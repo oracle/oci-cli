@@ -36,16 +36,17 @@ def session_group():
 
 @session_group.command('authenticate', help="""Creates a CLI session using a browser based login flow. --region is a [required] argument""")
 @click.option('--region', help=','.join(oci.regions.REGIONS))
+@click.option('--tenancy-name', help='Name of the tenancy')
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def authenticate(ctx, region):
+def authenticate(ctx, region, tenancy_name):
     region = ctx.obj['region']
     if region is None:
         region = cli_setup.prompt_for_region()
 
     # create a user session through the browser login flow
-    user_session = cli_setup_bootstrap.create_user_session(region)
+    user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
 
     # persist the session to a config (including the token value)
     profile_name, config_location = cli_setup_bootstrap.persist_user_session(user_session, persist_token=True)

@@ -2587,7 +2587,7 @@ def _get_source_encryption_key_params(source_encryption_key_file):
 # and returns a dictionary of key/value pairs that are sent as HTTP headers
 def _get_sse_params(data_file, param_names):
     if data_file:
-        key_data_base64_str = data_file.read()
+        key_data_base64_str = data_file.read().strip()
         key_sha256 = hashlib.sha256(base64.b64decode(key_data_base64_str)).digest()
         key_sha256_base64_str = base64.b64encode(key_sha256).decode('utf-8')
         return {
@@ -2602,7 +2602,7 @@ def _get_sse_params(data_file, param_names):
 # and returns a json representing the SSECustomerKeyDetails of the ReencryptObject API payload
 def _get_sse_customer_key_details(data_file):
     if data_file:
-        key_data_base64_str = data_file.read()
+        key_data_base64_str = data_file.read().strip()
         key_sha256 = hashlib.sha256(base64.b64decode(key_data_base64_str)).digest()
         key_sha256_base64_str = base64.b64encode(key_sha256).decode('utf-8')
         return {

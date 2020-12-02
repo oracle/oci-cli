@@ -873,12 +873,12 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
-@cli_util.option('--http-response-content-disposition', help=u"""This value will be used in Content-Disposition header of the response.""")
-@cli_util.option('--http-response-cache-control', help=u"""This value will be used in Cache-Control header of the response.""")
-@cli_util.option('--http-response-content-type', help=u"""This value will be used in Content-Type header of the response.""")
-@cli_util.option('--http-response-content-language', help=u"""This value will be used in Content-Language header of the response.""")
-@cli_util.option('--http-response-content-encoding', help=u"""This value will be used in Content-Encoding header of the response""")
-@cli_util.option('--http-response-expires', help=u"""This value will be used in Expires header of the response""")
+@cli_util.option('--http-response-content-disposition', help=u"""Specify this query parameter to override the value of the Content-Disposition response header in the GetObject response.""")
+@cli_util.option('--http-response-cache-control', help=u"""Specify this query parameter to override the Cache-Control response header in the GetObject response.""")
+@cli_util.option('--http-response-content-type', help=u"""Specify this query parameter to override the Content-Type response header in the GetObject response.""")
+@cli_util.option('--http-response-content-language', help=u"""Specify this query parameter to override the Content-Language response header in the GetObject response.""")
+@cli_util.option('--http-response-content-encoding', help=u"""Specify this query parameter to override the Content-Encoding response header in the GetObject response.""")
+@cli_util.option('--http-response-expires', help=u"""Specify this query parameter to override the Expires response header in the GetObject response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

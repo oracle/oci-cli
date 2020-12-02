@@ -17,6 +17,7 @@ CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
 GENERATED_ENC_KEY1_FILE = 'tests/temp/generated_enc_key1.txt'
 GENERATED_ENC_KEY2_FILE = 'tests/temp/generated_enc_key2.txt'
+GENERATED_ENC_KEY1_FILE_WITH_NEWLINE = 'tests/temp/generated_enc_key1_with_newline.txt'
 GENERATED_CONTENT_INPUT_FILE = 'tests/temp/generated_content_input.txt'
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 5
@@ -75,6 +76,11 @@ def setup_module():
         with open(fname, 'w') as f:
             f.write(enc_key_str)
 
+    # generate file with leading, trailing whitespaces and newline added to it
+    with open(GENERATED_ENC_KEY1_FILE) as fh:
+        with open(GENERATED_ENC_KEY1_FILE_WITH_NEWLINE, 'w') as fw:
+            fw.write('   ' + fh.read() + os.linesep + '   ')
+
 
 def teardown_module():
     if os.path.exists(CONTENT_OUTPUT_FILE):
@@ -92,6 +98,12 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
     object_name = 'a'
+
+    # check if GENERATED_ENC_KEY1_FILE is equal to the stripped version of GENERATED_ENC_KEY1_FILE_WITH_NEWLINE
+    with open(GENERATED_ENC_KEY1_FILE) as f1:
+        with open(GENERATED_ENC_KEY1_FILE_WITH_NEWLINE) as f2:
+            assertNotEquals(f1.read(), f2.read())
+            assertEquals(f1.read(), f2.read().strip())
 
     # ns get
     result = invoke(runner, config_file, config_profile, ['ns', 'get'], debug=debug)
@@ -122,10 +134,11 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
                      CONTENT_OUTPUT_FILE, '--encryption-key-file', GENERATED_ENC_KEY2_FILE], debug=debug)
     util.validate_service_error(result, 'The service returned error code 403', debug)
 
-    # object get with the correct SSE-C key
+    # object get with the correct SSE-C key.
+    # checking the integrity of this test with newline added to the enc key.
     result = invoke(runner, config_file, config_profile,
                     ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file',
-                     CONTENT_OUTPUT_FILE, '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
+                     CONTENT_OUTPUT_FILE, '--encryption-key-file', GENERATED_ENC_KEY1_FILE_WITH_NEWLINE], debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
     assertEqual(get_file_content(CONTENT_INPUT_FILE), get_file_content(CONTENT_OUTPUT_FILE))
 
@@ -146,10 +159,11 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
                      '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
-    # object reencrypt using the default/Oracle-managed key
+    # object reencrypt using the default/Oracle-managed key.
+    # checking the integrity of this test with newline added to the enc key file.
     result = invoke(runner, config_file, config_profile,
                     ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
-                     '--source-encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
+                     '--source-encryption-key-file', GENERATED_ENC_KEY1_FILE_WITH_NEWLINE], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
     # reencrypting the object again using the default/Oracle-managed key should not fail (no-op)
@@ -180,10 +194,11 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
                      '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
-    # reencrypt the object using yet another SSE-C key
+    # reencrypt the object using yet another SSE-C key.
+    # checking the integrity of this test with newline added to enc key file.
     result = invoke(runner, config_file, config_profile,
                     ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
-                     '--source-encryption-key-file', GENERATED_ENC_KEY1_FILE,
+                     '--source-encryption-key-file', GENERATED_ENC_KEY1_FILE_WITH_NEWLINE,
                      '--encryption-key-file', GENERATED_ENC_KEY2_FILE],
                     debug=debug)
     validate_response(result, includes_debug_data=debug)

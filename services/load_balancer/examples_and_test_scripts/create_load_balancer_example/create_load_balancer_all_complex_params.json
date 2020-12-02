@@ -94,7 +94,13 @@
                   },
                   {
                     "action": "REMOVE_HTTP_REQUEST_HEADER",
-                    "header": "AnyHeaderName3"
+                    "header": "AnyHeaderName3",
+                    "conditions": [
+                        {
+                            "attributeName": "SOURCE_IP_ADDRESS",
+                            "attributeValue": "10.1.0.0/16"
+                        }
+                    ]
                   },
                   {
                     "action": "ADD_HTTP_RESPONSE_HEADER",

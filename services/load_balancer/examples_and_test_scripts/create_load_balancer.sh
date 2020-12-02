@@ -260,7 +260,7 @@ function create_lb_with_minimum_then_add_related_resources() {
         --ssl-certificate-name my_cert_bundle \
         --ssl-verify-depth 3 \
         --ssl-verify-peer-certificate false
-    # If you would like to use the LB Cookie Session Persistence Configuration instead of "Sesssion Persistence" include the following line INSTEAD 
+    # If you would like to use the LB Cookie Session Persistence Configuration instead of "Sesssion Persistence" include the following line INSTEAD
     # of '--session-persistence=cookie-name' and '--session-persistence-disable-fallback' as these features are mutually exclusive:
     #    --lb-cookie-session-persistence-configuration file://${create_load_balancer_example_data}/lb_cookie_session_persistence_configuration_with_comments.json
 
@@ -292,7 +292,7 @@ function create_lb_with_minimum_then_add_related_resources() {
 
     # We can create one or more rule sets to attach to the load balancer listener.
     oci lb rule-set create --load-balancer-id $LB_ID \
-        --name ruleSetName\ 
+        --name ruleSetName \
         --items '[{"action": "REMOVE_HTTP_REQUEST_HEADER","header": "AnyHeaderName3"},{"action": "ADD_HTTP_RESPONSE_HEADER","header": "AnyHeaderName4","value": "Any Value for Header"},{"action": "CONTROL_ACCESS_USING_HTTP_METHODS", "allowedMethods": ["PUT", "POST"], "statusCode": "403"},{"action": "REDIRECT","conditions": [{"attributeName": "PATH","attributeValue": "/original","operator": "EXACT_MATCH"}],"redirectUri": {"host": "example.com","path": "/example","port": 8090,"protocol": "http","query": "?lang=en"},"responseCode": 301}]'
 
     # Now that we have our certificates, backend set, path route set, and rule set we can add a listener. We need to specify a backend set which exists (e.g. the one we made)

@@ -3,25 +3,25 @@
 # you may need to use the --extra-index-url option instead.
 
 appdirs==1.4.3
-arrow==0.14.7
+arrow==0.17.0
 certifi
 cffi>=1.9.1
 click==6.7
 configparser==4.0.2
 coverage==4.5.2
-cryptography==2.8
+cryptography==3.2.1
 httpsig-cffi==15.0.0
 Jinja2==2.10.1
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.24.0
+oci==2.25.0
 packaging==20.2
 pluggy==0.4.0
 py==1.4.33
 pyasn1==0.2.3
-pyOpenSSL==18.0.0
-pycparser==2.17
+pyOpenSSL==19.1.0
+pycparser==2.20
 pyparsing==2.2.0
 pytest==3.2.3
 pytest-cov==2.5.1
