@@ -6,10 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.16.1 - 2020-12-08
+-------------------
+Added
+~~~~~
+
+* Support for custom endpoint feature in the Integration Service
+ 
+  * ``oci integration integration-instance create --custom-endpoint``
+  * ``oci integration integration-instance update --custom-endpoint``
+
+* Support for the following in the Database Service
+
+  * Maintenance Schedule feature for Exadata Infrastructure resources
+ 
+    * ``oci db exadata-infrastructure create --maintenance-window``
+    * ``oci db exadata-infrastructure update --maintenance-window`` 
+
+  * ORDS and SSL certificate rotation for Autonomous Exadata Infrastructure
+ 
+    * ``oci db autonomous-exadata-infrastructure rotate-ords-certs --autonomous-exadata-infrastructure-id``
+    * ``oci db autonomous-exadata-infrastructure rotate-ssl-certs --autonomous-exadata-infrastructure-id``
+
+* Support added for fine-grained data analysis and improved SQL insights 
+ 
+  * Added IMPROVING field for ``oci opsi database-insights summarize-sql-statistics --category``
+
 2.16.0 - 2020-12-01
 -------------------
 Added
-~~~~~~~~
+~~~~~
 * Support for calling Oracle Cloud Infrastructure services in the Santiago region (``--region sa-santiago-1``)
 
 * Support for Mysql Database Service Channels

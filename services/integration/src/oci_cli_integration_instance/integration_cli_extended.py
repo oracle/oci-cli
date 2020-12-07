@@ -95,7 +95,7 @@ def list_work_requests_extended(ctx, **kwargs):
 @cli_util.option('--id', required=True, help=u"""Unique Integration Instance identifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[UpdateCustomEndpointDetails]'}})
 @cli_util.wrap_exceptions
 def update_integration_instance_extended(ctx, **kwargs):
     if 'id' in kwargs:
@@ -112,7 +112,7 @@ def update_integration_instance_extended(ctx, **kwargs):
 @integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.create_integration_instance.command_name', 'create'), help=integrationinstance_cli.create_integration_instance.help)
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}})
 @cli_util.wrap_exceptions
 def create_integration_instance_extended(ctx, **kwargs):
     if 'type' in kwargs:
