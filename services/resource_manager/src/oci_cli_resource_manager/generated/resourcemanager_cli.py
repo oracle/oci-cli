@@ -221,7 +221,7 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider.command_name', 'create'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [To create a configuration source provider]. \n[Command Reference](createConfigurationSourceProvider)""")
-@cli_util.option('--config-source-provider-type', required=True, help=u"""The type of configuration source provider. The `GITLAB_ACCESS_TOKEN` type corresponds to Git.""")
+@cli_util.option('--config-source-provider-type', required=True, help=u"""The type of configuration source provider. The `GITLAB_ACCESS_TOKEN` type corresponds to GitLab. The `GITHUB_ACCESS_TOKEN` type corresponds to GitHub.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
@@ -290,8 +290,8 @@ def create_configuration_source_provider(ctx, from_json, wait_for_state, max_wai
 
 
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider_create_gitlab_access_token_configuration_source_provider_details.command_name', 'create-configuration-source-provider-create-gitlab-access-token-configuration-source-provider-details'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [To create a configuration source provider]. \n[Command Reference](createConfigurationSourceProvider)""")
-@cli_util.option('--api-endpoint', required=True, help=u"""The Git service API endpoint. Example: `https://gitlab.com/api/v4/`""")
-@cli_util.option('--access-token', required=True, help=u"""The personal access token to be configured on the Git repository. Avoid entering confidential information.""")
+@cli_util.option('--api-endpoint', required=True, help=u"""The Git service endpoint. Example: `https://gitlab.com`""")
+@cli_util.option('--access-token', required=True, help=u"""The personal access token to be configured on the GitLab repository. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
@@ -330,6 +330,79 @@ def create_configuration_source_provider_create_gitlab_access_token_configuratio
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configSourceProviderType'] = 'GITLAB_ACCESS_TOKEN'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_configuration_source_provider(
+        create_configuration_source_provider_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_configuration_source_provider') and callable(getattr(client, 'get_configuration_source_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_configuration_source_provider(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@configuration_source_provider_group.command(name=cli_util.override('resource_manager.create_configuration_source_provider_create_github_access_token_configuration_source_provider_details.command_name', 'create-configuration-source-provider-create-github-access-token-configuration-source-provider-details'), help=u"""Creates a configuration source provider in the specified compartment. For more information, see [To create a configuration source provider]. \n[Command Reference](createConfigurationSourceProvider)""")
+@cli_util.option('--api-endpoint', required=True, help=u"""The GitHub service endpoint. Example: `https://github.com/`""")
+@cli_util.option('--access-token', required=True, help=u"""The personal access token to be configured on the GitHub repository. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where you want to create the configuration source provider.""")
+@cli_util.option('--display-name', help=u"""Human-readable name of the configuration source provider. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'ConfigurationSourceProvider'})
+@cli_util.wrap_exceptions
+def create_configuration_source_provider_create_github_access_token_configuration_source_provider_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_endpoint, access_token, compartment_id, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['apiEndpoint'] = api_endpoint
+    _details['accessToken'] = access_token
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['configSourceProviderType'] = 'GITHUB_ACCESS_TOKEN'
 
     client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_configuration_source_provider(
@@ -735,7 +808,7 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration file. The Terraform configuration file can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -810,7 +883,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration file. The Terraform configuration file can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -892,7 +965,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration file. The Terraform configuration file can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -982,7 +1055,7 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration file. The Terraform configuration file can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-compartment-id', required=True, help=u"""The [OCID] of the compartment to use for creating the stack. The new stack will include definitions for supported resource types in scope of the specified compartment OCID (tenancy level for root compartment, compartment level otherwise).""")
 @cli_util.option('--config-source-region', required=True, help=u"""The region to use for creating the stack. The new stack will include definitions for supported resource types in this region.""")
@@ -1590,6 +1663,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned resources. Ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--config-source-provider-type', help=u"""A filter to return only configuration source providers of the specified type (GitHub or GitLab).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1597,7 +1671,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_manager', 'class': 'ConfigurationSourceProviderCollection'})
 @cli_util.wrap_exceptions
-def list_configuration_source_providers(ctx, from_json, all_pages, page_size, compartment_id, configuration_source_provider_id, display_name, sort_by, sort_order, limit, page):
+def list_configuration_source_providers(ctx, from_json, all_pages, page_size, compartment_id, configuration_source_provider_id, display_name, sort_by, sort_order, limit, page, config_source_provider_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1617,6 +1691,8 @@ def list_configuration_source_providers(ctx, from_json, all_pages, page_size, co
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if config_source_provider_type is not None:
+        kwargs['config_source_provider_type'] = config_source_provider_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     if all_pages:
@@ -2039,7 +2115,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.option('--configuration-source-provider-id', required=True, help=u"""The [OCID] of the configuration source provider.""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
-@cli_util.option('--config-source-provider-type', help=u"""The type of configuration source provider. The `GITLAB_ACCESS_TOKEN` type corresponds to Git.""")
+@cli_util.option('--config-source-provider-type', help=u"""The type of configuration source provider. The `GITLAB_ACCESS_TOKEN` type corresponds to GitLab. The `GITHUB_ACCESS_TOKEN` type corresponds to GitHub.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2121,8 +2197,8 @@ def update_configuration_source_provider(ctx, from_json, force, wait_for_state, 
 @cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--api-endpoint', help=u"""The Git service API endpoint. Example: `https://gitlab.com/api/v4/`""")
-@cli_util.option('--access-token', help=u"""The personal access token to be configured on the Git repository.""")
+@cli_util.option('--api-endpoint', help=u"""The Git service endpoint. Example: `https://gitlab.com`""")
+@cli_util.option('--access-token', help=u"""The personal access token to be configured on the GitLab repository.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2168,6 +2244,92 @@ def update_configuration_source_provider_update_gitlab_access_token_configuratio
         _details['accessToken'] = access_token
 
     _details['configSourceProviderType'] = 'GITLAB_ACCESS_TOKEN'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.update_configuration_source_provider(
+        configuration_source_provider_id=configuration_source_provider_id,
+        update_configuration_source_provider_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_configuration_source_provider') and callable(getattr(client, 'get_configuration_source_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_configuration_source_provider(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@configuration_source_provider_group.command(name=cli_util.override('resource_manager.update_configuration_source_provider_update_github_access_token_configuration_source_provider_details.command_name', 'update-configuration-source-provider-update-github-access-token-configuration-source-provider-details'), help=u"""Updates the properties of the specified configuration source provider. For more information, see [To update a configuration source provider]. \n[Command Reference](updateConfigurationSourceProvider)""")
+@cli_util.option('--configuration-source-provider-id', required=True, help=u"""The [OCID] of the configuration source provider.""")
+@cli_util.option('--display-name', help=u"""Human-readable name of the configuration source provider. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Description of the configuration source provider. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--api-endpoint', help=u"""The GitHub service endpoint. Example: `https://github.com/`""")
+@cli_util.option('--access-token', help=u"""The personal access token to be configured on the GitHub repository.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'ConfigurationSourceProvider'})
+@cli_util.wrap_exceptions
+def update_configuration_source_provider_update_github_access_token_configuration_source_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_source_provider_id, display_name, description, freeform_tags, defined_tags, api_endpoint, access_token, if_match):
+
+    if isinstance(configuration_source_provider_id, six.string_types) and len(configuration_source_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --configuration-source-provider-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if api_endpoint is not None:
+        _details['apiEndpoint'] = api_endpoint
+
+    if access_token is not None:
+        _details['accessToken'] = access_token
+
+    _details['configSourceProviderType'] = 'GITHUB_ACCESS_TOKEN'
 
     client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.update_configuration_source_provider(

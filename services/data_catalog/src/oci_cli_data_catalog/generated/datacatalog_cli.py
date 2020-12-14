@@ -87,6 +87,12 @@ def data_asset_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_catalog.rule_summary_group.command_name', 'rule-summary'), cls=CommandGroupWithAlias, help="""A list of rule resources. One or more rules can be defined for a data entity. Each rule can be defined on one or more attributes of the data entity.""")
+@cli_util.help_option_group
+def rule_summary_group():
+    pass
+
+
 @click.command(cli_util.override('data_catalog.custom_property_group.command_name', 'custom-property'), cls=CommandGroupWithAlias, help="""Custom Property Definition""")
 @cli_util.help_option_group
 def custom_property_group():
@@ -278,6 +284,7 @@ data_catalog_root_group.add_command(job_metric_group)
 data_catalog_root_group.add_command(type_group)
 data_catalog_root_group.add_command(folder_collection_group)
 data_catalog_root_group.add_command(data_asset_collection_group)
+data_catalog_root_group.add_command(rule_summary_group)
 data_catalog_root_group.add_command(custom_property_group)
 data_catalog_root_group.add_command(work_request_log_group)
 data_catalog_root_group.add_command(attribute_tag_group)
@@ -3998,13 +4005,22 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "lifecycleState", "externalKey", "timeExternal", "timeStatusUpdated", "isLogical", "isPartition", "folderKey", "folderName", "typeKey", "path", "harvestStatus", "lastJobKey", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity response.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_aggregated_physical_entities(ctx, from_json, all_pages, catalog_id, data_asset_key, entity_key, fields):
+def list_aggregated_physical_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, fields, display_name_contains, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -4018,14 +4034,46 @@ def list_aggregated_physical_entities(ctx, from_json, all_pages, catalog_id, dat
     kwargs = {}
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
-    result = client.list_aggregated_physical_entities(
-        catalog_id=catalog_id,
-        data_asset_key=data_asset_key,
-        entity_key=entity_key,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_aggregated_physical_entities,
+            catalog_id=catalog_id,
+            data_asset_key=data_asset_key,
+            entity_key=entity_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_aggregated_physical_entities,
+            limit,
+            page_size,
+            catalog_id=catalog_id,
+            data_asset_key=data_asset_key,
+            entity_key=entity_key,
+            **kwargs
+        )
+    else:
+        result = client.list_aggregated_physical_entities(
+            catalog_id=catalog_id,
+            data_asset_key=data_asset_key,
+            entity_key=entity_key,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -4473,7 +4521,7 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--data-types', type=custom_types.CliCaseInsensitiveChoice(["TEXT", "RICH_TEXT", "BOOLEAN", "NUMBER", "DATE"]), multiple=True, help=u"""Return the custom properties which has specified data types""")
-@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
+@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET", "MESSAGE", "UNRECOGNIZED_FILE"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4736,14 +4784,23 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @pattern_group.command(name=cli_util.override('data_catalog.list_derived_logical_entities.command_name', 'list-derived-logical-entities'), help=u"""List logical entities derived from this pattern. \n[Command Reference](listDerivedLogicalEntities)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_derived_logical_entities(ctx, from_json, all_pages, catalog_id, pattern_key, if_match):
+def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_id, pattern_key, display_name_contains, sort_by, sort_order, limit, page, if_match):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -4752,15 +4809,45 @@ def list_derived_logical_entities(ctx, from_json, all_pages, catalog_id, pattern
         raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
-    result = client.list_derived_logical_entities(
-        catalog_id=catalog_id,
-        pattern_key=pattern_key,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_derived_logical_entities,
+            catalog_id=catalog_id,
+            pattern_key=pattern_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_derived_logical_entities,
+            limit,
+            page_size,
+            catalog_id=catalog_id,
+            pattern_key=pattern_key,
+            **kwargs
+        )
+    else:
+        result = client.list_derived_logical_entities(
+            catalog_id=catalog_id,
+            pattern_key=pattern_key,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -5931,6 +6018,110 @@ def list_patterns(ctx, from_json, all_pages, page_size, catalog_id, display_name
     else:
         result = client.list_patterns(
             catalog_id=catalog_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@rule_summary_group.command(name=cli_util.override('data_catalog.list_rules.command_name', 'list-rules'), help=u"""Returns a list of all rules of a data entity. \n[Command Reference](listRules)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--rule-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARYKEY", "FOREIGNKEY", "UNIQUEKEY"]), help=u"""Rule type used to filter the response to a list rules call.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@cli_util.option('--origin-type', type=custom_types.CliCaseInsensitiveChoice(["SOURCE", "USER", "PROFILING"]), help=u"""Rule origin type used to filter the response to a list rules call.""")
+@cli_util.option('--external-key', help=u"""Unique external identifier of this resource in the external source system.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
+@cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "ruleType", "externalKey", "referencedFolderKey", "referencedFolderName", "referencedEntityKey", "referencedEntityName", "referencedRuleKey", "referencedRuleName", "originType", "lifecycleState", "timeCreated", "uri"]), multiple=True, help=u"""Specifies the fields to return in a rule summary response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'RuleCollection'})
+@cli_util.wrap_exceptions
+def list_rules(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, display_name, display_name_contains, rule_type, lifecycle_state, origin_type, external_key, time_created, time_updated, created_by_id, updated_by_id, fields, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+        raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if rule_type is not None:
+        kwargs['rule_type'] = rule_type
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if origin_type is not None:
+        kwargs['origin_type'] = origin_type
+    if external_key is not None:
+        kwargs['external_key'] = external_key
+    if time_created is not None:
+        kwargs['time_created'] = time_created
+    if time_updated is not None:
+        kwargs['time_updated'] = time_updated
+    if created_by_id is not None:
+        kwargs['created_by_id'] = created_by_id
+    if updated_by_id is not None:
+        kwargs['updated_by_id'] = updated_by_id
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_rules,
+            catalog_id=catalog_id,
+            data_asset_key=data_asset_key,
+            entity_key=entity_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_rules,
+            limit,
+            page_size,
+            catalog_id=catalog_id,
+            data_asset_key=data_asset_key,
+            entity_key=entity_key,
+            **kwargs
+        )
+    else:
+        result = client.list_rules(
+            catalog_id=catalog_id,
+            data_asset_key=data_asset_key,
+            entity_key=entity_key,
             **kwargs
         )
     cli_util.render_response(result, ctx)

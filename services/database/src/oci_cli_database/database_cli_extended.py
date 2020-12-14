@@ -33,7 +33,6 @@ database_cli.list_db_system_patches.name = "by-db-system"
 database_cli.list_db_system_patch_history_entries.name = "by-db-system"
 
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.generate_autonomous_database_wallet, "generate-wallet")
-cli_util.rename_command(database_cli, database_cli.autonomous_data_warehouse_group, database_cli.generate_autonomous_data_warehouse_wallet, "generate-wallet")
 
 database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomous_database.name)
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_clone_details, "create-from-clone")
@@ -1610,3 +1609,7 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, **kwargs)
+
+
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.flex_component_collection_group, "flex-component")
+cli_util.rename_command(database_cli, database_cli.flex_component_collection_group, database_cli.list_flex_components, "list")
