@@ -847,6 +847,8 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `DISPLAYNAME` is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE"]), help=u"""A key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server.""")
+@cli_util.option('--algorithm', type=custom_types.CliCaseInsensitiveChoice(["AES"]), help=u"""The algorithm used by a key's key versions to encrypt or decrypt. Currently, only AES is supported.""")
+@cli_util.option('--length', type=click.INT, help=u"""The length of the key in bytes, expressed as an integer. Values of 16, 24, or 32 are supported.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -854,7 +856,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'list[KeySummary]'})
 @cli_util.wrap_exceptions
-def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, protection_mode):
+def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, protection_mode, algorithm, length):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -870,6 +872,10 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
         kwargs['sort_order'] = sort_order
     if protection_mode is not None:
         kwargs['protection_mode'] = protection_mode
+    if algorithm is not None:
+        kwargs['algorithm'] = algorithm
+    if length is not None:
+        kwargs['length'] = length
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('key_management', 'kms_management', ctx)
     if all_pages:

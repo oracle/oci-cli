@@ -22,3 +22,6 @@ waas, policy-config, update
 waas, protection-settings, update
 dts, export, get-passphrase
 network, vnic, assign-private-ip
+rover, cluster, set-secrets
+rover, cluster, add-workload
+rover, node, set-secrets

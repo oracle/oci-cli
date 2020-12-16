@@ -235,3 +235,8 @@ class TestDBCliExtended(unittest.TestCase):
         assert 'Missing a required parameter' in result.output
         assert '--db-system-id' in result.output
         assert '--vm-cluster-id' in result.output
+
+    def test_list_db_flex_component(self):
+            result = util.invoke_command(['db', 'flex-component', 'list'])
+            assert 'Error: Missing option(s)' in result.output
+            assert '--compartment-id' in result.output

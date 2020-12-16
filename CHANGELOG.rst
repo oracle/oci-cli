@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.17.0 - 2020-12-15
+-------------------
+Added
+~~~~~
+
+* Support for the following in the Roving Edge Infrastructure Service
+
+  * Rover Cluster API
+
+    * ``oci rover cluster``
+
+  * Rover Node API
+
+    * ``oci rover node``
+
+* Database Service
+
+  * Support for Customer-Managed Key features
+
+    * ``oci db database migrate-vault-key``
+    * ``oci db database rotate-vault-key``
+
+  * Support for listing flex components
+
+    * ``oci db flex-component list``
+
+* Support for filtering listKeys based on KeyShape in Key Management Service
+
+  * ``oci kms management key list --algorithm, --length``
+
+* Support for Github configuration source provider in Resource Manager Service
+
+  * ``oci resource-manager configuration-source-provider create-github-access-token-provider``
+  * ``oci resource-manager configuration-source-provider update-github-access-token-provider``
+
+* Data Catalog Service
+
+  * Support for listing harvested rules
+
+    * ``oci data-catalog rule-summary list-rules``
+
+  * Additional filtering options available for Logical Entity list calls
+
+    * ``oci data-catalog entity list-aggregated-physical --display-name-contains``
+    * ``oci data-catalog entity list-derived-logical-entities --display-name-contains``
+
+* Support for flexible load balancers in Load Balancer Service
+
+  * ``oci lb load-balancer create --shape-details``
+
+Changed
+~~~~~~~
+
+* [BREAKING] Deprecated support for Autonomous Data Warehouse in Database Service
+
+  * ``oci db autonomous-data-warehouse``
+
 2.16.1 - 2020-12-08
 -------------------
 Added
