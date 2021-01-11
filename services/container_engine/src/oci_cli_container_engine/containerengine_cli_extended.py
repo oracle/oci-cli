@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from oci_cli import cli_util
@@ -157,12 +157,17 @@ def create_cluster(ctx, **kwargs):
     {'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
      'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'},
+     'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
      'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
                                    'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'node-shape-config': {'module': 'container_engine',
+                                                         'class': 'CreateNodeShapeConfigDetails'},
+                                   'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
                                    'placement-configs': {'module': 'container_engine',
                                                          'class': 'list[NodePoolPlacementConfigDetails]'}})
 @cli_util.wrap_exceptions
@@ -212,11 +217,17 @@ def create_node_pool(ctx, **kwargs):
 @json_skeleton_utils.get_cli_json_input_option(
     {'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
      'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
+     'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'},
      'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
                                    'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
+                                   'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'},
                                    'placement-configs': {'module': 'container_engine',
                                                          'class': 'list[NodePoolPlacementConfigDetails]'}})
 @cli_util.wrap_exceptions

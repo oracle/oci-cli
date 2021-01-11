@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -539,12 +539,17 @@ def validate_fingerprint(fingerprint):
 
 
 def validate_region(region):
-    if not is_region(region):
-        click.echo("Unrecognized region: {}. Valid regions can be found here: https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm".format(region))
+    if not (is_region(region) or is_valid_region_index(region)):
+        click.echo("Unrecognized region: {}. Please enter a number between 1 to {}, or valid regions can be found here: https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm".format(region, len(REGIONS)))
         if not click.confirm("Continue with unrecognized region? (Enter 'n' to re-enter region)"):
             return None
 
     return region
+
+
+def is_valid_region_index(region):
+
+    return region.isdigit() and len(REGIONS) >= int(region) >= 1
 
 
 def process_config_filename(filename):
@@ -635,11 +640,17 @@ def prompt_session_for_profile():
 
 def prompt_for_region():
     region = None
-    while not region:
-        region_list = ', '.join(sorted(REGIONS))
-        region = click.prompt(text='Enter a region (e.g. {})'.format(region_list), value_proc=validate_region)
 
-    return region
+    # CHUNK_LENGTH represents how many regions will be displayed per line
+    CHUNK_LENGTH = 5
+    sorted_region_list = sorted(REGIONS)
+    numeric_region_list = ['{}: {}'.format(index + 1, numeric_region) for index, numeric_region in enumerate(sorted_region_list)]
+    chunked_region_list = [numeric_region_list[index:index + CHUNK_LENGTH] for index in range(0, len(numeric_region_list), CHUNK_LENGTH)]
+    region_list = ',\n'.join([', '.join(chunked_region) for chunked_region in chunked_region_list])
+    while not region:
+        region = click.prompt(text='Enter a region by index or name(e.g.\n{})'.format(region_list), value_proc=validate_region)
+
+    return sorted_region_list[int(region) - 1] if is_valid_region_index(region) else region
 
 
 def remove_profile_from_config(config_file, profile_name_to_terminate):

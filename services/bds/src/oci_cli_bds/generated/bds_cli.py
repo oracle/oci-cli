@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -51,6 +51,73 @@ bds_root_group.add_command(bds_instance_group)
 bds_root_group.add_command(work_request_error_group)
 bds_root_group.add_command(work_request_log_entry_group)
 bds_root_group.add_command(work_request_group)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.add_auto_scaling_configuration.command_name', 'add'), help=u"""Add autoscaling configuration. \n[Command Reference](addAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscaling configuration. The only supported type is WORKER.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@cli_util.option('--policy', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}})
+@cli_util.wrap_exceptions
+def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, policy, display_name, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['nodeType'] = node_type
+    _details['isEnabled'] = is_enabled
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['policy'] = cli_util.parse_json_parameter("policy", policy)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.add_auto_scaling_configuration(
+        bds_instance_id=bds_instance_id,
+        add_auto_scaling_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @bds_instance_group.command(name=cli_util.override('bds.add_block_storage.command_name', 'add'), help=u"""Adds storage to existing worker nodes. The same amount of storage will be added to all workers. No change will be made to already attached storage. Block Storage once added cannot be removed. \n[Command Reference](addBlockStorage)""")
@@ -294,7 +361,7 @@ def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @bds_instance_group.command(name=cli_util.override('bds.change_shape.command_name', 'change-shape'), help=u"""Scale-up/down individial nodes (per role type) in the cluster. Customer can choose arbitrarty VM_STANDARD shape to scale-up/down the instance. Only VM_STANDARD nodes can be re-shaped. \n[Command Reference](changeShape)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
-@cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Inidividial worker nodes groups details""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -359,7 +426,7 @@ def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--is-high-availability', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster is HA""")
 @cli_util.option('--is-secure', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster should be setup as secure.""")
 @cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of nodes in the BDS instance""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--network-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional configuration of customer's network.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -477,6 +544,33 @@ def delete_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.get_auto_scaling_configuration.command_name', 'get-auto-scaling-configuration'), help=u"""Gets information about the specified autoscaling configuration. \n[Command Reference](getAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscaling configuration.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'AutoScalingConfiguration'})
+@cli_util.wrap_exceptions
+def get_auto_scaling_configuration(ctx, from_json, bds_instance_id, auto_scaling_configuration_id):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.get_auto_scaling_configuration(
+        bds_instance_id=bds_instance_id,
+        auto_scaling_configuration_id=auto_scaling_configuration_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.get_bds_instance.command_name', 'get'), help=u"""Gets a BDS instance by identifier \n[Command Reference](getBdsInstance)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -521,9 +615,76 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.list_auto_scaling_configurations.command_name', 'list-auto-scaling-configurations'), help=u"""Gets information about the  autoscaling configuration. \n[Command Reference](listAutoScalingConfigurations)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the autoscaling configuration.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'list[AutoScalingConfigurationSummary]'})
+@cli_util.wrap_exceptions
+def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compartment_id, bds_instance_id, page, limit, sort_by, sort_order, display_name, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_auto_scaling_configurations,
+            compartment_id=compartment_id,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_auto_scaling_configurations,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_auto_scaling_configurations(
+            compartment_id=compartment_id,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.list_bds_instances.command_name', 'list'), help=u"""Returns a list of BDS instances. \n[Command Reference](listBdsInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "UPDATING_INFRA", "SUSPENDING", "SUSPENDED", "RESUMING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the BDS instance.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "SUSPENDING", "SUSPENDED", "RESUMING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the BDS instance.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
@@ -752,6 +913,68 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.remove_auto_scaling_configuration.command_name', 'remove'), help=u"""Remove autoscaling configuration. \n[Command Reference](removeAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscaling configuration.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, cluster_admin_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.remove_auto_scaling_configuration(
+        bds_instance_id=bds_instance_id,
+        auto_scaling_configuration_id=auto_scaling_configuration_id,
+        remove_auto_scaling_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.remove_cloud_sql.command_name', 'remove'), help=u"""Remove Cloud SQL capability. \n[Command Reference](removeCloudSql)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
@@ -838,6 +1061,87 @@ def restart_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     result = client.restart_node(
         bds_instance_id=bds_instance_id,
         restart_node_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.update_auto_scaling_configuration.command_name', 'update-auto-scaling-configuration'), help=u"""Updates certain fields on the specified autoscaling configuration, such as the name, the threshold value, and whether the autoscaling configuration is enabled. \n[Command Reference](updateAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscaling configuration.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'policy': {'module': 'bds', 'class': 'AutoScalePolicy'}})
+@cli_util.wrap_exceptions
+def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if policy:
+            if not click.confirm("WARNING: Updates to policy will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if cluster_admin_password is not None:
+        _details['clusterAdminPassword'] = cluster_admin_password
+
+    if policy is not None:
+        _details['policy'] = cli_util.parse_json_parameter("policy", policy)
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.update_auto_scaling_configuration(
+        bds_instance_id=bds_instance_id,
+        auto_scaling_configuration_id=auto_scaling_configuration_id,
+        update_auto_scaling_configuration_details=_details,
         **kwargs
     )
     if wait_for_state:
