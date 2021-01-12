@@ -1,10 +1,11 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import oci_cli
 import unittest
 from . import util
+from oci.regions import REGIONS
 from oci_cli import config
 
 from cryptography.hazmat.primitives import serialization
@@ -45,6 +46,9 @@ class TestSetup(unittest.TestCase):
         self.subtest_config_existing_keys_expands_user_directory()
         self.subtest_config_invalid_user_ocid()
         self.subtest_config_invalid_tenancy_ocid()
+        self.subtest_config_region_with_valid_index()
+        self.subtest_config_invalid_region_by_index_or_name_with_not_continue()
+        self.subtest_config_invalid_region_by_index_or_name_with_continue()
 
         self.subtest_autocomplete_deny_bash_rc_access()
 
@@ -350,6 +354,113 @@ class TestSetup(unittest.TestCase):
         assert 'Invalid OCID format' in result.output
 
         self.cleanup_default_generated_files()
+
+    @util.log_test
+    def subtest_config_region_with_valid_index(self):
+
+        self.cleanup_default_generated_files()
+
+        valid_index_of_region = str(sorted(REGIONS).index(REGION) + 1)
+
+        # input for interactive prompts - expanding for readability
+        stdin = [
+            CONFIG_FILENAME,
+            util.USER_ID,
+            util.TENANT_ID,
+            valid_index_of_region,
+            'Y',  # generate new keys
+            TEMP_DIR,  # key location
+            '',  # use default key name
+            PASSPHRASE,
+            PASSPHRASE,  # confirm passphrase
+            'Y'  # write passphrase to config
+        ]
+
+        result = self.invoke(
+            ['setup', 'config'], input='\n'.join(stdin))
+
+        assert '{}: {}'.format(valid_index_of_region, REGION) in result.output, 'Region list should be correctly formatted'
+
+        test_config = config.from_file(file_location=CONFIG_FILENAME, profile_name='DEFAULT')
+        self.validate_config(test_config)
+
+        assert test_config['region'] == REGION
+
+        # clean up config and keys
+        self.cleanup_default_generated_files()
+
+    @util.log_test
+    def subtest_config_invalid_region_by_index_or_name_with_not_continue(self):
+
+        self.cleanup_default_generated_files()
+
+        for invalid_region in ['-1', '0', '9999', str(len(REGIONS) + 1), 'aaa']:
+
+            # input for interactive prompts - expanding for readability
+            stdin = [
+                CONFIG_FILENAME,
+                util.USER_ID,
+                util.TENANT_ID,
+                invalid_region,
+                'N',  # re-enter region
+                REGION,
+                'Y',  # generate new keys
+                TEMP_DIR,  # key location
+                '',  # use default key name
+                PASSPHRASE,
+                PASSPHRASE,  # confirm passphrase
+                'Y'  # write passphrase to config
+            ]
+
+            result = self.invoke(
+                ['setup', 'config'], input='\n'.join(stdin))
+
+            assert 'Unrecognized region: {}'.format(invalid_region) in result.output, 'An expected hit should be given'
+            assert "Continue with unrecognized region? (Enter 'n' to re-enter region) [y/N]:" in result.output, 'A continue choice should be given'
+
+            test_config = config.from_file(file_location=CONFIG_FILENAME, profile_name='DEFAULT')
+            self.validate_config(test_config)
+
+            assert test_config['region'] == REGION
+
+            # clean up config and keys
+            self.cleanup_default_generated_files()
+
+    @util.log_test
+    def subtest_config_invalid_region_by_index_or_name_with_continue(self):
+
+        self.cleanup_default_generated_files()
+
+        for invalid_region in ['-1', '0', '9999', str(len(REGIONS) + 1), 'aaa']:
+
+            # input for interactive prompts - expanding for readability
+            stdin = [
+                CONFIG_FILENAME,
+                util.USER_ID,
+                util.TENANT_ID,
+                invalid_region,
+                'y',  # continue with unrecognized region
+                'Y',  # generate new keys
+                TEMP_DIR,  # key location
+                '',  # use default key name
+                PASSPHRASE,
+                PASSPHRASE,  # confirm passphrase
+                'Y'  # write passphrase to config
+            ]
+
+            result = self.invoke(
+                ['setup', 'config'], input='\n'.join(stdin))
+
+            assert 'Unrecognized region: {}'.format(invalid_region) in result.output, 'An expected hit should be given'
+            assert "Continue with unrecognized region? (Enter 'n' to re-enter region) [y/N]:" in result.output, 'A continue choice should be given'
+
+            test_config = config.from_file(file_location=CONFIG_FILENAME, profile_name='DEFAULT')
+            self.validate_config(test_config)
+
+            assert test_config['region'] == invalid_region
+
+            # clean up config and keys
+            self.cleanup_default_generated_files()
 
     @util.log_test
     def subtest_autocomplete_deny_bash_rc_access(self):

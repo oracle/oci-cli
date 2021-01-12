@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+
 # Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
 # This script provides an example of how to use the kms management CLI in terms of:
 #   - Backup vault using bucket name, namespace and object name
@@ -34,6 +37,7 @@
 # export OBJECT_LOCATION_URI=
 # export KEY_BINARY_FILE_EXAMPLE_LOCATION=
 # export VAULT_BINARY_FILE_EXAMPLE_LOCATION=
+
 
 set -e
 

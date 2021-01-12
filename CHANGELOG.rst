@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.18.0 - 2021-01-12
+-------------------
+Added
+~~~~~
+
+* Support for specifying region using numbers for the setup configuration command
+
+  * ``oci setup config``
+
+* Support for auto-scaling in the Big Data service
+
+  * ``oci bds auto-scale-config create``
+  * ``oci bds auto-scale-config get``
+  * ``oci bds auto-scale-config edit``
+  * ``oci bds auto-scale-config list``
+  * ``oci bds auto-scale-config delete``
+  * [BREAKING] ``UPDATING_INFRA`` option removed for ``oci bds instance list --lifecycle-state``
+
+* Documentation fixes for the Logging Search service
+
+Fixed
+~~~~~~~~
+* Fixed node-shape-config to be recognized as complex type
+
+  * ``oci ce node-pool create --generate-param-json-input node-shape-config``
+
 2.17.0 - 2020-12-15
 -------------------
 Added

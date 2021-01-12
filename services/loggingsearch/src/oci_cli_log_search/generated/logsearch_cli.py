@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -35,8 +35,8 @@ logging_search_root_group.add_command(search_result_group)
 @cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""End filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--search-query', required=True, help=u"""Query corresponding to the search operation. This query is parsed and validated before execution and should follow the specification. For more information on the query language specification, see [Logging Query Language Specification].""")
 @cli_util.option('--is-return-field-info', type=click.BOOL, help=u"""Whether to return field schema information for the log stream specified in searchQuery.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
-@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a response. Pagination is not supported in this API.""")
+@cli_util.option('--page', help=u"""Reserved for future use. Pagination is not supported in this API.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
