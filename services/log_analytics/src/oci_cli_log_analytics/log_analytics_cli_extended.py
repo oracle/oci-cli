@@ -95,14 +95,19 @@ get_param(loganalytics_cli.put_query_work_request_background, 'namespace_name').
 
 # ScheduledTask overrides
 loganalytics_cli.scheduled_task_group.commands.pop(loganalytics_cli.create_scheduled_task.name)
+loganalytics_cli.scheduled_task_group.commands.pop(loganalytics_cli.update_scheduled_task.name)
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.scheduled_task_group,
                         loganalytics_cli.create_scheduled_task_create_acceleration_task_details, "create-acceleration-task")
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.scheduled_task_group,
                         loganalytics_cli.create_scheduled_task_create_standard_task_details, "create-standard-task")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.scheduled_task_group,
+                        loganalytics_cli.update_scheduled_task_update_standard_task_details, "update")
 
 get_param(loganalytics_cli.create_scheduled_task_create_standard_task_details, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.create_scheduled_task_create_acceleration_task_details, 'namespace_name').opts.extend(['--namespace', '-ns'])
-get_param(loganalytics_cli.update_scheduled_task, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.update_scheduled_task_update_standard_task_details, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.pause_scheduled_task, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.resume_scheduled_task, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.clean, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.run, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.delete_scheduled_task, 'namespace_name').opts.extend(['--namespace', '-ns'])
@@ -466,6 +471,9 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_gr
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_config_work_request_group, "config-work-request")
 # cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_config_work_request_collection_group, "config-work-request-collection")
 
+# warning commands
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_warning_group, "warning")
+
 # #########################
 # Top Level Commands - End
 # #########################
@@ -488,6 +496,26 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_associa
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.list_source_associations, "list-source-assocs")
 # validate-association-parameters -> validate-association-params
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.validate_association_parameters, "validate-assoc-params")
+
+# list-lookups -> list
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.list_lookups, "list")
+# get-lookup -> get
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.get_lookup, "get")
+# update-lookup -> update
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.update_lookup, "update")
+# delete-lookup -> delete
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.delete_lookup, "delete")
+# append-lookup-data -> append-data
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.append_lookup_data, "append-data")
+# update-lookup-data -> update-data
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.update_lookup_data, "update-data")
+
+# list-warnings -> list
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_warning_group, loganalytics_cli.list_warnings, "list")
+# suppress-warning -> suppress
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_warning_group, loganalytics_cli.suppress_warning, "suppress")
+# unsuppress-warning -> unsuppress
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_warning_group, loganalytics_cli.unsuppress_warning, "unsuppress")
 
 # #########################
 # Sub Level Commands - End
@@ -616,6 +644,38 @@ def register_lookup_extended(ctx, **kwargs):
     ctx.invoke(loganalytics_cli.register_lookup, **kwargs)
 
 
+# append-lookup-data read from file
+@cli_util.copy_params_from_generated_command(loganalytics_cli.append_lookup_data, params_to_exclude=['append_lookup_file_body'])
+@loganalytics_cli.log_analytics_lookup_group.command(name='append-data', help=loganalytics_cli.append_lookup_data.help)
+@cli_util.option('--file', type=click.File(mode='rb'), required=True, help='''Path to the lookup content file''')
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def append_lookup_data_extended(ctx, **kwargs):
+    # Set "--append-lookup-file-body" to the content of file "--file"
+    if 'file' in kwargs and kwargs['file']:
+        content = kwargs['file'].read()
+        kwargs['append_lookup_file_body'] = content
+    del kwargs['file']
+    ctx.invoke(loganalytics_cli.append_lookup_data, **kwargs)
+
+
+# update-lookup-data read from file
+@cli_util.copy_params_from_generated_command(loganalytics_cli.update_lookup_data, params_to_exclude=['update_lookup_file_body'])
+@loganalytics_cli.log_analytics_lookup_group.command(name='update-data', help=loganalytics_cli.update_lookup_data.help)
+@cli_util.option('--file', type=click.File(mode='rb'), required=True, help='''Path to the lookup content file''')
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_lookup_data_extended(ctx, **kwargs):
+    # Set "--update-lookup-file-body" to the content of file "--file"
+    if 'file' in kwargs and kwargs['file']:
+        content = kwargs['file'].read()
+        kwargs['update_lookup_file_body'] = content
+    del kwargs['file']
+    ctx.invoke(loganalytics_cli.update_lookup_data, **kwargs)
+
+
 # extract-structured-log-field-paths param changes
 @cli_util.copy_params_from_generated_command(loganalytics_cli.extract_structured_log_field_paths, params_to_exclude=['parser_ignoreline_characters', 'should_tokenize_original_text'])
 @loganalytics_cli.log_analytics_parser_group.command(name='extract-structured-log-field-paths', help=loganalytics_cli.extract_structured_log_field_paths.help)
@@ -741,7 +801,7 @@ def validate_source_extended(ctx, **kwargs):
 @cli_util.option("--is-auto-assoc-enabled", help='''Auto associaton enabled flag''')
 @cli_util.option("--is-auto-assoc-override", help='''Auto associaton override flag''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'assoc-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'assoc-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
 @cli_util.wrap_exceptions
 def validate_source_extended_field_details_extended(ctx, **kwargs):
     if 'assoc_count' in kwargs:

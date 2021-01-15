@@ -82,7 +82,12 @@ IGNORED_COMMANDS = [
     ['lb', 'load-balancer', 'create'],
     ['network', 'private-endpoint', 'enable-reverse-connections'],
     ['os', 'object', 'reencrypt'],
-    ['dns', 'resolver', 'update']
+    ['dns', 'resolver', 'update'],
+    ['log-analytics', 'parser', 'list-parser-functions'],
+    ['log-analytics', 'parser', 'list-parser-meta-plugins'],
+    ['log-analytics', 'source', 'list-meta-source-types'],
+    ['log-analytics', 'source', 'list-source-functions'],
+    ['log-analytics', 'source', 'list-source-label-operators']
 ]
 
 IGNORED_COMMANDS_DOCS = [

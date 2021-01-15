@@ -433,6 +433,69 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'label', 'get-label'])
         assert """Usage: oci log-analytics label get-label""" in result.output
 
+    def test_list_lookups_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-lookup', 'list-lookups'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'list'])
+        assert """Usage: oci log-analytics lookup list""" in result.output
+
+    def test_get_lookup_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-lookup', 'get-lookup'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'get'])
+        assert """Usage: oci log-analytics lookup get""" in result.output
+
+    def test_update_lookup_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-lookup', 'update-lookup'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'update'])
+        assert """Usage: oci log-analytics lookup update""" in result.output
+
+    def test_delete_lookup_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-lookup', 'delete-lookup'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'delete'])
+        assert """Usage: oci log-analytics lookup delete""" in result.output
+
+    def test_append_lookup_data_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-lookup', 'append-lookup-data'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'append-data'])
+        assert """Usage: oci log-analytics lookup append-data""" in result.output
+
+    def test_update_lookup_data_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-lookup', 'update-lookup-data'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'update-data'])
+        assert """Usage: oci log-analytics lookup update-data""" in result.output
+
+    def test_list_warnings_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-warning', 'list-warnings'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'warning', 'list'])
+        assert """Usage: oci log-analytics warning list""" in result.output
+
+    def test_suppress_warning_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-warning', 'suppress-warning'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'warning', 'suppress'])
+        assert """Usage: oci log-analytics warning suppress""" in result.output
+
+    def test_unsuppress_warning_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-warning', 'unsuppress-warning'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'warning', 'unsuppress'])
+        assert """Usage: oci log-analytics warning unsuppress""" in result.output
+
     def test_get_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'get', '--log-analytics-log-group-id'])
         assert 'Error: no such option: --log-analytics-log-group-id' in result.output
@@ -469,6 +532,20 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         assert 'Error: no such option: --register-lookup-content-file-body' in result.output
 
         result = util.invoke_command(['log-analytics', 'lookup', 'register-lookup', '--file'])
+        assert 'Error: --file option requires an argument' in result.output
+
+    def test_append_lookup_removed_params(self):
+        result = util.invoke_command(['log-analytics', 'lookup', 'append-data', '--append-lookup-file-body'])
+        assert 'Error: no such option: --append-lookup-file-body' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'append-data', '--file'])
+        assert 'Error: --file option requires an argument' in result.output
+
+    def test_update_lookup_removed_params(self):
+        result = util.invoke_command(['log-analytics', 'lookup', 'update-data', '--update-lookup-file-body'])
+        assert 'Error: no such option: --update-lookup-file-body' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'update-data', '--file'])
         assert 'Error: --file option requires an argument' in result.output
 
     def test_extract_field_paths_removed_params(self):

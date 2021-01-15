@@ -33,7 +33,7 @@ def scheduled_task_group():
     pass
 
 
-@click.command(cli_util.override('log_analytics.upload_group.command_name', 'upload'), cls=CommandGroupWithAlias, help="""Upload is a container that can be used to optionally put all the relevant and related on-demand upload based log files.""")
+@click.command(cli_util.override('log_analytics.upload_group.command_name', 'upload'), cls=CommandGroupWithAlias, help="""Upload is a container that can be used to put all the relevant and related on-demand upload based log files together.""")
 @cli_util.help_option_group
 def upload_group():
     pass
@@ -99,7 +99,7 @@ def log_analytics_entity_group():
     pass
 
 
-@click.command(cli_util.override('log_analytics.char_encoding_collection_group.command_name', 'char-encoding-collection'), cls=CommandGroupWithAlias, help="""List of supported character encodings""")
+@click.command(cli_util.override('log_analytics.char_encoding_collection_group.command_name', 'char-encoding-collection'), cls=CommandGroupWithAlias, help="""List of supported character encodings.""")
 @cli_util.help_option_group
 def char_encoding_collection_group():
     pass
@@ -153,6 +153,12 @@ def log_analytics_association_group():
     pass
 
 
+@click.command(cli_util.override('log_analytics.log_analytics_warning_group.command_name', 'log-analytics-warning'), cls=CommandGroupWithAlias, help="""LogAnalyticsWarning""")
+@cli_util.help_option_group
+def log_analytics_warning_group():
+    pass
+
+
 @click.command(cli_util.override('log_analytics.query_work_request_group.command_name', 'query-work-request'), cls=CommandGroupWithAlias, help="""Job details outlining parameters specified when job was submitted.""")
 @cli_util.help_option_group
 def query_work_request_group():
@@ -187,11 +193,12 @@ log_analytics_root_group.add_command(log_analytics_source_group)
 log_analytics_root_group.add_command(log_analytics_parser_group)
 log_analytics_root_group.add_command(query_details_group)
 log_analytics_root_group.add_command(log_analytics_association_group)
+log_analytics_root_group.add_command(log_analytics_warning_group)
 log_analytics_root_group.add_command(query_work_request_group)
 log_analytics_root_group.add_command(binary_group)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.add_entity_association.command_name', 'add'), help=u"""Adds association between input source log analytics entity and destination entities. \n[Command Reference](addEntityAssociation)""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.add_entity_association.command_name', 'add'), help=u"""Adds association between input source log analytics entity and one or more existing destination entities. \n[Command Reference](addEntityAssociation)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--association-entities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Destination entities OCIDs with which associations are to be added.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -224,6 +231,74 @@ def add_entity_association(ctx, from_json, namespace_name, log_analytics_entity_
         add_entity_association_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.append_lookup_data.command_name', 'append-lookup-data'), help=u"""Append data to a lookup.  The file containing the information to append must be provided. \n[Command Reference](appendLookupData)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--lookup-name', required=True, help=u"""The name of the lookup to operate on.""")
+@cli_util.option('--append-lookup-file-body', required=True, help=u"""The file to append.""")
+@cli_util.option('--is-force', type=click.BOOL, help=u"""is force""")
+@cli_util.option('--char-encoding', help=u"""Character Encoding""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def append_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, append_lookup_file_body, is_force, char_encoding, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+        raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_force is not None:
+        kwargs['is_force'] = is_force
+    if char_encoding is not None:
+        kwargs['char_encoding'] = char_encoding
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.append_lookup_data(
+        namespace_name=namespace_name,
+        lookup_name=lookup_name,
+        append_lookup_file_body=append_lookup_file_body,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config_work_request') and callable(getattr(client, 'get_config_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -374,10 +449,10 @@ def change_log_analytics_log_group_compartment(ctx, from_json, namespace_name, l
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.change_log_analytics_object_collection_rule_compartment.command_name', 'change-compartment'), help=u"""Move the rule from it's current compartment to given compartment. \n[Command Reference](changeLogAnalyticsObjectCollectionRuleCompartment)""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.change_log_analytics_object_collection_rule_compartment.command_name', 'change-compartment'), help=u"""Move the rule from it's current compartment to the given compartment. \n[Command Reference](changeLogAnalyticsObjectCollectionRuleCompartment)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID]""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the rule should be moved.""")
+@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the rule have to be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -481,7 +556,7 @@ def clean(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_en
 
 @log_analytics_entity_group.command(name=cli_util.override('log_analytics.create_log_analytics_entity.command_name', 'create'), help=u"""Create a new log analytics entity. \n[Command Reference](createLogAnalyticsEntity)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--name', required=True, help=u"""Log analytics entity name. The name must be unique, within the tenancy, and cannot be changed.""")
+@cli_util.option('--name', required=True, help=u"""Log analytics entity name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--entity-type-name', required=True, help=u"""Log analytics entity type name.""")
 @cli_util.option('--management-agent-id', help=u"""The OCID of the Management Agent.""")
@@ -649,7 +724,7 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.create_log_analytics_object_collection_rule.command_name', 'create'), help=u"""Create a configuration to collect logs from object storage bucket. \n[Command Reference](createLogAnalyticsObjectCollectionRule)""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.create_log_analytics_object_collection_rule.command_name', 'create'), help=u"""Creates a rule to collect logs from an object storage bucket. \n[Command Reference](createLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""A unique name given to the rule. The name must be unique within the tenancy, and cannot be modified.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this rule belongs.""")
@@ -658,15 +733,16 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
 @cli_util.option('--log-group-id', required=True, help=u"""Logging Analytics Log group OCID to associate the processed logs with.""")
 @cli_util.option('--log-source-name', required=True, help=u"""Name of the Logging Analytics Source to use for the processing.""")
 @cli_util.option('--description', help=u"""A string that describes the details of the rule. It does not have to be unique, and can be changed. Avoid entering confidential information.""")
-@cli_util.option('--collection-type', type=custom_types.CliCaseInsensitiveChoice(["LIVE", "HISTORIC", "HISTORIC_LIVE"]), help=u"""The type of collection. Supported collection types: LIVE, HISTORIC, HISTORIC_LIVE""")
-@cli_util.option('--poll-since', help=u"""The oldest time of the file in the bucket to consider for collection. Accepted values are: BEGINNING or CURRENT_TIME or RFC3339 formatted datetime string. When collectionType is LIVE, specifying pollSince value other than CURRENT_TIME will result in error.""")
-@cli_util.option('--poll-till', help=u"""The oldest time of the file in the bucket to consider for collection. Accepted values are: CURRENT_TIME or RFC3339 formatted datetime string. When collectionType is LIVE, specifying pollTill will result in error.""")
+@cli_util.option('--collection-type', type=custom_types.CliCaseInsensitiveChoice(["LIVE", "HISTORIC", "HISTORIC_LIVE"]), help=u"""The type of collection.""")
+@cli_util.option('--poll-since', help=u"""The oldest time of the file in the bucket to consider for collection. Accepted values are: BEGINNING or CURRENT_TIME or RFC3339 formatted datetime string. Use this for HISTORIC or HISTORIC_LIVE collection types. When collectionType is LIVE, specifying pollSince value other than CURRENT_TIME will result in error.""")
+@cli_util.option('--poll-till', help=u"""The newest time of the file in the bucket to consider for collection. Accepted values are: CURRENT_TIME or RFC3339 formatted datetime string. Use this for HISTORIC collection type. When collectionType is LIVE or HISTORIC_LIVE, specifying pollTill will result in error.""")
 @cli_util.option('--entity-id', help=u"""Logging Analytics entity OCID. Associates the processed logs with the given entity (optional).""")
-@cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8589_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
+@cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8859_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether or not this rule is currently enabled.""")
 @cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The override is used to modify some important configuration properties for objects matching a specific pattern inside the bucket. Supported propeties for override are - logSourceName, charEncoding. Supported matchType for override are \"contains\".""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}})
@@ -674,7 +750,7 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
-def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, log_source_name, description, collection_type, poll_since, poll_till, entity_id, char_encoding, overrides, defined_tags, freeform_tags):
+def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, log_source_name, description, collection_type, poll_since, poll_till, entity_id, char_encoding, is_enabled, overrides, defined_tags, freeform_tags):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -707,6 +783,9 @@ def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, 
 
     if char_encoding is not None:
         _details['charEncoding'] = char_encoding
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
 
     if overrides is not None:
         _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
@@ -821,7 +900,7 @@ def create_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--task-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAVED_SEARCH", "ACCELERATION", "PURGE", "ACCELERATION_MAINTENANCE"]), help=u"""Task type.""")
-@cli_util.option('--schedules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Schedules, typically a single schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Schedules, typically a single schedule. Note there may only be a single schedule for SAVED_SEARCH and PURGE scheduled tasks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name that is changeable and that does not have to be unique. Format: a leading alphanumeric, followed by zero or more alphanumerics, underscores, spaces, backslashes, or hyphens in any order). No trailing spaces allowed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1116,7 +1195,7 @@ def delete_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_en
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.delete_log_analytics_entity_type.command_name', 'delete'), help=u"""Delete the log analytics entity type with the given name. \n[Command Reference](deleteLogAnalyticsEntityType)""")
+@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.delete_log_analytics_entity_type.command_name', 'delete'), help=u"""Delete log analytics entity type with the given name. \n[Command Reference](deleteLogAnalyticsEntityType)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--entity-type-name', required=True, help=u"""Log analytics entity type name.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1178,9 +1257,9 @@ def delete_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.delete_log_analytics_object_collection_rule.command_name', 'delete'), help=u"""Deletes a configured object storage bucket based collection rule to stop the log collection of the configured bucket . It will not delete the already collected log data from the configured bucket. \n[Command Reference](deleteLogAnalyticsObjectCollectionRule)""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.delete_log_analytics_object_collection_rule.command_name', 'delete'), help=u"""Deletes the configured object storage bucket based collection rule and stop the log collection. It will not delete the existing processed data associated with this bucket from logging analytics storage. \n[Command Reference](deleteLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID]""")
+@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1206,6 +1285,66 @@ def delete_log_analytics_object_collection_rule(ctx, from_json, namespace_name, 
         log_analytics_object_collection_rule_id=log_analytics_object_collection_rule_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.delete_lookup.command_name', 'delete-lookup'), help=u"""Delete the specified lookup. \n[Command Reference](deleteLookup)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--lookup-name', required=True, help=u"""The name of the lookup to operate on.""")
+@cli_util.option('--is-force', type=click.BOOL, help=u"""is force""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_lookup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, is_force, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+        raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_force is not None:
+        kwargs['is_force'] = is_force
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.delete_lookup(
+        namespace_name=namespace_name,
+        lookup_name=lookup_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config_work_request') and callable(getattr(client, 'get_config_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1304,7 +1443,7 @@ def delete_source(ctx, from_json, namespace_name, source_name, if_match):
 
 @upload_group.command(name=cli_util.override('log_analytics.delete_upload.command_name', 'delete'), help=u"""Deletes an Upload by its reference. It deletes all the logs in storage asscoiated with the upload and the corresponding upload metadata. \n[Command Reference](deleteUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
+@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1333,10 +1472,10 @@ def delete_upload(ctx, from_json, namespace_name, upload_reference, if_match):
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.delete_upload_file.command_name', 'delete-upload-file'), help=u"""Deletes a specific log file inside an upload by providing upload file reference. It deletes all the logs in storage asscoiated with the upload file and the corresponding upload metadata. \n[Command Reference](deleteUploadFile)""")
+@upload_group.command(name=cli_util.override('log_analytics.delete_upload_file.command_name', 'delete-upload-file'), help=u"""Deletes a specific log file inside an upload by upload file reference. It deletes all the logs from storage associated with the file and the corresponding metadata. \n[Command Reference](deleteUploadFile)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
-@cli_util.option('--file-reference', required=True, help=u"""Unique internal identifier to refer to upload file""")
+@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
+@cli_util.option('--file-reference', required=True, help=u"""Unique internal identifier to refer upload file.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1368,8 +1507,8 @@ def delete_upload_file(ctx, from_json, namespace_name, upload_reference, file_re
 
 @upload_group.command(name=cli_util.override('log_analytics.delete_upload_warning.command_name', 'delete-upload-warning'), help=u"""Suppresses a specific warning inside an upload. \n[Command Reference](deleteUploadWarning)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
-@cli_util.option('--warning-reference', required=True, help=u"""Unique internal identifier to refer to upload warning""")
+@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
+@cli_util.option('--warning-reference', required=True, help=u"""Unique internal identifier to refer upload warning.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1489,6 +1628,66 @@ def estimate_purge_data_size(ctx, from_json, namespace_name, compartment_id, tim
     result = client.estimate_purge_data_size(
         namespace_name=namespace_name,
         estimate_purge_data_size_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@storage_group.command(name=cli_util.override('log_analytics.estimate_recall_data_size.command_name', 'estimate-recall-data-size'), help=u"""This API gives an active storage usage estimate for archived data to be recalled and the time range of such data. \n[Command Reference](estimateRecallDataSize)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--time-data-started', required=True, type=custom_types.CLI_DATETIME, help=u"""This is the start of the time range for the data to be recalled""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""This is the end of the time range for the data to be recalled""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'EstimateRecallDataSizeResult'})
+@cli_util.wrap_exceptions
+def estimate_recall_data_size(ctx, from_json, namespace_name, time_data_started, time_data_ended):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['timeDataStarted'] = time_data_started
+    _details['timeDataEnded'] = time_data_ended
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.estimate_recall_data_size(
+        namespace_name=namespace_name,
+        estimate_recall_data_size_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@storage_group.command(name=cli_util.override('log_analytics.estimate_release_data_size.command_name', 'estimate-release-data-size'), help=u"""This API gives an active storage usage estimate for recalled data to be released and the time range of such data. \n[Command Reference](estimateReleaseDataSize)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--time-data-started', required=True, type=custom_types.CLI_DATETIME, help=u"""This is the start of the time range for the data to be released""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""This is the end of the time range for the data to be released""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'EstimateReleaseDataSizeResult'})
+@cli_util.wrap_exceptions
+def estimate_release_data_size(ctx, from_json, namespace_name, time_data_started, time_data_ended):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['timeDataStarted'] = time_data_started
+    _details['timeDataEnded'] = time_data_ended
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.estimate_release_data_size(
+        namespace_name=namespace_name,
+        estimate_release_data_size_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2170,7 +2369,7 @@ def get_label_summary(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.get_log_analytics_entities_summary.command_name', 'get-log-analytics-entities-summary'), help=u"""Returns log analytics entities count summary. \n[Command Reference](getLogAnalyticsEntitiesSummary)""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.get_log_analytics_entities_summary.command_name', 'get-log-analytics-entities-summary'), help=u"""Returns log analytics entities count summary report. \n[Command Reference](getLogAnalyticsEntitiesSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2301,7 +2500,7 @@ def get_log_analytics_log_groups_summary(ctx, from_json, namespace_name, compart
 
 @log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.get_log_analytics_object_collection_rule.command_name', 'get'), help=u"""Gets a configured object storage based collection rule by given id \n[Command Reference](getLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID]""")
+@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2321,6 +2520,33 @@ def get_log_analytics_object_collection_rule(ctx, from_json, namespace_name, log
     result = client.get_log_analytics_object_collection_rule(
         namespace_name=namespace_name,
         log_analytics_object_collection_rule_id=log_analytics_object_collection_rule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.get_lookup.command_name', 'get-lookup'), help=u"""Obtains the lookup with the specified reference. \n[Command Reference](getLookup)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--lookup-name', required=True, help=u"""The name of the lookup to operate on.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookup'})
+@cli_util.wrap_exceptions
+def get_lookup(ctx, from_json, namespace_name, lookup_name):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+        raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.get_lookup(
+        namespace_name=namespace_name,
+        lookup_name=lookup_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2612,9 +2838,9 @@ def get_storage_work_request(ctx, from_json, work_request_id, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.get_upload.command_name', 'get'), help=u"""Gets an On-Demand Upload info by reference \n[Command Reference](getUpload)""")
+@upload_group.command(name=cli_util.override('log_analytics.get_upload.command_name', 'get'), help=u"""Gets an On-Demand Upload info by reference. \n[Command Reference](getUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
+@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3461,7 +3687,7 @@ def list_log_analytics_log_groups(ctx, from_json, all_pages, page_size, namespac
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.list_log_analytics_object_collection_rules.command_name', 'list'), help=u"""Gets list of configuration details of Object Storage based collection rules. \n[Command Reference](listLogAnalyticsObjectCollectionRules)""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.list_log_analytics_object_collection_rules.command_name', 'list'), help=u"""Gets list of collection rules. \n[Command Reference](listLogAnalyticsObjectCollectionRules)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return rules only matching with this name.""")
@@ -3528,11 +3754,84 @@ def list_log_analytics_object_collection_rules(ctx, from_json, all_pages, page_s
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.list_lookups.command_name', 'list-lookups'), help=u"""Obtains a list of lookups.  The list is filtered according to the filter criteria specified by the user, and sorted according to the ordering criteria specified. \n[Command Reference](listLookups)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["Lookup", "Dictionary"]), help=u"""type - possible values are Lookup or Dictionary""")
+@cli_util.option('--lookup-display-text', help=u"""Search by lookup display name or description.""")
+@cli_util.option('--is-system', type=custom_types.CliCaseInsensitiveChoice(["ALL", "CUSTOM", "BUILT_IN"]), help=u"""Is system param of value (all, custom, sourceUsing)""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "status", "type", "updatedTime", "creationType"]), help=u"""sort by field""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ALL", "SUCCESFUL", "FAILED", "INPROGRESS"]), help=u"""The lookup status used for filtering when fetching a list of lookups.""")
+@cli_util.option('--is-hide-special', type=click.BOOL, help=u"""is include items""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookupCollection'})
+@cli_util.wrap_exceptions
+def list_lookups(ctx, from_json, all_pages, page_size, namespace_name, type, lookup_display_text, is_system, sort_by, status, is_hide_special, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if lookup_display_text is not None:
+        kwargs['lookup_display_text'] = lookup_display_text
+    if is_system is not None:
+        kwargs['is_system'] = is_system
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if status is not None:
+        kwargs['status'] = status
+    if is_hide_special is not None:
+        kwargs['is_hide_special'] = is_hide_special
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_lookups,
+            namespace_name=namespace_name,
+            type=type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_lookups,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            type=type,
+            **kwargs
+        )
+    else:
+        result = client.list_lookups(
+            namespace_name=namespace_name,
+            type=type,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_source_group.command(name=cli_util.override('log_analytics.list_meta_source_types.command_name', 'list-meta-source-types'), help=u"""get all meta source types \n[Command Reference](listMetaSourceTypes)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-by', help=u"""sort by field""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""sort by field""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3610,7 +3909,7 @@ def list_namespaces(ctx, from_json, all_pages, compartment_id):
 @cli_util.option('--parser-name', help=u"""parserName""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-by', help=u"""sort by field""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""sort by field""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3669,7 +3968,7 @@ def list_parser_functions(ctx, from_json, all_pages, page_size, namespace_name, 
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-by', help=u"""sort by field""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""sort by field""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3856,6 +4155,69 @@ def list_query_work_requests(ctx, from_json, all_pages, page_size, namespace_nam
         result = client.list_query_work_requests(
             namespace_name=namespace_name,
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@storage_group.command(name=cli_util.override('log_analytics.list_recalled_data.command_name', 'list-recalled-data'), help=u"""This API returns the list of recalled data of a tenancy. \n[Command Reference](listRecalledData)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeStarted", "timeDataStarted"]), help=u"""This is the query parameter of which field to sort by. Only one sort order may be provided. Default order for timeDataStarted is descending. If no value is specified timeDataStarted is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--time-data-started-greater-than-or-equal', type=custom_types.CLI_DATETIME, help=u"""This is the start of the time range for recalled data""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-data-ended-less-than', type=custom_types.CLI_DATETIME, help=u"""This is the end of the time range for recalled data""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'RecalledDataCollection'})
+@cli_util.wrap_exceptions
+def list_recalled_data(ctx, from_json, all_pages, page_size, namespace_name, limit, page, sort_by, sort_order, time_data_started_greater_than_or_equal, time_data_ended_less_than):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if time_data_started_greater_than_or_equal is not None:
+        kwargs['time_data_started_greater_than_or_equal'] = time_data_started_greater_than_or_equal
+    if time_data_ended_less_than is not None:
+        kwargs['time_data_ended_less_than'] = time_data_ended_less_than
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_recalled_data,
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_recalled_data,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    else:
+        result = client.list_recalled_data(
+            namespace_name=namespace_name,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -4071,7 +4433,7 @@ def list_source_extended_field_definitions(ctx, from_json, all_pages, page_size,
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-by', help=u"""sort by field""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""sort by field""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4128,7 +4490,7 @@ def list_source_label_operators(ctx, from_json, all_pages, page_size, namespace_
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-by', help=u"""sort by field""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""sort by field""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4252,7 +4614,7 @@ def list_source_patterns(ctx, from_json, all_pages, page_size, namespace_name, s
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--entity-type', help=u"""entityType""")
-@cli_util.option('--source-display-text', help=u"""search by source display name or description""")
+@cli_util.option('--source-display-text', help=u"""Search by source display name or description.""")
 @cli_util.option('--is-system', type=custom_types.CliCaseInsensitiveChoice(["ALL", "CUSTOM", "BUILT_IN"]), help=u"""Is system param of value (all, custom, sourceUsing)""")
 @cli_util.option('--is-auto-associated', type=click.BOOL, help=u"""auto association flag""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -4474,7 +4836,7 @@ def list_storage_work_requests(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@char_encoding_collection_group.command(name=cli_util.override('log_analytics.list_supported_char_encodings.command_name', 'list-supported-char-encodings'), help=u"""Gets the list of character encodings supported for log files. \n[Command Reference](listSupportedCharEncodings)""")
+@char_encoding_collection_group.command(name=cli_util.override('log_analytics.list_supported_char_encodings.command_name', 'list-supported-char-encodings'), help=u"""Gets list of character encodings which are supported by on-demand upload. \n[Command Reference](listSupportedCharEncodings)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4525,7 +4887,7 @@ def list_supported_char_encodings(ctx, from_json, all_pages, page_size, namespac
     cli_util.render_response(result, ctx)
 
 
-@timezone_collection_group.command(name=cli_util.override('log_analytics.list_supported_timezones.command_name', 'list-supported-timezones'), help=u"""Gets timezones that are supported when performing uploads. \n[Command Reference](listSupportedTimezones)""")
+@timezone_collection_group.command(name=cli_util.override('log_analytics.list_supported_timezones.command_name', 'list-supported-timezones'), help=u"""Gets list of timezones which are supported by on-demand upload. \n[Command Reference](listSupportedTimezones)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4576,15 +4938,15 @@ def list_supported_timezones(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.list_upload_files.command_name', 'list-upload-files'), help=u"""Gets list of files in an upload. \n[Command Reference](listUploadFiles)""")
+@upload_group.command(name=cli_util.override('log_analytics.list_upload_files.command_name', 'list-upload-files'), help=u"""Gets list of files in an upload along with its processing state. \n[Command Reference](listUploadFiles)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
+@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "fileName", "logGroup", "sourceName", "status"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending.""")
-@cli_util.option('--search-str', help=u"""Search string used to filtering uploads based on file name, log group name and log source name.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCESSFUL", "FAILED"]), multiple=True, help=u"""Upload Status.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeStarted", "name", "logGroupName", "sourceName", "status", "timeCreated", "fileName", "logGroup"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeStarted is descending. timeCreated, fileName and logGroup are deprecated. Instead use timestarted, name, logGroup accordingly.""")
+@cli_util.option('--search-str', help=u"""This can be used to filter upload files based on the file, log group and log source names.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCESSFUL", "FAILED"]), multiple=True, help=u"""Upload File processing state.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4646,9 +5008,9 @@ def list_upload_files(ctx, from_json, all_pages, page_size, namespace_name, uplo
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.list_upload_warnings.command_name', 'list-upload-warnings'), help=u"""Gets list of warnings in an upload explaining the failures due to incorrect configuration. \n[Command Reference](listUploadWarnings)""")
+@upload_group.command(name=cli_util.override('log_analytics.list_upload_warnings.command_name', 'list-upload-warnings'), help=u"""Gets list of warnings in an upload caused by incorrect configuration. \n[Command Reference](listUploadWarnings)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
+@cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4762,6 +5124,97 @@ def list_uploads(ctx, from_json, all_pages, page_size, namespace_name, name, nam
     else:
         result = client.list_uploads(
             namespace_name=namespace_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_warning_group.command(name=cli_util.override('log_analytics.list_warnings.command_name', 'list-warnings'), help=u"""Obtains a list of warnings.  The list is filtered according to the filter criteria specified by the user, and sorted according to the ordering criteria specified. \n[Command Reference](listWarnings)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--warning-state', type=custom_types.CliCaseInsensitiveChoice(["ALL", "SUPPRESSED", "UNSUPPRESSED"]), help=u"""The warning state used for filtering.  A value of SUPPRESSED will return only suppressed warnings, a value of UNSUPPRESSED will return only unsuppressed warnings, and a value of ALL will return all warnings regardless of their suppression state.  Default is UNSUPPRESSED.""")
+@cli_util.option('--source-name', help=u"""sourceName""")
+@cli_util.option('--source-pattern', help=u"""sourcePattern""")
+@cli_util.option('--warning-message', help=u"""warning message query parameter""")
+@cli_util.option('--entity-name', help=u"""entityName""")
+@cli_util.option('--entity-type', help=u"""entity type name""")
+@cli_util.option('--warning-type', help=u"""The warning type query parameter.""")
+@cli_util.option('--is-no-source', type=click.BOOL, help=u"""isNoSource""")
+@cli_util.option('--start-time', help=u"""The warning start date query parameter.""")
+@cli_util.option('--end-time', help=u"""The warning end date query parameter.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["EntityType", "SourceName", "PatternText", "FirstReported", "WarningMessage", "Host", "EntityName", "InitialWarningDate"]), help=u"""The attribute used to sort the returned warnings""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsWarningCollection'})
+@cli_util.wrap_exceptions
+def list_warnings(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, warning_state, source_name, source_pattern, warning_message, entity_name, entity_type, warning_type, is_no_source, start_time, end_time, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if warning_state is not None:
+        kwargs['warning_state'] = warning_state
+    if source_name is not None:
+        kwargs['source_name'] = source_name
+    if source_pattern is not None:
+        kwargs['source_pattern'] = source_pattern
+    if warning_message is not None:
+        kwargs['warning_message'] = warning_message
+    if entity_name is not None:
+        kwargs['entity_name'] = entity_name
+    if entity_type is not None:
+        kwargs['entity_type'] = entity_type
+    if warning_type is not None:
+        kwargs['warning_type'] = warning_type
+    if is_no_source is not None:
+        kwargs['is_no_source'] = is_no_source
+    if start_time is not None:
+        kwargs['start_time'] = start_time
+    if end_time is not None:
+        kwargs['end_time'] = end_time
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_warnings,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_warnings,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_warnings(
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -5061,6 +5514,62 @@ def parse_query(ctx, from_json, namespace_name, query_string, sub_system):
         parse_query_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_task_group.command(name=cli_util.override('log_analytics.pause_scheduled_task.command_name', 'pause'), help=u"""Pause the scheduled task specified by {scheduledTaskId}. \n[Command Reference](pauseScheduledTask)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'ScheduledTask'})
+@cli_util.wrap_exceptions
+def pause_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.pause_scheduled_task(
+        namespace_name=namespace_name,
+        scheduled_task_id=scheduled_task_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduled_task') and callable(getattr(client, 'get_scheduled_task')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduled_task(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -5487,6 +5996,62 @@ def remove_entity_associations(ctx, from_json, namespace_name, log_analytics_ent
     cli_util.render_response(result, ctx)
 
 
+@scheduled_task_group.command(name=cli_util.override('log_analytics.resume_scheduled_task.command_name', 'resume'), help=u"""Resume the scheduled task specified by {scheduledTaskId}. \n[Command Reference](resumeScheduledTask)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'ScheduledTask'})
+@cli_util.wrap_exceptions
+def resume_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.resume_scheduled_task(
+        namespace_name=namespace_name,
+        scheduled_task_id=scheduled_task_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduled_task') and callable(getattr(client, 'get_scheduled_task')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduled_task(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @scheduled_task_group.command(name=cli_util.override('log_analytics.run.command_name', 'run'), help=u"""Execute the saved search acceleration task in the foreground. The ScheduledTask taskType must be ACCELERATION. Optionally specify time range (timeStart and timeEnd). The default is all time. \n[Command Reference](run)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
@@ -5551,6 +6116,38 @@ def suggest(ctx, from_json, namespace_name, compartment_id, query_string, sub_sy
     result = client.suggest(
         namespace_name=namespace_name,
         suggest_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_warning_group.command(name=cli_util.override('log_analytics.suppress_warning.command_name', 'suppress-warning'), help=u"""Accepts a list of warnings.  Any unsuppressed warnings in the input list will be suppressed.  Warnings in the input list which are already suppressed will not be modified. \n[Command Reference](suppressWarning)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--warning-references', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of LogAnalyticsWarning references.  Used as input to APIs which operate on a list.  For example, the suppress warning API accepts a list of warning references and will suppress all warnings in the input list.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'warning-references': {'module': 'log_analytics', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'warning-references': {'module': 'log_analytics', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def suppress_warning(ctx, from_json, namespace_name, compartment_id, warning_references):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if warning_references is not None:
+        _details['warningReferences'] = cli_util.parse_json_parameter("warning_references", warning_references)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.suppress_warning(
+        namespace_name=namespace_name,
+        compartment_id=compartment_id,
+        warning_reference_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5688,10 +6285,42 @@ def test_parser(ctx, from_json, namespace_name, content, description, display_na
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_warning_group.command(name=cli_util.override('log_analytics.unsuppress_warning.command_name', 'unsuppress-warning'), help=u"""Accepts a list of warnings.  Any suppressed warnings in the input list will be unsuppressed.  Warnings in the input list which are unsuppressed will not be modified. \n[Command Reference](unsuppressWarning)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--warning-references', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of LogAnalyticsWarning references.  Used as input to APIs which operate on a list.  For example, the suppress warning API accepts a list of warning references and will suppress all warnings in the input list.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'warning-references': {'module': 'log_analytics', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'warning-references': {'module': 'log_analytics', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def unsuppress_warning(ctx, from_json, namespace_name, compartment_id, warning_references):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if warning_references is not None:
+        _details['warningReferences'] = cli_util.parse_json_parameter("warning_references", warning_references)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.unsuppress_warning(
+        namespace_name=namespace_name,
+        compartment_id=compartment_id,
+        warning_reference_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_entity_group.command(name=cli_util.override('log_analytics.update_log_analytics_entity.command_name', 'update'), help=u"""Update the log analytics entity with the given id. \n[Command Reference](updateLogAnalyticsEntity)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
-@cli_util.option('--name', help=u"""Log analytics entity name. The name must be unique, within the tenancy, and cannot be changed.""")
+@cli_util.option('--name', help=u"""Log analytics entity name.""")
 @cli_util.option('--management-agent-id', help=u"""The OCID of the Management Agent.""")
 @cli_util.option('--timezone-region', help=u"""The timezone region of the log analytics entity.""")
 @cli_util.option('--hostname', help=u"""The hostname where the entity represented here is actually present. This would be the output one would get if they run `echo $HOSTNAME` on Linux or an equivalent OS command. This may be different from management agents host since logs may be collected remotely.""")
@@ -5885,20 +6514,21 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.update_log_analytics_object_collection_rule.command_name', 'update'), help=u"""Update the rule with the given id. \n[Command Reference](updateLogAnalyticsObjectCollectionRule)""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.update_log_analytics_object_collection_rule.command_name', 'update'), help=u"""Updates configuration of the object collection rule for the given id. \n[Command Reference](updateLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID]""")
+@cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The Logging Analytics Object Collection Rule [OCID].""")
 @cli_util.option('--description', help=u"""A string that describes the details of the rule. Avoid entering confidential information.""")
 @cli_util.option('--log-group-id', help=u"""Logging Analytics Log group OCID to associate the processed logs with.""")
 @cli_util.option('--log-source-name', help=u"""Name of the Logging Analytics Source to use for the processing.""")
 @cli_util.option('--entity-id', help=u"""Logging Analytics entity OCID. Associates the processed logs with the given entity (optional).""")
-@cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8589_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
+@cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8859_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether or not this rule is currently enabled.""")
 @cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Use this to override some property values which are defined at bucket level to the scope of object. Supported propeties for override are, logSourceName, charEncoding. Supported matchType for override are \"contains\".""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}})
@@ -5906,7 +6536,7 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
-def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, overrides, defined_tags, freeform_tags, if_match):
+def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, is_enabled, overrides, defined_tags, freeform_tags, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -5939,6 +6569,9 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
 
     if char_encoding is not None:
         _details['charEncoding'] = char_encoding
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
 
     if overrides is not None:
         _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
@@ -5982,13 +6615,139 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.update_lookup.command_name', 'update-lookup'), help=u"""Updates the metadata of the specified lookup, such as the lookup description. \n[Command Reference](updateLookup)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--lookup-name', required=True, help=u"""The name of the lookup to operate on.""")
+@cli_util.option('--default-match-value', help=u"""The default match value.""")
+@cli_util.option('--description', help=u"""The lookup description.""")
+@cli_util.option('--fields', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The lookup fields.
+
+This option is a JSON list with items of type LogAnalyticsLookupFields.  For documentation on LogAnalyticsLookupFields please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsLookupFields.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--max-matches', type=click.INT, help=u"""The maximum number of matches.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLookupFields]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLookupFields]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookup'})
+@cli_util.wrap_exceptions
+def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_match_value, description, fields, max_matches, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+        raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
+    if not force:
+        if fields:
+            if not click.confirm("WARNING: Updates to fields will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if default_match_value is not None:
+        _details['defaultMatchValue'] = default_match_value
+
+    if description is not None:
+        _details['description'] = description
+
+    if fields is not None:
+        _details['fields'] = cli_util.parse_json_parameter("fields", fields)
+
+    if max_matches is not None:
+        _details['maxMatches'] = max_matches
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_lookup(
+        namespace_name=namespace_name,
+        lookup_name=lookup_name,
+        update_lookup_metadata_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.update_lookup_data.command_name', 'update-lookup-data'), help=u"""Updates the specified lookup with the details provided.  This API will not update lookup metadata (such as lookup description). \n[Command Reference](updateLookupData)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--lookup-name', required=True, help=u"""The name of the lookup to operate on.""")
+@cli_util.option('--update-lookup-file-body', required=True, help=u"""The file to use for the lookup update.""")
+@cli_util.option('--is-force', type=click.BOOL, help=u"""is force""")
+@cli_util.option('--char-encoding', help=u"""Character Encoding""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, update_lookup_file_body, is_force, char_encoding, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+        raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_force is not None:
+        kwargs['is_force'] = is_force
+    if char_encoding is not None:
+        kwargs['char_encoding'] = char_encoding
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_lookup_data(
+        namespace_name=namespace_name,
+        lookup_name=lookup_name,
+        update_lookup_file_body=update_lookup_file_body,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @scheduled_task_group.command(name=cli_util.override('log_analytics.update_scheduled_task.command_name', 'update'), help=u"""Update the scheduled task. Schedules may be updated only for taskType SAVED_SEARCH and PURGE. \n[Command Reference](updateScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
+@cli_util.option('--kind', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACCELERATION", "STANDARD"]), help=u"""Discriminator.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name that is changeable and that does not have to be unique. Format: a leading alphanumeric, followed by zero or more alphanumerics, underscores, spaces, backslashes, or hyphens in any order). No trailing spaces allowed.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Schedules may be updated for task types SAVED_SEARCH and PURGE
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Schedules may be updated for task types SAVED_SEARCH and PURGE. Note there may only be a single schedule for SAVED_SEARCH and PURGE scheduled tasks.
 
 This option is a JSON list with items of type Schedule.  For documentation on Schedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/Schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6001,7 +6760,7 @@ This option is a JSON list with items of type Schedule.  For documentation on Sc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'schedules': {'module': 'log_analytics', 'class': 'list[Schedule]'}}, output_type={'module': 'log_analytics', 'class': 'ScheduledTask'})
 @cli_util.wrap_exceptions
-def update_scheduled_task(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, display_name, freeform_tags, defined_tags, schedules, if_match):
+def update_scheduled_task(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, kind, display_name, freeform_tags, defined_tags, schedules, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -6011,6 +6770,91 @@ def update_scheduled_task(ctx, from_json, force, wait_for_state, max_wait_second
     if not force:
         if freeform_tags or defined_tags or schedules:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and schedules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['kind'] = kind
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if schedules is not None:
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_scheduled_task(
+        namespace_name=namespace_name,
+        scheduled_task_id=scheduled_task_id,
+        update_scheduled_task_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduled_task') and callable(getattr(client, 'get_scheduled_task')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduled_task(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_task_group.command(name=cli_util.override('log_analytics.update_scheduled_task_update_standard_task_details.command_name', 'update-scheduled-task-update-standard-task-details'), help=u"""Update the scheduled task. Schedules may be updated only for taskType SAVED_SEARCH and PURGE. \n[Command Reference](updateScheduledTask)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name that is changeable and that does not have to be unique. Format: a leading alphanumeric, followed by zero or more alphanumerics, underscores, spaces, backslashes, or hyphens in any order). No trailing spaces allowed.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Schedules may be updated for task types SAVED_SEARCH and PURGE. Note there may only be a single schedule for SAVED_SEARCH and PURGE scheduled tasks.
+
+This option is a JSON list with items of type Schedule.  For documentation on Schedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/Schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'schedules': {'module': 'log_analytics', 'class': 'list[Schedule]'}, 'action': {'module': 'log_analytics', 'class': 'Action'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'schedules': {'module': 'log_analytics', 'class': 'list[Schedule]'}, 'action': {'module': 'log_analytics', 'class': 'Action'}}, output_type={'module': 'log_analytics', 'class': 'ScheduledTask'})
+@cli_util.wrap_exceptions
+def update_scheduled_task_update_standard_task_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, display_name, freeform_tags, defined_tags, schedules, action, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or schedules or action:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and schedules and action will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6031,6 +6875,11 @@ def update_scheduled_task(ctx, from_json, force, wait_for_state, max_wait_second
 
     if schedules is not None:
         _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if action is not None:
+        _details['action'] = cli_util.parse_json_parameter("action", action)
+
+    _details['kind'] = 'STANDARD'
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.update_scheduled_task(
@@ -6110,7 +6959,7 @@ def update_storage(ctx, from_json, force, namespace_name, archiving_configuratio
 @cli_util.option('--upload-log-file-body', required=True, help=u"""Log data""")
 @cli_util.option('--entity-id', help=u"""The entity OCID.""")
 @cli_util.option('--timezone', help=u"""Timezone to be used when processing log entries whose timestamps do not include an explicit timezone. When this property is not specified, the timezone of the entity specified is used. If the entity is also not specified or do not have a valid timezone then UTC is used""")
-@cli_util.option('--char-encoding', help=u"""Character Encoding""")
+@cli_util.option('--char-encoding', help=u"""Character encoding to be used to detect the encoding type of file(s) being uploaded. When this property is not specified, system detected character encoding will be used.""")
 @cli_util.option('--date-format', help=u"""This property is used to specify the format of the date. This is to be used for ambiguous dates like 12/11/10. This property can take any of the following values -  MONTH_DAY_YEAR, DAY_MONTH_YEAR, YEAR_MONTH_DAY, MONTH_DAY, DAY_MONTH.""")
 @cli_util.option('--date-year', help=u"""Used to indicate the year where the log entries timestamp do not mention year (Ex: Nov  8 20:45:56).""")
 @cli_util.option('--invalidate-cache', type=click.BOOL, help=u"""This property can be used to reset configuration cache in case of an issue with the upload.""")
@@ -6701,9 +7550,9 @@ def validate_association_parameters(ctx, from_json, namespace_name, compartment_
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.validate_file.command_name', 'validate-file'), help=u"""Validates a log file to check whether it is eligible to upload or not. \n[Command Reference](validateFile)""")
+@upload_group.command(name=cli_util.override('log_analytics.validate_file.command_name', 'validate-file'), help=u"""Validates a log file to check whether it is eligible to be uploaded or not. \n[Command Reference](validateFile)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--object-location', required=True, help=u"""Location of the log file""")
+@cli_util.option('--object-location', required=True, help=u"""Location of the log file.""")
 @cli_util.option('--filename', required=True, help=u"""The name of the file being uploaded. The extension of the filename part will be used to detect the type of file (like zip, tar).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6973,12 +7822,15 @@ This option is a JSON list with items of type LogAnalyticsSourceEntityType.  For
 
 This option is a JSON list with items of type LogAnalyticsParser.  For documentation on LogAnalyticsParser please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsParser.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""timeUpdated""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}})
+@cli_util.option('--event-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of event types.
+
+This option is a JSON list with items of type EventType.  For documentation on EventType please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/EventType.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
 @cli_util.wrap_exceptions
-def validate_source_extended_field_details(ctx, from_json, namespace_name, label_conditions, association_count, association_entity, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, pattern_count, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, is_auto_association_enabled, is_auto_association_override, rule_id, type_name, type_display_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, time_updated):
+def validate_source_extended_field_details(ctx, from_json, namespace_name, label_conditions, association_count, association_entity, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, pattern_count, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, is_auto_association_enabled, is_auto_association_override, rule_id, type_name, type_display_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, time_updated, event_types):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7093,6 +7945,9 @@ def validate_source_extended_field_details(ctx, from_json, namespace_name, label
     if time_updated is not None:
         _details['timeUpdated'] = time_updated
 
+    if event_types is not None:
+        _details['eventTypes'] = cli_util.parse_json_parameter("event_types", event_types)
+
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.validate_source_extended_field_details(
         namespace_name=namespace_name,
@@ -7102,9 +7957,9 @@ def validate_source_extended_field_details(ctx, from_json, namespace_name, label
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.validate_source_mapping.command_name', 'validate-source-mapping'), help=u"""Validates the source mapping for given file and provides match status and parsed representation of log data. \n[Command Reference](validateSourceMapping)""")
+@upload_group.command(name=cli_util.override('log_analytics.validate_source_mapping.command_name', 'validate-source-mapping'), help=u"""Validates the source mapping for a given file and provides match status and the parsed representation of log data. \n[Command Reference](validateSourceMapping)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
-@cli_util.option('--object-location', required=True, help=u"""Location of the log file""")
+@cli_util.option('--object-location', required=True, help=u"""Location of the log file.""")
 @cli_util.option('--filename', required=True, help=u"""The name of the file being uploaded. The extension of the filename part will be used to detect the type of file (like zip, tar).""")
 @cli_util.option('--log-source-name', required=True, help=u"""Name of the log source that will be used to process the files being uploaded.""")
 @json_skeleton_utils.get_cli_json_input_option({})
