@@ -501,7 +501,7 @@ def build_config(command_args):
 
     try:
         client_config = config.from_file(file_location=command_args['config_file'], profile_name=command_args['profile'])
-    except exceptions.ProfileNotFound as e:
+    except (exceptions.ProfileNotFound, exceptions.InvalidKeyFilePath) as e:
         sys.exit("ERROR: " + str(e))
 
     FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))

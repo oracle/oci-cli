@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.19.0 - 2021-01-19
+-------------------
+Added
+~~~~~
+
+* Support for Data Archive and Recall features as a part of the Logging Analytics Service
+
+  * ``oci log-analytics storage``
+
+* Support for lookups in the Logging Analytics service
+
+  * ``oci log-analytics lookup *``
+
+* Support for Agent Collection Warnings in the Logging Analytics service
+
+  * ``oci log-analytics warning list``
+  * ``oci log-analytics warning suppress``
+  * ``oci log-analytics warning unsuppress``
+
+* Scheduled Task commands in the Logging Analytics service
+
+  * ``oci log-analytics scheduled-task pause``
+  * ``oci log-analytics scheduled-task resume``
+
+* Support to specify whether or not an object-collection-rule is currently enabled in the Logging Analytics service
+
+  * ``oci log-analytics object-collection-rule create --is-enabled``
+  * ``oci log-analytics object-collection-rule update --is-enabled``
+
+* Support for Logging Analytics as a target in the Service Connector Hub service
+
+* [BREAKING] The --sort-by parameter for few of the commands in log-analytics is restricted to only name field
+  * ``oci log-analytics source list-meta-source-types --sort-by``
+  * ``oci log-analytics parser list-parser-functions --sort-by``
+  * ``oci log-analytics parser list-parser-meta-plugins --sort-by``
+  * ``oci log-analytics source list-source-label-operators --sort-by``
+
+
 2.18.0 - 2021-01-12
 -------------------
 Added
