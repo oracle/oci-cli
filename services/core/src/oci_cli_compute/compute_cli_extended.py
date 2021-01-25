@@ -737,7 +737,7 @@ def get_plink_connection_string(ctx, from_json, instance_console_connection_id, 
     click.echo(connection_string)
 
 
-@cli_util.copy_params_from_generated_command(compute_cli.change_instance_compartment)
+@cli_util.copy_params_from_generated_command(compute_cli.change_instance_compartment, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
 @compute_cli.instance_group.command(name='change-compartment', help=compute_cli.change_instance_compartment.help)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

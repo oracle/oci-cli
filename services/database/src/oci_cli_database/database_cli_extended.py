@@ -1534,7 +1534,7 @@ def update_okv_keystore(ctx, **kwargs):
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
 @database_cli.autonomous_database_group.command(name='create', help=database_cli.create_autonomous_database_create_autonomous_database_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs):
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
@@ -1552,7 +1552,7 @@ def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs)
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
 @database_cli.autonomous_database_group.command(name='create-from-clone', help=database_cli.create_autonomous_database_create_autonomous_database_clone_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_clone_details(ctx, **kwargs):
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
@@ -1570,7 +1570,7 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, **k
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
 @database_cli.autonomous_database_group.command(name='update', help=database_cli.update_autonomous_database.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def update_autonomous_database(ctx, **kwargs):
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
@@ -1585,7 +1585,7 @@ def update_autonomous_database(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled'])
 @database_cli.autonomous_database_group.command(name='create-refreshable-clone', help=database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, **kwargs)
@@ -1595,7 +1595,7 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, params_to_exclude=['is_access_control_enabled'])
 @database_cli.autonomous_database_group.command(name='create-from-backup-id', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, **kwargs)
@@ -1605,7 +1605,7 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, params_to_exclude=['is_access_control_enabled'])
 @database_cli.autonomous_database_group.command(name='create-from-backup-timestamp', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, **kwargs)

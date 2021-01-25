@@ -25,7 +25,7 @@ def virtual_network_root_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.byoip_allocated_range_summary_group.command_name', 'byoip-allocated-range-summary'), cls=CommandGroupWithAlias, help="""Subrange of ByoipRange which is allocated to a PublicIpPool""")
+@click.command(cli_util.override('virtual_network.byoip_allocated_range_summary_group.command_name', 'byoip-allocated-range-summary'), cls=CommandGroupWithAlias, help="""A summary of CIDR block subranges that are currently allocated to an IP pool.""")
 @cli_util.help_option_group
 def byoip_allocated_range_summary_group():
     pass
@@ -89,7 +89,7 @@ def ip_sec_connection_device_config_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.byoip_range_group.command_name', 'byoip-range'), cls=CommandGroupWithAlias, help="""A ByoipRange, is an IP address prefix that the user owns and wishes to import into OCI.""")
+@click.command(cli_util.override('virtual_network.byoip_range_group.command_name', 'byoip-range'), cls=CommandGroupWithAlias, help="""Oracle offers the ability to Bring Your Own IP (BYOIP), importing public IP addresses that you currently own to Oracle Cloud Infrastructure. A `ByoipRange` resource is a record of the imported address block (a BYOIP CIDR block) and also some associated metadata. The process used to [Bring Your Own IP] is explained in the documentation.""")
 @cli_util.help_option_group
 def byoip_range_group():
     pass
@@ -211,7 +211,7 @@ def cross_connect_port_speed_shape_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.public_ip_pool_group.command_name', 'public-ip-pool'), cls=CommandGroupWithAlias, help="""A Public IP pool, conceptually, is a set of public IP addresses (represented as one or more CIDRs) Users can be allocated addresses from this for internet access.""")
+@click.command(cli_util.override('virtual_network.public_ip_pool_group.command_name', 'public-ip-pool'), cls=CommandGroupWithAlias, help="""A public IP pool is a set of public IP addresses represented as one or more IPv4 CIDR blocks. Resources like load balancers and compute instances can be allocated public IP addresses from a public IP pool.""")
 @cli_util.help_option_group
 def public_ip_pool_group():
     pass
@@ -540,10 +540,12 @@ def add_network_security_group_security_rules(ctx, from_json, network_security_g
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.add_public_ip_pool_capacity.command_name', 'add'), help=u"""Adds a Cidr from the named Byoip Range prefix to the referenced Public IP Pool. The cidr must be a subset of the Byoip Range in question. The cidr must not overlap with any other cidr already added to this or any other Public Ip Pool. \n[Command Reference](addPublicIpPoolCapacity)""")
-@cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range Id object to whch the cidr block belongs.""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range to be added to the Public Ip Pool Example: `10.0.1.0/24`""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.add_public_ip_pool_capacity.command_name', 'add'), help=u"""Adds some or all of a CIDR block to a public IP pool.
+
+The CIDR block (or subrange) must not overlap with any other CIDR block already added to this or any other public IP pool. \n[Command Reference](addPublicIpPoolCapacity)""")
+@cli_util.option('--public-ip-pool-id', required=True, help=u"""The [OCID] of the public IP pool.""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource to which the CIDR block belongs.""")
+@cli_util.option('--cidr-block', required=True, help=u"""The CIDR block to add to the public IP pool. It could be all of the CIDR block identified in `byoipRangeId`, or a subrange. Example: `10.0.1.0/24`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -596,18 +598,23 @@ def add_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.add_vcn_cidr.command_name', 'add'), help=u"""Add a CIDR to a VCN. The new CIDR must maintain the following rules -
+@vcn_group.command(name=cli_util.override('virtual_network.add_vcn_cidr.command_name', 'add'), help=u"""Adds a CIDR block to a VCN. The CIDR block you add:
 
-a. The CIDR provided is valid b. The new CIDR range should not overlap with any existing CIDRs c. The new CIDR should not exceed the max limit of CIDRs per VCNs d. The new CIDR range does not overlap with any peered VCNs \n[Command Reference](addVcnCidr)""")
+- Must be valid. - Must not overlap with another CIDR block in the VCN, a CIDR block of a peered VCN, or the on-premises network CIDR block. - Must not exceed the limit of CIDR blocks allowed per VCN.
+
+**Note:** Adding a CIDR block places your VCN in an updating state until the changes are complete. You cannot create or update the VCN's subnets, VLANs, LPGs, or route tables during this operation. The time to completion can take a few minutes. You can use the `GetWorkRequest` operation to check the status of the update. \n[Command Reference](addVcnCidr)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address that needs to be added.""")
+@cli_util.option('--cidr-block', required=True, help=u"""The CIDR block to add.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def add_vcn_cidr(ctx, from_json, vcn_id, cidr_block, if_match):
+def add_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, cidr_block, if_match):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
@@ -626,11 +633,42 @@ def add_vcn_cidr(ctx, from_json, vcn_id, cidr_block, if_match):
         add_vcn_cidr_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.advertise_byoip_range.command_name', 'advertise'), help=u"""initiate route advertisements for the Byoip Range prefix. the prefix must be in PROVISIONED state \n[Command Reference](advertiseByoipRange)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.advertise_byoip_range.command_name', 'advertise'), help=u"""Begins BGP route advertisements for the BYOIP CIDR block you imported to the Oracle Cloud. The `ByoipRange` resource must be in the PROVISIONED state before the BYOIP CIDR block routes can be advertised with BGP. \n[Command Reference](advertiseByoipRange)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -763,9 +801,9 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.change_byoip_range_compartment.command_name', 'change-compartment'), help=u"""Moves a byoip range into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeByoipRangeCompartment)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Byoip Range to.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.change_byoip_range_compartment.command_name', 'change-compartment'), help=u"""Moves a BYOIP CIDR block to a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeByoipRangeCompartment)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the destination compartment for the BYOIP CIDR block move.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -906,12 +944,15 @@ def change_dhcp_options_compartment(ctx, from_json, dhcp_id, compartment_id):
 @drg_group.command(name=cli_util.override('virtual_network.change_drg_compartment.command_name', 'change-compartment'), help=u"""Moves a DRG into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDrgCompartment)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the DRG to.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_drg_compartment(ctx, from_json, drg_id, compartment_id):
+def change_drg_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, compartment_id):
 
     if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
@@ -928,6 +969,37 @@ def change_drg_compartment(ctx, from_json, drg_id, compartment_id):
         change_drg_compartment_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1101,9 +1173,9 @@ def change_public_ip_compartment(ctx, from_json, public_ip_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.change_public_ip_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a public IP pool into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePublicIpPoolCompartment)""")
-@cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Public IP Pool to.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.change_public_ip_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a public IP pool to a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePublicIpPoolCompartment)""")
+@cli_util.option('--public-ip-pool-id', required=True, help=u"""The [OCID] of the public IP pool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the destination compartment for the public IP pool move.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1244,12 +1316,15 @@ def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compa
 @subnet_group.command(name=cli_util.override('virtual_network.change_subnet_compartment.command_name', 'change-compartment'), help=u"""Moves a subnet into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSubnetCompartment)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the subnet to.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_subnet_compartment(ctx, from_json, subnet_id, compartment_id):
+def change_subnet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, compartment_id):
 
     if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
@@ -1266,18 +1341,52 @@ def change_subnet_compartment(ctx, from_json, subnet_id, compartment_id):
         change_subnet_compartment_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @vcn_group.command(name=cli_util.override('virtual_network.change_vcn_compartment.command_name', 'change-compartment'), help=u"""Moves a VCN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVcnCompartment)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VCN to.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_vcn_compartment(ctx, from_json, vcn_id, compartment_id):
+def change_vcn_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, compartment_id):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
@@ -1294,6 +1403,37 @@ def change_vcn_compartment(ctx, from_json, vcn_id, compartment_id):
         change_vcn_compartment_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1329,12 +1469,15 @@ def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compa
 @cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VLAN to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_vlan_compartment(ctx, from_json, vlan_id, compartment_id, if_match):
+def change_vlan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vlan_id, compartment_id, if_match):
 
     if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
         raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
@@ -1353,6 +1496,37 @@ def change_vlan_compartment(ctx, from_json, vlan_id, compartment_id, if_match):
         change_vlan_compartment_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1418,9 +1592,9 @@ def connect_remote_peering_connections(ctx, from_json, remote_peering_connection
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a Byoip Range prefix. \n[Command Reference](createByoipRange)""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the prefix. Example: `10.0.1.0/24`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the Byoip Range.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a subrange of the BYOIP CIDR block. \n[Command Reference](createByoipRange)""")
+@cli_util.option('--cidr-block', required=True, help=u"""The BYOIP CIDR block. You can assign some or all of it to a public IP pool after it is validated. Example: `10.0.1.0/24`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the BYOIP CIDR block.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1857,9 +2031,7 @@ For the purposes of access control, the DRG attachment is automatically placed i
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--route-table-id', help=u"""The OCID of the route table the DRG attachment will use.
 
-If you don't specify a route table here, the DRG attachment is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the DRG attachment.
-
-For information about why you would associate a route table with a DRG attachment, see:
+If you don't specify a route table here, the DRG attachment is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the DRG attachment. For information about why you would associate a route table with a DRG attachment, see:
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2269,7 +2441,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--block-traffic', type=click.BOOL, help=u"""Whether the NAT gateway blocks traffic through it. The default is `false`.
 
 Example: `true`""")
-@cli_util.option('--public-ip-id', help=u"""The [OCID] of the Public IP associated with the NAT gateway.""")
+@cli_util.option('--public-ip-id', help=u"""The [OCID] of the public IP address associated with the NAT gateway.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2481,7 +2653,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Required for an ephemeral public IP because it must always be assigned to a private IP (specifically a *primary* private IP).
 
 Optional for a reserved public IP. If you don't provide it, the public IP is created but not assigned to a private IP. You can later assign the public IP with [UpdatePublicIp].""")
-@cli_util.option('--public-ip-pool-id', help=u"""OCID of the pool object created by the current tenancy""")
+@cli_util.option('--public-ip-pool-id', help=u"""The [OCID] of the public IP pool.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ASSIGNING", "ASSIGNED", "UNASSIGNING", "UNASSIGNED", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2544,8 +2716,8 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.create_public_ip_pool.command_name', 'create'), help=u"""Creates a Public Ip Pool \n[Command Reference](createPublicIpPool)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the Public Ip Pool""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.create_public_ip_pool.command_name', 'create'), help=u"""Creates a public IP pool. \n[Command Reference](createPublicIpPool)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the public IP pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3037,11 +3209,11 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 @vcn_group.command(name=cli_util.override('virtual_network.create_vcn.command_name', 'create'), help=u"""Creates a new virtual cloud network (VCN). For more information, see [VCNs and Subnets].
 
-To create the VCN, you may specify a list of IPv4 CIDR blocks. The CIDRs must maintain the following rules -
+For the VCN, you specify a list of one or more IPv4 CIDR blocks that meet the following criteria:
 
-a. The list of CIDRs provided are valid b. There is no overlap between different CIDRs c. The list of CIDRs does not exceed the max limit of CIDRs per VCN
+- The CIDR blocks must be valid. - They must not overlap with each other or with the on-premises network CIDR block. - The number of CIDR blocks does not exceed the limit of CIDR blocks allowed per VCN.
 
-Oracle recommends using one of the private IP address ranges specified in [RFC 1918] (https://tools.ietf.org/html/rfc1918) (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The CIDR blocks can range from /16 to /30, and they must not overlap with your on-premises network.
+For a CIDR block, Oracle recommends that you use one of the private IP address ranges specified in [RFC 1918] (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The CIDR blocks can range from /16 to /30.
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the VCN to reside. Consult an Oracle Cloud Infrastructure administrator in your organization if you're not sure which compartment to use. Notice that the VCN doesn't have to be in the same compartment as the subnets or other Networking Service components. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
@@ -3053,10 +3225,10 @@ The VCN automatically comes with a default route table, default security list, a
 
 The VCN and subnets you create are not accessible until you attach an internet gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service]. \n[Command Reference](createVcn)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VCN.""")
-@cli_util.option('--cidr-block', help=u"""Deprecated. Instead use 'cidrBlocks'. It is an error to set both cidrBlock and cidrBlocks. Example: `10.0.0.0/16`""")
-@cli_util.option('--cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of IPv4 CIDR blocks associated with the VCN. The CIDRs must maintain the following rules -
+@cli_util.option('--cidr-block', help=u"""**Deprecated.** Do *not* set this value. Use `cidrBlocks` instead. Example: `10.0.0.0/16`""")
+@cli_util.option('--cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of one or more IPv4 CIDR blocks for the VCN that meet the following criteria: - The CIDR blocks must be valid. - They must not overlap with each other or with the on-premises network CIDR block. - The number of CIDR blocks must not exceed the limit of CIDR blocks allowed per VCN.
 
-a. The list of CIDRs provided are valid b. There is no overlap between different CIDRs c. The number of CIDRs should not exceed the max limit of CIDRs per VCN d. It is an error to set both cidrBlock and cidrBlocks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+**Important:** Do *not* specify a value for `cidrBlock`. Use this parameter instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ipv6-cidr-block', help=u"""If you enable IPv6 for the VCN (see `isIpv6Enabled`), you may optionally provide an IPv6 /48 CIDR block from the supported ranges (see [IPv6 Addresses]. The addresses in this block will be considered private and cannot be accessed from the internet. The documentation refers to this as a *custom CIDR* for the VCN.
 
 If you don't provide a custom CIDR for the VCN, Oracle assigns the VCN's IPv6 /48 CIDR block.
@@ -3366,15 +3538,13 @@ def create_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.delete_byoip_range.command_name', 'delete'), help=u"""Deletes the specified Byoip Range prefix. The prefix must be in CREATING, PROVISIONED or FAILED state. It must not have any subranges allocated to a Public Ip Pool object. You must specify the object's OCID.
-
-In case the range is currently PROVISIONED, the operation will be asynchronous as it needs to be de-ptovisioned first. \n[Command Reference](deleteByoipRange)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.delete_byoip_range.command_name', 'delete'), help=u"""Deletes the specified `ByoipRange` resource. The resource must be in one of the following states: CREATING, PROVISIONED, ACTIVE, or FAILED. It must not have any subranges currently allocated to a PublicIpPool object or the deletion will fail. You must specify the [OCID]. If the `ByoipRange` resource is currently in the PROVISIONED or ACTIVE state, it will be de-provisioned and then deleted. \n[Command Reference](deleteByoipRange)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3394,9 +3564,10 @@ def delete_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         byoip_range_id=byoip_range_id,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
     if wait_for_state:
 
-        if hasattr(client, 'get_byoip_range') and callable(getattr(client, 'get_byoip_range')):
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
@@ -3404,31 +3575,19 @@ def delete_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, client.get_byoip_range(byoip_range_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
-            except oci.exceptions.ServiceError as e:
-                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
-                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
-                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
-                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
-                # succeed_on_not_found=True to the waiter).
-                #
-                # Any non-404 should still result in the exception being thrown.
-                if e.status == 404:
-                    pass
-                else:
-                    raise
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 raise
         else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4261,8 +4420,8 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.delete_public_ip_pool.command_name', 'delete'), help=u"""Deletes the specified Public Ip Pool It must not have any active address allocations You must specify the object's OCID. \n[Command Reference](deletePublicIpPool)""")
-@cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.delete_public_ip_pool.command_name', 'delete'), help=u"""Deletes the specified public IP pool. To delete a public IP pool it must not have any active IP address allocations. You must specify the object's [OCID] when deleting an IP pool. \n[Command Reference](deletePublicIpPool)""")
+@cli_util.option('--public-ip-pool-id', required=True, help=u"""The [OCID] of the public IP pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4896,8 +5055,8 @@ def detach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.get_byoip_range.command_name', 'get'), help=u"""Gets the specified Byoip Range object. You must specify the object's OCID. \n[Command Reference](getByoipRange)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.get_byoip_range.command_name', 'get'), help=u"""Gets the `ByoipRange` resource. You must specify the [OCID]. \n[Command Reference](getByoipRange)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -5604,8 +5763,8 @@ def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.get_public_ip_pool.command_name', 'get'), help=u"""Gets the specified Public Ip Pool object. You must specify the object's OCID. \n[Command Reference](getPublicIpPool)""")
-@cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.get_public_ip_pool.command_name', 'get'), help=u"""Gets the specified `PublicIpPool` object. You must specify the object's [OCID]. \n[Command Reference](getPublicIpPool)""")
+@cli_util.option('--public-ip-pool-id', required=True, help=u"""The [OCID] of the public IP pool.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -5959,8 +6118,8 @@ def list_allowed_peer_regions_for_remote_peering(ctx, from_json, all_pages, ):
     cli_util.render_response(result, ctx)
 
 
-@byoip_allocated_range_summary_group.command(name=cli_util.override('virtual_network.list_byoip_allocated_ranges.command_name', 'list-byoip-allocated-ranges'), help=u"""Lists the ByoipAllocatedRange objects for the ByoipRange. Each ByoipAllocatedRange object has a CIDR block part of the ByoipRange and the PublicIpPool it is assigned to. \n[Command Reference](listByoipAllocatedRanges)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_allocated_range_summary_group.command(name=cli_util.override('virtual_network.list_byoip_allocated_ranges.command_name', 'list-byoip-allocated-ranges'), help=u"""Lists the subranges of a BYOIP CIDR block currently allocated to an IP pool. Each `ByoipAllocatedRange` object also lists the IP pool where it is allocated. \n[Command Reference](listByoipAllocatedRanges)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -6012,7 +6171,7 @@ def list_byoip_allocated_ranges(ctx, from_json, all_pages, page_size, byoip_rang
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.list_byoip_ranges.command_name', 'list'), help=u"""Lists the ByoipRange objects in the specified compartment. You can filter the list by using query parameters. \n[Command Reference](listByoipRanges)""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.list_byoip_ranges.command_name', 'list'), help=u"""Lists the `ByoipRange` resources in the specified compartment. You can filter the list using query parameters. \n[Command Reference](listByoipRanges)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7277,14 +7436,14 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.list_public_ip_pools.command_name', 'list'), help=u"""Lists the PublicIpPool objects in the specified compartment. You can filter the list by using query parameters. \n[Command Reference](listPublicIpPools)""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.list_public_ip_pools.command_name', 'list'), help=u"""Lists the public IP pools in the specified compartment. You can filter the list using query parameters. \n[Command Reference](listPublicIpPools)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--byoip-range-id', help=u"""A filter to return only resources that match the given Byoip Range""")
+@cli_util.option('--byoip-range-id', help=u"""A filter to return only resources that match the given BYOIP CIDR block.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
@@ -8043,19 +8202,24 @@ def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, lim
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.modify_vcn_cidr.command_name', 'modify-vcn-cidr'), help=u"""Update a CIDR from a VCN. The new CIDR must maintain the following rules -
+@vcn_group.command(name=cli_util.override('virtual_network.modify_vcn_cidr.command_name', 'modify-vcn-cidr'), help=u"""Updates the specified CIDR block of a VCN. The new CIDR IP range must meet the following criteria:
 
-a. The CIDR provided is valid b. The new CIDR range should not overlap with any existing CIDRs c. The new CIDR should not exceed the max limit of CIDRs per VCNs d. The new CIDR range does not overlap with any peered VCNs e. The new CIDR should overlap with any existing route rule within a VCN f. All existing subnet CIDRs are subsets of the updated CIDR ranges \n[Command Reference](modifyVcnCidr)""")
+- Must be valid. - Must not overlap with another CIDR block in the VCN, a CIDR block of a peered VCN, or the on-premises network CIDR block. - Must not exceed the limit of CIDR blocks allowed per VCN. - Must include IP addresses from the original CIDR block that are used in the VCN's existing route rules. - No IP address in an existing subnet should be outside of the new CIDR block range.
+
+**Note:** Modifying a CIDR block places your VCN in an updating state until the changes are complete. You cannot create or update the VCN's subnets, VLANs, LPGs, or route tables during this operation. The time to completion can vary depending on the size of your network. Updating a small network could take about a minute, and updating a large network could take up to an hour. You can use the `GetWorkRequest` operation to check the status of the update. \n[Command Reference](modifyVcnCidr)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
-@cli_util.option('--original-cidr-block', required=True, help=u"""The CIDR IP address that needs to be updated.""")
-@cli_util.option('--new-cidr-block', required=True, help=u"""The new CIDR IP address which will replace the orginal one.""")
+@cli_util.option('--original-cidr-block', required=True, help=u"""The CIDR IP address to update.""")
+@cli_util.option('--new-cidr-block', required=True, help=u"""The new CIDR IP address.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def modify_vcn_cidr(ctx, from_json, vcn_id, original_cidr_block, new_cidr_block, if_match):
+def modify_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, original_cidr_block, new_cidr_block, if_match):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
@@ -8075,6 +8239,37 @@ def modify_vcn_cidr(ctx, from_json, vcn_id, original_cidr_block, new_cidr_block,
         modify_vcn_cidr_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -8107,9 +8302,9 @@ def remove_network_security_group_security_rules(ctx, from_json, network_securit
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.remove_public_ip_pool_capacity.command_name', 'remove'), help=u"""Removes a Cidr from the referenced Public IP Pool. \n[Command Reference](removePublicIpPoolCapacity)""")
-@cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range to be removed from the Public Ip Pool Example: `10.0.1.0/24`""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.remove_public_ip_pool_capacity.command_name', 'remove'), help=u"""Removes a CIDR block from the referenced public IP pool. \n[Command Reference](removePublicIpPoolCapacity)""")
+@cli_util.option('--public-ip-pool-id', required=True, help=u"""The [OCID] of the public IP pool.""")
+@cli_util.option('--cidr-block', required=True, help=u"""The CIDR block to remove from the  public IP pool. Example: `10.0.1.0/24`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -8161,16 +8356,21 @@ def remove_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.remove_vcn_cidr.command_name', 'remove'), help=u"""Remove a CIDR from a VCN. The CIDR being removed should not have any resources allocated from it. \n[Command Reference](removeVcnCidr)""")
+@vcn_group.command(name=cli_util.override('virtual_network.remove_vcn_cidr.command_name', 'remove'), help=u"""Removes a specified CIDR block from a VCN.
+
+**Notes:** - You cannot remove a CIDR block if an IP address in its range is in use. - Removing a CIDR block places your VCN in an updating state until the changes are complete. You cannot create or update the VCN's subnets, VLANs, LPGs, or route tables during this operation. The time to completion can take a few minutes. You can use the `GetWorkRequest` operation to check the status of the update. \n[Command Reference](removeVcnCidr)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address that needs to be removed.""")
+@cli_util.option('--cidr-block', required=True, help=u"""The CIDR block to remove.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_vcn_cidr(ctx, from_json, vcn_id, cidr_block, if_match):
+def remove_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, cidr_block, if_match):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
@@ -8189,11 +8389,42 @@ def remove_vcn_cidr(ctx, from_json, vcn_id, cidr_block, if_match):
         remove_vcn_cidr_details=_details,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.update_byoip_range.command_name', 'update'), help=u"""Updates the specified Byoip Range. \n[Command Reference](updateByoipRange)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.update_byoip_range.command_name', 'update'), help=u"""Updates the tags or display name associated to the specified BYOIP CIDR block. \n[Command Reference](updateByoipRange)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8905,7 +9136,7 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--routing', type=custom_types.CliCaseInsensitiveChoice(["BGP", "STATIC"]), help=u"""The type of routing to use for this tunnel (either BGP dynamic routing or static routing).""")
 @cli_util.option('--ike-version', type=custom_types.CliCaseInsensitiveChoice(["V1", "V2"]), help=u"""Internet Key Exchange protocol version.""")
-@cli_util.option('--bgp-session-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information for establishing a BGP session for the IPSec tunnel.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bgp-session-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -9543,8 +9774,8 @@ def update_public_ip(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.update_public_ip_pool.command_name', 'update'), help=u"""Updates the specified Public Ip Pool. \n[Command Reference](updatePublicIpPool)""")
-@cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.update_public_ip_pool.command_name', 'update'), help=u"""Updates the specified public IP pool. \n[Command Reference](updatePublicIpPool)""")
+@cli_util.option('--public-ip-pool-id', required=True, help=u"""The [OCID] of the public IP pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9973,9 +10204,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--route-table-id', help=u"""The OCID of the route table the subnet will use.""")
 @cli_util.option('--security-list-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the security list or lists the subnet will use. This replaces the entire current set of security lists. Remember that security lists are associated *with the subnet*, but the rules are applied to the individual VNICs in the subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cidr-block', help=u"""The CIDR IP address block of the Subnet. The CIDR must maintain the following rules -
+@cli_util.option('--cidr-block', help=u"""The CIDR block of the subnet. The new CIDR block must meet the following criteria:
 
-a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges. c. The old and new CIDR ranges both use the same base address. Example: 10.0.0.0/25 and 10.0.0.0/24. d. The new CIDR range contains all previously allocated private IP addresses in the old CIDR range. e. No previously allocated IP address overlaps the broadcast address (the last IP of a subnet CIDR range) of the new CIDR range.
+- Must be valid. - The CIDR block's IP range must be completely within one of the VCN's CIDR block ranges. - The old and new CIDR block ranges must use the same network address. Example: `10.0.0.0/25` and `10.0.0.0/24`. - Must contain all IP addresses in use in the old CIDR range. - The new CIDR range's broadcast address (last IP address of CIDR range) must not be an IP address in use in the old CIDR range.
+
+**Note:** If you are changing the CIDR block, you cannot create VNICs or private IPs for this resource while the update is in progress.
 
 Example: `172.16.0.0/16`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10305,7 +10538,7 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.update_vlan.command_name', 'update'), help=u"""Updates the specified VLAN. This could result in changes to all the VNICs in the VLAN, which can take time. During that transition period, the VLAN will be in the UPDATING state. \n[Command Reference](updateVlan)""")
+@vlan_group.command(name=cli_util.override('virtual_network.update_vlan.command_name', 'update'), help=u"""Updates the specified VLAN. Note that this operation might require changes to all the VNICs in the VLAN, which can take a while. The VLAN will be in the UPDATING state until the changes are complete. \n[Command Reference](updateVlan)""")
 @cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -10316,9 +10549,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to use with this VLAN. All VNICs in the VLAN will belong to these NSGs. For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--route-table-id', help=u"""The OCID of the route table the VLAN will use.""")
-@cli_util.option('--cidr-block', help=u"""The CIDR IP address block of the Vlan. The CIDR must maintain the following rules -
+@cli_util.option('--cidr-block', help=u"""The CIDR block of the VLAN. The new CIDR block must meet the following criteria:
 
-a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges. c. The old and new CIDR ranges both use the same base address. Example: 10.0.0.0/25 and 10.0.0.0/24. d. The new CIDR range contains all previously allocated private IP addresses in the old CIDR range. e. No previously allocated IP address overlaps the broadcast address (the last IP of a subnet CIDR range) of the new CIDR range.""")
+- Must be valid. - The CIDR block's IP range must be completely within one of the VCN's CIDR block ranges. - The old and new CIDR block ranges must use the same network address. Example: `10.0.0.0/25` and `10.0.0.0/24`. - Must contain all IP addresses in use in the old CIDR range. - The new CIDR range's broadcast address (last IP address of CIDR range) must not be an IP address in use in the old CIDR range.
+
+**Note:** If you are changing the CIDR block, you cannot create VNICs or private IPs for this resource while the update is in progress.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -10490,14 +10725,17 @@ def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.validate_byoip_range.command_name', 'validate'), help=u"""submit the Byoip Range for validation. This presumes the user has updated their IP registry record in accordance to validation requirements \n[Command Reference](validateByoipRange)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.validate_byoip_range.command_name', 'validate'), help=u"""Submits the BYOIP CIDR block you are importing for validation. Do not submit to Oracle for validation if you have not already modified the information for the BYOIP CIDR block with your Regional Internet Registry. See [To import a CIDR block] for details. \n[Command Reference](validateByoipRange)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def validate_byoip_range(ctx, from_json, byoip_range_id):
+def validate_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id):
 
     if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
@@ -10509,11 +10747,42 @@ def validate_byoip_range(ctx, from_json, byoip_range_id):
         byoip_range_id=byoip_range_id,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.withdraw_byoip_range.command_name', 'withdraw'), help=u"""stop route advertisements for the Byoip Range prefix. \n[Command Reference](withdrawByoipRange)""")
-@cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.withdraw_byoip_range.command_name', 'withdraw'), help=u"""Withdraws BGP route advertisement for the BYOIP CIDR block. \n[Command Reference](withdrawByoipRange)""")
+@cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

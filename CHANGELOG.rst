@@ -6,6 +6,73 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.20.0 - 2021-01-26
+-------------------
+Added
+~~~~~
+
+* Support for Load Balancer Shape update for Blockchain Platform in Blockchain Service
+
+  * ``oci blockchain blockchain-platform update --load-balancer-shape``
+
+* [Breaking] The parameter --idcs-access-token is now required for Blockchain Platform create in Blockchain Service
+
+  * ``oci blockchain blockchain-platform create``
+
+* Support for private access channel in Analytics Service
+
+  * ``oci analytics analytics-instance create-private-access-channel ``
+  * ``oci analytics analytics-instance get-private-access-channel``
+  * ``oci analytics analytics-instance update-private-access-channel``
+  * ``oci analytics analytics-instance delete-private-access-channel``
+
+* Support for vanity URL in Analytics Service
+
+  * ``oci analytics analytics-instance create-vanity-url``
+  * ``oci analytics analytics-instance update-vanity-url``
+  * ``oci analytics analytics-instance delete-vanity-url``
+
+* Support assignment of Volume Backup Policy to Volume Group in Block Volume Service
+
+  * ``oci bv volume-group create --backup-policy-id``
+
+* Support for --max-wait-seconds, --wait-for-state, --wait-interval-seconds for Change Compartment of Dedicated VM Host in Compute Service
+
+  * ``oci compute dedicated-vm-host change-compartment --max-wait-seconds --wait-for-state --wait-interval-seconds``
+
+* Support for --max-wait-seconds, --wait-for-state, --wait-interval-seconds for the below commands of Network Service
+
+  * ``oci network byoip-range validate``
+  * ``oci network drg change-compartment``
+  * ``oci network subnet change-compartment``
+  * ``oci network vcn add-vcn-cidr``
+  * ``oci network vcn change-compartment``
+  * ``oci network vcn modify-vcn-cidr``
+  * ``oci network vcn remove-vcn-cidr``
+  * ``oci network vlan change-compartment``
+
+* support for Access Control List for Autonomous Database with Data Guard enabled on Exadata Cloud Customer in Database Service
+
+  * ``oci db autonomous-database create --are-primary-whitelisted-ips-used, --standby-whitelisted-ips``
+  * ``oci db autonomous-database update --are-primary-whitelisted-ips-used, --standby-whitelisted-ips``
+
+* Support to specify Peer ACD unique name when creating Data Guard enabled Autonomous Container Database on Exadata Cloud Customer in Database Service
+
+  * ``oci db autonomous-container-database create --peer-db-unique-name``
+
+* Support for drift detection on individual resources of a stack in Resource Manager Service
+
+  * ``oci resource-manager stack detect-drift --resource-addresses``
+
+* Support for listing drift detection details given a work request id in Resource Manager Service
+
+  * ``oci resource-manager stack list-resource-drift-details --work-request-id``
+
+* Support for Create, Manage and Use of AsymmetricKeys in KeyManagement Service.
+
+  * ``oci kms crypto encrypt --key-version-id --encryption-algorithm``
+  * ``oci kms crypto decrypt --key-version-id --encryption-algorithm``
+
 2.19.0 - 2021-01-19
 -------------------
 Added
