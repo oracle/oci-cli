@@ -120,3 +120,79 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--network-endpoint-details', '{}'
         ])
         assert 'Error: Missing option(s) --analytics-instance-id.' in result.output
+
+    def test_vanity_url_feature(self):
+
+        inst_ocid = 'ocid1.analyticsinstance.oc1.us-ashburn-1.test.aaaaaaaas2la4dx7kym6sibwhqav2ikgc2q3hnqbre4jxzx6lqfa2qxdku2r'
+        key_file = 'services/analytics/tests/cassettes/key.pem'
+        cert_file = 'services/analytics/tests/cassettes/cert.pem'
+        intermediates_file = 'services/analytics/tests/cassettes/intermediates.pem'
+
+        # Check that create-vanity-url --private-key is not expected on the CLI and triggers an error.
+        result = util.invoke_command([
+            'analytics', 'analytics-instance', 'create-vanity-url',
+            '--analytics-instance-id', inst_ocid,
+            '--hosts', '["1"]',
+            '--private-key-file', key_file,
+            '--public-certificate-file', cert_file,
+            '--ca-certificate-file', intermediates_file,
+            '--private-key', 'abcdefg'
+        ])
+        assert 'Error: no such option: --private-key ' in result.output
+
+        # Check that create-vanity-url --public-certificate is not expected on the CLI and triggers an error.
+        result = util.invoke_command([
+            'analytics', 'analytics-instance', 'create-vanity-url',
+            '--analytics-instance-id', inst_ocid,
+            '--hosts', '["1"]',
+            '--private-key-file', key_file,
+            '--public-certificate-file', cert_file,
+            '--ca-certificate-file', intermediates_file,
+            '--public-certificate', 'abcdefg'
+        ])
+        assert 'Error: no such option: --public-certificate ' in result.output
+
+        # Check that create-vanity-url --ca-certificate is not expected on the CLI and triggers an error.
+        result = util.invoke_command([
+            'analytics', 'analytics-instance', 'create-vanity-url',
+            '--analytics-instance-id', inst_ocid,
+            '--hosts', '["1"]',
+            '--private-key-file', key_file,
+            '--public-certificate-file', cert_file,
+            '--ca-certificate-file', intermediates_file,
+            '--ca-certificate', 'abcdefg'
+        ])
+        assert 'Error: no such option: --ca-certificate ' in result.output
+
+        # Check that update-vanity-url --private-key is not expected on the CLI and triggers an error.
+        result = util.invoke_command([
+            'analytics', 'analytics-instance', 'update-vanity-url',
+            '--analytics-instance-id', inst_ocid,
+            '--private-key-file', key_file,
+            '--public-certificate-file', cert_file,
+            '--ca-certificate-file', intermediates_file,
+            '--private-key', 'abcdefg'
+        ])
+        assert 'Error: no such option: --private-key ' in result.output
+
+        # Check that update-vanity-url --public-certificate is not expected on the CLI and triggers an error.
+        result = util.invoke_command([
+            'analytics', 'analytics-instance', 'update-vanity-url',
+            '--analytics-instance-id', inst_ocid,
+            '--private-key-file', key_file,
+            '--public-certificate-file', cert_file,
+            '--ca-certificate-file', intermediates_file,
+            '--public-certificate', 'abcdefg'
+        ])
+        assert 'Error: no such option: --public-certificate ' in result.output
+
+        # Check that update-vanity-url --ca-certificate is not expected on the CLI and triggers an error.
+        result = util.invoke_command([
+            'analytics', 'analytics-instance', 'update-vanity-url',
+            '--analytics-instance-id', inst_ocid,
+            '--private-key-file', key_file,
+            '--public-certificate-file', cert_file,
+            '--ca-certificate-file', intermediates_file,
+            '--ca-certificate', 'abcdefg'
+        ])
+        assert 'Error: no such option: --ca-certificate ' in result.output

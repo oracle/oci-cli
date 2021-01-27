@@ -427,7 +427,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
-@cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies the boot volume source details for a new boot volume. The volume source is either another boot volume in the same availability domain or a boot volume backup. This is a mandatory field for a boot volume.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -815,7 +815,7 @@ Allowed values:
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
-@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies the volume source details for a new Block volume. The volume source is either another Block volume in the same availability domain or a Block volume backup. This is an optional field. If not specified or set to null, the new Block volume will be empty. When specified, the new Block volume will contain data from the source volume or backup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1274,7 +1274,8 @@ def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
-@cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies the volume group source details for a new volume group. The volume source is either another a list of volume ids in the same availability domain, another volume group or a volume group backup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1290,7 +1291,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, defined_tags, display_name, freeform_tags):
+def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
@@ -1298,6 +1299,9 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -1345,6 +1349,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-group-id', required=True, help=u"""The OCID of the volume group to clone from.""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1360,7 +1365,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_id, defined_tags, display_name, freeform_tags):
+def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_id, backup_policy_id, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
@@ -1369,6 +1374,9 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['volumeGroupId'] = source_details_volume_group_id
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -1418,6 +1426,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs for the volumes in this volume group.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1433,7 +1442,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_ids, defined_tags, display_name, freeform_tags):
+def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_ids, backup_policy_id, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
@@ -1442,6 +1451,9 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['volumeIds'] = cli_util.parse_json_parameter("source_details_volume_ids", source_details_volume_ids)
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -1491,6 +1503,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details-volume-group-backup-id', required=True, help=u"""The OCID of the volume group backup to restore from.""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1506,7 +1519,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_backup_id, defined_tags, display_name, freeform_tags):
+def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_backup_id, backup_policy_id, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
@@ -1515,6 +1528,9 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['volumeGroupBackupId'] = source_details_volume_group_backup_id
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)

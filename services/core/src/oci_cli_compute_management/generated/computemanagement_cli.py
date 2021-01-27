@@ -235,7 +235,7 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
 @cli_util.option('--instance-pools', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data to create the instance pools in the cluster network.
 
 Each cluster network can have one instance pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--placement-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configuration for the instance pools in the cluster network.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--placement-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -311,11 +311,17 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "INSTANCE"]), help=u"""The source of the instance configuration. An instance configuration defines the settings to use when creating Compute instances, including details such as the base image, shape, and metadata. You can also specify the associated resources for the instance, such as block volume attachments and network configuration.
 
+When you create an instance configuration using an existing instance as a template, the instance configuration does not include any information from the source instance's boot volume, such as installed applications, binaries, and files on the instance. It also does not include the contents of any block volumes that are attached to the instance.
+
+To create an instance configuration that includes the custom setup from an instance's boot volume, you must first create a custom image from the instance (see [CreateImage]). Then, use the custom image to launch a new instance (see [LaunchInstance]). Finally, create the instance configuration based on the instance that you created from the custom image.
+
+To include block volume contents with an instance configuration, first create a backup of the attached block volumes (see [CreateVolumeBackup]). Then, create the instance configuration by specifying the list of settings, using [InstanceConfigurationVolumeSourceFromVolumeBackupDetails] to include the block volume backups in the list of settings.
+
 The following values are supported:
 
 * `NONE`: Creates an instance configuration using the list of settings that you specify.
 
-* `INSTANCE`: Creates an instance configuration using an existing instance as a template. The instance configuration uses the same settings as the instance.""")
+* `INSTANCE`: Creates an instance configuration using an existing instance as a template.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -1279,9 +1285,9 @@ When you delete a cluster network, all of its resources are permanently deleted,
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1300,9 +1306,10 @@ def terminate_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
         cluster_network_id=cluster_network_id,
         **kwargs
     )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
     if wait_for_state:
 
-        if hasattr(client, 'get_cluster_network') and callable(getattr(client, 'get_cluster_network')):
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
@@ -1310,31 +1317,19 @@ def terminate_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, client.get_cluster_network(cluster_network_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
-            except oci.exceptions.ServiceError as e:
-                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
-                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
-                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
-                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
-                # succeed_on_not_found=True to the waiter).
-                #
-                # Any non-404 should still result in the exception being thrown.
-                if e.status == 404:
-                    pass
-                else:
-                    raise
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 raise
         else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

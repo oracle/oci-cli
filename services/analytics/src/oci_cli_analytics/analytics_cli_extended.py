@@ -56,6 +56,74 @@ def create_analytics_instance_extended(ctx, **kwargs):
     ctx.invoke(analytics_cli.create_analytics_instance, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(analytics_cli.create_vanity_url, params_to_exclude=['ca_certificate', 'private_key', 'public_certificate'])
+@analytics_cli.analytics_instance_group.command(name=cli_util.override('analytics.create_vanity_url.command_name', 'create-vanity-url'), help=analytics_cli.create_vanity_url.help)
+@cli_util.option('--private-key-file', required=True, type=click.File('r'), help=u"""PEM Private key file for HTTPS connections.""")
+@cli_util.option('--public-certificate-file', required=True, type=click.File('r'), help=u"""PEM certificate file for HTTPS connections.""")
+@cli_util.option('--ca-certificate-file', required=True, type=click.File('r'), help=u"""PEM CA certificate(s) file for HTTPS connections. This may include multiple PEM certificates.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hosts': {'module': 'analytics', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def create_vanity_url_extended(ctx, **kwargs):
+
+    # Set "--private-key" to the content of file "--private-key-file"
+    private_key_file = kwargs.get('private_key_file')
+    if private_key_file:
+        kwargs['private_key'] = private_key_file.read()
+
+    # Set "--public-certificate" to the content of file "--public-certificate-file"
+    public_certificate_file = kwargs.get('public_certificate_file')
+    if public_certificate_file:
+        kwargs['public_certificate'] = public_certificate_file.read()
+
+    # Set "--ca-certificate" to the content of file "--ca-certificate-file"
+    ca_certificate_file = kwargs.get('ca_certificate_file')
+    if ca_certificate_file:
+        kwargs['ca_certificate'] = ca_certificate_file.read()
+
+    # Remove the extram parameters not expected on base method "create-vanity-url".
+    kwargs.pop('ca_certificate_file')
+    kwargs.pop('private_key_file')
+    kwargs.pop('public_certificate_file')
+
+    # Invoke base method "create_analytics_instance"
+    ctx.invoke(analytics_cli.create_vanity_url, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(analytics_cli.update_vanity_url, params_to_exclude=['ca_certificate', 'private_key', 'public_certificate'])
+@analytics_cli.analytics_instance_group.command(name=cli_util.override('analytics.update_vanity_url.command_name', 'update-vanity-url'), help=analytics_cli.update_vanity_url.help)
+@cli_util.option('--private-key-file', required=True, type=click.File('r'), help=u"""PEM Private key file for HTTPS connections.""")
+@cli_util.option('--public-certificate-file', required=True, type=click.File('r'), help=u"""PEM certificate file for HTTPS connections.""")
+@cli_util.option('--ca-certificate-file', required=True, type=click.File('r'), help=u"""PEM CA certificate(s) file for HTTPS connections. This may include multiple PEM certificates.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_vanity_url_extended(ctx, **kwargs):
+
+    # Set "--private-key" to the content of file "--private-key-file"
+    private_key_file = kwargs.get('private_key_file')
+    if private_key_file:
+        kwargs['private_key'] = private_key_file.read()
+
+    # Set "--public-certificate" to the content of file "--public-certificate-file"
+    public_certificate_file = kwargs.get('public_certificate_file')
+    if public_certificate_file:
+        kwargs['public_certificate'] = public_certificate_file.read()
+
+    # Set "--ca-certificate" to the content of file "--ca-certificate-file"
+    ca_certificate_file = kwargs.get('ca_certificate_file')
+    if ca_certificate_file:
+        kwargs['ca_certificate'] = ca_certificate_file.read()
+
+    # Remove the extram parameters not expected on base method "update-vanity-url".
+    kwargs.pop('ca_certificate_file')
+    kwargs.pop('private_key_file')
+    kwargs.pop('public_certificate_file')
+
+    # Invoke base method "create_analytics_instance"
+    ctx.invoke(analytics_cli.update_vanity_url, **kwargs)
+
+
 # Remove commands:
 #   change-analytics-instance-network-endpoint-private-endpoint-details
 #   change-analytics-instance-network-endpoint-public-endpoint-details

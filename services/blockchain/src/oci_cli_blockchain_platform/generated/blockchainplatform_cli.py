@@ -127,9 +127,9 @@ def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--platform-role', required=True, help=u"""Role of platform - founder or participant""")
 @cli_util.option('--compute-shape', required=True, help=u"""Compute shape - STANDARD or ENTERPRISE_SMALL or ENTERPRISE_MEDIUM or ENTERPRISE_LARGE or ENTERPRISE_EXTRA_LARGE""")
+@cli_util.option('--idcs-access-token', required=True, help=u"""IDCS access token with Identity Domain Administrator role""")
 @cli_util.option('--description', help=u"""Platform Instance Description""")
 @cli_util.option('--is-byol', type=click.BOOL, help=u"""Bring your own license""")
-@cli_util.option('--idcs-access-token', help=u"""IDCS access token with Identity Domain Administrator role""")
 @cli_util.option('--federated-user-id', help=u"""Identifier for a federated user""")
 @cli_util.option('--ca-cert-archive-text', help=u"""Base64 encoded text in ASCII character set of a Thirdparty CA Certificates archive file. The Archive file is a zip file containing third part CA Certificates, the ca key and certificate files used when issuing enrollment certificates (ECerts) and transaction certificates (TCerts). The chainfile (if it exists) contains the certificate chain which should be trusted for this CA, where the 1st in the chain is always the root CA certificate. File list in zip file [ca-cert.pem,ca-key.pem,ca-chain.pem(optional)].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -142,7 +142,7 @@ def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'blockchain', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'blockchain', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, platform_role, compute_shape, description, is_byol, idcs_access_token, federated_user_id, ca_cert_archive_text, freeform_tags, defined_tags):
+def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, platform_role, compute_shape, idcs_access_token, description, is_byol, federated_user_id, ca_cert_archive_text, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -152,15 +152,13 @@ def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds,
     _details['compartmentId'] = compartment_id
     _details['platformRole'] = platform_role
     _details['computeShape'] = compute_shape
+    _details['idcsAccessToken'] = idcs_access_token
 
     if description is not None:
         _details['description'] = description
 
     if is_byol is not None:
         _details['isByol'] = is_byol
-
-    if idcs_access_token is not None:
-        _details['idcsAccessToken'] = idcs_access_token
 
     if federated_user_id is not None:
         _details['federatedUserId'] = federated_user_id
@@ -1249,6 +1247,7 @@ def stop_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--storage-size-in-tbs', help=u"""Storage size in TBs""")
 @cli_util.option('--replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--total-ocpu-capacity', type=click.INT, help=u"""Number of total OCPUs to allocate""")
+@cli_util.option('--load-balancer-shape', help=u"""Type of Load Balancer shape - LB_100_MBPS or LB_400_MBPS. Default is LB_100_MBPS.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1261,7 +1260,7 @@ def stop_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'replicas': {'module': 'blockchain', 'class': 'ReplicaDetails'}, 'freeform-tags': {'module': 'blockchain', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'blockchain', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_blockchain_platform(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, description, storage_size_in_tbs, replicas, total_ocpu_capacity, freeform_tags, defined_tags, if_match):
+def update_blockchain_platform(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, description, storage_size_in_tbs, replicas, total_ocpu_capacity, load_balancer_shape, freeform_tags, defined_tags, if_match):
 
     if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
@@ -1288,6 +1287,9 @@ def update_blockchain_platform(ctx, from_json, force, wait_for_state, max_wait_s
 
     if total_ocpu_capacity is not None:
         _details['totalOcpuCapacity'] = total_ocpu_capacity
+
+    if load_balancer_shape is not None:
+        _details['loadBalancerShape'] = load_balancer_shape
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

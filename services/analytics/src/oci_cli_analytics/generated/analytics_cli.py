@@ -562,6 +562,134 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
+@analytics_instance_group.command(name=cli_util.override('analytics.create_private_access_channel.command_name', 'create-private-access-channel'), help=u"""Create an Private access Channel for the Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createPrivateAccessChannel)""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--display-name', required=True, help=u"""Display Name of the Private Access Channel.""")
+@cli_util.option('--vcn-id', required=True, help=u"""OCID of the customer VCN peered with private access channel.""")
+@cli_util.option('--subnet-id', required=True, help=u"""OCID of the customer subnet connected to private access channel.""")
+@cli_util.option('--private-source-dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@cli_util.wrap_exceptions
+def create_private_access_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones):
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['vcnId'] = vcn_id
+    _details['subnetId'] = subnet_id
+    _details['privateSourceDnsZones'] = cli_util.parse_json_parameter("private_source_dns_zones", private_source_dns_zones)
+
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.create_private_access_channel(
+        analytics_instance_id=analytics_instance_id,
+        create_private_access_channel_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.create_vanity_url.command_name', 'create-vanity-url'), help=u"""Allows specifying a custom host name to be used to access the analytics instance.  This requires prior setup of DNS entry and certificate for this host. \n[Command Reference](createVanityUrl)""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--hosts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of fully qualified hostnames supported by this vanity URL definition (max of 3).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-key', required=True, help=u"""PEM Private key for HTTPS connections.""")
+@cli_util.option('--public-certificate', required=True, help=u"""PEM certificate for HTTPS connections.""")
+@cli_util.option('--ca-certificate', required=True, help=u"""PEM CA certificate(s) for HTTPS connections. This may include multiple PEM certificates.""")
+@cli_util.option('--description', help=u"""Optional description.""")
+@cli_util.option('--passphrase', help=u"""Passphrase for the PEM Private key (if any).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'hosts': {'module': 'analytics', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hosts': {'module': 'analytics', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def create_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, hosts, private_key, public_certificate, ca_certificate, description, passphrase):
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['hosts'] = cli_util.parse_json_parameter("hosts", hosts)
+    _details['privateKey'] = private_key
+    _details['publicCertificate'] = public_certificate
+    _details['caCertificate'] = ca_certificate
+
+    if description is not None:
+        _details['description'] = description
+
+    if passphrase is not None:
+        _details['passphrase'] = passphrase
+
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.create_vanity_url(
+        analytics_instance_id=analytics_instance_id,
+        create_vanity_url_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @analytics_instance_group.command(name=cli_util.override('analytics.delete_analytics_instance.command_name', 'delete'), help=u"""Terminates the specified Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](deleteAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -586,6 +714,120 @@ def delete_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
     client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.delete_analytics_instance(
         analytics_instance_id=analytics_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.delete_private_access_channel.command_name', 'delete-private-access-channel'), help=u"""Delete an Analytics instance's Private access channel with the given unique identifier key. \n[Command Reference](deletePrivateAccessChannel)""")
+@cli_util.option('--private-access-channel-key', required=True, help=u"""The unique identifier key of the Private Access Channel.""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_private_access_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_access_channel_key, analytics_instance_id, if_match):
+
+    if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
+        raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.delete_private_access_channel(
+        private_access_channel_key=private_access_channel_key,
+        analytics_instance_id=analytics_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.delete_vanity_url.command_name', 'delete-vanity-url'), help=u"""Allows deleting a previously created vanity url. \n[Command Reference](deleteVanityUrl)""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--vanity-url-key', required=True, help=u"""Specify unique identifier key of a vanity url to update or delete.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, vanity_url_key, if_match):
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    if isinstance(vanity_url_key, six.string_types) and len(vanity_url_key.strip()) == 0:
+        raise click.UsageError('Parameter --vanity-url-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.delete_vanity_url(
+        analytics_instance_id=analytics_instance_id,
+        vanity_url_key=vanity_url_key,
         **kwargs
     )
     if wait_for_state:
@@ -656,6 +898,33 @@ def get_analytics_instance(ctx, from_json, analytics_instance_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.get_analytics_instance(
+        analytics_instance_id=analytics_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.get_private_access_channel.command_name', 'get-private-access-channel'), help=u"""Retrieve private access channel in the specified Analytics Instance. \n[Command Reference](getPrivateAccessChannel)""")
+@cli_util.option('--private-access-channel-key', required=True, help=u"""The unique identifier key of the Private Access Channel.""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'analytics', 'class': 'PrivateAccessChannel'})
+@cli_util.wrap_exceptions
+def get_private_access_channel(ctx, from_json, private_access_channel_key, analytics_instance_id):
+
+    if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
+        raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.get_private_access_channel(
+        private_access_channel_key=private_access_channel_key,
         analytics_instance_id=analytics_instance_id,
         **kwargs
     )
@@ -861,7 +1130,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('analytics.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource associated with a work request.""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["ANALYTICS_INSTANCE"]), help=u"""Type of the resource associated with a work request""")
+@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["ANALYTICS_INSTANCE"]), help=u"""Type of the resource associated with a work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""One or more work request status values to filter on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1163,4 +1432,157 @@ def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_se
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.update_private_access_channel.command_name', 'update-private-access-channel'), help=u"""Update the Private Access Channel with the given unique identifier key in the specified Analytics Instance. \n[Command Reference](updatePrivateAccessChannel)""")
+@cli_util.option('--private-access-channel-key', required=True, help=u"""The unique identifier key of the Private Access Channel.""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--display-name', help=u"""Display Name of the Private Access Channel.""")
+@cli_util.option('--vcn-id', help=u"""OCID of the customer VCN peered with private access channel.""")
+@cli_util.option('--subnet-id', help=u"""OCID of the customer subnet connected to private access channel.""")
+@cli_util.option('--private-source-dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.
+
+This option is a JSON list with items of type PrivateSourceDnsZone.  For documentation on PrivateSourceDnsZone please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/PrivateSourceDnsZone.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@cli_util.wrap_exceptions
+def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_access_channel_key, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones, if_match):
+
+    if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
+        raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+    if not force:
+        if private_source_dns_zones:
+            if not click.confirm("WARNING: Updates to private-source-dns-zones will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if vcn_id is not None:
+        _details['vcnId'] = vcn_id
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if private_source_dns_zones is not None:
+        _details['privateSourceDnsZones'] = cli_util.parse_json_parameter("private_source_dns_zones", private_source_dns_zones)
+
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.update_private_access_channel(
+        private_access_channel_key=private_access_channel_key,
+        analytics_instance_id=analytics_instance_id,
+        update_private_access_channel_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.update_vanity_url.command_name', 'update-vanity-url'), help=u"""Allows uploading a new certificate for a vanity url, which will have to be done when the current certificate is expiring. \n[Command Reference](updateVanityUrl)""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--vanity-url-key', required=True, help=u"""Specify unique identifier key of a vanity url to update or delete.""")
+@cli_util.option('--private-key', required=True, help=u"""PEM Private key for HTTPS connections.""")
+@cli_util.option('--public-certificate', required=True, help=u"""PEM certificate for HTTPS connections.""")
+@cli_util.option('--ca-certificate', required=True, help=u"""PEM CA certificate(s) for HTTPS connections. This may include multiple PEM certificates.""")
+@cli_util.option('--passphrase', help=u"""Passphrase for the PEM Private key (if any).""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_vanity_url(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, vanity_url_key, private_key, public_certificate, ca_certificate, passphrase, if_match):
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    if isinstance(vanity_url_key, six.string_types) and len(vanity_url_key.strip()) == 0:
+        raise click.UsageError('Parameter --vanity-url-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['privateKey'] = private_key
+    _details['publicCertificate'] = public_certificate
+    _details['caCertificate'] = ca_certificate
+
+    if passphrase is not None:
+        _details['passphrase'] = passphrase
+
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.update_vanity_url(
+        analytics_instance_id=analytics_instance_id,
+        vanity_url_key=vanity_url_key,
+        update_vanity_url_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

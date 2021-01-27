@@ -1274,15 +1274,16 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @stack_group.command(name=cli_util.override('resource_manager.detect_stack_drift.command_name', 'detect-stack-drift'), help=u"""Checks drift status for the specified stack. \n[Command Reference](detectStackDrift)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--resource-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of resources in the specified stack to detect drift for. Each resource is identified by a resource address, which is a case-insensitive string derived from the resource type and name specified in the stack's Terraform configuration plus an optional index. For example, the resource address for the fourth Compute instance with the name \"test_instance\" is oci_core_instance.test_instance[3]. For more details and examples of resource addresses, see the Terraform documentation at [Resource spec].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'resource-addresses': {'module': 'resource_manager', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-addresses': {'module': 'resource_manager', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match):
+def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match, resource_addresses):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
@@ -1291,9 +1292,16 @@ def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if resource_addresses is not None:
+        _details['resourceAddresses'] = cli_util.parse_json_parameter("resource_addresses", resource_addresses)
+
     client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.detect_stack_drift(
         stack_id=stack_id,
+        detect_stack_drift_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1807,8 +1815,9 @@ def list_resource_discovery_services(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@stack_resource_drift_summary_group.command(name=cli_util.override('resource_manager.list_stack_resource_drift_details.command_name', 'list-stack-resource-drift-details'), help=u"""Lists drift status details for each resource defined in the specified stack. The drift status details for a given resource indicate differences, if any, between the actual state and the expected (defined) state for that resource. \n[Command Reference](listStackResourceDriftDetails)""")
+@stack_resource_drift_summary_group.command(name=cli_util.override('resource_manager.list_stack_resource_drift_details.command_name', 'list-stack-resource-drift-details'), help=u"""Lists drift status details for each resource defined in the specified stack. The drift status details for a given resource indicate differences, if any, between the actual state and the expected (defined) state for that resource. The drift status details correspond to the specified work request (`workRequestId`). If no work request is specified, then the drift status details correspond to the latest completed work request for the stack. \n[Command Reference](listStackResourceDriftDetails)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
+@cli_util.option('--work-request-id', help=u"""The [OCID] of the work request.""")
 @cli_util.option('--resource-drift-status', type=custom_types.CliCaseInsensitiveChoice(["NOT_CHECKED", "IN_SYNC", "MODIFIED", "DELETED"]), multiple=True, help=u"""A filter that returns only resources that match the given drift status. The value is case-insensitive. Allowable values -   - NOT_CHECKED   - MODIFIED   - IN_SYNC   - DELETED""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
@@ -1819,7 +1828,7 @@ def list_resource_discovery_services(ctx, from_json, all_pages, compartment_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_manager', 'class': 'StackResourceDriftCollection'})
 @cli_util.wrap_exceptions
-def list_stack_resource_drift_details(ctx, from_json, all_pages, page_size, stack_id, resource_drift_status, limit, page):
+def list_stack_resource_drift_details(ctx, from_json, all_pages, page_size, stack_id, work_request_id, resource_drift_status, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1828,6 +1837,8 @@ def list_stack_resource_drift_details(ctx, from_json, all_pages, page_size, stac
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if work_request_id is not None:
+        kwargs['work_request_id'] = work_request_id
     if resource_drift_status is not None and len(resource_drift_status) > 0:
         kwargs['resource_drift_status'] = resource_drift_status
     if limit is not None:
