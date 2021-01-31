@@ -3,7 +3,7 @@ Oracle Cloud Infrastructure CLI
 
 About
 =====
-This is the command line interface for Oracle Cloud Infrastructure.
+This is the command line interface for Oracle Cloud Infrastructure operations.
 
 The project is open source and maintained by Oracle Corp. The home page for the project is `here`__.
 
