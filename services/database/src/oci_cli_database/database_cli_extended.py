@@ -1613,3 +1613,428 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
 
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.flex_component_collection_group, "flex-component")
 cli_util.rename_command(database_cli, database_cli.flex_component_collection_group, database_cli.list_flex_components, "list")
+
+
+# oci db external-container-database -> oci db external-cdb
+# oci db external-pluggable-database -> oci db external-pdb
+# oci db external-non-container-database -> oci db external-non-cdb
+# oci db external-database-connector -> oci db external-db-connector
+# oci db external-container-database enable-external-container-database-database-management -> oci db external-container-database enable-db-management
+# oci db external-non-container-database enable-external-non-container-database-database-management -> oci db external-non-container-database enable-db-management
+# oci db external-pluggable-database enable-external-pluggable-database-database-management -> oci db external-pluggable-database enable-db-management
+# oci db external-container-database disable-external-container-database-database-management -> oci db external-container-database disable-db-management
+# oci db external-non-container-database disable-external-non-container-database-database-management -> oci db external-non-container-database disable-db-management
+# oci db external-pluggable-database disable-external-pluggable-database-database-management -> oci db external-pluggable-database disable-db-management
+# oci db external-database-connector create-external-database-connector-create-external-macs-connector-details -> oci db external-database-connector create-macs-connector
+# oci db external-database-connector check-external-database-connector-connection-status -> oci db external-database-connector check-connection-status
+# oci db external-container-database list-external-pluggable-databases -> oci db external-container-database list-external-pdbs
+# oci db external-container-database scan-external-container-database-pluggable-databases -> oci db external-container-database scan-pluggable-databases
+# Remove oci db external-database-connector create (user should use concrete subtypes, such as create-macs-connector)
+# Remove oci db external-database-connector update (user should use concrete subtypes, such as update-macs-connector)
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.external_container_database_group, "external-cdb")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.external_pluggable_database_group, "external-pdb")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.external_non_container_database_group, "external-non-cdb")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.external_database_connector_group, "external-db-connector")
+cli_util.rename_command(database_cli, database_cli.external_container_database_group, database_cli.enable_external_container_database_database_management, "enable-db-management")
+cli_util.rename_command(database_cli, database_cli.external_non_container_database_group, database_cli.enable_external_non_container_database_database_management, "enable-db-management")
+cli_util.rename_command(database_cli, database_cli.external_pluggable_database_group, database_cli.enable_external_pluggable_database_database_management, "enable-db-management")
+cli_util.rename_command(database_cli, database_cli.external_container_database_group, database_cli.disable_external_container_database_database_management, "disable-db-management")
+cli_util.rename_command(database_cli, database_cli.external_non_container_database_group, database_cli.disable_external_non_container_database_database_management, "disable-db-management")
+cli_util.rename_command(database_cli, database_cli.external_pluggable_database_group, database_cli.disable_external_pluggable_database_database_management, "disable-db-management")
+cli_util.rename_command(database_cli, database_cli.external_database_connector_group, database_cli.create_external_database_connector_create_external_macs_connector_details, "create-macs-connector")
+cli_util.rename_command(database_cli, database_cli.external_database_connector_group, database_cli.check_external_database_connector_connection_status, "check-connection-status")
+
+cli_util.rename_command(database_cli, database_cli.external_container_database_group, database_cli.scan_external_container_database_pluggable_databases, "scan-pluggable-databases")
+cli_util.rename_command(database_cli, database_cli.external_database_connector_group, database_cli.update_external_database_connector_update_external_macs_connector_details, "update-macs-connector")
+database_cli.external_database_connector_group.commands.pop(database_cli.create_external_database_connector.name)
+database_cli.external_database_connector_group.commands.pop(database_cli.update_external_database_connector.name)
+
+database_cli.external_pluggable_database_group.commands.pop(database_cli.list_external_pluggable_databases.name)
+# cli_util.rename_command(database_cli, database_cli.external_container_database_group, database_cli.list_external_pluggable_databases, "")
+
+
+@cli_util.copy_params_from_generated_command(database_cli.change_external_container_database_compartment, params_to_exclude=['external_container_database_id'])
+@database_cli.external_container_database_group.command(name=database_cli.change_external_container_database_compartment.name, help=database_cli.change_external_container_database_compartment.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_external_container_database_compartment_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.change_external_container_database_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.delete_external_container_database, params_to_exclude=['external_container_database_id'])
+@database_cli.external_container_database_group.command(name=database_cli.delete_external_container_database.name, help=database_cli.delete_external_container_database.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_container_database_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.delete_external_container_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.disable_external_container_database_database_management, params_to_exclude=['external_container_database_id'])
+@database_cli.external_container_database_group.command(name=database_cli.disable_external_container_database_database_management.name, help=database_cli.disable_external_container_database_database_management.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_external_container_database_database_management_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.disable_external_container_database_database_management, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.enable_external_container_database_database_management, params_to_exclude=['external_container_database_id', 'external_database_connector_id'])
+@database_cli.external_container_database_group.command(name=database_cli.enable_external_container_database_database_management.name, help=database_cli.enable_external_container_database_database_management.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the [external database connector]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_external_container_database_database_management_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.enable_external_container_database_database_management, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_external_container_database, params_to_exclude=['external_container_database_id'])
+@database_cli.external_container_database_group.command(name=database_cli.get_external_container_database.name, help=database_cli.get_external_container_database.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalContainerDatabase'})
+@cli_util.wrap_exceptions
+def get_external_container_database_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.get_external_container_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.list_external_pluggable_databases, params_to_exclude=['external_container_database_id'])
+@database_cli.external_container_database_group.command(name="list-external-pdbs", help=database_cli.list_external_pluggable_databases.help)
+@cli_util.option('--external-cdb-id', help=u"""The ExternalContainerDatabase [OCID].""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[ExternalPluggableDatabaseSummary]'})
+@cli_util.wrap_exceptions
+def list_external_pluggable_databases_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.list_external_pluggable_databases, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.scan_external_container_database_pluggable_databases, params_to_exclude=['external_container_database_id', 'external_database_connector_id'])
+@database_cli.external_container_database_group.command(name=database_cli.scan_external_container_database_pluggable_databases.name, help=database_cli.scan_external_container_database_pluggable_databases.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`). [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def scan_external_container_database_pluggable_databases_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.scan_external_container_database_pluggable_databases, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_external_container_database, params_to_exclude=['external_container_database_id', 'display_name'])
+@database_cli.external_container_database_group.command(name=database_cli.update_external_container_database.name, help=database_cli.update_external_container_database.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The ExternalContainerDatabase [OCID]. [required]""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the external database. The name does not have to be unique.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExternalContainerDatabase'})
+@cli_util.wrap_exceptions
+def update_external_container_database_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.update_external_container_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.check_external_database_connector_connection_status, params_to_exclude=['external_database_connector_id'])
+@database_cli.external_database_connector_group.command(name=database_cli.check_external_database_connector_connection_status.name, help=database_cli.check_external_database_connector_connection_status.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`). [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def check_external_database_connector_connection_status_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.check_external_database_connector_connection_status, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.delete_external_database_connector, params_to_exclude=['external_database_connector_id'])
+@database_cli.external_database_connector_group.command(name=database_cli.delete_external_database_connector.name, help=database_cli.delete_external_database_connector.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`). [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_database_connector_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.delete_external_database_connector, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_external_database_connector, params_to_exclude=['external_database_connector_id'])
+@database_cli.external_database_connector_group.command(name=database_cli.get_external_database_connector.name, help=database_cli.get_external_database_connector.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`). [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalDatabaseConnector'})
+@cli_util.wrap_exceptions
+def get_external_database_connector_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.get_external_database_connector, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_external_database_connector, params_to_exclude=['external_database_connector_id'])
+@database_cli.external_database_connector_group.command(name=database_cli.update_external_database_connector.name, help=database_cli.update_external_database_connector.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`). [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExternalDatabaseConnector'})
+@cli_util.wrap_exceptions
+def update_external_database_connector_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.update_external_database_connector, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_external_database_connector_update_external_macs_connector_details, params_to_exclude=['external_database_connector_id'])
+@database_cli.external_database_connector_group.command(name=database_cli.update_external_database_connector_update_external_macs_connector_details.name, help=database_cli.update_external_database_connector_update_external_macs_connector_details.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`). [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-string': {'module': 'database', 'class': 'DatabaseConnectionString'}, 'connection-credentials': {'module': 'database', 'class': 'DatabaseConnectionCredentials'}}, output_type={'module': 'database', 'class': 'ExternalDatabaseConnector'})
+@cli_util.wrap_exceptions
+def update_external_database_connector_update_external_macs_connector_details_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    ctx.invoke(database_cli.update_external_database_connector_update_external_macs_connector_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.change_external_non_container_database_compartment, params_to_exclude=['external_non_container_database_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.change_external_non_container_database_compartment.name, help=database_cli.change_external_non_container_database_compartment.help)
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_external_non_container_database_compartment_extended(ctx, **kwargs):
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.change_external_non_container_database_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.delete_external_non_container_database, params_to_exclude=['external_non_container_database_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.delete_external_non_container_database.name, help=database_cli.delete_external_non_container_database.help)
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_non_container_database_extended(ctx, **kwargs):
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.delete_external_non_container_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.disable_external_non_container_database_database_management, params_to_exclude=['external_non_container_database_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.disable_external_non_container_database_database_management.name, help=database_cli.disable_external_non_container_database_database_management.help)
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_external_non_container_database_database_management_extended(ctx, **kwargs):
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.disable_external_non_container_database_database_management, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.enable_external_non_container_database_database_management, params_to_exclude=['external_database_connector_id', 'external_non_container_database_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.enable_external_non_container_database_database_management.name, help=database_cli.enable_external_non_container_database_database_management.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the [external database connector]. [required]""")
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_external_non_container_database_database_management_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.enable_external_non_container_database_database_management, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_external_non_container_database, params_to_exclude=['external_non_container_database_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.get_external_non_container_database.name, help=database_cli.get_external_non_container_database.help)
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalNonContainerDatabase'})
+@cli_util.wrap_exceptions
+def get_external_non_container_database_extended(ctx, **kwargs):
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.get_external_non_container_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_external_non_container_database, params_to_exclude=['external_non_container_database_id', 'display_name'])
+@database_cli.external_non_container_database_group.command(name=database_cli.update_external_non_container_database.name, help=database_cli.update_external_non_container_database.help)
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the external database. The name does not have to be unique.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExternalNonContainerDatabase'})
+@cli_util.wrap_exceptions
+def update_external_non_container_database_extended(ctx, **kwargs):
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.update_external_non_container_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.change_external_pluggable_database_compartment, params_to_exclude=['external_pluggable_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.change_external_pluggable_database_compartment.name, help=database_cli.change_external_pluggable_database_compartment.help)
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_external_pluggable_database_compartment_extended(ctx, **kwargs):
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.change_external_pluggable_database_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_external_pluggable_database, params_to_exclude=['external_container_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.create_external_pluggable_database.name, help=database_cli.create_external_pluggable_database.help)
+@cli_util.option('--external-cdb-id', required=True, help=u"""The [OCID] of the [external container database] that contains the specified [external pluggable database] resource. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExternalPluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_external_pluggable_database_extended(ctx, **kwargs):
+    if 'external_cdb_id' in kwargs:
+        kwargs['external_container_database_id'] = kwargs['external_cdb_id']
+        kwargs.pop('external_cdb_id')
+
+    ctx.invoke(database_cli.create_external_pluggable_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.delete_external_pluggable_database, params_to_exclude=['external_pluggable_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.delete_external_pluggable_database.name, help=database_cli.delete_external_pluggable_database.help)
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_pluggable_database_extended(ctx, **kwargs):
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.delete_external_pluggable_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.disable_external_pluggable_database_database_management, params_to_exclude=['external_pluggable_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.disable_external_pluggable_database_database_management.name, help=database_cli.disable_external_pluggable_database_database_management.help)
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_external_pluggable_database_database_management_extended(ctx, **kwargs):
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.disable_external_pluggable_database_database_management, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.enable_external_pluggable_database_database_management, params_to_exclude=['external_database_connector_id', 'external_pluggable_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.enable_external_pluggable_database_database_management.name, help=database_cli.enable_external_pluggable_database_database_management.help)
+@cli_util.option('--external-db-connector-id', required=True, help=u"""The [OCID] of the [external database connector]. [required]""")
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_external_pluggable_database_database_management_extended(ctx, **kwargs):
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.enable_external_pluggable_database_database_management, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_external_pluggable_database, params_to_exclude=['external_pluggable_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.get_external_pluggable_database.name, help=database_cli.get_external_pluggable_database.help)
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalPluggableDatabase'})
+@cli_util.wrap_exceptions
+def get_external_pluggable_database_extended(ctx, **kwargs):
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.get_external_pluggable_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_external_pluggable_database, params_to_exclude=['external_pluggable_database_id', 'display_name'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.update_external_pluggable_database.name, help=database_cli.update_external_pluggable_database.help)
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the external database. The name does not have to be unique.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExternalPluggableDatabase'})
+@cli_util.wrap_exceptions
+def update_external_pluggable_database_extended(ctx, **kwargs):
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.update_external_pluggable_database, **kwargs)

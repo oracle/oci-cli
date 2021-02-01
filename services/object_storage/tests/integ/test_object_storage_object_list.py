@@ -9,13 +9,23 @@ from tests import util
 from tests import test_config_container
 
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
-BUCKET_NAME = "kern_test"
+BUCKET_NAME = "ObjectListBucket"
 
 
 @pytest.fixture(autouse=True, scope='function')
 def vcr_fixture(request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('{name}.yml'.format(name=request.function.__name__)):
         yield
+
+
+@pytest.fixture(scope='module', autouse=True)
+def test_data(object_storage_client):
+    # Setup test data
+
+    # Create the bucket with 2 objects
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, BUCKET_NAME)
+    util.create_bucket(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID,
+                       BUCKET_NAME, objects=['object1', 'object2'])
 
 
 def test_os_object_list(runner, config_file, config_profile):

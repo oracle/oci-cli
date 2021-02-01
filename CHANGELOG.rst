@@ -6,6 +6,61 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.21.0 - 2021-02-02
+-------------------
+Added
+~~~~~
+
+* Support for checking if a contact for Exadata infrastructure is valid in My Oracle Support in the Database service
+
+  * ``oci db exadata-infrastructure create --contacts``
+  * ``oci db exadata-infrastructure update --contacts``
+
+* Support for external databases in the Database service
+  
+  * ``oci db external-cdb``
+  * ``oci db external-database-connector``
+  * ``oci db external-pdb``
+  * ``oci db external-non-cdb``
+
+* Support for uploading objects to the infrequent access storage tier in the Object Storage service
+  
+  * ``oci os object put --storage-tier``
+  * ``oci os object copy --destination-object-storage-tier``
+  * ``oci os object bulk-upload --storage-tier`` 
+
+* Support for changing the storage tier of existing objects in the Object Storage service
+
+  * ``oci os object update-storage-tier --storage-tier`` 
+
+* Support for private templates in the Resource Manager service
+
+  * ``oci resource-manager template create``
+  * ``oci resource-manager template get``
+  * ``oci resource-manager template delete``
+  * ``oci resource-manager template get-template-logo``
+  * ``oci resource-manager template get-template-tf-config``
+  * ``oci resource-manager template list``
+  * ``oci resource-manager template update``
+  * ``oci resource-manager template list-template-categories``
+  * ``oci resource-manager template change-compartment``
+
+* Support for multiple encryption domains on IPSec tunnels in the Networking service
+  
+  * ``oci network ip-sec-tunnel update --encryption-domain-config``
+
+Changed
+~~~~~~~
+
+* Input parameter ``--vnic-id`` is now optional for the command ``oci network ipv6 create``
+
+* [Breaking] Response field ``vnicId`` is now optional for the following commands
+
+  * ``oci network ipv6 create``
+  * ``oci network ipv6 get``
+  * ``oci network ipv6 update``
+
+
 2.20.0 - 2021-01-26
 -------------------
 Added

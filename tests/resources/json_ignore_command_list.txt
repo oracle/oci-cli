@@ -15,6 +15,7 @@ os, object, put
 os, object, reencrypt
 os, object, resume-put
 os, object, bulk-delete-versions
+os, object, update-storage-tier
 resource-manager, job, create-import-tf-state-job
 resource-manager, stack, create
 resource-manager, stack, update

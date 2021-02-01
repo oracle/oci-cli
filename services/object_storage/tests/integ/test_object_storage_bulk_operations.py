@@ -501,12 +501,20 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--namespace', util.NAMESPACE,
         '--bucket-name', create_bucket_request.name,
         '--src-dir', root_bulk_put_folder,
-        '--part-size', '10'
+        '--part-size', '10',
+        '--storage-tier', 'InfrequentAccess'
     ])
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--fields=name,size,storageTier', '--all', '--page-size', '1000'])
+    parsed_result = json.loads(result.output)
+    if 'data' in parsed_result:
+        objects = parsed_result['data']
+        for obj in objects:
+            assert 'InfrequentAccess' == obj['storage-tier']
 
     result = invoke([
         'os', 'object', 'bulk-upload',
@@ -514,12 +522,20 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--bucket-name', create_bucket_request.name,
         '--src-dir', root_bulk_put_folder,
         '--no-multipart',
-        '--overwrite'
+        '--overwrite',
+        '--storage-tier', 'InfrequentAccess'
     ])
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--fields=name,size,storageTier', '--all', '--page-size', '1000'])
+    parsed_result = json.loads(result.output)
+    if 'data' in parsed_result:
+        objects = parsed_result['data']
+        for obj in objects:
+            assert 'InfrequentAccess' == obj['storage-tier']
 
     result = invoke([
         'os', 'object', 'bulk-upload',

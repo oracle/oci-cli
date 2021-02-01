@@ -296,3 +296,85 @@ cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, re
 
 # Pop the stack_resource_drift_summary group
 resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.stack_resource_drift_summary_group.name)
+
+
+# oci resource-manager stack create-stack-create-stack-template-config-source-details -> oci resource-manager stack create-from-template
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_stack_template_config_source_details, "create-from-template")
+
+
+# oci resource-manager template create-template-create-template-zip-upload-config-source-details -> oci resource-manager template create
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.template_group, resourcemanager_cli.create_template_create_template_zip_upload_config_source_details, "create")
+
+
+# oci resource-manager template update-template-update-template-zip-upload-config-source-details -> oci resource-manager template update
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.template_group, resourcemanager_cli.update_template_update_template_zip_upload_config_source_details, "update")
+
+
+# Remove create from oci resource-manager template
+resourcemanager_cli.template_group.commands.pop(resourcemanager_cli.create_template.name)
+
+
+# Remove update from oci resource-manager template
+resourcemanager_cli.template_group.commands.pop(resourcemanager_cli.update_template.name)
+
+
+# Move commands under 'oci resource-manager template-category-summary' -> 'oci resource-manager template'
+resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.template_category_summary_group.name)
+resourcemanager_cli.template_group.add_command(resourcemanager_cli.list_template_categories)
+
+
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_stack_create_stack_template_config_source_details, params_to_exclude=['config_source_template_id', 'config_source_working_directory'])
+@resourcemanager_cli.stack_group.command(name=resourcemanager_cli.create_stack_create_stack_template_config_source_details.name, help=resourcemanager_cli.create_stack_create_stack_template_config_source_details.help)
+@cli_util.option('--template-id', required=True, help=u"""[required]""")
+@cli_util.option('--working-directory', help=u"""File path to the directory from which Terraform runs. If not specified, the root directory is used. This parameter is ignored for the `configSourceType` value of `COMPARTMENT_CONFIG_SOURCE`.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@cli_util.wrap_exceptions
+def create_stack_create_stack_template_config_source_details_extended(ctx, **kwargs):
+    if 'template_id' in kwargs:
+        kwargs['config_source_template_id'] = kwargs['template_id']
+        kwargs.pop('template_id')
+
+    if 'working_directory' in kwargs:
+        kwargs['config_source_working_directory'] = kwargs['working_directory']
+        kwargs.pop('working_directory')
+
+    ctx.invoke(resourcemanager_cli.create_stack_create_stack_template_config_source_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_template_create_template_zip_upload_config_source_details, params_to_exclude=['logo_file_base64_encoded', 'template_config_source_zip_file_base64_encoded'])
+@resourcemanager_cli.template_group.command(name=resourcemanager_cli.create_template_create_template_zip_upload_config_source_details.name, help=resourcemanager_cli.create_template_create_template_zip_upload_config_source_details.help)
+@cli_util.option('--logo-file', help=u"""Base64-encoded logo for the template.""")
+@cli_util.option('--config-source', required=True, help=u"""[required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def create_template_create_template_zip_upload_config_source_details_extended(ctx, **kwargs):
+    if 'logo_file' in kwargs:
+        kwargs['logo_file_base64_encoded'] = kwargs['logo_file']
+        kwargs.pop('logo_file')
+
+    if 'config_source' in kwargs:
+        kwargs['template_config_source_zip_file_base64_encoded'] = kwargs['config_source']
+        kwargs.pop('config_source')
+
+    ctx.invoke(resourcemanager_cli.create_template_create_template_zip_upload_config_source_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.update_template_update_template_zip_upload_config_source_details, params_to_exclude=['logo_file_base64_encoded', 'template_config_source_zip_file_base64_encoded'])
+@resourcemanager_cli.template_group.command(name=resourcemanager_cli.update_template_update_template_zip_upload_config_source_details.name, help=resourcemanager_cli.update_template_update_template_zip_upload_config_source_details.help)
+@cli_util.option('--logo-file', help=u"""Base64-encoded logo for the template.""")
+@cli_util.option('--config-source', help=u"""""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def update_template_update_template_zip_upload_config_source_details_extended(ctx, **kwargs):
+    if 'logo_file' in kwargs:
+        kwargs['logo_file_base64_encoded'] = kwargs['logo_file']
+        kwargs.pop('logo_file')
+
+    if 'config_source' in kwargs:
+        kwargs['template_config_source_zip_file_base64_encoded'] = kwargs['config_source']
+        kwargs.pop('config_source')
+
+    ctx.invoke(resourcemanager_cli.update_template_update_template_zip_upload_config_source_details, **kwargs)

@@ -603,7 +603,7 @@ def ensure_test_data(api, namespace, compartment, bucket_prefix):
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket4')
     create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket4', LARGE_FILE_NAME, file_name=LARGE_FILE_LOCATION)
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket5', {'foo1': 'bar1', 'foo2': 'bar2'})
-    create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket6')
+    create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket6', versioning=True)
 
     for num in range(1, 213):
         create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket6', 'ob' + str(num))
@@ -625,16 +625,16 @@ def ensure_test_data(api, namespace, compartment, bucket_prefix):
             raise error
 
     api.put_object(namespace, test_data_metadata_bucket, test_data_version_object, TEST_DATA_VERSION)
-    print("Cleaning test data.")
-    clear_test_data(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket')
 
 
-def create_bucket(api, namespace, compartment, bucket_name, metadata=None, objects=None):
+def create_bucket(api, namespace, compartment, bucket_name, metadata=None, objects=None, versioning=False):
     """Deletes all buckets and objects in the given compartment."""
     request = oci.object_storage.models.CreateBucketDetails()
     request.name = bucket_name
     request.compartment_id = compartment
     request.metadata = metadata
+    if versioning:
+        request.versioning = 'Enabled'
     api.create_bucket(namespace, request)
     show_progress()
 
@@ -667,7 +667,8 @@ total_buckets: {bucket_count}
 
 def clear_test_data(api, namespace, compartment, bucket_prefix):
     print('Deleting test data.')
-    bucket_list = []
+    bucket_no_versioned_list = []
+    bucket_versioned_list = []
     next_page = None
     count = 0
     start_time = time.time()
@@ -676,8 +677,12 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
             response = api.list_buckets(namespace, compartment, page=next_page)
         else:
             response = api.list_buckets(namespace, compartment)
-
-        bucket_list.extend([bucket.name for bucket in response.data])
+        for bucket in response.data:
+            bucket_response = api.get_bucket(namespace, bucket.name)
+            if bucket_response.data.versioning == 'Enabled':
+                bucket_versioned_list.extend([bucket.name])
+            else:
+                bucket_no_versioned_list.extend([bucket.name])
 
         count += 1
         if count > 100:
@@ -686,10 +691,9 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
         if not response.has_next_page:
             break
         next_page = response.next_page
-
     object_count = 0
     bucket_count = 0
-    for bucket in bucket_list:
+    for bucket in bucket_no_versioned_list:
         # only delete buckets starting with prefix (i.e. CliReadOnlyTestBucket)
         if bucket_prefix not in bucket:
             continue
@@ -715,6 +719,35 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
 
         for obj in object_list:
             api.delete_object(namespace, bucket, obj)
+
+        object_count += len(object_list)
+        bucket_count += 1
+        api.delete_bucket(namespace, bucket)
+        show_progress()
+
+    for bucket in bucket_versioned_list:
+        # only delete buckets starting with prefix (i.e. CliReadOnlyTestBucket)
+        if bucket_prefix not in bucket:
+            continue
+
+        object_list = []
+        list_args = {}
+        list_args['page-size'] = 100
+        next_page = None
+        count = 0
+        while count == 0 or next_page is not None:
+            response = api.list_object_versions(namespace, bucket, **list_args)
+            items = response.data.items
+            next_page = response.headers.get('opc-next-page')
+            object_list.extend([(obj.name, obj.version_id) for obj in items])
+            count += 1
+            if count > 100:
+                raise RuntimeError("Too many pages, something is probably wrong.")
+            if next_page:
+                list_args['page'] = next_page
+
+        for obj_tuple in object_list:
+            api.delete_object(namespace, bucket, obj_tuple[0], version_id=obj_tuple[1])
 
         object_count += len(object_list)
         bucket_count += 1

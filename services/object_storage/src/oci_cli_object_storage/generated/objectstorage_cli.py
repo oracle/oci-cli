@@ -173,8 +173,8 @@ def cancel_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--upload-id', required=True, help=u"""The upload ID for a multipart upload.""")
 @cli_util.option('--parts-to-commit', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The part numbers and entity tags (ETags) for the parts to be committed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parts-to-exclude', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The part numbers for the parts to be excluded from the completed object. Each part created for this upload must be in either partsToExclude or partsToCommit, but cannot be in both.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @json_skeleton_utils.get_cli_json_input_option({'parts-to-commit': {'module': 'object_storage', 'class': 'list[CommitMultipartUploadPartDetails]'}, 'parts-to-exclude': {'module': 'object_storage', 'class': 'list[integer]'}})
 @cli_util.help_option
 @click.pass_context
@@ -223,12 +223,13 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @cli_util.option('--destination-region', required=True, help=u"""The destination region the object will be copied to, for example \"us-ashburn-1\".""")
 @cli_util.option('--destination-namespace', required=True, help=u"""The destination Object Storage namespace the object will be copied to.""")
 @cli_util.option('--destination-bucket', required=True, help=u"""The destination bucket the object will be copied to.""")
-@cli_util.option('--destination-object-name', required=True, help=u"""The name of the destination object resulting from the copy operation.""")
+@cli_util.option('--destination-object-name', required=True, help=u"""The name of the destination object resulting from the copy operation. Avoid entering confidential information.""")
 @cli_util.option('--source-object-if-match-e-tag', help=u"""The entity tag (ETag) to match against that of the source object. Used to confirm that the source object with a given name is the version of that object storing a specified ETag.""")
 @cli_util.option('--source-version-id', help=u"""VersionId of the object to copy. If not provided then current version is copied by default.""")
 @cli_util.option('--destination-object-if-match-e-tag', help=u"""The entity tag (ETag) to match against that of the destination object (an object intended to be overwritten). Used to confirm that the destination object stored under a given name is the version of that object storing a specified entity tag.""")
 @cli_util.option('--destination-object-if-none-match-e-tag', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists in the destination bucket.""")
 @cli_util.option('--destination-object-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string keys and values for the user-defined metadata for the object. Keys must be in \"opc-meta-*\" format. Avoid entering confidential information. Metadata key-value pairs entered in this field are assigned to the destination object. If you enter no metadata values, the destination object will inherit any existing metadata values associated with the source object.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--destination-object-storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be stored in. If not specified, the object will be stored in the same storage tier as the bucket.""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -243,7 +244,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destination-object-metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
-def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name, source_object_name, destination_region, destination_namespace, destination_bucket, destination_object_name, source_object_if_match_e_tag, source_version_id, destination_object_if_match_e_tag, destination_object_if_none_match_e_tag, destination_object_metadata, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_source_sse_customer_algorithm, opc_source_sse_customer_key, opc_source_sse_customer_key_sha256):
+def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name, source_object_name, destination_region, destination_namespace, destination_bucket, destination_object_name, source_object_if_match_e_tag, source_version_id, destination_object_if_match_e_tag, destination_object_if_none_match_e_tag, destination_object_metadata, destination_object_storage_tier, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_source_sse_customer_algorithm, opc_source_sse_customer_key, opc_source_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -287,6 +288,9 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if destination_object_metadata is not None:
         _details['destinationObjectMetadata'] = cli_util.parse_json_parameter("destination_object_metadata", destination_object_metadata)
+
+    if destination_object_storage_tier is not None:
+        _details['destinationObjectStorageTier'] = destination_object_storage_tier
 
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.copy_object(
@@ -392,9 +396,10 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 @cli_util.option('--content-encoding', help=u"""The optional Content-Encoding header that defines the content encodings that were applied to the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to determine what decoding mechanisms need to be applied to obtain the media-type specified by the Content-Type header of the object.""")
 @cli_util.option('--content-disposition', help=u"""The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.""")
 @cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
+@cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be stored in. If not specified, the object will be stored in the same storage tier as the bucket.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string keys and values for the user-defined metadata for the object. Keys must be in \"opc-meta-*\" format. Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -403,7 +408,7 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'MultipartUpload'})
 @cli_util.wrap_exceptions
-def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
+def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, storage_tier, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -442,6 +447,9 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
     if cache_control is not None:
         _details['cacheControl'] = cache_control
 
+    if storage_tier is not None:
+        _details['storageTier'] = storage_tier
+
     if metadata is not None:
         _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
@@ -458,7 +466,7 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
 @preauthenticated_request_group.command(name=cli_util.override('os.create_preauthenticated_request.command_name', 'create'), help=u"""Creates a pre-authenticated request specific to the bucket. \n[Command Reference](createPreauthenticatedRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--name', required=True, help=u"""A user-specified name for the pre-authenticated request. Names can be helpful in managing pre-authenticated requests.""")
+@cli_util.option('--name', required=True, help=u"""A user-specified name for the pre-authenticated request. Names can be helpful in managing pre-authenticated requests. Avoid entering confidential information.""")
 @cli_util.option('--access-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ObjectRead", "ObjectWrite", "ObjectReadWrite", "AnyObjectWrite"]), help=u"""The operation that can be performed on this resource.""")
 @cli_util.option('--time-expires', required=True, type=custom_types.CLI_DATETIME, help=u"""The expiration date for the pre-authenticated request as per [RFC 3339]. After this date the pre-authenticated request will no longer be valid.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--object-name', help=u"""The name of the object that is being granted access to by the pre-authenticated request. Avoid entering confidential information. The object name can be null and if so, the pre-authenticated request grants access to the entire bucket.""")
@@ -499,7 +507,7 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
 @replication_group.command(name=cli_util.override('os.create_replication_policy.command_name', 'create-replication-policy'), help=u"""Creates a replication policy for the specified bucket. \n[Command Reference](createReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--name', required=True, help=u"""The name of the policy.""")
+@cli_util.option('--name', required=True, help=u"""The name of the policy. Avoid entering confidential information.""")
 @cli_util.option('--destination-region-name', required=True, help=u"""The destination region to replicate to, for example \"us-ashburn-1\".""")
 @cli_util.option('--destination-bucket-name', required=True, help=u"""The bucket to replicate to in the destination region. Replication policy creation does not automatically create a destination bucket. Create the destination bucket before creating the policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -536,7 +544,7 @@ def create_replication_policy(ctx, from_json, namespace_name, bucket_name, name,
 @retention_rule_group.command(name=cli_util.override('os.create_retention_rule.command_name', 'create'), help=u"""Creates a new retention rule in the specified bucket. The new rule will take effect typically within 30 seconds. Note that a maximum of 100 rules are supported on a bucket. \n[Command Reference](createRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--display-name', help=u"""A user-specified name for the retention rule. Names can be helpful in identifying retention rules.""")
+@cli_util.option('--display-name', help=u"""A user-specified name for the retention rule. Names can be helpful in identifying retention rules. Avoid entering confidential information.""")
 @cli_util.option('--duration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-rule-locked', type=custom_types.CLI_DATETIME, help=u"""The date and time as per [RFC 3339] after which this rule is locked and can only be deleted by deleting the bucket. Once a rule is locked, only increases in the duration are allowed and no other properties can be changed. This property cannot be updated for rules that are in a locked state. Specifying it when a duration is not specified is considered an error.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({'duration': {'module': 'object_storage', 'class': 'Duration'}})
@@ -579,7 +587,7 @@ def create_retention_rule(ctx, from_json, namespace_name, bucket_name, display_n
 @bucket_group.command(name=cli_util.override('os.delete_bucket.command_name', 'delete'), help=u"""Deletes a bucket if the bucket is already empty. If the bucket is not empty, use [DeleteObject] first. In addition, you cannot delete a bucket that has a multipart upload in progress or a pre-authenticated request associated with that bucket. \n[Command Reference](deleteBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -611,7 +619,7 @@ def delete_bucket(ctx, from_json, namespace_name, bucket_name, if_match):
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -649,7 +657,7 @@ def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_m
 @object_lifecycle_policy_group.command(name=cli_util.override('os.delete_object_lifecycle_policy.command_name', 'delete'), help=u"""Deletes the object lifecycle policy for the bucket. \n[Command Reference](deleteObjectLifecyclePolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -747,7 +755,7 @@ def delete_replication_policy(ctx, from_json, namespace_name, bucket_name, repli
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--retention-rule-id', required=True, help=u"""The ID of the retention rule.""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -782,8 +790,8 @@ def delete_retention_rule(ctx, from_json, namespace_name, bucket_name, retention
 @bucket_group.command(name=cli_util.override('os.get_bucket.command_name', 'get'), help=u"""Gets the current representation of the given bucket in the given Object Storage namespace. \n[Command Reference](getBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateCount", "approximateSize"]), multiple=True, help=u"""Bucket summary includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'approximateCount' (approximate number of objects) and 'approximateSize' (total approximate size in bytes of all objects). For example 'approximateCount,approximateSize'.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -867,8 +875,8 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233]. Note that only a single range of bytes is supported.""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -1103,8 +1111,8 @@ def get_work_request(ctx, from_json, work_request_id):
 @bucket_group.command(name=cli_util.override('os.head_bucket.command_name', 'head'), help=u"""Efficiently checks to see if a bucket exists and gets the current entity tag (ETag) for the bucket. \n[Command Reference](headBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1138,8 +1146,8 @@ def head_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_m
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -1185,11 +1193,13 @@ def head_object(ctx, from_json, namespace_name, bucket_name, object_name, versio
 
 @bucket_group.command(name=cli_util.override('os.list_buckets.command_name', 'list'), help=u"""Gets a list of all BucketSummary items in a compartment. A BucketSummary contains only summary fields for the bucket and does not contain fields like the user-defined metadata.
 
+ListBuckets returns a BucketSummary containing at most 1000 buckets. To paginate through more buckets, use the returned `opc-next-page` value with the `page` request parameter.
+
 To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listBuckets)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["tags"]), multiple=True, help=u"""Bucket summary in list of buckets includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'tags' (freeformTags and definedTags). The only supported value of this parameter is 'tags' for now. Example 'tags'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1248,8 +1258,8 @@ def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartme
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--upload-id', required=True, help=u"""The upload ID for a multipart upload.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1315,8 +1325,8 @@ def list_multipart_upload_parts(ctx, from_json, all_pages, page_size, namespace_
 @multipart_upload_group.command(name=cli_util.override('os.list_multipart_uploads.command_name', 'list'), help=u"""Lists all of the in-progress multipart uploads for the given bucket in the given Object Storage namespace. \n[Command Reference](listMultipartUploads)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1372,17 +1382,19 @@ def list_multipart_uploads(ctx, from_json, all_pages, page_size, namespace_name,
 
 @object_group.command(name=cli_util.override('os.list_object_versions.command_name', 'list-object-versions'), help=u"""Lists the object versions in a bucket.
 
+ListObjectVersions returns an ObjectVersionCollection containing at most 1000 object versions. To paginate through more object versions, use the returned `opc-next-page` value with the `page` request parameter.
+
 To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listObjectVersions)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
 @cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
 @cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
-@cli_util.option('--fields', help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time) and 'timeModified' (object modification date and time). Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified' Allowed values are: name, size, etag, timeCreated, md5, timeModified""")
+@cli_util.option('--fields', help=u"""Object summary by default includes only the 'name' field. Use this parameter to also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time), 'timeModified' (object modification date and time), 'storageTier' and 'archivalState' fields. Specify the value of this parameter as a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified,storageTier,archivalState'. Allowed values are: name, size, etag, timeCreated, md5, timeModified, storageTier, archivalState""")
 @cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1448,7 +1460,9 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.list_objects.command_name', 'list'), help=u"""Lists the objects in a bucket.
+@object_group.command(name=cli_util.override('os.list_objects.command_name', 'list'), help=u"""Lists the objects in a bucket. By default, ListObjects returns object names only. See the `fields` parameter for other fields that you can optionally include in ListObjects response.
+
+ListObjects returns at most 1000 objects. To paginate through more objects, use the returned 'nextStartWith' value with the 'start' parameter. To filter which objects ListObjects returns, use the 'start' and 'end' parameters.
 
 To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listObjects)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
@@ -1456,9 +1470,9 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
 @cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
 @cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
-@cli_util.option('--fields', help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time) and 'timeModified' (object modification date and time). Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified' Allowed values are: name, size, etag, timeCreated, md5, timeModified""")
+@cli_util.option('--fields', help=u"""Object summary by default includes only the 'name' field. Use this parameter to also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time), 'timeModified' (object modification date and time), 'storageTier' and 'archivalState' fields. Specify the value of this parameter as a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified,storageTier,archivalState'. Allowed values are: name, size, etag, timeCreated, md5, timeModified, storageTier, archivalState""")
 @cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1503,8 +1517,8 @@ def list_objects(ctx, from_json, all_pages, namespace_name, bucket_name, prefix,
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name-prefix', help=u"""User-specified object name prefixes can be used to query and return a list of pre-authenticated requests.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1563,8 +1577,8 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
 @replication_group.command(name=cli_util.override('os.list_replication_policies.command_name', 'list-replication-policies'), help=u"""List the replication policies associated with a bucket. \n[Command Reference](listReplicationPolicies)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1621,8 +1635,8 @@ def list_replication_policies(ctx, from_json, all_pages, page_size, namespace_na
 @replication_group.command(name=cli_util.override('os.list_replication_sources.command_name', 'list-replication-sources'), help=u"""List the replication sources of a destination bucket. \n[Command Reference](listReplicationSources)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1679,7 +1693,7 @@ def list_replication_sources(ctx, from_json, all_pages, page_size, namespace_nam
 @retention_rule_group.command(name=cli_util.override('os.list_retention_rules.command_name', 'list'), help=u"""List the retention rules for a bucket. The retention rules are sorted based on creation time, with the most recently created retention rule returned first. \n[Command Reference](listRetentionRules)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1716,8 +1730,8 @@ def list_retention_rules(ctx, from_json, all_pages, namespace_name, bucket_name,
 
 @work_request_error_group.command(name=cli_util.override('os.list_work_request_errors.command_name', 'list'), help=u"""Lists the errors of the work request with the given ID. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1767,8 +1781,8 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 @work_request_log_entry_group.command(name=cli_util.override('os.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists the logs of the work request with the given ID. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1818,8 +1832,8 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 @work_request_group.command(name=cli_util.override('os.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
-@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1901,8 +1915,8 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--put-object-body', required=True, help=u"""The object to upload to the object store.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--expect', help=u"""100-continue""")
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
@@ -1915,13 +1929,14 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be stored in. If not specified, the object will be stored in the same storage tier as the bucket.""")
 @cli_util.option('--opc-meta-', help=u"""Optional user-defined metadata key and value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_meta_):
+def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, storage_tier, opc_meta_):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1959,6 +1974,8 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
         kwargs['opc_sse_customer_key'] = opc_sse_customer_key
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
+    if storage_tier is not None:
+        kwargs['storage_tier'] = storage_tier
     if opc_meta_ is not None:
         kwargs['opc_meta_'] = opc_meta_
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1983,8 +2000,8 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The bucket's set of lifecycle policy rules.
 
 This option is a JSON list with items of type ObjectLifecycleRule.  For documentation on ObjectLifecycleRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/objectstorage/20160918/datatypes/ObjectLifecycleRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'object_storage', 'class': 'list[ObjectLifecycleRule]'}})
 @cli_util.help_option
@@ -2143,7 +2160,7 @@ See [Object Names] for object naming requirements. \n[Command Reference](renameO
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--source-name', required=True, help=u"""The name of the source object to be renamed.""")
-@cli_util.option('--new-name', required=True, help=u"""The new name of the source object.""")
+@cli_util.option('--new-name', required=True, help=u"""The new name of the source object. Avoid entering confidential information.""")
 @cli_util.option('--src-obj-if-match-e-tag', help=u"""The if-match entity tag (ETag) of the source object.""")
 @cli_util.option('--new-obj-if-match-e-tag', help=u"""The if-match entity tag (ETag) of the new object.""")
 @cli_util.option('--new-obj-if-none-match-e-tag', help=u"""The if-none-match entity tag (ETag) of the new object.""")
@@ -2240,7 +2257,7 @@ Use UpdateBucket to move a bucket from one compartment to another within the sam
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the Key Management master encryption key to associate with the specified bucket. If this value is empty, the Update operation will remove the associated key, if there is one, from the bucket. (The bucket will continue to be encrypted, but with an encryption key managed by Oracle.)""")
 @cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Suspended"]), help=u"""The versioning status on the bucket. If in state `Enabled`, multiple versions of the same object can be kept in the bucket. When the object is overwritten or deleted, previous versions will still be available. When versioning is `Suspended`, the previous versions will still remain but new versions will no longer be created when overwitten or deleted. Versioning cannot be disabled on a bucket once enabled.""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
@@ -2334,14 +2351,53 @@ def update_namespace_metadata(ctx, from_json, namespace_name, default_s3_compart
     cli_util.render_response(result, ctx)
 
 
+@object_group.command(name=cli_util.override('os.update_object_storage_tier.command_name', 'update-object-storage-tier'), help=u"""Changes the storage tier of the object specified by the objectName parameter. \n[Command Reference](updateObjectStorageTier)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--object-name', required=True, help=u"""An object for which the storage tier needs to be changed.""")
+@cli_util.option('--storage-tier', required=True, type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be moved to.""")
+@cli_util.option('--version-id', help=u"""The versionId of the object. Current object version is used by default.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_object_storage_tier(ctx, from_json, namespace_name, bucket_name, object_name, storage_tier, version_id):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['objectName'] = object_name
+    _details['storageTier'] = storage_tier
+
+    if version_id is not None:
+        _details['versionId'] = version_id
+
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.update_object_storage_tier(
+        namespace_name=namespace_name,
+        bucket_name=bucket_name,
+        update_object_storage_tier_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @retention_rule_group.command(name=cli_util.override('os.update_retention_rule.command_name', 'update'), help=u"""Updates the specified retention rule. Rule changes take effect typically within 30 seconds. \n[Command Reference](updateRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--retention-rule-id', required=True, help=u"""The ID of the retention rule.""")
-@cli_util.option('--display-name', help=u"""A user-specified name for the retention rule. Names can be helpful in identifying retention rules.""")
+@cli_util.option('--display-name', help=u"""A user-specified name for the retention rule. Names can be helpful in identifying retention rules. Avoid entering confidential information.""")
 @cli_util.option('--duration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-rule-locked', type=custom_types.CLI_DATETIME, help=u"""The date and time as per [RFC 3339] after which this rule is locked and can only be deleted by deleting the bucket. Once a rule is locked, only increases in the duration are allowed and no other properties can be changed. This property cannot be updated for rules that are in a locked state. Specifying it when a duration is not specified is considered an error.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'duration': {'module': 'object_storage', 'class': 'Duration'}})
 @cli_util.help_option
@@ -2398,8 +2454,8 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @cli_util.option('--upload-part-num', required=True, type=click.INT, help=u"""The part number that identifies the object part currently being uploaded.""")
 @cli_util.option('--upload-part-body', required=True, help=u"""The part being uploaded to the Object Storage service.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
-@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--expect', help=u"""100-continue""")
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
