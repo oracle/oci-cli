@@ -24,6 +24,12 @@ def resource_manager_root_group():
     pass
 
 
+@click.command(cli_util.override('resource_manager.template_group.command_name', 'template'), cls=CommandGroupWithAlias, help="""The properties that define a template. A template is a pre-built Terraform configuration that provisions a set of resources used in a common scenario.""")
+@cli_util.help_option_group
+def template_group():
+    pass
+
+
 @click.command(cli_util.override('resource_manager.stack_group.command_name', 'stack'), cls=CommandGroupWithAlias, help="""The stack object. Stacks represent definitions of groups of Oracle Cloud Infrastructure resources that you can act upon as a group. You take action on stacks by using jobs.""")
 @cli_util.help_option_group
 def stack_group():
@@ -33,6 +39,12 @@ def stack_group():
 @click.command(cli_util.override('resource_manager.configuration_source_provider_summary_group.command_name', 'configuration-source-provider-summary'), cls=CommandGroupWithAlias, help="""Summary information for a configuration source provider.""")
 @cli_util.help_option_group
 def configuration_source_provider_summary_group():
+    pass
+
+
+@click.command(cli_util.override('resource_manager.template_category_summary_group.command_name', 'template-category-summary'), cls=CommandGroupWithAlias, help="""Summary information for the template category.""")
+@cli_util.help_option_group
+def template_category_summary_group():
     pass
 
 
@@ -60,8 +72,10 @@ def job_group():
     pass
 
 
+resource_manager_root_group.add_command(template_group)
 resource_manager_root_group.add_command(stack_group)
 resource_manager_root_group.add_command(configuration_source_provider_summary_group)
+resource_manager_root_group.add_command(template_category_summary_group)
 resource_manager_root_group.add_command(configuration_source_provider_group)
 resource_manager_root_group.add_command(stack_resource_drift_summary_group)
 resource_manager_root_group.add_command(work_request_group)
@@ -217,6 +231,37 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.change_template_compartment.command_name', 'change-compartment'), help=u"""Moves a template into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeTemplateCompartment)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the configuration source provider to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_template_compartment(ctx, from_json, template_id, compartment_id, if_match):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.change_template_compartment(
+        template_id=template_id,
+        change_template_compartment_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1143,6 +1188,239 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_stack_template_config_source_details.command_name', 'create-stack-create-stack-template-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--config-source-template-id', required=True, help=u"""""")
+@cli_util.option('--display-name', help=u"""The stack's display name.""")
+@cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags associated with this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-source-working-directory', help=u"""File path to the directory from which Terraform runs. If not specified, the root directory is used. This parameter is ignored for the `configSourceType` value of `COMPARTMENT_CONFIG_SOURCE`.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@cli_util.wrap_exceptions
+def create_stack_create_stack_template_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_template_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['configSource']['templateId'] = config_source_template_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if terraform_version is not None:
+        _details['terraformVersion'] = terraform_version
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if config_source_working_directory is not None:
+        _details['configSource']['workingDirectory'] = config_source_working_directory
+
+    _details['configSource']['configSourceType'] = 'TEMPLATE_CONFIG_SOURCE'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_stack(
+        create_stack_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.create_template.command_name', 'create'), help=u"""Creates a custom template in the specified compartment. \n[Command Reference](createTemplate)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this template.""")
+@cli_util.option('--display-name', required=True, help=u"""The template's display name. Avoid entering confidential information.""")
+@cli_util.option('--description', required=True, help=u"""Description of the template. Avoid entering confidential information.""")
+@cli_util.option('--template-config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--long-description', help=u"""Detailed description of the template. This description is displayed in the Console page listing templates when the template is expanded. Avoid entering confidential information.""")
+@cli_util.option('--logo-file-base64-encoded', help=u"""Base64-encoded logo for the template.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oci-splat-generated-ocids', help=u"""This is to enable limit/quota support through splat""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'template-config-source': {'module': 'resource_manager', 'class': 'CreateTemplateConfigSourceDetails'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'template-config-source': {'module': 'resource_manager', 'class': 'CreateTemplateConfigSourceDetails'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def create_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, template_config_source, long_description, logo_file_base64_encoded, freeform_tags, defined_tags, oci_splat_generated_ocids):
+
+    kwargs = {}
+    if oci_splat_generated_ocids is not None:
+        kwargs['oci_splat_generated_ocids'] = oci_splat_generated_ocids
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['description'] = description
+    _details['templateConfigSource'] = cli_util.parse_json_parameter("template_config_source", template_config_source)
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if logo_file_base64_encoded is not None:
+        _details['logoFileBase64Encoded'] = logo_file_base64_encoded
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_template(
+        create_template_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_template') and callable(getattr(client, 'get_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_template(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.create_template_create_template_zip_upload_config_source_details.command_name', 'create-template-create-template-zip-upload-config-source-details'), help=u"""Creates a custom template in the specified compartment. \n[Command Reference](createTemplate)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this template.""")
+@cli_util.option('--display-name', required=True, help=u"""The template's display name. Avoid entering confidential information.""")
+@cli_util.option('--description', required=True, help=u"""Description of the template. Avoid entering confidential information.""")
+@cli_util.option('--template-config-source-zip-file-base64-encoded', required=True, help=u"""""")
+@cli_util.option('--long-description', help=u"""Detailed description of the template. This description is displayed in the Console page listing templates when the template is expanded. Avoid entering confidential information.""")
+@cli_util.option('--logo-file-base64-encoded', help=u"""Base64-encoded logo for the template.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oci-splat-generated-ocids', help=u"""This is to enable limit/quota support through splat""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def create_template_create_template_zip_upload_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, template_config_source_zip_file_base64_encoded, long_description, logo_file_base64_encoded, freeform_tags, defined_tags, oci_splat_generated_ocids):
+
+    kwargs = {}
+    if oci_splat_generated_ocids is not None:
+        kwargs['oci_splat_generated_ocids'] = oci_splat_generated_ocids
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['templateConfigSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['description'] = description
+    _details['templateConfigSource']['zipFileBase64Encoded'] = template_config_source_zip_file_base64_encoded
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if logo_file_base64_encoded is not None:
+        _details['logoFileBase64Encoded'] = logo_file_base64_encoded
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['templateConfigSource']['templateConfigSourceType'] = 'ZIP_UPLOAD'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_template(
+        create_template_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_template') and callable(getattr(client, 'get_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_template(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @configuration_source_provider_group.command(name=cli_util.override('resource_manager.delete_configuration_source_provider.command_name', 'delete'), help=u"""Deletes the specified configuration source provider. \n[Command Reference](deleteConfigurationSourceProvider)""")
 @cli_util.option('--configuration-source-provider-id', required=True, help=u"""The [OCID] of the configuration source provider.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1245,6 +1523,70 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_stack(stack_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.delete_template.command_name', 'delete'), help=u"""Deletes the specified template. \n[Command Reference](deleteTemplate)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, template_id, if_match):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.delete_template(
+        template_id=template_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_template') and callable(getattr(client, 'get_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_template(template_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1641,6 +1983,118 @@ def get_stack_tf_state(ctx, from_json, file, stack_id):
         file.close()
 
 
+@template_group.command(name=cli_util.override('resource_manager.get_template.command_name', 'get'), help=u"""Gets the specified template. \n[Command Reference](getTemplate)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def get_template(ctx, from_json, template_id):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.get_template(
+        template_id=template_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.get_template_logo.command_name', 'get-template-logo'), help=u"""Returns the Terraform logo file in .logo format for the specified template. Returns an error if no logo file is found. \n[Command Reference](getTemplateLogo)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_template_logo(ctx, from_json, file, template_id):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.get_template_logo(
+        template_id=template_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@template_group.command(name=cli_util.override('resource_manager.get_template_tf_config.command_name', 'get-template-tf-config'), help=u"""Returns the Terraform configuration file in .zip format for the specified template. Returns an error if no zip file is found. \n[Command Reference](getTemplateTfConfig)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_template_tf_config(ctx, from_json, file, template_id):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.get_template_tf_config(
+        template_id=template_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @work_request_group.command(name=cli_util.override('resource_manager.get_work_request.command_name', 'get'), help=u"""Return the given work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1931,6 +2385,86 @@ def list_stacks(ctx, from_json, all_pages, page_size, compartment_id, id, lifecy
         )
     else:
         result = client.list_stacks(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@template_category_summary_group.command(name=cli_util.override('resource_manager.list_template_categories.command_name', 'list-template-categories'), help=u"""Lists template categories. \n[Command Reference](listTemplateCategories)""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_manager', 'class': 'TemplateCategorySummaryCollection'})
+@cli_util.wrap_exceptions
+def list_template_categories(ctx, from_json, all_pages, ):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.list_template_categories(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.list_templates.command_name', 'list'), help=u"""Lists templates according to the specified filter. \n[Command Reference](listTemplates)""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
+@cli_util.option('--template-category-id', help=u"""Unique identifier of the template category.""")
+@cli_util.option('--template-id', help=u"""The [OCID] of the template.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to use when sorting returned resources. By default, `TIMECREATED` is ordered descending. By default, `DISPLAYNAME` is ordered ascending. Note that you can sort only on one field.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned resources. Ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_manager', 'class': 'TemplateSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_templates(ctx, from_json, all_pages, page_size, compartment_id, template_category_id, template_id, display_name, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if template_category_id is not None:
+        kwargs['template_category_id'] = template_category_id
+    if template_id is not None:
+        kwargs['template_id'] = template_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_templates,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_templates,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_templates(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2716,6 +3250,185 @@ def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, 
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_stack(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.update_template.command_name', 'update'), help=u"""Updates the specified template. \n[Command Reference](updateTemplate)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@cli_util.option('--display-name', help=u"""The template's display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Description of the template. Avoid entering confidential information.""")
+@cli_util.option('--long-description', help=u"""Detailed description of the template. This description is displayed in the Console page listing templates when the template is expanded. Avoid entering confidential information.""")
+@cli_util.option('--logo-file-base64-encoded', help=u"""Base64-encoded logo for the template.""")
+@cli_util.option('--template-config-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'template-config-source': {'module': 'resource_manager', 'class': 'UpdateTemplateConfigSourceDetails'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'template-config-source': {'module': 'resource_manager', 'class': 'UpdateTemplateConfigSourceDetails'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def update_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, template_id, display_name, description, long_description, logo_file_base64_encoded, template_config_source, freeform_tags, defined_tags, if_match):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+    if not force:
+        if template_config_source or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to template-config-source and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if logo_file_base64_encoded is not None:
+        _details['logoFileBase64Encoded'] = logo_file_base64_encoded
+
+    if template_config_source is not None:
+        _details['templateConfigSource'] = cli_util.parse_json_parameter("template_config_source", template_config_source)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.update_template(
+        template_id=template_id,
+        update_template_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_template') and callable(getattr(client, 'get_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_template(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('resource_manager.update_template_update_template_zip_upload_config_source_details.command_name', 'update-template-update-template-zip-upload-config-source-details'), help=u"""Updates the specified template. \n[Command Reference](updateTemplate)""")
+@cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
+@cli_util.option('--display-name', help=u"""The template's display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Description of the template. Avoid entering confidential information.""")
+@cli_util.option('--long-description', help=u"""Detailed description of the template. This description is displayed in the Console page listing templates when the template is expanded. Avoid entering confidential information.""")
+@cli_util.option('--logo-file-base64-encoded', help=u"""Base64-encoded logo for the template.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--template-config-source-zip-file-base64-encoded', help=u"""""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def update_template_update_template_zip_upload_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, template_id, display_name, description, long_description, logo_file_base64_encoded, freeform_tags, defined_tags, if_match, template_config_source_zip_file_base64_encoded):
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['templateConfigSource'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if logo_file_base64_encoded is not None:
+        _details['logoFileBase64Encoded'] = logo_file_base64_encoded
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if template_config_source_zip_file_base64_encoded is not None:
+        _details['templateConfigSource']['zipFileBase64Encoded'] = template_config_source_zip_file_base64_encoded
+
+    _details['templateConfigSource']['templateConfigSourceType'] = 'ZIP_UPLOAD'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.update_template(
+        template_id=template_id,
+        update_template_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_template') and callable(getattr(client, 'get_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_template(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

@@ -205,12 +205,16 @@ get_param(objectstorage_cli.list_retention_rules, 'namespace_name').opts.extend(
 get_param(objectstorage_cli.list_retention_rules, 'bucket_name').opts.extend(['--bucket', '-bn'])
 get_param(objectstorage_cli.delete_retention_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.delete_retention_rule, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.update_object_storage_tier, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.update_object_storage_tier, 'bucket_name').opts.extend(['--bucket', '-bn'])
+
 
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.os_root_group, objectstorage_cli.namespace_group, "ns")
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.namespace_group, objectstorage_cli.get_namespace_metadata, "get-metadata")
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.namespace_group, objectstorage_cli.update_namespace_metadata, "update-metadata")
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.os_root_group, objectstorage_cli.preauthenticated_request_group, "preauth-request")
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.work_request_log_entry_group, objectstorage_cli.list_work_request_logs, "list")
+cli_util.rename_command(objectstorage_cli, objectstorage_cli.object_group, objectstorage_cli.update_object_storage_tier, "update-storage-tier")
 
 objectstorage_cli.os_root_group.help = "Object Storage Service CLI"
 objectstorage_cli.os_root_group.short_help = "Object Storage Service"
@@ -221,6 +225,9 @@ cli_util.override_command_short_help_and_help(objectstorage_cli.get_bucket, u"""
 
 Bucket  summary  includes  the  'namespace',  'name',  'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields.""")
 cli_util.update_param_help(objectstorage_cli.get_bucket, 'fields', """This parameter can only include 'approximateCount' (approximate number of objects) and 'approximateSize' (total approximate size in bytes of all objects). For example '--fields approximateCount --fields approximateSize'.""", append=False)
+
+cli_util.update_param_help(objectstorage_cli.update_object_storage_tier, 'bucket_name', """The name of the bucket. Example: `my-bucket1`""", append=False)
+cli_util.update_param_help(objectstorage_cli.update_object_storage_tier, 'object_name', """The name of the object for which the storage tier needs to be changed.""", append=False)
 
 
 @objectstorage_cli.object_group.command(name='list-object-versions', help=u"""Lists the object versions in a bucket.
@@ -233,7 +240,7 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
-@cli_util.option('--fields', default='name,size,timeCreated,md5', show_default=True, help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time) and 'timeModified' (object modification date and time). Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified' Allowed values are: name, size, etag, timeCreated, md5, timeModified""")
+@cli_util.option('--fields', default='name,size,etag,md5,timeCreated,timeModified,storageTier,archivalState', show_default=True, help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time), 'timeModified' (object modification date and time), 'storageTier' and 'archivalState'. Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,size,etag,md5,timeCreated,timeModified,storageTier,archivalState' Allowed values are: name, size, etag, md5, timeCreated, timeModified, storageTier, archivalState.""")
 @cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -345,8 +352,8 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
                  "up to the last occurrence of the delimiter (after the optional prefix) "
                  "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
                  "character at this time.")
-@cli_util.option('--fields', default='name,size,timeCreated,md5', show_default=True, help="Object summary in list of objects includes the 'name' field. This parameter may also include "
-                 "'size' (object size in bytes), 'md5', and 'timeCreated' (object creation date and time) fields. "
+@cli_util.option('--fields', default='name,size,etag,md5,timeCreated,timeModified,storageTier,archivalState', show_default=True, help="Object summary in list of objects includes the 'name' field. This parameter may also include "
+                 "'size' (object size in bytes), 'md5', 'timeCreated' (object creation date and time), 'timeModified' (object modification date and time), 'storageTier' and 'archivalState' fields. "
                  "Value of this parameter should be a comma separated, case-insensitive list of those field names.")
 @cli_util.option('--stream-output', 'stream_output', is_flag=True, help="""Print output to stdout as it is fetched so the full response is not stored in memory. This only works with --all.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -487,12 +494,13 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be stored in. If not specified, the object will be stored in the same storage tier as the bucket.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control, encryption_key_file):
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control, encryption_key_file, storage_tier):
     """
     Creates a new object or overwrites an existing one.
 
@@ -589,6 +597,9 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         sse_args = _get_encryption_key_params(encryption_key_file)
         if sse_args:
             kwargs.update(sse_args)
+
+    if storage_tier is not None:
+        kwargs['storage_tier'] = storage_tier
 
     if math.ceil(total_size / part_size_mib) > MAX_MULTIPART_SIZE:
         part_size = math.ceil(math.ceil(total_size / MAX_MULTIPART_SIZE) / MEBIBYTE)
@@ -723,6 +734,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 @cli_util.option('--content-type', help='The content type to apply to all files being uploaded. If content type is set to auto, then the CLI will guess the content type of the file.')
 @cli_util.option('--content-language', help='The content language to apply to all files being uploaded.')
 @cli_util.option('--content-encoding', help='The content encoding to apply to all files being uploaded.')
+@cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the objects should be stored in. If not specified, the objects will be stored in the same storage tier as the bucket.""")
 @cli_util.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage with the same name, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object with the same name would be overwritten.
 
 Specifying this flag will also allow for faster uploads as the CLI will not initially check whether or not the files with the same name already exist in Object Storage.""")
@@ -752,7 +764,7 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @wrap_exceptions
-def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude, encryption_key_file, dry_run):
+def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, storage_tier, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude, encryption_key_file, dry_run):
     """
     Uploads all files in a given directory and all subdirectories.
 
@@ -958,6 +970,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
 
                 if is_python2():
                     object_name = object_name.encode("utf-8")
+
+                if storage_tier:
+                    base_kwargs['storage_tier'] = storage_tier
 
                 transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path, file_size, verify_checksum, **base_kwargs)
 

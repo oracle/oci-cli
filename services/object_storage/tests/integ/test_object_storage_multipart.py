@@ -148,6 +148,53 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
+def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
+    object_name = 'a-ia'
+
+    ssec_params = []
+    if customer_key:
+        ssec_params = ['--encryption-key-file', GENERATED_ENC_KEY_FILE]
+
+    # object put (large file so multipart is used)
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name, '--file', content_input_file,
+                                                          '--storage-tier', 'InfrequentAccess',
+                                                          '--part-size', str(DEFAULT_TEST_PART_SIZE)] + ssec_params)
+
+    validate_response(result, json_response_expected=False)
+
+    response = parse_json_response_from_multipart_output(result.output)
+    assert response
+    assert response["etag"]
+    assert response["last-modified"]
+    assert response["opc-multipart-md5"]
+
+    upload_id = parse_upload_id_from_multipart_output(result.output)
+    assert upload_id
+
+    # object get (confirm object exists)
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name,
+                                                          '--file', CONTENT_OUTPUT_FILE] + ssec_params)
+    validate_response(result, json_response_expected=False)
+
+    assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
+    assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
+
+    # object head (confirm storage-tier)
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name] + ssec_params)
+    validate_response(result, json_response_expected=True)
+    head_output = json.loads(result.output)
+    assert 'storage-tier' in head_output
+    assert 'InfrequentAccess' == head_output['storage-tier']
+
+    # object delete
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name], input='y')
+    validate_response(result, json_response_expected=False)
+
+
 def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client):
     object_name = 'a'
 

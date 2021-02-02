@@ -53,6 +53,11 @@ def test_data(object_storage_client):
     util.ensure_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, util.bucket_regional_prefix() + 'Cli')
 
 
+def is_none(value):
+    # If the fix for CASPER-10721 is not deployed, then the value for archival-state is returned as UNKNOWN_ENUM_VALUE
+    return value is None or (value == 'UNKNOWN_ENUM_VALUE')
+
+
 def setup_function():
     if os.path.exists(CONTENT_OUTPUT_FILE):
         os.remove(CONTENT_OUTPUT_FILE)
@@ -175,6 +180,114 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
 
 
 @util.skip_while_rerecording
+def test_run_all_ia_operations(runner, config_file, config_profile, debug):
+    """Successfully calls every operation with required arguments only."""
+    bucket_name = 'cli_temp_bucket_ia_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
+    object_name = 'a'
+    object_name_std = 'a-std'
+    object_name_ia = 'a-ia'
+
+    # bucket create
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # object put
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', CONTENT_INPUT_FILE], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_std, '--file', CONTENT_INPUT_FILE], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_ia, '--file', CONTENT_INPUT_FILE, '--storage-tier', 'InfrequentAccess'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # object head
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    validate_response(result)
+    head_output = json.loads(result.output)
+    assert 'storage-tier' in head_output
+    assertEquals('Standard', head_output['storage-tier'])
+
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_std])
+    validate_response(result)
+    head_output = json.loads(result.output)
+    assert 'storage-tier' in head_output
+    assertEquals('Standard', head_output['storage-tier'])
+
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_ia])
+    validate_response(result)
+    head_output = json.loads(result.output)
+    assert 'storage-tier' in head_output
+    assertEquals('InfrequentAccess', head_output['storage-tier'])
+
+    # object update-storage-tier
+    result = invoke(runner, config_file, config_profile, ['object', 'update-storage-tier', '-ns', util.NAMESPACE, '-bn', bucket_name, '--object-name', object_name_std, '--storage-tier', 'InfrequentAccess'])
+    validate_response(result)
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_std])
+    validate_response(result)
+    head_output = json.loads(result.output)
+    assert 'storage-tier' in head_output
+    assertEquals('InfrequentAccess', head_output['storage-tier'])
+
+    # object list
+    result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
+    validate_response(result)
+    list_json = json.loads(result.output)
+    for object_item in list_json['data']:
+        if object_item['name'] == object_name:
+            assertEquals('Standard', object_item['storage-tier'])
+            assert is_none(object_item['archival-state'])
+        elif object_item['name'] == object_name_ia:
+            assertEquals('InfrequentAccess', object_item['storage-tier'])
+            assert is_none(object_item['archival-state'])
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--fields', 'name,size'])
+    validate_response(result)
+    json_head = json.loads(result.output)
+    for object_item in json_head['data']:
+        assert object_item['storage-tier'] is None
+
+    copy_bucket_name = None
+    copy_object_name = None
+    if not test_config_container.using_vcr_with_mock_responses():
+        # Copy object
+        # -- create destination bucket
+        copy_bucket_name = 'cli_temp_bucket_ia_copy_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
+        result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', copy_bucket_name], debug=debug)
+        validate_response(result, includes_debug_data=debug)
+        # -- copy object to the destination bucket
+        copy_object_name = 'a-object-copy'
+        result = invoke(runner, config_file, config_profile,
+                        ['object', 'copy', '-ns', util.NAMESPACE, '-bn', bucket_name, '--source-object-name', object_name,
+                         '--destination-bucket', copy_bucket_name, '--destination-object-name', copy_object_name,
+                         '--destination-object-storage-tier', 'InfrequentAccess',
+                         '--wait-for-state', 'COMPLETED', '--wait-for-state', 'FAILED'], debug=debug)
+        validate_response(result, includes_debug_data=debug)
+        # -- verify storage tier of the copied object
+        result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', copy_bucket_name, '--name', copy_object_name])
+        validate_response(result)
+        head_output = json.loads(result.output)
+        assert 'storage-tier' in head_output
+        assertEquals('InfrequentAccess', head_output['storage-tier'])
+
+    # object delete
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y', debug=debug)
+    validate_response(result, json_response_expected=False, includes_debug_data=debug)
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_std], input='y', debug=debug)
+    validate_response(result, json_response_expected=False, includes_debug_data=debug)
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_ia], input='y', debug=debug)
+    validate_response(result, json_response_expected=False, includes_debug_data=debug)
+    if copy_object_name is not None:
+        result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', copy_bucket_name, '--name', copy_object_name], input='y', debug=debug)
+        validate_response(result, json_response_expected=False, includes_debug_data=debug)
+
+    # bucket delete
+    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+    if copy_bucket_name is not None:
+        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', copy_bucket_name, '--force'], debug=debug)
+        validate_response(result, includes_debug_data=debug)
+
+
+@util.skip_while_rerecording
 def test_archive_bucket(runner, config_file, config_profile):
     bucket_name = 'cli_temp_archive_bucket_' + str(random.randint(0, 1000000)) + '_no_debug'
     object_name = 'a'
@@ -197,6 +310,14 @@ def test_archive_bucket(runner, config_file, config_profile):
     json_head = json.loads(result.output)
     assertEquals('Archived', json_head['archival-state'])
 
+    # object list and validate archival state
+    result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
+    validate_response(result)
+    list_json = json.loads(result.output)
+    for object_item in list_json['data']:
+        assertEquals('Archive', object_item['storage-tier'])
+        assertEquals('Archived', object_item['archival-state'])
+
     # object restore status - Archived
     result = invoke(runner, config_file, config_profile, ['object', 'restore-status', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
     assert 'Archived' in result.output
@@ -210,6 +331,14 @@ def test_archive_bucket(runner, config_file, config_profile):
     validate_response(result)
     json_head = json.loads(result.output)
     assertEquals('Restoring', json_head['archival-state'])
+
+    # object list and validate archival state
+    result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
+    validate_response(result)
+    list_json = json.loads(result.output)
+    for object_item in list_json['data']:
+        if object_item['name'] == object_name:
+            assertEquals('Restoring', object_item['archival-state'])
 
     # object restore status - Restoring
     result = invoke(runner, config_file, config_profile, ['object', 'restore-status', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
@@ -942,9 +1071,11 @@ def subtest_object_list(runner, config_file, config_profile):
 def subtest_object_list_versions(runner, config_file, config_profile):
     """Tests all optional parameters for oci object list-object-versions."""
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
-    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1'])
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--fields', 'name,size,md5,storageTier', '--limit', '1'])
     validate_response(result)
     assertEqual(1, result.output.count('"name"'))
+    list_objects = json.loads(result.output)
+    assertEquals('Standard', list_objects['data'][0]['storage-tier'])
 
     result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '10000'])
     validate_response(result)

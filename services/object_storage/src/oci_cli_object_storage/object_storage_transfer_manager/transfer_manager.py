@@ -45,7 +45,10 @@ class TransferManager():
 
     def upload_object(self, callbacks_container, namespace_name, bucket_name, object_name, file_path, file_size, verify_checksum, **kwargs):
         if not self._config.use_multipart_uploads:
-            upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container, verify_checksum)
+            upload_kwargs = {}
+            if 'storage_tier' in kwargs:
+                upload_kwargs['storage_tier'] = kwargs['storage_tier']
+            upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container, verify_checksum, **upload_kwargs)
             return self._object_storage_request_pool.submit(upload_task)
 
         part_size = self._config.multipart_part_size

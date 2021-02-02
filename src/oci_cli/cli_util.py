@@ -994,13 +994,11 @@ def update_param_help(command, param_name, updated_help, append=False, example=N
     """Update help for the given parameter and command, either by replacing or adding to existing help."""
     param = get_param(command, param_name)
 
-    required_param = False
+    required_param = param.help.endswith(" [required]")
     current_help = param.help if append else updated_help
 
-    if len(current_help) > 0:
-        required_param = current_help.endswith(" [required]")
-        if required_param:
-            current_help = current_help.replace(" [required]", "")
+    if len(current_help) > 0 and required_param:
+        current_help = current_help.replace(" [required]", "")
 
     updated_help = current_help + (" " + updated_help if append and len(current_help) > 0 else "")
 
