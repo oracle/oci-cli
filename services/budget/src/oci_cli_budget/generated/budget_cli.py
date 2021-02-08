@@ -130,6 +130,7 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--target-compartment-id', help=u"""This is DEPRECTAED. Set the target compartment id in targets instead.""")
 @cli_util.option('--display-name', help=u"""The displayName of the budget.""")
 @cli_util.option('--description', help=u"""The description of the budget.""")
+@cli_util.option('--budget-processing-period-start-offset', type=click.INT, help=u"""The number of days offset from the first day of the month, at which the budget processing period starts. In months that have fewer days than this value, processing will begin on the last day of that month. For example, for a value of 12, processing starts every month on the 12th at midnight.""")
 @cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "TAG"]), help=u"""The type of target on which the budget is applied.""")
 @cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets on which the budget is applied.   If targetType is \"COMPARTMENT\", targets contains list of compartment OCIDs.   If targetType is \"TAG\", targets contains list of cost tracking tag identifiers in the form of \"{tagNamespace}.{tagKey}.{tagValue}\". Curerntly, the array should contain EXACT ONE item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -146,7 +147,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'targets': {'module': 'budget', 'class': 'list[string]'}, 'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'Budget'})
 @cli_util.wrap_exceptions
-def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, amount, reset_period, target_compartment_id, display_name, description, target_type, targets, freeform_tags, defined_tags):
+def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, amount, reset_period, target_compartment_id, display_name, description, budget_processing_period_start_offset, target_type, targets, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -164,6 +165,9 @@ def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if description is not None:
         _details['description'] = description
+
+    if budget_processing_period_start_offset is not None:
+        _details['budgetProcessingPeriodStartOffset'] = budget_processing_period_start_offset
 
     if target_type is not None:
         _details['targetType'] = target_type
@@ -598,6 +602,7 @@ def update_alert_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--display-name', help=u"""The displayName of the budget.""")
 @cli_util.option('--description', help=u"""The description of the budget.""")
 @cli_util.option('--amount', type=click.FLOAT, help=u"""The amount of the budget expressed as a whole number in the currency of the customer's rate card.""")
+@cli_util.option('--budget-processing-period-start-offset', type=click.INT, help=u"""The number of days offset from the first day of the month, at which the budget processing period starts. In months that have fewer days than this value, processing will begin on the last day of that month. For example, for a value of 12, processing starts every month on the 12th at midnight.""")
 @cli_util.option('--reset-period', type=custom_types.CliCaseInsensitiveChoice(["MONTHLY"]), help=u"""The reset period for the budget.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -615,7 +620,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'Budget'})
 @cli_util.wrap_exceptions
-def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, display_name, description, amount, reset_period, freeform_tags, defined_tags, if_match):
+def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, display_name, description, amount, budget_processing_period_start_offset, reset_period, freeform_tags, defined_tags, if_match):
 
     if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
@@ -639,6 +644,9 @@ def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if amount is not None:
         _details['amount'] = amount
+
+    if budget_processing_period_start_offset is not None:
+        _details['budgetProcessingPeriodStartOffset'] = budget_processing_period_start_offset
 
     if reset_period is not None:
         _details['resetPeriod'] = reset_period

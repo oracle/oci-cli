@@ -70,6 +70,12 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('os_management.erratum_summary_group.command_name', 'erratum-summary'), cls=CommandGroupWithAlias, help="""Important changes for software. This can include security | advisories, bug fixes, or enhancements.""")
+@cli_util.help_option_group
+def erratum_summary_group():
+    pass
+
+
 os_management_root_group.add_command(software_source_group)
 os_management_root_group.add_command(erratum_group)
 os_management_root_group.add_command(managed_instance_group_group)
@@ -78,6 +84,7 @@ os_management_root_group.add_command(scheduled_job_group)
 os_management_root_group.add_command(windows_update_group)
 os_management_root_group.add_command(work_request_summary_group)
 os_management_root_group.add_command(work_request_group)
+os_management_root_group.add_command(erratum_summary_group)
 
 
 @software_source_group.command(name=cli_util.override('os_management.add_packages_to_software_source.command_name', 'add'), help=u"""Adds a given list of Software Packages to a specific Software Source. \n[Command Reference](addPackagesToSoftwareSource)""")
@@ -1502,6 +1509,142 @@ def list_available_windows_updates_for_managed_instance(ctx, from_json, all_page
         )
     else:
         result = client.list_available_windows_updates_for_managed_instance(
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@erratum_summary_group.command(name=cli_util.override('os_management.list_errata.command_name', 'list-errata'), help=u"""Returns a list of all of the currently available Errata in the system \n[Command Reference](listErrata)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--erratum-id', help=u"""The OCID of the erratum.""")
+@cli_util.option('--advisory-name', help=u"""The assigned erratum name. It's unique and not changeable.
+
+Example: `ELSA-2020-5804`""")
+@cli_util.option('--time-issue-date-start', type=custom_types.CLI_DATETIME, help=u"""The issue date after which to list all errata, in ISO 8601 format
+
+Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-issue-date-end', type=custom_types.CLI_DATETIME, help=u"""The issue date before which to list all errata, in ISO 8601 format
+
+Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ISSUEDATE", "ADVISORYNAME"]), help=u"""The field to sort errata by. Only one sort order may be provided. Default order for ISSUEDATE is descending. Default order for ADVISORYNAME is ascending. If no value is specified ISSUEDATE is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ErratumSummary]'})
+@cli_util.wrap_exceptions
+def list_errata(ctx, from_json, all_pages, page_size, compartment_id, erratum_id, advisory_name, time_issue_date_start, time_issue_date_end, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if erratum_id is not None:
+        kwargs['erratum_id'] = erratum_id
+    if advisory_name is not None:
+        kwargs['advisory_name'] = advisory_name
+    if time_issue_date_start is not None:
+        kwargs['time_issue_date_start'] = time_issue_date_start
+    if time_issue_date_end is not None:
+        kwargs['time_issue_date_end'] = time_issue_date_end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_errata,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_errata,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_errata(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('os_management.list_managed_instance_errata.command_name', 'list-managed-instance-errata'), help=u"""Returns a list of errata relevant to the Managed Instance. \n[Command Reference](listManagedInstanceErrata)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
+
+Example: `My new resource`""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ErratumSummary]'})
+@cli_util.wrap_exceptions
+def list_managed_instance_errata(ctx, from_json, all_pages, page_size, managed_instance_id, display_name, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_managed_instance_errata,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_managed_instance_errata,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_managed_instance_errata(
             managed_instance_id=managed_instance_id,
             **kwargs
         )

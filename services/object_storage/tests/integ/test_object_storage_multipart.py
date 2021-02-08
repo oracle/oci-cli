@@ -41,7 +41,7 @@ def content_input_file():
 
 
 @pytest.fixture(scope='module')
-def temp_bucket(runner, config_file, config_profile):
+def temp_bucket(runner, config_file, config_profile, object_storage_client):
     bucket_name = 'cli_temp_multipart_bucket_' + str(random.randint(0, 1000000))
     print("Bucket Name: ", bucket_name)
 
@@ -51,6 +51,7 @@ def temp_bucket(runner, config_file, config_profile):
     assert util.NAMESPACE in result.output
 
     # bucket create
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
     validate_response(result)
 

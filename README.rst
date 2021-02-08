@@ -13,11 +13,23 @@ __ https://docs.cloud.oracle.com/Content/API/Concepts/cliconcepts.htm
 Installation
 ============
 
-Mac / Linux
------------
+Mac OS X
+--------
+::
+
+    brew install oci-cli
+
+Linux
+-----
 ::
 
     bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
+
+Oracle Linux 7
+--------------
+::
+
+    sudo yum install python36-oci-cli
 
 Windows
 -------
