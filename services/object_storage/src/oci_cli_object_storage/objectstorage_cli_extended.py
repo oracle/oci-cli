@@ -1158,7 +1158,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
 @cli_util.option('--overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, overwrite it. If neither this flag nor --no-overwrite is specified, you will be prompted each time a file would be overwritten.')
 @cli_util.option('--no-overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
 @cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the upload process will consume more system resources and network bandwidth.')
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the download process will consume more system resources and network bandwidth.')
 @cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
 @cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
 @cli_util.option('--include', multiple=True, help="""Only download objects which match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
@@ -1464,7 +1464,7 @@ def object_head(ctx, from_json, namespace, bucket_name, name, version_id, if_mat
 @cli_util.option('--dry-run', is_flag=True, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
 @cli_util.option('--force', is_flag=True, help='Do not ask for confirmation prior to performing the bulk delete.')
 @cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the upload process will consume more system resources and network bandwidth.')
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the bulk delete process will consume more system resources and network bandwidth.')
 @cli_util.option('--include', multiple=True, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
@@ -1719,7 +1719,7 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
 @cli_util.option('--dry-run', is_flag=True, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
 @cli_util.option('--force', is_flag=True, help='Do not ask for confirmation prior to performing the bulk delete.')
 @cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the upload process will consume more system resources and network bandwidth.')
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the bulk-delete-versions process will consume more system resources and network bandwidth.')
 @cli_util.option('--include', multiple=True, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}

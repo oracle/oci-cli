@@ -5,17 +5,16 @@
 import click
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
-
+from services.compute_instance_agent.src.oci_cli_compute_instance_agent.generated import instance_agent_service_cli
 from services.compute_instance_agent.src.oci_cli_compute_instance_agent.generated import computeinstanceagent_cli
 
-computeinstanceagent_cli.instance_agent_root_group.commands.pop(computeinstanceagent_cli.instance_agent_command_group.name)
-computeinstanceagent_cli.instance_agent_root_group.commands.pop(computeinstanceagent_cli.instance_agent_command_execution_group.name)
+instance_agent_service_cli.instance_agent_service_group.commands.pop(computeinstanceagent_cli.compute_instance_agent_root_group.name)
 
-computeinstanceagent_cli.instance_agent_root_group.help = "Compute Instance Agent Service CLI"
-computeinstanceagent_cli.instance_agent_root_group.short_help = "Compute Instance Agent Service"
+instance_agent_service_cli.instance_agent_service_group.help = "Compute Instance Agent Service CLI"
+instance_agent_service_cli.instance_agent_service_group.short_help = "Compute Instance Agent Service"
 
-cli_util.rename_command(computeinstanceagent_cli, computeinstanceagent_cli.instance_agent_root_group, computeinstanceagent_cli.instance_agent_command_group, "command")
-cli_util.rename_command(computeinstanceagent_cli, computeinstanceagent_cli.instance_agent_root_group, computeinstanceagent_cli.instance_agent_command_execution_group, "command-execution")
+cli_util.rename_command(instance_agent_service_cli, instance_agent_service_cli.instance_agent_service_group, computeinstanceagent_cli.instance_agent_command_group, "command")
+cli_util.rename_command(instance_agent_service_cli, instance_agent_service_cli.instance_agent_service_group, computeinstanceagent_cli.instance_agent_command_execution_group, "command-execution")
 
 
 @cli_util.copy_params_from_generated_command(computeinstanceagent_cli.cancel_instance_agent_command, params_to_exclude=['instance_agent_command_id'])

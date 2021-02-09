@@ -73,9 +73,10 @@ database_cli.database_group.commands.pop(database_cli.upgrade_database_database_
 database_cli.database_group.commands.pop(database_cli.upgrade_database_database_upgrade_with_db_home_details.name)
 
 
-# Rename the command upgrade_database_database_upgrade_with_database_software_image_details and the parameter database-upgrade-source-details-database-software-image-id to database-software-image-id
-@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, params_to_exclude=['database_upgrade_source_details_database_software_image_id'])
+# Rename the command upgrade_database_database_upgrade_with_database_software_image_details and the parameter database-upgrade-source-details-database-software-image-id to database-software-image-id and database_upgrade_source_details_options to options.
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, params_to_exclude=['database_upgrade_source_details_database_software_image_id', 'database_upgrade_source_details_options'])
 @cli_util.option('--database-software-image-id', required=True, help=u"""the database software id used for upgrading the database.""")
+@cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-database-software-image', help=database_cli.database_group.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
@@ -84,13 +85,19 @@ def upgrade_database_database_upgrade_with_database_software_image_details_exten
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         kwargs['database_upgrade_source_details_database_software_image_id'] = kwargs['database_software_image_id']
 
+    if 'options' in kwargs and kwargs['options']:
+        kwargs['database_upgrade_source_details_options'] = kwargs['options']
+
     del kwargs['database_software_image_id']
+    del kwargs['options']
+
     ctx.invoke(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, **kwargs)
 
 
-# Rename the command upgrade_database_database_upgrade_with_db_version_details and the parameter database-upgrade-source-details-db-version to db-version
-@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_version_details, params_to_exclude=['database_upgrade_source_details_db_version'])
+# Rename the command upgrade_database_database_upgrade_with_db_version_details and the parameter database-upgrade-source-details-db-version to db-version and database_upgrade_source_details_options to options.
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_version_details, params_to_exclude=['database_upgrade_source_details_db_version', 'database_upgrade_source_details_options'])
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-db-version', help=database_cli.database_group.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
@@ -99,13 +106,19 @@ def upgrade_database_database_upgrade_with_db_version_details_extended(ctx, **kw
     if 'db_version' in kwargs and kwargs['db_version']:
         kwargs['database_upgrade_source_details_db_version'] = kwargs['db_version']
 
+    if 'options' in kwargs and kwargs['options']:
+        kwargs['database_upgrade_source_details_options'] = kwargs['options']
+
     del kwargs['db_version']
+    del kwargs['options']
+
     ctx.invoke(database_cli.upgrade_database_database_upgrade_with_db_version_details, **kwargs)
 
 
-# Rename the command upgrade_database_database_upgrade_with_db_home_details and the parameter database-upgrade-source-details-db-home-id to db-home-id
-@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_home_details, params_to_exclude=['database_upgrade_source_details_db_home_id'])
+# Rename the command upgrade_database_database_upgrade_with_db_home_details and the parameter database-upgrade-source-details-db-home-id to db-home-id and database_upgrade_source_details_options to options.
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_home_details, params_to_exclude=['database_upgrade_source_details_db_home_id', 'database_upgrade_source_details_options'])
 @cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-db-home', help=database_cli.database_group.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
@@ -114,7 +127,12 @@ def upgrade_database_database_upgrade_with_db_home_details_extended(ctx, **kwarg
     if 'db_home_id' in kwargs and kwargs['db_home_id']:
         kwargs['database_upgrade_source_details_db_home_id'] = kwargs['db_home_id']
 
+    if 'options' in kwargs and kwargs['options']:
+        kwargs['database_upgrade_source_details_options'] = kwargs['options']
+
     del kwargs['db_home_id']
+    del kwargs['options']
+
     ctx.invoke(database_cli.upgrade_database_database_upgrade_with_db_home_details, **kwargs)
 
 

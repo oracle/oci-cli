@@ -6,6 +6,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.21.1 - 2021-02-09
+-------------------
+Added
+~~~~~
+* Support for Database Management service
+
+  * ``oci database-management``
+
+* Support for additional upgrade options in Database service
+
+  * ``oci db database upgrade-with-db-home``
+  * ``oci db database upgrade-with-database-software-image``
+  * ``oci db database upgrade-with-db-version``
+
+* Support for discovering available plugins in Oracle Cloud Agent service
+
+  * ``oci instance-agent plugin``
+  * ``oci instance-agent available-plugins``
+
+* Support for Erratum List API in OS Management service
+
+  * ``oci os-management erratum-summary list-errata``
+  * ``oci os-management managed-instance list-managed-instance-errata``
+
+* Support to Enable/Disable Oracle Cloud Agent plugins in Compute service
+
+  * ``oci compute instance launch --agent-config '{ "are-all-plugins-disabled" : true|false,"plugins-config": []}'``
+  * ``oci compute instance update --agent-config '{ "are-all-plugins-disabled" : true|false,"plugins-config": []}'``
+
+* Support for recommending glossary terms in Data Catalog service
+
+  * ``oci data-catalog catalog recommendations``
+  * ``oci data-catalog catalog process-recommendation``
+
+* Support for setting the offset to start budget processing in Budgets service
+
+  * ``oci budgets budget create --budget-processing-period-start-offset``
+  * ``oci budgets budget update --budget-processing-period-start-offset``
+
+Changed
+~~~~~~~
+
+* Minor help text updates for
+
+  * ``oci os object bulk-delete-versions``
+  * ``oci os object bulk-delete``
+  * ``oci os object bulk-download``
+
+
 2.21.0 - 2021-02-02
 -------------------
 Added

@@ -1290,12 +1290,13 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
 
 
 @util.skip_while_rerecording
-def test_get_object_multipart_download(runner, config_file, config_profile, test_id):
+def test_get_object_multipart_download(runner, config_file, config_profile, test_id, object_storage_client):
     test_file_path = os.path.join('tests', 'temp', 'for_multipart_download_{}.bin'.format(test_id))
     util.create_large_file(test_file_path, 400)
 
     bucket_name = 'cli_temp_bucket_' + test_id
     object_name = 'for_multipart_download_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
     # bucket create
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])

@@ -698,6 +698,8 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
         if bucket_prefix not in bucket:
             continue
 
+        abort_multipart_uploading(api, namespace, bucket)
+
         object_list = []
         next_start = None
         count = 0
@@ -729,6 +731,8 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
         # only delete buckets starting with prefix (i.e. CliReadOnlyTestBucket)
         if bucket_prefix not in bucket:
             continue
+
+        abort_multipart_uploading(api, namespace, bucket)
 
         object_list = []
         list_args = {}
@@ -871,6 +875,12 @@ VARIABLE_NAME_OVERRIDES = {
 
 def variable_name_override(key):
     return VARIABLE_NAME_OVERRIDES.get(key, None)
+
+
+def abort_multipart_uploading(api, namespace, bucket_name):
+    multipart_uploads_list = api.list_multipart_uploads(namespace, bucket_name)
+    for multipart_upload in multipart_uploads_list.data:
+        api.abort_multipart_upload(namespace, bucket_name, multipart_upload.object, multipart_upload.upload_id)
 
 
 # Trivial object to provide dictionary and dot accessor capabilities
