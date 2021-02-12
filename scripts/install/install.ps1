@@ -63,7 +63,7 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
 $PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
 $FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.5"    # version of Python to install if none exists
-$MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
+$MinValidPython2Version = "2.7.5"
 $MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
 
 function LogOutput($Output) {
@@ -126,7 +126,7 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
         # If there is a valid python and it is not python 3
         if ( (-Not $AcceptAllDefaults) -And $PythonVersion.StartsWith("2") -And ($MinVersionToCheck -ne $MinValidPython3Version)){
             $message  = 'OCI-CLI recommends python 3. Do you want to install Python 3?'
-            $question = 'Install Python 3 now? (Entering "n" will install OCI CLI using existing Python 2)'
+            $question = 'Install Python 3 now? (Entering "n" will install OCI CLI using existing Python)'
 
             $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
             $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
@@ -327,7 +327,7 @@ Try {
             # value passed by the user as an argument
             $PythonInstallLocation = Join-Path $PythonInstallLocation "Python"
         }
-        # use MSI installer for python 2.7.x on Windows Server 2008 SP 0
+        # use MSI installer on Windows Server 2008 SP 0
         Try
         {
             $OsInfo = Get-WMIObject Win32_OperatingSystem -ComputerName $env:COMPUTERNAME

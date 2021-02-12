@@ -80,7 +80,7 @@ def test_topic_crud(runner, config_file, config_profile):
 # TODO: Test is failing in py2.7:
 #    Comment to record new tests.
 #    Later on fix running in 2.7
-@pytest.mark.skip('Test failing only in Python 2.7')
+@pytest.mark.skip('Test failing only in non-Python3 environment')
 def test_subscription_crud(runner, config_file, config_profile):
     topic_id = None
     try:

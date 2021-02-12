@@ -230,6 +230,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -246,7 +247,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'discovery-details': {'module': 'application_migration', 'class': 'DiscoveryDetails'}, 'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -265,6 +266,9 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -326,6 +330,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -342,7 +347,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_oic_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration_oic_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -363,6 +368,9 @@ def create_migration_oic_discovery_details(ctx, from_json, wait_for_state, max_w
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -426,6 +434,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -442,7 +451,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_pcs_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration_pcs_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -463,6 +472,9 @@ def create_migration_pcs_discovery_details(ctx, from_json, wait_for_state, max_w
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -526,6 +538,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -542,7 +555,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_ics_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration_ics_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -563,6 +576,9 @@ def create_migration_ics_discovery_details(ctx, from_json, wait_for_state, max_w
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -626,6 +642,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -642,7 +659,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_oac_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration_oac_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -663,6 +680,9 @@ def create_migration_oac_discovery_details(ctx, from_json, wait_for_state, max_w
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -726,6 +746,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -742,7 +763,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_jcs_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration_jcs_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -763,6 +784,9 @@ def create_migration_jcs_discovery_details(ctx, from_json, wait_for_state, max_w
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -826,6 +850,7 @@ To track the progress of this operation, you can monitor the status of the Creat
 @cli_util.option('--display-name', help=u"""User-friendly name of the application. This will be the name of the migrated application in Oracle Cloud Infrastructure.""")
 @cli_util.option('--description', help=u"""Description of the application that you are migrating.""")
 @cli_util.option('--pre-created-target-database-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_SYSTEM", "NOT_SET"]), help=u"""The pre-existing database type to be used in this migration. Currently, Application migration only supports Oracle Cloud Infrastrure databases and this option is currently available only for `JAVA_CLOUD_SERVICE` and `WEBLOGIC_CLOUD_SERVICE` target instance types.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -842,7 +867,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_soacs_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, pre_created_target_database_type, service_config, application_config, freeform_tags, defined_tags):
+def create_migration_soacs_discovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, application_name, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, pre_created_target_database_type, is_selective_migration, service_config, application_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -863,6 +888,9 @@ def create_migration_soacs_discovery_details(ctx, from_json, wait_for_state, max
 
     if pre_created_target_database_type is not None:
         _details['preCreatedTargetDatabaseType'] = pre_created_target_database_type
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -956,6 +984,88 @@ def create_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
+    result = client.create_source(
+        create_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@source_group.command(name=cli_util.override('application_migration.create_source_occ_source_details.command_name', 'create-source-occ-source-details'), help=u"""Creates a source in the specified compartment. In Application Migration, a source refers to the environment from which the application is being migrated. For more information, see [Manage Sources].
+
+All Oracle Cloud Infrastructure resources, including sources, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+
+After you send your request, a source is created in the specified compartment. The new source's lifecycle state will temporarily be <code>CREATING</code>. Application Migration connects to the source environment with the authentication credentials that you have provided. If the connection is established, the status of the source changes to <code>ACTIVE</code> and Application Migration fetches the list of applications that are available for migration in the source environment.
+
+To track the progress of the operation, you can monitor the status of the Create Source work request by using the <code>[GetWorkRequest]</code> REST API operation on the work request or by viewing the status of the work request in the console.
+
+Ensure that the state of the source has changed to <code>ACTIVE</code>, before you retrieve the list of applications from the source environment using the <code>[ListSourceApplications]</code> REST API call. \n[Command Reference](createSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the source.""")
+@cli_util.option('--source-details-compute-account', required=True, help=u"""If you are using a Oracle Cloud @ Customer account with Identity Cloud Service (IDCS), enter the service instance ID. For example, if Compute-567890123 is the account name of your Oracle Cloud @ Customer Compute service entitlement, then enter 567890123.""")
+@cli_util.option('--display-name', help=u"""Name of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--description', help=u"""Description of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--authorization-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Source'})
+@cli_util.wrap_exceptions
+def create_source_occ_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_compute_account, display_name, description, authorization_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['computeAccount'] = source_details_compute_account
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if authorization_details is not None:
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['sourceDetails']['type'] = 'OCC'
 
     client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
@@ -1124,6 +1234,88 @@ def create_source_ocic_source_details(ctx, from_json, wait_for_state, max_wait_s
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['sourceDetails']['type'] = 'OCIC'
+
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
+    result = client.create_source(
+        create_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@source_group.command(name=cli_util.override('application_migration.create_source_occ_authorization_details.command_name', 'create-source-occ-authorization-details'), help=u"""Creates a source in the specified compartment. In Application Migration, a source refers to the environment from which the application is being migrated. For more information, see [Manage Sources].
+
+All Oracle Cloud Infrastructure resources, including sources, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+
+After you send your request, a source is created in the specified compartment. The new source's lifecycle state will temporarily be <code>CREATING</code>. Application Migration connects to the source environment with the authentication credentials that you have provided. If the connection is established, the status of the source changes to <code>ACTIVE</code> and Application Migration fetches the list of applications that are available for migration in the source environment.
+
+To track the progress of the operation, you can monitor the status of the Create Source work request by using the <code>[GetWorkRequest]</code> REST API operation on the work request or by viewing the status of the work request in the console.
+
+Ensure that the state of the source has changed to <code>ACTIVE</code>, before you retrieve the list of applications from the source environment using the <code>[ListSourceApplications]</code> REST API call. \n[Command Reference](createSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the source.""")
+@cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization-details-username', required=True, help=u"""User with Compute Operations role in Oracle Cloud @ Customer.""")
+@cli_util.option('--authorization-details-password', required=True, help=u"""Password for this user.""")
+@cli_util.option('--display-name', help=u"""Name of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--description', help=u"""Description of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'application_migration', 'class': 'SourceDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'application_migration', 'class': 'SourceDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'application_migration', 'class': 'Source'})
+@cli_util.wrap_exceptions
+def create_source_occ_authorization_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details, authorization_details_username, authorization_details_password, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['authorizationDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+    _details['authorizationDetails']['username'] = authorization_details_username
+    _details['authorizationDetails']['password'] = authorization_details_password
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['authorizationDetails']['type'] = 'OCC'
 
     client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
@@ -1917,6 +2109,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
 @cli_util.option('--discovery-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1935,7 +2128,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'discovery-details': {'module': 'application_migration', 'class': 'DiscoveryDetails'}, 'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, description, discovery_details, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, display_name, description, discovery_details, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -1959,6 +2152,9 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if discovery_details is not None:
         _details['discoveryDetails'] = cli_util.parse_json_parameter("discovery_details", discovery_details)
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2022,6 +2218,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""Password for this user.""")
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2040,7 +2237,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration_oic_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration_oic_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2064,6 +2261,9 @@ def update_migration_oic_discovery_details(ctx, from_json, force, wait_for_state
 
     if description is not None:
         _details['description'] = description
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2129,6 +2329,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""Password for this user.""")
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2147,7 +2348,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration_pcs_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration_pcs_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2171,6 +2372,9 @@ def update_migration_pcs_discovery_details(ctx, from_json, force, wait_for_state
 
     if description is not None:
         _details['description'] = description
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2236,6 +2440,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""Password for this user.""")
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2254,7 +2459,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration_ics_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration_ics_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2278,6 +2483,9 @@ def update_migration_ics_discovery_details(ctx, from_json, force, wait_for_state
 
     if description is not None:
         _details['description'] = description
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2343,6 +2551,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""This field is currently not supported. You must enter a value, such as <code>unused</code>. However, the value that you enter is ignored.""")
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2361,7 +2570,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration_oac_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration_oac_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_service_instance_user, discovery_details_service_instance_password, display_name, description, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2385,6 +2594,9 @@ def update_migration_oac_discovery_details(ctx, from_json, force, wait_for_state
 
     if description is not None:
         _details['description'] = description
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2450,6 +2662,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--discovery-details-weblogic-password', required=True, help=u"""The password of the WebLogic administrator for the Oracle Java Cloud Service application in the source environment.""")
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2468,7 +2681,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration_jcs_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration_jcs_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2492,6 +2705,9 @@ def update_migration_jcs_discovery_details(ctx, from_json, force, wait_for_state
 
     if description is not None:
         _details['description'] = description
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2557,6 +2773,7 @@ When the migration has been updated, the state of the migration changes to <code
 @cli_util.option('--discovery-details-weblogic-password', required=True, help=u"""Password for this user.""")
 @cli_util.option('--display-name', help=u"""User-friendly name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
+@cli_util.option('--is-selective-migration', type=click.BOOL, help=u"""If set to `true`, Application Migration migrates the application resources selectively depending on the source.""")
 @cli_util.option('--service-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Configuration required to migrate the application. In addition to the key and value, additional fields are provided to describe type type and purpose of each field. Only the value for each key is required when passing configuration to the CreateMigration operation.
 
 This option is a JSON dictionary of type dict(str, ConfigurationField).  For documentation on ConfigurationField please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationmigration/20191031/datatypes/ConfigurationField.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2575,7 +2792,7 @@ This option is a JSON dictionary of type dict(str, ConfigurationField).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'application-config': {'module': 'application_migration', 'class': 'dict(str, ConfigurationField)'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration_soacs_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, service_config, application_config, freeform_tags, defined_tags, if_match):
+def update_migration_soacs_discovery_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, discovery_details_weblogic_user, discovery_details_weblogic_password, display_name, description, is_selective_migration, service_config, application_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2599,6 +2816,9 @@ def update_migration_soacs_discovery_details(ctx, from_json, force, wait_for_sta
 
     if description is not None:
         _details['description'] = description
+
+    if is_selective_migration is not None:
+        _details['isSelectiveMigration'] = is_selective_migration
 
     if service_config is not None:
         _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
@@ -2699,6 +2919,93 @@ def update_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
+    result = client.update_source(
+        source_id=source_id,
+        update_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@source_group.command(name=cli_util.override('application_migration.update_source_occ_source_details.command_name', 'update-source-occ-source-details'), help=u"""You can update the authorization details to access the source environment from which you want to migrate applications to Oracle Cloud Infrastructure. You can also update the description and tags of a source.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API. \n[Command Reference](updateSource)""")
+@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source.""")
+@cli_util.option('--source-details-compute-account', required=True, help=u"""If you are using a Oracle Cloud @ Customer account with Identity Cloud Service (IDCS), enter the service instance ID. For example, if Compute-567890123 is the account name of your Oracle Cloud @ Customer Compute service entitlement, then enter 567890123.""")
+@cli_util.option('--display-name', help=u"""Name of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--description', help=u"""Description of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--authorization-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_source_occ_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, source_id, source_details_compute_account, display_name, description, authorization_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(source_id, six.string_types) and len(source_id.strip()) == 0:
+        raise click.UsageError('Parameter --source-id cannot be whitespace or empty string')
+    if not force:
+        if authorization_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to authorization-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['sourceDetails']['computeAccount'] = source_details_compute_account
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if authorization_details is not None:
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['sourceDetails']['type'] = 'OCC'
 
     client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
@@ -2877,6 +3184,95 @@ def update_source_ocic_source_details(ctx, from_json, force, wait_for_state, max
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['sourceDetails']['type'] = 'OCIC'
+
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
+    result = client.update_source(
+        source_id=source_id,
+        update_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@source_group.command(name=cli_util.override('application_migration.update_source_occ_authorization_details.command_name', 'update-source-occ-authorization-details'), help=u"""You can update the authorization details to access the source environment from which you want to migrate applications to Oracle Cloud Infrastructure. You can also update the description and tags of a source.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API. \n[Command Reference](updateSource)""")
+@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source.""")
+@cli_util.option('--authorization-details-username', required=True, help=u"""User with Compute Operations role in Oracle Cloud @ Customer.""")
+@cli_util.option('--authorization-details-password', required=True, help=u"""Password for this user.""")
+@cli_util.option('--display-name', help=u"""Name of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--description', help=u"""Description of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'application_migration', 'class': 'SourceDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'application_migration', 'class': 'SourceDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_source_occ_authorization_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, source_id, authorization_details_username, authorization_details_password, display_name, description, source_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(source_id, six.string_types) and len(source_id.strip()) == 0:
+        raise click.UsageError('Parameter --source-id cannot be whitespace or empty string')
+    if not force:
+        if source_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to source-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['authorizationDetails'] = {}
+    _details['authorizationDetails']['username'] = authorization_details_username
+    _details['authorizationDetails']['password'] = authorization_details_password
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['authorizationDetails']['type'] = 'OCC'
 
     client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(

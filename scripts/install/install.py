@@ -26,11 +26,9 @@ try:
     from urllib.request import urlopen
     from urllib.error import URLError
 except ImportError:
-    # Import python 2 version
     from urllib2 import urlopen, URLError
 
 try:
-    # Rename raw_input to input to support Python 2
     input = raw_input
 except NameError:
     # Python 3 doesn't have raw_input
@@ -540,7 +538,7 @@ def verify_python_version():
     v = sys.version_info
     valid_version = v >= (2, 7, 5) if v.major == 2 else v >= (3, 5, 0)
     if not valid_version:
-        raise CLIInstallError('The CLI does not support Python 2 versions less than 2.7.5 or Python 3 versions less than 3.5.0.')
+        raise CLIInstallError('The CLI does not support Python 3 versions less than 3.5.0.')
     if 'conda' in sys.version:
         raise CLIInstallError("This script does not support the Python Anaconda environment. "
                               "Create an Anaconda virtual environment and install with 'pip'")

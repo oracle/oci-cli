@@ -248,7 +248,7 @@ if [ $? -eq 0 ]; then
 
         command -v python3 >/dev/null 2>&1
         if [ $? -eq 1 ]; then
-            # Ask user if they would like to upgrade python 2 to python 3
+            # Ask user if they would like to upgrade to python 3
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ]; then
                 while true
                 do
@@ -264,7 +264,7 @@ if [ $? -eq 0 ]; then
             fi
         fi
     else
-        echo "System version of Python must be either a Python 2 version >= 2.7.5 or a Python 3 version >= 3.5.0."
+        echo "System version of Python must be a Python 3 version >= 3.5.0."
     fi
 
 else
@@ -283,7 +283,7 @@ if [ $? -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
     else
-        echo "System version of Python must be either a Python 2 version >= 2.7.5 or a Python 3 version >= 3.5.0."
+        echo "System version of Python must be a Python 3 version >= 3.5.0."
     fi
 else
     echo "Python3 not found on system PATH"

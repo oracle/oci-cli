@@ -60,6 +60,22 @@ applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.upda
 applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_ocic_source_details.name)
 
 
+# Remove create-source-occ-authorization-details from oci application-migration source
+applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.create_source_occ_authorization_details.name)
+
+
+# Remove create-source-occ-source-details from oci application-migration source
+applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.create_source_occ_source_details.name)
+
+
+# Remove update-source-occ-authorization-details from oci application-migration source
+applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_occ_authorization_details.name)
+
+
+# Remove update-source-occ-source-details from oci application-migration source
+applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_occ_source_details.name)
+
+
 @cli_util.copy_params_from_generated_command(applicationmigration_cli.list_migrations, params_to_exclude=['lifecycle_state'])
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""Filter results on lifecycleState.""")
 @applicationmigration_cli.migration_group.command(name=cli_util.override('application_migration.list_migrations.command_name', 'list'), help=applicationmigration_cli.list_migrations.help)

@@ -290,9 +290,10 @@ Output is in JSON format.
 For information on configuration, see https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--release-info', is_flag=True, show_default=False, callback=find_latest_release_info,
-              expose_value=False, is_eager=True, help='Print latest release info. Please visit https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst for more info')
+              expose_value=False, is_eager=True, help='Prints ChangeLog difference between current installed version and '
+                                                      'latest released version. Please visit https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst for more info')
 @click.option('--latest-version', is_flag=True, show_default=False, callback=find_latest_release_version,
-              expose_value=False, is_eager=True, help='Print latest release version.')
+              expose_value=False, is_eager=True, help='Prints latest released version.')
 @click.option('--config-file',
               default=DEFAULT_LOCATION, show_default=True, callback=read_values_from_env,
               help='The path to the config file.')
