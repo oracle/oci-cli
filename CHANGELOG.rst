@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.21.2 - 2021-02-16
+-------------------
+Added
+~~~~~
+* New parameter --is-selective-migration is added for the below commands in Application Migration Service
+
+  * ``oci application-migration migration create --is-selective-migration``
+  * ``oci application-migration migration update --is-selective-migration``
+
+* Support for "OCC" Source type in Application Migration Service
+
+  * ``oci application-migration source``
+
+* Support for change network endpoint for integration instance in Integration Service
+
+  * ``oci integration integration-instance change-network-endpoint``
+
 2.21.1 - 2021-02-09
 -------------------
 Added

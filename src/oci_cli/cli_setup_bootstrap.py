@@ -176,6 +176,8 @@ def create_user_session(region='', tenancy_name=None):
     try:
         if webbrowser.open_new(url):
             click.echo('    Please switch to newly opened browser window to log in!')
+            click.echo('    You can also open the following URL in a web browser window to continue:')
+            click.echo('%s' % url)
         else:
             click.echo('    Open the following URL in a web browser window to continue:')
             click.echo('%s' % url)

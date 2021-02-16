@@ -9,6 +9,10 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils
 from oci_cli import cli_util
 
+integrationinstance_cli.integration_instance_group.commands.pop('change-integration-instance-network-endpoint-public-endpoint-details')
+integrationinstance_cli.integration_instance_group.commands.pop('create-integration-instance-public-endpoint-details')
+integrationinstance_cli.integration_instance_group.commands.pop('change-integration-instance-network-endpoint')
+
 
 # Rename integration-instance-id -> id for all parameters
 # Rename integration-instance-type -> type for all parameters
@@ -23,6 +27,19 @@ def change_integration_instance_compartment_extended(ctx, **kwargs):
         kwargs['integration_instance_id'] = kwargs['id']
         kwargs.pop('id')
     ctx.invoke(integrationinstance_cli.change_integration_instance_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(integrationinstance_cli.change_integration_instance_network_endpoint, params_to_exclude=['integration_instance_id'])
+@integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.change_integration_instance_network_endpoint.command_name', 'change-network-endpoint'), help=integrationinstance_cli.change_integration_instance_network_endpoint.help)
+@cli_util.option('--id', required=True, help=u"""Unique Integration Instance identifier.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
+@cli_util.wrap_exceptions
+def change_integration_instance_network_endpoint_extended(ctx, **kwargs):
+    if 'id' in kwargs:
+        kwargs['integration_instance_id'] = kwargs['id']
+        kwargs.pop('id')
+    ctx.invoke(integrationinstance_cli.change_integration_instance_network_endpoint, **kwargs)
 
 
 @cli_util.copy_params_from_generated_command(integrationinstance_cli.start_integration_instance, params_to_exclude=['integration_instance_id'])
@@ -110,9 +127,9 @@ def update_integration_instance_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(integrationinstance_cli.create_integration_instance, params_to_exclude=['integration_instance_type'])
 @integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.create_integration_instance.command_name', 'create'), help=integrationinstance_cli.create_integration_instance.help)
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
 def create_integration_instance_extended(ctx, **kwargs):
     if 'type' in kwargs:

@@ -654,7 +654,9 @@ def prompt_for_region():
 
 
 def remove_profile_from_config(config_file, profile_name_to_terminate):
-    config = configparser.ConfigParser()
+    # Set default_section to custom value or else we can't delete 'DEFAULT'
+    # profiles since it is protected by configparser
+    config = configparser.ConfigParser(default_section="")
     config.read(config_file)
     config.remove_section(profile_name_to_terminate)
     with open(config_file, 'w') as config_file_handle:

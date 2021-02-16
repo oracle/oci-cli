@@ -467,10 +467,10 @@ class TestSetup(unittest.TestCase):
         if oci_cli.cli_util.is_windows() and six.PY2:
             print(
                 """
-                Skipping subtest_autocomplete_deny_bash_rc_access on Windows with Python 2.7 as the CliRunner click offers for testing seems to use a StringIO
+                Skipping subtest_autocomplete_deny_bash_rc_access on Windows without Python 3 as the CliRunner click offers for testing seems to use a StringIO
                 to back stdout, which throws an error when sys.stdout.encoding is called since there is no encoding attribute on a StringIO.
 
-                Running manually on Windows with Python 2.7 works and Windows tests with Python 3 work, just this case breaks.
+                Running manually on Windows with and without Python 3 both work, just this case breaks.
                 """
             )
             return
