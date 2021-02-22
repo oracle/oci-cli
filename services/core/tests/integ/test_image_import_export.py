@@ -20,6 +20,8 @@ class TestImageImportExport(object):
                 self.set_up_resources()
                 self.subtest_image_import_export_via_tuple()
                 self.subtest_image_import_export_via_uri(config)
+                self.subtest_image_export_via_tuple_with_export_format_specified()
+                self.subtest_image_export_via_uri_with_export_format_specified(config)
                 # self.subtest_image_import_export_via_preauthenticated_url(config)
             finally:
                 self.clean_up_resources()
@@ -187,6 +189,41 @@ class TestImageImportExport(object):
 
     #     util.wait_until(['compute', 'image', 'get', '--image-id', self.imported_image_from_par_id], 'AVAILABLE', max_wait_seconds=3600)
 
+    def subtest_image_export_via_tuple_with_export_format_specified(self):
+        self.export_via_tuple_object_name_with_export_format = 'export-via-tuple-with-export-format'
+
+        result = self.invoke(
+            ['compute', 'image', 'export', 'to-object',
+             '--image-id', self.custom_image_id,
+             '--namespace', self.object_storage_namespace,
+             '--bucket-name', self.bucket_name,
+             '--name', self.export_via_tuple_object_name_with_export_format,
+             '--export-format', 'vmdk'])
+        image_details = json.loads(result.output)
+        assert self.custom_image_id == image_details['data']['id']
+        assert image_details['data']['lifecycle-state'] == 'EXPORTING'
+
+        util.wait_until(['compute', 'image', 'get', '--image-id', self.custom_image_id], 'AVAILABLE', max_wait_seconds=3600)
+
+    def subtest_image_export_via_uri_with_export_format_specified(self, config):
+        self.export_via_uri_object_name_with_export_format = 'export-via-uri-with-export-format'
+        object_uri = '{}/n/{}/b/{}/o/{}'.format(
+            oci.regions.endpoint_for('object_storage', config['region']),
+            self.object_storage_namespace,
+            self.bucket_name,
+            self.export_via_uri_object_name_with_export_format)
+
+        result = self.invoke(
+            ['compute', 'image', 'export', 'to-object-uri',
+             '--image-id', self.custom_image_id,
+             '--uri', object_uri,
+             '--export-format', 'qcow2'])
+        image_details = json.loads(result.output)
+        assert self.custom_image_id == image_details['data']['id']
+        assert image_details['data']['lifecycle-state'] == 'EXPORTING'
+
+        util.wait_until(['compute', 'image', 'get', '--image-id', self.custom_image_id], 'AVAILABLE', max_wait_seconds=3600)
+
     def set_up_resources(self):
         # Grab the Object Storage namespace
         result = self.invoke(['os', 'ns', 'get'])
@@ -197,9 +234,9 @@ class TestImageImportExport(object):
         self.bucket_name = util.random_name('CliImageImportExport')
         result = self.invoke(
             ['os', 'bucket', 'create',
-                '--compartment-id', util.COMPARTMENT_ID,
-                '--namespace', self.object_storage_namespace,
-                '--name', self.bucket_name])
+             '--compartment-id', util.COMPARTMENT_ID,
+             '--namespace', self.object_storage_namespace,
+             '--name', self.bucket_name])
         util.validate_response(result, expect_etag=True)
 
         # Create a VCN
@@ -372,6 +409,34 @@ class TestImageImportExport(object):
                      '--namespace', self.object_storage_namespace,
                      '--bucket-name', self.bucket_name,
                      '--name', self.export_via_uri_object_name,
+                     '--force'])
+                util.validate_response(result)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if (hasattr(self, 'export_via_tuple_object_name_with_export_format')):
+            try:
+                print("Deleting exported image via tuple with export format")
+                result = self.invoke(
+                    ['os', 'object', 'delete',
+                     '--namespace', self.object_storage_namespace,
+                     '--bucket-name', self.bucket_name,
+                     '--name', self.export_via_tuple_object_name_with_export_format,
+                     '--force'])
+                util.validate_response(result)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if (hasattr(self, 'export_via_uri_object_name_with_export_format')):
+            try:
+                print("Deleting exported image via uri with export format")
+                result = self.invoke(
+                    ['os', 'object', 'delete',
+                     '--namespace', self.object_storage_namespace,
+                     '--bucket-name', self.bucket_name,
+                     '--name', self.export_via_uri_object_name_with_export_format,
                      '--force'])
                 util.validate_response(result)
             except Exception as error:

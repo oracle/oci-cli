@@ -176,12 +176,14 @@ To perform an image export, you need write access to the Object Storage Service 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image_to_object(ctx, from_json, image_id, if_match, namespace, bucket_name, name):
+def export_image_to_object(ctx, from_json, image_id, if_match, namespace, bucket_name, name, export_format):
     export_image_details = {}
     export_image_details['destinationType'] = 'objectStorageTuple'
     export_image_details['namespaceName'] = namespace
     export_image_details['bucketName'] = bucket_name
     export_image_details['objectName'] = name
+    if export_format is not None:
+        export_image_details['exportFormat'] = export_format
 
     export_image_internal(ctx, image_id, export_image_details, if_match)
 
@@ -197,10 +199,12 @@ See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image_to_uri(ctx, from_json, image_id, if_match, uri):
+def export_image_to_uri(ctx, from_json, image_id, if_match, uri, export_format):
     export_image_details = {}
     export_image_details['destinationType'] = 'objectStorageUri'
     export_image_details['destinationUri'] = uri
+    if export_format is not None:
+        export_image_details['exportFormat'] = export_format
 
     export_image_internal(ctx, image_id, export_image_details, if_match)
 
@@ -1001,3 +1005,7 @@ def update_image_capability_schema(ctx, **kwargs):
         kwargs['compute_image_capability_schema_id'] = kwargs['image_capability_schema_id']
         kwargs.pop('image_capability_schema_id')
     ctx.invoke(compute_cli.update_compute_image_capability_schema, **kwargs)
+
+
+# Remove launch-instance-amd-milan-bm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_milan_bm_launch_instance_platform_config.name)

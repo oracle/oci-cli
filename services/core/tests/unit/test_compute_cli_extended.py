@@ -123,3 +123,10 @@ class TestCompute(unittest.TestCase):
 
         result = util.invoke_command(['compute', 'image', 'import', 'from-object-uri', '--operating-system-version'])
         assert 'Error: --operating-system-version option' in result.output
+
+    def test_image_export(self):
+        result = util.invoke_command(['compute', 'image', 'export', 'to-object', '--export-format'])
+        assert 'Error: --export-format option' in result.output
+
+        result = util.invoke_command(['compute', 'image', 'export', 'to-object-uri', '--export-format'])
+        assert 'Error: --export-format option' in result.output
