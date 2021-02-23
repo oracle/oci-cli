@@ -6,6 +6,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+2.21.3 - 2021-02-23
+-------------------
+Added
+~~~~~
+* Support for exporting an existing running VM, or a copy of VM, into a VMDK, QCOW2, VDI, VHD, or OCI formatted image in the Compute service
+
+  * ``oci compute image export to-object --export-format``
+  * ``oci compute image export to-object-uri --export-format``
+
+* Support for providing target-tags and target-compartments in the Profile in the Optimizer service
+
+  * ``oci optimizer profile create --target-compartments, --target-tags``
+  * ``oci optimizer profile update --target-compartments, --target-tags``
+
+* Support for Optional param ``--actions`` in Recommendation Bulk Apply in the Optimizer service
+
+  * ``oci optimizer recommendation bulk-apply --actions``
+
+* Support for the 'Fix it' feature in the Optimizer service
+
+  * ``oci optimizer recommendation-strategy-summary list-recommendation-strategies``
+
+* Support for the OCI Registry Service
+
+  * ``oci artifacts``
+
+* Support for configuring the Platform Configuration of type AMD_MILAN_BM of an Instance in Compute service.
+
+  * ``oci compute instance launch --platform-config '{"type":"AMD_MILAN_BM","numaNodesPerSocket":"NPS1"}'``
+
+Changed
+~~~~~~~~
+* Fix volume create commands to not infer availability domain if it is manually specified by the user
+
+  * ``oci bv volume create``
+  * ``oci bv boot-volume create``
+
+* Required param ``--resource-action-ids`` has been made optional in Recommendation Bulk Apply in the Optimizer service
+
+  * ``oci optimizer recommendation bulk-apply --resource-action-ids``
+
+* Param ``--name`` can now be updated in Profile in the Optimizer service
+
+  * ``oci optimizer profile update --name``
+
 2.21.2 - 2021-02-16
 -------------------
 Added

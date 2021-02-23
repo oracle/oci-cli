@@ -21,17 +21,13 @@ def optimizer_root_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.category_summary_group.command_name', 'category-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the category summary.
-
-**Caution:** Avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('optimizer.category_summary_group.command_name', 'category-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the category summary.""")
 @cli_util.help_option_group
 def category_summary_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.profile_group.command_name', 'profile'), cls=CommandGroupWithAlias, help="""The metadata associated with the profile.
-
-**Caution:** Avoid using any confidential information when you use the API to supply string values.""")
+@click.command(cli_util.override('optimizer.profile_group.command_name', 'profile'), cls=CommandGroupWithAlias, help="""The metadata associated with the profile.""")
 @cli_util.help_option_group
 def profile_group():
     pass
@@ -43,9 +39,7 @@ def profile_summary_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.recommendation_group.command_name', 'recommendation'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation.
-
-**Caution:** Avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('optimizer.recommendation_group.command_name', 'recommendation'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation.""")
 @cli_util.help_option_group
 def recommendation_group():
     pass
@@ -57,9 +51,7 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.recommendation_summary_group.command_name', 'recommendation-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation summary.
-
-**Caution:** Avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('optimizer.recommendation_summary_group.command_name', 'recommendation-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation summary.""")
 @cli_util.help_option_group
 def recommendation_summary_group():
     pass
@@ -77,49 +69,43 @@ def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.enrollment_status_summary_group.command_name', 'enrollment-status-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the enrollment status summary.
-
-**Caution:** Avoid using any confidential information when you use the API to supply string values.""")
+@click.command(cli_util.override('optimizer.enrollment_status_summary_group.command_name', 'enrollment-status-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the enrollment status summary.""")
 @cli_util.help_option_group
 def enrollment_status_summary_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.resource_action_group.command_name', 'resource-action'), cls=CommandGroupWithAlias, help="""The metadata associated with the resource action.
-
-**Caution:** Avoid using any confidential information when you use the API to supply string values.""")
+@click.command(cli_util.override('optimizer.resource_action_group.command_name', 'resource-action'), cls=CommandGroupWithAlias, help="""The metadata associated with the resource action.""")
 @cli_util.help_option_group
 def resource_action_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.history_summary_group.command_name', 'history-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation history and its related resources.
-
-**Caution:** Avoid using any confidential information when you use the API to supply string values.""")
+@click.command(cli_util.override('optimizer.history_summary_group.command_name', 'history-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation history and its related resources.""")
 @cli_util.help_option_group
 def history_summary_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.category_group.command_name', 'category'), cls=CommandGroupWithAlias, help="""The metadata associated with the category.
-
-**Caution:** Avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('optimizer.category_group.command_name', 'category'), cls=CommandGroupWithAlias, help="""The metadata associated with the category.""")
 @cli_util.help_option_group
 def category_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.enrollment_status_group.command_name', 'enrollment-status'), cls=CommandGroupWithAlias, help="""The metadata associated with the enrollment status.
-
-**Caution:** Avoid using any confidential information when you use the API to supply string values.""")
+@click.command(cli_util.override('optimizer.enrollment_status_group.command_name', 'enrollment-status'), cls=CommandGroupWithAlias, help="""The metadata associated with the enrollment status.""")
 @cli_util.help_option_group
 def enrollment_status_group():
     pass
 
 
-@click.command(cli_util.override('optimizer.resource_action_summary_group.command_name', 'resource-action-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the resource action summary.
+@click.command(cli_util.override('optimizer.recommendation_strategy_summary_group.command_name', 'recommendation-strategy-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the recommendation strategy.""")
+@cli_util.help_option_group
+def recommendation_strategy_summary_group():
+    pass
 
-**Caution:** Avoid using any confidential information when you use the API to supply string values.""")
+
+@click.command(cli_util.override('optimizer.resource_action_summary_group.command_name', 'resource-action-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the resource action summary.""")
 @cli_util.help_option_group
 def resource_action_summary_group():
     pass
@@ -138,25 +124,31 @@ optimizer_root_group.add_command(resource_action_group)
 optimizer_root_group.add_command(history_summary_group)
 optimizer_root_group.add_command(category_group)
 optimizer_root_group.add_command(enrollment_status_group)
+optimizer_root_group.add_command(recommendation_strategy_summary_group)
 optimizer_root_group.add_command(resource_action_summary_group)
 
 
 @recommendation_group.command(name=cli_util.override('optimizer.bulk_apply_recommendations.command_name', 'bulk-apply'), help=u"""Applies the specified recommendations to the resources. \n[Command Reference](bulkApplyRecommendations)""")
 @cli_util.option('--recommendation-id', required=True, help=u"""The unique OCID associated with the recommendation.""")
-@cli_util.option('--resource-action-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The unique OCIDs of the resource actions that recommendations are applied to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["PENDING", "DISMISSED", "POSTPONED", "IMPLEMENTED"]), help=u"""The current status of the recommendation.""")
+@cli_util.option('--resource-action-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The unique OCIDs of the resource actions that recommendations are applied to.
+
+This field is deprecated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The unique resource actions that recommendations are applied to.
+
+This option is a JSON list with items of type BulkApplyResourceAction.  For documentation on BulkApplyResourceAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/optimizer/20200606/datatypes/BulkApplyResourceAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-status-end', type=custom_types.CLI_DATETIME, help=u"""The date and time the current status will change. The format is defined by RFC3339.
 
 For example, \"The current `postponed` status of the resource action will end and change to `pending` on this date and time.\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resource-action-ids': {'module': 'optimizer', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'resource-action-ids': {'module': 'optimizer', 'class': 'list[string]'}, 'actions': {'module': 'optimizer', 'class': 'list[BulkApplyResourceAction]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-action-ids': {'module': 'optimizer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-action-ids': {'module': 'optimizer', 'class': 'list[string]'}, 'actions': {'module': 'optimizer', 'class': 'list[BulkApplyResourceAction]'}})
 @cli_util.wrap_exceptions
-def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recommendation_id, resource_action_ids, status, time_status_end):
+def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recommendation_id, status, resource_action_ids, actions, time_status_end):
 
     if isinstance(recommendation_id, six.string_types) and len(recommendation_id.strip()) == 0:
         raise click.UsageError('Parameter --recommendation-id cannot be whitespace or empty string')
@@ -165,8 +157,13 @@ def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds,
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['resourceActionIds'] = cli_util.parse_json_parameter("resource_action_ids", resource_action_ids)
     _details['status'] = status
+
+    if resource_action_ids is not None:
+        _details['resourceActionIds'] = cli_util.parse_json_parameter("resource_action_ids", resource_action_ids)
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
 
     if time_status_end is not None:
         _details['timeStatusEnd'] = time_status_end
@@ -205,8 +202,8 @@ def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @profile_group.command(name=cli_util.override('optimizer.create_profile.command_name', 'create'), help=u"""Creates a new profile. \n[Command Reference](createProfile)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy. The tenancy is the root compartment.""")
-@cli_util.option('--name', required=True, help=u"""The name assigned to the profile.""")
-@cli_util.option('--description', required=True, help=u"""Text describing the profile.""")
+@cli_util.option('--name', required=True, help=u"""The name assigned to the profile. Avoid entering confidential information.""")
+@cli_util.option('--description', required=True, help=u"""Text describing the profile. Avoid entering confidential information.""")
 @cli_util.option('--levels-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -214,15 +211,17 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair applied without any predefined name, type, or namespace. For more information, see [Resource Tags]. Exists for cross-compatibility only.
 
 Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-compartments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, levels_configuration, defined_tags, freeform_tags):
+def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, levels_configuration, defined_tags, freeform_tags, target_compartments, target_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -238,6 +237,12 @@ def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if target_compartments is not None:
+        _details['targetCompartments'] = cli_util.parse_json_parameter("target_compartments", target_compartments)
+
+    if target_tags is not None:
+        _details['targetTags'] = cli_util.parse_json_parameter("target_tags", target_tags)
 
     client = cli_util.build_client('optimizer', 'optimizer', ctx)
     result = client.create_profile(
@@ -730,6 +735,72 @@ def list_profiles(ctx, from_json, all_pages, page_size, compartment_id, name, li
     cli_util.render_response(result, ctx)
 
 
+@recommendation_strategy_summary_group.command(name=cli_util.override('optimizer.list_recommendation_strategies.command_name', 'list-recommendation-strategies'), help=u"""Lists the existing strategies. \n[Command Reference](listRecommendationStrategies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
+
+Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
+@cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
+@cli_util.option('--recommendation-name', help=u"""Optional. A filter that returns results that match the recommendation name specified.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'RecommendationStrategyCollection'})
+@cli_util.wrap_exceptions
+def list_recommendation_strategies(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, name, recommendation_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if recommendation_name is not None:
+        kwargs['recommendation_name'] = recommendation_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('optimizer', 'optimizer', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_recommendation_strategies,
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_recommendation_strategies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    else:
+        result = client.list_recommendation_strategies(
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @recommendation_summary_group.command(name=cli_util.override('optimizer.list_recommendations.command_name', 'list-recommendations'), help=u"""Lists the Cloud Advisor recommendations that are currently supported in the specified category. \n[Command Reference](listRecommendations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
@@ -1088,7 +1159,7 @@ def update_enrollment_status(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @profile_group.command(name=cli_util.override('optimizer.update_profile.command_name', 'update'), help=u"""Updates the specified profile. Uses the profile's OCID to determine which profile to update. \n[Command Reference](updateProfile)""")
 @cli_util.option('--profile-id', required=True, help=u"""The unique OCID of the profile.""")
-@cli_util.option('--description', help=u"""Text describing the profile.""")
+@cli_util.option('--description', help=u"""Text describing the profile. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1096,23 +1167,26 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 
 Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--levels-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-compartments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""The name assigned to the profile. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, defined_tags, freeform_tags, levels_configuration, if_match):
+def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, defined_tags, freeform_tags, levels_configuration, target_compartments, target_tags, name, if_match):
 
     if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or levels_configuration:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and levels-configuration will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or levels_configuration or target_compartments or target_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and levels-configuration and target-compartments and target-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1133,6 +1207,15 @@ def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if levels_configuration is not None:
         _details['levelsConfiguration'] = cli_util.parse_json_parameter("levels_configuration", levels_configuration)
+
+    if target_compartments is not None:
+        _details['targetCompartments'] = cli_util.parse_json_parameter("target_compartments", target_compartments)
+
+    if target_tags is not None:
+        _details['targetTags'] = cli_util.parse_json_parameter("target_tags", target_tags)
+
+    if name is not None:
+        _details['name'] = name
 
     client = cli_util.build_client('optimizer', 'optimizer', ctx)
     result = client.update_profile(

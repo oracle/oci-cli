@@ -331,10 +331,6 @@ def create_config_and_signer_based_on_click_context(ctx):
 
     if instance_principal_auth or delegation_token_auth:
         if delegation_token_auth:
-            # Cloud Shell should export an env variable "export OCI_CLI_CLOUD_SHELL=True"
-            # This way we can differentiate between requests coming from CLI and Cloud shell.
-            if 'OCI_CLI_CLOUD_SHELL' in os.environ:
-                client_config["additional_user_agent"] += ' Cloud-Shell'
             client_config["auth_type"] = cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
         elif "auth_purpose" in ctx.obj:
             client_config["auth_purpose"] = ctx.obj["auth_purpose"]
