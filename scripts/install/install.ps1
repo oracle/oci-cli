@@ -176,7 +176,7 @@ function FindLatestPythonExecutableInRegistry {
 function DownloadFile($Uri, $OutFile) {
     # PowerShell V2 doesn't support Invoke-WebRequest so use WebClient
     # Use Invoke-WebRequest on versions that support it since it writes progress
-    if ($PsVersionTable.PsVersion.Major > 2) {
+    if ($PsVersionTable.PsVersion.Major -gt 2) {
         Invoke-WebRequest -Uri $Uri -OutFile $OutFile -UseBasicParsing
     }
     else {
