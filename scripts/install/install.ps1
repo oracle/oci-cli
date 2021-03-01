@@ -56,7 +56,7 @@ $OriginalErrorActionPreference = $ErrorActionPreference
 
 # Explicitly support TLS 1.2 only if OS supports it
 if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12') {
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12';
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
 }
 
 
