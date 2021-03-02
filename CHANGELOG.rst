@@ -6,6 +6,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.21.4 - 2021-03-02
+-------------------
+Added
+~~~~~
+* Support for Clones Feature in File System Service
+
+    * ``oci fs file-system create ``
+    * ``oci fs file-system list``
+
+* Support for pipelines and pipeline tasks for Dataflow service
+
+    * ``oci data-integration pipeline``
+
+* Enhanced support for publishing Data Integration tasks for Dataflow service
+
+    * ``oci data-integration task get --expand-references``
+    * ``oci data-integration task-run list --aggregator-key``
+    * ``oci data-integration connection update --password-secret``
+    * ``oci data-integration data-entity list --is-pattern``
+    * ``oci data-integration schema list --name-list``
+    * ``oci data-integration work-request list --workspace-id``
 
 2.21.3 - 2021-02-23
 -------------------

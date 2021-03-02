@@ -24,7 +24,6 @@ from services.dts.src.oci_cli_transfer_appliance.generated import transferapplia
 @cli_util.option('--name', required=True, help=u"""Requestor name""")
 @cli_util.option('--email', required=True, help=u"""Requestor email""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'TransferJob'})
 @cli_util.wrap_exceptions
@@ -44,7 +43,6 @@ def create_transfer_appliance_entitlement_extended(ctx, **kwargs):
     help=transferapplianceentitlement_cli.get_transfer_appliance_entitlement.help)
 @cli_util.option('--compartment-id', required=True, help=u"""Root compartment OCID""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'TransferJob'})
 @cli_util.wrap_exceptions

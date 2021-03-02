@@ -134,8 +134,6 @@ update_connection_args = [
 @cli_util.option('--user-id', help=copy_help_from_generated_code(dataintegration_cli.update_connection_update_connection_from_object_storage, 'user_id', remove_required=True))
 @cli_util.option('--finger-print', help=copy_help_from_generated_code(dataintegration_cli.update_connection_update_connection_from_object_storage, 'finger_print', remove_required=True))
 @cli_util.option('--pass-phrase', help=copy_help_from_generated_code(dataintegration_cli.update_connection_update_connection_from_object_storage, 'pass_phrase', remove_required=True))
-@cli_util.copy_params_from_generated_command(dataintegration_cli.update_connection_update_connection_from_adwc, update_connection_args)
-@cli_util.copy_params_from_generated_command(dataintegration_cli.update_connection_update_connection_from_object_storage, update_connection_args)
 @dataintegration_cli.connection_group.command(name=cli_util.override('data_integration.update_connection.command_name', 'update'), help=u"""Updates a connection under a data asset.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
@@ -505,6 +503,50 @@ def create_workspace_extended(ctx, **kwargs):
 
 
 dataintegration_cli.data_entity_group.commands.pop(dataintegration_cli.create_entity_shape.name)
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.update_task_update_task_from_pipeline_task, "update-pipeline-task")
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.create_task_create_task_from_pipeline_task, "create-pipeline-task")
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_validation_group, dataintegration_cli.create_task_validation_create_task_validation_from_pipeline_task, "create-from-pipeline-task")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_task_create_task_from_pipeline_task, params_to_exclude=['config_provider_delegate'])
+@cli_util.option('--config-provider', type=get_param(dataintegration_cli.create_task_create_task_from_pipeline_task, 'config_provider_delegate').type, help=get_param(dataintegration_cli.create_task_create_task_from_pipeline_task, 'config_provider_delegate').help)
+@dataintegration_cli.task_group.command(name=cli_util.override('data_integration.create_task_create_task_from_pipeline_task.command_name', 'create-task-create-task-from-pipeline-task'), help=u"""Creates a new task ready for performing data integrations. There are specialized types of tasks that include data loader and integration tasks. \n[Command Reference](createTask)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'pipeline': {'module': 'data_integration', 'class': 'Pipeline'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@cli_util.wrap_exceptions
+def create_task_create_task_from_pipeline_task_extended(ctx, **kwargs):
+    if 'config_provider' in kwargs:
+        kwargs['config_provider_delegate'] = kwargs['config_provider']
+        kwargs.pop('config_provider')
+    ctx.invoke(dataintegration_cli.create_task_create_task_from_pipeline_task, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_task_update_task_from_pipeline_task, params_to_exclude=['config_provider_delegate'])
+@cli_util.option('--config-provider', type=get_param(dataintegration_cli.update_task_update_task_from_pipeline_task, 'config_provider_delegate').type, help=get_param(dataintegration_cli.update_task_update_task_from_pipeline_task, 'config_provider_delegate').help)
+@dataintegration_cli.task_group.command(name=cli_util.override('data_integration.update_task_update_task_from_pipeline_task.command_name', 'update-task-update-task-from-pipeline-task'), help=u"""Updates a specific task. For example, you can update the task description or move the task to a different folder by changing the `aggregatorKey` to a different folder in the registry. \n[Command Reference](updateTask)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'pipeline': {'module': 'data_integration', 'class': 'Pipeline'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@cli_util.wrap_exceptions
+def update_task_update_task_from_pipeline_task_extended(ctx, **kwargs):
+    if 'config_provider' in kwargs:
+        kwargs['config_provider_delegate'] = kwargs['config_provider']
+        kwargs.pop('config_provider')
+    ctx.invoke(dataintegration_cli.update_task_update_task_from_pipeline_task, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_task_validation_create_task_validation_from_pipeline_task, params_to_exclude=['config_provider_delegate'])
+@cli_util.option('--config-provider', type=get_param(dataintegration_cli.create_task_validation_create_task_validation_from_pipeline_task, 'config_provider_delegate').type, help=get_param(dataintegration_cli.create_task_validation_create_task_validation_from_pipeline_task, 'config_provider_delegate').help)
+@dataintegration_cli.task_validation_group.command(name=cli_util.override('data_integration.create_task_validation_create_task_validation_from_pipeline_task.command_name', 'create-from-pipeline-task'), help=u"""Validates a specific task. \n[Command Reference](createTaskValidation)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'pipeline': {'module': 'data_integration', 'class': 'Pipeline'}}, output_type={'module': 'data_integration', 'class': 'TaskValidation'})
+@cli_util.wrap_exceptions
+def create_task_validation_create_task_validation_from_pipeline_task(ctx, **kwargs):
+    if 'config_provider' in kwargs:
+        kwargs['config_provider_delegate'] = kwargs['config_provider']
+        kwargs.pop('config_provider')
+    ctx.invoke(dataintegration_cli.create_task_validation_create_task_validation_from_pipeline_task, **kwargs)
+
+
 cli_util.rename_command(dataintegration_cli, dataintegration_cli.data_entity_group, dataintegration_cli.create_entity_shape_create_entity_shape_from_file, "create-entity-shape-from-file")
 
 dataintegration_cli.task_validation_group.commands.pop(dataintegration_cli.create_task_validation.name)

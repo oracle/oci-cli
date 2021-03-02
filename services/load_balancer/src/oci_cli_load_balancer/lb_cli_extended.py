@@ -178,8 +178,6 @@ Example:
 Example:
 
     -----BEGIN CERTIFICATE-----     MIIC2jCCAkMCAg38MA0GCSqGSIb3DQEBBQUAMIGbMQswCQYDVQQGEwJKUDEOMAwG     A1UECBMFVG9reW8xEDAOBgNVBAcTB0NodW8ta3UxETAPBgNVBAoTCEZyYW5rNERE     MRgwFgYDVQQLEw9XZWJDZXJ0IFN1cHBvcnQxGDAWBgNVBAMTD0ZyYW5rNEREIFdl     YiBDQTEjMCEGCSqGSIb3DQEJARYUc3VwcG9ydEBmcmFuazRkZC5jb20wHhcNMTIw     ...     -----END CERTIFICATE-----""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -223,8 +221,6 @@ def create_certificate(ctx, **kwargs):
 Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for backend.""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for backend.""")
-@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
@@ -256,8 +252,6 @@ def create_backend_set(ctx, **kwargs):
 Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for backend.""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for backend.""")
-@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions

@@ -27,7 +27,6 @@ cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasaf
 @datasafe_cli.data_safe_private_endpoint_group.command(name='change-compartment', help=datasafe_cli.change_data_safe_private_endpoint_compartment.help)
 @cli_util.option('--private-endpoint-id', required=True, help=u"""unique data safe private endpoint identifier""")
 @click.pass_context
-@cli_util.help_option
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def change_data_safe_private_endpoint_compartment_extended(ctx, **kwargs):
@@ -83,8 +82,6 @@ def get_data_safe_private_endpoint_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(datasafe_cli.update_data_safe_private_endpoint, params_to_exclude=['data_safe_private_endpoint_id'])
 @datasafe_cli.data_safe_private_endpoint_group.command(name='update', help=datasafe_cli.update_data_safe_private_endpoint.help)
 @cli_util.option('--private-endpoint-id', required=True, help=u"""unique data safe private endpoint identifier""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
