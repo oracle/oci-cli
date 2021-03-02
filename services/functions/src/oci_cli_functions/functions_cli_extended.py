@@ -55,7 +55,6 @@ functionsmanagement_cli.function_group.commands.pop(functionsinvoke_cli.function
 @cli_util.option('--body', required=True, help=u"""The body of the function invocation. Note: The maximum size of the request is limited. This limit is currently 6MB and the endpoint will not accept requests that are bigger than this limit.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.wrap_exceptions
 def invoke_function_extended(ctx, **kwargs):
     kwargs['invoke_function_body'] = kwargs['body']

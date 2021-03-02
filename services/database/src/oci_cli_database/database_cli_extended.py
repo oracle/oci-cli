@@ -429,7 +429,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database(ctx, **kwargs):
     if kwargs['db_home_id'] is None and kwargs['db_version'] is None:
@@ -538,7 +538,7 @@ def create_database(ctx, **kwargs):
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database_from_backup(ctx, **kwargs):
 
@@ -642,7 +642,7 @@ def update_database_extended(ctx, **kwargs):
 @cli_util.option('--point-in-time-recovery-timestamp', required=False, help="""The point in time of the original database from which the new database is created. If not specifed, the latest backup is used to create the database.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database_from_another_database(ctx, **kwargs):
     create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromDatabaseDetails()
@@ -1144,7 +1144,6 @@ def get_patch_by_database(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.list_db_home_patches, params_to_exclude=['db_home_id'])
 @patch_list_group.command('by-database', help="""List patches for a given database""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchSummary]'})
 @cli_util.wrap_exceptions
@@ -1181,7 +1180,6 @@ def get_patch_history_entry_by_database(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.list_db_home_patch_history_entries, params_to_exclude=['db_home_id'])
 @patch_history_list_group.command('by-database', help="""List patch history entries for a given database""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchHistoryEntrySummary]'})
 @cli_util.wrap_exceptions
@@ -1347,7 +1345,7 @@ def update_cloud_exadata_infrastructure(ctx, **kwargs):
 @cli_util.option('--db-version', required=False, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_db_home(ctx, **kwargs):
     client = cli_util.build_client('database', 'database', ctx)
@@ -1483,7 +1481,6 @@ database_cli.key_store_group.add_command(database_cli.list_key_stores)
 @cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @database_cli.key_store_group.command(name='create-oracle-key-vault-details', help=database_cli.create_key_store_key_store_type_from_oracle_key_vault_details.help)
 @click.pass_context
-@json_skeleton_utils.get_cli_json_input_option({'connection-ips': {'module': 'database', 'class': 'list[string]'}})
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'KeyStore'})
 @cli_util.wrap_exceptions
 def create_okv_keystore(ctx, **kwargs):
@@ -1518,7 +1515,6 @@ def create_okv_keystore(ctx, **kwargs):
 @cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @database_cli.key_store_group.command(name='update-oracle-key-vault-details', help=database_cli.update_key_store_key_store_type_from_oracle_key_vault_details.help)
 @click.pass_context
-@json_skeleton_utils.get_cli_json_input_option({'connection-ips': {'module': 'database', 'class': 'list[string]'}})
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'KeyStore'})
 @cli_util.wrap_exceptions
 def update_okv_keystore(ctx, **kwargs):

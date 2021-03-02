@@ -34,8 +34,6 @@ dbsystem_cli.db_system_root_group.add_command(dbsystem_cli.update_db_system)
 @cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system_create_db_system_source_import_from_url_details, params_to_exclude=['source_source_url'])
 @cli_util.option('--source-url', required=True, help="""The Pre-Authenticated Request (PAR) URL of the file you want to import from Object Storage.""")
 @dbsystem_cli.db_system_root_group.command(name="import", help=dbsystem_cli.create_db_system_create_db_system_source_import_from_url_details.help)
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions

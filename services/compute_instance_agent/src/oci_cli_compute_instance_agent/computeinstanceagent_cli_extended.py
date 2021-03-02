@@ -21,8 +21,6 @@ cli_util.rename_command(instance_agent_service_cli, instance_agent_service_cli.i
 @computeinstanceagent_cli.instance_agent_command_group.command(name=cli_util.override('instance_agent.cancel_instance_agent_command.command_name', 'cancel'), help=computeinstanceagent_cli.cancel_instance_agent_command.help)
 @cli_util.option('--command-id', required=True, help=u"""The OCID of the command.""")
 @cli_util.confirm_delete_option
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -35,8 +33,6 @@ def cancel_instance_agent_command(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(computeinstanceagent_cli.create_instance_agent_command, params_to_exclude=['execution_time_out_in_seconds'])
 @computeinstanceagent_cli.instance_agent_command_group.command(name=cli_util.override('instance_agent.create_instance_agent_command.command_name', 'create'), help=computeinstanceagent_cli.create_instance_agent_command.help)
 @cli_util.option('--timeout-in-seconds', required=True, help=u"""Command execution time limit. Zero means no timeout.""")
-@json_skeleton_utils.get_cli_json_input_option({'target': {'module': 'compute_instance_agent', 'class': 'InstanceAgentCommandTarget'}, 'content': {'module': 'compute_instance_agent', 'class': 'InstanceAgentCommandContent'}})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'compute_instance_agent', 'class': 'InstanceAgentCommandTarget'}, 'content': {'module': 'compute_instance_agent', 'class': 'InstanceAgentCommandContent'}}, output_type={'module': 'compute_instance_agent', 'class': 'InstanceAgentCommand'})
 @cli_util.wrap_exceptions
@@ -49,8 +45,6 @@ def create_instance_agent_command(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(computeinstanceagent_cli.get_instance_agent_command, params_to_exclude=['instance_agent_command_id'])
 @computeinstanceagent_cli.instance_agent_command_group.command(name=cli_util.override('instance_agent.get_instance_agent_command.command_name', 'get'), help=computeinstanceagent_cli.get_instance_agent_command.help)
 @cli_util.option('--command-id', required=True, help=u"""The OCID of the command.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'compute_instance_agent', 'class': 'InstanceAgentCommand'})
 @cli_util.wrap_exceptions
@@ -63,8 +57,6 @@ def get_instance_agent_command(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(computeinstanceagent_cli.get_instance_agent_command_execution, params_to_exclude=['instance_agent_command_id'])
 @computeinstanceagent_cli.instance_agent_command_execution_group.command(name=cli_util.override('instance_agent.get_instance_agent_command_execution.command_name', 'get'), help=computeinstanceagent_cli.get_instance_agent_command_execution.help)
 @cli_util.option('--command-id', required=True, help=u"""The OCID of the command.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'compute_instance_agent', 'class': 'InstanceAgentCommandExecution'})
 @cli_util.wrap_exceptions

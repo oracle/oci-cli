@@ -91,7 +91,6 @@ def get_rover_node_helper(ctx, node_id):
 @cli_util.option('--email', help=u"""Email address.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[object]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
@@ -105,8 +104,6 @@ def create_rover_node_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(rovernode_cli.get_rover_node, params_to_exclude=['rover_node_id'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.get_rover_node.name, help=rovernode_cli.get_rover_node.help)
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverCluster identifier""")
-@cli_util.help_option
-@json_skeleton_utils.get_cli_json_input_option({})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
@@ -154,7 +151,6 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--zip-postal-code', help=u"""Zip or Postal Code""")
 @cli_util.option('--phone-number', help=u"""Phone number.""")
 @cli_util.option('--email', help=u"""Email address.""")
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[object]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
@@ -190,7 +186,6 @@ def request_rover_node(ctx, **kwargs):
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.delete_rover_node.name, help=rovernode_cli.delete_rover_node.help)
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.confirm_delete_option
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -320,7 +315,6 @@ def list_workload(ctx, **kwargs):
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
@@ -366,8 +360,6 @@ def set_secrets_rover_node(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(rovernode_cli.get_rover_node_encryption_key, params_to_exclude=['rover_node_id'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.get_rover_node_encryption_key.name, help=rovernode_cli.get_rover_node_encryption_key.help)
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverNodeEncryptionKey'})
 @cli_util.wrap_exceptions

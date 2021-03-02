@@ -72,11 +72,6 @@ IGNORED_COMMANDS = [
     ['compute', 'instance', 'attach-vnic'],
     # added to ignore as JSON can be produced
     ['ce', 'node-pool', 'update'],
-    ['compute', 'instance', 'launch'],
-    ['db', 'database', 'create'],
-    ['db', 'database', 'create-from-backup'],
-    ['db', 'database', 'create-from-database'],
-    ['db', 'db-home', 'create'],
     ['db', 'system', 'launch'],
     ['db', 'system', 'update'],
     ['lb', 'load-balancer', 'create'],
@@ -87,7 +82,12 @@ IGNORED_COMMANDS = [
     ['log-analytics', 'parser', 'list-parser-meta-plugins'],
     ['log-analytics', 'source', 'list-meta-source-types'],
     ['log-analytics', 'source', 'list-source-functions'],
-    ['log-analytics', 'source', 'list-source-label-operators']
+    ['log-analytics', 'source', 'list-source-label-operators'],
+    ['instance-agent', 'pluginconfig', 'plugin', 'list-instanceagent-available'],
+    ['data-integration', 'task-validation', 'create-from-pipeline-task'],
+    ['data-integration', 'task', 'update-pipeline-task'],
+    ['data-integration', 'task', 'create-pipeline-task'],
+    ['dns', 'resolver', 'update']
 ]
 
 IGNORED_COMMANDS_DOCS = [

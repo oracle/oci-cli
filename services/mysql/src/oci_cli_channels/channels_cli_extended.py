@@ -19,7 +19,6 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.c
 @cli_util.option('--target-db-system-id', required=True, help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_db_system_id", remove_required=False))
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
 @cli_util.wrap_exceptions
@@ -54,7 +53,6 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.u
 @channels_cli.channel_group.command(name='update-from-mysql', help=channels_cli.update_channel_update_channel_source_from_mysql_details.help)
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
-@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
 @cli_util.wrap_exceptions

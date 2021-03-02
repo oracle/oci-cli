@@ -252,7 +252,7 @@ if [ $? -eq 0 ]; then
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ]; then
                 while true
                 do
-                  read -p "Would you like to upgrade to Python 3? Please enter Y or N. " answer
+                  read -p "Python 2.7+/3.5 will be deprecated on May 25th, 2021. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. Would you like to upgrade to Python 3? Please enter Y or N. " answer
                   case $answer in
                    [yY]* ) echo "Installing Python 3...";
                       need_to_install_python=true;

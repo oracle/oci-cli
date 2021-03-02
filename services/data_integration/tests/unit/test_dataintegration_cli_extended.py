@@ -295,3 +295,18 @@ class TestDataIntegration(unittest.TestCase):
         result = util.invoke_command(
             ['data-integration', 'data-asset', 'update-data-asset-update-data-asset-from-jdbc'])
         assert 'Error: No such command "update-data-asset-update-data-asset-from-jdbc".' in result.output
+
+    def test_create_task_pipeline_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'create-task-create-task-from-pipeline-task'])
+        assert 'Error: No such command "create-task-create-task-from-pipeline-task".' in result.output
+
+    def test_create_task_validation_pipeline_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task-validation', 'create-task-validation-create-task-validation-from-pipeline-task'])
+        assert 'Error: No such command "create-task-validation-create-task-validation-from-pipeline-task".' in result.output
+
+    def test_update_task_pipeline_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'update-task-update-task-from-pipeline-task'])
+        assert 'Error: No such command "update-task-update-task-from-pipeline-task".' in result.output
