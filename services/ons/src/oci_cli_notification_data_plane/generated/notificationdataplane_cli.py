@@ -79,7 +79,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the subscription.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
 
-Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
+Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `ORACLE_FUNCTIONS`   * `PAGERDUTY`   * `SLACK`   * `SMS`
 
 For information about subscription protocols, see [To create a subscription].""")
 @cli_util.option('--endpoint-parameterconflict', required=True, help=u"""A locator that corresponds to the subscription protocol. For example, an email address for a subscription that uses the `EMAIL` protocol, or a URL for a subscription that uses an HTTP-based protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\". A URL cannot exceed 512 characters. Avoid entering confidential information.
@@ -224,7 +224,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
 
-Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
+Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `ORACLE_FUNCTIONS`   * `PAGERDUTY`   * `SLACK`   * `SMS`
 
 For information about subscription protocols, see [To create a subscription].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -273,14 +273,14 @@ def get_subscription(ctx, from_json, subscription_id):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('notification_data_plane.get_unsubscription.command_name', 'get-unsubscription'), help=u"""Gets the unsubscription details for the specified subscription.
+@subscription_group.command(name=cli_util.override('notification_data_plane.get_unsubscription.command_name', 'get-unsubscription'), help=u"""Unsubscribes the subscription from the topic.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](getUnsubscription)""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to unsubscribe from.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
 
-Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
+Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `ORACLE_FUNCTIONS`   * `PAGERDUTY`   * `SLACK`   * `SMS`
 
 For information about subscription protocols, see [To create a subscription].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -368,13 +368,15 @@ Message size limit per request: 64KB.
 
 Message delivery rate limit per endpoint: 60 messages per minute for HTTP-based protocols, 10 messages per minute for the `EMAIL` protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\".
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60 per topic.
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60 per topic. (This TPM limit represents messages per minute.)
 
 For more information about publishing messages, see [Publishing Messages]. For steps to request a limit increase, see [Requesting a Service Limit Increase]. \n[Command Reference](publishMessage)""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic.""")
-@cli_util.option('--body', required=True, help=u"""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
+@cli_util.option('--body', required=True, help=u"""The body of the message to be published. Avoid entering confidential information.""")
 @cli_util.option('--title', help=u"""The title of the message to be published. Avoid entering confidential information.""")
-@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help=u"""Type of message body in the request.""")
+@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help=u"""**Deprecated.** Support for JSON is deprecated. You can send a JSON payload even when transmitting the payload as a raw string. Configure your receiving system to read the raw payload as JSON format.
+
+Type of message body in the request. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

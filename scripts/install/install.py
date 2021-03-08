@@ -241,18 +241,22 @@ def create_virtualenv(tmp_dir, install_dir):
         return
     try:
         # Since Ubuntu and Debian are having issues with python3 venv (mising ensurepip module), install python3-venv
-        # package
-        if is_ubuntu_or_debian():
+        # package, this doesn't work with the offline installation mode since there is no internet connection
+        if is_ubuntu_or_debian() and not OFFLINE_INSTALL:
             install_python3_venv()
         print_status('Trying to use python3 venv.')
         cmd = [sys.executable, '-m', 'venv', install_dir]
         exec_command(cmd)
 
-        if not is_windows():
+        if not is_windows() and not OFFLINE_INSTALL:
             upgrade_pip_wheel(tmp_dir, install_dir)
     except Exception:
-        print_status('System was unable to use venv, is going to download and create virtualenv.')
-        download_and_create_virtualenv(tmp_dir, install_dir)
+        if OFFLINE_INSTALL:
+            print_status('System was unable to use venv, Please make sure Python3 venv is installed.')
+            exit(1)
+        else:
+            print_status('System was unable to use venv, is going to download and create virtualenv.')
+            download_and_create_virtualenv(tmp_dir, install_dir)
 
 
 def install_cli(install_dir, tmp_dir, version, optional_features):
@@ -268,11 +272,12 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
     if '__PYVENV_LAUNCHER__' in os.environ:
         env.pop('__PYVENV_LAUNCHER__')
 
-    # The python installer handles 2 cases:
+    # The python installer handles 3 cases:
     # 1) full install zip bundles -- originally for distributing preview builds
     #    --oci-cli-version can be used to pick the version of the local whl package
     # 2) installation from pypi
     #    --oci-cli-version can be used to pick the version of oci-cli from pypi
+    # 3) offline installation (this is for regions or instances which don't have internet access)
 
     match_wheel = "oci_cli*.whl"
     cli_package_name = 'oci_cli'
@@ -287,6 +292,9 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
     if os.path.exists('./cli-deps') and len(oci_cli_whl_files) > 0:
         print_status("Installing {} from local resources.".format(oci_cli_whl_files[0]))
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, oci_cli_whl_files[0], '--upgrade', '--find-links', 'cli-deps']
+
+    elif OFFLINE_INSTALL:
+        cmd = [path_to_pip, 'install', cli_package_name, '--find-links', 'cli-deps', '--no-index']
     else:
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
 
@@ -574,6 +582,9 @@ def main():
                              'responses will be used. This flag can be used in combination with other input '
                              'parameters/flags. When used with other parameters/flags, other parameter values '
                              'mentioned on command line take precedence over default values.')
+    parser.add_argument('--offline-install', action='store_true',
+                        help='When specified, the script installs CLI without going to the internet.'
+                             'This can run only as part of offline installation.')
     parser.add_argument('--optional-features', help="""This input param is used to specify any optional
                          features that need to be installed as part of OCI CLI install .e.g. to run dbaas script
                          'create_backup_from_onprem', users need to install optional "db" feature which will install
@@ -600,9 +611,16 @@ def main():
     args = parser.parse_args()
     global ACCEPT_ALL_DEFAULTS
     ACCEPT_ALL_DEFAULTS = args.accept_all_defaults
+    global OFFLINE_INSTALL
+    OFFLINE_INSTALL = args.offline_install
     global DRY_RUN
     DRY_RUN = args.dry_run
     OPTIONAL_FEATURES = args.optional_features
+    if OPTIONAL_FEATURES and OFFLINE_INSTALL:
+        ans = prompt_y_n("You can not provide optional features with the Offline installation mode, do you want to continue?", "y")
+        if not ans:
+            exit(1)
+        OPTIONAL_FEATURES = ""
     install_dir = args.install_dir
     exec_dir = args.exec_dir
     script_dir = args.script_dir
@@ -626,7 +644,7 @@ def main():
     else:
         # Create the script directory provided by the user if it does not exist
         create_dir(script_dir)
-    if OPTIONAL_FEATURES is None:
+    if OPTIONAL_FEATURES is None and not OFFLINE_INSTALL:
         OPTIONAL_FEATURES = get_optional_features()
 
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
@@ -635,7 +653,13 @@ def main():
     create_virtualenv(tmp_dir, install_dir)
     if OPTIONAL_FEATURES:
         install_native_dependencies_for_ubuntu()
-    install_cli(install_dir, tmp_dir, args.oci_cli_version, OPTIONAL_FEATURES)
+    cli_version = args.oci_cli_version
+    if cli_version and OFFLINE_INSTALL:
+        ans = prompt_y_n("CLI version can't be specified with the Offline installation, do you want to continue?", "y")
+        if not ans:
+            exit(1)
+        cli_version = None
+    install_cli(install_dir, tmp_dir, cli_version, OPTIONAL_FEATURES)
 
     if DRY_RUN:
         print_status("dry-run: Skipping copying files to Scripts/bin directories.")

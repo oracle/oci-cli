@@ -27,6 +27,9 @@ The following options are available:
         When specified, skips all interactive prompts by selecting the default
         response.  This is a non-interactive mode which can be used in conjunction
         with other parameters that follow.
+    --offline-install
+        When specified, the script installs CLI without the need to go to the internet.
+        This can run only as part of offline installation.
     --python-install-location
         Optionally specifies where to install python on systems where it is
         not present. This must be an absolute path and it will be created if
@@ -97,6 +100,11 @@ case $key in
     --accept-all-defaults)
     ACCEPT_ALL_DEFAULTS=true
     install_args="$install_args --accept-all-defaults"
+    shift # past argument
+    ;;
+    --offline-install)
+    OFFLINE_INSTALL=true
+    install_args="$install_args --offline-install"
     shift # past argument
     ;;
     --install-dir)
@@ -189,6 +197,11 @@ case $key in
 esac
 done
 
+# If offline installation enabled, then use local install,py
+if [ "$OFFLINE_INSTALL" = true ]; then
+  install_script="./install.py"
+fi
+
 # Some implicit logic to handle full-install packages such as preview installs.
 ls ./oci_cli*.whl 2> /dev/null
 if [ $? -eq 0 ];then
@@ -216,6 +229,9 @@ else
     ******************************************************************************"
 fi
 
+if [ "$OFFLINE_INSTALL" = true ]; then
+    echo "Starting OCI CLI Offline Installation"
+fi
 
 if [ "${install_script}" == "" ];then
     install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
@@ -236,6 +252,9 @@ python_exe=python
 
 # if python is not installed or is less than the required version, then install Python
 need_to_install_python=true
+
+# This is needed for Offline installation, since Offline installation requires Python 3 to be installed
+python3_is_installed=false
 command -v python >/dev/null 2>&1
 if [ $? -eq 0 ]; then
     # python is installed so check if the version is valid
@@ -249,7 +268,7 @@ if [ $? -eq 0 ]; then
         command -v python3 >/dev/null 2>&1
         if [ $? -eq 1 ]; then
             # Ask user if they would like to upgrade to python 3
-            if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ]; then
+            if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ] &&  ["${OFFLINE_INSTALL}" != "true" ]; then
                 while true
                 do
                   read -p "Python 2.7+/3.5 will be deprecated on May 25th, 2021. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. Would you like to upgrade to Python 3? Please enter Y or N. " answer
@@ -262,6 +281,8 @@ if [ $? -eq 0 ]; then
                   esac
                 done
             fi
+        else
+          python3_is_installed=true
         fi
     else
         echo "System version of Python must be a Python 3 version >= 3.5.0."
@@ -282,6 +303,7 @@ if [ $? -eq 0 ]; then
         python_exe=python3
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
+        python3_is_installed=true
     else
         echo "System version of Python must be a Python 3 version >= 3.5.0."
     fi
@@ -292,6 +314,12 @@ fi
 sudo_cmd="sudo"
 if [ "$(whoami)" == "root" ];then
     sudo_cmd=""
+fi
+
+if [ "${OFFLINE_INSTALL}" = "true" ] && [ "$python3_is_installed" = false ]; then
+  echo "Python3 not found on system PATH"
+  echo "Python CLI Offline Installation requires Python3, Please install Python3 then try later"
+  exit 1
 fi
 
 if [ "$need_to_install_python" = true ]; then
@@ -349,7 +377,7 @@ fi
 
 # In the future native dependency setup will be done in this script.
 cat /etc/os-release | grep "Ubuntu 18"
-if [ "$?" = "0" ];then
+if [ "$?" = "0" ] && [ "${OFFLINE_INSTALL}" != "true" ];then
     $sudo_cmd apt-get $apt_get_opts update
     $sudo_cmd apt-get $apt_get_opts install python3-distutils
 fi
@@ -357,7 +385,7 @@ fi
 chmod 775 $install_script
 echo "Running install script."
 echo "$python_exe $install_script $install_args"
-if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ] || [ "${NO_TTY_REQUIRED}" == "true" ];then
+if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ] || [ "${NO_TTY_REQUIRED}" == "true" ] || [ "${OFFLINE_INSTALL}" == "true" ];then
     # By removing the tty requirement, users will be able to install non-interactively over ssh
     # and in docker containers more easily.
     $python_exe $install_script $install_args

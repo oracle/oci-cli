@@ -59,12 +59,72 @@ def instance_pool_load_balancer_attachment_group():
     pass
 
 
+@click.command(cli_util.override('compute_management.instance_pool_instance_group.command_name', 'instance-pool-instance'), cls=CommandGroupWithAlias, help="""Instance data along with the lifecycleState of instance to instance pool attachment.""")
+@cli_util.help_option_group
+def instance_pool_instance_group():
+    pass
+
+
 core_service_cli.core_service_group.add_command(compute_management_root_group)
 compute_management_root_group.add_command(instance_pool_group)
 compute_management_root_group.add_command(instance_group)
 compute_management_root_group.add_command(instance_configuration_group)
 compute_management_root_group.add_command(cluster_network_group)
 compute_management_root_group.add_command(instance_pool_load_balancer_attachment_group)
+compute_management_root_group.add_command(instance_pool_instance_group)
+
+
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.attach_instance_pool_instance.command_name', 'attach'), help=u"""Attach an instance to the instance pool. \n[Command Reference](attachInstancePoolInstance)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--instance-id', required=True, help=u"""the instance ocid to attach.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ACTIVE", "DETACHING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePoolInstance'})
+@cli_util.wrap_exceptions
+def attach_instance_pool_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, instance_id):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    _details = {}
+    _details['instanceId'] = instance_id
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.attach_instance_pool_instance(
+        instance_pool_id=instance_pool_id,
+        attach_instance_pool_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_instance_pool_instance') and callable(getattr(client, 'get_instance_pool_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance_pool_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @instance_pool_group.command(name=cli_util.override('compute_management.attach_load_balancer.command_name', 'attach'), help=u"""Attach a load balancer to the instance pool. \n[Command Reference](attachLoadBalancer)""")
@@ -541,6 +601,75 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
     cli_util.render_response(result, ctx)
 
 
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.detach_instance_pool_instance.command_name', 'detach'), help=u"""Detach instance from the instance pool. \n[Command Reference](detachInstancePoolInstance)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--instance-id', required=True, help=u"""The instance ocid to detach.""")
+@cli_util.option('--is-decrement-size', type=click.BOOL, help=u"""Decrement the size of the instance pool during detachment.""")
+@cli_util.option('--is-auto-terminate', type=click.BOOL, help=u"""Terminate the instance after it has been detached.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def detach_instance_pool_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, instance_id, is_decrement_size, is_auto_terminate):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    _details = {}
+    _details['instanceId'] = instance_id
+
+    if is_decrement_size is not None:
+        _details['isDecrementSize'] = is_decrement_size
+
+    if is_auto_terminate is not None:
+        _details['isAutoTerminate'] = is_auto_terminate
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.detach_instance_pool_instance(
+        instance_pool_id=instance_pool_id,
+        detach_instance_pool_instance_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @instance_pool_group.command(name=cli_util.override('compute_management.detach_load_balancer.command_name', 'detach'), help=u"""Detach a load balancer from the instance pool. \n[Command Reference](detachLoadBalancer)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to detach from the instance pool.""")
@@ -657,6 +786,32 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.get_instance_pool(
         instance_pool_id=instance_pool_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.get_instance_pool_instance.command_name', 'get'), help=u"""Gets the instance pool instance \n[Command Reference](getInstancePoolInstance)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePoolInstance'})
+@cli_util.wrap_exceptions
+def get_instance_pool_instance(ctx, from_json, instance_pool_id, instance_id):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.get_instance_pool_instance(
+        instance_pool_id=instance_pool_id,
+        instance_id=instance_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
