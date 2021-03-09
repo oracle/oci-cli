@@ -342,7 +342,7 @@ def create_backup_from_onprem(ctx, config_file, profile, **kwargs):
 
         # wait for object store credential to be available
         click.echo("Waiting for completion of external backup job...")
-        time.sleep(30)
+        time.sleep(300)
 
         if tdeenabled:
             # push the wallet to object store

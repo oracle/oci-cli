@@ -6,6 +6,8 @@
     Installs the Oracle Cloud Infrastructure CLI.
 .PARAMETER AcceptAllDefaults
     Run the script accepting all default options. This will suppress all prompts for user input.
+.PARAMETER OfflineInstall
+    Install CLI in the offline mode. This should be part of CLI Offline package.
 .PARAMETER PythonInstallLocation
     Optionally specifies where to install python on systems where it is not present. This must be an absolute path and
     it will be created if it does not exist.
@@ -40,6 +42,7 @@
 [CmdletBinding()]
 Param(
     [Parameter(Mandatory=$false)][switch]$AcceptAllDefaults,
+    [Parameter(Mandatory=$false)][switch]$OfflineInstall,
     [Parameter(Mandatory=$false)][string]$PythonInstallLocation,
     [Parameter(Mandatory=$false)][string]$OptionalFeatures,
     [Parameter(Mandatory=$false)][string]$InstallDir,
@@ -118,7 +121,8 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
     $EscapedExecutable = $PythonExecutable
     $PythonVersion = Invoke-Expression "& `"$EscapedExecutable`" -c 'import platform;print(platform.python_version())'"
     $MinVersionToCheck = $MinValidPython2Version
-    if ($PythonVersion.StartsWith("3")) {
+    # Offline installation requires Python3
+    if ($PythonVersion.StartsWith("3") -Or $OfflineInstall) {
         $MinVersionToCheck = $MinValidPython3Version
     }
 
@@ -273,6 +277,15 @@ Try {
         https://github.com/oracle/oci-cli/blob/master/scripts/install/README.rst
         ******************************************************************************"
     }
+
+    if ($OfflineInstall)
+    {
+        Write-Output "
+        ******************************************************************************
+        Starting OCI CLI Offline Installation
+        ******************************************************************************"
+    }
+
     # check if Python is installed, and is greater than MinValidPythonVersion
     $PythonExecutable = $null
     $CurrentUserPythonExecutable = FindLatestPythonExecutableInRegistry "HKCU"
@@ -295,6 +308,12 @@ Try {
     }
     Else {
         LogOutput "No valid Python installation found."
+
+         if ($OfflineInstall) {
+            LogOutput 'Exiting script. Offline installation requires Python3.5+ to be installed, Please install Python manually and re-run.'
+                Exit 1
+         }
+
 
         if (-Not $AcceptAllDefaults) {
             $message  = 'Python is required to run the CLI.'
@@ -355,6 +374,10 @@ Try {
     if ($OciCliVersion -And $OciCliVersion -Contains "preview" -And $install_py_exists) {
         $UseLocalCLiInstaller = $true
     }
+    if ($OfflineInstall) {
+        $UseLocalCLiInstaller = $true
+    }
+
     if ($UseLocalCLiInstaller -And $install_py_exists) {
         $PythonInstallScriptPath = "$PSScriptRoot\install.py"
     } else {
@@ -375,6 +398,9 @@ Try {
     $ArgumentList = "`"$PythonInstallScriptPath`""
     if ($AcceptAllDefaults) {
         $ArgumentList = "$ArgumentList --accept-all-defaults"
+    }
+    if ($OfflineInstall) {
+        $ArgumentList = "$ArgumentList --offline-install"
     }
     if ($InstallDir) {
         $ArgumentList = "$ArgumentList --install-dir $InstallDir"

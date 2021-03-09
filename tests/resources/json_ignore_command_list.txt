@@ -26,3 +26,4 @@ network, vnic, assign-private-ip
 rover, cluster, set-secrets
 rover, cluster, add-workload
 rover, node, set-secrets
+goldengate, deployment, update

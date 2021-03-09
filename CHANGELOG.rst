@@ -6,6 +6,48 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.21.5 - 2021-03-09
+-------------------
+Added
+~~~~~
+* Support for SMS subscriptions through the Oracle Cloud Infrastructure Notifications service.
+
+    * ``oci ons message publish``
+    * ``oci ons subscription confirm``
+    * ``oci ons subscription create``
+    * ``oci ons subscription unsubscribe``
+
+* Support for friendly formatting messages when target is ONS as part of the Service Connector Hub service.
+
+    * ``oci sch service-connector create``
+    * ``oci sch service-connector update``
+
+* Support the ability to attach and detach instance from instance pool in Compute Management service.
+
+    * ``oci compute-management instance-pool-instance attach``
+    * ``oci compute-management instance-pool-instance detach``
+    * ``oci compute-management instance-pool-instance get``
+
+* Support for Application Performance Monitoring Trace service
+
+    * ``oci apm-traces``
+
+* Support for Application Performance Monitoring Synthetic service
+
+    * ``oci apm-synthetics``
+
+* Support for APM service control plane
+
+    * ``oci apm-control-plane``
+
+* Support for GoldenGate service
+
+    * ``oci goldengate``
+
+Changed
+~~~~~~~~
+* Updated incremental delay and retry mechanism for create-backup-from-onPrem script in Database service
+
 2.21.4 - 2021-03-02
 -------------------
 Added
