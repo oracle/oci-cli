@@ -87,7 +87,8 @@ IGNORED_COMMANDS = [
     ['data-integration', 'task-validation', 'create-from-pipeline-task'],
     ['data-integration', 'task', 'update-pipeline-task'],
     ['data-integration', 'task', 'create-pipeline-task'],
-    ['dns', 'resolver', 'update']
+    ['dns', 'resolver', 'update'],
+    ['resource-manager', 'stack', 'copy'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

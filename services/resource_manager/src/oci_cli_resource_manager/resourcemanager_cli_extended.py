@@ -10,9 +10,13 @@ import sys
 from services.resource_manager.src.oci_cli_resource_manager.generated import resourcemanager_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from oci_cli import cli_constants
+from oci_cli import custom_types  # noqa: F401
 import oci  # noqa: F401
 import base64
 import zipfile
+from oci.regions import is_region
+from oci.regions import get_realm_from_region
 
 resourcemanager_cli.stack_group.commands.pop(resourcemanager_cli.create_stack.name)
 resourcemanager_cli.stack_group.commands.pop(resourcemanager_cli.update_stack.name)
@@ -378,3 +382,244 @@ def update_template_update_template_zip_upload_config_source_details_extended(ct
         kwargs.pop('config_source')
 
     ctx.invoke(resourcemanager_cli.update_template_update_template_zip_upload_config_source_details, **kwargs)
+
+
+@resourcemanager_cli.stack_group.command(name='copy', help=u"""Creates a copy of the specified stack in the specified destination (compartment and region). Note: The access token is required when copying a stack that uses a Git configuration source provider to a different region. For more information, see [To copy a stack]. \n[Command Reference](copyStack)""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
+@cli_util.option('--destination-compartment-id', help=u"""The [OCID] of the destination compartment for the copied stack.""")
+@cli_util.option('--destination-region', help=u"""The destination region for the copied stack.""")
+@cli_util.option('--display-name', help=u"""The display name to use for the copied stack.""")
+@cli_util.option('--description', help=u"""The description to use for the copied stack.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags associated with this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token', help=u"""The personal access token for the Git repository. Required when copying a stack that uses a Git configuration source provider to a different region. Avoid entering confidential information. For more information, see [To copy a stack]. \n[Command Reference](copyStack)""")
+@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@cli_util.wrap_exceptions
+def copy_stack(ctx, from_json, stack_id, destination_region, destination_compartment_id, display_name, description, freeform_tags, defined_tags, variables, access_token):
+
+    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+        raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
+
+    if destination_region is not None and not is_region(destination_region):
+        raise click.UsageError("Unrecognized region: {}. Review valid regions at https://docs.oracle.com/iaas/Content/General/Concepts/regions.htm".format(destination_region))
+
+    inner_kwargs = {}
+    inner_kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+
+    # GET Stack
+    source_stack_response = client.get_stack(
+        stack_id=stack_id,
+        **inner_kwargs
+    )
+
+    source_region = ctx.obj['config']['region']
+    if destination_region is not None and get_realm_from_region(destination_region) != get_realm_from_region(source_region):
+        raise click.UsageError("Invalid region. Destination region must be in the same realm {}. Review valid regions at https://docs.oracle.com/iaas/Content/General/Concepts/regions.htm".format(destination_region))
+
+    copy_display_name_prefix = "[copy-from-" + source_region + "]-"
+
+    if destination_region is not None and destination_region == source_region:
+        destination_region = None
+
+    # Prepare Stack Metadata
+    if source_stack_response is None or source_stack_response.data is None:
+        raise Exception("Could not retrieve stack object", inner_kwargs['opc_request_id'])
+
+    source_stack = source_stack_response.data
+    _details = copy_stack_metadata(source_stack, destination_compartment_id, display_name, description, freeform_tags, defined_tags, variables, copy_display_name_prefix)
+
+    # get config source metadata for stack
+    _details['configSource'] = get_config_source_metadata_for_stack(source_stack, destination_region, access_token)
+
+    is_zip_upload = source_stack.config_source.config_source_type == oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_ZIP_UPLOAD or source_stack.config_source.config_source_type == oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_COMPARTMENT_CONFIG_SOURCE
+
+    is_git_config = source_stack.config_source.config_source_type == oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_GIT_CONFIG_SOURCE
+
+    if not is_zip_upload and not is_git_config:
+        raise Exception("Only zip-upload config, git-configuration-source and create-from-compartment stacks are supported for copy stack", inner_kwargs['opc_request_id'])
+
+    # GET TF Config
+    if is_zip_upload:
+        stack_tf_config_response = client.get_stack_tf_config(
+            stack_id=stack_id,
+            **inner_kwargs
+        )
+
+        if stack_tf_config_response is None or stack_tf_config_response.data is None:
+            raise Exception("Could not retrieve stack TF config", inner_kwargs['opc_request_id'])
+
+        base64encoded_stack_tf_config = get_source_stack_tf_config_base64encoded_zip(stack_id, stack_tf_config_response)
+        _details['configSource']['zipFileBase64Encoded'] = base64encoded_stack_tf_config
+
+    # Setup Cross region
+    if destination_region is not None and is_git_config:
+        _get_config_details = {}
+
+        # GET config source provider
+        get_config_source_provider_response = client.get_configuration_source_provider(
+            configuration_source_provider_id=source_stack.config_source.configuration_source_provider_id,
+            **inner_kwargs
+        )
+
+        if get_config_source_provider_response is None or get_config_source_provider_response.data is None:
+            raise Exception("Unable to get git config source provider", inner_kwargs['opc_request_id'])
+
+        _get_config_details.update(copy_git_config_source_provider_metadata(get_config_source_provider_response.data, access_token, copy_display_name_prefix))
+
+        # Change region
+        client.base_client.set_region(destination_region)
+
+        # CREATE config source provider in new region
+        create_config_source_provider_response = client.create_configuration_source_provider(
+            create_configuration_source_provider_details=_get_config_details,
+            **inner_kwargs
+        )
+
+        if create_config_source_provider_response is None or create_config_source_provider_response.data is None:
+            raise Exception("Unable to copy Git configuration source provider", inner_kwargs['opc_request_id'])
+
+        cli_util.render_response(create_config_source_provider_response, ctx)
+        _details['configSource']['configurationSourceProviderId'] = create_config_source_provider_response.data.id
+    elif destination_region is not None:
+        # Change region
+        client.base_client.set_region(destination_region)
+
+    try:
+        # CREATE stack
+        result = client.create_stack(
+            create_stack_details=_details,
+            **inner_kwargs
+        )
+        cli_util.render_response(result, ctx)
+    except Exception as e:
+        print("Failed to copy stack: ", stack_id)
+        print(e)
+        if destination_region is not None and is_git_config:
+            print("Deleting copied configuration source provider: ", create_config_source_provider_response.data.id)
+
+            # delete config source provider
+            delete_config_source = client.delete_configuration_source_provider(
+                configuration_source_provider_id=create_config_source_provider_response.data.id,
+                **inner_kwargs
+            )
+
+
+def get_config_source_metadata_for_stack(source_stack, destination_region, access_token):
+    _details = {}
+
+    # GIT CONFIG SOURCE PROVIDER
+    if source_stack.config_source.config_source_type == oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_GIT_CONFIG_SOURCE:
+        if destination_region is not None and access_token is None:
+            raise click.UsageError("Need access token for Git configuration source provider to copy the stack across regions")
+
+        if destination_region is None:
+            _details['configurationSourceProviderId'] = source_stack.config_source.configuration_source_provider_id
+
+        _details['workingDirectory'] = source_stack.config_source.working_directory
+        _details['repositoryUrl'] = source_stack.config_source.repository_url
+        _details['branchName'] = source_stack.config_source.branch_name
+        _details['configSourceType'] = oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_GIT_CONFIG_SOURCE
+
+    # ZIP CONFIG SOURCE or RESOURCE DISCOVERY
+    else:
+        _details['workingDirectory'] = source_stack.config_source.working_directory
+        _details['configSourceType'] = oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_ZIP_UPLOAD
+
+    return _details
+
+
+def copy_stack_metadata(source_stack_data, compartment_id, display_name, description, freeform_tags, defined_tags, variables, copy_prefix_name):
+    _details = {}
+
+    # Get non-mutable Stack Metadata
+    _details['terraformVersion'] = source_stack_data.terraform_version
+
+    # Get Optional parameters
+    if display_name is not None:
+        _details['displayName'] = display_name
+    else:
+        _details['displayName'] = copy_prefix_name + source_stack_data.display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+    else:
+        _details['compartmentId'] = source_stack_data.compartment_id
+
+    if description is not None:
+        _details['description'] = description
+    else:
+        _details['description'] = source_stack_data.description
+
+    # freeformTags
+    merged_freeform_tags = merge_tags_variables(source_stack_data.freeform_tags, freeform_tags, "freeform_tags")
+    _details['freeformTags'] = merged_freeform_tags
+
+    # definedTags
+    merged_defined_tags = merge_tags_variables(source_stack_data.defined_tags, defined_tags, "defined_tags")
+    _details['definedTags'] = merged_defined_tags
+
+    # variables
+    merged_variables = merge_tags_variables(source_stack_data.variables, variables, "variables")
+    _details['variables'] = merged_variables
+
+    return _details
+
+
+def merge_tags_variables(source_data, new_data, param_key):
+    original_map = cli_util.parse_json_parameter(param_key, source_data)
+    new_map = cli_util.parse_json_parameter(param_key, new_data)
+
+    merged = {}
+
+    if original_map is not None:
+        merged.update(original_map)
+
+    if new_map is not None:
+        # overwrite existing key or add new key
+        for key in new_map:
+            merged[key] = new_map[key]
+
+    return merged
+
+
+def copy_git_config_source_provider_metadata(config_source_provider_data, access_token, copy_prefix_name):
+    _config_provider_details = {}
+
+    _config_provider_details['apiEndpoint'] = config_source_provider_data.api_endpoint
+    _config_provider_details['accessToken'] = access_token
+    _config_provider_details['compartmentId'] = config_source_provider_data.compartment_id
+    _config_provider_details['displayName'] = copy_prefix_name + config_source_provider_data.display_name
+    _config_provider_details['description'] = config_source_provider_data.description
+    _config_provider_details['configSourceProviderType'] = config_source_provider_data.config_source_provider_type
+
+    if config_source_provider_data.freeform_tags is not None:
+        _config_provider_details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", config_source_provider_data.freeform_tags)
+
+    if config_source_provider_data.defined_tags is not None:
+        _config_provider_details['definedTags'] = cli_util.parse_json_parameter("defined_tags", config_source_provider_data.defined_tags)
+
+    return _config_provider_details
+
+
+def get_source_stack_tf_config_base64encoded_zip(stack_id, stack_tf_config_response):
+    tf_config = b""
+    try:
+        for chunk in stack_tf_config_response.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            tf_config += chunk
+    except Exception:
+        raise Exception("Unable to complete download of the stack's Terraform configuration")
+
+    base64encoded_tf_config = base64.b64encode(tf_config).decode('utf-8')
+
+    if not base64encoded_tf_config:
+        raise Exception('Internal error: Unable to generate encoded Terraform configuration')
+
+    return base64encoded_tf_config
+
+
+resourcemanager_cli.stack_group.add_command(copy_stack)

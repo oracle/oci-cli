@@ -103,3 +103,11 @@ def create_model_artifact_extended(ctx, model_id, from_json, **kwargs):
             **kwargs
         )
         cli_util.render_response(result, ctx)
+
+
+# Remove create-model-deployment-single-model-deployment-configuration-details from oci data-science model-deployment
+datascience_cli.model_deployment_group.commands.pop(datascience_cli.create_model_deployment_single_model_deployment_configuration_details.name)
+
+
+# Remove update-model-deployment-update-single-model-deployment-configuration-details from oci data-science model-deployment
+datascience_cli.model_deployment_group.commands.pop(datascience_cli.update_model_deployment_update_single_model_deployment_configuration_details.name)

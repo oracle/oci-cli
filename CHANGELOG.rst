@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.21.6 - 2021-03-16
+-------------------
+Added
+~~~~~
+* Support for Routing Policies and HTTP2 Listener protocol features in Load Balancer service
+
+    * ``oci lb routing-policy``
+    * ``oci lb listener create --routing-policy-name --protocol HTTP2``
+    * ``oci lb listener update --routing-policy-name --protocol HTTP2``
+
+* Support for updating instance usage type, (NONPRIMARY, PRIMARY), in OCE service
+
+    * ``oci oce oce-instance update --instance-usage-type``
+
+* Support for private clusters to the Container Engine in Kubernetes service
+
+    * ``oci ce cluster create --endpoint-subnet-id --endpoint-public-ip-enabled --endpoint-nsg-ids``
+    * ``oci ce cluster update-endpoint-config --is-public-ip-enabled --nsg-ids``
+    * ``oci ce cluster create-kubeconfig --kube-endpoint``
+
+* Support for model deployment in Data Science service
+
+    * ``oci data-science model-deployment``
+
+* Support for copying stacks in Resource Manager service
+
+    * ``oci resource-manager stack copy``
+
+* Support for retrieving certificates for clusters and nodes in Roving Edge Infrastructure service
+
+    * ``oci rover cluster get-certificate``
+    * ``oci rover node get-certificate``
+    * ``oci rover node setup-identity``
+
+Fixed
+~~~~~
+* Bug with resource_principal not properly working with --region parameter
+
 2.21.5 - 2021-03-09
 -------------------
 Added

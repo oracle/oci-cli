@@ -521,6 +521,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.option('--description', help=u"""OceInstance description""")
 @cli_util.option('--waf-primary-domain', help=u"""Web Application Firewall(WAF) primary domain""")
 @cli_util.option('--instance-license-type', type=custom_types.CliCaseInsensitiveChoice(["NEW", "BYOL"]), help=u"""Flag indicating whether the instance license is new cloud or bring your own license""")
+@cli_util.option('--instance-usage-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "NONPRIMARY"]), help=u"""Instance type based on its usage""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -533,7 +534,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_oce_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oce_instance_id, description, waf_primary_domain, instance_license_type, freeform_tags, defined_tags, if_match):
+def update_oce_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oce_instance_id, description, waf_primary_domain, instance_license_type, instance_usage_type, freeform_tags, defined_tags, if_match):
 
     if isinstance(oce_instance_id, six.string_types) and len(oce_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oce-instance-id cannot be whitespace or empty string')
@@ -557,6 +558,9 @@ def update_oce_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if instance_license_type is not None:
         _details['instanceLicenseType'] = instance_license_type
+
+    if instance_usage_type is not None:
+        _details['instanceUsageType'] = instance_usage_type
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -54,6 +54,14 @@ def listener_group():
     pass
 
 
+@click.command(cli_util.override('lb.routing_policy_group.command_name', 'routing-policy'), cls=CommandGroupWithAlias, help="""A named ordered list of routing rules that is applied to a listener.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def routing_policy_group():
+    pass
+
+
 @click.command(cli_util.override('lb.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Many of the API requests you use to create and configure load balancing do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. WorkRequest objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
 @cli_util.help_option_group
 def work_request_group():
@@ -182,6 +190,7 @@ lb_root_group.add_command(load_balancer_group)
 lb_root_group.add_command(load_balancer_shape_group)
 lb_root_group.add_command(certificate_group)
 lb_root_group.add_command(listener_group)
+lb_root_group.add_command(routing_policy_group)
 lb_root_group.add_command(work_request_group)
 lb_root_group.add_command(backend_set_health_group)
 lb_root_group.add_command(health_checker_group)
@@ -592,11 +601,16 @@ Example: `HTTP`""")
 Example: `example_listener`""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add a listener.""")
 @cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--path-route-set-name', help=u"""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
+@cli_util.option('--path-route-set-name', help=u"""Deprecated. Please use `routingPolicies` instead.
+
+The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
 
 Example: `example_path_route_set`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--routing-policy-name', help=u"""The name of the routing policy applied to this listener's traffic.
+
+Example: `example_routing_policy`""")
 @cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The names of the [rule sets] to apply to the listener.
 
 Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -608,7 +622,7 @@ Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, name, load_balancer_id, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, rule_set_names):
+def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, name, load_balancer_id, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, routing_policy_name, rule_set_names):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -633,6 +647,9 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if connection_configuration is not None:
         _details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
+
+    if routing_policy_name is not None:
+        _details['routingPolicyName'] = routing_policy_name
 
     if rule_set_names is not None:
         _details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
@@ -872,6 +889,66 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     result = client.create_path_route_set(
         load_balancer_id=load_balancer_id,
         create_path_route_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@routing_policy_group.command(name=cli_util.override('lb.create_routing_policy.command_name', 'create'), help=u"""Adds a routing policy to a load balancer. For more information, see [Managing Request Routing]. \n[Command Reference](createRoutingPolicy)""")
+@cli_util.option('--name', required=True, help=u"""The name for this list of routing rules. It must be unique and it cannot be changed. Avoid entering confidential information.
+
+Example: `example_routing_rules`""")
+@cli_util.option('--condition-language-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["V1"]), help=u"""The version of the language in which `condition` of `rules` are composed.""")
+@cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of routing rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the routing policy rule list to.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'rules': {'module': 'load_balancer', 'class': 'list[RoutingRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rules': {'module': 'load_balancer', 'class': 'list[RoutingRule]'}})
+@cli_util.wrap_exceptions
+def create_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, condition_language_version, rules, load_balancer_id):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['conditionLanguageVersion'] = condition_language_version
+    _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.create_routing_policy(
+        load_balancer_id=load_balancer_id,
+        create_routing_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1428,6 +1505,64 @@ def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@routing_policy_group.command(name=cli_util.override('lb.delete_routing_policy.command_name', 'delete'), help=u"""Deletes a routing policy from the specified load balancer.
+
+To delete a routing rule from a routing policy, use the [UpdateRoutingPolicy] operation. \n[Command Reference](deleteRoutingPolicy)""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the routing policy to delete.""")
+@cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to delete.
+
+Example: `example_routing_policy`""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, routing_policy_name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(routing_policy_name, six.string_types) and len(routing_policy_name.strip()) == 0:
+        raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.delete_routing_policy(
+        load_balancer_id=load_balancer_id,
+        routing_policy_name=routing_policy_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @rule_set_group.command(name=cli_util.override('lb.delete_rule_set.command_name', 'delete'), help=u"""Deletes a rule set from the specified load balancer.
 
 To delete a rule from a rule set, use the [UpdateRuleSet] operation. \n[Command Reference](deleteRuleSet)""")
@@ -1798,6 +1933,35 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
     result = client.get_path_route_set(
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@routing_policy_group.command(name=cli_util.override('lb.get_routing_policy.command_name', 'get'), help=u"""Gets the specified routing policy. \n[Command Reference](getRoutingPolicy)""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to retrieve.
+
+Example: `example_routing_policy`""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'RoutingPolicy'})
+@cli_util.wrap_exceptions
+def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(routing_policy_name, six.string_types) and len(routing_policy_name.strip()) == 0:
+        raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.get_routing_policy(
+        load_balancer_id=load_balancer_id,
+        routing_policy_name=routing_policy_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2259,6 +2423,61 @@ def list_protocols(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     else:
         result = client.list_protocols(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@routing_policy_group.command(name=cli_util.override('lb.list_routing_policies.command_name', 'list'), help=u"""Lists all routing policies associated with the specified load balancer. \n[Command Reference](listRoutingPolicies)""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the routing policies.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `3`""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[RoutingPolicy]'})
+@cli_util.wrap_exceptions
+def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_routing_policies,
+            load_balancer_id=load_balancer_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_routing_policies,
+            limit,
+            page_size,
+            load_balancer_id=load_balancer_id,
+            **kwargs
+        )
+    else:
+        result = client.list_routing_policies(
+            load_balancer_id=load_balancer_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2758,9 +2977,14 @@ Example: `HTTP`""")
 
 Example: `example_listener`""")
 @cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--path-route-set-name', help=u"""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
+@cli_util.option('--path-route-set-name', help=u"""Deprecated. Please use `routingPolicies` instead.
+
+The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
 
 Example: `example_path_route_set`""")
+@cli_util.option('--routing-policy-name', help=u"""The name of the routing policy applied to this listener's traffic.
+
+Example: `example_routing_policy`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The names of the [rule sets] to apply to the listener.
@@ -2775,7 +2999,7 @@ Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, rule_set_names):
+def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, hostname_names, path_route_set_name, routing_policy_name, ssl_configuration, connection_configuration, rule_set_names):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2800,6 +3024,9 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if path_route_set_name is not None:
         _details['pathRouteSetName'] = path_route_set_name
+
+    if routing_policy_name is not None:
+        _details['routingPolicyName'] = routing_policy_name
 
     if ssl_configuration is not None:
         _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
@@ -3096,6 +3323,78 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
         update_path_route_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@routing_policy_group.command(name=cli_util.override('lb.update_routing_policy.command_name', 'update'), help=u"""Overwrites an existing routing policy on the specified load balancer. Use this operation to add, delete, or alter routing policy rules in a routing policy.
+
+To add a new routing rule to a routing policy, the body must include both the new routing rule to add and the existing rules to retain. \n[Command Reference](updateRoutingPolicy)""")
+@cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of routing rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the routing policy to update.""")
+@cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to update.
+
+Example: `example_routing_policy_name`""")
+@cli_util.option('--condition-language-version', type=custom_types.CliCaseInsensitiveChoice(["V1"]), help=u"""The version of the language in which `condition` of `rules` are composed.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'rules': {'module': 'load_balancer', 'class': 'list[RoutingRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rules': {'module': 'load_balancer', 'class': 'list[RoutingRule]'}})
+@cli_util.wrap_exceptions
+def update_routing_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rules, load_balancer_id, routing_policy_name, condition_language_version):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(routing_policy_name, six.string_types) and len(routing_policy_name.strip()) == 0:
+        raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
+    if not force:
+        if rules:
+            if not click.confirm("WARNING: Updates to rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    if condition_language_version is not None:
+        _details['conditionLanguageVersion'] = condition_language_version
+
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.update_routing_policy(
+        load_balancer_id=load_balancer_id,
+        routing_policy_name=routing_policy_name,
+        update_routing_policy_details=_details,
         **kwargs
     )
     if wait_for_state:

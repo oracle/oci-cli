@@ -20,6 +20,9 @@ from datetime import datetime, timedelta
 DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
 cli_util.rename_command(containerengine_cli, containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
                         "list")
+
+cli_util.rename_command(containerengine_cli, containerengine_cli.cluster_group, containerengine_cli.update_cluster_endpoint_config, "update-endpoint-config")
+
 containerengine_cli.node_pool_group.commands.pop(containerengine_cli.create_node_pool_node_source_via_image_details.name)
 containerengine_cli.node_pool_group.commands.pop(containerengine_cli.update_node_pool_node_source_via_image_details.name)
 
@@ -90,7 +93,7 @@ def generate_token(ctx, from_json, cluster_id):
 containerengine_cli.cluster_group.add_command(generate_token)
 
 
-@cli_util.copy_params_from_generated_command(containerengine_cli.create_cluster, params_to_exclude=['options'],
+@cli_util.copy_params_from_generated_command(containerengine_cli.create_cluster, params_to_exclude=['options', 'endpoint_config'],
                                              copy_from_json=False)
 @containerengine_cli.cluster_group.command(name=cli_util.override('create_cluster.command_name', 'create'),
                                            help="""Create a new cluster.""")
@@ -104,11 +107,16 @@ containerengine_cli.cluster_group.add_command(generate_token)
  in the cluster, expressed as a single, contiguous IPv4 CIDR block. For example, 10.244.0.0/16.""")
 @cli_util.option('--services-cidr', help="""The available group of network addresses that can be exposed as Kubernetes\
  services (ClusterIPs), expressed as a single, contiguous IPv4 CIDR block. For example, 10.96.0.0/16.""")
+@cli_util.option('--endpoint-subnet-id', help="""The OCID of the regional subnet in which to place the Cluster endpoint.""")
+@cli_util.option('--endpoint-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of the OCIDs of the network\
+ security groups (NSGs) to apply to the cluster endpoint. You must also specify --endpoint-subnet-id.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--endpoint-public-ip-enabled', type=click.BOOL, help="""Whether the cluster should be assigned a public\
+ IP address. Defaults to false. If set to true on a private subnet, the cluster provisioning will fail. You must also specify --endpoint-subnet-id.""")
 @json_skeleton_utils.get_cli_json_input_option(
     {'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
-    input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+    input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}
@@ -138,6 +146,26 @@ def create_cluster(ctx, **kwargs):
             kwargs['options']['kubernetesNetworkConfig'] = {}
         kwargs['options']['kubernetesNetworkConfig']['servicesCidr'] = kwargs['services_cidr']
     kwargs.pop('services_cidr', None)
+
+    if kwargs.get('endpoint_nsg_ids') and not kwargs.get('endpoint_subnet_id'):
+        raise click.UsageError(
+            'Cannot specify --endpoint-nsg-ids without --endpoint-subnet-id'
+        )
+    if 'endpoint_public_ip_enabled' in kwargs and kwargs['endpoint_public_ip_enabled'] is not None and not kwargs.get('endpoint_subnet_id'):
+        raise click.UsageError(
+            'Cannot specify --endpoint-public-ip-enabled without --endpoint-subnet-id'
+        )
+
+    if 'endpoint_subnet_id' in kwargs and kwargs['endpoint_subnet_id'] is not None:
+        kwargs['endpoint_config'] = {}
+        kwargs['endpoint_config']['subnetId'] = kwargs['endpoint_subnet_id']
+        if 'endpoint_nsg_ids' in kwargs and kwargs['endpoint_nsg_ids'] is not None:
+            kwargs['endpoint_config']['nsgIds'] = cli_util.parse_json_parameter("endpoint_nsg_ids", kwargs['endpoint_nsg_ids'])
+        if 'endpoint_public_ip_enabled' in kwargs and kwargs['endpoint_public_ip_enabled'] is not None:
+            kwargs['endpoint_config']['isPublicIpEnabled'] = kwargs['endpoint_public_ip_enabled']
+    kwargs.pop('endpoint_subnet_id', None)
+    kwargs.pop('endpoint_nsg_ids', None)
+    kwargs.pop('endpoint_public_ip_enabled', None)
 
     # It seems like the service needs options param even if it is empty so leave it when invoking the create command
 
@@ -258,18 +286,19 @@ def update_node_pool(ctx, **kwargs):
 # new one, if it does not exist.
 # 3. Running CLI command to obtain new kubeconfig always sets the default context to the new cluster.
 # 4. A ‘merged’ kubeconfig file does not have any duplicates and the information is not lost or corrupted in any way.
-@cli_util.copy_params_from_generated_command(containerengine_cli.create_kubeconfig, params_to_exclude=['file', 'token_version'])
+@cli_util.copy_params_from_generated_command(containerengine_cli.create_kubeconfig, params_to_exclude=['endpoint_parameterconflict', 'file', 'token-version'])
 @containerengine_cli.cluster_group.command(name=cli_util.override('create_kubeconfig.command_name', 'create-kubeconfig'),
                                            help="""Create the Kubeconfig YAML for a cluster.""")
 @cli_util.option('--file', type=click.Path(), default=DEFAULT_KUBECONFIG_LOCATION, show_default=True,
                  help="The name of the file that will be updated with response data, or '-' to write to STDOUT.")
 @cli_util.option('--token-version', default="2.0.0", help=u"""The version of the kubeconfig token. Supported value is 2.0.0""", type=custom_types.CliCaseInsensitiveChoice(['2.0.0']))
+@cli_util.option('--kube-endpoint', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time. Supported values LEGACY_KUBERNETES, PUBLIC_ENDPOINT, PRIVATE_ENDPOINT""")
 @cli_util.option('--overwrite', is_flag=True, help="""Overwrites the contents of kubeconfig file specified using --file\
  option or kubeconfig file at default location if --file is not used.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, overwrite):
+def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, kube_endpoint, overwrite):
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
@@ -283,6 +312,9 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 
     if expiration is not None:
         details['expiration'] = expiration
+
+    if kube_endpoint is not None:
+        details['endpoint'] = kube_endpoint
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_kubeconfig(
