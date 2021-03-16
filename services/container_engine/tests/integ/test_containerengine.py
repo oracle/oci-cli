@@ -13,8 +13,9 @@ from tests import util
 from tests import test_config_container
 
 CLUSTER_CREATE_PROVISIONING_TIME_SEC = 1200
+CLUSTER_UPDATE_TIME_SEC = 1200
 PROVISIONING_TIME_SEC = 300
-DELETION_TIME_SEC = 300
+DELETION_TIME_SEC = 1200
 DEFAULT_KUBECONFIG_LOCATION = '~/.kube/config'
 USER_KUBECONFIG_DIR = './config/'
 USER_KUBECONFIG_LOCATION = USER_KUBECONFIG_DIR + 'kubeconfig'
@@ -70,6 +71,24 @@ def oce_cluster(runner, config_file, config_profile):
             util.wait_until(['network', 'subnet', 'get', '--subnet-id', subnet_ocids[idx]], 'AVAILABLE',
                             max_wait_seconds=PROVISIONING_TIME_SEC)
 
+        regional_subnet_name = util.random_name('cli_test_compute_subnet')
+        subnet_names.append(regional_subnet_name)
+        params = [
+            'network', 'subnet', 'create',
+            '--compartment-id', util.COMPARTMENT_ID,
+            '--display-name', regional_subnet_name,
+            '--vcn-id', vcn_ocid,
+            '--cidr-block', "10.0.6.0/24",
+        ]
+
+        # Create a public regional subnet for the cluster endpoint
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+        regional_subnet_ocid = util.find_id_in_response(result.output)
+        subnet_ocids.append(regional_subnet_ocid)
+        util.wait_until(['network', 'subnet', 'get', '--subnet-id', regional_subnet_ocid], 'AVAILABLE',
+                        max_wait_seconds=PROVISIONING_TIME_SEC)
+
         # Find Supported Kubernetes versions
         params = [
             'ce', 'cluster-options', 'get',
@@ -79,6 +98,7 @@ def oce_cluster(runner, config_file, config_profile):
         util.validate_response(result)
         # Pick the first version in the response to be used for the test cluster
         kub_version = json.loads(result.output)['data']['kubernetes-versions'][0]
+        kub_upgrade_version = json.loads(result.output)['data']['kubernetes-versions'][1]
 
         # Create a cluster
         cluster_lb_subnets = '["' + subnet_ocids[3] + '", "' + subnet_ocids[4] + '"]'
@@ -93,7 +113,8 @@ def oce_cluster(runner, config_file, config_profile):
             '--tiller-enabled', 'true',
             '--pods-cidr', pod_cidr_block,
             '--services-cidr', kub_svcs_cidr_block,
-            '--service-lb-subnet-ids', cluster_lb_subnets
+            '--service-lb-subnet-ids', cluster_lb_subnets,
+            '--endpoint-subnet-id', regional_subnet_ocid
         ]
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
@@ -143,7 +164,8 @@ def oce_cluster(runner, config_file, config_profile):
         params = [
             'ce', 'cluster', 'update',
             '--cluster-id', cluster_id,
-            '--name', cluster_name
+            '--name', cluster_name,
+            '--kubernetes-version', kub_upgrade_version
         ]
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
@@ -153,7 +175,7 @@ def oce_cluster(runner, config_file, config_profile):
         work_request_id = response['opc-work-request-id']
         get_work_request_result = util.wait_until(['ce', 'work-request', 'get', '--work-request-id', work_request_id],
                                                   'SUCCEEDED', state_property_name='status',
-                                                  max_wait_seconds=PROVISIONING_TIME_SEC)
+                                                  max_wait_seconds=CLUSTER_UPDATE_TIME_SEC)
         util.validate_response(get_work_request_result)
 
         # Get the list of work request logs
@@ -164,6 +186,24 @@ def oce_cluster(runner, config_file, config_profile):
         ]
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
+
+        # Update a cluster endpoint
+        params = [
+            'ce', 'cluster', 'update-endpoint-config',
+            '--cluster-id', cluster_id,
+            '--is-public-ip-enabled', 'true',
+            '--nsg-ids', '[]'
+        ]
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+
+        # Update endpoint config returns a work request. Get work request response to check the command succeeded
+        response = json.loads(result.output)
+        work_request_id = response['opc-work-request-id']
+        get_work_request_result = util.wait_until(['ce', 'work-request', 'get', '--work-request-id', work_request_id],
+                                                  'SUCCEEDED', state_property_name='status',
+                                                  max_wait_seconds=CLUSTER_UPDATE_TIME_SEC)
+        util.validate_response(get_work_request_result)
 
         yield cluster_id, subnet_ocids[0], subnet_ocids[1], subnet_ocids[2]
 
@@ -207,7 +247,6 @@ def oce_cluster(runner, config_file, config_profile):
 
 
 @util.slow
-@pytest.mark.skip
 def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
     # Set-up of cross-connect group
     node_pool_id = None
@@ -220,7 +259,7 @@ def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
         # Pick the first version in the response to be used for the test cluster
-        kub_version = json.loads(result.output)['data']['kubernetes-versions'][0]  # v1.8.11
+        kub_version = json.loads(result.output)['data']['kubernetes-versions'][0]
         node_shape = "VM.Standard1.1"
         node_image = "Oracle-Linux-7.4"
         # Get the return values from the cluster generator
@@ -309,7 +348,6 @@ def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
 # Default kubeconfig file (~/.kube/config) does NOT exist
 # OUTPUT:
 # New kubeconfig file created at default location with command returned contents.
-@pytest.mark.skip
 def test_create_kubeconfig_1(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test1.yml'):
         config_file_path = os.path.expandvars(os.path.expanduser(DEFAULT_KUBECONFIG_LOCATION))
@@ -419,7 +457,6 @@ def test_create_kubeconfig_2(runner, config_file, config_profile, oce_cluster, r
 # Kubeconfig file does NOT exist at user provided file path.
 # OUTPUT:
 # New kubeconfig file created at user provided file location with command returned contents.
-@pytest.mark.skip
 def test_create_kubeconfig_3(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test3.yml'):
         config_file_path = os.path.expandvars(os.path.expanduser(USER_KUBECONFIG_LOCATION + "_" + request.function.__name__))
@@ -455,7 +492,6 @@ def test_create_kubeconfig_3(runner, config_file, config_profile, oce_cluster, r
 # Kubeconfig file contents are EMPTY.
 # OUTPUT:
 # Existing kubeconfig file at user provided file location populated with command returned contents.
-@pytest.mark.skip
 def test_create_kubeconfig_4(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test4.yml'):
         # There should be an EMPTY kubeconfig file at user provided location for this test.
@@ -494,7 +530,6 @@ def test_create_kubeconfig_4(runner, config_file, config_profile, oce_cluster, r
 # Default kubeconfig file has pre-populated kubeconfig contents.
 # OUTPUT:
 # Default kubeconfig file at user provided file location should be overwritten with command returned contents.
-@pytest.mark.skip
 def test_create_kubeconfig_5(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test5.yml'):
         # There should be a pre-populated kubeconfig file at default location for this test.
@@ -540,7 +575,6 @@ def test_create_kubeconfig_5(runner, config_file, config_profile, oce_cluster, r
 # File DOES NOT exist at user provided file path.
 # OUTPUT:
 # New kubeconfig file created at user provided file location populated with command returned contents.
-@pytest.mark.skip
 def test_create_kubeconfig_6(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test6.yml'):
         config_file_path = os.path.expandvars(os.path.expanduser(USER_KUBECONFIG_LOCATION + "_" + request.function.__name__))

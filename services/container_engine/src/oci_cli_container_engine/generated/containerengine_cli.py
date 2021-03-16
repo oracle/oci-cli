@@ -79,17 +79,18 @@ ce_root_group.add_command(cluster_options_group)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the cluster.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
 @cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install into the cluster masters.""")
+@cli_util.option('--endpoint-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The network configuration for access to the Cluster control plane.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for Kubernetes secret encryption. When used, `kubernetesVersion` must be at least `v1.13.0`.""")
 @cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional attributes for the cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
+@json_skeleton_utils.get_cli_json_input_option({'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
 @cli_util.wrap_exceptions
-def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, kms_key_id, options):
+def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, endpoint_config, kms_key_id, options):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -99,6 +100,9 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     _details['compartmentId'] = compartment_id
     _details['vcnId'] = vcn_id
     _details['kubernetesVersion'] = kubernetes_version
+
+    if endpoint_config is not None:
+        _details['endpointConfig'] = cli_util.parse_json_parameter("endpoint_config", endpoint_config)
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
@@ -142,12 +146,13 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--token-version', help=u"""The version of the kubeconfig token. Supported value 2.0.0""")
 @cli_util.option('--expiration', type=click.INT, help=u"""Deprecated. This field is no longer used.""")
+@cli_util.option('--endpoint-parameterconflict', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration):
+def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, endpoint_parameterconflict):
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
@@ -162,6 +167,9 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 
     if expiration is not None:
         _details['expiration'] = expiration
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_kubeconfig(
@@ -542,7 +550,7 @@ def get_cluster(ctx, from_json, cluster_id):
 
 
 @cluster_options_group.command(name=cli_util.override('ce.get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters. \n[Command Reference](getClusterOptions)""")
-@cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Only \"all\" is supported.""")
+@cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -915,6 +923,69 @@ def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     result = client.update_cluster(
         cluster_id=cluster_id,
         update_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cluster_group.command(name=cli_util.override('ce.update_cluster_endpoint_config.command_name', 'update-cluster-endpoint-config'), help=u"""Update the details of the cluster endpoint configuration. \n[Command Reference](updateClusterEndpointConfig)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to apply to the cluster endpoint. For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-public-ip-enabled', type=click.BOOL, help=u"""Whether the cluster should be assigned a public IP address. Defaults to false. If set to true on a private subnet, the cluster update will fail.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_cluster_endpoint_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, nsg_ids, is_public_ip_enabled, if_match):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if is_public_ip_enabled is not None:
+        _details['isPublicIpEnabled'] = is_public_ip_enabled
+
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
+    result = client.update_cluster_endpoint_config(
+        cluster_id=cluster_id,
+        update_cluster_endpoint_config_details=_details,
         **kwargs
     )
     if wait_for_state:

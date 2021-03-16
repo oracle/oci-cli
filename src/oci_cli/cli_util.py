@@ -349,6 +349,8 @@ def create_config_and_signer_based_on_click_context(ctx):
         # OCI_RESOURCE_PRINCIPAL_VERSION="1.1"
         # OCI_RESOURCE_PRINCIPAL_RPT_ENDPOINT
         # OCI_RESOURCE_PRINCIPAL_RPST_ENDPOINT
+        if ctx.obj['region']:
+            client_config["region"] = ctx.obj['region']
         signer = oci.auth.signers.resource_principals_signer.get_resource_principals_signer()
     kwargs['signer'] = signer
 

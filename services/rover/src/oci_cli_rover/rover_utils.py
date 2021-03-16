@@ -4,6 +4,8 @@
 
 import click
 import six
+
+import oci
 from oci_cli import cli_util
 
 
@@ -43,3 +45,46 @@ def export_compute_image_helper(ctx, image_id, destinationUri):
         export_image_details=export_details,
         **kwargs_request
     )
+
+
+def get_work_request(ctx, work_request_id):
+    try:
+        ctx_endpoint = ctx.obj['endpoint']
+        ctx.obj['endpoint'] = None
+        client = cli_util.build_client('work_requests', 'work_request', ctx)
+        ctx.obj['endpoint'] = ctx_endpoint
+        response = client.get_work_request(work_request_id=work_request_id)
+        if response.data.status.lower() == "succeeded":
+            return "SUCCEEDED"
+        elif response.data.status.lower() == "failed":
+            return "FAILED"
+        else:
+            percentage = 0 if response.data.status.lower() == "accepted" else response.data.percent_complete
+            return str(percentage) + "% " + "IN_PROGRESS"
+    except oci.exceptions.ServiceError as e:
+        return "FAILED" if e.status == 404 else "NA"
+    except Exception as e:
+        return "NA"
+
+
+def export_compute_image_status_helper(ctx, work_request_id):
+    if work_request_id is None:
+        return "NA"
+    elif work_request_id.lower() == "exported":
+        return "SUCCEEDED"
+    elif work_request_id.find("ocid") >= 0:
+        return get_work_request(ctx, work_request_id)
+
+
+def prompt_for_secrets(secret_type):
+    return click.prompt(text='Enter {0} (minimum 8 characters)'.format(secret_type), default='',
+                        hide_input=True, show_default=False, confirmation_prompt=True)
+
+
+def prompt_for_workload_delete():
+    return click.prompt("Enter workload number to be deleted", type=int)
+
+
+def modify_image_workload_name(image_workload_name):
+    image_workload_name = image_workload_name.replace(" ", "")
+    return image_workload_name

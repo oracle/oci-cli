@@ -32,4 +32,4 @@ Offline Installation issues
 
   * Error "command 'gcc' failed with exit status 1"
 
-    * To fix the above error, please install the packages gcc, openssl-devel and python3-devel in the System and try the installation again
+    * To fix the above error, please install the packages gcc, zlib-devel, python3-devel and OpenSSL 1.1.1-latest in the System and try the installation again
