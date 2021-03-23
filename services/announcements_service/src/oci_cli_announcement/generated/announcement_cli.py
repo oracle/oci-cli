@@ -7,51 +7,45 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.announcements_service.src.oci_cli_announcements_service.generated import announce_service_cli
 
 
-@cli.command(cli_util.override('announce.announce_root_group.command_name', 'announce'), cls=CommandGroupWithAlias, help=cli_util.override('announce.announce_root_group.help', """Manage Oracle Cloud Infrastructure console announcements."""), short_help=cli_util.override('announce.announce_root_group.short_help', """Announcements Service API"""))
+@click.command(cli_util.override('announcement.announcement_root_group.command_name', 'announcement'), cls=CommandGroupWithAlias, help=cli_util.override('announcement.announcement_root_group.help', """Manage Oracle Cloud Infrastructure console announcements."""), short_help=cli_util.override('announcement.announcement_root_group.short_help', """Announcements Service API"""))
 @cli_util.help_option_group
-def announce_root_group():
+def announcement_root_group():
     pass
 
 
-@click.command(cli_util.override('announce.announcements_collection_group.command_name', 'announcements-collection'), cls=CommandGroupWithAlias, help="""A list of announcements that match filter criteria, if any. Results contain both the announcements and the user-specific status of the announcements.""")
+@click.command(cli_util.override('announcement.announcements_collection_group.command_name', 'announcements-collection'), cls=CommandGroupWithAlias, help="""A list of announcements that match filter criteria, if any. Results contain both the announcements and the user-specific status of the announcements.""")
 @cli_util.help_option_group
 def announcements_collection_group():
     pass
 
 
-@click.command(cli_util.override('announce.announcement_user_status_details_group.command_name', 'announcement-user-status-details'), cls=CommandGroupWithAlias, help="""An announcement's status regarding whether it has been acknowledged by a user.""")
+@click.command(cli_util.override('announcement.announcement_user_status_details_group.command_name', 'announcement-user-status-details'), cls=CommandGroupWithAlias, help="""An announcement's status regarding whether it has been acknowledged by a user.""")
 @cli_util.help_option_group
 def announcement_user_status_details_group():
     pass
 
 
-@click.command(cli_util.override('announce.announcement_group.command_name', 'announcement'), cls=CommandGroupWithAlias, help="""A message about an impactful operational event.""")
+@click.command(cli_util.override('announcement.announcement_group.command_name', 'announcement'), cls=CommandGroupWithAlias, help="""A message about an impactful operational event.""")
 @cli_util.help_option_group
 def announcement_group():
     pass
 
 
-@click.command(cli_util.override('announce.announcement_user_status_group.command_name', 'announcement-user-status'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def announcement_user_status_group():
-    pass
+announce_service_cli.announce_service_group.add_command(announcement_root_group)
+announcement_root_group.add_command(announcements_collection_group)
+announcement_root_group.add_command(announcement_user_status_details_group)
+announcement_root_group.add_command(announcement_group)
 
 
-announce_root_group.add_command(announcements_collection_group)
-announce_root_group.add_command(announcement_user_status_details_group)
-announce_root_group.add_command(announcement_group)
-announce_root_group.add_command(announcement_user_status_group)
-
-
-@announcement_group.command(name=cli_util.override('announce.get_announcement.command_name', 'get'), help=u"""Gets the details of a specific announcement. \n[Command Reference](getAnnouncement)""")
+@announcement_group.command(name=cli_util.override('announcement.get_announcement.command_name', 'get'), help=u"""Gets the details of a specific announcement. \n[Command Reference](getAnnouncement)""")
 @cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -73,7 +67,7 @@ def get_announcement(ctx, from_json, announcement_id):
     cli_util.render_response(result, ctx)
 
 
-@announcement_user_status_details_group.command(name=cli_util.override('announce.get_announcement_user_status.command_name', 'get-announcement-user-status'), help=u"""Gets information about whether a specific announcement was acknowledged by a user. \n[Command Reference](getAnnouncementUserStatus)""")
+@announcement_user_status_details_group.command(name=cli_util.override('announcement.get_announcement_user_status.command_name', 'get-announcement-user-status'), help=u"""Gets information about whether a specific announcement was acknowledged by a user. \n[Command Reference](getAnnouncementUserStatus)""")
 @cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -95,7 +89,7 @@ def get_announcement_user_status(ctx, from_json, announcement_id):
     cli_util.render_response(result, ctx)
 
 
-@announcements_collection_group.command(name=cli_util.override('announce.list_announcements.command_name', 'list-announcements'), help=u"""Gets a list of announcements for the current tenancy. \n[Command Reference](listAnnouncements)""")
+@announcements_collection_group.command(name=cli_util.override('announcement.list_announcements.command_name', 'list-announcements'), help=u"""Gets a list of announcements for the current tenancy. \n[Command Reference](listAnnouncements)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment. Because announcements are specific to a tenancy, this is the OCID of the root compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -164,7 +158,7 @@ def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@announcement_user_status_group.command(name=cli_util.override('announce.update_announcement_user_status.command_name', 'update'), help=u"""Updates the status of the specified announcement with regard to whether it has been marked as read. \n[Command Reference](updateAnnouncementUserStatus)""")
+@announcement_user_status_details_group.command(name=cli_util.override('announcement.update_announcement_user_status.command_name', 'update-announcement-user-status'), help=u"""Updates the status of the specified announcement with regard to whether it has been marked as read. \n[Command Reference](updateAnnouncementUserStatus)""")
 @cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
 @cli_util.option('--user-status-announcement-id', required=True, help=u"""The OCID of the announcement that this status is associated with.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user that this status is associated with.""")

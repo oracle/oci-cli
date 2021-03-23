@@ -6,6 +6,59 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.22.0 - 2021-03-23
+-------------------
+Added
+~~~~~
+* Support for Network Load Balancer service
+
+  * ``oci nlb``
+
+* Support for Organizations Domain and Domian Governance in Organization service
+
+  * ``oci organizations domain``
+  * ``oci organizations domain-governance``
+
+* Support for query to filter and aggregate in Usage API service
+
+  * ``oci usage-api query``
+
+* Support to list and get maintenance runs for autonomous database in Database service.
+
+  * ``oci db maintenance-run list --target-resource-type AUTONOMOUS_DATABASE``
+  * ``oci db maintenance-run list --target-resource-id <autonomous-database-ocid>``
+  * ``oci db maintenance-run get --maintenance-run-id <maintenance-run-ocid>``
+
+* Support for Marketplace Publication feature in Marketplace service
+
+  * ``oci marketplace publication``
+  * ``oci marketplace publication-package``
+  * ``oci marketplace publication-summary``
+
+* Support for Compute Capacity Reservation feature in Compute service
+
+  * ``oci compute capacity-reservation``
+
+* Support for Announcements Preferences in Announcements Service.
+
+  * ``oci announce announcements-preferences``
+
+* Support for HeatWave Cluster (in-memory analytics accelerator) in MySQL Database Service.
+
+  * ``oci mysql db-system heatwave-cluster``
+  * ``oci mysql db-system heatwave-cluster-memory-estimate generate``
+  * ``oci mysql db-system heatwave-cluster-memory-estimate get``
+
+* [Breaking] The parameter --vnic-id is now required for create IPv6 for the specified VNIC in Network service.
+
+  * ``oci network ipv6 create``
+
+Fixed
+~~~~~
+* Fixed upload large files bug in create-model-artifact in Data Science service
+
+  * ``oci data-science model create-model-artifact``
+
 2.21.6 - 2021-03-16
 -------------------
 Added

@@ -25,22 +25,6 @@ def compute_root_group():
     pass
 
 
-@click.command(cli_util.override('compute.dedicated_vm_host_group.command_name', 'dedicated-vm-host'), cls=CommandGroupWithAlias, help="""A dedicated virtual machine host that enables you to host multiple VM instances on a dedicated host that is not shared with other tenancies.""")
-@cli_util.help_option_group
-def dedicated_vm_host_group():
-    pass
-
-
-@click.command(cli_util.override('compute.image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see [Overview of the Compute Service].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def image_group():
-    pass
-
-
 @click.command(cli_util.override('compute.instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance. For more information, see [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -48,18 +32,6 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def instance_group():
-    pass
-
-
-@click.command(cli_util.override('compute.shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance]. For more information, see [Overview of the Compute Service] and [Compute Shapes].""")
-@cli_util.help_option_group
-def shape_group():
-    pass
-
-
-@click.command(cli_util.override('compute.compute_image_capability_schema_group.command_name', 'compute-image-capability-schema'), cls=CommandGroupWithAlias, help="""Compute Image Capability Schema is a set of capabilities that filter the compute global capability schema version for an image.""")
-@cli_util.help_option_group
-def compute_image_capability_schema_group():
     pass
 
 
@@ -81,15 +53,81 @@ def volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('compute.app_catalog_listing_resource_version_group.command_name', 'app-catalog-listing-resource-version'), cls=CommandGroupWithAlias, help="""Listing Resource Version""")
+@click.command(cli_util.override('compute.compute_capacity_reservation_group.command_name', 'compute-capacity-reservation'), cls=CommandGroupWithAlias, help="""A template that defines the settings to use when creating compute capacity reservations.""")
 @cli_util.help_option_group
-def app_catalog_listing_resource_version_group():
+def compute_capacity_reservation_group():
     pass
 
 
 @click.command(cli_util.override('compute.dedicated_vm_host_instance_group.command_name', 'dedicated-vm-host-instance'), cls=CommandGroupWithAlias, help="""Condensed instance data when listing instances on a dedicated VM host.""")
 @cli_util.help_option_group
 def dedicated_vm_host_instance_group():
+    pass
+
+
+@click.command(cli_util.override('compute.instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to Compute instances, enabling you to troubleshoot malfunctioning instances remotely.
+
+For more information about instance console connections, see [Troubleshooting Instances Using Instance Console Connections].""")
+@cli_util.help_option_group
+def instance_console_connection_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_global_image_capability_schema_group.command_name', 'compute-global-image-capability-schema'), cls=CommandGroupWithAlias, help="""Compute Global Image Capability Schema is a container for a set of compute global image capability schema versions""")
+@cli_util.help_option_group
+def compute_global_image_capability_schema_group():
+    pass
+
+
+@click.command(cli_util.override('compute.instance_credentials_group.command_name', 'instance-credentials'), cls=CommandGroupWithAlias, help="""The credentials for a particular instance.""")
+@cli_util.help_option_group
+def instance_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('compute.capacity_reservation_instance_group.command_name', 'capacity-reservation-instance'), cls=CommandGroupWithAlias, help="""Condensed instance data when listing instances in a compute capacity reservation.""")
+@cli_util.help_option_group
+def capacity_reservation_instance_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_capacity_reservation_instance_shape_group.command_name', 'compute-capacity-reservation-instance-shape'), cls=CommandGroupWithAlias, help="""An available shape used to launch instances in a compute capacity reservation.""")
+@cli_util.help_option_group
+def compute_capacity_reservation_instance_shape_group():
+    pass
+
+
+@click.command(cli_util.override('compute.dedicated_vm_host_group.command_name', 'dedicated-vm-host'), cls=CommandGroupWithAlias, help="""A dedicated virtual machine host that enables you to host multiple VM instances on a dedicated host that is not shared with other tenancies.""")
+@cli_util.help_option_group
+def dedicated_vm_host_group():
+    pass
+
+
+@click.command(cli_util.override('compute.image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see [Overview of the Compute Service].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def image_group():
+    pass
+
+
+@click.command(cli_util.override('compute.shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance]. For more information, see [Overview of the Compute Service] and [Compute Shapes].""")
+@cli_util.help_option_group
+def shape_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_image_capability_schema_group.command_name', 'compute-image-capability-schema'), cls=CommandGroupWithAlias, help="""Compute Image Capability Schema is a set of capabilities that filter the compute global capability schema version for an image.""")
+@cli_util.help_option_group
+def compute_image_capability_schema_group():
+    pass
+
+
+@click.command(cli_util.override('compute.app_catalog_listing_resource_version_group.command_name', 'app-catalog-listing-resource-version'), cls=CommandGroupWithAlias, help="""Listing Resource Version""")
+@cli_util.help_option_group
+def app_catalog_listing_resource_version_group():
     pass
 
 
@@ -119,14 +157,6 @@ def boot_volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('compute.instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to Compute instances, enabling you to troubleshoot malfunctioning instances remotely.
-
-For more information about instance console connections, see [Troubleshooting Instances Using Instance Console Connections].""")
-@cli_util.help_option_group
-def instance_console_connection_group():
-    pass
-
-
 @click.command(cli_util.override('compute.compute_global_image_capability_schema_version_group.command_name', 'compute-global-image-capability-schema-version'), cls=CommandGroupWithAlias, help="""Compute Global Image Capability Schema Version is a set of all possible capabilities for a collection of images.""")
 @cli_util.help_option_group
 def compute_global_image_capability_schema_version_group():
@@ -146,18 +176,6 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def volume_group():
-    pass
-
-
-@click.command(cli_util.override('compute.compute_global_image_capability_schema_group.command_name', 'compute-global-image-capability-schema'), cls=CommandGroupWithAlias, help="""Compute Global Image Capability Schema is a container for a set of compute global image capability schema versions""")
-@cli_util.help_option_group
-def compute_global_image_capability_schema_group():
-    pass
-
-
-@click.command(cli_util.override('compute.instance_credentials_group.command_name', 'instance-credentials'), cls=CommandGroupWithAlias, help="""The credentials for a particular instance.""")
-@cli_util.help_option_group
-def instance_credentials_group():
     pass
 
 
@@ -198,25 +216,28 @@ def console_history_group():
 
 
 core_service_cli.core_service_group.add_command(compute_root_group)
-compute_root_group.add_command(dedicated_vm_host_group)
-compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_group)
-compute_root_group.add_command(shape_group)
-compute_root_group.add_command(compute_image_capability_schema_group)
 compute_root_group.add_command(vnic_attachment_group)
 compute_root_group.add_command(volume_attachment_group)
-compute_root_group.add_command(app_catalog_listing_resource_version_group)
+compute_root_group.add_command(compute_capacity_reservation_group)
 compute_root_group.add_command(dedicated_vm_host_instance_group)
+compute_root_group.add_command(instance_console_connection_group)
+compute_root_group.add_command(compute_global_image_capability_schema_group)
+compute_root_group.add_command(instance_credentials_group)
+compute_root_group.add_command(capacity_reservation_instance_group)
+compute_root_group.add_command(compute_capacity_reservation_instance_shape_group)
+compute_root_group.add_command(dedicated_vm_host_group)
+compute_root_group.add_command(image_group)
+compute_root_group.add_command(shape_group)
+compute_root_group.add_command(compute_image_capability_schema_group)
+compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(boot_volume_attachment_group)
-compute_root_group.add_command(instance_console_connection_group)
 compute_root_group.add_command(compute_global_image_capability_schema_version_group)
 compute_root_group.add_command(dedicated_vm_host_instance_shape_group)
 compute_root_group.add_command(volume_group)
-compute_root_group.add_command(compute_global_image_capability_schema_group)
-compute_root_group.add_command(instance_credentials_group)
 compute_root_group.add_command(boot_volume_group)
 compute_root_group.add_command(dedicated_vm_host_shape_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
@@ -795,6 +816,71 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.change_compute_capacity_reservation_compartment.command_name', 'change-compartment'), help=u"""Moves a compute capacity reservation into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeCapacityReservationCompartment)""")
+@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute capacity reservation to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, capacity_reservation_id, compartment_id, if_match):
+
+    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+        raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.change_compute_capacity_reservation_compartment(
+        capacity_reservation_id=capacity_reservation_id,
+        change_compute_capacity_reservation_compartment_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeImageCapabilitySchemaCompartment)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
@@ -925,7 +1011,7 @@ def change_image_compartment(ctx, from_json, image_id, compartment_id, if_match)
 @instance_group.command(name=cli_util.override('compute.change_instance_compartment.command_name', 'change-compartment'), help=u"""Moves an instance into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 When you move an instance to a different compartment, associated resources such as boot volumes and VNICs are not moved. \n[Command Reference](changeInstanceCompartment)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1022,6 +1108,87 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
         create_app_catalog_subscription_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.create_compute_capacity_reservation.command_name', 'create'), help=u"""Creates a new compute capacity reservation in the specified compartment and availability domain. Compute capacity reservations let you reserve instances in a compartment. When you launch an instance using this reservation, you are assured that you have enough space for your instance, and you won't get out of capacity errors. For more information, see [Reserved Capacity]. \n[Command Reference](createComputeCapacityReservation)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the capacity reservation.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity reservation.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the compute capacity reservation. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-default-reservation', type=click.BOOL, help=u"""Whether this capacity reservation is the default. For more information, see [Capacity Reservations].""")
+@cli_util.option('--instance-reservation-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The reservation configurations for the capacity reservation.
+
+To use the reservation for the desired shape, specify the shape, count, and optionally the fault domain where you want this configuration.
+
+This option is a JSON list with items of type InstanceReservationConfigDetails.  For documentation on InstanceReservationConfigDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceReservationConfigDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "MOVING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-reservation-configs': {'module': 'core', 'class': 'list[InstanceReservationConfigDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-reservation-configs': {'module': 'core', 'class': 'list[InstanceReservationConfigDetails]'}}, output_type={'module': 'core', 'class': 'ComputeCapacityReservation'})
+@cli_util.wrap_exceptions
+def create_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, defined_tags, display_name, freeform_tags, is_default_reservation, instance_reservation_configs):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if is_default_reservation is not None:
+        _details['isDefaultReservation'] = is_default_reservation
+
+    if instance_reservation_configs is not None:
+        _details['instanceReservationConfigs'] = cli_util.parse_json_parameter("instance_reservation_configs", instance_reservation_configs)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_capacity_reservation(
+        create_compute_capacity_reservation_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_capacity_reservation') and callable(getattr(client, 'get_compute_capacity_reservation')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_capacity_reservation(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1543,6 +1710,59 @@ def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.delete_compute_capacity_reservation.command_name', 'delete'), help=u"""Deletes the specified compute capacity reservation. \n[Command Reference](deleteComputeCapacityReservation)""")
+@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, capacity_reservation_id, if_match):
+
+    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+        raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.delete_compute_capacity_reservation(
+        capacity_reservation_id=capacity_reservation_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.delete_compute_image_capability_schema.command_name', 'delete'), help=u"""Deletes the specified Compute Image Capability Schema \n[Command Reference](deleteComputeImageCapabilitySchema)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2013,7 +2233,11 @@ To perform an image export, you need write access to the Object Storage bucket f
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-type', required=True, help=u"""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
-@cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format of the image to be exported. The default value is \"OCI\".""")
+@cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format to export the image to. The default value is `OCI`.
+
+The following image formats are available:
+
+- `OCI` - Oracle Cloud Infrastructure file with a QCOW2 image and Oracle Cloud Infrastructure metadata (.oci). Use this format to export a custom image that you want to import into other tenancies or regions. - `QCOW2` - QEMU Copy On Write (.qcow2) - `VDI` - Virtual Disk Image (.vdi) for Oracle VM VirtualBox - `VHD` - Virtual Hard Disk (.vhd) for Hyper-V - `VMDK` - Virtual Machine Disk (.vmdk)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2079,7 +2303,11 @@ To perform an image export, you need write access to the Object Storage bucket f
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-uri', required=True, help=u"""The Object Storage URL to export the image to. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
-@cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format of the image to be exported. The default value is \"OCI\".""")
+@cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format to export the image to. The default value is `OCI`.
+
+The following image formats are available:
+
+- `OCI` - Oracle Cloud Infrastructure file with a QCOW2 image and Oracle Cloud Infrastructure metadata (.oci). Use this format to export a custom image that you want to import into other tenancies or regions. - `QCOW2` - QEMU Copy On Write (.qcow2) - `VDI` - Virtual Disk Image (.vdi) for Oracle VM VirtualBox - `VHD` - Virtual Hard Disk (.vhd) for Hyper-V - `VMDK` - Virtual Machine Disk (.vmdk)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2149,7 +2377,11 @@ See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructin
 @cli_util.option('--bucket-name', required=True, help=u"""The Object Storage bucket to export the image to.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace to export the image to.""")
 @cli_util.option('--object-name', required=True, help=u"""The Object Storage object name for the exported image.""")
-@cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format of the image to be exported. The default value is \"OCI\".""")
+@cli_util.option('--export-format', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK", "OCI", "VHD", "VDI"]), help=u"""The format to export the image to. The default value is `OCI`.
+
+The following image formats are available:
+
+- `OCI` - Oracle Cloud Infrastructure file with a QCOW2 image and Oracle Cloud Infrastructure metadata (.oci). Use this format to export a custom image that you want to import into other tenancies or regions. - `QCOW2` - QEMU Copy On Write (.qcow2) - `VDI` - Virtual Disk Image (.vdi) for Oracle VM VirtualBox - `VHD` - Virtual Hard Disk (.vhd) for Hyper-V - `VMDK` - Virtual Machine Disk (.vmdk)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2299,6 +2531,28 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_boot_volume_attachment(
         boot_volume_attachment_id=boot_volume_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.get_compute_capacity_reservation.command_name', 'get'), help=u"""Gets information about the specified compute capacity reservation. \n[Command Reference](getComputeCapacityReservation)""")
+@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeCapacityReservation'})
+@cli_util.wrap_exceptions
+def get_compute_capacity_reservation(ctx, from_json, capacity_reservation_id):
+
+    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+        raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_capacity_reservation(
+        capacity_reservation_id=capacity_reservation_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2495,7 +2749,7 @@ def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
 
 
 @instance_group.command(name=cli_util.override('compute.get_instance.command_name', 'get'), help=u"""Gets information about the specified instance. \n[Command Reference](getInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2579,7 +2833,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
 
 
 @instance_credentials_group.command(name=cli_util.override('compute.get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help=u"""Gets the generated credentials for the instance. Only works for instances that require a password to log in, such as Windows. For certain operating systems, users will be forced to change the initial credentials. \n[Command Reference](getWindowsInstanceInitialCredentials)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2614,7 +2868,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 - **SENDDIAGNOSTICINTERRUPT** - For advanced users. **Warning: Sending a diagnostic interrupt to a live system can cause data corruption or system failure.** Sends a diagnostic interrupt that causes the instance's OS to crash and then reboot. Before you send a diagnostic interrupt, you must configure the instance to generate a crash dump file when it crashes. The crash dump captures information about the state of the OS at the time of the crash. After the OS restarts, you can analyze the crash dump to diagnose the issue. For more information, see [Sending a Diagnostic Interrupt].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2687,6 +2941,7 @@ Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
 
 You can enumerate all available shapes by calling [ListShapes].""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2767,7 +3022,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
 
     kwargs = {}
 
@@ -2775,6 +3030,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['shape'] = shape
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if create_vnic_details is not None:
         _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
@@ -2890,6 +3148,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2970,7 +3229,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, source_details_boot_volume_size_in_gbs):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, source_details_boot_volume_size_in_gbs):
 
     kwargs = {}
 
@@ -2980,6 +3239,9 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
     _details['compartmentId'] = compartment_id
     _details['shape'] = shape
     _details['sourceDetails']['imageId'] = source_details_image_id
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if create_vnic_details is not None:
         _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
@@ -3097,6 +3359,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -3176,7 +3439,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
 
     kwargs = {}
 
@@ -3186,6 +3449,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
     _details['compartmentId'] = compartment_id
     _details['shape'] = shape
     _details['sourceDetails']['bootVolumeId'] = source_details_boot_volume_id
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if create_vnic_details is not None:
         _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
@@ -3299,6 +3565,7 @@ Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
 
 You can enumerate all available shapes by calling [ListShapes].""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -3370,7 +3637,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
-@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket.""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3379,7 +3646,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_numa_nodes_per_socket):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_numa_nodes_per_socket):
 
     kwargs = {}
 
@@ -3388,6 +3655,9 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['shape'] = shape
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if create_vnic_details is not None:
         _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
@@ -3709,6 +3979,218 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
     else:
         result = client.list_boot_volume_attachments(
             availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_reservation_instance_shape_group.command(name=cli_util.override('compute.list_compute_capacity_reservation_instance_shapes.command_name', 'list'), help=u"""Lists the shapes that can be reserved within the specified compartment. \n[Command Reference](listComputeCapacityReservationInstanceShapes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ComputeCapacityReservationInstanceShapeSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_reservation_instance_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, display_name, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_reservation_instance_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_reservation_instance_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_reservation_instance_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@capacity_reservation_instance_group.command(name=cli_util.override('compute.list_compute_capacity_reservation_instances.command_name', 'list-compute'), help=u"""Lists the instances launched under a capacity reservation. You can filter results by specifying criteria. \n[Command Reference](listComputeCapacityReservationInstances)""")
+@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CapacityReservationInstanceSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_reservation_instances(ctx, from_json, all_pages, page_size, capacity_reservation_id, availability_domain, compartment_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+        raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_reservation_instances,
+            capacity_reservation_id=capacity_reservation_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_reservation_instances,
+            limit,
+            page_size,
+            capacity_reservation_id=capacity_reservation_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_reservation_instances(
+            capacity_reservation_id=capacity_reservation_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.list_compute_capacity_reservations.command_name', 'list'), help=u"""Lists the compute capacity reservations that match the specified criteria and compartment.
+
+You can limit the list by specifying a compute capacity reservation display name (the list will include all the identically-named compute capacity reservations in the compartment). \n[Command Reference](listComputeCapacityReservations)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "MOVING", "DELETED", "DELETING"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ComputeCapacityReservationSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_reservations(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_reservations,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_reservations,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_reservations(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -4419,7 +4901,7 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
 
 
 @device_group.command(name=cli_util.override('compute.list_instance_devices.command_name', 'list-instance'), help=u"""Gets a list of all the devices for given instance. You can optionally filter results by device availability. \n[Command Reference](listInstanceDevices)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--is-available', type=click.BOOL, help=u"""A filter to return only available devices or only used devices.""")
 @cli_util.option('--name', help=u"""A filter to return only devices that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -4490,6 +4972,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -4507,7 +4990,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Instance]'})
 @cli_util.wrap_exceptions
-def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, limit, page, sort_by, sort_order, lifecycle_state):
+def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, capacity_reservation_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4517,6 +5000,8 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
+    if capacity_reservation_id is not None:
+        kwargs['capacity_reservation_id'] = capacity_reservation_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if limit is not None:
@@ -4766,7 +5251,7 @@ def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name)
 To preserve the boot volume associated with the instance, specify `true` for `PreserveBootVolumeQueryParam`. To delete the boot volume when the instance is deleted, specify `false` or do not specify a value for `PreserveBootVolumeQueryParam`.
 
 This is an asynchronous operation. The instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed. \n[Command Reference](terminateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--preserve-boot-volume', type=click.BOOL, help=u"""Specifies whether to delete or preserve the boot volume when terminating an instance. The default value is false.""")
 @cli_util.confirm_delete_option
@@ -4828,6 +5313,104 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.update_compute_capacity_reservation.command_name', 'update'), help=u"""Updates the display name, defined tag, and freeform tag fields for the specified compute capacity reservation. Fields that are not provided in the request will not be updated. Avoid entering confidential information.
+
+The update also modifies the reservation configurations of the specified compute capacity reservation. \n[Command Reference](updateComputeCapacityReservation)""")
+@cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the compute capacity reservation. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-default-reservation', type=click.BOOL, help=u"""Whether this capacity reservation is the default. For more information, see [Capacity Reservations].""")
+@cli_util.option('--instance-reservation-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The reservation configurations for the capacity reservation.
+
+To use the reservation for the desired shape, specify the shape, count, and optionally the fault domain where you want this configuration.
+
+This option is a JSON list with items of type InstanceReservationConfigDetails.  For documentation on InstanceReservationConfigDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceReservationConfigDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-reservation-configs': {'module': 'core', 'class': 'list[InstanceReservationConfigDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-reservation-configs': {'module': 'core', 'class': 'list[InstanceReservationConfigDetails]'}})
+@cli_util.wrap_exceptions
+def update_compute_capacity_reservation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, capacity_reservation_id, defined_tags, display_name, freeform_tags, is_default_reservation, instance_reservation_configs, if_match):
+
+    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+        raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or instance_reservation_configs:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and instance-reservation-configs will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if is_default_reservation is not None:
+        _details['isDefaultReservation'] = is_default_reservation
+
+    if instance_reservation_configs is not None:
+        _details['instanceReservationConfigs'] = cli_util.parse_json_parameter("instance_reservation_configs", instance_reservation_configs)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_capacity_reservation(
+        capacity_reservation_id=capacity_reservation_id,
+        update_compute_capacity_reservation_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -5133,7 +5716,8 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5184,7 +5768,7 @@ Example: `FAULT-DOMAIN-1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, instance_options, fault_domain, launch_options, availability_config, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, instance_options, fault_domain, launch_options, availability_config, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -5198,6 +5782,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
 
     _details = {}
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)

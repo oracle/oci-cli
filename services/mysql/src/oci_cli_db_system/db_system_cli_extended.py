@@ -43,3 +43,25 @@ def rename_create_import_args(ctx, **kwargs):
         kwargs.pop('source_url')
 
     ctx.invoke(dbsystem_cli.create_db_system_create_db_system_source_import_from_url_details, **kwargs)
+
+
+# oci mysql db-system heat-wave-cluster -> oci mysql db-system heatwave-cluster
+cli_util.rename_command(dbsystem_cli, dbsystem_cli.db_system_root_group, dbsystem_cli.heat_wave_cluster_group, "heatwave-cluster")
+
+
+# oci mysql db-system heat-wave-cluster-memory-estimate -> oci mysql db-system heatwave-cluster-memory-estimate
+cli_util.rename_command(dbsystem_cli, dbsystem_cli.db_system_root_group, dbsystem_cli.heat_wave_cluster_memory_estimate_group, "heatwave-cluster-memory-estimate")
+
+
+@cli_util.copy_params_from_generated_command(dbsystem_cli.list_db_systems, params_to_exclude=['is_heat_wave_cluster_attached'])
+@dbsystem_cli.db_system_root_group.command(name=dbsystem_cli.list_db_systems.name, help=dbsystem_cli.list_db_systems.help)
+@cli_util.option('--is-heatwave-cluster-attached', type=click.BOOL, help=u"""If true, return only DB Systems with a HeatWave cluster attached, if false return only DB Systems with no HeatWave cluster attached. If not present, return all DB Systems.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'list[DbSystemSummary]'})
+@cli_util.wrap_exceptions
+def list_db_systems_extended(ctx, **kwargs):
+    if 'is_heatwave_cluster_attached' in kwargs:
+        kwargs['is_heat_wave_cluster_attached'] = kwargs['is_heatwave_cluster_attached']
+        kwargs.pop('is_heatwave_cluster_attached')
+
+    ctx.invoke(dbsystem_cli.list_db_systems, **kwargs)

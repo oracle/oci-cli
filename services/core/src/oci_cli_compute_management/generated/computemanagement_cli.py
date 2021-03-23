@@ -25,7 +25,7 @@ def compute_management_root_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.instance_pool_group.command_name', 'instance-pool'), cls=CommandGroupWithAlias, help="""An instance pool is a group of instances within the same region that are created based off of the same instance configuration. For more information about instance pools and instance configurations, see [Managing Compute Instances].""")
+@click.command(cli_util.override('compute_management.instance_pool_group.command_name', 'instance-pool'), cls=CommandGroupWithAlias, help="""An instance pool is a set of instances within the same region that are managed as a group. For more information about instance pools and instance configurations, see [Managing Compute Instances].""")
 @cli_util.help_option_group
 def instance_pool_group():
     pass
@@ -59,7 +59,7 @@ def instance_pool_load_balancer_attachment_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.instance_pool_instance_group.command_name', 'instance-pool-instance'), cls=CommandGroupWithAlias, help="""Instance data along with the lifecycleState of instance to instance pool attachment.""")
+@click.command(cli_util.override('compute_management.instance_pool_instance_group.command_name', 'instance-pool-instance'), cls=CommandGroupWithAlias, help="""Information about an instance that belongs to an instance pool.""")
 @cli_util.help_option_group
 def instance_pool_instance_group():
     pass
@@ -74,9 +74,9 @@ compute_management_root_group.add_command(instance_pool_load_balancer_attachment
 compute_management_root_group.add_command(instance_pool_instance_group)
 
 
-@instance_pool_instance_group.command(name=cli_util.override('compute_management.attach_instance_pool_instance.command_name', 'attach'), help=u"""Attach an instance to the instance pool. \n[Command Reference](attachInstancePoolInstance)""")
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.attach_instance_pool_instance.command_name', 'attach'), help=u"""Attaches an instance to an instance pool. For information about the prerequisites that an instance must meet before you can attach it to a pool, see [Attaching an Instance to an Instance Pool]. \n[Command Reference](attachInstancePoolInstance)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
-@cli_util.option('--instance-id', required=True, help=u"""the instance ocid to attach.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ACTIVE", "DETACHING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -601,11 +601,11 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_instance_group.command(name=cli_util.override('compute_management.detach_instance_pool_instance.command_name', 'detach'), help=u"""Detach instance from the instance pool. \n[Command Reference](detachInstancePoolInstance)""")
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.detach_instance_pool_instance.command_name', 'detach'), help=u"""Detaches an instance from an instance pool. \n[Command Reference](detachInstancePoolInstance)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
-@cli_util.option('--instance-id', required=True, help=u"""The instance ocid to detach.""")
-@cli_util.option('--is-decrement-size', type=click.BOOL, help=u"""Decrement the size of the instance pool during detachment.""")
-@cli_util.option('--is-auto-terminate', type=click.BOOL, help=u"""Terminate the instance after it has been detached.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--is-decrement-size', type=click.BOOL, help=u"""Whether to decrease the size of the instance pool when the instance is detached. If `true`, the pool size is decreased. If `false`, the pool will provision a new, replacement instance using the pool's instance configuration as a template. Default is `true`.""")
+@cli_util.option('--is-auto-terminate', type=click.BOOL, help=u"""Whether to permanently terminate (delete) the instance and its attached boot volume when detaching it from the instance pool. Default is `false`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -791,9 +791,9 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_instance_group.command(name=cli_util.override('compute_management.get_instance_pool_instance.command_name', 'get'), help=u"""Gets the instance pool instance \n[Command Reference](getInstancePoolInstance)""")
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.get_instance_pool_instance.command_name', 'get'), help=u"""Gets information about an instance that belongs to an instance pool. \n[Command Reference](getInstancePoolInstance)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
-@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

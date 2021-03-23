@@ -21,6 +21,18 @@ def marketplace_root_group():
     pass
 
 
+@click.command(cli_util.override('marketplace.publication_summary_group.command_name', 'publication-summary'), cls=CommandGroupWithAlias, help="""The model for a summary of an Oracle Cloud Infrastructure publication""")
+@cli_util.help_option_group
+def publication_summary_group():
+    pass
+
+
+@click.command(cli_util.override('marketplace.publication_package_group.command_name', 'publication-package'), cls=CommandGroupWithAlias, help="""A base object for all types of publication packages.""")
+@cli_util.help_option_group
+def publication_package_group():
+    pass
+
+
 @click.command(cli_util.override('marketplace.agreement_group.command_name', 'agreement'), cls=CommandGroupWithAlias, help="""The model for an end user license agreement.""")
 @cli_util.help_option_group
 def agreement_group():
@@ -33,15 +45,33 @@ def category_summary_group():
     pass
 
 
+@click.command(cli_util.override('marketplace.listing_package_summary_group.command_name', 'listing-package-summary'), cls=CommandGroupWithAlias, help="""The model for a summary of a package.""")
+@cli_util.help_option_group
+def listing_package_summary_group():
+    pass
+
+
+@click.command(cli_util.override('marketplace.tax_summary_group.command_name', 'tax-summary'), cls=CommandGroupWithAlias, help="""Tax implication that current tenant may be eligible while using specific listing""")
+@cli_util.help_option_group
+def tax_summary_group():
+    pass
+
+
+@click.command(cli_util.override('marketplace.report_collection_group.command_name', 'report-collection'), cls=CommandGroupWithAlias, help="""A collection of reports that match the parameters of the request.""")
+@cli_util.help_option_group
+def report_collection_group():
+    pass
+
+
 @click.command(cli_util.override('marketplace.listing_package_group.command_name', 'listing-package'), cls=CommandGroupWithAlias, help="""A base object for all types of listing packages.""")
 @cli_util.help_option_group
 def listing_package_group():
     pass
 
 
-@click.command(cli_util.override('marketplace.listing_package_summary_group.command_name', 'listing-package-summary'), cls=CommandGroupWithAlias, help="""The model for a summary of a package.""")
+@click.command(cli_util.override('marketplace.publication_group.command_name', 'publication'), cls=CommandGroupWithAlias, help="""The model for an Oracle Cloud Infrastructure Marketplace Publication""")
 @cli_util.help_option_group
-def listing_package_summary_group():
+def publication_group():
     pass
 
 
@@ -69,28 +99,52 @@ def listing_group():
     pass
 
 
-@click.command(cli_util.override('marketplace.tax_summary_group.command_name', 'tax-summary'), cls=CommandGroupWithAlias, help="""Tax implication that current tenant may be eligible while using specific listing""")
-@cli_util.help_option_group
-def tax_summary_group():
-    pass
-
-
-@click.command(cli_util.override('marketplace.report_collection_group.command_name', 'report-collection'), cls=CommandGroupWithAlias, help="""A collection of reports that match the parameters of the request.""")
-@cli_util.help_option_group
-def report_collection_group():
-    pass
-
-
+marketplace_root_group.add_command(publication_summary_group)
+marketplace_root_group.add_command(publication_package_group)
 marketplace_root_group.add_command(agreement_group)
 marketplace_root_group.add_command(category_summary_group)
-marketplace_root_group.add_command(listing_package_group)
 marketplace_root_group.add_command(listing_package_summary_group)
+marketplace_root_group.add_command(tax_summary_group)
+marketplace_root_group.add_command(report_collection_group)
+marketplace_root_group.add_command(listing_package_group)
+marketplace_root_group.add_command(publication_group)
 marketplace_root_group.add_command(publisher_group)
 marketplace_root_group.add_command(report_type_collection_group)
 marketplace_root_group.add_command(accepted_agreement_group)
 marketplace_root_group.add_command(listing_group)
-marketplace_root_group.add_command(tax_summary_group)
-marketplace_root_group.add_command(report_collection_group)
+
+
+@publication_group.command(name=cli_util.override('marketplace.change_publication_compartment.command_name', 'change-compartment'), help=u"""Changes the compartment of the Publication \n[Command Reference](changePublicationCompartment)""")
+@cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment to which the Publication should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_publication_compartment(ctx, from_json, publication_id, compartment_id, if_match):
+
+    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+        raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.change_publication_compartment(
+        publication_id=publication_id,
+        change_publication_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @accepted_agreement_group.command(name=cli_util.override('marketplace.create_accepted_agreement.command_name', 'create'), help=u"""Accepts a terms of use agreement for a specific package version of a listing. You must accept all terms of use for a package before you can deploy the package. \n[Command Reference](createAcceptedAgreement)""")
@@ -136,6 +190,163 @@ def create_accepted_agreement(ctx, from_json, compartment_id, listing_id, packag
     cli_util.render_response(result, ctx)
 
 
+@publication_group.command(name=cli_util.override('marketplace.create_publication.command_name', 'create'), help=u"""Creates a publication of the given type with an optional default package \n[Command Reference](createPublication)""")
+@cli_util.option('--listing-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMUNITY", "PARTNER", "PRIVATE"]), help=u"""In which catalog the listing should exist.""")
+@cli_util.option('--name', required=True, help=u"""The name of the listing.""")
+@cli_util.option('--short-description', required=True, help=u"""short description of the catalog listing""")
+@cli_util.option('--support-contacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Contact information to use to get support from the publisher for the listing.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the resource within.""")
+@cli_util.option('--package-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-agreement-acknowledged', required=True, type=click.BOOL, help=u"""Acknowledgement that invoker has the right and authority to share this Community Image in accordance with their agreement with Oracle applicable to the Services and the related Service Specifications""")
+@cli_util.option('--long-description', help=u"""short description of the catalog listing""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'support-contacts': {'module': 'marketplace', 'class': 'list[SupportContact]'}, 'package-details': {'module': 'marketplace', 'class': 'CreatePublicationPackage'}, 'defined-tags': {'module': 'marketplace', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'marketplace', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'support-contacts': {'module': 'marketplace', 'class': 'list[SupportContact]'}, 'package-details': {'module': 'marketplace', 'class': 'CreatePublicationPackage'}, 'defined-tags': {'module': 'marketplace', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'marketplace', 'class': 'dict(str, string)'}}, output_type={'module': 'marketplace', 'class': 'Publication'})
+@cli_util.wrap_exceptions
+def create_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_type, name, short_description, support_contacts, compartment_id, package_details, is_agreement_acknowledged, long_description, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['listingType'] = listing_type
+    _details['name'] = name
+    _details['shortDescription'] = short_description
+    _details['supportContacts'] = cli_util.parse_json_parameter("support_contacts", support_contacts)
+    _details['compartmentId'] = compartment_id
+    _details['packageDetails'] = cli_util.parse_json_parameter("package_details", package_details)
+    _details['isAgreementAcknowledged'] = is_agreement_acknowledged
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.create_publication(
+        create_publication_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_publication') and callable(getattr(client, 'get_publication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_publication(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@publication_group.command(name=cli_util.override('marketplace.create_publication_create_image_publication_package.command_name', 'create-publication-create-image-publication-package'), help=u"""Creates a publication of the given type with an optional default package \n[Command Reference](createPublication)""")
+@cli_util.option('--listing-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMUNITY", "PARTNER", "PRIVATE"]), help=u"""In which catalog the listing should exist.""")
+@cli_util.option('--name', required=True, help=u"""The name of the listing.""")
+@cli_util.option('--short-description', required=True, help=u"""short description of the catalog listing""")
+@cli_util.option('--support-contacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Contact information to use to get support from the publisher for the listing.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the resource within.""")
+@cli_util.option('--is-agreement-acknowledged', required=True, type=click.BOOL, help=u"""Acknowledgement that invoker has the right and authority to share this Community Image in accordance with their agreement with Oracle applicable to the Services and the related Service Specifications""")
+@cli_util.option('--package-details-package-version', required=True, help=u"""The version of the package""")
+@cli_util.option('--package-details-operating-system', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--package-details-eula', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""End User License Agreeement that a consumer of this listing has to accept""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--long-description', help=u"""short description of the catalog listing""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--package-details-image-id', help=u"""base image id of the listing""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'support-contacts': {'module': 'marketplace', 'class': 'list[SupportContact]'}, 'defined-tags': {'module': 'marketplace', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'marketplace', 'class': 'dict(str, string)'}, 'package-details-operating-system': {'module': 'marketplace', 'class': 'OperatingSystem'}, 'package-details-eula': {'module': 'marketplace', 'class': 'list[Eula]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'support-contacts': {'module': 'marketplace', 'class': 'list[SupportContact]'}, 'defined-tags': {'module': 'marketplace', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'marketplace', 'class': 'dict(str, string)'}, 'package-details-operating-system': {'module': 'marketplace', 'class': 'OperatingSystem'}, 'package-details-eula': {'module': 'marketplace', 'class': 'list[Eula]'}}, output_type={'module': 'marketplace', 'class': 'Publication'})
+@cli_util.wrap_exceptions
+def create_publication_create_image_publication_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_type, name, short_description, support_contacts, compartment_id, is_agreement_acknowledged, package_details_package_version, package_details_operating_system, package_details_eula, long_description, defined_tags, freeform_tags, package_details_image_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['packageDetails'] = {}
+    _details['listingType'] = listing_type
+    _details['name'] = name
+    _details['shortDescription'] = short_description
+    _details['supportContacts'] = cli_util.parse_json_parameter("support_contacts", support_contacts)
+    _details['compartmentId'] = compartment_id
+    _details['isAgreementAcknowledged'] = is_agreement_acknowledged
+    _details['packageDetails']['packageVersion'] = package_details_package_version
+    _details['packageDetails']['operatingSystem'] = cli_util.parse_json_parameter("package_details_operating_system", package_details_operating_system)
+    _details['packageDetails']['eula'] = cli_util.parse_json_parameter("package_details_eula", package_details_eula)
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if package_details_image_id is not None:
+        _details['packageDetails']['imageId'] = package_details_image_id
+
+    _details['packageDetails']['packageType'] = 'IMAGE'
+
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.create_publication(
+        create_publication_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_publication') and callable(getattr(client, 'get_publication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_publication(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @accepted_agreement_group.command(name=cli_util.override('marketplace.delete_accepted_agreement.command_name', 'delete'), help=u"""Removes a previously accepted terms of use agreement from the list of agreements that Marketplace checks before initiating a deployment. Listings in the Marketplace that require acceptance of the specified terms of use can no longer be deployed, but existing deployments aren't affected. \n[Command Reference](deleteAcceptedAgreement)""")
 @cli_util.option('--accepted-agreement-id', required=True, help=u"""The unique identifier for the accepted terms of use agreement.""")
 @cli_util.option('--signature', help=u"""Previously, the signature generated for the listing package terms of use agreement, but now deprecated and ignored.""")
@@ -162,6 +373,70 @@ def delete_accepted_agreement(ctx, from_json, accepted_agreement_id, signature, 
         accepted_agreement_id=accepted_agreement_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@publication_group.command(name=cli_util.override('marketplace.delete_publication.command_name', 'delete'), help=u"""Deletes a Publication. This will also remove the associated Listing from Marketplace. \n[Command Reference](deletePublication)""")
+@cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, publication_id, if_match):
+
+    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+        raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.delete_publication(
+        publication_id=publication_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_publication') and callable(getattr(client, 'get_publication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_publication(publication_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -283,6 +558,55 @@ def get_package(ctx, from_json, listing_id, package_version, compartment_id):
     client = cli_util.build_client('marketplace', 'marketplace', ctx)
     result = client.get_package(
         listing_id=listing_id,
+        package_version=package_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@publication_group.command(name=cli_util.override('marketplace.get_publication.command_name', 'get'), help=u"""Get details of a publication \n[Command Reference](getPublication)""")
+@cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the listing.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'Publication'})
+@cli_util.wrap_exceptions
+def get_publication(ctx, from_json, publication_id):
+
+    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+        raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.get_publication(
+        publication_id=publication_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@publication_package_group.command(name=cli_util.override('marketplace.get_publication_package.command_name', 'get'), help=u"""Gets the details of a specific package within a given Publication \n[Command Reference](getPublicationPackage)""")
+@cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'PublicationPackage'})
+@cli_util.wrap_exceptions
+def get_publication_package(ctx, from_json, publication_id, package_version):
+
+    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+        raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
+
+    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+        raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.get_publication_package(
+        publication_id=publication_id,
         package_version=package_version,
         **kwargs
     )
@@ -481,15 +805,17 @@ To get the image ID to launch an instance, issue a [GetAppCatalogListingResource
 @cli_util.option('--category', multiple=True, help=u"""Name of the product category or categories. If you specify multiple categories, then Marketplace returns any listing with one or more matching categories.""")
 @cli_util.option('--pricing', type=custom_types.CliCaseInsensitiveChoice(["FREE", "BYOL", "PAYGO"]), multiple=True, help=u"""Name of the pricing type. If multiple pricing types are provided, then any listing with one or more matching pricing models will be returned.""")
 @cli_util.option('--is-featured', type=click.BOOL, help=u"""Indicates whether to show only featured listings. If this is set to `false` or is omitted, then all listings will be returned.""")
+@cli_util.option('--listing-types', type=custom_types.CliCaseInsensitiveChoice(["COMMUNITY", "PARTNER", "PRIVATE"]), multiple=True, help=u"""The type of the listing""")
+@cli_util.option('--operating-systems', multiple=True, help=u"""OS of the listing.""")
 @cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'marketplace', 'class': 'list[string]'}, 'category': {'module': 'marketplace', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'marketplace', 'class': 'list[string]'}, 'category': {'module': 'marketplace', 'class': 'list[string]'}, 'operating-systems': {'module': 'marketplace', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'marketplace', 'class': 'list[string]'}, 'category': {'module': 'marketplace', 'class': 'list[string]'}}, output_type={'module': 'marketplace', 'class': 'list[ListingSummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'marketplace', 'class': 'list[string]'}, 'category': {'module': 'marketplace', 'class': 'list[string]'}, 'operating-systems': {'module': 'marketplace', 'class': 'list[string]'}}, output_type={'module': 'marketplace', 'class': 'list[ListingSummary]'})
 @cli_util.wrap_exceptions
-def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, publisher_id, package_type, limit, page, sort_by, sort_order, category, pricing, is_featured, compartment_id):
+def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, publisher_id, package_type, limit, page, sort_by, sort_order, category, pricing, is_featured, listing_types, operating_systems, compartment_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -517,6 +843,10 @@ def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, publis
         kwargs['pricing'] = pricing
     if is_featured is not None:
         kwargs['is_featured'] = is_featured
+    if listing_types is not None and len(listing_types) > 0:
+        kwargs['listing_types'] = listing_types
+    if operating_systems is not None and len(operating_systems) > 0:
+        kwargs['operating_systems'] = operating_systems
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -610,6 +940,136 @@ def list_packages(ctx, from_json, all_pages, page_size, listing_id, package_vers
     else:
         result = client.list_packages(
             listing_id=listing_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@publication_package_group.command(name=cli_util.override('marketplace.list_publication_packages.command_name', 'list'), help=u"""Lists the packages in the given Publication \n[Command Reference](listPublicationPackages)""")
+@cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--package-version', help=u"""The version of the package. Package versions are unique within a listing.""")
+@cli_util.option('--package-type', help=u"""A filter to return only packages that match the given package type exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMERELEASED"]), help=u"""The field to use to sort listed results. You can only specify one field to sort by. `TIMERELEASED` displays results in descending order by default. You can change your preference by specifying a different sort order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'list[PublicationPackageSummary]'})
+@cli_util.wrap_exceptions
+def list_publication_packages(ctx, from_json, all_pages, page_size, publication_id, package_version, package_type, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+        raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if package_version is not None:
+        kwargs['package_version'] = package_version
+    if package_type is not None:
+        kwargs['package_type'] = package_type
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_publication_packages,
+            publication_id=publication_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_publication_packages,
+            limit,
+            page_size,
+            publication_id=publication_id,
+            **kwargs
+        )
+    else:
+        result = client.list_publication_packages(
+            publication_id=publication_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@publication_summary_group.command(name=cli_util.override('marketplace.list_publications.command_name', 'list-publications'), help=u"""Lists the publications in the given compartment \n[Command Reference](listPublications)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--listing-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMUNITY", "PARTNER", "PRIVATE"]), help=u"""The type of the listing""")
+@cli_util.option('--name', multiple=True, help=u"""The name of the listing.""")
+@cli_util.option('--publication-id', help=u"""The unique identifier for the listing.""")
+@cli_util.option('--operating-systems', multiple=True, help=u"""OS of the listing.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMERELEASED"]), help=u"""The field to use to sort listed results. You can only specify one field to sort by. `TIMERELEASED` displays results in descending order by default. You can change your preference by specifying a different sort order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'marketplace', 'class': 'list[string]'}, 'operating-systems': {'module': 'marketplace', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'marketplace', 'class': 'list[string]'}, 'operating-systems': {'module': 'marketplace', 'class': 'list[string]'}}, output_type={'module': 'marketplace', 'class': 'list[PublicationSummary]'})
+@cli_util.wrap_exceptions
+def list_publications(ctx, from_json, all_pages, page_size, compartment_id, listing_type, name, publication_id, operating_systems, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if publication_id is not None:
+        kwargs['publication_id'] = publication_id
+    if operating_systems is not None and len(operating_systems) > 0:
+        kwargs['operating_systems'] = operating_systems
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_publications,
+            compartment_id=compartment_id,
+            listing_type=listing_type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_publications,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            listing_type=listing_type,
+            **kwargs
+        )
+    else:
+        result = client.list_publications(
+            compartment_id=compartment_id,
+            listing_type=listing_type,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -800,4 +1260,90 @@ def update_accepted_agreement(ctx, from_json, force, accepted_agreement_id, disp
         update_accepted_agreement_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@publication_group.command(name=cli_util.override('marketplace.update_publication.command_name', 'update'), help=u"""Updates details of an existing Publication \n[Command Reference](updatePublication)""")
+@cli_util.option('--publication-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--name', help=u"""The name of the listing.""")
+@cli_util.option('--short-description', help=u"""short description of the catalog listing""")
+@cli_util.option('--long-description', help=u"""short description of the catalog listing""")
+@cli_util.option('--support-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Contact information to use to get support from the publisher for the listing.
+
+This option is a JSON list with items of type SupportContact.  For documentation on SupportContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/marketplace/20181001/datatypes/SupportContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'support-contacts': {'module': 'marketplace', 'class': 'list[SupportContact]'}, 'defined-tags': {'module': 'marketplace', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'marketplace', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'support-contacts': {'module': 'marketplace', 'class': 'list[SupportContact]'}, 'defined-tags': {'module': 'marketplace', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'marketplace', 'class': 'dict(str, string)'}}, output_type={'module': 'marketplace', 'class': 'Publication'})
+@cli_util.wrap_exceptions
+def update_publication(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, publication_id, name, short_description, long_description, support_contacts, defined_tags, freeform_tags, if_match):
+
+    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+        raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
+    if not force:
+        if support_contacts or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to support-contacts and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if name is not None:
+        _details['name'] = name
+
+    if short_description is not None:
+        _details['shortDescription'] = short_description
+
+    if long_description is not None:
+        _details['longDescription'] = long_description
+
+    if support_contacts is not None:
+        _details['supportContacts'] = cli_util.parse_json_parameter("support_contacts", support_contacts)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.update_publication(
+        publication_id=publication_id,
+        update_publication_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_publication') and callable(getattr(client, 'get_publication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_publication(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
