@@ -7,7 +7,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('work_request.organizations_service_group.command_name', 'organizations'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.organizations_service_group.help', """A description of the TenantManager API"""), short_help=cli_util.override('work_request.organizations_service_group.short_help', """TenantManager API"""))
+@cli.command(cli_util.override('work_request.organizations_service_group.command_name', 'organizations'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.organizations_service_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('work_request.organizations_service_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def organizations_service_group():
     pass

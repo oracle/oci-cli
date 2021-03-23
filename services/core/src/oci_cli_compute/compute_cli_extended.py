@@ -30,6 +30,23 @@ cli.add_command(compute_cli.compute_root_group)
 compute_cli.compute_root_group.commands.pop(compute_cli.volume_group.name)
 compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_group.name)
 
+# oci compute compute-capacity-reservation ... -> oci compute capacity-reservation ...
+cli_util.rename_command(compute_cli, compute_cli.compute_root_group, compute_cli.compute_capacity_reservation_group, "capacity-reservation")
+# oci compute capacity-reservation list-compute -> oci compute capacity-reservation list
+cli_util.rename_command(compute_cli, compute_cli.compute_capacity_reservation_group, compute_cli.list_compute_capacity_reservations, "list")
+
+# oci compute compute-capacity-reservation-instance ... -> oci compute capacity-reservation instance ...
+compute_cli.compute_root_group.commands.pop(compute_cli.capacity_reservation_instance_group.name)
+compute_cli.compute_capacity_reservation_group.add_command(compute_cli.capacity_reservation_instance_group)
+cli_util.rename_command(compute_cli, compute_cli.compute_capacity_reservation_group, compute_cli.capacity_reservation_instance_group, 'instance')
+# oci compute capacity-reservation instance list-compute ->  oci compute capacity-reservation instance list
+cli_util.rename_command(compute_cli, compute_cli.capacity_reservation_instance_group, compute_cli.list_compute_capacity_reservation_instances, "list")
+
+# oci compute compute-capacity-reservation-instance-shape ... -> oci compute capacity-reservation instance-shape ...
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_capacity_reservation_instance_shape_group.name)
+compute_cli.compute_capacity_reservation_group.add_command(compute_cli.compute_capacity_reservation_instance_shape_group)
+cli_util.rename_command(compute_cli, compute_cli.compute_capacity_reservation_group, compute_cli.compute_capacity_reservation_instance_shape_group, 'instance-shape')
+# oci compute capacity-reservation instance-shape list-compute ->  oci compute capacity-reservation instance-shape list
 
 # oci compute dedicated-vm-host-instance-shape list to
 # oci compute dedicated-vm-host instance-shape list

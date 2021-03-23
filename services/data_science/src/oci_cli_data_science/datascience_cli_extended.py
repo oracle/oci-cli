@@ -99,7 +99,7 @@ def create_model_artifact_extended(ctx, model_id, from_json, **kwargs):
     with open(model_artifact_file, 'rb') as file:
         result = client.create_model_artifact(
             model_id=model_id,
-            model_artifact=file.read(),
+            model_artifact=file,
             **kwargs
         )
         cli_util.render_response(result, ctx)

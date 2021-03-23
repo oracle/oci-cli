@@ -18,6 +18,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.skip("DEXREQ-2090")
 def test_announcements_announce_list(runner, config_file, config_profile):
     params = [
         'announce', 'announcements', 'list',
