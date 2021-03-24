@@ -11,8 +11,8 @@
 #           individual params > accept_all_defaults > interactive inputs
 #
 SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.14.4/scripts/install/install.py"
-FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.12.7/scripts/install/install.py"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.22.0/scripts/install/install.py"
+FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.14.4/scripts/install/install.py"
 _TTY=/dev/tty
 NO_TTY_REQUIRED=false
 
