@@ -40,10 +40,17 @@ def key_group():
     pass
 
 
+@click.command(cli_util.override('kms_management.replication_status_details_group.command_name', 'replication-status-details'), cls=CommandGroupWithAlias, help="""Details of replication status across all replica regions""")
+@cli_util.help_option_group
+def replication_status_details_group():
+    pass
+
+
 kms_service_cli.kms_service_group.add_command(kms_management_root_group)
 kms_management_root_group.add_command(wrapping_key_group)
 kms_management_root_group.add_command(key_version_group)
 kms_management_root_group.add_command(key_group)
+kms_management_root_group.add_command(replication_status_details_group)
 
 
 @key_group.command(name=cli_util.override('kms_management.backup_key.command_name', 'backup'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
@@ -675,6 +682,30 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
     cli_util.render_response(result, ctx)
 
 
+@replication_status_details_group.command(name=cli_util.override('kms_management.get_replication_status.command_name', 'get-replication-status'), help=u"""When a vault has a replica, each operation on the vault or its resources, such as keys, is replicated and has an associated replicationId. Replication status provides details about whether the operation associated with the given replicationId has been successfully applied across replicas.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getReplicationStatus)""")
+@cli_util.option('--replication-id', required=True, help=u"""replicationId associated with an operation on a resource""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'ReplicationStatusDetails'})
+@cli_util.wrap_exceptions
+def get_replication_status(ctx, from_json, replication_id):
+
+    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.get_replication_status(
+        replication_id=replication_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @wrapping_key_group.command(name=cli_util.override('kms_management.get_wrapping_key.command_name', 'get'), help=u"""Gets details about the public RSA wrapping key associated with the vault in the endpoint. Each vault has an RSA key-pair that wraps and unwraps AES key material for import into Key Management.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getWrappingKey)""")
@@ -847,9 +878,9 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `DISPLAYNAME` is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE"]), help=u"""A key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server.""")
-@cli_util.option('--algorithm', type=custom_types.CliCaseInsensitiveChoice(["AES", "RSA", "ECDSA"]), help=u"""The algorithm used by a key's key versions to encrypt or decrypt. Currently, only AES, RSA and ECDSA are supported.""")
-@cli_util.option('--length', type=click.INT, help=u"""The length of the key in bytes, expressed as an integer. Values of 16, 24, 32 are supported.""")
-@cli_util.option('--curve-id', type=custom_types.CliCaseInsensitiveChoice(["NIST_P256", "NIST_P384", "NIST_P521"]), help=u"""The curve Id of the keys in case of ECDSA keys""")
+@cli_util.option('--algorithm', type=custom_types.CliCaseInsensitiveChoice(["AES", "RSA", "ECDSA"]), help=u"""The algorithm used by a key's key versions to encrypt or decrypt data. Currently, support includes AES, RSA, and ECDSA algorithms.""")
+@cli_util.option('--length', type=click.INT, help=u"""The length of the key in bytes, expressed as an integer. Supported values include 16, 24, or 32.""")
+@cli_util.option('--curve-id', type=custom_types.CliCaseInsensitiveChoice(["NIST_P256", "NIST_P384", "NIST_P521"]), help=u"""The curve ID of the keys. (This pertains only to ECDSA keys.)""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1167,7 +1198,7 @@ def schedule_key_version_deletion(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('kms_management.update_key.command_name', 'update'), help=u"""Updates the properties of a master encryption key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must in an ENABLED or CREATING state to be updated.
+@key_group.command(name=cli_util.override('kms_management.update_key.command_name', 'update'), help=u"""Updates the properties of a master encryption key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must be in an `ENABLED` or `CREATING` state to be updated.
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 

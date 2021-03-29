@@ -197,7 +197,23 @@ def upload_log_file_extended(ctx, **kwargs):
     ctx.invoke(loganalytics_cli.upload_log_file, **kwargs)
 
 
-# namespace aliases for uplaods
+# upload-log-events-file
+@cli_util.copy_params_from_generated_command(loganalytics_cli.upload_log_events_file, params_to_exclude=['upload_log_events_file_details'])
+@loganalytics_cli.upload_group.command(name='upload-log-events-file', help=loganalytics_cli.upload_log_events_file.help)
+@cli_util.option('--file', type=click.File(mode='rb'), required=True, help=u"""Log data file. Example: --file /Users/me/myfile.txt""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'Upload'})
+@cli_util.wrap_exceptions
+def upload_log_events_file_extended(ctx, **kwargs):
+    # Set "--upload-log-events-file-details" to the content of file "--file"
+    if 'file' in kwargs and kwargs['file']:
+        content = kwargs['file'].read()
+        kwargs['upload_log_events_file_details'] = content
+    del kwargs['file']
+    ctx.invoke(loganalytics_cli.upload_log_events_file, **kwargs)
+
+
+# namespace aliases for uploads
 get_param(loganalytics_cli.upload_log_file, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.list_uploads, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.get_upload, 'namespace_name').opts.extend(['--namespace', '-ns'])
@@ -216,6 +232,7 @@ get_param(loganalytics_cli.get_log_analytics_object_collection_rule, 'namespace_
 get_param(loganalytics_cli.update_log_analytics_object_collection_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.delete_log_analytics_object_collection_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.change_log_analytics_object_collection_rule_compartment, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.upload_log_events_file, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
 
 # Entity type command and param changes
@@ -430,6 +447,77 @@ get_param(loganalytics_cli.get_log_analytics_entities_summary, 'namespace_name')
 get_param(loganalytics_cli.list_log_analytics_entities, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.update_log_analytics_entity, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
+# EM Bridge CLI overrides
+# Rename em-bridge command and sub-commands
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_em_bridge_group, "em-bridge")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_em_bridge_group, loganalytics_cli.get_log_analytics_em_bridge_summary, "summary")
+
+
+# Rename log_analytics_em_bridge_id to bridge_id in change compartment
+@cli_util.copy_params_from_generated_command(loganalytics_cli.change_log_analytics_em_bridge_compartment, params_to_exclude=['log_analytics_em_bridge_id'])
+@loganalytics_cli.log_analytics_em_bridge_group.command(name='change-compartment', help=loganalytics_cli.change_log_analytics_em_bridge_compartment.help)
+@cli_util.option('--bridge-id', required=True, help="""The log analytics enterprise manager bridge OCID""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_log_analytics_em_bridge_compartment_extended(ctx, **kwargs):
+    if 'bridge_id' in kwargs:
+        kwargs['log_analytics_em_bridge_id'] = kwargs['bridge_id']
+        kwargs.pop('bridge_id')
+    ctx.invoke(loganalytics_cli.change_log_analytics_em_bridge_compartment, **kwargs)
+
+
+# Rename log_analytics_em_bridge_id to bridge_id in delete em_bridge
+@cli_util.copy_params_from_generated_command(loganalytics_cli.delete_log_analytics_em_bridge, params_to_exclude=['log_analytics_em_bridge_id'])
+@loganalytics_cli.log_analytics_em_bridge_group.command(name='delete', help=loganalytics_cli.delete_log_analytics_em_bridge.help)
+@cli_util.option('--bridge-id', required=True, help="""The log analytics enterprise manager bridge OCID""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_log_analytics_em_bridge_extended(ctx, **kwargs):
+    if 'bridge_id' in kwargs:
+        kwargs['log_analytics_em_bridge_id'] = kwargs['bridge_id']
+        kwargs.pop('bridge_id')
+    ctx.invoke(loganalytics_cli.delete_log_analytics_em_bridge, **kwargs)
+
+
+# Rename log_analytics_em_bridge_id to bridge_id in get em_bridge
+@cli_util.copy_params_from_generated_command(loganalytics_cli.get_log_analytics_em_bridge, params_to_exclude=['log_analytics_em_bridge_id'])
+@loganalytics_cli.log_analytics_em_bridge_group.command(name='get', help=loganalytics_cli.get_log_analytics_em_bridge.help)
+@cli_util.option('--bridge-id', required=True, help="""The log analytics enterprise manager bridge OCID""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEmBridge'})
+@cli_util.wrap_exceptions
+def get_log_analytics_em_bridge_extended(ctx, **kwargs):
+    if 'bridge_id' in kwargs:
+        kwargs['log_analytics_em_bridge_id'] = kwargs['bridge_id']
+        kwargs.pop('bridge_id')
+    ctx.invoke(loganalytics_cli.get_log_analytics_em_bridge, **kwargs)
+
+
+# Rename log_analytics_em_bridge_id to bridge_id in update em_bridge
+@cli_util.copy_params_from_generated_command(loganalytics_cli.update_log_analytics_em_bridge, params_to_exclude=['log_analytics_em_bridge_id'])
+@loganalytics_cli.log_analytics_em_bridge_group.command(name='update', help=loganalytics_cli.update_log_analytics_em_bridge.help)
+@cli_util.option('--bridge-id', required=True, help="""The log analytics enterprise manager bridge OCID""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEmBridge'})
+@cli_util.wrap_exceptions
+def update_log_analytics_em_bridge_extended(ctx, **kwargs):
+    if 'bridge_id' in kwargs:
+        kwargs['log_analytics_em_bridge_id'] = kwargs['bridge_id']
+        kwargs.pop('bridge_id')
+    ctx.invoke(loganalytics_cli.update_log_analytics_em_bridge, **kwargs)
+
+
+get_param(loganalytics_cli.change_log_analytics_em_bridge_compartment, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.create_log_analytics_em_bridge, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.delete_log_analytics_em_bridge, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.get_log_analytics_em_bridge, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.get_log_analytics_em_bridge_summary, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.list_log_analytics_em_bridges, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.update_log_analytics_em_bridge, 'namespace_name').opts.extend(['--namespace', '-ns'])
+
+
 # Config CLI overrides
 
 # ###########################
@@ -516,6 +604,25 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_warning
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_warning_group, loganalytics_cli.suppress_warning, "suppress")
 # unsuppress-warning -> unsuppress
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_warning_group, loganalytics_cli.unsuppress_warning, "unsuppress")
+
+# get-lookup-summary -> get-summary
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_lookup_group, loganalytics_cli.get_lookup_summary, "get-summary")
+# list-source-event-types -> list-event-types
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.list_source_event_types, "list-event-types")
+# add -> add-event-types
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.add_source_event_types, "add-event-types")
+# enable-source-event-types -> enable-event-types
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.enable_source_event_types, "enable-event-types")
+# disable-source-event-types -> disable-event-types
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.disable_source_event_types, "disable-event-types")
+# remove -> remove-event-types
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.remove_source_event_types, "remove-event-types")
+# list-auto-associations -> list-auto-assocs
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.list_auto_associations, "list-auto-assocs")
+# enable-auto-association -> enable-auto-assoc
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.enable_auto_association, "enable-auto-assoc")
+# disable-auto-association -> disable-auto-assoc
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.disable_auto_association, "disable-auto-assoc")
 
 # #########################
 # Sub Level Commands - End

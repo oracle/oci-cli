@@ -7,7 +7,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('work_request.ocvs_service_group.command_name', 'ocvs'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.ocvs_service_group.help', """Use this API to manage the Oracle Cloud VMware Solution."""), short_help=cli_util.override('work_request.ocvs_service_group.short_help', """Oracle Cloud VMware Solution API"""))
+@cli.command(cli_util.override('work_request.ocvs_service_group.command_name', 'ocvs'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.ocvs_service_group.help', """Use this API to manage your [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('work_request.ocvs_service_group.short_help', """Oracle Cloud VMware Solution API"""))
 @cli_util.help_option_group
 def ocvs_service_group():
     pass

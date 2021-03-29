@@ -97,7 +97,7 @@ def compute_capacity_reservation_instance_shape_group():
     pass
 
 
-@click.command(cli_util.override('compute.dedicated_vm_host_group.command_name', 'dedicated-vm-host'), cls=CommandGroupWithAlias, help="""A dedicated virtual machine host that enables you to host multiple VM instances on a dedicated host that is not shared with other tenancies.""")
+@click.command(cli_util.override('compute.dedicated_vm_host_group.command_name', 'dedicated-vm-host'), cls=CommandGroupWithAlias, help="""A dedicated virtual machine host lets you host multiple VM instances on a dedicated server that is not shared with other tenancies.""")
 @cli_util.help_option_group
 def dedicated_vm_host_group():
     pass
@@ -169,16 +169,6 @@ def dedicated_vm_host_instance_shape_group():
     pass
 
 
-@click.command(cli_util.override('compute.volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def volume_group():
-    pass
-
-
 @click.command(cli_util.override('compute.boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -237,7 +227,6 @@ compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(compute_global_image_capability_schema_version_group)
 compute_root_group.add_command(dedicated_vm_host_instance_shape_group)
-compute_root_group.add_command(volume_group)
 compute_root_group.add_command(boot_volume_group)
 compute_root_group.add_command(dedicated_vm_host_shape_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
@@ -2159,7 +2148,7 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('compute.detach_volume.command_name', 'detach'), help=u"""Detaches a storage volume from an instance. You must specify the OCID of the volume attachment.
+@volume_attachment_group.command(name=cli_util.override('compute.detach_volume.command_name', 'detach'), help=u"""Detaches a storage volume from an instance. You must specify the OCID of the volume attachment.
 
 This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed. \n[Command Reference](detachVolume)""")
 @cli_util.option('--volume-attachment-id', required=True, help=u"""The OCID of the volume attachment.""")

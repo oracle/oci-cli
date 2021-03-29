@@ -6,6 +6,100 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.22.1 - 2021-03-30
+-------------------
+Added
+~~~~~
+* Support for the Vulnerability Scanning service.
+  
+  * ``oci vulnerability-scanning``
+
+* Support for vSphere 7.0 in the VMware Solution service. 
+  
+  * ``oci ocvs sddc create --provisioning-vlan-id, --replication-vlan-id``
+  * ``oci ocvs sddc update --provisioning-vlan-id, --replication-vlan-id``
+  
+* Support for forecasting in the Usage service.
+  
+  * ``oci usage-api usage-summary request-summarized-usages --forecast``
+
+* Support for listing, changing, and resetting parameters for on-premise Oracle databases in the Database Management service
+  
+  * ``oci database-management managed-database change-database-parameters``
+  * ``oci database-management managed-database list-database-parameters``
+  * ``oci database-management managed-database reset-database-parameters``
+
+* Support for listing tablespaces of managed databases in the Database Management service
+  
+  * ``oci database-management tablespace list``
+
+* Support for cross-regional replication of keys in the Key Management service
+  
+  * ``oci kms management replication-status-details get-replication-status``
+  * ``oci kms management vault create-vault-replica``
+  * ``oci kms management vault delete-vault-replica``
+  * ``oci kms management vault list-vault-replicas``
+  
+* Support for highly-available database systems in the MySQL Database service
+  
+  * ``oci mysql db-system create --is-highly-available``
+  * ``oci mysql db-system import --is-highly-available``
+  
+* Support for Oracle Enterprise Manager bridges, source auto-association, source event type mappings, and plugins to upload data in the Logging Analytics service
+  
+  * Support for partitioning/searching data via logset 
+    
+    * ``oci log-analytics storage list-log-sets``
+  
+  * Support for Source Auto Association 
+  
+    * ``oci log-analytics source list-auto-assocs``
+    * ``oci log-analytics source enable-auto-assoc``
+    * ``oci log-analytics source disable-auto-assoc``
+  
+  * Support for Source Event Types Mapping 
+  
+    * ``oci log-analytics source add-event-types``
+    * ``oci log-analytics source disable-event-types``
+    * ``oci log-analytics source enable-event-types``
+    * ``oci log-analytics source remove-event-types``
+    * ``oci log-analytics source list-event-type``
+  
+  * Support for Enterprise Manager bridges 
+
+    * ``oci log-analytics em-bridge``
+  
+  * Support for Log events API used by plugins like fluentd, fluentbit, etc to upload data to logging analytics
+  
+    * ``oci log-analytics upload upload-log-events-file``
+  
+  * Support for Lookups Summary 
+  
+    * ``oci log-analytics lookup get-summary``
+  
+  * Support for Source Associable Entities 
+  
+    * ``oci log-analytics source list-associable-entities``
+  
+  * Additional fields in the following commands
+  
+    * ``oci log-analytics entity list --creation-source-details, --creation-source-type``
+    * ``oci log-analytics parser extract-structured-log-field-paths --field-delimiter,  --field-qualifier``
+    * ``oci log-analytics parser extract-structured-log-header-paths --field-delimiter,  --field-qualifier``
+    * ``oci log-analytics parser test-parser --field-delimiter,  --field-qualifier``
+    * ``oci log-analytics parser upsert-parser --field-delimiter,  --field-qualifier``
+    * ``oci log-analytics scheduled-task list --display-name-contains --saved-search-id``
+    * ``oci log-analytics upload list --warnings-filter``
+    * ``oci log-analytics upload upload-log-file --log-set``
+
+Changed
+~~~~~~~
+* Jinja2 was upgraded to version 2.11.3. Jinja isn't used in our run-time system but as part of our documentation build process.
+
+* Fixed bug in the dry-run option for bulk download command.
+  
+  * ``oci os object bulk-download --dry-run``
+
 2.22.0 - 2021-03-23
 -------------------
 Added
@@ -65,33 +159,33 @@ Added
 ~~~~~
 * Support for Routing Policies and HTTP2 Listener protocol features in Load Balancer service
 
-    * ``oci lb routing-policy``
-    * ``oci lb listener create --routing-policy-name --protocol HTTP2``
-    * ``oci lb listener update --routing-policy-name --protocol HTTP2``
+  * ``oci lb routing-policy``
+  * ``oci lb listener create --routing-policy-name --protocol HTTP2``
+  * ``oci lb listener update --routing-policy-name --protocol HTTP2``
 
 * Support for updating instance usage type, (NONPRIMARY, PRIMARY), in OCE service
 
-    * ``oci oce oce-instance update --instance-usage-type``
+  * ``oci oce oce-instance update --instance-usage-type``
 
 * Support for private clusters to the Container Engine in Kubernetes service
 
-    * ``oci ce cluster create --endpoint-subnet-id --endpoint-public-ip-enabled --endpoint-nsg-ids``
-    * ``oci ce cluster update-endpoint-config --is-public-ip-enabled --nsg-ids``
-    * ``oci ce cluster create-kubeconfig --kube-endpoint``
+  * ``oci ce cluster create --endpoint-subnet-id --endpoint-public-ip-enabled --endpoint-nsg-ids``
+  * ``oci ce cluster update-endpoint-config --is-public-ip-enabled --nsg-ids``
+  * ``oci ce cluster create-kubeconfig --kube-endpoint``
 
 * Support for model deployment in Data Science service
 
-    * ``oci data-science model-deployment``
+  * ``oci data-science model-deployment``
 
 * Support for copying stacks in Resource Manager service
 
-    * ``oci resource-manager stack copy``
+  * ``oci resource-manager stack copy``
 
 * Support for retrieving certificates for clusters and nodes in Roving Edge Infrastructure service
 
-    * ``oci rover cluster get-certificate``
-    * ``oci rover node get-certificate``
-    * ``oci rover node setup-identity``
+  * ``oci rover cluster get-certificate``
+  * ``oci rover node get-certificate``
+  * ``oci rover node setup-identity``
 
 Fixed
 ~~~~~
@@ -103,37 +197,37 @@ Added
 ~~~~~
 * Support for SMS subscriptions through the Oracle Cloud Infrastructure Notifications service.
 
-    * ``oci ons message publish``
-    * ``oci ons subscription confirm``
-    * ``oci ons subscription create``
-    * ``oci ons subscription unsubscribe``
+  * ``oci ons message publish``
+  * ``oci ons subscription confirm``
+  * ``oci ons subscription create``
+  * ``oci ons subscription unsubscribe``
 
 * Support for friendly formatting messages when target is ONS as part of the Service Connector Hub service.
 
-    * ``oci sch service-connector create``
-    * ``oci sch service-connector update``
+  * ``oci sch service-connector create``
+  * ``oci sch service-connector update``
 
 * Support the ability to attach and detach instance from instance pool in Compute Management service.
 
-    * ``oci compute-management instance-pool-instance attach``
-    * ``oci compute-management instance-pool-instance detach``
-    * ``oci compute-management instance-pool-instance get``
+  * ``oci compute-management instance-pool-instance attach``
+  * ``oci compute-management instance-pool-instance detach``
+  * ``oci compute-management instance-pool-instance get``
 
 * Support for Application Performance Monitoring Trace service
 
-    * ``oci apm-traces``
+  * ``oci apm-traces``
 
 * Support for Application Performance Monitoring Synthetic service
 
-    * ``oci apm-synthetics``
+  * ``oci apm-synthetics``
 
 * Support for APM service control plane
 
-    * ``oci apm-control-plane``
+  * ``oci apm-control-plane``
 
 * Support for GoldenGate service
 
-    * ``oci goldengate``
+  * ``oci goldengate``
 
 Changed
 ~~~~~~~~
@@ -145,21 +239,21 @@ Added
 ~~~~~
 * Support for Clones Feature in File System Service
 
-    * ``oci fs file-system create ``
-    * ``oci fs file-system list``
+  * ``oci fs file-system create``
+  * ``oci fs file-system list``
 
 * Support for pipelines and pipeline tasks for Dataflow service
 
-    * ``oci data-integration pipeline``
+  * ``oci data-integration pipeline``
 
 * Enhanced support for publishing Data Integration tasks for Dataflow service
 
-    * ``oci data-integration task get --expand-references``
-    * ``oci data-integration task-run list --aggregator-key``
-    * ``oci data-integration connection update --password-secret``
-    * ``oci data-integration data-entity list --is-pattern``
-    * ``oci data-integration schema list --name-list``
-    * ``oci data-integration work-request list --workspace-id``
+  * ``oci data-integration task get --expand-references``
+  * ``oci data-integration task-run list --aggregator-key``
+  * ``oci data-integration connection update--password-secret``
+  * ``oci data-integration data-entity list --is-pattern``
+  * ``oci data-integration schema list --name-list``
+  * ``oci data-integration work-request list --workspace-id``
 
 2.21.3 - 2021-02-23
 -------------------

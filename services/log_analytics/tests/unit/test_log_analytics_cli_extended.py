@@ -130,6 +130,14 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--file'])
         assert 'Error: --file option requires an argument' in result.output
 
+    # upload-log-events-file flattened params
+    def test_upload_log_events_file_flattened_params(self):
+        result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--upload-log-events-file-details'])
+        assert 'Error: no such option: --upload-log-events-file-details' in result.output
+
+        result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--file'])
+        assert 'Error: --file option requires an argument' in result.output
+
     # upload namespace aliases
     def test_upload_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--namespace-name'])
@@ -258,6 +266,13 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'change-compartment', '-ns'])
         assert 'Error: -ns option requires an argument' in result.output
 
+        result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
     # log analytics entity type renamed root group command
     def test_entity_type_renamed_commands(self):
         result = util.invoke_command(['log-analytics', 'log-analytics-entity-type'])
@@ -341,6 +356,87 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
         result = util.invoke_command(['log-analytics', 'entity', 'remove-associations', '--log-analytics-entity-id'])
         assert 'Error: no such option: --log-analytics-entity-id' in result.output
+
+    # log analytics em-bridge renamed root group command and em-bridge commands
+    def test_em_bridge_renamed_commands(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-em-bridge'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge'])
+        assert """Usage: oci log-analytics em-bridge [OPTIONS] COMMAND [ARGS]""" in result.output
+
+        result = util.invoke_command(['log-analytics', 'log-analytics-em-bridge', 'get-log-analytics-em-bridge-summary'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'summary'])
+        assert """Usage: oci log-analytics em-bridge summary [OPTIONS]""" in result.output
+
+    def test_em_bridge_flattened_params(self):
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '--log-analytics-em-bridge-id'])
+        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '--log-analytics-em-bridge-id'])
+        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '--log-analytics-em-bridge-id'])
+        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '--log-analytics-em-bridge-id'])
+        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '--log-analytics-em-bridge-id'])
+        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+
+    # namespace aliases
+    def test_em_bridge_namespace_aliases(self):
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'list', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'list', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'list', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'summary', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'summary', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'summary', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
 
     def test_validate_source_efds_changed_command(self):
         result = util.invoke_command(['log-analytics', 'log-analytics-source', 'validate-source-extended-field-details'])
@@ -495,6 +591,69 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
         result = util.invoke_command(['log-analytics', 'warning', 'unsuppress'])
         assert """Usage: oci log-analytics warning unsuppress""" in result.output
+
+    def test_get_lookup_summary_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'lookup', 'get-lookup-summary'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'lookup', 'get-summary'])
+        assert """Usage: oci log-analytics lookup get-summary""" in result.output
+
+    def test_list_source_event_types_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'list-source-event-types'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'list-event-types'])
+        assert """Usage: oci log-analytics source list-event-types""" in result.output
+
+    def test_add_source_event_types_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'add'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'add-event-types'])
+        assert """Usage: oci log-analytics source add-event-types""" in result.output
+
+    def test_enable_source_event_types_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'enable-source-event-types'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'enable-event-types'])
+        assert """Usage: oci log-analytics source enable-event-types""" in result.output
+
+    def test_disable_source_event_types_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'disable-source-event-types'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'disable-event-types'])
+        assert """Usage: oci log-analytics source disable-event-types""" in result.output
+
+    def test_remove_source_event_types_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'remove'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'remove-event-types'])
+        assert """Usage: oci log-analytics source remove-event-types""" in result.output
+
+    def test_list_auto_associations_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'list-auto-associations'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'list-auto-assocs'])
+        assert """Usage: oci log-analytics source list-auto-assocs""" in result.output
+
+    def test_enable_auto_association_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'enable-auto-association'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'enable-auto-assoc'])
+        assert """Usage: oci log-analytics source enable-auto-assoc""" in result.output
+
+    def test_disable_auto_association_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'disable-auto-association'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'disable-auto-assoc'])
+        assert """Usage: oci log-analytics source disable-auto-assoc""" in result.output
 
     def test_get_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'get', '--log-analytics-log-group-id'])
