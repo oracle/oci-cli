@@ -15,13 +15,13 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ocvp.src.oci_cli_ocvp.generated import ocvs_service_cli
 
 
-@click.command(cli_util.override('sddc.sddc_root_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help=cli_util.override('sddc.sddc_root_group.help', """Use this API to manage the Oracle Cloud VMware Solution."""), short_help=cli_util.override('sddc.sddc_root_group.short_help', """Oracle Cloud VMware Solution API"""))
+@click.command(cli_util.override('sddc.sddc_root_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help=cli_util.override('sddc.sddc_root_group.help', """Use this API to manage your [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('sddc.sddc_root_group.short_help', """Oracle Cloud VMware Solution API"""))
 @cli_util.help_option_group
 def sddc_root_group():
     pass
 
 
-@click.command(cli_util.override('sddc.sddc_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help="""A software-defined data center (SDDC) contains the resources required for a functional VMware environment. Instances in an SDDC (see [EsxiHost]) run in a virtual cloud network (VCN) and are preconfigured with VMware and storage. Use the vCenter utility to manage and deploy VMware virtual machines (VMs) in the SDDC.
+@click.command(cli_util.override('sddc.sddc_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help="""An [Oracle Cloud VMware Solution] software-defined data center (SDDC) contains the resources required for a functional VMware environment. Instances in an SDDC (see [EsxiHost]) run in a virtual cloud network (VCN) and are preconfigured with VMware and storage. Use the vCenter utility to manage and deploy VMware virtual machines (VMs) in the SDDC.
 
 The SDDC uses a single management subnet for provisioning the SDDC. It also uses a set of VLANs for various components of the VMware environment (vSphere, vMotion, vSAN, and so on). See the Core Services API for information about VCN subnets and VLANs.""")
 @cli_util.help_option_group
@@ -78,9 +78,11 @@ def change_sddc_compartment(ctx, from_json, sddc_id, compartment_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@sddc_group.command(name=cli_util.override('sddc.create_sddc.command_name', 'create'), help=u"""Creates a software-defined data center (SDDC).
+@sddc_group.command(name=cli_util.override('sddc.create_sddc.command_name', 'create'), help=u"""Creates an Oracle Cloud VMware Solution software-defined data center (SDDC).
 
-Use the [WorkRequest] operations to track the creation of the SDDC. \n[Command Reference](createSddc)""")
+Use the [WorkRequest] operations to track the creation of the SDDC.
+
+**Important:** You must configure the SDDC's networking resources with the security rules detailed in [Security Rules for Oracle Cloud VMware Solution SDDCs]. Otherwise, provisioning the SDDC will fail. The rules are based on the requirements set by VMware. \n[Command Reference](createSddc)""")
 @cli_util.option('--compute-availability-domain', required=True, help=u"""The availability domain to create the SDDC's ESXi hosts in.""")
 @cli_util.option('--vmware-software-version', required=True, help=u"""The VMware software bundle to install on the ESXi hosts in the SDDC. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the SDDC.""")
@@ -95,14 +97,18 @@ Use the [WorkRequest] operations to track the creation of the SDDC. \n[Command R
 @cli_util.option('--nsx-v-tep-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX VTEP component of the VMware environment.""")
 @cli_util.option('--nsx-edge-v-tep-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge VTEP component of the VMware environment.""")
 @cli_util.option('--nsx-edge-uplink1-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 1 component of the VMware environment.""")
-@cli_util.option('--nsx-edge-uplink2-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 2 component of the VMware environment.""")
+@cli_util.option('--nsx-edge-uplink2-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 2 component of the VMware environment.
+
+**Note:** This VLAN is reserved for future use to deploy public-facing applications on the VMware SDDC.""")
 @cli_util.option('--display-name', help=u"""A descriptive name for the SDDC. SDDC name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region. Avoid entering confidential information.""")
 @cli_util.option('--instance-display-name-prefix', help=u"""A prefix used in the name of each ESXi host and Compute instance in the SDDC. If this isn't set, the SDDC's `displayName` is used as the prefix.
 
 For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `mySDDC-2`, and so on.""")
-@cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""This flag tells us if HCX is enabled or not.""")
-@cli_util.option('--hcx-vlan-id', help=u"""This id is required only when hcxEnabled is true""")
+@cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX for this SDDC.""")
+@cli_util.option('--hcx-vlan-id', help=u"""The [OCID] of the VLAN to use for the HCX component of the VMware environment. This value is required only when `isHcxEnabled` is true.""")
 @cli_util.option('--workload-network-cidr', help=u"""The CIDR block for the IP addresses that VMware VMs in the SDDC use to run application workloads.""")
+@cli_util.option('--replication-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the vSphere Replication component of the VMware environment.""")
+@cli_util.option('--provisioning-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the Provisioning component of the VMware environment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -117,7 +123,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, is_hcx_enabled, hcx_vlan_id, workload_network_cidr, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, is_hcx_enabled, hcx_vlan_id, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -151,6 +157,12 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if workload_network_cidr is not None:
         _details['workloadNetworkCidr'] = workload_network_cidr
+
+    if replication_vlan_id is not None:
+        _details['replicationVlanId'] = replication_vlan_id
+
+    if provisioning_vlan_id is not None:
+        _details['provisioningVlanId'] = provisioning_vlan_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -395,8 +407,12 @@ For the list of versions supported by the Oracle Cloud VMware Solution, see [Lis
 @cli_util.option('--nsx-v-tep-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX VTEP component of the VMware environment when adding new ESXi hosts to the SDDC.""")
 @cli_util.option('--nsx-edge-v-tep-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge VTEP component of the VMware environment when adding new ESXi hosts to the SDDC.""")
 @cli_util.option('--nsx-edge-uplink1-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 1 component of the VMware environment when adding new ESXi hosts to the SDDC.""")
-@cli_util.option('--nsx-edge-uplink2-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 2 component of the VMware environment when adding new ESXi hosts to the SDDC.""")
-@cli_util.option('--hcx-vlan-id', help=u"""This id is editable only when hcxEnabled is true""")
+@cli_util.option('--nsx-edge-uplink2-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 2 component of the VMware environment when adding new ESXi hosts to the SDDC.
+
+**Note:** This VLAN is reserved for future use to deploy public-facing applications on the VMware SDDC.""")
+@cli_util.option('--replication-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the vSphere Replication component of the VMware environment.""")
+@cli_util.option('--provisioning-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the Provisioning component of the VMware environment.""")
+@cli_util.option('--hcx-vlan-id', help=u"""The [OCID] of the VLAN to use for the HCX component of the VMware environment when adding new ESXi hosts to the SDDC. This value can be updated only when `isHcxEnabled` is true.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -413,7 +429,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'Sddc'})
 @cli_util.wrap_exceptions
-def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, ssh_authorized_keys, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, hcx_vlan_id, freeform_tags, defined_tags, if_match):
+def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, ssh_authorized_keys, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, replication_vlan_id, provisioning_vlan_id, hcx_vlan_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
@@ -458,6 +474,12 @@ def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if nsx_edge_uplink2_vlan_id is not None:
         _details['nsxEdgeUplink2VlanId'] = nsx_edge_uplink2_vlan_id
+
+    if replication_vlan_id is not None:
+        _details['replicationVlanId'] = replication_vlan_id
+
+    if provisioning_vlan_id is not None:
+        _details['provisioningVlanId'] = provisioning_vlan_id
 
     if hcx_vlan_id is not None:
         _details['hcxVlanId'] = hcx_vlan_id

@@ -27,7 +27,6 @@ DEFAULT_SSH_PROXY_PORT = 5905
 
 cli.add_command(compute_cli.compute_root_group)
 
-compute_cli.compute_root_group.commands.pop(compute_cli.volume_group.name)
 compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_group.name)
 
 # oci compute compute-capacity-reservation ... -> oci compute capacity-reservation ...
@@ -95,7 +94,6 @@ cli_util.rename_command(compute_cli, compute_cli.instance_group, compute_cli.ins
 cli_util.rename_command(compute_cli, compute_cli.instance_credentials_group, compute_cli.get_windows_instance_initial_credentials, "get-windows-initial-creds")
 compute_cli.get_windows_instance_initial_credentials.name = "get-windows-initial-creds"
 compute_cli.instance_group.add_command(compute_cli.get_windows_instance_initial_credentials)
-compute_cli.volume_attachment_group.add_command(compute_cli.detach_volume)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.attach_vnic.name)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.detach_vnic.name)
 compute_cli.instance_console_connection_group.commands.pop(compute_cli.create_instance_console_connection.name)

@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ocvp.src.oci_cli_ocvp.generated import ocvs_service_cli
 
 
-@click.command(cli_util.override('esxi_host.esxi_host_root_group.command_name', 'esxi-host'), cls=CommandGroupWithAlias, help=cli_util.override('esxi_host.esxi_host_root_group.help', """Use this API to manage the Oracle Cloud VMware Solution."""), short_help=cli_util.override('esxi_host.esxi_host_root_group.short_help', """Oracle Cloud VMware Solution API"""))
+@click.command(cli_util.override('esxi_host.esxi_host_root_group.command_name', 'esxi-host'), cls=CommandGroupWithAlias, help=cli_util.override('esxi_host.esxi_host_root_group.help', """Use this API to manage your [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('esxi_host.esxi_host_root_group.short_help', """Oracle Cloud VMware Solution API"""))
 @cli_util.help_option_group
 def esxi_host_root_group():
     pass

@@ -385,6 +385,74 @@ def create_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@vault_group.command(name=cli_util.override('kms_vault.create_vault_replica.command_name', 'create-vault-replica'), help=u"""Creates a replica for the vault in another region in the same realm
+
+The API is a no-op if called for same region that a vault is already replicated to. 409 if called on a vault that is already replicated to a different region. Users need to delete existing replica first before calling it with a different region.
+
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](createVaultReplica)""")
+@cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
+@cli_util.option('--replica-region', required=True, help=u"""The region in the realm to which the vault need to be replicated to""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_vault_replica(ctx, from_json, vault_id, replica_region, if_match):
+
+    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+        raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['replicaRegion'] = replica_region
+
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
+    result = client.create_vault_replica(
+        vault_id=vault_id,
+        create_vault_replica_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vault_group.command(name=cli_util.override('kms_vault.delete_vault_replica.command_name', 'delete-vault-replica'), help=u"""Deletes a vault replica
+
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](deleteVaultReplica)""")
+@cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
+@cli_util.option('--replica-region', required=True, help=u"""The region in the realm on which the replica should be deleted""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_vault_replica(ctx, from_json, vault_id, replica_region, if_match):
+
+    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+        raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['replicaRegion'] = replica_region
+
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
+    result = client.delete_vault_replica(
+        vault_id=vault_id,
+        delete_vault_replica_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @vault_group.command(name=cli_util.override('kms_vault.get_vault.command_name', 'get'), help=u"""Gets the specified vault's configuration information.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](getVault)""")
@@ -428,6 +496,68 @@ def get_vault_usage(ctx, from_json, vault_id):
         vault_id=vault_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@vault_group.command(name=cli_util.override('kms_vault.list_vault_replicas.command_name', 'list-vault-replicas'), help=u"""Lists the replicas for a vault
+
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](listVaultReplicas)""")
+@cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `DISPLAYNAME` is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'list[VaultReplicaSummary]'})
+@cli_util.wrap_exceptions
+def list_vault_replicas(ctx, from_json, all_pages, page_size, vault_id, if_match, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+        raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vault_replicas,
+            vault_id=vault_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vault_replicas,
+            limit,
+            page_size,
+            vault_id=vault_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vault_replicas(
+            vault_id=vault_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 

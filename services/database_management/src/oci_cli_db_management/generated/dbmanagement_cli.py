@@ -29,6 +29,12 @@ def database_fleet_health_metrics_group():
     pass
 
 
+@click.command(cli_util.override('database_management.tablespace_group.command_name', 'tablespace'), cls=CommandGroupWithAlias, help="""The details of a tablespace.""")
+@cli_util.help_option_group
+def tablespace_group():
+    pass
+
+
 @click.command(cli_util.override('database_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
 @cli_util.help_option_group
 def managed_database_group():
@@ -66,6 +72,7 @@ def job_group():
 
 
 database_management_root_group.add_command(database_fleet_health_metrics_group)
+database_management_root_group.add_command(tablespace_group)
 database_management_root_group.add_command(managed_database_group)
 database_management_root_group.add_command(job_run_group)
 database_management_root_group.add_command(job_execution_group)
@@ -97,6 +104,44 @@ def add_managed_database_to_managed_database_group(ctx, from_json, managed_datab
     result = client.add_managed_database_to_managed_database_group(
         managed_database_group_id=managed_database_group_id,
         add_managed_database_to_managed_database_group_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('database_management.change_database_parameters.command_name', 'change-database-parameters'), help=u"""Changes database parameters' values. There are two kinds of database parameters:
+
+- Dynamic parameters: They can be changed for the current Oracle Database instance. The changes take effect immediately. - Static parameters: They cannot be changed for the current instance. You must change these parameters and then restart the database before changes take effect.
+
+**Note:** If the instance is started using a text initialization parameter file, the parameter changes are applicable only for the current instance. You must update them manually to be passed to a future instance. \n[Command Reference](changeDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameters and their values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def change_database_parameters(ctx, from_json, managed_database_id, credentials, scope, parameters):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_database_parameters(
+        managed_database_id=managed_database_id,
+        change_database_parameters_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -783,6 +828,44 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('database_management.list_database_parameters.command_name', 'list-database-parameters'), help=u"""Gets the list of database parameters for the specified Managed Database. The parameters are listed in alphabetical order, along with their current values. \n[Command Reference](listDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["CURRENT", "SPFILE"]), help=u"""The source used to list database parameters. `CURRENT` is used to get the database parameters that are currently in effect for the database instance. `SPFILE` is used to list parameters from the server parameter file. Default is `CURRENT`.""")
+@cli_util.option('--name', help=u"""A filter to return all parameters that have the text given in their names.""")
+@cli_util.option('--is-allowed-values-included', type=click.BOOL, help=u"""When true, results include a list of valid values for parameters (if applicable).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DatabaseParametersCollection'})
+@cli_util.wrap_exceptions
+def list_database_parameters(ctx, from_json, all_pages, managed_database_id, source, name, is_allowed_values_included, sort_by, sort_order):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if source is not None:
+        kwargs['source'] = source
+    if name is not None:
+        kwargs['name'] = name
+    if is_allowed_values_included is not None:
+        kwargs['is_allowed_values_included'] = is_allowed_values_included
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.list_database_parameters(
+        managed_database_id=managed_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @job_execution_group.command(name=cli_util.override('database_management.list_job_executions.command_name', 'list'), help=u"""Gets the job execution for a specific ID or the list of job executions for a job, Managed Database or Managed Database Group in a specific compartment. Only one of the parameters, ID, jobId, managedDatabaseId or managedDatabaseGroupId should be provided. If none of these parameters is provided, all the job executions in the compartment are listed. Job executions can also be filtered based on the name and status parameters. \n[Command Reference](listJobExecutions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
@@ -1119,6 +1202,66 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@tablespace_group.command(name=cli_util.override('database_management.list_tablespaces.command_name', 'list'), help=u"""Gets the list of tablespaces for the specified managedDatabaseId. \n[Command Reference](listTablespaces)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order.""")
+@cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceCollection'})
+@cli_util.wrap_exceptions
+def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, name, sort_by, sort_order, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_tablespaces,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_tablespaces,
+            limit,
+            page_size,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_tablespaces(
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group_group.command(name=cli_util.override('database_management.remove_managed_database_from_managed_database_group.command_name', 'remove'), help=u"""Removes a Managed Database from a Managed Database Group. Any management activities that are currently running on this database will continue to run to completion. However, any activities scheduled to run in the future will not be performed on this database. \n[Command Reference](removeManagedDatabaseFromManagedDatabaseGroup)""")
 @cli_util.option('--managed-database-group-id', required=True, help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
@@ -1142,6 +1285,40 @@ def remove_managed_database_from_managed_database_group(ctx, from_json, managed_
     result = client.remove_managed_database_from_managed_database_group(
         managed_database_group_id=managed_database_group_id,
         remove_managed_database_from_managed_database_group_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('database_management.reset_database_parameters.command_name', 'reset-database-parameters'), help=u"""Resets database parameters' values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameter names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def reset_database_parameters(ctx, from_json, managed_database_id, credentials, scope, parameters):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.reset_database_parameters(
+        managed_database_id=managed_database_id,
+        reset_database_parameters_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

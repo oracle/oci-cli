@@ -191,11 +191,12 @@ def request_summarized_configurations(ctx, from_json, tenant_id):
 
 
 @usage_summary_group.command(name=cli_util.override('usage_api.request_summarized_usages.command_name', 'request-summarized-usages'), help=u"""Returns usage for the given account. \n[Command Reference](requestSummarizedUsages)""")
-@cli_util.option('--tenant-id', required=True, help=u"""Tenant ID""")
+@cli_util.option('--tenant-id', required=True, help=u"""Tenant ID.""")
 @cli_util.option('--time-usage-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-usage-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--granularity', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "TOTAL"]), help=u"""The usage granularity. HOURLY - Hourly data aggregation. DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation. TOTAL - Not yet supported.""")
 @cli_util.option('--is-aggregate-by-time', type=click.BOOL, help=u"""is aggregated by time. true isAggregateByTime will add up all usage/cost over query time period""")
+@cli_util.option('--forecast', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-type', type=custom_types.CliCaseInsensitiveChoice(["USAGE", "COST"]), help=u"""The query usage type. COST by default if it is missing Usage - Query the usage data. Cost - Query the cost/billing data.""")
 @cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Aggregate the result by. example:   `[\"tagNamespace\", \"tagKey\", \"tagValue\", \"service\", \"skuName\", \"skuPartNumber\", \"unit\",     \"compartmentName\", \"compartmentPath\", \"compartmentId\", \"platform\", \"region\", \"logicalAd\",     \"resourceId\", \"tenantId\", \"tenantName\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--group-by-tag', type=custom_types.CLI_COMPLEX_TYPE, help=u"""GroupBy a specific tagKey. Provide tagNamespace and tagKey in tag object. Only support one tag in the list example:   `[{\"namespace\":\"oracle\", \"key\":\"createdBy\"]`
@@ -205,12 +206,12 @@ This option is a JSON list with items of type Tag.  For documentation on Tag ple
 @cli_util.option('--filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
-@json_skeleton_utils.get_cli_json_input_option({'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}})
+@json_skeleton_utils.get_cli_json_input_option({'forecast': {'module': 'usage_api', 'class': 'Forecast'}, 'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}}, output_type={'module': 'usage_api', 'class': 'UsageAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'forecast': {'module': 'usage_api', 'class': 'Forecast'}, 'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}}, output_type={'module': 'usage_api', 'class': 'UsageAggregation'})
 @cli_util.wrap_exceptions
-def request_summarized_usages(ctx, from_json, tenant_id, time_usage_started, time_usage_ended, granularity, is_aggregate_by_time, query_type, group_by, group_by_tag, compartment_depth, filter, page, limit):
+def request_summarized_usages(ctx, from_json, tenant_id, time_usage_started, time_usage_ended, granularity, is_aggregate_by_time, forecast, query_type, group_by, group_by_tag, compartment_depth, filter, page, limit):
 
     kwargs = {}
     if page is not None:
@@ -227,6 +228,9 @@ def request_summarized_usages(ctx, from_json, tenant_id, time_usage_started, tim
 
     if is_aggregate_by_time is not None:
         _details['isAggregateByTime'] = is_aggregate_by_time
+
+    if forecast is not None:
+        _details['forecast'] = cli_util.parse_json_parameter("forecast", forecast)
 
     if query_type is not None:
         _details['queryType'] = query_type

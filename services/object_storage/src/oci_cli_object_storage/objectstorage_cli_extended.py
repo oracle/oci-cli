@@ -1283,8 +1283,8 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
         next_start = list_objects_response.data.next_start_with
         to_download = []
 
-        if next_start is not None and not overwrite and not no_overwrite and ask_overwrite:
-            if click.confirm("You are downloading more than 1000 objects, do you want to overwrite all?"):
+        if next_start is not None and not overwrite and not no_overwrite and ask_overwrite and not dry_run:
+            if click.confirm("You are downloading more than {} objects, do you want to overwrite all?".format(OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS)):
                 overwrite = True
             ask_overwrite = False
 
@@ -1326,84 +1326,85 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
         if dry_run:
             for obj in to_download:
                 click.echo(click.style("{}").format(obj['name']))
-            sys.exit(0)
-        for obj in to_download:
-            object_name = obj['name']
-            object_size = obj['size']
-            full_file_path = obj['full_file_path']
+        else:
+            for obj in to_download:
+                object_name = obj['name']
+                object_size = obj['size']
+                full_file_path = obj['full_file_path']
 
-            directory_for_file = os.path.dirname(full_file_path)
-            if not os.path.exists(directory_for_file):
-                os.makedirs(directory_for_file)
+                directory_for_file = os.path.dirname(full_file_path)
+                if not os.path.exists(directory_for_file):
+                    os.makedirs(directory_for_file)
 
-            try:
-                get_object_kwargs = {
-                    'namespace': namespace,
-                    'bucket_name': bucket_name,
-                    'object_name': object_name.encode("utf-8") if is_python2() else object_name,
-                    'full_file_path': full_file_path,
-                    'request_id': ctx.obj['request_id']
-                }
-                get_object_kwargs.update(encryption_key_params)
+                try:
+                    get_object_kwargs = {
+                        'namespace': namespace,
+                        'bucket_name': bucket_name,
+                        'object_name': object_name.encode("utf-8") if is_python2() else object_name,
+                        'full_file_path': full_file_path,
+                        'request_id': ctx.obj['request_id']
+                    }
+                    get_object_kwargs.update(encryption_key_params)
 
-                if ctx.obj['debug']:
-                    update_progress_kwargs = {'message': u'Downloaded {}'.format(object_name)}
-                    update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
-                else:
-                    update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Downloaded')}
-                    update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
-
-                error_callback_kwargs = {'failed_item': object_name}
-                add_to_download_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
-
-                callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], error_callbacks=[add_to_download_failures_callback])
-
-                if ctx.obj['debug']:
-                    click.echo(u'Downloading {} to {}'.format(object_name, full_file_path), file=sys.stderr)
-                else:
-                    reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Downloading'))
-
-                # If it's not multipart, or it is but we would only have a single part then just download it, otherwise do a multipart get
-                # If the part size is somehow not known then use a multipart download by default (the multipart download will
-                # try and figure out the size via a HEAD and then take the appropriate action based on the size and threshold)
-                if not multipart_download_threshold or (multipart_download_threshold and (object_size is not None and part_size >= object_size)):
-                    transfer_manager.get_object(callbacks_container, **get_object_kwargs)
-                else:
-                    if object_size:
-                        multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, object_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
-
-                        get_object_kwargs['total_size'] = object_size
-                        if not ctx.obj['debug']:
-                            get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
-                            get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+                    if ctx.obj['debug']:
+                        update_progress_kwargs = {'message': u'Downloaded {}'.format(object_name)}
+                        update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
                     else:
-                        multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, 5 * part_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+                        update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Downloaded')}
+                        update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
 
-                        # Since we don't know the total here, give some arbitrary size and the task will update it later
-                        if not ctx.obj['debug']:
-                            get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
-                            get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+                    error_callback_kwargs = {'failed_item': object_name}
+                    add_to_download_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
 
-                    get_object_kwargs['part_size'] = part_size
-                    get_object_kwargs['multipart_download_threshold'] = multipart_download_threshold
+                    callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], error_callbacks=[add_to_download_failures_callback])
 
-                    get_object_kwargs.pop('full_file_path')
+                    if ctx.obj['debug']:
+                        click.echo(u'Downloading {} to {}'.format(object_name, full_file_path), file=sys.stderr)
+                    else:
+                        reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Downloading'))
 
-                    transfer_manager.get_object_multipart(callbacks_container, full_file_path, **get_object_kwargs)
-            except Exception as e:
-                # Don't let one get failure fail the entire batch, but store the error for output later
-                output.add_failure(object_name, callback_exception=e)
+                    # If it's not multipart, or it is but we would only have a single part then just download it, otherwise do a multipart get
+                    # If the part size is somehow not known then use a multipart download by default (the multipart download will
+                    # try and figure out the size via a HEAD and then take the appropriate action based on the size and threshold)
+                    if not multipart_download_threshold or (multipart_download_threshold and (object_size is not None and part_size >= object_size)):
+                        transfer_manager.get_object(callbacks_container, **get_object_kwargs)
+                    else:
+                        if object_size:
+                            multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, object_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
 
-                if ctx.obj['debug']:
-                    click.echo(u'Failed to download {}'.format(object_name), file=sys.stderr)
+                            get_object_kwargs['total_size'] = object_size
+                            if not ctx.obj['debug']:
+                                get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
+                                get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+                        else:
+                            multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, 5 * part_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+
+                            # Since we don't know the total here, give some arbitrary size and the task will update it later
+                            if not ctx.obj['debug']:
+                                get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
+                                get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+
+                        get_object_kwargs['part_size'] = part_size
+                        get_object_kwargs['multipart_download_threshold'] = multipart_download_threshold
+
+                        get_object_kwargs.pop('full_file_path')
+
+                        transfer_manager.get_object_multipart(callbacks_container, full_file_path, **get_object_kwargs)
+                except Exception as e:
+                    # Don't let one get failure fail the entire batch, but store the error for output later
+                    output.add_failure(object_name, callback_exception=e)
+
+                    if ctx.obj['debug']:
+                        click.echo(u'Failed to download {}'.format(object_name), file=sys.stderr)
 
         # Keep going if we have more pages
         kwargs['start'] = next_start
         keep_paginating = (next_start is not None)
 
+    if dry_run:
+        sys.exit(0)
     transfer_manager.wait_for_completion()
     reusable_progress_bar.render_finish()
-
     render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
     if output.has_failures():

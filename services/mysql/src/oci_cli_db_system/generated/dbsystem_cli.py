@@ -189,8 +189,19 @@ def add_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--admin-password', required=True, help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
-@cli_util.option('--availability-domain', help=u"""The Availability Domain where the primary instance should be located.""")
-@cli_util.option('--fault-domain', help=u"""The name of the Fault Domain the DB System is located in.""")
+@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
+
+When creating a DB System with High Availability, three instances are created and placed according to your region- and subnet-type. The secondaries are placed automatically in the other two availability or fault domains.  You can choose the preferred location of your primary instance, only.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other availability domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the availability domain in which the DB System is placed.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other fault domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
@@ -215,7 +226,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, display_name, description, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags):
+def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -232,6 +243,9 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if description is not None:
         _details['description'] = description
+
+    if is_highly_available is not None:
+        _details['isHighlyAvailable'] = is_highly_available
 
     if availability_domain is not None:
         _details['availabilityDomain'] = availability_domain
@@ -317,8 +331,19 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--source-backup-id', required=True, help=u"""The OCID of the backup to be used as the source for the new DB System.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
-@cli_util.option('--availability-domain', help=u"""The Availability Domain where the primary instance should be located.""")
-@cli_util.option('--fault-domain', help=u"""The name of the Fault Domain the DB System is located in.""")
+@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
+
+When creating a DB System with High Availability, three instances are created and placed according to your region- and subnet-type. The secondaries are placed automatically in the other two availability or fault domains.  You can choose the preferred location of your primary instance, only.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other availability domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the availability domain in which the DB System is placed.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other fault domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
@@ -342,7 +367,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, source_backup_id, display_name, description, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags):
+def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -361,6 +386,9 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
 
     if description is not None:
         _details['description'] = description
+
+    if is_highly_available is not None:
+        _details['isHighlyAvailable'] = is_highly_available
 
     if availability_domain is not None:
         _details['availabilityDomain'] = availability_domain
@@ -444,8 +472,19 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
 @cli_util.option('--admin-password', required=True, help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
-@cli_util.option('--availability-domain', help=u"""The Availability Domain where the primary instance should be located.""")
-@cli_util.option('--fault-domain', help=u"""The name of the Fault Domain the DB System is located in.""")
+@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
+
+When creating a DB System with High Availability, three instances are created and placed according to your region- and subnet-type. The secondaries are placed automatically in the other two availability or fault domains.  You can choose the preferred location of your primary instance, only.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other availability domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the availability domain in which the DB System is placed.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other fault domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
@@ -469,7 +508,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, display_name, description, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags):
+def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -487,6 +526,9 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 
     if description is not None:
         _details['description'] = description
+
+    if is_highly_available is not None:
+        _details['isHighlyAvailable'] = is_highly_available
 
     if availability_domain is not None:
         _details['availabilityDomain'] = availability_domain
@@ -571,8 +613,19 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 @cli_util.option('--source-source-url', required=True, help=u"""The Pre-Authenticated Request (PAR) URL of the file you want to import from Object Storage.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
-@cli_util.option('--availability-domain', help=u"""The Availability Domain where the primary instance should be located.""")
-@cli_util.option('--fault-domain', help=u"""The name of the Fault Domain the DB System is located in.""")
+@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
+
+When creating a DB System with High Availability, three instances are created and placed according to your region- and subnet-type. The secondaries are placed automatically in the other two availability or fault domains.  You can choose the preferred location of your primary instance, only.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other availability domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the availability domain in which the DB System is placed.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other fault domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
@@ -596,7 +649,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, source_source_url, display_name, description, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags):
+def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -615,6 +668,9 @@ def create_db_system_create_db_system_source_import_from_url_details(ctx, from_j
 
     if description is not None:
         _details['description'] = description
+
+    if is_highly_available is not None:
+        _details['isHighlyAvailable'] = is_highly_available
 
     if availability_domain is not None:
         _details['availabilityDomain'] = availability_domain
@@ -1709,8 +1765,17 @@ Updating different fields in the DB System will have different results on the up
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--availability-domain', help=u"""The Availability Domain where the primary instance should be located.""")
-@cli_util.option('--fault-domain', help=u"""The name of the Fault Domain the DB System is located in.""")
+@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""If the policy is to enable high availability of the instance, by maintaining secondary/failover capacity as necessary.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other availability domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the availability domain in which the DB System is placed.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
+
+In a failover scenario, the Read/Write endpoint is redirected to one of the other fault domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
+
+For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--shape-name', help=u"""The shape of the DB System. The shape determines resources allocated to the DB System - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.
 
 Changes in Shape will result in a downtime as the MySQL DB System is migrated to the new Compute instance.""")
@@ -1741,7 +1806,7 @@ Decreases in data storage size are not supported.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, is_highly_available, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
@@ -1765,6 +1830,9 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if subnet_id is not None:
         _details['subnetId'] = subnet_id
+
+    if is_highly_available is not None:
+        _details['isHighlyAvailable'] = is_highly_available
 
     if availability_domain is not None:
         _details['availabilityDomain'] = availability_domain
