@@ -1749,8 +1749,7 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
             wrapped_array_pagination = True
             for key in sorted(call_result.data.attribute_map.keys()):
                 aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(getattr(call_result.data, key))
-                if isinstance(getattr(call_result.data, key), list):
-                    remaining_items_to_fetch -= len(getattr(call_result.data, key))
+                remaining_items_to_fetch -= len(getattr(call_result.data, key))
         else:
             aggregated_results.extend(call_result.data)
             remaining_items_to_fetch -= len(call_result.data)
