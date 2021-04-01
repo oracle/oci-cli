@@ -1807,7 +1807,8 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
             if not isinstance(call_result.data, list):
                 wrapped_array_pagination = True
                 for key in sorted(call_result.data.attribute_map.keys()):
-                    aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(getattr(call_result.data, key))
+                    if isinstance(getattr(call_result.data, key), list):
+                        aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(getattr(call_result.data, key))
             else:
                 if stream_output:
                     previous_page_has_data = stream_page(is_json, page_index, call_result, ctx, previous_page_has_data)
