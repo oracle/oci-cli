@@ -14,6 +14,8 @@ IGNORED_COMMANDS = [
     ['session', 'refresh'],
     ['session', 'terminate'],
     ['session', 'validate'],
+    ['artifacts', 'container', 'image-signature', 'sign-upload'],
+    ['artifacts', 'container', 'image-signature', 'get-verify'],
     # Note this is being added b/c python sdk doesn't generate models
     # for top level enums.
     # This means that the --generate-full-command-json-input will not work
@@ -89,6 +91,8 @@ IGNORED_COMMANDS = [
     ['data-integration', 'task', 'create-pipeline-task'],
     ['dns', 'resolver', 'update'],
     ['resource-manager', 'stack', 'copy'],
+    ['log-analytics', 'upload', 'upload-log-file'],
+    ['log-analytics', 'upload', 'upload-log-events-file'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

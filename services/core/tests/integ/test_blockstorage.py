@@ -33,7 +33,12 @@ class TestBlockStorage(unittest.TestCase):
     def test_volume_create_validations(self):
         result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test',
                               '--availability-domain', 'unit-test', '--compartment-id', 'unit-test'])
-        assert 'You cannot specify both the --volume-backup-id and --source-volume-id options' in result.output
+        assert 'You can only specify one of either --volume-backup-id, --source-volume-id or --source-volume-replica-id option' in result.output
+
+        result = self.invoke(
+            ['volume', 'create', '--source-volume-replica-id', 'unit-test', '--volume-backup-id', 'unit-test',
+             '--availability-domain', 'unit-test', '--compartment-id', 'unit-test'])
+        assert 'You can only specify one of either --volume-backup-id, --source-volume-id or --source-volume-replica-id option' in result.output
 
         result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--size-in-gbs', '50'])
         assert 'An availability domain must be specified when creating an empty volume or restoring a volume from a backup' in result.output

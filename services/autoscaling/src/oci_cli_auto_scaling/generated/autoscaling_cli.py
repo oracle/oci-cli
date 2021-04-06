@@ -26,7 +26,7 @@ def autoscaling_root_group():
     pass
 
 
-@click.command(cli_util.override('autoscaling.auto_scaling_configuration_group.command_name', 'auto-scaling-configuration'), cls=CommandGroupWithAlias, help="""An autoscaling configuration allows you to dynamically scale the resources in a Compute instance pool. For more information, see [Autoscaling].""")
+@click.command(cli_util.override('autoscaling.auto_scaling_configuration_group.command_name', 'auto-scaling-configuration'), cls=CommandGroupWithAlias, help="""An autoscaling configuration lets you dynamically scale the resources in a Compute instance pool. For more information, see [Autoscaling].""")
 @cli_util.help_option_group
 def auto_scaling_configuration_group():
     pass
@@ -40,7 +40,11 @@ def auto_scaling_policy_summary_group():
 
 @click.command(cli_util.override('autoscaling.auto_scaling_policy_group.command_name', 'auto-scaling-policy'), cls=CommandGroupWithAlias, help="""Autoscaling policies define the criteria that trigger autoscaling actions and the actions to take.
 
-An autoscaling policy is part of an autoscaling configuration. For more information, see [Autoscaling].""")
+An autoscaling policy is part of an autoscaling configuration. For more information, see [Autoscaling].
+
+You can create the following types of autoscaling policies:
+
+  - **Schedule-based:** Autoscaling events take place at the specific times that you schedule.   - **Threshold-based:** An autoscaling action is triggered when a performance metric meets or exceeds a threshold.""")
 @cli_util.help_option_group
 def auto_scaling_policy_group():
     pass
@@ -95,7 +99,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""The minimum period of time to wait between scaling actions. The cooldown period gives the system time to stabilize before rescaling. The minimum value is 300 seconds, which is also the default.""")
+@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""For threshold-based autoscaling policies, this value is the minimum period of time to wait between scaling actions. The cooldown period gives the system time to stabilize before rescaling. The minimum value is 300 seconds, which is also the default. The cooldown period starts when the instance pool reaches the running state.
+
+For schedule-based autoscaling policies, this value is not used.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}, 'policies': {'module': 'autoscaling', 'class': 'list[CreateAutoScalingPolicyDetails]'}, 'resource': {'module': 'autoscaling', 'class': 'Resource'}})
 @cli_util.help_option
@@ -146,7 +152,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""The minimum period of time to wait between scaling actions. The cooldown period gives the system time to stabilize before rescaling. The minimum value is 300 seconds, which is also the default.""")
+@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""For threshold-based autoscaling policies, this value is the minimum period of time to wait between scaling actions. The cooldown period gives the system time to stabilize before rescaling. The minimum value is 300 seconds, which is also the default. The cooldown period starts when the instance pool reaches the running state.
+
+For schedule-based autoscaling policies, this value is not used.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}, 'policies': {'module': 'autoscaling', 'class': 'list[CreateAutoScalingPolicyDetails]'}})
 @cli_util.help_option
@@ -189,18 +197,24 @@ def create_auto_scaling_configuration_instance_pool_resource(ctx, from_json, com
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy.command_name', 'create'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration. \n[Command Reference](createAutoScalingPolicy)""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy.command_name', 'create'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.
+
+You can create the following types of autoscaling policies:
+
+- **Schedule-based:** Autoscaling events take place at the specific times that you schedule. - **Threshold-based:** An autoscaling action is triggered when a performance metric meets or exceeds a threshold.
+
+An autoscaling configuration can either have multiple schedule-based autoscaling policies, or one threshold-based autoscaling policy. \n[Command Reference](createAutoScalingPolicy)""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
-@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-type', required=True, help=u"""The type of autoscaling policy.""")
+@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Boolean field indicating whether this policy is enabled or not.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'autoscaling', 'class': 'Capacity'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingPolicy'})
 @cli_util.wrap_exceptions
-def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, capacity, policy_type, display_name, is_enabled):
+def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, policy_type, capacity, display_name, is_enabled):
 
     if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
@@ -209,8 +223,10 @@ def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, ca
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
     _details['policyType'] = policy_type
+
+    if capacity is not None:
+        _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -227,18 +243,25 @@ def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, ca
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy_create_scheduled_policy_details.command_name', 'create-auto-scaling-policy-create-scheduled-policy-details'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration. \n[Command Reference](createAutoScalingPolicy)""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy_create_scheduled_policy_details.command_name', 'create-auto-scaling-policy-create-scheduled-policy-details'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.
+
+You can create the following types of autoscaling policies:
+
+- **Schedule-based:** Autoscaling events take place at the specific times that you schedule. - **Threshold-based:** An autoscaling action is triggered when a performance metric meets or exceeds a threshold.
+
+An autoscaling configuration can either have multiple schedule-based autoscaling policies, or one threshold-based autoscaling policy. \n[Command Reference](createAutoScalingPolicy)""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
-@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--execution-schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Boolean field indicating whether this policy is enabled or not.""")
-@json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}})
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
+@cli_util.option('--resource-action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}, 'resource-action': {'module': 'autoscaling', 'class': 'ResourceAction'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingPolicy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}, 'resource-action': {'module': 'autoscaling', 'class': 'ResourceAction'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingPolicy'})
 @cli_util.wrap_exceptions
-def create_auto_scaling_policy_create_scheduled_policy_details(ctx, from_json, auto_scaling_configuration_id, capacity, execution_schedule, display_name, is_enabled):
+def create_auto_scaling_policy_create_scheduled_policy_details(ctx, from_json, auto_scaling_configuration_id, execution_schedule, capacity, display_name, is_enabled, resource_action):
 
     if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
@@ -247,14 +270,19 @@ def create_auto_scaling_policy_create_scheduled_policy_details(ctx, from_json, a
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
     _details['executionSchedule'] = cli_util.parse_json_parameter("execution_schedule", execution_schedule)
+
+    if capacity is not None:
+        _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
 
     if display_name is not None:
         _details['displayName'] = display_name
 
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
+
+    if resource_action is not None:
+        _details['resourceAction'] = cli_util.parse_json_parameter("resource_action", resource_action)
 
     _details['policyType'] = 'scheduled'
 
@@ -267,18 +295,24 @@ def create_auto_scaling_policy_create_scheduled_policy_details(ctx, from_json, a
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy_create_threshold_policy_details.command_name', 'create-auto-scaling-policy-create-threshold-policy-details'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration. \n[Command Reference](createAutoScalingPolicy)""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy_create_threshold_policy_details.command_name', 'create-auto-scaling-policy-create-threshold-policy-details'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.
+
+You can create the following types of autoscaling policies:
+
+- **Schedule-based:** Autoscaling events take place at the specific times that you schedule. - **Threshold-based:** An autoscaling action is triggered when a performance metric meets or exceeds a threshold.
+
+An autoscaling configuration can either have multiple schedule-based autoscaling policies, or one threshold-based autoscaling policy. \n[Command Reference](createAutoScalingPolicy)""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
-@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Boolean field indicating whether this policy is enabled or not.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'rules': {'module': 'autoscaling', 'class': 'list[CreateConditionDetails]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'rules': {'module': 'autoscaling', 'class': 'list[CreateConditionDetails]'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingPolicy'})
 @cli_util.wrap_exceptions
-def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, auto_scaling_configuration_id, capacity, rules, display_name, is_enabled):
+def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, auto_scaling_configuration_id, rules, capacity, display_name, is_enabled):
 
     if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
@@ -287,8 +321,10 @@ def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, a
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
     _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    if capacity is not None:
+        _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -414,7 +450,7 @@ def get_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_
 
 
 @auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.list_auto_scaling_configurations.command_name', 'list'), help=u"""Lists autoscaling configurations in the specifed compartment. \n[Command Reference](listAutoScalingConfigurations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resource. Use tenancyId to search in the root compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -540,7 +576,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
-@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""The minimum period of time to wait between scaling actions. The cooldown period gives the system time to stabilize before rescaling. The minimum value is 300 seconds, which is also the default.""")
+@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}})
@@ -594,7 +630,7 @@ def update_auto_scaling_configuration(ctx, from_json, force, auto_scaling_config
 @cli_util.option('--policy-type', required=True, help=u"""Indicates the type of autoscaling policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Boolean field indicating whether this policy is enabled or not.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}})
@@ -646,7 +682,7 @@ def update_auto_scaling_policy(ctx, from_json, force, auto_scaling_configuration
 @cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the autoscaling policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Boolean field indicating whether this policy is enabled or not.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
 @cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type UpdateConditionDetails.  For documentation on UpdateConditionDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/autoscaling/20181001/datatypes/UpdateConditionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -705,16 +741,17 @@ def update_auto_scaling_policy_update_threshold_policy_details(ctx, from_json, f
 @cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the autoscaling policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Boolean field indicating whether this policy is enabled or not.""")
-@cli_util.option('--execution-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling policy is enabled.""")
+@cli_util.option('--execution-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schedule for executing the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}})
+@json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}, 'resource-action': {'module': 'autoscaling', 'class': 'ResourceAction'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingPolicy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'execution-schedule': {'module': 'autoscaling', 'class': 'ExecutionSchedule'}, 'resource-action': {'module': 'autoscaling', 'class': 'ResourceAction'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingPolicy'})
 @cli_util.wrap_exceptions
-def update_auto_scaling_policy_update_scheduled_policy_details(ctx, from_json, force, auto_scaling_configuration_id, auto_scaling_policy_id, display_name, capacity, is_enabled, execution_schedule, if_match):
+def update_auto_scaling_policy_update_scheduled_policy_details(ctx, from_json, force, auto_scaling_configuration_id, auto_scaling_policy_id, display_name, capacity, is_enabled, execution_schedule, resource_action, if_match):
 
     if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
@@ -722,8 +759,8 @@ def update_auto_scaling_policy_update_scheduled_policy_details(ctx, from_json, f
     if isinstance(auto_scaling_policy_id, six.string_types) and len(auto_scaling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-policy-id cannot be whitespace or empty string')
     if not force:
-        if capacity or execution_schedule:
-            if not click.confirm("WARNING: Updates to capacity and execution-schedule will replace any existing values. Are you sure you want to continue?"):
+        if capacity or execution_schedule or resource_action:
+            if not click.confirm("WARNING: Updates to capacity and execution-schedule and resource-action will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -744,6 +781,9 @@ def update_auto_scaling_policy_update_scheduled_policy_details(ctx, from_json, f
 
     if execution_schedule is not None:
         _details['executionSchedule'] = cli_util.parse_json_parameter("execution_schedule", execution_schedule)
+
+    if resource_action is not None:
+        _details['resourceAction'] = cli_util.parse_json_parameter("resource_action", resource_action)
 
     _details['policyType'] = 'scheduled'
 

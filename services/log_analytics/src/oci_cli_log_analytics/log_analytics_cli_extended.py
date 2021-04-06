@@ -184,33 +184,33 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.char_encoding_collect
 # upload-log-file
 @cli_util.copy_params_from_generated_command(loganalytics_cli.upload_log_file, params_to_exclude=['upload_log_file_body'])
 @loganalytics_cli.upload_group.command(name='upload-log-file', help=loganalytics_cli.upload_log_file.help)
-@cli_util.option('--file', type=click.File(mode='rb'), required=True, help=u"""Log data file. Example: --file /Users/me/myfile.txt""")
+@cli_util.option('--file', required=True, help=u"""Log data file. Example: --file /Users/me/myfile.txt""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'Upload'})
 @cli_util.wrap_exceptions
 def upload_log_file_extended(ctx, **kwargs):
-    # Set "--upload-log-file-body" to the content of file "--file"
-    if 'file' in kwargs and kwargs['file']:
-        content = kwargs['file'].read()
-        kwargs['upload_log_file_body'] = content
+    # Set "--upload-log-file-body" to file's "--file" handle
+    upload_file = kwargs['file']
     del kwargs['file']
-    ctx.invoke(loganalytics_cli.upload_log_file, **kwargs)
+    with open(upload_file, 'rb') as ufile:
+        kwargs['upload_log_file_body'] = ufile
+        ctx.invoke(loganalytics_cli.upload_log_file, **kwargs)
 
 
 # upload-log-events-file
 @cli_util.copy_params_from_generated_command(loganalytics_cli.upload_log_events_file, params_to_exclude=['upload_log_events_file_details'])
 @loganalytics_cli.upload_group.command(name='upload-log-events-file', help=loganalytics_cli.upload_log_events_file.help)
-@cli_util.option('--file', type=click.File(mode='rb'), required=True, help=u"""Log data file. Example: --file /Users/me/myfile.txt""")
+@cli_util.option('--file', required=True, help=u"""Log data file. Example: --file /Users/me/myfile.txt""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'Upload'})
 @cli_util.wrap_exceptions
 def upload_log_events_file_extended(ctx, **kwargs):
-    # Set "--upload-log-events-file-details" to the content of file "--file"
-    if 'file' in kwargs and kwargs['file']:
-        content = kwargs['file'].read()
-        kwargs['upload_log_events_file_details'] = content
+    # Set "--upload-log-events-file-details" to file's "--file" handle
+    upload_file = kwargs['file']
     del kwargs['file']
-    ctx.invoke(loganalytics_cli.upload_log_events_file, **kwargs)
+    with open(upload_file, 'rb') as ufile:
+        kwargs['upload_log_events_file_details'] = ufile
+        ctx.invoke(loganalytics_cli.upload_log_events_file, **kwargs)
 
 
 # namespace aliases for uploads

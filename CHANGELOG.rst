@@ -6,6 +6,91 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.22.2 - 2021-04-06
+-------------------
+Added
+~~~~~
+
+* Support for Database Software Image for Database service
+
+  * ``oci db database-software-image create --image-shape-family EXACC_SHAPE``
+  * ``oci db database-software-image list --image-shape-family EXACC_SHAPE``
+
+* Support for new parameters in Compute service
+
+  * ``oci compute dedicated-vm-host list --remaining-ocpus-greater-than-or-equal-to``
+  * ``oci compute dedicated-vm-host list --remaining-memory-in-gbs-greater-than-or-equal-to``
+
+* Support for new parameters ``total-memory-in-gbs`` and ``remaining-memory-in-gbs`` in Compute service
+
+  * ``oci compute dedicated-vm-host create``
+  * ``oci compute dedicated-vm-host list``
+  * ``oci compute dedicated-vm-host get``
+  * ``oci compute dedicated-vm-host update``
+
+* Support for new parameters ``access-type``, ``object-name``, ``bucket-listing-action`` in Preauth-request service
+
+  * ``oci os preauth-request create --access-type --object-name --bucket-listing-action``
+
+* Support for SDK generation feature in the API Gateway service
+
+  * ``oci api-gateway sdk --help``
+  * ``oci api-gateway sdk-language-type --help``
+
+* Support for a new parameter ``image-policy-config`` for Container Engine in Kubernetes service
+
+  * ``oci ce cluster create``
+  * ``oci ce cluster update``
+
+* Support for new parameter ``routing-policy`` in Network service.
+
+  * ``oci network virtual-circuit create --routing-policy``
+  * ``oci network virtual-circuit update --routing-policy``
+
+* Support for new parameter ``capacity`` in autoscaling service.
+
+  * ``oci autoscaling policy create --capacity``
+
+* Support for cross-region asynchronous volume replication in Block Storage service
+
+  * ``oci bv block-volume-replica``
+  * ``oci bv boot-volume-replica``
+  * ``oci bv volume update --block-volume-replicas``
+  * ``oci bv boot-volume update --boot-volume-replicas``
+  * ``oci bv volume create --source-volume-replica-id``
+  * ``oci bv boot-volume create --source-volume-replica-id``
+
+* Support for Container Image Signing in artifacts service
+
+  * ``oci artifacts container image-signature``
+
+* Support for new type of authorizationDetails in Application Migration service.
+
+  * ``oci application-migration source create-source-ocic-authtoken --authorization-details-client-app-url --authorization-details-access-token``
+  * ``oci application-migration source update-source-ocic-authtoken --authorization-details-client-app-url --authorization-details-access-token``
+
+Changed
+~~~~~~~~
+
+* The parameter ``specification`` is now optional for API deployment in the API Gateway service
+
+  * ``oci api-gateway deployment create --specification``
+
+* PyYAML was upgraded to 5.3.1
+
+* Tox was upgraded to version 3.23.0. Tox isn't used in our run-time system but as part of our documentation build process.
+
+  * Pluggy upgraded to 0.13.0 and virtualenv upgraded to 16.7.10 for same reasons as above.
+
+Fixed
+~~~~~
+
+* Fixed timeout issue in log-analytics service
+
+  * ``oci log-analytics upload upload-log-file``
+  * ``oci log-analytics upload upload-log-events-file``
+
+
 2.22.1 - 2021-03-30
 -------------------
 Added

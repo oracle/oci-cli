@@ -82,15 +82,16 @@ ce_root_group.add_command(cluster_options_group)
 @cli_util.option('--endpoint-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The network configuration for access to the Cluster control plane.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for Kubernetes secret encryption. When used, `kubernetesVersion` must be at least `v1.13.0`.""")
 @cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional attributes for the cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The image verification policy for signature validation. Once a policy is created and enabled with one or more kms keys, the policy will ensure all images deployed has been signed with the key(s) attached to the policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
+@json_skeleton_utils.get_cli_json_input_option({'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
 @cli_util.wrap_exceptions
-def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, endpoint_config, kms_key_id, options):
+def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, endpoint_config, kms_key_id, options, image_policy_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -109,6 +110,9 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if options is not None:
         _details['options'] = cli_util.parse_json_parameter("options", options)
+
+    if image_policy_config is not None:
+        _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_cluster(
@@ -884,23 +888,24 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, clu
 @cli_util.option('--name', help=u"""The new name for the cluster. Avoid entering confidential information.""")
 @cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to which the cluster masters should be upgraded.""")
 @cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The image verification policy for signature validation. Once a policy is created and enabled with one or more kms keys, the policy will ensure all images deployed has been signed with the key(s) attached to the policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'container_engine', 'class': 'UpdateClusterOptionsDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'container_engine', 'class': 'UpdateClusterOptionsDetails'}, 'image-policy-config': {'module': 'container_engine', 'class': 'UpdateImagePolicyConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'container_engine', 'class': 'UpdateClusterOptionsDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'container_engine', 'class': 'UpdateClusterOptionsDetails'}, 'image-policy-config': {'module': 'container_engine', 'class': 'UpdateImagePolicyConfigDetails'}})
 @cli_util.wrap_exceptions
-def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, name, kubernetes_version, options, if_match):
+def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, name, kubernetes_version, options, image_policy_config, if_match):
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
     if not force:
-        if options:
-            if not click.confirm("WARNING: Updates to options will replace any existing values. Are you sure you want to continue?"):
+        if options or image_policy_config:
+            if not click.confirm("WARNING: Updates to options and image-policy-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -918,6 +923,9 @@ def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if options is not None:
         _details['options'] = cli_util.parse_json_parameter("options", options)
+
+    if image_policy_config is not None:
+        _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.update_cluster(

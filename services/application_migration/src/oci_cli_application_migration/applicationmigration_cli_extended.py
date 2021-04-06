@@ -60,6 +60,12 @@ applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.upda
 applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_ocic_source_details.name)
 
 
+# oci application-migration source create-source-ocic-authorization-token-details -> oci application-migration source create-source-ocic-authtoken
+# oci application-migration source update-source-ocic-authorization-token-details -> oci application-migration source update-source-ocic-authtoken
+cli_util.rename_command(applicationmigration_cli, applicationmigration_cli.source_group, applicationmigration_cli.update_source_ocic_authorization_token_details, 'update-source-ocic-authtoken')
+cli_util.rename_command(applicationmigration_cli, applicationmigration_cli.source_group, applicationmigration_cli.create_source_ocic_authorization_token_details, 'create-source-ocic-authtoken')
+
+
 # Remove create-source-occ-authorization-details from oci application-migration source
 applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.create_source_occ_authorization_details.name)
 

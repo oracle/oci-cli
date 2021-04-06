@@ -79,6 +79,22 @@ def volume_group_backup_group():
     pass
 
 
+@click.command(cli_util.override('blockstorage.block_volume_replica_group.command_name', 'block-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a block volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Block Volume Replicas] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def block_volume_replica_group():
+    pass
+
+
+@click.command(cli_util.override('blockstorage.boot_volume_replica_group.command_name', 'boot-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Block Volume Replicas] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def boot_volume_replica_group():
+    pass
+
+
 @click.command(cli_util.override('blockstorage.volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies the volume that the volume backup policy is assigned to.
 
 For more information about Oracle defined backup policies and custom backup policies, see [Policy-Based Backups].""")
@@ -116,6 +132,8 @@ blockstorage_root_group.add_command(boot_volume_backup_group)
 blockstorage_root_group.add_command(boot_volume_group)
 blockstorage_root_group.add_command(volume_backup_group)
 blockstorage_root_group.add_command(volume_group_backup_group)
+blockstorage_root_group.add_command(block_volume_replica_group)
+blockstorage_root_group.add_command(boot_volume_replica_group)
 blockstorage_root_group.add_command(volume_backup_policy_assignment_group)
 blockstorage_root_group.add_command(volume_group_group)
 blockstorage_root_group.add_command(volume_backup_policy_group)
@@ -446,15 +464,18 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+@cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
@@ -486,6 +507,9 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if boot_volume_replicas is not None:
+        _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
@@ -542,15 +566,18 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+@cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled):
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
@@ -583,6 +610,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if boot_volume_replicas is not None:
+        _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
 
     _details['sourceDetails']['type'] = 'bootVolumeBackup'
 
@@ -641,15 +671,18 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+@cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled):
+def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
@@ -683,7 +716,115 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
+    if boot_volume_replicas is not None:
+        _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
     _details['sourceDetails']['type'] = 'bootVolume'
+
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.create_boot_volume(
+        create_boot_volume_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_replica_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-replica-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume replica.""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
+@cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+@cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@cli_util.wrap_exceptions
+def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+
+    kwargs = {}
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['id'] = source_details_id
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if size_in_gbs is not None:
+        _details['sizeInGBs'] = size_in_gbs
+
+    if vpus_per_gb is not None:
+        _details['vpusPerGB'] = vpus_per_gb
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if boot_volume_replicas is not None:
+        _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    _details['sourceDetails']['type'] = 'bootVolumeReplica'
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
@@ -818,15 +959,18 @@ Allowed values:
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled):
+def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
@@ -866,6 +1010,128 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if block_volume_replicas is not None:
+        _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.create_volume(
+        create_volume_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_group.command(name=cli_util.override('blockstorage.create_volume_volume_source_from_block_volume_replica_details.command_name', 'create-volume-volume-source-from-block-volume-replica-details'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+
+A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--source-details-id', required=True, help=u"""The OCID of the block volume replica.""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume. If omitted, no policy will be assigned.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `0`: Represents Lower Cost option.
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
+@cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
+@cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
+@cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@cli_util.wrap_exceptions
+def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+
+    kwargs = {}
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['id'] = source_details_id
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if vpus_per_gb is not None:
+        _details['vpusPerGB'] = vpus_per_gb
+
+    if size_in_gbs is not None:
+        _details['sizeInGBs'] = size_in_gbs
+
+    if size_in_mbs is not None:
+        _details['sizeInMBs'] = size_in_mbs
+
+    if volume_backup_id is not None:
+        _details['volumeBackupId'] = volume_backup_id
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if block_volume_replicas is not None:
+        _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    _details['sourceDetails']['type'] = 'blockVolumeReplica'
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
@@ -930,15 +1196,18 @@ Allowed values:
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled):
+def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
@@ -977,6 +1246,9 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if block_volume_replicas is not None:
+        _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
 
     _details['sourceDetails']['type'] = 'volume'
 
@@ -1043,15 +1315,18 @@ Allowed values:
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled):
+def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
@@ -1090,6 +1365,9 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if block_volume_replicas is not None:
+        _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
 
     _details['sourceDetails']['type'] = 'volumeBackup'
 
@@ -2127,6 +2405,27 @@ def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@block_volume_replica_group.command(name=cli_util.override('blockstorage.get_block_volume_replica.command_name', 'get'), help=u"""Gets information for the specified block volume replica. \n[Command Reference](getBlockVolumeReplica)""")
+@cli_util.option('--block-volume-replica-id', required=True, help=u"""The OCID of the block volume replica.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BlockVolumeReplica'})
+@cli_util.wrap_exceptions
+def get_block_volume_replica(ctx, from_json, block_volume_replica_id):
+
+    if isinstance(block_volume_replica_id, six.string_types) and len(block_volume_replica_id.strip()) == 0:
+        raise click.UsageError('Parameter --block-volume-replica-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.get_block_volume_replica(
+        block_volume_replica_id=block_volume_replica_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_group.command(name=cli_util.override('blockstorage.get_boot_volume.command_name', 'get'), help=u"""Gets information for the specified boot volume. \n[Command Reference](getBootVolume)""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2188,6 +2487,27 @@ def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_boot_volume_kms_key(
         boot_volume_id=boot_volume_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_replica_group.command(name=cli_util.override('blockstorage.get_boot_volume_replica.command_name', 'get'), help=u"""Gets information for the specified boot volume replica. \n[Command Reference](getBootVolumeReplica)""")
+@cli_util.option('--boot-volume-replica-id', required=True, help=u"""The OCID of the boot volume replica.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeReplica'})
+@cli_util.wrap_exceptions
+def get_boot_volume_replica(ctx, from_json, boot_volume_replica_id):
+
+    if isinstance(boot_volume_replica_id, six.string_types) and len(boot_volume_replica_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-replica-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.get_boot_volume_replica(
+        boot_volume_replica_id=boot_volume_replica_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2369,6 +2689,77 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@block_volume_replica_group.command(name=cli_util.override('blockstorage.list_block_volume_replicas.command_name', 'list'), help=u"""Lists the block volume replicas in the specified compartment and availability domain. \n[Command Reference](listBlockVolumeReplicas)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ACTIVATING", "TERMINATING", "TERMINATED", "FAULTY"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BlockVolumeReplica]'})
+@cli_util.wrap_exceptions
+def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_block_volume_replicas,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_block_volume_replicas,
+            limit,
+            page_size,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_block_volume_replicas(
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_backup_group.command(name=cli_util.override('blockstorage.list_boot_volume_backups.command_name', 'list'), help=u"""Lists the boot volume backups in the specified compartment. You can filter the results by boot volume. \n[Command Reference](listBootVolumeBackups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--boot-volume-id', help=u"""The OCID of the boot volume.""")
@@ -2432,6 +2823,77 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
         )
     else:
         result = client.list_boot_volume_backups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_replica_group.command(name=cli_util.override('blockstorage.list_boot_volume_replicas.command_name', 'list'), help=u"""Lists the boot volume replicas in the specified compartment and availability domain. \n[Command Reference](listBootVolumeReplicas)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ACTIVATING", "TERMINATING", "TERMINATED", "FAULTY"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BootVolumeReplica]'})
+@cli_util.wrap_exceptions
+def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_boot_volume_replicas,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_boot_volume_replicas,
+            limit,
+            page_size,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_boot_volume_replicas(
+            availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
@@ -2839,23 +3301,26 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+@cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas that this boot volume will be updated to have in the specified destination availability domains.
+
+This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, if_match):
+def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or boot_volume_replicas:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and boot-volume-replicas will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2881,6 +3346,9 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if boot_volume_replicas is not None:
+        _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume(
@@ -3041,23 +3509,26 @@ Allowed values:
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas that this volume will be updated to have in the specified destination availability domains.
+
+This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, is_auto_tune_enabled, if_match):
+def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, is_auto_tune_enabled, block_volume_replicas, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or block_volume_replicas:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and block-volume-replicas will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3083,6 +3554,9 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if is_auto_tune_enabled is not None:
         _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if block_volume_replicas is not None:
+        _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume(

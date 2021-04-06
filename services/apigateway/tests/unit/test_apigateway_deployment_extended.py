@@ -24,7 +24,6 @@ class TestApiGatewayDeployment(unittest.TestCase):
         assert '--gateway-id' in result.output
         assert '--compartment-id' in result.output
         assert '--path-prefix' in result.output
-        assert '--specification' in result.output
 
     def test_update_deployment(self):
         result = util.invoke_command(['api-gateway', 'deployment', 'update'])

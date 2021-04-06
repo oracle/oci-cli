@@ -282,7 +282,12 @@ def translate_complex_param_to_example_object(complex_param_entry, visited):
         return PRIMITIVE_TYPES_TO_EXAMPLE_SCALAR_VALUES[cls]
 
     # If we're at this point, we're some sort of model object so pull out what class we actually are
-    cls_type = cli_util.MODULE_TO_TYPE_MAPPINGS[complex_param_entry['module']][cls]
+    try:
+        cls_type = cli_util.MODULE_TO_TYPE_MAPPINGS[complex_param_entry['module']][cls]
+    except KeyError:
+        # Temp fix: If we do not find the class in SDK mappings, return string
+        # as it is due to the class not being generated for enums defined in the spec.
+        return PRIMITIVE_TYPES_TO_EXAMPLE_SCALAR_VALUES['string']
 
     # Check if we already visited this Class, this is important to cut any cycle.
     if cls in visited:

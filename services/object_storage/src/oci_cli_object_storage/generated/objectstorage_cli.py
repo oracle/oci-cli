@@ -467,15 +467,16 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--name', required=True, help=u"""A user-specified name for the pre-authenticated request. Names can be helpful in managing pre-authenticated requests. Avoid entering confidential information.""")
-@cli_util.option('--access-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ObjectRead", "ObjectWrite", "ObjectReadWrite", "AnyObjectWrite"]), help=u"""The operation that can be performed on this resource.""")
+@cli_util.option('--access-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ObjectRead", "ObjectWrite", "ObjectReadWrite", "AnyObjectWrite", "AnyObjectRead", "AnyObjectReadWrite"]), help=u"""The operation that can be performed on this resource.""")
 @cli_util.option('--time-expires', required=True, type=custom_types.CLI_DATETIME, help=u"""The expiration date for the pre-authenticated request as per [RFC 3339]. After this date the pre-authenticated request will no longer be valid.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--object-name', help=u"""The name of the object that is being granted access to by the pre-authenticated request. Avoid entering confidential information. The object name can be null and if so, the pre-authenticated request grants access to the entire bucket.""")
+@cli_util.option('--bucket-listing-action', help=u"""Specifies whether a list operation is allowed on a PAR with accessType \"AnyObjectRead\" or \"AnyObjectReadWrite\". Deny: Prevents the user from performing a list operation. ListObjects: Authorizes the user to perform a list operation.""")
+@cli_util.option('--object-name', help=u"""The name of the object that is being granted access to by the pre-authenticated request. Avoid entering confidential information. The object name can be null and if so, the pre-authenticated request grants access to the entire bucket if the access type allows that. The object name can be a prefix as well, in that case pre-authenticated request grants access to all the objects within the bucket starting with that prefix provided that we have the correct access type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'PreauthenticatedRequest'})
 @cli_util.wrap_exceptions
-def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name, name, access_type, time_expires, object_name):
+def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name, name, access_type, time_expires, bucket_listing_action, object_name):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -490,6 +491,9 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
     _details['name'] = name
     _details['accessType'] = access_type
     _details['timeExpires'] = time_expires
+
+    if bucket_listing_action is not None:
+        _details['bucketListingAction'] = bucket_listing_action
 
     if object_name is not None:
         _details['objectName'] = object_name

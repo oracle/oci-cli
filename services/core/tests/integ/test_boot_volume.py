@@ -165,7 +165,7 @@ def test_boot_volume_clone_backup(network_resources):
             result = invoke(['bv', 'boot-volume', 'create',
                              '--wait-for-state', 'AVAILABLE',
                              '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS])
-            assert "An empty boot volume cannot be created. Please specify either --boot-volume-backup-id or --source-boot-volume-id" in result.output
+            assert "An empty boot volume cannot be created. Please specify either --boot-volume-backup-id, --source-boot-volume-id or --source-volume-replica-id" in result.output
 
             # Error 2: Both options specified
             result = invoke(['bv', 'boot-volume', 'create',
@@ -173,7 +173,7 @@ def test_boot_volume_clone_backup(network_resources):
                              '--boot-volume-backup-id', boot_volume_id[0],
                              '--wait-for-state', 'AVAILABLE',
                              '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS])
-            assert "You cannot specify both the --boot-volume-backup-id and --source-boot-volume-id options" in result.output
+            assert "You can only specify one of either --source-boot-volume-id, --boot-volume-backup-id or --source-volume-replica-id option" in result.output
 
             # Clone the boot volume (Error 1: Invalid Boot Volume ID)
             result = invoke(['bv', 'boot-volume', 'create',

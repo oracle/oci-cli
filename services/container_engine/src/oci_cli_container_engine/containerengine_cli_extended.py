@@ -113,10 +113,10 @@ containerengine_cli.cluster_group.add_command(generate_token)
 @cli_util.option('--endpoint-public-ip-enabled', type=click.BOOL, help="""Whether the cluster should be assigned a public\
  IP address. Defaults to false. If set to true on a private subnet, the cluster provisioning will fail. You must also specify --endpoint-subnet-id.""")
 @json_skeleton_utils.get_cli_json_input_option(
-    {'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+    {'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'image-policy-config': {'module': 'container_engine', 'class': 'UpdateImagePolicyConfigDetails'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
-    input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+    input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}

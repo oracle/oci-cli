@@ -28,6 +28,12 @@ def container_image_summary_group():
     pass
 
 
+@click.command(cli_util.override('artifacts.container_image_signature_summary_group.command_name', 'container-image-signature-summary'), cls=CommandGroupWithAlias, help="""Container image signature summary.""")
+@cli_util.help_option_group
+def container_image_signature_summary_group():
+    pass
+
+
 @click.command(cli_util.override('artifacts.container_configuration_group.command_name', 'container-configuration'), cls=CommandGroupWithAlias, help="""Container configuration.""")
 @cli_util.help_option_group
 def container_configuration_group():
@@ -46,10 +52,18 @@ def container_image_group():
     pass
 
 
+@click.command(cli_util.override('artifacts.container_image_signature_group.command_name', 'container-image-signature'), cls=CommandGroupWithAlias, help="""Container image signature metadata.""")
+@cli_util.help_option_group
+def container_image_signature_group():
+    pass
+
+
 artifacts_root_group.add_command(container_image_summary_group)
+artifacts_root_group.add_command(container_image_signature_summary_group)
 artifacts_root_group.add_command(container_configuration_group)
 artifacts_root_group.add_command(container_repository_group)
 artifacts_root_group.add_command(container_image_group)
+artifacts_root_group.add_command(container_image_signature_group)
 
 
 @container_repository_group.command(name=cli_util.override('artifacts.change_container_repository_compartment.command_name', 'change-compartment'), help=u"""Moves a container repository into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeContainerRepositoryCompartment)""")
@@ -80,6 +94,50 @@ def change_container_repository_compartment(ctx, from_json, repository_id, compa
     result = client.change_container_repository_compartment(
         repository_id=repository_id,
         change_container_repository_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@container_image_signature_group.command(name=cli_util.override('artifacts.create_container_image_signature.command_name', 'create'), help=u"""Upload a signature to an image. \n[Command Reference](createContainerImageSignature)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the container repository exists.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.
+
+Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
+@cli_util.option('--kms-key-id', required=True, help=u"""The [OCID] of the kmsKeyId used to sign the container image.
+
+Example: `ocid1.key.oc1..exampleuniqueID`""")
+@cli_util.option('--kms-key-version-id', required=True, help=u"""The [OCID] of the kmsKeyVersionId used to sign the container image.
+
+Example: `ocid1.keyversion.oc1..exampleuniqueID`""")
+@cli_util.option('--message', required=True, help=u"""The base64 encoded signature payload that was signed.""")
+@cli_util.option('--signature', required=True, help=u"""The signature of the message field using the kmsKeyId, the kmsKeyVersionId, and the signingAlgorithm.""")
+@cli_util.option('--signing-algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS"]), help=u"""The algorithm to be used for signing. These are the only supported signing algorithms for container images.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerImageSignature'})
+@cli_util.wrap_exceptions
+def create_container_image_signature(ctx, from_json, compartment_id, image_id, kms_key_id, kms_key_version_id, message, signature, signing_algorithm, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['imageId'] = image_id
+    _details['kmsKeyId'] = kms_key_id
+    _details['kmsKeyVersionId'] = kms_key_version_id
+    _details['message'] = message
+    _details['signature'] = signature
+    _details['signingAlgorithm'] = signing_algorithm
+
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    result = client.create_container_image_signature(
+        create_container_image_signature_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -214,6 +272,34 @@ def delete_container_image(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
+@container_image_signature_group.command(name=cli_util.override('artifacts.delete_container_image_signature.command_name', 'delete'), help=u"""Delete a container image signature. \n[Command Reference](deleteContainerImageSignature)""")
+@cli_util.option('--image-signature-id', required=True, help=u"""The [OCID] of the container image signature.
+
+Example: `ocid1.containersignature.oc1..exampleuniqueID`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_container_image_signature(ctx, from_json, image_signature_id, if_match):
+
+    if isinstance(image_signature_id, six.string_types) and len(image_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-signature-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    result = client.delete_container_image_signature(
+        image_signature_id=image_signature_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @container_repository_group.command(name=cli_util.override('artifacts.delete_container_repository.command_name', 'delete'), help=u"""Delete container repository. \n[Command Reference](deleteContainerRepository)""")
 @cli_util.option('--repository-id', required=True, help=u"""The [OCID] of the container repository.
 
@@ -323,6 +409,30 @@ def get_container_image(ctx, from_json, image_id):
     cli_util.render_response(result, ctx)
 
 
+@container_image_signature_group.command(name=cli_util.override('artifacts.get_container_image_signature.command_name', 'get'), help=u"""Get container image signature metadata. \n[Command Reference](getContainerImageSignature)""")
+@cli_util.option('--image-signature-id', required=True, help=u"""The [OCID] of the container image signature.
+
+Example: `ocid1.containersignature.oc1..exampleuniqueID`""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerImageSignature'})
+@cli_util.wrap_exceptions
+def get_container_image_signature(ctx, from_json, image_signature_id):
+
+    if isinstance(image_signature_id, six.string_types) and len(image_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-signature-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    result = client.get_container_image_signature(
+        image_signature_id=image_signature_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @container_repository_group.command(name=cli_util.override('artifacts.get_container_repository.command_name', 'get'), help=u"""Get container repository. \n[Command Reference](getContainerRepository)""")
 @cli_util.option('--repository-id', required=True, help=u"""The [OCID] of the container repository.
 
@@ -344,6 +454,99 @@ def get_container_repository(ctx, from_json, repository_id):
         repository_id=repository_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@container_image_signature_summary_group.command(name=cli_util.override('artifacts.list_container_image_signatures.command_name', 'list-container-image-signatures'), help=u"""List container image signatures in an image. \n[Command Reference](listContainerImageSignatures)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are inspected depending on the the setting of `accessLevel`. Default is false. Can only be set to true when calling the API on the tenancy (root compartment).""")
+@cli_util.option('--image-id', help=u"""A filter to return a container image summary only for the specified container image OCID.""")
+@cli_util.option('--repository-id', help=u"""A filter to return container images only for the specified container repository OCID.""")
+@cli_util.option('--repository-name', help=u"""A filter to return container images or container image signatures that match the repository name.
+
+Example: `foo` or `foo*`""")
+@cli_util.option('--image-digest', help=u"""The digest of the container image.
+
+Example: `sha256:e7d38b3517548a1c71e41bffe9c8ae6d6d29546ce46bf62159837aad072c90aa`""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--kms-key-id', help=u"""The [OCID] of the kmsKeyVersionId used to sign the container image.
+
+Example: `ocid1.keyversion.oc1..exampleuniqueID`""")
+@cli_util.option('--kms-key-version-id', help=u"""The [OCID] of the kmsKeyVersionId used to sign the container image.
+
+Example: `ocid1.keyversion.oc1..exampleuniqueID`""")
+@cli_util.option('--signing-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS"]), help=u"""The algorithm to be used for signing. These are the only supported signing algorithms for container images.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerImageSignatureCollection'})
+@cli_util.wrap_exceptions
+def list_container_image_signatures(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, image_id, repository_id, repository_name, image_digest, display_name, kms_key_id, kms_key_version_id, signing_algorithm, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if image_id is not None:
+        kwargs['image_id'] = image_id
+    if repository_id is not None:
+        kwargs['repository_id'] = repository_id
+    if repository_name is not None:
+        kwargs['repository_name'] = repository_name
+    if image_digest is not None:
+        kwargs['image_digest'] = image_digest
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if kms_key_id is not None:
+        kwargs['kms_key_id'] = kms_key_id
+    if kms_key_version_id is not None:
+        kwargs['kms_key_version_id'] = kms_key_version_id
+    if signing_algorithm is not None:
+        kwargs['signing_algorithm'] = signing_algorithm
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_container_image_signatures,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_container_image_signatures,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_container_image_signatures(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
