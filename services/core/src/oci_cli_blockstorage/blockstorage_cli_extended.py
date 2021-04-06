@@ -51,19 +51,23 @@ You may optionally specify a *display name* for the volume, which is simply a fr
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment that contains the volume.""")
-@cli_util.option('--source-volume-id', help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
-@cli_util.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
+@cli_util.option('--source-volume-id', help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this, --volume-backup-id or --source-volume-replica-id but not all. If neither is specified then the new Block volume will be empty.""")
+@cli_util.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this, --source-volume-id or --source-volume-replica-id but not all. If neither is specified then the new Block volume will be empty.""")
+@cli_util.option('--source-volume-replica-id', help="""The OCID of the block volume replica from which the data should be restored on the newly created volume. You can specify either this, --volume-backup-id or --source-volume-id but not all. If neither is specified then the new Block volume will be empty.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
 def create_volume_extended(ctx, **kwargs):
-    if kwargs['source_volume_id'] and kwargs['volume_backup_id']:
-        raise click.UsageError('You cannot specify both the --volume-backup-id and --source-volume-id options')
+    if (kwargs['source_volume_id'] and kwargs['volume_backup_id']) or (kwargs['source_volume_id'] and kwargs['source_volume_replica_id']) or \
+            (kwargs['volume_backup_id'] and kwargs['source_volume_replica_id']):
+        raise click.UsageError('You can only specify one of either --volume-backup-id, --source-volume-id or --source-volume-replica-id option')
 
-    if not kwargs['source_volume_id'] and not kwargs['availability_domain']:
-        raise click.UsageError('An availability domain must be specified when creating an empty volume or restoring a volume from a backup')
+    if not kwargs['source_volume_id'] and not kwargs['source_volume_replica_id']:
+        if not kwargs['availability_domain']:
+            raise click.UsageError('An availability domain must be specified when creating an empty volume or restoring a volume from a backup')
 
-    if not kwargs['source_volume_id'] and not kwargs['volume_backup_id'] and not kwargs['compartment_id']:
+    if not kwargs['source_volume_id'] and not kwargs['volume_backup_id'] and not kwargs['source_volume_replica_id'] \
+            and not kwargs['compartment_id']:
         raise click.UsageError('A compartment ID must be specified when creating an empty volume')
 
     if kwargs['size_in_mbs'] and kwargs['size_in_gbs']:
@@ -83,22 +87,34 @@ def create_volume_extended(ctx, **kwargs):
         if not kwargs['compartment_id']:
             kwargs['compartment_id'] = source_backup.data.compartment_id
 
-    if kwargs['source_volume_id'] or kwargs['volume_backup_id']:
+    if kwargs['source_volume_replica_id']:
+        source_volume_replica = client.get_block_volume_replica(block_volume_replica_id=kwargs['source_volume_replica_id'])
+        kwargs['availability_domain'] = source_volume_replica.data.availability_domain
+        if not kwargs['compartment_id']:
+            kwargs['compartment_id'] = source_volume_replica.data.compartment_id
+
+    if kwargs['source_volume_id'] or kwargs['volume_backup_id'] or kwargs['source_volume_replica_id']:
         if kwargs['volume_backup_id']:
             source_details = {
                 'type': 'volumeBackup',
                 'id': kwargs['volume_backup_id']
             }
-        else:
+        elif kwargs['source_volume_id']:
             source_details = {
                 'type': 'volume',
                 'id': kwargs['source_volume_id']
+            }
+        else:
+            source_details = {
+                'type': 'blockVolumeReplica',
+                'id': kwargs['source_volume_replica_id']
             }
 
         kwargs['source_details'] = json.dumps(source_details)
 
     kwargs.pop('source_volume_id', None)
     kwargs.pop('volume_backup_id', None)
+    kwargs.pop('source_volume_replica_id', None)
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
 
@@ -111,20 +127,23 @@ def create_volume_extended(ctx, **kwargs):
 
 This is optional when cloning a boot volume as the newly created boot volume will be created in the same Availability Domain as its source. This is required when restoring a volume from a backup.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment that contains the boot volume. This is optional when cloning a boot volume or restoring a boot volume from a backup. If it is not supplied then the boot volume will be created in the same compartment as the source.""")
-@cli_util.option('--source-boot-volume-id', help="""The OCID of a boot volume in the same Availability Domain from which the data should be cloned to the newly created boot volume. You can specify either this or --boot-volume-backup-id but not both.""")
-@cli_util.option('--boot-volume-backup-id', help="""The OCID of the boot volume backup from which the data should be restored on the newly created boot volume. You can specify either this or --source-boot-volume-id but not both.""")
+@cli_util.option('--source-boot-volume-id', help="""The OCID of a boot volume in the same Availability Domain from which the data should be cloned to the newly created boot volume. You can specify either this, --boot-volume-backup-id or --source-volume-replica-id but not all.""")
+@cli_util.option('--boot-volume-backup-id', help="""The OCID of the boot volume backup from which the data should be restored on the newly created boot volume. You can specify either this, --source-boot-volume-id or --source-volume-replica-id but not all.""")
+@cli_util.option('--source-volume-replica-id', help="""The OCID of the boot volume replica from which the data should be restored on the newly created boot volume. You can specify either this, --source-boot-volume-id or --boot-volume-backup-id --but not all.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
 def create_boot_volume_extended(ctx, **kwargs):
-    if kwargs['source_boot_volume_id'] and kwargs['boot_volume_backup_id']:
-        raise click.UsageError('You cannot specify both the --boot-volume-backup-id and --source-boot-volume-id options')
+    if (kwargs['source_boot_volume_id'] and kwargs['boot_volume_backup_id']) or (kwargs['source_boot_volume_id'] and kwargs['source_volume_replica_id']) or \
+            (kwargs['boot_volume_backup_id'] and kwargs['source_volume_replica_id']):
+        raise click.UsageError('You can only specify one of either --source-boot-volume-id, --boot-volume-backup-id or --source-volume-replica-id option')
 
-    if not kwargs['source_boot_volume_id'] and not kwargs['boot_volume_backup_id']:
-        raise click.UsageError('An empty boot volume cannot be created. Please specify either --boot-volume-backup-id or --source-boot-volume-id')
+    if not kwargs['source_boot_volume_id'] and not kwargs['boot_volume_backup_id'] and not kwargs['source_volume_replica_id']:
+        raise click.UsageError('An empty boot volume cannot be created. Please specify either --boot-volume-backup-id, --source-boot-volume-id or --source-volume-replica-id')
 
-    if not kwargs['source_boot_volume_id'] and not kwargs['availability_domain']:
-        raise click.UsageError('An availability domain must be specified when restoring a boot volume from backup')
+    if not kwargs['source_boot_volume_id'] and not kwargs['source_volume_replica_id']:
+        if not kwargs['availability_domain']:
+            raise click.UsageError('An availability domain must be specified when restoring a boot volume from backup')
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
 
@@ -140,22 +159,34 @@ def create_boot_volume_extended(ctx, **kwargs):
         if not kwargs['compartment_id']:
             kwargs['compartment_id'] = source_backup.data.compartment_id
 
-    if kwargs['source_boot_volume_id'] or kwargs['boot_volume_backup_id']:
+    if kwargs['source_volume_replica_id']:
+        source_volume_replica = client.get_boot_volume_replica(boot_volume_replica_id=kwargs['source_volume_replica_id'])
+        kwargs['availability_domain'] = source_volume_replica.data.availability_domain
+        if not kwargs['compartment_id']:
+            kwargs['compartment_id'] = source_volume_replica.data.compartment_id
+
+    if kwargs['source_boot_volume_id'] or kwargs['boot_volume_backup_id'] or kwargs['source_volume_replica_id']:
         if kwargs['boot_volume_backup_id']:
             source_details = {
                 'type': 'bootVolumeBackup',
                 'id': kwargs['boot_volume_backup_id']
             }
-        else:
+        elif kwargs['source_boot_volume_id']:
             source_details = {
                 'type': 'bootVolume',
                 'id': kwargs['source_boot_volume_id']
+            }
+        else:
+            source_details = {
+                'type': 'bootVolumeReplica',
+                'id': kwargs['source_volume_replica_id']
             }
 
         kwargs['source_details'] = json.dumps(source_details)
 
     kwargs.pop('source_boot_volume_id', None)
     kwargs.pop('boot_volume_backup_id', None)
+    kwargs.pop('source_volume_replica_id', None)
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
 

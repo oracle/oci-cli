@@ -9,6 +9,66 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.apigateway.src.oci_cli_api_gateway.generated import apigateway_cli
 from services.apigateway.src.oci_cli_apigateway.generated import api_gateway_service_cli
 
+
+# #### Api resource #### #
+
+# new groups rather than rename for future modifications (adding commands manualy)
+
+# Changes from this:
+# oci api-gateway api-specification get-api-deployment-specification --api-id, -? | -h | --help
+# oci api-gateway api-validations get --api-id, -? | -h | --help
+# oci api-gateway api get-api-content --api-id, --file, -? | -h | --help
+
+# to this
+# oci api-gateway api deployment-specification get --api-id, -? | -h | --help
+# oci api-gateway api validations get --api-id, -? | -h | --help
+# oci api-gateway api content get --api-id, --file, -? | -h | --help
+
+
+@apigateway_cli.api_group.command('validations', cls=CommandGroupWithAlias,
+                                  help=apigateway_cli.api_validations_group.help)
+@cli_util.help_option_group
+def validations_group():
+    pass
+
+
+api_gateway_service_cli.api_gateway_service_group.commands.pop(apigateway_cli.api_validations_group.name)
+cli_util.rename_command(apigateway_cli, validations_group, apigateway_cli.get_api_validations, "get")
+
+
+@apigateway_cli.api_group.command('content', cls=CommandGroupWithAlias, help="""The raw API content""")
+@cli_util.help_option_group
+def content_group():
+    pass
+
+
+api_gateway_service_cli.api_gateway_service_group.commands['api'].commands.pop(
+    apigateway_cli.api_gateway_root_group.commands['api'].commands['get-api-content'].name)
+cli_util.rename_command(apigateway_cli, content_group, apigateway_cli.get_api_content, "get")
+
+
+@apigateway_cli.api_group.command('deployment-specification', cls=CommandGroupWithAlias,
+                                  help="""API Deployment specification generated from API""")
+@cli_util.help_option_group
+def deployment_specification_group():
+    pass
+
+
+api_gateway_service_cli.api_gateway_service_group.commands.pop(apigateway_cli.api_specification_group.name)
+cli_util.rename_command(apigateway_cli, deployment_specification_group, apigateway_cli.get_api_deployment_specification,
+                        "get")
+
+# Changes from
+# oci api-gateway sdk-language-type-summary list-sdk-language-types
+# to
+# oci api-gateway sdk-language-type list
+
+cli_util.rename_command(apigateway_cli, api_gateway_service_cli.api_gateway_service_group,
+                        api_gateway_service_cli.api_gateway_service_group.commands['sdk-language-type-summary'],
+                        "sdk-language-type")
+cli_util.rename_command(apigateway_cli, apigateway_cli.sdk_language_type_summary_group,
+                        apigateway_cli.list_sdk_language_types, "list")
+
 # Certificates  #
 
 key_mapping = {
@@ -60,47 +120,3 @@ def create_certificate(ctx, **kwargs):
             kwargs[key_mapping[key]] = kwargs.get(key).read()
         del kwargs[key]
     ctx.invoke(apigateway_cli.create_certificate, **kwargs)
-
-# #### Api resource #### #
-
-# new groups rather than rename for future modifications (adding commands manualy)
-
-# Changes from this:
-# oci api-gateway api-specification get-api-deployment-specification --api-id, -? | -h | --help
-# oci api-gateway api-validations get --api-id, -? | -h | --help
-# oci api-gateway binary get-api-content --api-id, --file, -? | -h | --help
-
-# to this
-# oci api-gateway api deployment-specification get --api-id, -? | -h | --help
-# oci api-gateway api validations get --api-id, -? | -h | --help
-# oci api-gateway api content get --api-id, --file, -? | -h | --help
-
-
-@apigateway_cli.api_group.command('validations', cls=CommandGroupWithAlias, help=apigateway_cli.api_validations_group.help)
-@cli_util.help_option_group
-def validations_group():
-    pass
-
-
-api_gateway_service_cli.api_gateway_service_group.commands.pop(apigateway_cli.api_validations_group.name)
-cli_util.rename_command(apigateway_cli, validations_group, apigateway_cli.get_api_validations, "get")
-
-
-@apigateway_cli.api_group.command('content', cls=CommandGroupWithAlias, help="""The raw API content""")
-@cli_util.help_option_group
-def content_group():
-    pass
-
-
-api_gateway_service_cli.api_gateway_service_group.commands.pop(apigateway_cli.binary_group.name)
-cli_util.rename_command(apigateway_cli, content_group, apigateway_cli.get_api_content, "get")
-
-
-@apigateway_cli.api_group.command('deployment-specification', cls=CommandGroupWithAlias, help="""API Deployment specification generated from API""")
-@cli_util.help_option_group
-def deployment_specification_group():
-    pass
-
-
-api_gateway_service_cli.api_gateway_service_group.commands.pop(apigateway_cli.api_specification_group.name)
-cli_util.rename_command(apigateway_cli, deployment_specification_group, apigateway_cli.get_api_deployment_specification, "get")

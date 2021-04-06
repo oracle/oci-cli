@@ -15,9 +15,9 @@ Jinja2==2.11.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.35.0
+oci==2.35.1
 packaging==20.2
-pluggy==0.4.0
+pluggy==0.13.0
 py==1.4.33
 pyasn1==0.2.3
 pyOpenSSL==19.1.0
@@ -34,9 +34,9 @@ six==1.14.0
 sphinx==1.6.4
 sphinx-rtd-theme==0.2.5b1
 terminaltables==3.1.0
-tox==2.9.1
+tox==3.23.0
 vcrpy==1.13.0
-virtualenv==15.1.0
+virtualenv==16.7.10
 pytest-xdist==1.22.2
 pytest-forked==1.0.2
-PyYAML==5.1.2
+PyYAML==5.3.1

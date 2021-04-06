@@ -104,3 +104,42 @@ class TestArtifact(unittest.TestCase):
         result = util.invoke_command(['artifacts', 'container', 'repository', 'update'])
         assert 'Error: Missing option(s)' in result.output
         assert 'repository-id' in result.output
+
+    def test_create_container_image_signature(self):
+        result = util.invoke_command((['artifacts', 'container', 'image-signature', 'create']))
+        assert 'Error: Missing option(s)' in result.output
+        assert 'compartment-id' in result.output
+
+    def test_delete_container_image_signature(self):
+        result = util.invoke_command((['artifacts', 'container', 'image-signature', 'delete']))
+        assert 'Error: Missing option(s)' in result.output
+        assert 'image-signature-id' in result.output
+
+    def test_get_container_image_signature(self):
+        result = util.invoke_command((['artifacts', 'container', 'image-signature', 'get']))
+        assert 'Error: Missing option(s)' in result.output
+        assert 'image-signature-id' in result.output
+
+    def test_list_container_image_signature(self):
+        result = util.invoke_command((['artifacts', 'container', 'image-signature', 'list']))
+        assert 'Error: Missing option(s)' in result.output
+        assert 'compartment-id' in result.output
+
+    def test_sign_and_upload_container_image_signature_metadata(self):
+        command = ["artifacts", "container", "image-signature", "sign-upload"]
+        result = util.invoke_command(command)
+        assert 'Error: Missing option(s)' in result.output
+        assert 'kms-key-id' in result.output
+        assert 'kms-key-version-id' in result.output
+        assert 'compartment-id' in result.output
+        assert 'image-id' in result.output
+        assert 'signing-algorithm' in result.output
+        assert 'metadata' in result.output
+        assert 'description' in result.output
+
+    def test_get_and_verify_image_signature_metadata(self):
+        result = util.invoke_command((['artifacts', 'container', 'image-signature', 'get-verify', '--trusted-keys', 'ocid.key.1', '--trusted-keys', 'ocid.key.2']))
+        assert 'Error: Missing option(s)' in result.output
+        assert 'compartment-id' in result.output
+        assert 'repo-name' in result.output
+        assert 'image-digest' in result.output

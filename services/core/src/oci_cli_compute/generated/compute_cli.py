@@ -4646,6 +4646,8 @@ Example: `50`""")
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--remaining-memory-in-gbs-greater-than-or-equal-to', type=click.FLOAT, help=u"""The remaining memory of the dedicated VM host, in GBs.""")
+@cli_util.option('--remaining-ocpus-greater-than-or-equal-to', type=click.FLOAT, help=u"""The available OCPUs of the dedicated VM host.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4653,7 +4655,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostSummary]'})
 @cli_util.wrap_exceptions
-def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order):
+def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order, remaining_memory_in_gbs_greater_than_or_equal_to, remaining_ocpus_greater_than_or_equal_to):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4677,6 +4679,10 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if remaining_memory_in_gbs_greater_than_or_equal_to is not None:
+        kwargs['remaining_memory_in_gbs_greater_than_or_equal_to'] = remaining_memory_in_gbs_greater_than_or_equal_to
+    if remaining_ocpus_greater_than_or_equal_to is not None:
+        kwargs['remaining_ocpus_greater_than_or_equal_to'] = remaining_ocpus_greater_than_or_equal_to
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:

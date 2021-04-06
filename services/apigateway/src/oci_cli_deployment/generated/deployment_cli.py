@@ -103,10 +103,10 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--gateway-id', required=True, help=u"""The [OCID] of the resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--path-prefix', required=True, help=u"""A path on which to deploy all routes contained in the API deployment specification. For more information, see [Deploying an API on an API Gateway by Creating an API Deployment].""")
-@cli_util.option('--specification', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--specification', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -121,7 +121,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'specification': {'module': 'apigateway', 'class': 'ApiSpecification'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
-def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, compartment_id, path_prefix, specification, display_name, freeform_tags, defined_tags):
+def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, compartment_id, path_prefix, display_name, specification, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -130,10 +130,12 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     _details['gatewayId'] = gateway_id
     _details['compartmentId'] = compartment_id
     _details['pathPrefix'] = path_prefix
-    _details['specification'] = cli_util.parse_json_parameter("specification", specification)
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if specification is not None:
+        _details['specification'] = cli_util.parse_json_parameter("specification", specification)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

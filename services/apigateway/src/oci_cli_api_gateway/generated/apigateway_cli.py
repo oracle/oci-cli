@@ -41,15 +41,21 @@ def api_specification_group():
     pass
 
 
+@click.command(cli_util.override('api_gateway.sdk_language_type_summary_group.command_name', 'sdk-language-type-summary'), cls=CommandGroupWithAlias, help="""SDK target language details.""")
+@cli_util.help_option_group
+def sdk_language_type_summary_group():
+    pass
+
+
 @click.command(cli_util.override('api_gateway.api_group.command_name', 'api'), cls=CommandGroupWithAlias, help="""An API is simple container for an API Specification. For more information, see [API Gateway Concepts].""")
 @cli_util.help_option_group
 def api_group():
     pass
 
 
-@click.command(cli_util.override('api_gateway.binary_group.command_name', 'binary'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('api_gateway.sdk_group.command_name', 'sdk'), cls=CommandGroupWithAlias, help="""Information about the SDK.""")
 @cli_util.help_option_group
-def binary_group():
+def sdk_group():
     pass
 
 
@@ -57,15 +63,17 @@ api_gateway_service_cli.api_gateway_service_group.add_command(api_gateway_root_g
 api_gateway_root_group.add_command(api_validations_group)
 api_gateway_root_group.add_command(certificate_group)
 api_gateway_root_group.add_command(api_specification_group)
+api_gateway_root_group.add_command(sdk_language_type_summary_group)
 api_gateway_root_group.add_command(api_group)
-api_gateway_root_group.add_command(binary_group)
+api_gateway_root_group.add_command(sdk_group)
 # oci api_gateway api_gateway --> oci api_gateway
 api_gateway_service_cli.api_gateway_service_group.commands.pop(api_gateway_root_group.name)
 api_gateway_service_cli.api_gateway_service_group.add_command(api_validations_group)
 api_gateway_service_cli.api_gateway_service_group.add_command(certificate_group)
 api_gateway_service_cli.api_gateway_service_group.add_command(api_specification_group)
+api_gateway_service_cli.api_gateway_service_group.add_command(sdk_language_type_summary_group)
 api_gateway_service_cli.api_gateway_service_group.add_command(api_group)
-api_gateway_service_cli.api_gateway_service_group.add_command(binary_group)
+api_gateway_service_cli.api_gateway_service_group.add_command(sdk_group)
 
 
 @api_group.command(name=cli_util.override('api_gateway.change_api_compartment.command_name', 'change-compartment'), help=u"""Changes the API compartment. \n[Command Reference](changeApiCompartment)""")
@@ -308,6 +316,83 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@sdk_group.command(name=cli_util.override('api_gateway.create_sdk.command_name', 'create'), help=u"""Creates a new SDK. \n[Command Reference](createSdk)""")
+@cli_util.option('--target-language', required=True, help=u"""The string representing the target programming language for generating the SDK.""")
+@cli_util.option('--api-id', required=True, help=u"""The [OCID] of API resource""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional optional configurations that can be passed to generate SDK Api. The applicable parameters are listed under \"parameters\" when \"/sdkLanguageTypes\" is called.
+
+Example: `{\"configName\": \"configValue\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'parameters': {'module': 'apigateway', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'parameters': {'module': 'apigateway', 'class': 'dict(str, string)'}}, output_type={'module': 'apigateway', 'class': 'Sdk'})
+@cli_util.wrap_exceptions
+def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_language, api_id, display_name, freeform_tags, defined_tags, parameters):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetLanguage'] = target_language
+    _details['apiId'] = api_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if parameters is not None:
+        _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.create_sdk(
+        create_sdk_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @api_group.command(name=cli_util.override('api_gateway.delete_api.command_name', 'delete'), help=u"""Deletes the API with the given identifier. \n[Command Reference](deleteApi)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -416,6 +501,60 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@sdk_group.command(name=cli_util.override('api_gateway.delete_sdk.command_name', 'delete'), help=u"""Deletes provided SDK. \n[Command Reference](deleteSdk)""")
+@cli_util.option('--sdk-id', required=True, help=u"""The ocid of the SDK.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, if_match):
+
+    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+        raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.delete_sdk(
+        sdk_id=sdk_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @api_group.command(name=cli_util.override('api_gateway.get_api.command_name', 'get'), help=u"""Gets an API by identifier. \n[Command Reference](getApi)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -438,7 +577,7 @@ def get_api(ctx, from_json, api_id):
     cli_util.render_response(result, ctx)
 
 
-@binary_group.command(name=cli_util.override('api_gateway.get_api_content.command_name', 'get-api-content'), help=u"""Get the raw API content. \n[Command Reference](getApiContent)""")
+@api_group.command(name=cli_util.override('api_gateway.get_api_content.command_name', 'get-api-content'), help=u"""Get the raw API content. \n[Command Reference](getApiContent)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -553,6 +692,28 @@ def get_certificate(ctx, from_json, certificate_id):
     client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     result = client.get_certificate(
         certificate_id=certificate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sdk_group.command(name=cli_util.override('api_gateway.get_sdk.command_name', 'get'), help=u"""Return object store downloadable URL and metadata. \n[Command Reference](getSdk)""")
+@cli_util.option('--sdk-id', required=True, help=u"""The ocid of the SDK.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Sdk'})
+@cli_util.wrap_exceptions
+def get_sdk(ctx, from_json, sdk_id):
+
+    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+        raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.get_sdk(
+        sdk_id=sdk_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -681,6 +842,131 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, disp
     else:
         result = client.list_certificates(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@sdk_language_type_summary_group.command(name=cli_util.override('api_gateway.list_sdk_language_types.command_name', 'list-sdk-language-types'), help=u"""Lists programming languages in which SDK can be generated. \n[Command Reference](listSdkLanguageTypes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
+
+Example: `My new resource`""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. The default order depends on the sortBy value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `timeCreated` is descending. Default order for `displayName` is ascending. The `displayName` sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'SdkLanguageTypeCollection'})
+@cli_util.wrap_exceptions
+def list_sdk_language_types(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sdk_language_types,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sdk_language_types,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sdk_language_types(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@sdk_group.command(name=cli_util.override('api_gateway.list_sdks.command_name', 'list'), help=u"""Returns list of generated SDKs. \n[Command Reference](listSdks)""")
+@cli_util.option('--sdk-id', help=u"""The ocid of the SDK.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
+
+Example: `My new resource`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state.
+
+Example: `ACTIVE` or `DELETED`""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. The default order depends on the sortBy value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `timeCreated` is descending. Default order for `displayName` is ascending. The `displayName` sort order is case sensitive.""")
+@cli_util.option('--api-id', help=u"""The ocid of the API.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'SdkCollection'})
+@cli_util.wrap_exceptions
+def list_sdks(ctx, from_json, all_pages, page_size, sdk_id, display_name, lifecycle_state, limit, page, sort_order, sort_by, api_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if sdk_id is not None:
+        kwargs['sdk_id'] = sdk_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if api_id is not None:
+        kwargs['api_id'] = api_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sdks,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sdks,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_sdks(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -847,4 +1133,56 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sdk_group.command(name=cli_util.override('api_gateway.update_sdk.command_name', 'update'), help=u"""Updates the SDK with the given identifier. \n[Command Reference](updateSdk)""")
+@cli_util.option('--sdk-id', required=True, help=u"""The ocid of the SDK.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_sdk(ctx, from_json, force, sdk_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+        raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.update_sdk(
+        sdk_id=sdk_id,
+        update_sdk_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)

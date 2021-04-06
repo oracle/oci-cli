@@ -3298,6 +3298,7 @@ Example: `10 Gbps`""")
 @cli_util.option('--cross-connect-mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Create a `CrossConnectMapping` for each cross-connect or cross-connect group this virtual circuit will run on.
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Deprecated. Instead use `customerAsn`. If you specify values for both, the request will be rejected.""")
 @cli_util.option('--customer-asn', type=click.INT, help=u"""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null. Can be a 2-byte or 4-byte ASN. Uses \"asplain\" format.
 
@@ -3326,7 +3327,7 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict):
 
     kwargs = {}
 
@@ -3339,6 +3340,9 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if cross_connect_mappings is not None:
         _details['crossConnectMappings'] = cli_util.parse_json_parameter("cross_connect_mappings", cross_connect_mappings)
+
+    if routing_policy is not None:
+        _details['routingPolicy'] = cli_util.parse_json_parameter("routing_policy", routing_policy)
 
     if customer_bgp_asn is not None:
         _details['customerBgpAsn'] = customer_bgp_asn
@@ -10385,6 +10389,7 @@ To change the list of public IP prefixes for a public virtual circuit, use [Bulk
 The customer and provider can update different properties in the mapping depending on the situation. See the description of the [CrossConnectMapping].
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Deprecated. Instead use `customerAsn`. If you specify values for both, the request will be rejected.""")
 @cli_util.option('--customer-asn', type=click.INT, help=u"""The BGP ASN of the network at the other end of the BGP session from Oracle.
 
@@ -10422,13 +10427,13 @@ To be updated only by the provider.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, if_match):
+def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
     if not force:
-        if cross_connect_mappings or defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to cross-connect-mappings and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if cross_connect_mappings or routing_policy or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to cross-connect-mappings and routing-policy and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -10442,6 +10447,9 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if cross_connect_mappings is not None:
         _details['crossConnectMappings'] = cli_util.parse_json_parameter("cross_connect_mappings", cross_connect_mappings)
+
+    if routing_policy is not None:
+        _details['routingPolicy'] = cli_util.parse_json_parameter("routing_policy", routing_policy)
 
     if customer_bgp_asn is not None:
         _details['customerBgpAsn'] = customer_bgp_asn
