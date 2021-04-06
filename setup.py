@@ -43,7 +43,7 @@ requires = [
     'six==1.14.0',
     'terminaltables==3.1.0',
     'pyOpenSSL==19.1.0',
-    'PyYAML==5.3.1'
+    'PyYAML==5.4'
 ]
 
 extras = {
