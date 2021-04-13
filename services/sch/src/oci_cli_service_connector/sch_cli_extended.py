@@ -40,3 +40,10 @@ serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.c
 
 # Remove update-service-connector-logging-analytics-target-details from oci sch service-connector
 serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.update_service_connector_logging_analytics_target_details.name)
+
+# Remove create-service-connector-streaming-source-details from oci sch service-connector
+serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.create_service_connector_streaming_source_details.name)
+
+
+# Remove update-service-connector-streaming-source-details from oci sch service-connector
+serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.update_service_connector_streaming_source_details.name)

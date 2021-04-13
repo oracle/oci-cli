@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.limits.src.oci_cli_limits.generated import limits_service_cli
 
 
-@click.command(cli_util.override('limits.limits_root_group.command_name', 'limits'), cls=CommandGroupWithAlias, help=cli_util.override('limits.limits_root_group.help', """APIs that interact with the resource limits of a specific resource type"""), short_help=cli_util.override('limits.limits_root_group.short_help', """Service limits APIs"""))
+@click.command(cli_util.override('limits.limits_root_group.command_name', 'limits'), cls=CommandGroupWithAlias, help=cli_util.override('limits.limits_root_group.help', """APIs that interact with the resource limits of a specific resource type"""), short_help=cli_util.override('limits.limits_root_group.short_help', """Service Limits APIs"""))
 @cli_util.help_option_group
 def limits_root_group():
     pass
