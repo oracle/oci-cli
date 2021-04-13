@@ -46,11 +46,13 @@ esxi_host_root_group.add_command(esxi_host_summary_group)
 
 Use the [WorkRequest] operations to track the creation of the ESXi host. \n[Command Reference](createEsxiHost)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC to add the ESXi host to.""")
+@cli_util.option('--current-sku', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option selected during SDDC creation. [ListSupportedSkus].""")
 @cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the SDDC.
 
 If this attribute is not specified, the SDDC's `instanceDisplayNamePrefix` attribute is used to name and incrementally number the ESXi host. For example, if you're creating the fourth ESXi host in the SDDC, and `instanceDisplayNamePrefix` is `MySDDC`, the host's display name is `MySDDC-4`.
 
 Avoid entering confidential information.""")
+@cli_util.option('--next-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option to switch to once existing billing cycle ends. If nextSku is null or empty, currentSku will be used to continue with next billing term. [ListSupportedSkus].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -65,16 +67,20 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, freeform_tags, defined_tags):
+def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, current_sku, display_name, next_sku, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['sddcId'] = sddc_id
+    _details['currentSku'] = current_sku
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if next_sku is not None:
+        _details['nextSku'] = next_sku
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -264,6 +270,7 @@ def list_esxi_hosts(ctx, from_json, all_pages, page_size, sddc_id, compute_insta
 @cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the SDDC.
 
 Avoid entering confidential information.""")
+@cli_util.option('--next-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option to switch to once existing billing cycle ends. [ListSupportedSkus].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -280,7 +287,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'EsxiHost'})
 @cli_util.wrap_exceptions
-def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, display_name, freeform_tags, defined_tags, if_match):
+def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, display_name, next_sku, freeform_tags, defined_tags, if_match):
 
     if isinstance(esxi_host_id, six.string_types) and len(esxi_host_id.strip()) == 0:
         raise click.UsageError('Parameter --esxi-host-id cannot be whitespace or empty string')
@@ -298,6 +305,9 @@ def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if next_sku is not None:
+        _details['nextSku'] = next_sku
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

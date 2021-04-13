@@ -41,6 +41,12 @@ def managed_database_group():
     pass
 
 
+@click.command(cli_util.override('database_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
+@cli_util.help_option_group
+def cluster_cache_metric_group():
+    pass
+
+
 @click.command(cli_util.override('database_management.job_run_group.command_name', 'job-run'), cls=CommandGroupWithAlias, help="""The details of a specific job run.""")
 @cli_util.help_option_group
 def job_run_group():
@@ -74,6 +80,7 @@ def job_group():
 database_management_root_group.add_command(database_fleet_health_metrics_group)
 database_management_root_group.add_command(tablespace_group)
 database_management_root_group.add_command(managed_database_group)
+database_management_root_group.add_command(cluster_cache_metric_group)
 database_management_root_group.add_command(job_run_group)
 database_management_root_group.add_command(job_execution_group)
 database_management_root_group.add_command(managed_database_group_group)
@@ -109,7 +116,7 @@ def add_managed_database_to_managed_database_group(ctx, from_json, managed_datab
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.change_database_parameters.command_name', 'change-database-parameters'), help=u"""Changes database parameters' values. There are two kinds of database parameters:
+@managed_database_group.command(name=cli_util.override('database_management.change_database_parameters.command_name', 'change-database-parameters'), help=u"""Changes database parameter values. There are two kinds of database parameters:
 
 - Dynamic parameters: They can be changed for the current Oracle Database instance. The changes take effect immediately. - Static parameters: They cannot be changed for the current instance. You must change these parameters and then restart the database before changes take effect.
 
@@ -653,6 +660,32 @@ def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cluster_cache_metric_group.command(name=cli_util.override('database_management.get_cluster_cache_metric.command_name', 'get'), help=u"""Gets the metrics related to cluster cache for the Oracle Real Application Clusters (Oracle RAC) database specified by managedDatabaseId. \n[Command Reference](getClusterCacheMetric)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time for the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time for the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ClusterCacheMetric'})
+@cli_util.wrap_exceptions
+def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, end_time):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cluster_cache_metric(
+        managed_database_id=managed_database_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1290,12 +1323,12 @@ def remove_managed_database_from_managed_database_group(ctx, from_json, managed_
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.reset_database_parameters.command_name', 'reset-database-parameters'), help=u"""Resets database parameters' values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
+@managed_database_group.command(name=cli_util.override('database_management.reset_database_parameters.command_name', 'reset-database-parameters'), help=u"""Resets database parameter values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
 
-Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+Use `MEMORY` to make the change in memory and ensure that it takes effect immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
 @cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameter names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option

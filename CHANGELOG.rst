@@ -6,6 +6,102 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.23.0 - 2021-04-13
+-------------------
+Added
+~~~~~
+
+* Support for Database Migration service
+
+  * ``oci database-migration``
+
+* Support for following in Network Service
+
+  * Support for Networking Topology
+
+    * ``oci network networking-topology``
+    * ``oci network vcn-topology``
+
+  * Support to improve the DRG functionality
+
+    * ``oci network drg get-all-drg-attachments``
+    * ``oci network drg get-upgrade-status``
+    * ``oci network drg upgrade``
+    * ``oci network drg-attachment remove-export-route-distribution``
+    * ``oci network drg-route-distribution``
+    * ``oci network drg-route-distribution-statement``
+    * ``oci network drg-route-rule``
+    * ``oci network drg-route-table``
+    * ``oci network internal-public-ip delete-drg-route-table``
+
+  * Support to asssign/unassign IPV6 for the VNIC
+
+    * ``oci network vnic assign-ipv6``
+    * ``oci network vnic unassign-ipv6``
+
+  * Support for enabling IPv6 support in the existing subnet
+
+    * ``oci network subnet update --ipv6-cidr-block``
+
+  * Support to list the Cross Connect mapping Details for the specified Virtual Circuit
+
+    * ``oci network cross-connect-mapping-details-collection list-cross-connect-mappings --virtual-circuit-id``
+
+* Support for following in OCVS Service
+
+  * [Breaking] New required parameter --current-sku has been added to the below command
+
+    * ``oci ocvs esxi-host create --current-sku``
+
+  * [Breaking] New required parameter --initial-sku has been added to the below command
+
+    * ``oci ocvs sddc create --initial-sku``
+
+  * New parameter --next-sku has been added to the below command
+
+    * ``oci ocvs esxi-host update --next-sku``
+
+* Support for getting a cluster cache metrics for a specified RAC CDB Managed Database in the Database Management service
+
+  * ``oci database-management cluster-cache-metric``
+
+* Support for new parameter --response-cache-details in the API Gateway service
+
+  * ``oci api-gateway gateway create --response-cache-details``
+  * ``oci api-gateway gateway update --response-cache-details``
+
+* Support for preemptible instances in Compute service
+
+  * ``oci compute instance launch --preemptible-instance-config``
+
+* Improvements for Operations Insights in the OPSI service
+
+  * ``oci opsi database-insights``
+  * ``oci opsi enterprise-manager-bridges``
+  * ``oci opsi host-insights``
+  * ``oci opsi work-requests``
+
+
+Changed
+~~~~~~~~
+
+* Updated parameters for database insight list operation in the OPSI service.
+
+  * ``oci opsi database-insights list``
+
+* Following commands changed in Network Service
+
+  * [Breaking] Optional param --is-internet-access-allowed is deleted for the below commands
+
+    * ``oci network ipv6 update``
+    * ``oci network vnic assign-ipv6``
+
+  * [Breaking] Optional param --ipv6-cidr-block is deleted for the below commands
+
+    * ``oci network vcn add-ipv6-vcn-cidr``
+    * ``oci network vcn create``
+
+
 2.22.2 - 2021-04-06
 -------------------
 Added

@@ -41,10 +41,17 @@ def sddc_summary_group():
     pass
 
 
+@click.command(cli_util.override('sddc.supported_sku_summary_group.command_name', 'supported-sku-summary'), cls=CommandGroupWithAlias, help="""A specific SKU. HOUR, MONTH, ONE_YEAR and THREE_YEARS supported by the Oracle Cloud VMware Solution.""")
+@cli_util.help_option_group
+def supported_sku_summary_group():
+    pass
+
+
 ocvs_service_cli.ocvs_service_group.add_command(sddc_root_group)
 sddc_root_group.add_command(sddc_group)
 sddc_root_group.add_command(supported_vmware_software_version_summary_group)
 sddc_root_group.add_command(sddc_summary_group)
+sddc_root_group.add_command(supported_sku_summary_group)
 
 
 @sddc_group.command(name=cli_util.override('sddc.change_sddc_compartment.command_name', 'change-compartment'), help=u"""Moves an SDDC into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSddcCompartment)""")
@@ -89,6 +96,7 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--esxi-hosts-count', required=True, type=click.INT, help=u"""The number of ESXi hosts to create in the SDDC. You can add more hosts later (see [CreateEsxiHost]).
 
 **Note:** If you later delete EXSi hosts from the SDDC to total less than 3, you are still billed for the 3 minimum recommended EXSi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.""")
+@cli_util.option('--initial-sku', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option selected during SDDC creation [ListSupportedSkus].""")
 @cli_util.option('--ssh-authorized-keys', required=True, help=u"""One or more public SSH keys to be included in the `~/.ssh/authorized_keys` file for the default user on each ESXi host. Use a newline character to separate multiple keys. The SSH keys must be in the format required for the `authorized_keys` file""")
 @cli_util.option('--provisioning-subnet-id', required=True, help=u"""The [OCID] of the management subnet to use for provisioning the SDDC.""")
 @cli_util.option('--vsphere-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the vSphere component of the VMware environment.""")
@@ -123,7 +131,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, is_hcx_enabled, hcx_vlan_id, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, initial_sku, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, is_hcx_enabled, hcx_vlan_id, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -133,6 +141,7 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     _details['vmwareSoftwareVersion'] = vmware_software_version
     _details['compartmentId'] = compartment_id
     _details['esxiHostsCount'] = esxi_hosts_count
+    _details['initialSku'] = initial_sku
     _details['sshAuthorizedKeys'] = ssh_authorized_keys
     _details['provisioningSubnetId'] = provisioning_subnet_id
     _details['vsphereVlanId'] = vsphere_vlan_id
@@ -338,6 +347,54 @@ def list_sddcs(ctx, from_json, all_pages, page_size, compartment_id, compute_ava
         )
     else:
         result = client.list_sddcs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@supported_sku_summary_group.command(name=cli_util.override('sddc.list_supported_skus.command_name', 'list-supported-skus'), help=u"""Lists supported SKUs. HHOUR, MONTH, ONE_YEAR and THREE_YEARS supported by the Oracle Cloud VMware Solution. \n[Command Reference](listSupportedSkus)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'SupportedSkuSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_supported_skus(ctx, from_json, all_pages, page_size, compartment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_supported_skus,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_supported_skus,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_supported_skus(
             compartment_id=compartment_id,
             **kwargs
         )

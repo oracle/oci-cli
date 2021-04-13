@@ -93,6 +93,9 @@ IGNORED_COMMANDS = [
     ['resource-manager', 'stack', 'copy'],
     ['log-analytics', 'upload', 'upload-log-file'],
     ['log-analytics', 'upload', 'upload-log-events-file'],
+    ['database-migration', 'agent', 'update'],
+    ['database-migration', 'connection', 'create'],
+    ['database-migration', 'connection', 'update']
 ]
 
 IGNORED_COMMANDS_DOCS = [

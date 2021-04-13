@@ -27,3 +27,19 @@ from oci_cli import cli_util
 cli_util.rename_command(gateway_cli, gateway_cli.gateway_group, gateway_cli.list_gateways, "list")
 api_gateway_service_cli.api_gateway_service_group.commands.pop(gateway_cli.gateway_root_group.name)
 api_gateway_service_cli.api_gateway_service_group.add_command(gateway_cli.gateway_group)
+
+
+# Remove create-gateway-external-resp-cache from oci api-gateway gateway
+gateway_cli.gateway_group.commands.pop(gateway_cli.create_gateway_external_resp_cache.name)
+
+
+# Remove create-gateway-no-cache from oci api-gateway gateway
+gateway_cli.gateway_group.commands.pop(gateway_cli.create_gateway_no_cache.name)
+
+
+# Remove update-gateway-external-resp-cache from oci api-gateway gateway
+gateway_cli.gateway_group.commands.pop(gateway_cli.update_gateway_external_resp_cache.name)
+
+
+# Remove update-gateway-no-cache from oci api-gateway gateway
+gateway_cli.gateway_group.commands.pop(gateway_cli.update_gateway_no_cache.name)

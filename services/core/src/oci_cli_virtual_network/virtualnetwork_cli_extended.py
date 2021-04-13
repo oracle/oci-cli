@@ -57,6 +57,7 @@ cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.security_rule_gro
 
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.add_vcn_cidr, "add-vcn-cidr")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.remove_vcn_cidr, "remove-vcn-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.add_ipv6_vcn_cidr, "add-ipv6-vcn-cidr")
 
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
@@ -270,6 +271,120 @@ def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
         sys.exit('Taking no action as {} is the primary private IP on VNIC {}'.format(ip_address, vnic_id))
 
     networking_client.delete_private_ip(target_ip_address.id)
+
+    # The delete result has an empty body on success so doing cli_util.render_response provides no feedback. Instead, just echo out a
+    # confirmation
+    click.echo('Unassigned IP address {} from VNIC {}'.format(ip_address, vnic_id), err=True)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_ipv6, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
+@virtualnetwork_cli.vnic_group.command(name='assign-ipv6', help=virtualnetwork_cli.create_ipv6.help)
+@cli_util.option('--unassign-if-already-assigned', is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@cli_util.wrap_exceptions
+def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned):
+    networking_client = cli_util.build_client('core', 'virtual_network', ctx)
+
+    # First we get the VNIC because we need to know the subnet OCID for the ListIpv6s call
+    vnic = networking_client.get_vnic(vnic_id).data
+    subnet_id = vnic.subnet_id
+
+    is_ip_reassignment = False
+    if ip_address is not None:
+        # Try and see whether the IP is already in use by calling ListIpv6s with the IP address and subnet. In this case, we don't
+        # worry about pagination because we expect at most 1 entry
+        list_ips_response = networking_client.list_ipv6s(ip_address=ip_address, subnet_id=subnet_id, vnic_id=vnic_id)
+        list_ips_response_data = list_ips_response.data
+
+        if list_ips_response_data is not None:
+            if len(list_ips_response_data) == 1:
+                # If the IP is already on the VNIC, make this a no-op
+                if list_ips_response_data[0].vnic_id == vnic_id:
+                    click.echo('Taking no action as IP address {} is already assigned to VNIC {}'.format(ip_address, vnic_id), err=True)
+                    return
+
+                # The IP address exists and it can theoretically be moved on a separate VNIC.
+                # However, if the user did not specify the --unassign-if-already-assigned flag then we do not proceed
+                # as they haven't explicitly said they want to do the reassignment
+                if not unassign_if_already_assigned:
+                    sys.exit(
+                        'IP address {} is already assigned to a different VNIC: {}. To reassign it, re-run this command with the --unassign-if-already-assigned option'.format(
+                            ip_address, list_ips_response_data[0].vnic_id
+                        )
+                    )
+
+                is_ip_reassignment = True
+            elif len(list_ips_response_data) > 1:
+                # This would be unexpected as it means that the IP exists twice in the subnet
+                sys.exit(
+                    'IP address {} appeared {} times in subnet with OCID {}. It is expected to appear at most once (Request ID: {})'.format(
+                        ip_address, len(list_ips_response_data), subnet_id, list_ips_response.request_id
+                    )
+                )
+
+    assign_ip_request_body = {}
+    assign_ip_request_body['vnicId'] = vnic_id
+
+    # These are optional in the request, so check whether we should set them or not.
+    if display_name is not None:
+        assign_ip_request_body['displayName'] = display_name
+    if defined_tags is not None:
+        assign_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+    if freeform_tags is not None:
+        assign_ip_request_body['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    # If we are here then either the IP address does not exist or it is a candidate to be moved
+    if not is_ip_reassignment:
+        if ip_address is not None:
+            assign_ip_request_body['ipAddress'] = ip_address
+
+        result = networking_client.create_ipv6(assign_ip_request_body)
+    else:
+        result = networking_client.update_ipv6(list_ips_response_data[0].id, assign_ip_request_body)
+
+    ip_id = result.data.id
+    get_ip_id_result = networking_client.get_ipv6(ip_id)
+
+    cli_util.render_response(get_ip_id_result, ctx)
+
+
+@virtualnetwork_cli.vnic_group.command(name='unassign-ipv6', help=virtualnetwork_cli.delete_ipv6.help)
+@cli_util.option('--vnic-id', required=True, help="""The OCID of the VNIC to unassign the private IP from.""")
+@cli_util.option('--ip-address', required=True, help="""The IP to unassign from the VNIC.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def unassign_ipv6(ctx, from_json, vnic_id, ip_address):
+    networking_client = cli_util.build_client('core', 'virtual_network', ctx)
+
+    list_ips_response = networking_client.list_ipv6s(ip_address=ip_address, vnic_id=vnic_id)
+
+    if list_ips_response.data is None:
+        sys.exit('No IP addresses found for VNIC {}'.format(vnic_id))
+
+    ip_addresses = list_ips_response.data
+    next_page = list_ips_response.next_page
+    while next_page is not None:
+        list_ips_response = networking_client.list_ipv6s(ip_address=ip_address, vnic_id=vnic_id, page=next_page)
+
+        if list_ips_response.data is not None:
+            ip_addresses += list_ips_response.data
+
+        next_page = list_ips_response.next_page
+
+    target_ip_address = None
+    for ip in ip_addresses:
+        if ip.ip_address == ip_address:
+            target_ip_address = ip
+            break
+
+    if target_ip_address is None:
+        sys.exit('IP address {} was not found on VNIC {}'.format(ip_address, vnic_id))
+
+    networking_client.delete_ipv6(target_ip_address.id)
 
     # The delete result has an empty body on success so doing cli_util.render_response provides no feedback. Instead, just echo out a
     # confirmation
@@ -666,3 +781,173 @@ def update_virtual_circuit_extended(ctx, from_json, force, wait_for_state, max_w
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+# DRG Attachment
+virtualnetwork_cli.drg_attachment_group.commands.pop(virtualnetwork_cli.create_drg_attachment_vcn_drg_attachment_network_create_details.name)
+virtualnetwork_cli.drg_attachment_group.commands.pop(virtualnetwork_cli.update_drg_attachment_vcn_drg_attachment_network_update_details.name)
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_attachment_group, virtualnetwork_cli.remove_export_drg_route_distribution, "remove-export-route-distribution")
+
+# DRG Route Distribution
+virtualnetwork_cli.drg_route_distribution_statement_group.commands.pop(virtualnetwork_cli.delete_drg_route_distribution.name)
+virtualnetwork_cli.drg_route_distribution_group.add_command(virtualnetwork_cli.delete_drg_route_distribution)
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_distribution_group, virtualnetwork_cli.delete_drg_route_distribution, "delete")
+
+# DRG Route Table
+virtualnetwork_cli.drg_route_table_group.add_command(virtualnetwork_cli.delete_drg_route_table)
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_table_group, virtualnetwork_cli.delete_drg_route_table, "delete")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_table_group, virtualnetwork_cli.remove_import_drg_route_distribution, "remove-import-route-distribution")
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.get_drg_route_distribution, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_group.command(name=virtualnetwork_cli.get_drg_route_distribution.name, help=virtualnetwork_cli.get_drg_route_distribution.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgRouteDistribution'})
+@cli_util.wrap_exceptions
+def get_drg_route_distribution_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.get_drg_route_distribution, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.update_drg_route_distribution, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_group.command(name=virtualnetwork_cli.update_drg_route_distribution.name, help=virtualnetwork_cli.update_drg_route_distribution.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}},
+    output_type={'module': 'core', 'class': 'DrgRouteDistribution'})
+@cli_util.wrap_exceptions
+def update_drg_route_distribution_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.update_drg_route_distribution, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.add_drg_route_distribution_statements, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_statement_group.command(name=virtualnetwork_cli.add_drg_route_distribution_statements.name,
+                                                                   help=virtualnetwork_cli.add_drg_route_distribution_statements.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'core', 'class': 'list[AddDrgRouteDistributionStatementDetails]'}},
+                                                      output_type={'module': 'core', 'class': 'list[DrgRouteDistributionStatement]'})
+@cli_util.wrap_exceptions
+def add_drg_route_distribution_statements_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.add_drg_route_distribution_statements, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.delete_drg_route_distribution, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_group.command(name=virtualnetwork_cli.delete_drg_route_distribution.name, help=virtualnetwork_cli.delete_drg_route_distribution.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_drg_route_distribution_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.delete_drg_route_distribution, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.list_drg_route_distribution_statements, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_statement_group.command(name=virtualnetwork_cli.list_drg_route_distribution_statements.name,
+                                                                   help=virtualnetwork_cli.list_drg_route_distribution_statements.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DrgRouteDistributionStatement]'})
+@cli_util.wrap_exceptions
+def list_drg_route_distribution_statements_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.list_drg_route_distribution_statements, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.remove_drg_route_distribution_statements, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_statement_group.command(name=virtualnetwork_cli.remove_drg_route_distribution_statements.name,
+                                                                   help=virtualnetwork_cli.remove_drg_route_distribution_statements.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statement-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def remove_drg_route_distribution_statements_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.remove_drg_route_distribution_statements, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.update_drg_route_distribution_statements, params_to_exclude=['drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_distribution_statement_group.command(name=virtualnetwork_cli.update_drg_route_distribution_statements.name,
+                                                                   help=virtualnetwork_cli.update_drg_route_distribution_statements.help)
+@cli_util.option('--route-distribution-id', required=True, help=u"""The OCID of the Route Distribution [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'core', 'class': 'list[UpdateDrgRouteDistributionStatementDetails]'}},
+                                                      output_type={'module': 'core', 'class': 'list[DrgRouteDistributionStatement]'})
+@cli_util.wrap_exceptions
+def update_drg_route_distribution_statements_extended(ctx, **kwargs):
+    if 'route_distribution_id' in kwargs:
+        kwargs['drg_route_distribution_id'] = kwargs['route_distribution_id']
+        kwargs.pop('route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.update_drg_route_distribution_statements, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_drg_route_table, params_to_exclude=['import_drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_table_group.command(name=virtualnetwork_cli.create_drg_route_table.name, help=virtualnetwork_cli.create_drg_route_table.help)
+@cli_util.option('--import-route-distribution-id',
+                 help=u"""The OCID of the import route distribution used to specify how incoming route advertisements through referenced attachements are inserted into the DRG route table.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}},
+    output_type={'module': 'core', 'class': 'DrgRouteTable'})
+@cli_util.wrap_exceptions
+def create_drg_route_table_extended(ctx, **kwargs):
+    if 'import_route_distribution_id' in kwargs:
+        kwargs['import_drg_route_distribution_id'] = kwargs['import_route_distribution_id']
+        kwargs.pop('import_route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.create_drg_route_table, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.list_drg_route_tables, params_to_exclude=['import_drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_table_group.command(name=virtualnetwork_cli.list_drg_route_tables.name, help=virtualnetwork_cli.list_drg_route_tables.help)
+@cli_util.option('--import-route-distribution-id', help=u"""The OCID of the import Route Distribution.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DrgRouteTable]'})
+@cli_util.wrap_exceptions
+def list_drg_route_tables_extended(ctx, **kwargs):
+    if 'import_route_distribution_id' in kwargs:
+        kwargs['import_drg_route_distribution_id'] = kwargs['import_route_distribution_id']
+        kwargs.pop('import_route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.list_drg_route_tables, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.update_drg_route_table, params_to_exclude=['import_drg_route_distribution_id'])
+@virtualnetwork_cli.drg_route_table_group.command(name=virtualnetwork_cli.update_drg_route_table.name, help=virtualnetwork_cli.update_drg_route_table.help)
+@cli_util.option('--import-route-distribution-id',
+                 help=u"""The OCID of the import route distribution used to specify how incoming route advertisements through referenced attachements are inserted into the DRG route table.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}},
+    output_type={'module': 'core', 'class': 'DrgRouteTable'})
+@cli_util.wrap_exceptions
+def update_drg_route_table_extended(ctx, **kwargs):
+    if 'import_route_distribution_id' in kwargs:
+        kwargs['import_drg_route_distribution_id'] = kwargs['import_route_distribution_id']
+        kwargs.pop('import_route_distribution_id')
+
+    ctx.invoke(virtualnetwork_cli.update_drg_route_table, **kwargs)
