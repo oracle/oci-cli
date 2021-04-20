@@ -1548,7 +1548,7 @@ def update_okv_keystore(ctx, **kwargs):
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
 @database_cli.autonomous_database_group.command(name='create', help=database_cli.create_autonomous_database_create_autonomous_database_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs):
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
@@ -1566,7 +1566,7 @@ def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs)
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
 @database_cli.autonomous_database_group.command(name='create-from-clone', help=database_cli.create_autonomous_database_create_autonomous_database_clone_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_clone_details(ctx, **kwargs):
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
@@ -1584,7 +1584,7 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, **k
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
 @database_cli.autonomous_database_group.command(name='update', help=database_cli.update_autonomous_database.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def update_autonomous_database(ctx, **kwargs):
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
@@ -1599,7 +1599,7 @@ def update_autonomous_database(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled'])
 @database_cli.autonomous_database_group.command(name='create-refreshable-clone', help=database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, **kwargs)
@@ -1609,7 +1609,7 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, params_to_exclude=['is_access_control_enabled'])
 @database_cli.autonomous_database_group.command(name='create-from-backup-id', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, **kwargs)
@@ -1619,7 +1619,7 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, params_to_exclude=['is_access_control_enabled'])
 @database_cli.autonomous_database_group.command(name='create-from-backup-timestamp', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details.help)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, **kwargs):
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, **kwargs)
@@ -2052,3 +2052,87 @@ def update_external_pluggable_database_extended(ctx, **kwargs):
         kwargs.pop('external_pdb_id')
 
     ctx.invoke(database_cli.update_external_pluggable_database, **kwargs)
+
+
+# oci db external-non-cdb disable-external-non-container-database-operations-insights -> oci db external-non-cdb disable-operations-insights
+cli_util.rename_command(database_cli, database_cli.external_non_container_database_group, database_cli.disable_external_non_container_database_operations_insights, "disable-operations-insights")
+
+
+# oci db external-non-cdb enable-external-non-container-database-operations-insights -> oci db external-non-cdb enable-operations-insights
+cli_util.rename_command(database_cli, database_cli.external_non_container_database_group, database_cli.enable_external_non_container_database_operations_insights, "enable-operations-insights")
+
+
+# oci db external-pdb disable-external-pluggable-database-operations-insights -> oci db external-pdb disable-operations-insights
+cli_util.rename_command(database_cli, database_cli.external_pluggable_database_group, database_cli.disable_external_pluggable_database_operations_insights, "disable-operations-insights")
+
+
+# oci db external-pdb enable-external-pluggable-database-operations-insights -> oci db external-pdb enable-operations-insights
+cli_util.rename_command(database_cli, database_cli.external_pluggable_database_group, database_cli.enable_external_pluggable_database_operations_insights, "enable-operations-insights")
+
+
+@cli_util.copy_params_from_generated_command(database_cli.disable_external_non_container_database_operations_insights, params_to_exclude=['external_non_container_database_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.disable_external_non_container_database_operations_insights.name, help=database_cli.disable_external_non_container_database_operations_insights.help)
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The external non-container database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_external_non_container_database_operations_insights_extended(ctx, **kwargs):
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.disable_external_non_container_database_operations_insights, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.enable_external_non_container_database_operations_insights, params_to_exclude=['external_database_connector_id', 'external_non_container_database_id', 'external_database_connector_id'])
+@database_cli.external_non_container_database_group.command(name=database_cli.enable_external_non_container_database_operations_insights.name, help=database_cli.enable_external_non_container_database_operations_insights.help)
+@cli_util.option('--external-db-connector-id', required=True, help="""The [OCID] of the [external database connector]. [required]""")
+@cli_util.option('--external-non-cdb-id', required=True, help=u"""The [OCID] of the external non-container database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_external_non_container_database_operations_insights_extended(ctx, **kwargs):
+
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    if 'external_non_cdb_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_non_cdb_id']
+        kwargs.pop('external_non_cdb_id')
+
+    ctx.invoke(database_cli.enable_external_non_container_database_operations_insights, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.disable_external_pluggable_database_operations_insights, params_to_exclude=['external_pluggable_database_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.disable_external_pluggable_database_operations_insights.name, help=database_cli.disable_external_pluggable_database_operations_insights.help)
+@cli_util.option('--external-pdb-id', required=True, help=u"""The ExternalPluggableDatabaseId [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_external_pluggable_database_operations_insights_extended(ctx, **kwargs):
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.disable_external_pluggable_database_operations_insights, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.enable_external_pluggable_database_operations_insights, params_to_exclude=['external_database_connector_id', 'external_pluggable_database_id', 'external_database_connector_id'])
+@database_cli.external_pluggable_database_group.command(name=database_cli.enable_external_pluggable_database_operations_insights.name, help=database_cli.enable_external_pluggable_database_operations_insights.help)
+@cli_util.option('--external-db-connector-id', required=True, help="""The [OCID] of the [external database connector]. [required]""")
+@cli_util.option('--external-pdb-id', required=True, help=u"""The [OCID] of the external pluggable database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_external_pluggable_database_operations_insights_extended(ctx, **kwargs):
+
+    if 'external_db_connector_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_db_connector_id']
+        kwargs.pop('external_db_connector_id')
+
+    if 'external_pdb_id' in kwargs:
+        kwargs['external_database_connector_id'] = kwargs['external_pdb_id']
+        kwargs.pop('external_pdb_id')
+
+    ctx.invoke(database_cli.enable_external_pluggable_database_operations_insights, **kwargs)

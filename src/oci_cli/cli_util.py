@@ -47,6 +47,7 @@ from .version import __version__
 from . import string_utils
 from . import help_text_producer
 from . import cli_constants
+from . import cli_metrics
 
 try:
     # PY3+
@@ -480,6 +481,13 @@ def build_client(spec_name, service_name, ctx):
             # TODO: Update this once alternate certs are exposed in the SDK.
             client.base_client.session.verify = cert_bundle
 
+        if cli_metrics.Metrics.is_metrics_enabled():
+            invocation_time = timer() - ctx.obj['start_time']
+            if ctx.obj['debug']:
+                logger.debug(oci.base_client.utc_now() + "Invocation time: " + str(invocation_time))
+            if invocation_time > cli_metrics.Metrics.get_pre_invocation_delay():
+                cli_metrics.Metrics.update_metric("NUM_SLOW_INVOCATIONS", ctx.obj['debug'])
+
         return client
     except exceptions.InvalidPrivateKey as bad_key:
         sys.exit(str(bad_key))
@@ -763,7 +771,8 @@ def wrap_exceptions(func):
             if exception.status == 401:
                 warn_if_token_present_in_profile_but_not_using_token_auth(ctx)
                 command_name = (ctx.command_path).split()[1] if len(ctx.command_path) > 1 else 'compute'
-                warn_if_clock_skew_present(ctx.obj.get('config'), command_name)
+                is_obo_user = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
+                warn_if_clock_skew_present(ctx.obj.get('config'), command_name, ctx.obj['debug'], is_obo_user)
 
             if ctx.obj["debug"]:
                 raise
@@ -785,6 +794,9 @@ def wrap_exceptions(func):
                 raise
             tpl = "{usage}\n\nError: Missing option --endpoint."
             sys.exit(tpl.format(usage=ctx.get_usage()))
+        except (oci.exceptions.RequestException, oci.exceptions.ConnectTimeout):
+            cli_metrics.Metrics.update_metric("NUM_CONN_FAILURES", ctx.obj['debug'])
+            raise
         except Exception as exception:
             if ctx.obj["debug"]:
                 raise
@@ -1536,7 +1548,7 @@ def get_spec_name_from_command_name(command_name, link_replacements={}, generate
 
 
 # checks computer time vs server time to determine if clock skew is > 5 minute threshold
-def warn_if_clock_skew_present(config, command_name):
+def warn_if_clock_skew_present(config, command_name, debug=False, is_obo_user=False):
     try:
         try:
             spec_name = get_spec_name_from_command_name(command_name)
@@ -1559,6 +1571,9 @@ def warn_if_clock_skew_present(config, command_name):
                 server_time=server_time,
                 threshold=CLOCK_SKEW_WARNING_THRESHOLD_MINUTES)
             click.echo(click.style(warning, fg='red'), file=sys.stderr)
+        else:
+            if is_obo_user:
+                cli_metrics.Metrics.update_metric("NUM_AUTH_FAILURES", debug)
     except Exception:
         # this warning is a just a convenience so we dont want to raise an error if there is an exception
         # fetching the server time

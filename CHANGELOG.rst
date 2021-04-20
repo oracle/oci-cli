@@ -6,6 +6,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.24.0 - 2021-04-20
+-------------------
+Added
+~~~~~
+
+* Support for enabling and disabling Operations Insights for External Non-Container and External Pluggable Databases in Database service
+
+  * ``oci db external-non-cdb enable-operations-insights``
+  * ``oci db external-non-cdb disable-operations-insights``
+  * ``oci db external-pdb enable-operations-insights``
+  * ``oci db external-pdb disable-operations-insights``
+
+* Support for customer contract for Autonomous Databases in Database Service
+
+  * ``oci db autonomous-database create --customer-contacts``
+  * ``oci db autonomous-database create-from-backup-id --customer-contacts``
+  * ``oci db autonomous-database create-from-backup-timestamp --customer-contacts``
+  * ``oci db autonomous-database create-from-clone --customer-contacts``
+  * ``oci db autonomous-database create-refreshable-clone --customer-contacts``
+  * ``oci db autonomous-database update --customer-contacts``
+
+* Support for business name annotation of harvested objects in Data Catalog service
+
+  * ``oci data-catalog attribute | entity | folder update --business-name``
+
+* Support for opt-in/opt-out of live migration at an instance level in Compute service
+
+  * ``oci compute instance launch --availability-config '{"isLiveMigrationPreferred": true}'``
+
+Changed
+~~~~~~~
+
+* [Breaking] This version drops support for Python 3.5
+
+  * Due to a possible security issue in the version of the dependent cryptography package, we have bumped up the version to 3.3.2. This version does not support Python 3.5.
+
+* Updated help text for putting messages into a stream in Streaming Service
+
+  * ``oci streaming stream message put``
+
+* Some unused commands have been removed from the DNS service
+
+  * ``oci dns resolver-endpoint create-resolver-endpoint-create-resolver-vnic-endpoint-details``
+  * ``oci dns resolver-endpoint update-resolver-endpoint-update-resolver-vnic-endpoint-details``
+
+* Some parameters made optional for signing uploads in Artifacts service
+
+  * ``oci artifacts container image-signature sign-upload --description --metadata``
+
 2.23.0 - 2021-04-13
 -------------------
 Added

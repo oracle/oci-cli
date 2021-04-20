@@ -134,8 +134,6 @@ class TestArtifact(unittest.TestCase):
         assert 'compartment-id' in result.output
         assert 'image-id' in result.output
         assert 'signing-algorithm' in result.output
-        assert 'metadata' in result.output
-        assert 'description' in result.output
 
     def test_get_and_verify_image_signature_metadata(self):
         result = util.invoke_command((['artifacts', 'container', 'image-signature', 'get-verify', '--trusted-keys', 'ocid.key.1', '--trusted-keys', 'ocid.key.2']))
