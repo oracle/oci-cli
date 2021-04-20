@@ -2,24 +2,29 @@
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
-import sys
-from oci.config import DEFAULT_LOCATION, DEFAULT_PROFILE
-import click
-import configparser
-import os.path
-import logging
-from oci.util import Sentinel
-import six
-import importlib
-import re
-from .version import __version__
-from .aliasing import parameter_alias, CommandGroupWithAlias
-from . import help_text_producer
-from . import cli_util
+from timeit import default_timer as timer
 
-from . import cli_constants
-from collections import OrderedDict
-from oci._vendor import requests
+start = timer()
+
+import sys  # noqa: E402
+from oci.config import DEFAULT_LOCATION, DEFAULT_PROFILE    # noqa: E402
+import click    # noqa: E402
+import configparser     # noqa: E402
+import os.path  # noqa: E402
+import logging  # noqa: E402
+from oci.util import Sentinel   # noqa: E402
+import six  # noqa: E402
+import importlib    # noqa: E402
+import re   # noqa: E402
+from .version import __version__    # noqa: E402
+from .aliasing import parameter_alias, CommandGroupWithAlias    # noqa: E402
+from . import help_text_producer    # noqa: E402
+from . import cli_util  # noqa: E402
+
+from . import cli_constants     # noqa: E402
+from collections import OrderedDict     # noqa: E402
+from oci._vendor import requests    # noqa: E402
+from . import cli_metrics    # noqa: E402
 
 # Enable WARN logging to surface important warnings attached to loading
 # defaults, automatic coercion, or fallback values/endpoints that may impact
@@ -388,6 +393,9 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         if is_top_level_help(ctx) and not cli_util.parse_boolean(ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
             help_text_producer.render_help_text(ctx, [sys.argv[1]])
 
+    cli_metrics.Metrics.update_metric("NUM_INVOCATIONS", ctx.obj['debug'])
+    ctx.obj['start_time'] = start
+
     # Support inititialization for a subcommand.
     # In an "extended" file, add a mapping of the subcommand to the subcommand_init_module.
     # The subcommand_init_module can be the extended file itself or a separate module altogether.
@@ -397,7 +405,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         subcommand_init_module_name = cli_util.SUBCOMMAND_TO_SERVICE_INIT_MODULE[ctx.invoked_subcommand]
         subcommand_init_module = importlib.import_module(subcommand_init_module_name)
         subcommand_init_module.init()
-    except Exception as e:
+    except Exception:
         pass
 
 

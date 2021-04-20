@@ -20,21 +20,6 @@ build-py27:
         oci --version
         oci compute instance launch --generate-full-command-json-input
 
-build-py35:
-  box: python:3.5
-  steps:
-    - pip-install
-    - pip-install:
-      requirements_file: ""
-      extra_args: "-e ."
-    - script:
-      name: make sure CLI can be invoked
-      code: |
-        python --version
-        oci
-        oci --version
-        oci compute instance launch --generate-full-command-json-input
-
 build-py36:
   box: python:3.6
   steps:

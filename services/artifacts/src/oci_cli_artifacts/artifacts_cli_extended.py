@@ -168,8 +168,8 @@ def list_container_images_extended(ctx, **kwargs):
 @cli_util.option('--signing-algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS"]), help=u"""The algorithm to be used for signing. These are the only supported signing algorithms for container images.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the container repository exists.""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.""")
-@cli_util.option('--description', required=True, help="""Description""")
-@cli_util.option('--metadata', required=True, help="""Metadata""")
+@cli_util.option('--description', help="""The optional text of your choice to describe the image. The description is included as part of the signature, and is shown in the Console. For example, --description "Image for UAT testing" """)
+@cli_util.option('--metadata', help="""The optional information of your choice about the image, in a valid JSON format (alphanumeric characters only, with no whitespace or escape characters). For example, --metadata "{\"buildNumber\":\"123\"}" """)
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -200,6 +200,17 @@ def sign_and_upload_container_image_signature_metadata(ctx, from_json, kms_key_i
     - should not have whitespaces or escape characters.
     :return: A :class:`~oci.response.Response` object with data of type :class:`~oci.artifacts.models.ContainerImageSignature`
     """
+
+    if description is None:
+        description = ""
+
+    if metadata is None:
+        metadata = ""
+    else:
+        try:
+            json.loads(metadata)
+        except ValueError as e:
+            raise Exception("Metadata should be in valid json format (alphanumeric characters only, with no whitespace or escape characters).")
 
     signing_algo_kms = signing_algorithm
     signing_algo_ocir = signing_algorithm

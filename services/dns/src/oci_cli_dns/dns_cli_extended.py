@@ -60,6 +60,9 @@ def migrate_zone_from_dynect(ctx, **kwargs):
     ctx.invoke(dns_cli.create_zone_create_migrated_dynect_zone_details, **kwargs)
 
 
+dns_cli.resolver_endpoint_group.commands.pop(dns_cli.create_resolver_endpoint_create_resolver_vnic_endpoint_details.name)
+dns_cli.resolver_endpoint_group.commands.pop(dns_cli.update_resolver_endpoint_update_resolver_vnic_endpoint_details.name)
+
 dns_cli.zone_group.commands.pop(dns_cli.create_zone.name)
 dns_cli.zone_group.commands.pop(dns_cli.create_zone_create_migrated_dynect_zone_details.name)
 dns_cli.zone_group.commands.pop(dns_cli.create_zone_create_zone_details.name)

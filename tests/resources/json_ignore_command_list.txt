@@ -18,3 +18,5 @@ resource-manager, stack, update
 rover, cluster, set-secrets
 rover, node, set-secrets
 waas, protection-settings, update
+db, external-non-cdb, enable-operations-insights
+db, external-pdb, enable-operations-insights

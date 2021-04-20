@@ -207,6 +207,12 @@ def data_asset_tag_group():
     pass
 
 
+@click.command(cli_util.override('data_catalog.suggest_results_group.command_name', 'suggest-results'), cls=CommandGroupWithAlias, help="""The list of potential matches returned from the suggest operation for the given input text. The size of the list will be determined by the limit parameter.""")
+@cli_util.help_option_group
+def suggest_results_group():
+    pass
+
+
 @click.command(cli_util.override('data_catalog.glossary_group.command_name', 'glossary'), cls=CommandGroupWithAlias, help="""Full glossary details. A glossary of business terms, such as 'Customer', 'Account', 'Contact' , 'Address', or 'Product', with definitions, used to provide common meaning across disparate data assets. Business glossaries may be hierarchical where some terms may contain child terms to allow them to be used as 'taxonomies'. By linking data assets, data entities, and attributes to glossaries and glossary terms, the glossary can act as a way of organizing data catalog objects in a hierarchy to make a large number of objects more navigable and easier to consume. Objects in the data aatalog, such as data assets or data entities, may be linked to any level in the glossary, so that the glossary can be used to browse the available data according to the business model of the organization.""")
 @cli_util.help_option_group
 def glossary_group():
@@ -304,6 +310,7 @@ data_catalog_root_group.add_command(attribute_collection_group)
 data_catalog_root_group.add_command(folder_tag_group)
 data_catalog_root_group.add_command(search_result_group)
 data_catalog_root_group.add_command(data_asset_tag_group)
+data_catalog_root_group.add_command(suggest_results_group)
 data_catalog_root_group.add_command(glossary_group)
 data_catalog_root_group.add_command(folder_group)
 data_catalog_root_group.add_command(namespace_group)
@@ -621,6 +628,7 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--external-data-type', required=True, help=u"""Data type of the attribute as defined in the external system.""")
 @cli_util.option('--time-external', required=True, type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of this object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--business-name', help=u"""Optional user friendly business name of the attribute. If set, this supplements the harvested display name of the object.""")
 @cli_util.option('--description', help=u"""Detailed description of the attribute.""")
 @cli_util.option('--is-incremental-data', type=click.BOOL, help=u"""Property that identifies if this attribute can be used as a watermark to extract incremental data.""")
 @cli_util.option('--is-nullable', type=click.BOOL, help=u"""Property that identifies if this attribute can be assigned null values.""")
@@ -644,7 +652,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties):
+def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, business_name, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -662,6 +670,9 @@ def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     _details['displayName'] = display_name
     _details['externalDataType'] = external_data_type
     _details['timeExternal'] = time_external
+
+    if business_name is not None:
+        _details['businessName'] = business_name
 
     if description is not None:
         _details['description'] = description
@@ -947,7 +958,7 @@ def create_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
 
 This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--enc-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the encrypted values for sensitive properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"encProperties\": { \"default\": { \"password\": \"pwd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--enc-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the encrypted values for sensitive properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"encProperties\": { \"default\": { \"password\": \"example-password\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates whether this connection is the default connection. The first connection of a data asset defaults to being the default, subsequent connections default to not being the default. If a default connection already exists, then trying to create a connection as the default will fail. In this case the default connection would need to be updated not to be the default and then the new connection can then be created as the default.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1029,6 +1040,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--is-multi-valued', type=click.BOOL, help=u"""If this field allows multiple values to be set""")
 @cli_util.option('--is-hidden', type=click.BOOL, help=u"""If this field is a hidden field""")
 @cli_util.option('--is-editable', type=click.BOOL, help=u"""If this field is a editable field""")
+@cli_util.option('--is-shown-in-list', type=click.BOOL, help=u"""If this field is displayed in a list view of applicable objects.""")
 @cli_util.option('--is-hidden-in-search', type=click.BOOL, help=u"""If this field is allowed to pop in search results""")
 @cli_util.option('--allowed-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed values for the custom property if any""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the data asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. To determine the set of optional and required properties for a data asset type, a query can be done on '/types?type=dataAsset' that returns a collection of all data asset types. The appropriate data asset type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1040,7 +1052,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
 @cli_util.wrap_exceptions
-def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, data_type, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_hidden_in_search, allowed_values, properties):
+def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, data_type, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, allowed_values, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1074,6 +1086,9 @@ def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if is_editable is not None:
         _details['isEditable'] = is_editable
+
+    if is_shown_in_list is not None:
+        _details['isShownInList'] = is_shown_in_list
 
     if is_hidden_in_search is not None:
         _details['isHiddenInSearch'] = is_hidden_in_search
@@ -1257,6 +1272,7 @@ def create_data_asset_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--time-external', required=True, type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of the object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--business-name', help=u"""Optional user friendly business name of the data entity. If set, this supplements the harvested display name of the object.""")
 @cli_util.option('--description', help=u"""Detailed description of a data entity.""")
 @cli_util.option('--is-logical', type=click.BOOL, help=u"""Property to indicate if the object is a physical materialized object or virtual. For example, View.""")
 @cli_util.option('--is-partition', type=click.BOOL, help=u"""Property to indicate if the object is a sub object of a parent physical object.""")
@@ -1277,7 +1293,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
 @cli_util.wrap_exceptions
-def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, description, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties):
+def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, description, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1291,6 +1307,9 @@ def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     _details = {}
     _details['displayName'] = display_name
     _details['timeExternal'] = time_external
+
+    if business_name is not None:
+        _details['businessName'] = business_name
 
     if description is not None:
         _details['description'] = description
@@ -1430,6 +1449,7 @@ def create_entity_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--time-external', required=True, type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of this object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--business-name', help=u"""Optional user friendly business name of the folder. If set, this supplements the harvested display name of the object.""")
 @cli_util.option('--description', help=u"""Detailed description of a folder.""")
 @cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
 
@@ -1446,7 +1466,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
 @cli_util.wrap_exceptions
-def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, description, custom_property_members, properties, parent_folder_key, last_job_key, harvest_status):
+def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, description, custom_property_members, properties, parent_folder_key, last_job_key, harvest_status):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1460,6 +1480,9 @@ def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     _details = {}
     _details['displayName'] = display_name
     _details['timeExternal'] = time_external
+
+    if business_name is not None:
+        _details['businessName'] = business_name
 
     if description is not None:
         _details['description'] = description
@@ -4181,6 +4204,8 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--business-name', help=u"""A filter to return only resources that match the entire business name given. The match is not case sensitive.""")
+@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\".""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4208,7 +4233,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'AttributeCollection'})
 @cli_util.wrap_exceptions
-def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, external_type_name, is_incremental_data, is_nullable, length, position, precision, scale, fields, sort_by, sort_order, limit, page):
+def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, display_name, business_name, display_or_business_name_contains, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, external_type_name, is_incremental_data, is_nullable, length, position, precision, scale, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4225,6 +4250,10 @@ def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if business_name is not None:
+        kwargs['business_name'] = business_name
+    if display_or_business_name_contains is not None:
+        kwargs['display_or_business_name_contains'] = display_or_business_name_contains
     if display_name_contains is not None:
         kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
@@ -4855,6 +4884,9 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--business-name', help=u"""A filter to return only resources that match the entire business name given. The match is not case sensitive.""")
+@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\".""")
+@cli_util.option('--type-key', help=u"""The key of the object type.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4883,7 +4915,7 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, pattern_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, business_name, display_or_business_name_contains, type_key, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, pattern_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4897,6 +4929,12 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if business_name is not None:
+        kwargs['business_name'] = business_name
+    if display_or_business_name_contains is not None:
+        kwargs['display_or_business_name_contains'] = display_or_business_name_contains
+    if type_key is not None:
+        kwargs['type_key'] = type_key
     if display_name_contains is not None:
         kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
@@ -5157,6 +5195,8 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--business-name', help=u"""A filter to return only resources that match the entire business name given. The match is not case sensitive.""")
+@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\".""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--parent-folder-key', help=u"""Unique folder key.""")
@@ -5180,7 +5220,7 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'FolderCollection'})
 @cli_util.wrap_exceptions
-def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, parent_folder_key, path, external_key, time_created, time_updated, created_by_id, updated_by_id, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, business_name, display_or_business_name_contains, display_name_contains, lifecycle_state, parent_folder_key, path, external_key, time_created, time_updated, created_by_id, updated_by_id, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5194,6 +5234,10 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if business_name is not None:
+        kwargs['business_name'] = business_name
+    if display_or_business_name_contains is not None:
+        kwargs['display_or_business_name_contains'] = display_or_business_name_contains
     if display_name_contains is not None:
         kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
@@ -5764,6 +5808,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
 @cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE"]), help=u"""Job type.""")
 @cli_util.option('--job-definition-key', help=u"""Unique job definition key.""")
+@cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
 @cli_util.option('--schedule-cron-expression', help=u"""Schedule specified in the cron expression format that has seven fields for second, minute, hour, day-of-month, month, day-of-week, year. It can also include special characters like * for all and ? for any. There are also pre-defined schedules that can be specified using special strings. For example, @hourly will run the job every hour.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5783,7 +5828,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'JobCollection'})
 @cli_util.wrap_exceptions
-def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, job_type, job_definition_key, schedule_cron_expression, time_schedule_begin, time_schedule_end, schedule_type, connection_key, fields, execution_count, time_of_latest_execution, sort_by, sort_order, limit, page):
+def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, job_type, job_definition_key, data_asset_key, schedule_cron_expression, time_schedule_begin, time_schedule_end, schedule_type, connection_key, fields, execution_count, time_of_latest_execution, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5810,6 +5855,8 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
         kwargs['job_type'] = job_type
     if job_definition_key is not None:
         kwargs['job_definition_key'] = job_definition_key
+    if data_asset_key is not None:
+        kwargs['data_asset_key'] = data_asset_key
     if schedule_cron_expression is not None:
         kwargs['schedule_cron_expression'] = schedule_cron_expression
     if time_schedule_begin is not None:
@@ -6888,6 +6935,36 @@ def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, faceted
     cli_util.render_response(result, ctx)
 
 
+@suggest_results_group.command(name=cli_util.override('data_catalog.suggest_matches.command_name', 'suggest-matches'), help=u"""Returns a list of potential string matches for a given input string. \n[Command Reference](suggestMatches)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--input-text', required=True, help=u"""Text input string used for computing potential matching suggestions.""")
+@cli_util.option('--timeout', help=u"""A search timeout string (for example, timeout=4000ms), bounding the search request to be executed within the specified time value and bail with the hits accumulated up to that point when expired. Defaults to no timeout.""")
+@cli_util.option('--limit', type=click.INT, help=u"""Limit for the list of potential matches returned from the Suggest API. If not specified, will default to 10.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'SuggestResults'})
+@cli_util.wrap_exceptions
+def suggest_matches(ctx, from_json, catalog_id, input_text, timeout, limit):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if timeout is not None:
+        kwargs['timeout'] = timeout
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.suggest_matches(
+        catalog_id=catalog_id,
+        input_text=input_text,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('data_catalog.test_connection.command_name', 'test'), help=u"""Test the connection by connecting to the data asset using credentials in the metadata. \n[Command Reference](testConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -6926,6 +7003,7 @@ def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--attribute-key', required=True, help=u"""Unique attribute key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--business-name', help=u"""Optional user friendly business name of the attribute. If set, this supplements the harvested display name of the object.""")
 @cli_util.option('--description', help=u"""Detailed description of the attribute.""")
 @cli_util.option('--external-data-type', help=u"""Data type of the attribute as defined in the external system.""")
 @cli_util.option('--is-incremental-data', type=click.BOOL, help=u"""Property that identifies if this attribute can be used as a watermark to extract incremental data.""")
@@ -6953,7 +7031,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties, if_match):
+def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, business_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -6980,6 +7058,9 @@ def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if business_name is not None:
+        _details['businessName'] = business_name
 
     if description is not None:
         _details['description'] = description
@@ -7219,7 +7300,7 @@ def update_catalog_private_endpoint(ctx, from_json, force, wait_for_state, max_w
 
 This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"username\": \"user1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--enc-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the encrypted values for sensitive properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"encProperties\": { \"default\": { \"password\": \"pwd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--enc-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the encrypted values for sensitive properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"encProperties\": { \"default\": { \"password\": \"example-password\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates whether this connection is the default connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7316,6 +7397,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--is-multi-valued', type=click.BOOL, help=u"""If this field allows multiple values to be set""")
 @cli_util.option('--is-hidden', type=click.BOOL, help=u"""If this field is a hidden field""")
 @cli_util.option('--is-editable', type=click.BOOL, help=u"""If this field is a editable field""")
+@cli_util.option('--is-shown-in-list', type=click.BOOL, help=u"""If this field is displayed in a list view of applicable objects.""")
 @cli_util.option('--is-hidden-in-search', type=click.BOOL, help=u"""If this field is allowed to pop in search results""")
 @cli_util.option('--allowed-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed values for the custom property if any""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7329,7 +7411,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
 @cli_util.wrap_exceptions
-def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, custom_property_key, display_name, description, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_hidden_in_search, allowed_values, properties, if_match):
+def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, custom_property_key, display_name, description, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, allowed_values, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -7371,6 +7453,9 @@ def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if is_editable is not None:
         _details['isEditable'] = is_editable
+
+    if is_shown_in_list is not None:
+        _details['isShownInList'] = is_shown_in_list
 
     if is_hidden_in_search is not None:
         _details['isHiddenInSearch'] = is_hidden_in_search
@@ -7503,6 +7588,7 @@ def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--business-name', help=u"""Optional user friendly business name of the data entity. If set, this supplements the harvested display name of the object.""")
 @cli_util.option('--description', help=u"""Detailed description of a data entity.""")
 @cli_util.option('--time-external', type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of the object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-logical', type=click.BOOL, help=u"""Property to indicate if the object is a physical materialized object or virtual. For example, View.""")
@@ -7526,7 +7612,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
 @cli_util.wrap_exceptions
-def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, description, time_external, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties, if_match):
+def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, business_name, description, time_external, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -7550,6 +7636,9 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if business_name is not None:
+        _details['businessName'] = business_name
 
     if description is not None:
         _details['description'] = description
@@ -7623,6 +7712,7 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--business-name', help=u"""Optional user friendly business name of the folder. If set, this supplements the harvested display name of the object.""")
 @cli_util.option('--description', help=u"""Detailed description of a folder.""")
 @cli_util.option('--parent-folder-key', help=u"""The key of the containing folder.""")
 @cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
@@ -7642,7 +7732,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
 @cli_util.wrap_exceptions
-def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, folder_key, display_name, description, parent_folder_key, custom_property_members, properties, time_external, harvest_status, last_job_key, if_match):
+def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, folder_key, display_name, business_name, description, parent_folder_key, custom_property_members, properties, time_external, harvest_status, last_job_key, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -7666,6 +7756,9 @@ def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if business_name is not None:
+        _details['businessName'] = business_name
 
     if description is not None:
         _details['description'] = description
