@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.24.1 - 2021-04-22
+-------------------
+Fixed
+~~~~~
+* Previous release had a bug which caused CLI installations on Windows operating systems to fail with an error. Please see `github issue #404 <https://github.com/oracle/oci-cli/issues/404>`_ for more details
+
+
 2.24.0 - 2021-04-20
 -------------------
 Added
