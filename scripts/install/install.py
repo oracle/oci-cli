@@ -217,21 +217,36 @@ def install_python3_venv():
 
 def upgrade_pip_wheel(tmp_dir, install_dir):
     if is_windows():
+        path_to_python = os.path.join(install_dir, 'Scripts', 'python.exe')
+
+        cmd = [path_to_python, '-m', 'pip', 'install', '--upgrade', 'pip']
+        if DRY_RUN:
+            print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
+        else:
+            exec_command(cmd)
+
         path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
+
+        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
+        if DRY_RUN:
+            print_status('dry-run: Skipping wheel upgrade, cmd=' + str(cmd))
+        else:
+            exec_command(cmd)
+
     else:
         path_to_pip = os.path.join(install_dir, 'bin', 'pip')
 
-    cmd = [path_to_pip, 'install', '--upgrade', 'pip']
-    if DRY_RUN:
-        print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
-    else:
-        exec_command(cmd)
+        cmd = [path_to_pip, 'install', '--upgrade', 'pip']
+        if DRY_RUN:
+            print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
+        else:
+            exec_command(cmd)
 
-    cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
-    if DRY_RUN:
-        print_status('dry-run: Skipping wheel upgrade, cmd=' + str(cmd))
-    else:
-        exec_command(cmd)
+        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
+        if DRY_RUN:
+            print_status('dry-run: Skipping wheel upgrade, cmd=' + str(cmd))
+        else:
+            exec_command(cmd)
 
 
 def create_virtualenv(tmp_dir, install_dir):
@@ -245,10 +260,11 @@ def create_virtualenv(tmp_dir, install_dir):
         if is_ubuntu_or_debian() and not OFFLINE_INSTALL:
             install_python3_venv()
         print_status('Trying to use python3 venv.')
+
         cmd = [sys.executable, '-m', 'venv', install_dir]
         exec_command(cmd)
 
-        if not is_windows() and not OFFLINE_INSTALL:
+        if not OFFLINE_INSTALL:
             upgrade_pip_wheel(tmp_dir, install_dir)
     except Exception:
         if OFFLINE_INSTALL:
