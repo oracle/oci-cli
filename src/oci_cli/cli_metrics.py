@@ -4,7 +4,6 @@
 
 import os
 import oci
-import fcntl
 import logging
 
 logger = logging.getLogger("{}".format(__name__))
@@ -48,6 +47,10 @@ class Metrics():
             if debug:
                 logger.debug(oci.base_client.utc_now() + "Metrics is not enabled")
             return
+
+        # this import does not work on Windows
+        # Currently only being used for CloudShell instances which are not Windows instances
+        import fcntl
 
         metric_dir = os.getenv(Metrics.CLOUDSHELL_ENV_VAR)
         metric_file = os.path.join(metric_dir, Metrics.METRICS[metric_name])
