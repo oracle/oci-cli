@@ -22,6 +22,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
 
         try:
             self.subtest_setup()
+            self.subtest_launch_instance_with_assign_private_dns()
             self.subtest_launch_instance_ipxe_script_file_and_extended_metadata()
             self.subtest_launch_instance_ssh_authorized_keys_in_param_and_in_metadata_throws_error()
             self.subtest_launch_instance_user_data_in_param_and_in_metadata_throws_error()
@@ -130,6 +131,84 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         vnic = json.loads(get_vnic_result.output)['data']
 
         assert vnic['hostname-label'] == hostname_label + "1"
+        assert vnic['display-name'] == vnic_display_name
+        assert vnic['public-ip']
+
+        content = None
+        with open(IPXE_SCRIPT_FILE, mode='r') as file:
+            content = file.read()
+
+        assert 'ipxe-script' in launch_instance_result.output
+        # Just look at the first few characters. Once we hit a line break the formatting will differ.
+        assert content[:5] in launch_instance_result.output
+
+        self.delete_instance(temp_instance_ocid)
+
+    @util.log_test
+    def subtest_launch_instance_with_assign_private_dns(self):
+        instance_name = util.random_name('cli_test_instance_options_optout_dns')
+        image_id = util.oracle_linux_image()
+        shape = 'VM.Standard1.2'
+        vnic_display_name = 'vnic_display_name'
+        assign_private_dns_record = 'true'
+
+        extended_metadata = '{"a": "1", "b": {"c": "3", "d": {}}}'
+
+        launch_instance_result = util.invoke_command(
+            ['compute', 'instance', 'launch',
+             '--compartment-id', util.COMPARTMENT_ID,
+             '--availability-domain', util.availability_domain(),
+             '--display-name', instance_name,
+             '--subnet-id', self.subnet_ocid,
+             '--image-id', image_id,
+             '--shape', shape,
+             '--ipxe-script-file', IPXE_SCRIPT_FILE,
+             '--assign-private-dns-record', assign_private_dns_record,
+             '--vnic-display-name', vnic_display_name,
+             '--extended-metadata', extended_metadata])
+
+        temp_instance_ocid = util.find_id_in_response(launch_instance_result.output)
+        self.instance_ocids.append(temp_instance_ocid)
+        util.validate_response(launch_instance_result, expect_etag=True)
+
+        extended_metadata_result = json.loads(launch_instance_result.output)['data']['extended-metadata']
+        assert extended_metadata_result['a'] == '1'
+        assert extended_metadata_result['b']['c'] == '3'
+
+        # This can be in ATTACHING state for some time
+        try:
+            util.wait_until(
+                ['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+                 temp_instance_ocid], 'ATTACHED', max_wait_seconds=60, item_index_in_list_response=0)
+        except Exception:
+            try:
+                # If it is ATTACHING we will consider it good enough
+                util.wait_until(
+                    ['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+                     temp_instance_ocid], 'ATTACHING', max_wait_seconds=30, item_index_in_list_response=0)
+            except Exception:
+                # If it is not ATTACHING, double check that it didn't go to ATTACHED
+                util.wait_until(
+                    ['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+                     temp_instance_ocid], 'ATTACHED', max_wait_seconds=30, item_index_in_list_response=0)
+
+        # get vnic attachments for given instance
+        list_vnics_result = util.invoke_command(
+            ['compute', 'vnic-attachment', 'list',
+             '--compartment-id', util.COMPARTMENT_ID,
+             '--instance-id', temp_instance_ocid
+             ])
+
+        vnic_id = json.loads(list_vnics_result.output)['data'][0]['vnic-id']
+
+        # get full data for vnic attached to new instance
+        get_vnic_result = util.invoke_command(
+            ['network', 'vnic', 'get',
+             '--vnic-id', vnic_id
+             ])
+
+        vnic = json.loads(get_vnic_result.output)['data']
+
         assert vnic['display-name'] == vnic_display_name
         assert vnic['public-ip']
 

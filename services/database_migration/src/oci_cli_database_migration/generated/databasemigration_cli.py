@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('database_migration.database_migration_root_group.command_name', 'database-migration'), cls=CommandGroupWithAlias, help=cli_util.override('database_migration.database_migration_root_group.help', """Provides users the ability to perform Zero Downtime migration operations"""), short_help=cli_util.override('database_migration.database_migration_root_group.short_help', """REST API for Zero Downtime Migration (Oracle Database Migration Service --ODMS-- as customer-facing service name)"""))
+@cli.command(cli_util.override('database_migration.database_migration_root_group.command_name', 'database-migration'), cls=CommandGroupWithAlias, help=cli_util.override('database_migration.database_migration_root_group.help', """Use the Oracle Cloud Infrastructure Database Migration APIs to perform database migration operations."""), short_help=cli_util.override('database_migration.database_migration_root_group.short_help', """Database Migration API"""))
 @cli_util.help_option_group
 def database_migration_root_group():
     pass
@@ -172,7 +172,7 @@ def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.change_agent_compartment.command_name', 'change-compartment'), help=u"""Used to configure a ODMS Agent Compartment Id. \n[Command Reference](changeAgentCompartment)""")
+@agent_group.command(name=cli_util.override('database_migration.change_agent_compartment.command_name', 'change-compartment'), help=u"""Used to configure an ODMS Agent Compartment ID. \n[Command Reference](changeAgentCompartment)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the resource to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -203,8 +203,8 @@ def change_agent_compartment(ctx, from_json, agent_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.change_connection_compartment.command_name', 'change-compartment'), help=u"""Used to change the Databasee Connection compartment. \n[Command Reference](changeConnectionCompartment)""")
-@cli_util.option('--connection-id', required=True, help=u"""The OCID of the job""")
+@connection_group.command(name=cli_util.override('database_migration.change_connection_compartment.command_name', 'change-compartment'), help=u"""Used to change the Database Connection compartment. \n[Command Reference](changeConnectionCompartment)""")
+@cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the resource to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -235,7 +235,7 @@ def change_connection_compartment(ctx, from_json, connection_id, compartment_id,
 
 
 @migration_group.command(name=cli_util.override('database_migration.change_migration_compartment.command_name', 'change-compartment'), help=u"""Used to change the Migration compartment. \n[Command Reference](changeMigrationCompartment)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the resource to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -266,13 +266,13 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
 
 
 @migration_group.command(name=cli_util.override('database_migration.clone_migration.command_name', 'clone'), help=u"""Clone a configuration from an existing Migration. \n[Command Reference](cloneMigration)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
 @cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
 @cli_util.option('--display-name', help=u"""Migration Display Name""")
 @cli_util.option('--compartment-id', help=u"""OCID of the compartment""")
-@cli_util.option('--agent-id', help=u"""The OCID of the registered On-Prem ODMS Agent. Required for OFFLINE Migrations.""")
-@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for ONLINE migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered on-premises ODMS Agent. Only valid for Offline Logical Migrations.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
 @cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration.
 
 This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20200720/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -453,14 +453,14 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.create_migration.command_name', 'create'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation like source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
+@migration_group.command(name=cli_util.override('database_migration.create_migration.command_name', 'create'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
 @cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
 @cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
 @cli_util.option('--display-name', help=u"""Migration Display Name""")
-@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Required for OFFLINE Migrations.""")
-@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for ONLINE migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Only valid for Offline Logical Migrations.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration.
@@ -550,7 +550,7 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.delete_agent.command_name', 'delete'), help=u"""Delete the ODMS Agent represented by the given ODMS Agent id. \n[Command Reference](deleteAgent)""")
+@agent_group.command(name=cli_util.override('database_migration.delete_agent.command_name', 'delete'), help=u"""Delete the ODMS Agent represented by the specified ODMS Agent ID. \n[Command Reference](deleteAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -603,7 +603,7 @@ def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @connection_group.command(name=cli_util.override('database_migration.delete_connection.command_name', 'delete'), help=u"""Deletes the Database Connection represented by the specified connection ID. \n[Command Reference](deleteConnection)""")
-@cli_util.option('--connection-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -719,7 +719,7 @@ def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @migration_group.command(name=cli_util.override('database_migration.delete_migration.command_name', 'delete'), help=u"""Deletes the Migration represented by the specified migration ID. \n[Command Reference](deleteMigration)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -771,7 +771,7 @@ def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 
 @job_group.command(name=cli_util.override('database_migration.evaluate_migration.command_name', 'evaluate-migration'), help=u"""Start Validate Migration job. \n[Command Reference](evaluateMigration)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -844,7 +844,7 @@ def get_agent(ctx, from_json, agent_id):
 
 
 @connection_group.command(name=cli_util.override('database_migration.get_connection.command_name', 'get'), help=u"""Display Database Connection details. \n[Command Reference](getConnection)""")
-@cli_util.option('--connection-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -933,7 +933,7 @@ def get_job_output_content(ctx, from_json, file, job_id):
 
 
 @migration_group.command(name=cli_util.override('database_migration.get_migration.command_name', 'get'), help=u"""Display Migration details. \n[Command Reference](getMigration)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1560,7 +1560,7 @@ def resume_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @migration_group.command(name=cli_util.override('database_migration.retrieve_supported_phases.command_name', 'retrieve-supported-phases'), help=u"""Display Migration Phases for a specified migration. \n[Command Reference](retrieveSupportedPhases)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1582,7 +1582,7 @@ def retrieve_supported_phases(ctx, from_json, migration_id):
 
 
 @job_group.command(name=cli_util.override('database_migration.start_migration.command_name', 'start-migration'), help=u"""Start Migration job. \n[Command Reference](startMigration)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-after', type=custom_types.CliCaseInsensitiveChoice(["ODMS_VALIDATE_TGT", "ODMS_VALIDATE_SRC", "ODMS_VALIDATE_GG_HUB", "ODMS_VALIDATE_DATAPUMP_SETTINGS", "ODMS_VALIDATE_DATAPUMP_SETTINGS_SRC", "ODMS_VALIDATE_DATAPUMP_SETTINGS_TGT", "ODMS_VALIDATE", "ODMS_PREPARE", "ODMS_INITIAL_LOAD_EXPORT", "ODMS_DATA_UPLOAD", "ODMS_INITIAL_LOAD_IMPORT", "ODMS_POST_INITIAL_LOAD", "ODMS_PREPARE_REPLICATION_TARGET", "ODMS_MONITOR_REPLICATION_LAG", "ODMS_SWITCHOVER", "ODMS_CLEANUP"]), help=u"""Name of a migration phase. The Job will wait after executing this phase until the Resume Job endpoint is called.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1640,7 +1640,7 @@ def start_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.update_agent.command_name', 'update'), help=u"""Modifies the ODMS Agent represented by the given ODMS agent Id. \n[Command Reference](updateAgent)""")
+@agent_group.command(name=cli_util.override('database_migration.update_agent.command_name', 'update'), help=u"""Modifies the ODMS Agent represented by the given ODMS Agent ID. \n[Command Reference](updateAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', help=u"""ODMS Agent name""")
@@ -1728,8 +1728,8 @@ def update_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.update_connection.command_name', 'update'), help=u"""Update a Database Connection resource details. \n[Command Reference](updateConnection)""")
-@cli_util.option('--connection-id', required=True, help=u"""The OCID of the job""")
+@connection_group.command(name=cli_util.override('database_migration.update_connection.command_name', 'update'), help=u"""Update Database Connection resource details. \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @cli_util.option('--display-name', help=u"""Database Connection display name identifier.""")
 @cli_util.option('--database-id', help=u"""The OCID of the cloud database.""")
 @cli_util.option('--connect-descriptor', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1836,7 +1836,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.update_job.command_name', 'update'), help=u"""Update a Migration Job resource details. \n[Command Reference](updateJob)""")
+@job_group.command(name=cli_util.override('database_migration.update_job.command_name', 'update'), help=u"""Update Migration Job resource details. \n[Command Reference](updateJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--display-name', help=u"""Name of the job.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1908,13 +1908,13 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.update_migration.command_name', 'update'), help=u"""Update a Migration resource details. \n[Command Reference](updateMigration)""")
-@cli_util.option('--migration-id', required=True, help=u"""The OCID of the job""")
+@migration_group.command(name=cli_util.override('database_migration.update_migration.command_name', 'update'), help=u"""Update Migration resource details. \n[Command Reference](updateMigration)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
 @cli_util.option('--display-name', help=u"""Migration Display Name""")
 @cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent.""")
 @cli_util.option('--source-database-connection-id', help=u"""The OCID of the Source Database Connection.""")
-@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for ONLINE migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection Id.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection ID.""")
 @cli_util.option('--target-database-connection-id', help=u"""The OCID of the Target Database Connection.""")
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

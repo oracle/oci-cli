@@ -1566,23 +1566,26 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-pools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The instance pools in the cluster network to update.
+
+This option is a JSON list with items of type UpdateClusterNetworkInstancePoolDetails.  For documentation on UpdateClusterNetworkInstancePoolDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateClusterNetworkInstancePoolDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-pools': {'module': 'core', 'class': 'list[UpdateClusterNetworkInstancePoolDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ClusterNetwork'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-pools': {'module': 'core', 'class': 'list[UpdateClusterNetworkInstancePoolDetails]'}}, output_type={'module': 'core', 'class': 'ClusterNetwork'})
 @cli_util.wrap_exceptions
-def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_network_id, defined_tags, display_name, freeform_tags, if_match):
+def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_network_id, defined_tags, display_name, freeform_tags, instance_pools, if_match):
 
     if isinstance(cluster_network_id, six.string_types) and len(cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or instance_pools:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and instance-pools will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1599,6 +1602,9 @@ def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if instance_pools is not None:
+        _details['instancePools'] = cli_util.parse_json_parameter("instance_pools", instance_pools)
 
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.update_cluster_network(

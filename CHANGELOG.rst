@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.24.2 - 2021-04-27
+-------------------
+Added
+~~~~~
+
+* Support for data masking and other enhancements in the Cloud Guard service
+
+  * ``oci cloud-guard data-mask-rule``
+  * ``oci cloud-guard policy-summary list-policies``
+  * ``oci cloud-guard problem update-bulk-problem-status --comment``
+  
+* Support for opting out of DNS records during instance launch, as well as attaching secondary VNICs, in the Compute service
+
+  * ``oci compute instance attach-vnic --assign-private-dns-record``
+  * ``oci compute instance launch --assign-private-dns-record``
+
+* Support for mutable sizes on cluster networks in the Compute Management service. Argument (instance-pools) allows to specify updates to the underlying instance pool(s) of a cluster network.
+  
+  * ``oci compute-management cluster-network update --instance-pools`` 
+
+* Support for auto-tiering on buckets in the Object Storage service
+
+  * ``oci os bucket create --auto-tiering``
+  * ``oci os bucket update --auto-tiering``
+
+Changed
+~~~~~~~
+
+* VCN id parameter is now optional on list operation in the Networking service
+
+  * ``oci network vlan list --vcn-id``
+
 2.24.1 - 2021-04-22
 -------------------
 Fixed
