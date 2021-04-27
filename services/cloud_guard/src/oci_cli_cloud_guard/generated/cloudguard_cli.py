@@ -27,6 +27,12 @@ def impacted_resource_summary_group():
     pass
 
 
+@click.command(cli_util.override('cloud_guard.data_mask_rule_group.command_name', 'data-mask-rule'), cls=CommandGroupWithAlias, help="""Description of DataMaskRule.""")
+@cli_util.help_option_group
+def data_mask_rule_group():
+    pass
+
+
 @click.command(cli_util.override('cloud_guard.target_responder_recipe_responder_rule_group.command_name', 'target-responder-recipe-responder-rule'), cls=CommandGroupWithAlias, help="""Details of ResponderRule.""")
 @cli_util.help_option_group
 def target_responder_recipe_responder_rule_group():
@@ -171,6 +177,12 @@ def responder_activity_summary_group():
     pass
 
 
+@click.command(cli_util.override('cloud_guard.policy_summary_group.command_name', 'policy-summary'), cls=CommandGroupWithAlias, help="""Global policy statement""")
+@cli_util.help_option_group
+def policy_summary_group():
+    pass
+
+
 @click.command(cli_util.override('cloud_guard.managed_list_group.command_name', 'managed-list'), cls=CommandGroupWithAlias, help="""A cloud guard list containing one or more items of a list type""")
 @cli_util.help_option_group
 def managed_list_group():
@@ -208,6 +220,7 @@ def risk_score_aggregation_group():
 
 
 cloud_guard_root_group.add_command(impacted_resource_summary_group)
+cloud_guard_root_group.add_command(data_mask_rule_group)
 cloud_guard_root_group.add_command(target_responder_recipe_responder_rule_group)
 cloud_guard_root_group.add_command(problem_trend_aggregation_group)
 cloud_guard_root_group.add_command(configuration_group)
@@ -232,6 +245,7 @@ cloud_guard_root_group.add_command(recommendation_summary_group)
 cloud_guard_root_group.add_command(problem_aggregation_group)
 cloud_guard_root_group.add_command(target_group)
 cloud_guard_root_group.add_command(responder_activity_summary_group)
+cloud_guard_root_group.add_command(policy_summary_group)
 cloud_guard_root_group.add_command(managed_list_group)
 cloud_guard_root_group.add_command(managed_list_type_summary_group)
 cloud_guard_root_group.add_command(target_responder_recipe_group)
@@ -333,6 +347,325 @@ def change_responder_recipe_compartment(ctx, from_json, responder_recipe_id, com
     cli_util.render_response(result, ctx)
 
 
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule.command_name', 'create'), help=u"""Creates a new Data Mask Rule Definition \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data Mask Rule name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--target-selected', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--description', help=u"""The Data Mask Rule description.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def create_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, target_selected, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['iamGroupId'] = iam_group_id
+    _details['targetSelected'] = cli_util.parse_json_parameter("target_selected", target_selected)
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if description is not None:
+        _details['description'] = description
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_data_mask_rule(
+        create_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_all_targets_selected.command_name', 'create-data-mask-rule-all-targets-selected'), help=u"""Creates a new Data Mask Rule Definition \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data Mask Rule name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--description', help=u"""The Data Mask Rule description.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def create_data_mask_rule_all_targets_selected(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetSelected'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['iamGroupId'] = iam_group_id
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if description is not None:
+        _details['description'] = description
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['targetSelected']['kind'] = 'ALL'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_data_mask_rule(
+        create_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_target_resource_types_selected.command_name', 'create-data-mask-rule-target-resource-types-selected'), help=u"""Creates a new Data Mask Rule Definition \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data Mask Rule name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--description', help=u"""The Data Mask Rule description.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-selected-values', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD"]), help=u"""Types of Targets""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def create_data_mask_rule_target_resource_types_selected(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags, target_selected_values):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetSelected'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['iamGroupId'] = iam_group_id
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if description is not None:
+        _details['description'] = description
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_selected_values is not None:
+        _details['targetSelected']['values'] = cli_util.parse_json_parameter("target_selected_values", target_selected_values)
+
+    _details['targetSelected']['kind'] = 'TARGETTYPES'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_data_mask_rule(
+        create_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_target_ids_selected.command_name', 'create-data-mask-rule-target-ids-selected'), help=u"""Creates a new Data Mask Rule Definition \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data Mask Rule name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--description', help=u"""The Data Mask Rule description.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-selected-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Ids of Target""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def create_data_mask_rule_target_ids_selected(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, iam_group_id, data_mask_categories, description, data_mask_rule_status, lifecycle_state, freeform_tags, defined_tags, target_selected_values):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetSelected'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['iamGroupId'] = iam_group_id
+    _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if description is not None:
+        _details['description'] = description
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_selected_values is not None:
+        _details['targetSelected']['values'] = cli_util.parse_json_parameter("target_selected_values", target_selected_values)
+
+    _details['targetSelected']['kind'] = 'TARGETIDS'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_data_mask_rule(
+        create_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @detector_recipe_group.command(name=cli_util.override('cloud_guard.create_detector_recipe.command_name', 'create'), help=u"""Creates a DetectorRecipe \n[Command Reference](createDetectorRecipe)""")
 @cli_util.option('--display-name', required=True, help=u"""DetectorRecipe Display Name""")
 @cli_util.option('--source-detector-recipe-id', required=True, help=u"""The id of the source detector recipe.""")
@@ -409,7 +742,7 @@ def create_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--source-managed-list-id', help=u"""OCID of the Source ManagedList""")
 @cli_util.option('--description', help=u"""ManagedList description""")
-@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS"]), help=u"""type of the list""")
+@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC"]), help=u"""type of the list""")
 @cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ManagedListItem""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -712,6 +1045,70 @@ def create_target_responder_recipe(ctx, from_json, target_id, responder_recipe_i
         attach_target_responder_recipe_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.delete_data_mask_rule.command_name', 'delete'), help=u"""Deletes a DataMaskRule identified by dataMaskRuleId \n[Command Reference](deleteDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, if_match):
+
+    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.delete_data_mask_rule(
+        data_mask_rule_id=data_mask_rule_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_data_mask_rule(data_mask_rule_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1112,6 +1509,28 @@ def get_configuration(ctx, from_json, compartment_id):
     client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
     result = client.get_configuration(
         compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.get_data_mask_rule.command_name', 'get'), help=u"""Returns a DataMaskRule identified by DataMaskRuleId \n[Command Reference](getDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def get_data_mask_rule(ctx, from_json, data_mask_rule_id):
+
+    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_data_mask_rule(
+        data_mask_rule_id=data_mask_rule_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1549,6 +1968,81 @@ def list_condition_metadata_types(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.list_data_mask_rules.command_name', 'list'), help=u"""Returns a list of all Data Mask Rules in the root 'compartmentId' passed. \n[Command Reference](listDataMaskRules)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--target-id', help=u"""OCID of target""")
+@cli_util.option('--iam-group-id', help=u"""OCID of iamGroup""")
+@cli_util.option('--target-type', help=u"""Type of target""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRuleCollection'})
+@cli_util.wrap_exceptions
+def list_data_mask_rules(ctx, from_json, all_pages, page_size, compartment_id, display_name, lifecycle_state, access_level, limit, page, sort_order, sort_by, data_mask_rule_status, target_id, iam_group_id, target_type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if data_mask_rule_status is not None:
+        kwargs['data_mask_rule_status'] = data_mask_rule_status
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if iam_group_id is not None:
+        kwargs['iam_group_id'] = iam_group_id
+    if target_type is not None:
+        kwargs['target_type'] = target_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_data_mask_rules,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_data_mask_rules,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_mask_rules(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_recipe_detector_rules.command_name', 'list'), help=u"""Returns a list of DetectorRule associated with DetectorRecipe. \n[Command Reference](listDetectorRecipeDetectorRules)""")
 @cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
@@ -1625,7 +2119,7 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 The parameter `compartmentIdInSubtree` applies when you perform ListDetectorRecipes on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDetectorRecipes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard is returned.""")
+@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard are returned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1936,9 +2430,9 @@ The parameter `accessLevel` specifies whether to return ManagedLists in only tho
 The parameter `compartmentIdInSubtree` applies when you perform ListManagedLists on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listManagedLists)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard is returned.""")
+@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard are returned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS"]), help=u"""The type of the ManagedList.""")
+@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC"]), help=u"""The type of the ManagedList.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
@@ -1999,6 +2493,60 @@ def list_managed_lists(ctx, from_json, all_pages, page_size, compartment_id, dis
         )
     else:
         result = client.list_managed_lists(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@policy_summary_group.command(name=cli_util.override('cloud_guard.list_policies.command_name', 'list-policies'), help=u"""Returns the list of global policy statements needed by Cloud Guard when enabling \n[Command Reference](listPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'PolicyCollection'})
+@cli_util.wrap_exceptions
+def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_policies(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -2074,10 +2622,10 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 
 The parameter `compartmentIdInSubtree` applies when you perform ListProblems on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listProblems)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--lifecycle-detail', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--region-parameterconflict', help=u"""OCI Monitoring region.""")
@@ -2529,7 +3077,7 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 
 The parameter `compartmentIdInSubtree` applies when you perform ListResponderRecipe on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResponderRecipes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard is returned.""")
+@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard are returned.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3265,8 +3813,8 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedTrendProblems)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3462,12 +4010,13 @@ def trigger_responder(ctx, from_json, problem_id, responder_rule_id, configurati
 @problem_group.command(name=cli_util.override('cloud_guard.update_bulk_problem_status.command_name', 'update-bulk-problem-status'), help=u"""Updates the statuses in bulk for a list of problems The operation is atomic in nature \n[Command Reference](updateBulkProblemStatus)""")
 @cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED"]), help=u"""Action taken by user""")
 @cli_util.option('--problem-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ProblemIds to be passed in to update the Problem status.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--comment', help=u"""User defined comment to be passed in to update the problem.""")
 @json_skeleton_utils.get_cli_json_input_option({'problem-ids': {'module': 'cloud_guard', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'problem-ids': {'module': 'cloud_guard', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_bulk_problem_status(ctx, from_json, status, problem_ids):
+def update_bulk_problem_status(ctx, from_json, status, problem_ids, comment):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3475,6 +4024,9 @@ def update_bulk_problem_status(ctx, from_json, status, problem_ids):
     _details = {}
     _details['status'] = status
     _details['problemIds'] = cli_util.parse_json_parameter("problem_ids", problem_ids)
+
+    if comment is not None:
+        _details['comment'] = comment
 
     client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
     result = client.update_bulk_problem_status(
@@ -3515,6 +4067,379 @@ def update_configuration(ctx, from_json, reporting_region, status, compartment_i
         update_configuration_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule.command_name', 'update'), help=u"""Updates a DataMaskRule identified by dataMaskRuleId \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@cli_util.option('--display-name', help=u"""Data Mask Rule Name""")
+@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--target-selected', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-selected': {'module': 'cloud_guard', 'class': 'TargetSelected'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, target_selected, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
+
+    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
+    if not force:
+        if target_selected or data_mask_categories or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to target-selected and data-mask-categories and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if iam_group_id is not None:
+        _details['iamGroupId'] = iam_group_id
+
+    if target_selected is not None:
+        _details['targetSelected'] = cli_util.parse_json_parameter("target_selected", target_selected)
+
+    if data_mask_categories is not None:
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_data_mask_rule(
+        data_mask_rule_id=data_mask_rule_id,
+        update_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_all_targets_selected.command_name', 'update-data-mask-rule-all-targets-selected'), help=u"""Updates a DataMaskRule identified by dataMaskRuleId \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@cli_util.option('--display-name', help=u"""Data Mask Rule Name""")
+@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def update_data_mask_rule_all_targets_selected(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
+
+    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
+    if not force:
+        if data_mask_categories or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-mask-categories and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetSelected'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if iam_group_id is not None:
+        _details['iamGroupId'] = iam_group_id
+
+    if data_mask_categories is not None:
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['targetSelected']['kind'] = 'ALL'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_data_mask_rule(
+        data_mask_rule_id=data_mask_rule_id,
+        update_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_target_resource_types_selected.command_name', 'update-data-mask-rule-target-resource-types-selected'), help=u"""Updates a DataMaskRule identified by dataMaskRuleId \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@cli_util.option('--display-name', help=u"""Data Mask Rule Name""")
+@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--target-selected-values', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD"]), help=u"""Types of Targets""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def update_data_mask_rule_target_resource_types_selected(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
+
+    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
+    if not force:
+        if data_mask_categories or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-mask-categories and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetSelected'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if iam_group_id is not None:
+        _details['iamGroupId'] = iam_group_id
+
+    if data_mask_categories is not None:
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_selected_values is not None:
+        _details['targetSelected']['values'] = cli_util.parse_json_parameter("target_selected_values", target_selected_values)
+
+    _details['targetSelected']['kind'] = 'TARGETTYPES'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_data_mask_rule(
+        data_mask_rule_id=data_mask_rule_id,
+        update_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_target_ids_selected.command_name', 'update-data-mask-rule-target-ids-selected'), help=u"""Updates a DataMaskRule identified by dataMaskRuleId \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@cli_util.option('--display-name', help=u"""Data Mask Rule Name""")
+@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--target-selected-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Ids of Target""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'target-selected-values': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'DataMaskRule'})
+@cli_util.wrap_exceptions
+def update_data_mask_rule_target_ids_selected(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
+
+    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
+    if not force:
+        if data_mask_categories or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-mask-categories and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetSelected'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if iam_group_id is not None:
+        _details['iamGroupId'] = iam_group_id
+
+    if data_mask_categories is not None:
+        _details['dataMaskCategories'] = cli_util.parse_json_parameter("data_mask_categories", data_mask_categories)
+
+    if data_mask_rule_status is not None:
+        _details['dataMaskRuleStatus'] = data_mask_rule_status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_selected_values is not None:
+        _details['targetSelected']['values'] = cli_util.parse_json_parameter("target_selected_values", target_selected_values)
+
+    _details['targetSelected']['kind'] = 'TARGETIDS'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_data_mask_rule(
+        data_mask_rule_id=data_mask_rule_id,
+        update_data_mask_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_mask_rule') and callable(getattr(client, 'get_data_mask_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_mask_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

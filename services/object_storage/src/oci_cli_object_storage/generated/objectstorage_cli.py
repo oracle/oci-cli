@@ -337,12 +337,13 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Disabled"]), help=u"""Set the versioning status on the bucket. By default, a bucket is created with versioning `Disabled`. Use this option to enable versioning during bucket creation. Objects in a version enabled bucket are protected from overwrites and deletions. Previous versions of the same object will be available in the bucket.""")
+@cli_util.option('--auto-tiering', help=u"""Set the auto tiering status on the bucket. By default, a bucket is created with auto tiering `Disabled`. Use this option to enable auto tiering during bucket creation. Objects in a bucket with auto tiering set to `InfrequentAccess` are transitioned automatically between the 'Standard' and 'InfrequentAccess' tiers based on the access pattern of the objects.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning):
+def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, auto_tiering):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -377,6 +378,9 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 
     if versioning is not None:
         _details['versioning'] = versioning
+
+    if auto_tiering is not None:
+        _details['autoTiering'] = auto_tiering
 
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_bucket(
@@ -796,7 +800,7 @@ def delete_retention_rule(ctx, from_json, namespace_name, bucket_name, retention
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateCount", "approximateSize"]), multiple=True, help=u"""Bucket summary includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'approximateCount' (approximate number of objects) and 'approximateSize' (total approximate size in bytes of all objects). For example 'approximateCount,approximateSize'.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateCount", "approximateSize", "autoTiering"]), multiple=True, help=u"""Bucket summary includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'approximateCount' (approximate number of objects), 'approximateSize' (total approximate size in bytes of all objects) and 'autoTiering' (state of auto tiering on the bucket). For example 'approximateCount,approximateSize,autoTiering'.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2261,13 +2265,14 @@ Use UpdateBucket to move a bucket from one compartment to another within the sam
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the Key Management master encryption key to associate with the specified bucket. If this value is empty, the Update operation will remove the associated key, if there is one, from the bucket. (The bucket will continue to be encrypted, but with an encryption key managed by Oracle.)""")
 @cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Suspended"]), help=u"""The versioning status on the bucket. If in state `Enabled`, multiple versions of the same object can be kept in the bucket. When the object is overwritten or deleted, previous versions will still be available. When versioning is `Suspended`, the previous versions will still remain but new versions will no longer be created when overwitten or deleted. Versioning cannot be disabled on a bucket once enabled.""")
+@cli_util.option('--auto-tiering', help=u"""The auto tiering status on the bucket. If in state `InfrequentAccess`, objects are transitioned automatically between the 'Standard' and 'InfrequentAccess' tiers based on the access pattern of the objects. When auto tiering is `Disabled`, there will be no automatic transitions between storage tiers.""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, auto_tiering, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2308,6 +2313,9 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
     if versioning is not None:
         _details['versioning'] = versioning
+
+    if auto_tiering is not None:
+        _details['autoTiering'] = auto_tiering
 
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.update_bucket(

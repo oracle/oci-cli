@@ -432,6 +432,7 @@ def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pag
 @cli_util.option('--assign-public-ip', type=click.BOOL, help="""Whether the default VNIC attached to this instance should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
 @cli_util.option('--private-ip', help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
+@cli_util.option('--assign-private-dns-record', type=click.BOOL, help="""Whether the VNIC should be assigned a DNS record. If set to false, no DNS record registion for the VNIC; if set to true, DNS record will be registered. The default value is `true`.""")
 @cli_util.option('--user-data-file', type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
 @cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
@@ -488,6 +489,9 @@ def launch_instance_extended(ctx, **kwargs):
     if 'skip_source_dest_check' in kwargs and kwargs['skip_source_dest_check'] is not None:
         create_vnic_details['skipSourceDestCheck'] = kwargs['skip_source_dest_check']
 
+    if 'assign_private_dns_record' in kwargs and kwargs['assign_private_dns_record'] is not None:
+        create_vnic_details['assignPrivateDnsRecord'] = kwargs['assign_private_dns_record']
+
     if kwargs['hostname_label']:
         create_vnic_details['hostnameLabel'] = kwargs['hostname_label']
 
@@ -524,6 +528,7 @@ def launch_instance_extended(ctx, **kwargs):
     del kwargs['user_data_file']
     del kwargs['vnic_display_name']
     del kwargs['skip_source_dest_check']
+    del kwargs['assign_private_dns_record']
     del kwargs['nsg_ids']
 
     # Remove the source_boot_volume_id and boot_volume_size_in_gbs parameters. image_id is an existing parameter so the underlying
@@ -545,6 +550,7 @@ def launch_instance_extended(ctx, **kwargs):
 @cli_util.option('--assign-public-ip', type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
 @cli_util.option('--private-ip', help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
+@cli_util.option('--assign-private-dns-record', type=click.BOOL, help="""Whether the VNIC should be assigned a DNS record. If set to false, no DNS record registion for the VNIC; if set to true, DNS record will be registered. The default value is `true`.""")
 @cli_util.option('--hostname-label', help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
 @cli_util.option('--nic-index', type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
 @cli_util.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
@@ -555,7 +561,7 @@ def launch_instance_extended(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
+def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_display_name, assign_public_ip, private_ip, assign_private_dns_record, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
     kwargs = {}
 
     if subnet_id is None and vlan_id is None:
@@ -589,6 +595,9 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_d
 
     if skip_source_dest_check is not None:
         vnic_details['skipSourceDestCheck'] = skip_source_dest_check
+
+    if assign_private_dns_record is not None:
+        vnic_details['assignPrivateDnsRecord'] = assign_private_dns_record
 
     attachment_details = {}
     attachment_details['createVnicDetails'] = vnic_details

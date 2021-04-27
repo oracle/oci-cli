@@ -9130,11 +9130,11 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @vlan_group.command(name=cli_util.override('virtual_network.list_vlans.command_name', 'list'), help=u"""Lists the VLANs in the specified VCN and the specified compartment. \n[Command Reference](listVlans)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -9148,7 +9148,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vlan]'})
 @cli_util.wrap_exceptions
-def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, limit, page, vcn_id, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9158,6 +9158,8 @@ def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, lim
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if sort_by is not None:
@@ -9175,7 +9177,6 @@ def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, lim
         result = cli_util.list_call_get_all_results(
             client.list_vlans,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -9184,13 +9185,11 @@ def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, lim
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_vlans(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
