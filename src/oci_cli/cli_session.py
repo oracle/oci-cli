@@ -37,10 +37,12 @@ def session_group():
 @session_group.command('authenticate', help="""Creates a CLI session using a browser based login flow. --region is a [required] argument""")
 @click.option('--region', help=','.join(oci.regions.REGIONS))
 @click.option('--tenancy-name', help='Name of the tenancy')
+@click.option('--profile-name', help='Name of the profile you are creating')
+@click.option('--config-location', help='Path to the config for the new session')
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def authenticate(ctx, region, tenancy_name):
+def authenticate(ctx, region, tenancy_name, profile_name, config_location):
     region = ctx.obj['region']
     if region is None:
         region = cli_setup.prompt_for_region()
@@ -49,15 +51,15 @@ def authenticate(ctx, region, tenancy_name):
     user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
 
     # persist the session to a config (including the token value)
-    profile_name, config_location = cli_setup_bootstrap.persist_user_session(user_session, persist_token=True)
+    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, persist_token=True)
 
-    click.echo('Config written to: {}'.format(config_location))
+    click.echo('Config written to: {}'.format(config))
 
     click.echo("""
     Try out your newly created session credentials with the following example command:
 
     oci iam region list --config-file {config_file} --profile {profile} --auth {auth}
-""".format(config_file=config_location, profile=profile_name, auth=cli_constants.OCI_CLI_AUTH_SESSION_TOKEN))
+""".format(config_file=config, profile=profile, auth=cli_constants.OCI_CLI_AUTH_SESSION_TOKEN))
 
 
 @session_group.command('validate', help="""Tests whether a CLI session is still valid""")

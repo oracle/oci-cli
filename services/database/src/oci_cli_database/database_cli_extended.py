@@ -431,7 +431,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
-def create_database(ctx, **kwargs):
+def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
     if kwargs['db_home_id'] is None and kwargs['db_version'] is None:
         click.echo(message="Missing a required parameter. Either --db-home-id or --db-version must be specified.", file=sys.stderr)
         sys.exit(1)
@@ -513,6 +513,30 @@ def create_database(ctx, **kwargs):
         db_home_id = result.data.id
         compartment_id = result.data.compartment_id
 
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_home(db_home_id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+
     # result is now the DbHome that was created, so we need to get the
     # corresponding database and print that out for the user
     try:
@@ -540,7 +564,7 @@ def create_database(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
-def create_database_from_backup(ctx, **kwargs):
+def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
 
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
         create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromBackupDetails()
@@ -583,6 +607,30 @@ def create_database_from_backup(ctx, **kwargs):
 
     db_home_id = result.data.id
     compartment_id = result.data.compartment_id
+
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_home(db_home_id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
 
     # result is now the DbHome that was created, so we need to get the
     # corresponding database and print that out for the user
@@ -644,7 +692,7 @@ def update_database_extended(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
-def create_database_from_another_database(ctx, **kwargs):
+def create_database_from_another_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
     create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromDatabaseDetails()
     create_database_details = oci.database.models.CreateDatabaseFromAnotherDatabaseDetails()
     if 'admin_password' in kwargs and kwargs['admin_password']:
@@ -678,6 +726,30 @@ def create_database_from_another_database(ctx, **kwargs):
 
     db_home_id = result.data.id
     compartment_id = result.data.compartment_id
+
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_home(db_home_id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
 
     # result is now the DbHome that was created, so we need to get the
     # corresponding database and print that out for the user
@@ -1347,7 +1419,7 @@ def update_cloud_exadata_infrastructure(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
-def create_db_home(ctx, **kwargs):
+def create_db_home(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
     client = cli_util.build_client('database', 'database', ctx)
 
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
@@ -1380,8 +1452,33 @@ def create_db_home(ctx, **kwargs):
     db_system_shape = get_db_system_response.data.shape
     # For Exadata systems create db home is called
     if EXADATA_SHAPE_PREFIX in db_system_shape:
-        response = client.create_db_home(db_home_details)
-        cli_util.render_response(response, ctx)
+        result = client.create_db_home(db_home_details)
+
+        if wait_for_state:
+
+            if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+                try:
+                    wait_period_kwargs = {}
+                    if max_wait_seconds is not None:
+                        wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                    if wait_interval_seconds is not None:
+                        wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                    click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                    result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                except oci.exceptions.MaximumWaitTimeExceeded as e:
+                    # If we fail, we should show an error, but we should still provide the information to the customer
+                    click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                    cli_util.render_response(result, ctx)
+                    sys.exit(2)
+                except Exception:
+                    click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                    cli_util.render_response(result, ctx)
+                    raise
+            else:
+                click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+
+        cli_util.render_response(result, ctx)
     else:
         click.echo(message="Cannot create a DB Home for Db systems with non Exadata shapes.", file=sys.stderr)
         sys.exit(1)

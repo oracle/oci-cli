@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+2.24.3 - 2021-05-04
+-------------------
+Added
+~~~~~
+* Options for configuring config path and profile name for session authentication
+
+  * ``oci session authenticate --profile-name --config-location``
+
+* Support for the Operator Access Control service
+
+ * ``oci opctl``
+
+* Support for the Service Catalog service
+
+ * ``oci service-catalog``
+
+* Support for the AI Language service
+
+ * ``oci ai language``
+
+Fixed
+~~~~~
+* Wait for state parameter for the following database commands were returning on incorrect states
+
+  * oci db database create --wait-for-state
+  * oci db database create-from-backup --wait-for-state
+  * oci db database create-from-database --wait-for-state
+  * oci db db-home create --wait-for-state
+
 2.24.2 - 2021-04-27
 -------------------
 Added

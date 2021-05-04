@@ -200,9 +200,14 @@ def create_user_session(region='', tenancy_name=None):
     return UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
 
 
-def persist_user_session(user_session, persist_token=False, bootstrap=False):
-    # prompt for location of user config
-    config_location, profile_name = cli_setup.prompt_session_for_profile()
+def persist_user_session(user_session, profile_name=None, config=None, persist_token=False, bootstrap=False):
+    if not profile_name:
+        # prompt for location of user config
+        config_location, profile_name = cli_setup.prompt_session_for_profile()
+    if config:
+        config_location = config
+    else:
+        config_location = cli_setup.DEFAULT_CONFIG_LOCATION
 
     if not config_location:
         click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)
