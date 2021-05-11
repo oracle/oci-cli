@@ -189,7 +189,6 @@ def test_create_update_bucket_and_put_object():
     invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--name', bucket_name, '--force'])
 
 
-@pytest.mark.skip('DEXREQ-973')
 def test_create_with_complex_param_in_json(network_resources):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_create_with_complex_param_in_json.yml'):
         input_file_path = os.path.join(INPUT_FILE_FOLDER, 'create-security-list.json')
@@ -201,11 +200,12 @@ def test_create_with_complex_param_in_json(network_resources):
         parsed_output = json.loads(result.output)
 
         expected_egress = [
-            {'destination': '0.0.0.0/0', 'icmp-options': None, 'is-stateless': None, 'protocol': 'all',
+            {'description': None, 'destination': '0.0.0.0/0', 'icmp-options': None, 'is-stateless': None, 'protocol': 'all',
              'tcp-options': None, 'udp-options': None}
         ]
         expected_ingress = [
             {
+                'description': None,
                 'protocol': '6',
                 'udp-options': None,
                 'is-stateless': None,
@@ -214,6 +214,7 @@ def test_create_with_complex_param_in_json(network_resources):
                 'source': '0.0.0.0/0'
             },
             {
+                'description': None,
                 'protocol': '1',
                 'udp-options': None,
                 'is-stateless': None,
@@ -222,6 +223,7 @@ def test_create_with_complex_param_in_json(network_resources):
                 'source': '0.0.0.0/0'
             },
             {
+                'description': None,
                 'protocol': '1',
                 'udp-options': None,
                 'is-stateless': None,

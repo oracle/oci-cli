@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.24.4 - 2021-05-11
+-------------------
+Added
+~~~~~
+* Support for database maintenance run patchMode feature as a part of the Database Service
+
+  * ``oci db maintenance-run``
+
+Fixed
+~~~~~
+
+* PyYAML was upgraded to version 5.4.1 to address a vulnerability identified on GitHub as CVE-2020-14343
+
+* Py was upgraded to version 1.10.0 to address a vulnerability identified on GitHub as CVE-2020-29651. Py isn't used in our run-time system but as part of our documentation build process.
 
 2.24.3 - 2021-05-04
 -------------------

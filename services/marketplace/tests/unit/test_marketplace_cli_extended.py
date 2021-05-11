@@ -4,7 +4,6 @@
 
 import unittest
 from tests import util
-import pytest
 
 
 class TestMarketplace(unittest.TestCase):
@@ -19,9 +18,3 @@ class TestMarketplace(unittest.TestCase):
         result = util.invoke_command(
             ['marketplace', 'package', 'get'])
         assert 'Error: Missing option(s)' in result.output
-
-    @pytest.mark.skip("Failing image tests")
-    def test_marketplace_category(self):
-        result = util.invoke_command(
-            ['marketplace', 'category', 'list', '--help'])
-        assert 'Usage: oci marketplace category list' in result.output

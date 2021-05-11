@@ -271,7 +271,7 @@ if [ $? -eq 0 ]; then
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ] &&  ["${OFFLINE_INSTALL}" != "true" ]; then
                 while true
                 do
-                  read -p "Python 2.7+/3.5 will be deprecated on May 25th, 2021. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. Would you like to upgrade to Python 3? Please enter Y or N. " answer
+                  read -p "Python 2.7+ will be deprecated on May 25th, 2021. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. Would you like to upgrade to Python 3? Please enter Y or N. " answer
                   case $answer in
                    [yY]* ) echo "Installing Python 3...";
                       need_to_install_python=true;
@@ -285,7 +285,7 @@ if [ $? -eq 0 ]; then
           python3_is_installed=true
         fi
     else
-        echo "System version of Python must be a Python 3 version >= 3.5.0."
+        echo "System version of Python must be a Python 3 version >= 3.6.0."
     fi
 
 else
@@ -305,7 +305,7 @@ if [ $? -eq 0 ]; then
         need_to_install_python=false
         python3_is_installed=true
     else
-        echo "System version of Python must be a Python 3 version >= 3.5.0."
+        echo "System version of Python must be a Python 3 version >= 3.6.0."
     fi
 else
     echo "Python3 not found on system PATH"
@@ -357,7 +357,7 @@ if [ "$need_to_install_python" = true ]; then
         fi
         python_exe=python3
     else
-        echo "ERROR: Could not install Python 3 based on operating system. Please install Python 3.5+ manually and re-run this script."
+        echo "ERROR: Could not install Python 3 based on operating system. Please install Python 3.6+ manually and re-run this script."
         exit 1
     fi
 fi

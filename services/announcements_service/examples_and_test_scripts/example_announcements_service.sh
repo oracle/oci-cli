@@ -37,14 +37,14 @@ oci announce announcements list --compartment-id $COMPARTMENT_ID --sort-order DE
 
 set +e
 # Filter time one to be at least the current time
-oci announce announcements list --compartment-id $COMPARTMENT_ID --time-one-earliest-time `date +%s`
+oci announce announcements list --compartment-id $COMPARTMENT_ID --time-one-earliest-time 2021-05-05T23:11:01.000Z
 # Filter time one to be at most the current time
-oci announce announcements list --compartment-id $COMPARTMENT_ID --time-one-latest-time `date +%s`
+oci announce announcements list --compartment-id $COMPARTMENT_ID --time-one-latest-time 2021-05-05T23:11:06.000Z
 set -e 
 
 oci announce user-status get --announcement-id $ANNOUNCEMENT_ID
 # Update user's announcement acknowledgement time to now
-oci announce user-status update --announcement-id $ANNOUNCEMENT_ID --user-status-announcement-id $ANNOUNCEMENT_ID --user-id $USER_ID --time-acknowledged `date +%s`
+oci announce user-status update --announcement-id $ANNOUNCEMENT_ID --user-status-announcement-id $ANNOUNCEMENT_ID --user-id $USER_ID --time-acknowledged 2021-05-05T23:11:17.000Z
 oci announce user-status get --announcement-id $ANNOUNCEMENT_ID
 # Cleanup status
-oci announce user-status update --announcement-id $ANNOUNCEMENT_ID --user-status-announcement-id $ANNOUNCEMENT_ID --user-id $USER_ID --time-acknowledged `date +%s`
+oci announce user-status update --announcement-id $ANNOUNCEMENT_ID --user-status-announcement-id $ANNOUNCEMENT_ID --user-id $USER_ID --time-acknowledged 2021-05-05T23:11:17.000Z

@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.38.1',
+    'oci==2.38.2',
     'arrow==0.17.0',
     'certifi',
     'click==6.7',
@@ -43,7 +43,7 @@ requires = [
     'six==1.14.0',
     'terminaltables==3.1.0',
     'pyOpenSSL==19.1.0',
-    'PyYAML==5.3.1'
+    'PyYAML==5.4.1'
 ]
 
 extras = {
@@ -100,7 +100,9 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "License :: OSI Approved :: Universal Permissive License (UPL)",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9"
     ]
 )
