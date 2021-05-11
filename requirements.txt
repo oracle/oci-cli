@@ -15,10 +15,10 @@ Jinja2==2.11.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.38.1
+oci==2.38.2
 packaging==20.2
 pluggy==0.13.0
-py==1.4.33
+py==1.10.0
 pyasn1==0.2.3
 pyOpenSSL==19.1.0
 pycparser==2.20
@@ -39,4 +39,4 @@ vcrpy==1.13.0
 virtualenv==16.7.10
 pytest-xdist==1.22.2
 pytest-forked==1.0.2
-PyYAML==5.3.1
+PyYAML==5.4.1
