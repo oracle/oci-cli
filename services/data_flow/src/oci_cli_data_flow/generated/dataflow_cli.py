@@ -206,6 +206,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties. Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
+@cli_util.option('--execute', help=u"""The input used for spark-submit command. For more details see https://spark.apache.org/docs/latest/submitting-applications.html#launching-applications-with-spark-submit. Supported options include ``--class``, ``--file``, ``--jars``, ``--conf``, ``--py-files``, and main application file with arguments. Example: ``--jars oci://path/to/a.jar,oci://path/to/b.jar --files oci://path/to/a.json,oci://path/to/b.csv --py-files oci://path/to/a.py,oci://path/to/b.py --conf spark.sql.crossJoin.enabled=true --class org.apache.spark.examples.SparkPi oci://path/to/main.jar 10`` Note: If execute is specified together with applicationId, className, configuration, fileUri, language, arguments, parameters during application create/update, or run create/submit, Data Flow service will use derived information from execute input only.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
@@ -221,7 +222,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, file_uri, language, num_executors, spark_version, archive_uri, arguments, class_name, configuration, defined_tags, description, freeform_tags, logs_bucket_uri, parameters, private_endpoint_id, warehouse_bucket_uri):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, file_uri, language, num_executors, spark_version, archive_uri, arguments, class_name, configuration, defined_tags, description, execute, freeform_tags, logs_bucket_uri, parameters, private_endpoint_id, warehouse_bucket_uri):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -253,6 +254,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if description is not None:
         _details['description'] = description
+
+    if execute is not None:
+        _details['execute'] = execute
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -300,7 +304,7 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint to be used by an application. \n[Command Reference](createPrivateEndpoint)""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint to be used by applications. \n[Command Reference](createPrivateEndpoint)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of DNS zone names. Example: `[ \"app.examplecorp.com\", \"app.examplecorp2.com\" ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of a subnet.""")
@@ -378,13 +382,15 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @run_group.command(name=cli_util.override('data_flow.create_run.command_name', 'create'), help=u"""Creates a run for an application. \n[Command Reference](createRun)""")
-@cli_util.option('--application-id', required=True, help=u"""The application ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--application-id', help=u"""The OCID of the associated application. If this value is set, then no value for the execute parameter is required. If this value is not set, then a value for the execute parameter is required, and a new application is created and associated with the new run.""")
+@cli_util.option('--archive-uri', help=u"""An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The arguments passed to the running application as command line arguments.  An argument is either a plain text or a placeholder. Placeholders are replaced using values from the parameters map.  Each placeholder specified must be represented in the parameters map else the request (POST or PUT) will fail with a HTTP 400 status code.  Placeholders are specified as `Service Api Spec`, where `name` is the name of the parameter. Example:  `[ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]` If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties. Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name that does not have to be unique. Avoid entering confidential information. If this value is not specified, it will be derived from the associated application's displayName or set by API using fileUri's application file name.""")
 @cli_util.option('--driver-shape', help=u"""The VM shape for the driver. Sets the driver cores and memory.""")
+@cli_util.option('--execute', help=u"""The input used for spark-submit command. For more details see https://spark.apache.org/docs/latest/submitting-applications.html#launching-applications-with-spark-submit. Supported options include ``--class``, ``--file``, ``--jars``, ``--conf``, ``--py-files``, and main application file with arguments. Example: ``--jars oci://path/to/a.jar,oci://path/to/b.jar --files oci://path/to/a.json,oci://path/to/b.csv --py-files oci://path/to/a.py,oci://path/to/b.py --conf spark.sql.crossJoin.enabled=true --class org.apache.spark.examples.SparkPi oci://path/to/main.jar 10`` Note: If execute is specified together with applicationId, className, configuration, fileUri, language, arguments, parameters during application create/update, or run create/submit, Data Flow service will use derived information from execute input only.""")
 @cli_util.option('--executor-shape', help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
@@ -392,6 +398,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--spark-version', help=u"""The Spark version utilized to run the application. This value may be set if applicationId is not since the Spark version will be taken from the associated application.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "CANCELING", "CANCELED", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -401,15 +408,19 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
 @cli_util.wrap_exceptions
-def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, compartment_id, display_name, arguments, configuration, defined_tags, driver_shape, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, warehouse_bucket_uri):
+def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, execute, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, spark_version, warehouse_bucket_uri):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['applicationId'] = application_id
     _details['compartmentId'] = compartment_id
-    _details['displayName'] = display_name
+
+    if application_id is not None:
+        _details['applicationId'] = application_id
+
+    if archive_uri is not None:
+        _details['archiveUri'] = archive_uri
 
     if arguments is not None:
         _details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
@@ -420,8 +431,14 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if display_name is not None:
+        _details['displayName'] = display_name
+
     if driver_shape is not None:
         _details['driverShape'] = driver_shape
+
+    if execute is not None:
+        _details['execute'] = execute
 
     if executor_shape is not None:
         _details['executorShape'] = executor_shape
@@ -437,6 +454,9 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if parameters is not None:
         _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    if spark_version is not None:
+        _details['sparkVersion'] = spark_version
 
     if warehouse_bucket_uri is not None:
         _details['warehouseBucketUri'] = warehouse_bucket_uri
@@ -790,7 +810,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('data_flow.list_applications.command_name', 'list'), help=u"""Lists all applications in the specified compartment. \n[Command Reference](listApplications)""")
+@application_group.command(name=cli_util.override('data_flow.list_applications.command_name', 'list'), help=u"""Lists all applications in the specified compartment. Only one parameter other than compartmentId may also be included in a query. The query must include compartmentId. If the query does not include compartmentId, or includes compartmentId but two or more other parameters an error is returned. \n[Command Reference](listApplications)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -970,7 +990,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.list_runs.command_name', 'list'), help=u"""Lists all runs of an application in the specified compartment. \n[Command Reference](listRuns)""")
+@run_group.command(name=cli_util.override('data_flow.list_runs.command_name', 'list'), help=u"""Lists all runs of an application in the specified compartment.  Only one parameter other than compartmentId may also be included in a query. The query must include compartmentId. If the query does not include compartmentId, or includes compartmentId but two or more other parameters an error is returned. \n[Command Reference](listRuns)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--application-id', help=u"""The ID of the application.""")
 @cli_util.option('--owner-principal-id', help=u"""The OCID of the user who created the resource.""")
@@ -1205,6 +1225,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 @cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--driver-shape', help=u"""The VM shape for the driver. Sets the driver cores and memory.""")
+@cli_util.option('--execute', help=u"""The input used for spark-submit command. For more details see https://spark.apache.org/docs/latest/submitting-applications.html#launching-applications-with-spark-submit. Supported options include ``--class``, ``--file``, ``--jars``, ``--conf``, ``--py-files``, and main application file with arguments. Example: ``--jars oci://path/to/a.jar,oci://path/to/b.jar --files oci://path/to/a.json,oci://path/to/b.csv --py-files oci://path/to/a.py,oci://path/to/b.py --conf spark.sql.crossJoin.enabled=true --class org.apache.spark.examples.SparkPi oci://path/to/main.jar 10`` Note: If execute is specified together with applicationId, className, configuration, fileUri, language, arguments, parameters during application create/update, or run create/submit, Data Flow service will use derived information from execute input only.""")
 @cli_util.option('--executor-shape', help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
@@ -1224,7 +1245,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, execute, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
@@ -1272,6 +1293,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if driver_shape is not None:
         _details['driverShape'] = driver_shape
+
+    if execute is not None:
+        _details['execute'] = execute
 
     if executor_shape is not None:
         _details['executorShape'] = executor_shape

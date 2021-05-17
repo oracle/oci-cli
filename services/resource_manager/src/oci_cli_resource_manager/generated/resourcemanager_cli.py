@@ -853,7 +853,7 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -928,7 +928,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -1010,7 +1010,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -1100,7 +1100,93 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_object_storage_config_source_details.command_name', 'create-stack-create-object-storage-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
+@cli_util.option('--config-source-region', required=True, help=u"""The name of the bucket's region. Example: `PHX`""")
+@cli_util.option('--config-source-namespace', required=True, help=u"""The Object Storage namespace that contains the bucket.""")
+@cli_util.option('--config-source-bucket-name', required=True, help=u"""The name of the bucket that contains the Terraform configuration files.""")
+@cli_util.option('--display-name', help=u"""The stack's display name.""")
+@cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags associated with this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-source-working-directory', help=u"""File path to the directory from which Terraform runs. If not specified, the root directory is used. This parameter is ignored for the `configSourceType` value of `COMPARTMENT_CONFIG_SOURCE`.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@cli_util.wrap_exceptions
+def create_stack_create_object_storage_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_region, config_source_namespace, config_source_bucket_name, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['configSource']['region'] = config_source_region
+    _details['configSource']['namespace'] = config_source_namespace
+    _details['configSource']['bucketName'] = config_source_bucket_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if terraform_version is not None:
+        _details['terraformVersion'] = terraform_version
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if config_source_working_directory is not None:
+        _details['configSource']['workingDirectory'] = config_source_working_directory
+
+    _details['configSource']['configSourceType'] = 'OBJECT_STORAGE_CONFIG_SOURCE'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_stack(
+        create_stack_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-compartment-id', required=True, help=u"""The [OCID] of the compartment to use for creating the stack. The new stack will include definitions for supported resource types in scope of the specified compartment OCID (tenancy level for root compartment, compartment level otherwise).""")
 @cli_util.option('--config-source-region', required=True, help=u"""The region to use for creating the stack. The new stack will include definitions for supported resource types in this region.""")
@@ -1188,7 +1274,7 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_stack_template_config_source_details.command_name', 'create-stack-create-stack-template-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_stack_template_config_source_details.command_name', 'create-stack-create-stack-template-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-template-id', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -3136,6 +3222,109 @@ def update_stack_update_git_config_source_details(ctx, from_json, force, wait_fo
         _details['configSource']['branchName'] = config_source_branch_name
 
     _details['configSource']['configSourceType'] = 'GIT_CONFIG_SOURCE'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.update_stack(
+        stack_id=stack_id,
+        update_stack_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stack(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_object_storage_config_source_details.command_name', 'update-stack-update-object-storage-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [To update a stack] and [To edit a stack]. \n[Command Reference](updateStack)""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
+@cli_util.option('--display-name', help=u"""The name of the stack.""")
+@cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--config-source-working-directory', help=u"""The path of the directory from which to run terraform. If not specified, the the root will be used. This parameter is ignored for the `configSourceType` value of `COMPARTMENT_CONFIG_SOURCE`.""")
+@cli_util.option('--config-source-region', help=u"""The name of the bucket's region. Example: `PHX`""")
+@cli_util.option('--config-source-namespace', help=u"""The Object Storage namespace that contains the bucket.""")
+@cli_util.option('--config-source-bucket-name', help=u"""The name of the bucket that contains the Terraform configuration files.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@cli_util.wrap_exceptions
+def update_stack_update_object_storage_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_region, config_source_namespace, config_source_bucket_name):
+
+    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+        raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
+    if not force:
+        if variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configSource'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if terraform_version is not None:
+        _details['terraformVersion'] = terraform_version
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if config_source_working_directory is not None:
+        _details['configSource']['workingDirectory'] = config_source_working_directory
+
+    if config_source_region is not None:
+        _details['configSource']['region'] = config_source_region
+
+    if config_source_namespace is not None:
+        _details['configSource']['namespace'] = config_source_namespace
+
+    if config_source_bucket_name is not None:
+        _details['configSource']['bucketName'] = config_source_bucket_name
+
+    _details['configSource']['configSourceType'] = 'OBJECT_STORAGE_CONFIG_SOURCE'
 
     client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.update_stack(

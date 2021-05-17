@@ -38,14 +38,15 @@ def create_base64encoded_tf_state(tf_state):
             return base64.b64encode(tf_state_file.read()).decode('utf-8')
 
 
-@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_stack, params_to_exclude=['config_source'])
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_stack, params_to_exclude=['config_source', 'wait_for_state'])
 @resourcemanager_cli.stack_group.command(name=cli_util.override('create_stack.command_name', 'create'), help="""Creates a Stack""")
 @cli_util.option('--config-source', required=True, help="""A Terraform configuration .zip file.""")
 @cli_util.option('--working-directory', help=""" The path of the directory from which to run terraform. If not specified the root will be used.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NOT_CHECKED", "IN_SYNC", "DRIFTED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack_extended(ctx, config_source, working_directory, **kwargs):
+def create_stack_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source, display_name, description, variables, terraform_version, freeform_tags, defined_tags, working_directory, **kwargs):
 
     config_source = os.path.expandvars(os.path.expanduser(config_source))
     if not os.path.exists(config_source):
@@ -61,15 +62,76 @@ def create_stack_extended(ctx, config_source, working_directory, **kwargs):
         click.echo('Internal error: Unable to generate encoded zip', file=sys.stderr)
         ctx.abort()
 
-    kwargs['config_source'] = {
+    config_source = {
         'configSourceType': oci.resource_manager.models.ConfigSource.CONFIG_SOURCE_TYPE_ZIP_UPLOAD,
         'zipFileBase64Encoded': send_value}
 
     if working_directory is not None:
-        kwargs['config_source']['workingDirectory'] = working_directory
+        config_source['workingDirectory'] = working_directory
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
-    ctx.invoke(resourcemanager_cli.create_stack, **kwargs)
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['configSource'] = cli_util.parse_json_parameter("config_source", config_source)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if variables is not None:
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
+
+    if terraform_version is not None:
+        _details['terraformVersion'] = terraform_version
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_stack(
+        create_stack_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo(
+                    'Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state),
+                    file=sys.stderr)
+                result = oci.wait_until(client, client.get_stack(result.data.id),
+                                        'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo(
+                    'Failed to wait until the work request entered the specified state. Outputting last known resource state',
+                    file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo(
+                    'Encountered error while waiting for work request to enter the specified state. Outputting last known resource state',
+                    file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @cli_util.copy_params_from_generated_command(resourcemanager_cli.update_stack, params_to_exclude=['config_source'])
@@ -301,6 +363,9 @@ cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, re
 # Pop the stack_resource_drift_summary group
 resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.stack_resource_drift_summary_group.name)
 
+# Shorten stack commands based for object storage
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_object_storage_config_source_details, "create-from-object-storage")
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.update_stack_update_object_storage_config_source_details, "update-from-object-storage")
 
 # oci resource-manager stack create-stack-create-stack-template-config-source-details -> oci resource-manager stack create-from-template
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_stack_template_config_source_details, "create-from-template")

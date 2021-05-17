@@ -8,7 +8,11 @@
 from services.mysql.src.oci_cli_db_system.generated import dbsystem_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from oci_cli import custom_types
 import click
+import six
+import oci.waiter
+import sys
 
 # rename  oci mysql db-system create-db-system-create-db-system-source-from-backup-details -> oci mysql db-system clone
 cli_util.rename_command(dbsystem_cli, dbsystem_cli.db_system_group, dbsystem_cli.create_db_system_create_db_system_source_from_backup_details, "clone")
@@ -91,3 +95,105 @@ def modify_clone_input_args(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def modify_update_import_args(ctx, **kwargs):
     ctx.invoke(dbsystem_cli.update_db_system, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbsystem_cli.start_db_system, params_to_exclude=['wait_for_state'])
+@dbsystem_cli.db_system_root_group.command(name=dbsystem_cli.start_db_system.name, help=dbsystem_cli.start_db_system.help)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_db_system_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match, **kwargs):
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('mysql', 'db_system', ctx)
+    result = client.start_db_system(
+        db_system_id=db_system_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo(
+                    'Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state),
+                    file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_system(db_system_id), 'lifecycle_state', wait_for_state,
+                                        **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo(
+                    'Failed to wait until the work request entered the specified state. Outputting last known resource state',
+                    file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo(
+                    'Encountered error while waiting for work request to enter the specified state. Outputting last known resource state',
+                    file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(dbsystem_cli.stop_db_system, params_to_exclude=['wait_for_state'])
+@dbsystem_cli.db_system_root_group.command(name=dbsystem_cli.stop_db_system.name, help=dbsystem_cli.stop_db_system.help)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_db_system_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shutdown_type, if_match, **kwargs):
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['shutdownType'] = shutdown_type
+
+    client = cli_util.build_client('mysql', 'db_system', ctx)
+    result = client.stop_db_system(
+        db_system_id=db_system_id,
+        stop_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_system(db_system_id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
