@@ -794,6 +794,7 @@ virtualnetwork_cli.drg_route_distribution_group.add_command(virtualnetwork_cli.d
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_distribution_group, virtualnetwork_cli.delete_drg_route_distribution, "delete")
 
 # DRG Route Table
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.internal_public_ip_group.name)
 virtualnetwork_cli.drg_route_table_group.add_command(virtualnetwork_cli.delete_drg_route_table)
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_table_group, virtualnetwork_cli.delete_drg_route_table, "delete")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_table_group, virtualnetwork_cli.remove_import_drg_route_distribution, "remove-import-route-distribution")

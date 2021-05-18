@@ -159,7 +159,7 @@ def updateKwargs(kwargs):
 #   - a plaint text, eg.:    'spark.app.name="My App Name" spark.shuffle.io.maxRetries=4'
 #   - or a json object, eg.: '{"spark.app.name": "My App Name", "spark.shuffle.io.maxRetries": "4"}'
 # See SSS-2321 (https://jira.oci.oraclecorp.com/browse/SSS-2321)
-@cli_util.copy_params_from_generated_command(dataflow_cli.create_application, params_to_exclude=['arguments', 'parameters', 'configuration'])
+@cli_util.copy_params_from_generated_command(dataflow_cli.create_application, params_to_exclude=['arguments', 'parameters', 'configuration', 'execute'])
 @dataflow_cli.application_group.command(name=cli_util.override('data_flow.create_application.command_name', 'create'), help=dataflow_cli.create_application.help)
 @cli_util.option('--arguments', help=u"""The arguments passed to the running application as command line arguments. Arguments may contain zero or more placeholders that are replaced using values from the parameters map. Each placeholder specified must be represented in the parameters map else the request will fail with a HTTP 400 status code. Placeholders are specified as `${name}`, where `name` is the name of the parameter. Example:  '--input ${input_file} --name \"John Doe\"'  Alternatively, the arguments can be specified as a JSON array of strings where each string represent an argument. Example:  [ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]  If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""")
 @cli_util.option('--parameters', help=u"""A string of name=value pairs used to supply SQL parameters or fill placeholders found in the arguments parameter. The name must be a string of one or more word characters (a-z, A-Z, 0-9, _). The value can be a string of zero or more characters of any kind. Example:  'iterations=10 input_file=mydata.xml variable_x=${x}'  Alternatively, the arguments can be specified as a JSON array of objects. Example:  [ { name : \"iterations\", value : \"10\" }, { name : \"input_file\", value : \"mydata.xml\" }, { name : \"variable_x\", value : \"${x}\" } ]""")
@@ -183,7 +183,7 @@ def create_application(ctx, **kwargs):
 #   - a plaint text, eg.:    'spark.app.name="My App Name" spark.shuffle.io.maxRetries=4'
 #   - or a json object, eg.: '{"spark.app.name": "My App Name", "spark.shuffle.io.maxRetries": "4"}'
 # See SSS-2321 (https://jira.oci.oraclecorp.com/browse/SSS-2321)
-@cli_util.copy_params_from_generated_command(dataflow_cli.update_application, params_to_exclude=['arguments', 'parameters', 'configuration'])
+@cli_util.copy_params_from_generated_command(dataflow_cli.update_application, params_to_exclude=['arguments', 'parameters', 'configuration', 'execute'])
 @dataflow_cli.application_group.command(name=cli_util.override('data_flow.update_application.command_name', 'update'), help=dataflow_cli.update_application.help)
 @cli_util.option('--arguments', help=u"""The arguments passed to the running application as command line arguments. Arguments may contain zero or more placeholders that are replaced using values from the parameters map. Each placeholder specified must be represented in the parameters map else the request will fail with a HTTP 400 status code. Placeholders are specified as `${name}`, where `name` is the name of the parameter. Example:  '--input ${input_file} --name \"John Doe\"'  Alternatively, the arguments can be specified as a JSON array of strings where each string represent an argument. Example:  [ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]  If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""")
 @cli_util.option('--parameters', help=u"""A string of name=value pairs used to supply SQL parameters or fill placeholders found in the arguments parameter. The name must be a string of one or more word characters (a-z, A-Z, 0-9, _). The value can be a string of zero or more characters of any kind. Example:  'iterations=10 input_file=mydata.xml variable_x=${x}'  Alternatively, the arguments can be specified as a JSON array of objects. Example:  [ { name : \"iterations\", value : \"10\" }, { name : \"input_file\", value : \"mydata.xml\" }, { name : \"variable_x\", value : \"${x}\" } ]""")
@@ -194,3 +194,27 @@ def create_application(ctx, **kwargs):
 def update_application(ctx, **kwargs):
     updateKwargs(kwargs)
     ctx.invoke(dataflow_cli.update_application, **kwargs)
+
+
+# Add command submit to run group, using create command with --execute input, which is compatible with spark-submit syntax
+# See https://jira.oci.oraclecorp.com/browse/SSS-3694
+@cli_util.copy_params_from_generated_command(dataflow_cli.create_run, params_to_exclude=['execute', 'application_id', 'arguments', 'parameters'])
+@dataflow_cli.run_group.command(name=cli_util.override('data_flow.submit_run.command_name', 'submit'), help=u"""Submit a run using spark-submit like syntax""")
+@cli_util.option('--execute', required=True, help=u"""The input used for spark-submit command. For more details see https://spark.apache.org/docs/latest/submitting-applications.html#launching-applications-with-spark-submit. Supported options include ``--class``, ``--file``, ``--jars``, ``--conf``, ``--py-files``, and main application file with arguments. Example: ``--jars oci://path/to/a.jar,oci://path/to/b.jar --files oci://path/to/a.json,oci://path/to/b.csv --py-files oci://path/to/a.py,oci://path/to/b.py --conf spark.sql.crossJoin.enabled=true --class org.apache.spark.examples.SparkPi oci://path/to/main.jar 10`` Note: If execute is specified together with applicationId, className, configuration, fileUri, language, arguments, parameters during application create/update, or run create/submit, Data Flow service will use derived information from execute input only.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
+@cli_util.wrap_exceptions
+def submit_run(ctx, **kwargs):
+    ctx.invoke(dataflow_cli.create_run, **kwargs)
+
+
+# For normal run create, application-id and display-name are required, execute is excluded.
+@cli_util.copy_params_from_generated_command(dataflow_cli.create_run, params_to_exclude=['execute', 'application_id', 'display_name', 'archive_uri'])
+@dataflow_cli.run_group.command(name=cli_util.override('data_flow.create_run_extended.command_name', 'create'), help=u"""Creates a run for an application. \n[Command Reference](createRun)""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the associated application. If this value is set, then no value for the execute parameter is required. If this value is not set, then a value for the execute parameter is required, and a new application is created and associated with the new run.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name that does not have to be unique. Avoid entering confidential information. If this value is not specified, it will be derived from the associated application's displayName or set by API using fileUri's application file name.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
+@cli_util.wrap_exceptions
+def create_run_extended(ctx, **kwargs):
+    ctx.invoke(dataflow_cli.create_run, **kwargs)

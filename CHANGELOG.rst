@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.24.5 - 2021-05-18
+-------------------
+Added
+~~~~~
+* Sample scripts are available for every command on the `CLI public doc page <https://docs.oracle.com/en-us/iaas/tools/oci-cli/latest/oci_cli_docs/>`__ and man pages
+
+* Support for Object storage configuration source in the Resource Manager service
+
+  * ``oci resource-manager stack create-from-object-storage``
+  * ``oci resource-manager stack update-from-object-storage``
+
+* Support for spark-submit compatible options in the Data Flow service
+
+  * ``oci data-flow run submit``
+
+Fixed
+~~~~~
+* Wait for state parameter for the following commands were returning an error on valid states
+
+  * ``oci mysql db-system start/stop --wait-for-state``
+  * ``oci resource-manager stack create --wait-for-state``
+
+* Fixed list commands in Artifacts service
+
+  * ``oci artifacts container image list``
+  * ``oci artifacts container image-signature list``
+  * ``oci artifacts container repository list``
+
 2.24.4 - 2021-05-11
 -------------------
 Added

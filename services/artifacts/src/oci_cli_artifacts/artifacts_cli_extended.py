@@ -137,29 +137,196 @@ cli_util.rename_command(artifacts_cli, artifacts_cli.container_image_group, arti
 
 
 artifacts_cli.artifacts_root_group.commands.pop(artifacts_cli.container_image_signature_summary_group.name)
-artifacts_cli.container_image_signature_group.add_command(artifacts_cli.list_container_image_signatures)
-cli_util.rename_command(artifacts_cli, artifacts_cli.container_image_signature_group, artifacts_cli.list_container_image_signatures, 'list')
+# artifacts_cli.container_image_signature_group.add_command(artifacts_cli.list_container_image_signatures)
+# cli_util.rename_command(artifacts_cli, artifacts_cli.container_image_signature_group, artifacts_cli.list_container_image_signatures, 'list')
+
+
+# Using artifacts_list_call_get_all_results
+@cli_util.copy_params_from_generated_command(artifacts_cli.list_container_image_signatures)
+@artifacts_cli.container_image_signature_group.command(name=cli_util.override('list_container_image_signatures.command_name', 'list'), help=artifacts_cli.list_container_image_signatures.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerImageSignatureCollection'})
+@cli_util.wrap_exceptions
+def list_container_image_signatures_extended(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, image_id, repository_id, repository_name, image_digest, display_name, kms_key_id, kms_key_version_id, signing_algorithm, limit, page, sort_by, sort_order):
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if image_id is not None:
+        kwargs['image_id'] = image_id
+    if repository_id is not None:
+        kwargs['repository_id'] = repository_id
+    if repository_name is not None:
+        kwargs['repository_name'] = repository_name
+    if image_digest is not None:
+        kwargs['image_digest'] = image_digest
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if kms_key_id is not None:
+        kwargs['kms_key_id'] = kms_key_id
+    if kms_key_version_id is not None:
+        kwargs['kms_key_version_id'] = kms_key_version_id
+    if signing_algorithm is not None:
+        kwargs['signing_algorithm'] = signing_algorithm
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.artifacts_list_call_get_all_results(
+            client.list_container_image_signatures,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.artifacts_list_call_get_up_to_limit(
+            client.list_container_image_signatures,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_container_image_signatures(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+# Using artifacts_list_call_get_all_results
+@cli_util.copy_params_from_generated_command(artifacts_cli.list_container_repositories,)
+@artifacts_cli.container_repository_group.command(name=cli_util.override('list_container_repositories.command_name', 'list'), help=artifacts_cli.list_container_repositories.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerRepositoryCollection'})
+@cli_util.wrap_exceptions
+def list_container_repositories_extended(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, repository_id, display_name, is_public, lifecycle_state, limit, page, sort_by, sort_order):
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if repository_id is not None:
+        kwargs['repository_id'] = repository_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if is_public is not None:
+        kwargs['is_public'] = is_public
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.artifacts_list_call_get_all_results(
+            client.list_container_repositories,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.artifacts_list_call_get_up_to_limit(
+            client.list_container_repositories,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_container_repositories(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
 
 
 # Rename argument: oci artifacts container image list --version-parameterconflict
 # => oci artifacts container image list --image-version
+# Using artifacts_list_call_get_all_results
+@cli_util.copy_params_from_generated_command(artifacts_cli.list_container_images, params_to_exclude=['version_parameterconflict'])
+@artifacts_cli.container_image_group.command(name=cli_util.override('list_container_images.command_name', 'list'), help=artifacts_cli.list_container_images.help)
+@cli_util.option('--image-version', help=u"""A filter to return container images that match the version.
 
-
-@cli_util.copy_params_from_generated_command(artifacts_cli.list_container_images,
-                                             params_to_exclude=['version_parameterconflict'])
-@artifacts_cli.container_image_group.command(name=cli_util.override('list_container_images.command_name', 'list'),
-                                             help=artifacts_cli.list_container_images.help)
-@cli_util.option('--image-version', help=cli_util.copy_help_from_generated_code(artifacts_cli.list_container_images,
-                                                                                'version_parameterconflict'))
+Example: `foo` or `foo*`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts',
                                                                                                      'class': 'ContainerImageCollection'})
 @cli_util.wrap_exceptions
-def list_container_images_extended(ctx, **kwargs):
+def list_container_images_extended(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, display_name, image_id, is_versioned, repository_id, repository_name, lifecycle_state, limit, page, sort_by, sort_order, **kwargs):
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     if 'image_version' in kwargs:
-        kwargs['version_parameterconflict'] = kwargs['image_version']
+        kwargs['version'] = kwargs['image_version']
         kwargs.pop('image_version')
-    ctx.invoke(artifacts_cli.list_container_images, **kwargs)
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if image_id is not None:
+        kwargs['image_id'] = image_id
+    if is_versioned is not None:
+        kwargs['is_versioned'] = is_versioned
+    if repository_id is not None:
+        kwargs['repository_id'] = repository_id
+    if repository_name is not None:
+        kwargs['repository_name'] = repository_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.artifacts_list_call_get_all_results(
+            client.list_container_images,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.artifacts_list_call_get_up_to_limit(
+            client.list_container_images,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_container_images(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
 
 
 @artifacts_cli.container_image_signature_group.command(name='sign-upload', help=u"""Sign a container image metadata and upload the signature. \n[Command Reference](SignAndUploadContainerImageSignatureMetadata)""")

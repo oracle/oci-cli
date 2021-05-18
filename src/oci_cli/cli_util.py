@@ -1897,6 +1897,180 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
                       call_result.request)
 
 
+def artifacts_list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwargs):
+    # If no limit was provided, make a single call
+    if record_limit is None:
+        return list_func_ref(**func_kwargs)
+
+    # If we have a limit, make calls until we get that amount of data
+    keep_paginating = True
+    remaining_items_to_fetch = record_limit
+    call_result = None
+    aggregated_results = []
+    aggregated_results_dict = {}
+    wrapped_array_pagination = False
+
+    # if the user explicitly sets limit to 0 we will still call the service once with limit=0
+    fetched_at_least_once = False
+    while keep_paginating and (remaining_items_to_fetch > 0 or not fetched_at_least_once):
+        fetched_at_least_once = True
+
+        if page_size:
+            func_kwargs['limit'] = min(page_size, remaining_items_to_fetch)
+        elif 'limit' in func_kwargs:
+            func_kwargs['limit'] = min(func_kwargs['limit'], remaining_items_to_fetch)
+
+        call_result = list_func_ref(**func_kwargs)
+
+        # If the result is not a list, we want to return all the values of the object and not just `items`
+        if not isinstance(call_result.data, list):
+            wrapped_array_pagination = True
+            for key in sorted(call_result.data.attribute_map.keys()):
+                if isinstance(getattr(call_result.data, key), list):
+                    aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(getattr(call_result.data, key))
+                    remaining_items_to_fetch -= len(getattr(call_result.data, key))
+                else:
+                    aggregated_results_dict[key.replace("_", "-")] = getattr(call_result.data, key)
+        else:
+            aggregated_results.extend(call_result.data)
+            remaining_items_to_fetch -= len(call_result.data)
+
+        if call_result.next_page is not None:
+            func_kwargs['page'] = call_result.next_page
+
+        keep_paginating = call_result.has_next_page
+
+    if wrapped_array_pagination:
+        limit_items = record_limit
+        for key in sorted(aggregated_results_dict.keys()):
+            if isinstance(aggregated_results_dict[key], list):
+                if limit_items > 0:
+                    aggregated_results_dict[key] = list(chain.from_iterable(aggregated_results_dict[key]))
+                    aggregated_results_dict[key] = aggregated_results_dict[key][:limit_items]
+                    limit_items -= len(aggregated_results_dict[key])
+                else:
+                    aggregated_results_dict.pop(key, None)
+
+    # Truncate the list to the first limit items, as potentially we could have gotten more than what the caller asked for
+    if wrapped_array_pagination:
+        final_response = Response(
+            call_result.status,
+            call_result.headers,
+            aggregated_results_dict,
+            call_result.request
+        )
+    else:
+        final_response = Response(call_result.status, call_result.headers, aggregated_results[:record_limit],
+                                  call_result.request)
+
+    return final_response
+
+
+def artifacts_list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_output=False, **func_kwargs):
+    keep_paginating = True
+    call_result = None
+    aggregated_results = []
+    aggregated_results_dict = {}
+    wrapped_array_pagination = False
+
+    page_index = 1
+    has_stream_data = False
+    previous_page_has_data = False  # Indicates whether some previous page had data
+    if stream_output:
+        if ctx.obj['query']:
+            ctx.obj['expression'] = build_query_expression(ctx)
+        stream_header(is_json, ctx)
+    ex = None
+    try:
+        while keep_paginating:
+            call_result = list_func_ref(**func_kwargs)
+            start = timer()
+            # If the result is not a list, we want to return all the values of the object and not just `items`
+            if not isinstance(call_result.data, list):
+                wrapped_array_pagination = True
+                for key in sorted(call_result.data.attribute_map.keys()):
+                    if isinstance(getattr(call_result.data, key), list):
+                        aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(
+                            getattr(call_result.data, key))
+                    else:
+                        aggregated_results_dict[key.replace("_", "-")] = getattr(call_result.data, key)
+            else:
+                if stream_output:
+                    previous_page_has_data = stream_page(is_json, page_index, call_result, ctx, previous_page_has_data)
+                    if previous_page_has_data:
+                        has_stream_data = previous_page_has_data
+                else:
+                    aggregated_results.extend(call_result.data)
+
+            if call_result.next_page is not None:
+                func_kwargs['page'] = call_result.next_page
+
+            keep_paginating = call_result.has_next_page
+            if ctx and ctx.obj['debug']:
+                end = timer()
+                logger.debug(oci.base_client.utc_now() + 'time elapsed evaluating logic after page {}: {}'.format(
+                    str(page_index), str(end - start)))
+                output_memory('total memory usage after evaluating page' + str(page_index) + ': ')
+            page_index = page_index + 1
+    except Exception as e:
+        ex = e
+        raise e
+    finally:
+        for key in aggregated_results_dict.keys():
+            if isinstance(aggregated_results_dict[key], list):
+                aggregated_results_dict[key] = list(chain.from_iterable(aggregated_results_dict[key]))
+        if stream_output:
+            if ex and ctx and ctx.obj['debug']:
+                print(str(ex).replace("'", '"'), file=sys.stderr)
+            elif ex:
+                print(str(ex).replace("'", '"'))
+            elif not has_stream_data:
+                print('null')
+            stream_footer(is_json, ctx)
+            post_processed_results = aggregated_results
+            status = None
+            headers = None
+            request = None
+            if call_result:
+                status = call_result.status
+                headers = call_result.headers
+                request = call_result.request
+            final_response = Response(status, headers, post_processed_results, request)
+            return final_response
+    if ctx and ctx.obj['debug']:
+        print("", file=sys.stderr)
+
+    post_processed_results = aggregated_results
+    if 'sort_by' in func_kwargs:
+        if func_kwargs['sort_by'].upper() == 'DISPLAYNAME':
+            sort_direction = 'ASC'
+            if 'sort_order' in func_kwargs:
+                sort_direction = func_kwargs['sort_order'].upper()
+
+            post_processed_results = sorted(aggregated_results,
+                                            key=lambda r: retrieve_attribute_for_sort(r, 'display_name'),
+                                            reverse=(sort_direction == 'DESC'))
+        elif func_kwargs['sort_by'].upper() == 'TIMECREATED':
+            sort_direction = 'DESC'
+            if 'sort_order' in func_kwargs:
+                sort_direction = func_kwargs['sort_order'].upper()
+
+                post_processed_results = sorted(aggregated_results,
+                                                key=lambda r: retrieve_attribute_for_sort(r, 'time_created'),
+                                                reverse=(sort_direction == 'DESC'))
+
+    # Most of this is just dummy since we're discarding the intermediate requests
+
+    return Response(call_result.status,
+                    call_result.headers,
+                    aggregated_results_dict,
+                    call_result.request) if wrapped_array_pagination \
+        else Response(call_result.status,
+                      call_result.headers,
+                      post_processed_results,
+                      call_result.request)
+
+
 # Called by stream_page to execute a jmes query against a page of data.
 def execute_query(expression, input, ctx):
     search_data = None
@@ -2177,3 +2351,10 @@ class CommandExample:
         self.description = description
         self.usage = usage
         self.output = output
+
+
+class AutoCommandExample:
+
+    def __init__(self, dependency="", complex_param_msg=""):
+        self.dependency = dependency
+        self.complex_param_msg = complex_param_msg
