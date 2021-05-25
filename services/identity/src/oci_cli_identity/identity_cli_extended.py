@@ -49,6 +49,8 @@ def cli_util_func(ctx, param_name):
 def set_iam_default_tenancy_help():
     iam_tenancy_defaults = get_iam_commands_that_use_tenancy_defaults()
 
+    if not cli_root.cli.commands.get('iam', None):
+        return
     iam_command = cli_root.cli.commands.get('iam')
     for _, entitycommand in six.iteritems(iam_command.commands):
         if entitycommand.name in iam_tenancy_defaults.keys():

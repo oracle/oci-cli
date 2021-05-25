@@ -95,7 +95,8 @@ IGNORED_COMMANDS = [
     ['log-analytics', 'upload', 'upload-log-events-file'],
     ['database-migration', 'agent', 'update'],
     ['database-migration', 'connection', 'create'],
-    ['database-migration', 'connection', 'update']
+    ['database-migration', 'connection', 'update'],
+    ['artifacts', 'generic', 'artifact', 'upload-by-path'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

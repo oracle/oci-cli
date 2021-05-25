@@ -41,7 +41,7 @@ def sddc_summary_group():
     pass
 
 
-@click.command(cli_util.override('sddc.supported_sku_summary_group.command_name', 'supported-sku-summary'), cls=CommandGroupWithAlias, help="""A specific SKU. HOUR, MONTH, ONE_YEAR and THREE_YEARS supported by the Oracle Cloud VMware Solution.""")
+@click.command(cli_util.override('sddc.supported_sku_summary_group.command_name', 'supported-sku-summary'), cls=CommandGroupWithAlias, help="""A specific SKU. Oracle Cloud Infrastructure VMware Solution supports the following billing interval SKUs: HOUR, MONTH, ONE_YEAR, and THREE_YEARS.""")
 @cli_util.help_option_group
 def supported_sku_summary_group():
     pass
@@ -52,6 +52,57 @@ sddc_root_group.add_command(sddc_group)
 sddc_root_group.add_command(supported_vmware_software_version_summary_group)
 sddc_root_group.add_command(sddc_summary_group)
 sddc_root_group.add_command(supported_sku_summary_group)
+
+
+@sddc_group.command(name=cli_util.override('sddc.cancel_downgrade_hcx.command_name', 'cancel-downgrade-hcx'), help=u"""Cancel the pending SDDC downgrade from HCX Enterprise to HCX Advanced \n[Command Reference](cancelDowngradeHcx)""")
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.cancel_downgrade_hcx(
+        sddc_id=sddc_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @sddc_group.command(name=cli_util.override('sddc.change_sddc_compartment.command_name', 'change-compartment'), help=u"""Moves an SDDC into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSddcCompartment)""")
@@ -96,7 +147,6 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--esxi-hosts-count', required=True, type=click.INT, help=u"""The number of ESXi hosts to create in the SDDC. You can add more hosts later (see [CreateEsxiHost]).
 
 **Note:** If you later delete EXSi hosts from the SDDC to total less than 3, you are still billed for the 3 minimum recommended EXSi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.""")
-@cli_util.option('--initial-sku', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option selected during SDDC creation [ListSupportedSkus].""")
 @cli_util.option('--ssh-authorized-keys', required=True, help=u"""One or more public SSH keys to be included in the `~/.ssh/authorized_keys` file for the default user on each ESXi host. Use a newline character to separate multiple keys. The SSH keys must be in the format required for the `authorized_keys` file""")
 @cli_util.option('--provisioning-subnet-id', required=True, help=u"""The [OCID] of the management subnet to use for provisioning the SDDC.""")
 @cli_util.option('--vsphere-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the vSphere component of the VMware environment.""")
@@ -112,8 +162,10 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--instance-display-name-prefix', help=u"""A prefix used in the name of each ESXi host and Compute instance in the SDDC. If this isn't set, the SDDC's `displayName` is used as the prefix.
 
 For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `mySDDC-2`, and so on.""")
+@cli_util.option('--initial-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option selected during SDDC creation. Oracle Cloud Infrastructure VMware Solution supports the following billing interval SKUs: HOUR, MONTH, ONE_YEAR, and THREE_YEARS. [ListSupportedSkus].""")
 @cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX for this SDDC.""")
 @cli_util.option('--hcx-vlan-id', help=u"""The [OCID] of the VLAN to use for the HCX component of the VMware environment. This value is required only when `isHcxEnabled` is true.""")
+@cli_util.option('--is-hcx-enterprise-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX Enterprise for this SDDC.""")
 @cli_util.option('--workload-network-cidr', help=u"""The CIDR block for the IP addresses that VMware VMs in the SDDC use to run application workloads.""")
 @cli_util.option('--replication-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the vSphere Replication component of the VMware environment.""")
 @cli_util.option('--provisioning-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the Provisioning component of the VMware environment.""")
@@ -131,7 +183,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, initial_sku, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, is_hcx_enabled, hcx_vlan_id, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -141,7 +193,6 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     _details['vmwareSoftwareVersion'] = vmware_software_version
     _details['compartmentId'] = compartment_id
     _details['esxiHostsCount'] = esxi_hosts_count
-    _details['initialSku'] = initial_sku
     _details['sshAuthorizedKeys'] = ssh_authorized_keys
     _details['provisioningSubnetId'] = provisioning_subnet_id
     _details['vsphereVlanId'] = vsphere_vlan_id
@@ -158,11 +209,17 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     if instance_display_name_prefix is not None:
         _details['instanceDisplayNamePrefix'] = instance_display_name_prefix
 
+    if initial_sku is not None:
+        _details['initialSku'] = initial_sku
+
     if is_hcx_enabled is not None:
         _details['isHcxEnabled'] = is_hcx_enabled
 
     if hcx_vlan_id is not None:
         _details['hcxVlanId'] = hcx_vlan_id
+
+    if is_hcx_enterprise_enabled is not None:
+        _details['isHcxEnterpriseEnabled'] = is_hcx_enterprise_enabled
 
     if workload_network_cidr is not None:
         _details['workloadNetworkCidr'] = workload_network_cidr
@@ -264,6 +321,63 @@ def delete_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
+@sddc_group.command(name=cli_util.override('sddc.downgrade_hcx.command_name', 'downgrade-hcx'), help=u"""Downgrade the specified SDDC from HCX Enterprise to HCX Advanced \n[Command Reference](downgradeHcx)""")
+@cli_util.option('--reserving-hcx-on-premise-license-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The HCX on-premise licenses keys to be reserved when downgrade from HCX Enterprise to HCX Advanced.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'reserving-hcx-on-premise-license-keys': {'module': 'ocvp', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reserving-hcx-on-premise-license-keys': {'module': 'ocvp', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, reserving_hcx_on_premise_license_keys, sddc_id, if_match):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reservingHcxOnPremiseLicenseKeys'] = cli_util.parse_json_parameter("reserving_hcx_on_premise_license_keys", reserving_hcx_on_premise_license_keys)
+
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.downgrade_hcx(
+        sddc_id=sddc_id,
+        downgrade_hcx_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @sddc_group.command(name=cli_util.override('sddc.get_sddc.command_name', 'get'), help=u"""Gets the specified SDDC's information. \n[Command Reference](getSddc)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -353,7 +467,7 @@ def list_sddcs(ctx, from_json, all_pages, page_size, compartment_id, compute_ava
     cli_util.render_response(result, ctx)
 
 
-@supported_sku_summary_group.command(name=cli_util.override('sddc.list_supported_skus.command_name', 'list-supported-skus'), help=u"""Lists supported SKUs. HHOUR, MONTH, ONE_YEAR and THREE_YEARS supported by the Oracle Cloud VMware Solution. \n[Command Reference](listSupportedSkus)""")
+@supported_sku_summary_group.command(name=cli_util.override('sddc.list_supported_skus.command_name', 'list-supported-skus'), help=u"""Lists supported SKUs. Oracle Cloud Infrastructure VMware Solution supports the following billing interval SKUs: HOUR, MONTH, ONE_YEAR, and THREE_YEARS. \n[Command Reference](listSupportedSkus)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -446,6 +560,57 @@ def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@sddc_group.command(name=cli_util.override('sddc.refresh_hcx_license_status.command_name', 'refresh-hcx-license-status'), help=u"""Refresh HCX on-premise licenses status of the specified SDDC. \n[Command Reference](refreshHcxLicenseStatus)""")
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_hcx_license_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.refresh_hcx_license_status(
+        sddc_id=sddc_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -576,4 +741,55 @@ def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sddc_group.command(name=cli_util.override('sddc.upgrade_hcx.command_name', 'upgrade-hcx'), help=u"""Upgrade the specified SDDC from HCX Advanced to HCX Enterprise. \n[Command Reference](upgradeHcx)""")
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def upgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.upgrade_hcx(
+        sddc_id=sddc_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

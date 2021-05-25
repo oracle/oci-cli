@@ -9,6 +9,7 @@ from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from oci_cli import cli_constants, cli_util, cli_setup
+from oci import object_storage, core, file_storage, identity, dns
 
 import click
 import datetime
@@ -21,6 +22,7 @@ import random
 import time
 import configparser
 import sys
+import oci_cli.dynamic_loader
 
 from inspect import getsourcefile
 from os.path import abspath
@@ -39,9 +41,10 @@ logging.basicConfig()
 vcr_log = logging.getLogger("vcr")
 vcr_log.setLevel(logging.INFO)
 
-
 if not os.path.exists(os.path.join('tests', 'temp')):
     os.makedirs(os.path.join('tests', 'temp'))
+
+oci_cli.dynamic_loader.load_all_services()
 
 
 def pytest_addoption(parser):
@@ -183,37 +186,37 @@ def test_id():
 
 @pytest.fixture(scope='session')
 def object_storage_client(config):
-    return oci.object_storage.ObjectStorageClient(config)
+    return object_storage.ObjectStorageClient(config)
 
 
 @pytest.fixture(scope='session')
 def network_client(config):
-    return oci.core.VirtualNetworkClient(config)
+    return core.VirtualNetworkClient(config)
 
 
 @pytest.fixture(scope='session')
 def compute_client(config):
-    return oci.core.ComputeClient(config)
+    return core.ComputeClient(config)
 
 
 @pytest.fixture(scope='session')
 def filestorage_client(config):
-    return oci.file_storage.FileStorageClient(config)
+    return file_storage.FileStorageClient(config)
 
 
 @pytest.fixture(scope='session')
 def identity_client(config):
-    return oci.identity.IdentityClient(config)
+    return identity.IdentityClient(config)
 
 
 @pytest.fixture(scope='session')
 def dns_client(config):
-    return oci.dns.DnsClient(config)
+    return dns.DnsClient(config)
 
 
 @pytest.fixture(scope='session')
 def blockstorage_client(config):
-    return oci.core.BlockstorageClient(config)
+    return core.BlockstorageClient(config)
 
 
 @pytest.fixture(scope='session')
