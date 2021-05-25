@@ -25,6 +25,7 @@ from . import cli_constants     # noqa: E402
 from collections import OrderedDict     # noqa: E402
 from oci._vendor import requests    # noqa: E402
 from . import cli_metrics    # noqa: E402
+from .service_mapping import service_mapping    # noqa: E402
 
 # Enable WARN logging to surface important warnings attached to loading
 # defaults, automatic coercion, or fallback values/endpoints that may impact
@@ -39,6 +40,7 @@ from . import cli_metrics    # noqa: E402
 # Users can increase this to DEBUG with -d, but we don't want to suppress
 # important security information.
 logging.basicConfig(level=logging.WARN)
+PYTHON2_DEPRECATION_NOTICE = """***Warning*** After August 1st, 2021, new releases of the OCI CLI will only run on Python 3.6 or higher. Please upgrade your Python environment to Python3.6+ and reinstall OCI CLI before this date. To keep using Python 2.X and to stop seeing this message, set the following environment variable OCI_CLI_ALLOW_PYTHON2=True."""
 
 OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
 
@@ -333,10 +335,12 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
 def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, generate_full_command_json_input, generate_param_json_input, debug, help):
+    if sys.version_info < (3, 6, 0) and not os.environ.get("OCI_CLI_ALLOW_PYTHON2"):
+        click.echo(click.style(PYTHON2_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
     # Show help in any case if there are no subcommands, or if the help option
     # is used but there are subcommands, then set a flag for user later.
     if not ctx.invoked_subcommand:
-        click.echo(ctx.get_help(), color=ctx.color)
+        echo_help(ctx)
         ctx.exit()
 
     if profile == Sentinel(DEFAULT_PROFILE):
@@ -433,3 +437,22 @@ def load_default_values(ctx, defaults_file, profile):
         parser.read(file_location)
         if profile in parser:
             ctx.obj['default_values_from_file'] = dict(parser.items(profile))
+
+
+# Need to remove help for commands under root to re-add with all the service commands
+# in order to keep formatting consistent.
+def echo_help(ctx):
+    help_text = ctx.get_help()
+    help_text = re.split('(Commands:\n)', help_text, maxsplit=1)
+    help_text_commands = help_text[2].split("\n")
+    help_text = help_text[0] + help_text[1]
+    command_list = []
+    for command in help_text_commands:
+        command_list.append(tuple(command.strip().split(" ", 1)))
+    formatter = click.formatting.HelpFormatter()
+    for service in sorted(service_mapping):
+        command_list.append((service, service_mapping[service][1]))
+    click.echo(help_text, color=ctx.color)
+    with formatter.indentation():
+        formatter.write_dl(command_list)
+        click.echo(formatter.getvalue(), color=ctx.color)

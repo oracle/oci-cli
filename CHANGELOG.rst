@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.25.0 - 2021-05-25
+-------------------
+Added
+~~~~~
+* [Breaking] For CLI installations running on Python 3.5 or lower, warning message to upgrade Python to v3.6+ and reinstall CLI before August 1st, 2021 will be seen. 
+ 
+  * To disable the warning message, set environment variable ``OCI_CLI_ALLOW_PYTHON2=True``
+
+* O is a wrapper for oci-cli, providing an alternate interface with shortcuts to all commands, parameters, resource IDs, and output fields. 
+  
+  * O can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/project_o>`__.
+
+* Support for Generic Artifacts Service (``oci artifacts``)
+
+* Support for Bastion Service (``oci bastion``)
+
+* Support to provide visualization to view the Automatic Workload Repository (AWR) data for external database in Database Management Service
+
+  * ``oci database-management get-awr-db-report``
+  * ``oci database-management get-awr-db-sql-report``
+  * ``oci database-management list-awr-db-snapshots``
+  * ``oci database-management list-awr-dbs``
+  * ``oci database-management summarize-awr-db-cpu-usages``
+  * ``oci database-management summarize-awr-db-metrics``
+  * ``oci database-management summarize-awr-db-parameter-changes``
+  * ``oci database-management summarize-awr-db-parameters``
+  * ``oci database-management summarize-awr-db-snapshot-ranges``
+  * ``oci database-management summarize-awr-db-sysstats``
+  * ``oci database-management summarize-awr-db-top-wait-events``
+  * ``oci database-management summarize-awr-db-wait-event-buckets``
+  * ``oci database-management summarize-awr-db-wait-events``
+
+* Support for VM.Standard.E3.Flex Flexible Compute Shape with customizable OCPUs and memory for Data Science Notebooks
+  
+  * ``oci data-science notebook-session create --configuration-details``
+  * ``oci data-science notebook-session update --configuration-details``
+
+* Support for HCX Enterprise Add-on for Oracle Cloud VMware Solution 
+
+  * ``oci ocvs sddc cancel-downgrade-hcx``
+  * ``oci ocvs sddc downgrade-hcx``
+  * ``oci ocvs sddc refresh-hcx-license-status``
+  * ``oci ocvs sddc upgrade-hcx``
+  * ``current-sku`` parameter in ``oci ocvs esxi-host create`` is now optional
+  * ``initial-sku`` parameter in ``oci ocvs sddc create`` is now optional
+  
+* Support for Secrets Read By Name as part of Secrets in Vault Service
+
+  * ``oci secrets secret-bundle get-secret-bundle-by-name`` 
+
+* Support for ``isDynamic`` field in the response for ``oci limits definition list``
+
+Changed
+~~~~~~~
+
+* Service modules are now dynamically imported at runtime, speeding up CLI invocations
+
 2.24.5 - 2021-05-18
 -------------------
 Added

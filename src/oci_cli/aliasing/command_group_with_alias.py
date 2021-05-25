@@ -4,6 +4,7 @@
 
 import click
 import sys
+from oci_cli import dynamic_loader
 
 
 class CommandGroupWithAlias(click.Group):
@@ -36,11 +37,13 @@ class CommandGroupWithAlias(click.Group):
 
         if command_chain in ctx.obj['command_sequence_alias']:
             if cmd_name in ctx.obj['command_sequence_alias'][command_chain]:
+                dynamic_loader.load_service(ctx.obj['command_sequence_alias'][command_chain][cmd_name])
                 rv = click.Group.get_command(self, ctx, ctx.obj['command_sequence_alias'][command_chain][cmd_name])
                 if rv is not None:
                     return rv
 
         if cmd_name in ctx.obj['global_command_alias']:
+            dynamic_loader.load_service(ctx.obj['global_command_alias'][cmd_name])
             rv = click.Group.get_command(self, ctx, ctx.obj['global_command_alias'][cmd_name])
             if rv is not None:
                 return rv

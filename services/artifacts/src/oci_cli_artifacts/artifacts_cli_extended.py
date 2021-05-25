@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 from services.artifacts.src.oci_cli_artifacts.generated import artifacts_cli
+from services.generic_artifacts_content.src.oci_cli_generic_artifacts_content.generated import genericartifactscontent_cli
 from oci_cli import cli_util, json_skeleton_utils
 import click
 from oci_cli.aliasing import CommandGroupWithAlias
@@ -13,6 +14,110 @@ import re
 import json
 import base64
 import oci
+
+
+artifacts_cli.artifacts_root_group.commands.pop(artifacts_cli.generic_artifact_group.name)
+
+
+# oci artifacts generic-artifact -> oci artifacts generic artifact
+@click.command('generic', cls=CommandGroupWithAlias, help='Generic metadata.')
+@cli_util.help_option_group
+def generic_group():
+    pass
+
+
+@cli_util.copy_params_from_generated_command(genericartifactscontent_cli.get_generic_artifact_content_by_path, params_to_exclude=['version_parameterconflict'])
+@artifacts_cli.generic_artifact_group.command(name='download-by-path', help=genericartifactscontent_cli.get_generic_artifact_content_by_path.help)
+@cli_util.option('--artifact-version', required=True, help=u"""The generic artifact version.
+
+Example: `1.1.2`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_generic_artifact_content_by_path_extended(ctx, **kwargs):
+    if 'artifact_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+    ctx.invoke(genericartifactscontent_cli.get_generic_artifact_content_by_path, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(genericartifactscontent_cli.put_generic_artifact_content_by_path, params_to_exclude=['version_parameterconflict', 'generic_artifact_content_body'])
+@artifacts_cli.generic_artifact_group.command(name='upload-by-path', help=genericartifactscontent_cli.put_generic_artifact_content_by_path.help)
+@cli_util.option('--artifact-version', required=True, help=u"""The generic artifact version.
+
+Example: `1.1.2`""")
+@cli_util.option('--content-body', required=True, help=u"""Put generic artifact content file. Example: --content-body /Users/me/myfile.txt""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generic_artifacts_content', 'class': 'GenericArtifact'})
+@cli_util.wrap_exceptions
+def put_generic_artifact_content_by_path_extended(ctx, **kwargs):
+    if 'artifact_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+
+    upload_file = kwargs['content_body']
+    kwargs.pop('content_body')
+    with open(upload_file, 'rb') as ufile:
+        kwargs['generic_artifact_content_body'] = ufile
+        ctx.invoke(genericartifactscontent_cli.put_generic_artifact_content_by_path, **kwargs)
+
+
+# oci artifacts generic artifact XX-generic-artifact-by-path -> XX-by-path
+@cli_util.copy_params_from_generated_command(artifacts_cli.delete_generic_artifact_by_path, params_to_exclude=['version_parameterconflict'])
+@artifacts_cli.generic_artifact_group.command(name=cli_util.override('delete_generic_artifact_by_path.command_name', 'delete-by-path'), help=artifacts_cli.delete_generic_artifact_by_path.help)
+@cli_util.option('--artifact-version', required=True, help=u"""The generic artifact version.
+
+Example: `1.1.2`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_generic_artifact_by_path_extended(ctx, **kwargs):
+    if 'artifact_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+    ctx.invoke(artifacts_cli.delete_generic_artifact_by_path, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(artifacts_cli.get_generic_artifact_by_path, params_to_exclude=['version_parameterconflict'])
+@artifacts_cli.generic_artifact_group.command(name=cli_util.override('get_generic_artifact_by_path.command_name', 'get-by-path'), help=artifacts_cli.get_generic_artifact_by_path.help)
+@cli_util.option('--artifact-version', required=True, help=u"""The generic artifact version.
+
+Example: `1.1.2`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'GenericArtifact'})
+@cli_util.wrap_exceptions
+def get_generic_artifact_by_path_extended(ctx, **kwargs):
+    if 'artifact_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+    ctx.invoke(artifacts_cli.get_generic_artifact_by_path, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(artifacts_cli.update_generic_artifact_by_path, params_to_exclude=['version_parameterconflict'])
+@artifacts_cli.generic_artifact_group.command(name=cli_util.override('update_generic_artifact_by_path.command_name', 'update-by-path'), help=artifacts_cli.update_generic_artifact_by_path.help)
+@cli_util.option('--artifact-version', required=True, help=u"""The generic artifact version.
+
+Example: `1.1.2`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'artifacts', 'class': 'GenericArtifact'})
+@cli_util.wrap_exceptions
+def update_generic_artifact_by_path_extended(ctx, **kwargs):
+    if 'artifact_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+    ctx.invoke(artifacts_cli.update_generic_artifact_by_path, **kwargs)
+
+
+artifacts_cli.artifacts_root_group.add_command(generic_group)
+cli_util.rename_command(artifacts_cli, generic_group, artifacts_cli.generic_artifact_group, 'artifact')
+cli_util.rename_command(artifacts_cli, artifacts_cli.generic_artifact_group, genericartifactscontent_cli.get_generic_artifact_content, 'download')
+artifacts_cli.generic_artifact_group.commands.pop(artifacts_cli.update_generic_artifact_by_path.name)
+artifacts_cli.generic_artifact_group.commands.pop(artifacts_cli.get_generic_artifact_by_path.name)
+artifacts_cli.generic_artifact_group.commands.pop(artifacts_cli.delete_generic_artifact_by_path.name)
+
+
+cli_util.rename_command(artifacts_cli, artifacts_cli.repository_group, artifacts_cli.update_repository_update_generic_repository_details, 'update-generic-repository')
+cli_util.rename_command(artifacts_cli, artifacts_cli.repository_group, artifacts_cli.create_repository_create_generic_repository_details, 'create-generic-repository')
 
 
 # OCIR cli will follow the following format:
@@ -200,6 +305,124 @@ def list_container_image_signatures_extended(ctx, from_json, all_pages, page_siz
     else:
         result = client.list_container_image_signatures(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+# Using artifacts_list_call_get_all_results
+@cli_util.copy_params_from_generated_command(artifacts_cli.list_repositories)
+@artifacts_cli.repository_group.command(name=cli_util.override('list_repositories.command_name', 'list'), help=artifacts_cli.list_repositories.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'RepositoryCollection'})
+@cli_util.wrap_exceptions
+def list_repositories_extended(ctx, from_json, all_pages, page_size, compartment_id, id, display_name, is_immutable, lifecycle_state, limit, page, sort_by, sort_order):
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if is_immutable is not None:
+        kwargs['is_immutable'] = is_immutable
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.artifacts_list_call_get_all_results(
+            client.list_repositories,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.artifacts_list_call_get_up_to_limit(
+            client.list_repositories,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_repositories(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+# Using artifacts_artifacts_list_call_get_all_results
+@cli_util.copy_params_from_generated_command(artifacts_cli.list_generic_artifacts, params_to_exclude=['version_parameterconflict'])
+@artifacts_cli.generic_artifact_group.command(name=cli_util.override('list_generic_artifacts.command_name', 'list'), help=artifacts_cli.list_generic_artifacts.help)
+@cli_util.option('--artifact-version', help=u"""The generic artifact version.
+
+Example: `1.1.2`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'GenericArtifactCollection'})
+@cli_util.wrap_exceptions
+def list_generic_artifacts_extended(ctx, from_json, all_pages, page_size, compartment_id, repository_id, id, display_name, artifact_path, artifact_version, sha256, lifecycle_state, limit, page, sort_by, sort_order):
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if artifact_path is not None:
+        kwargs['artifact_path'] = artifact_path
+    if artifact_version is not None:
+        kwargs['version'] = artifact_version
+    if sha256 is not None:
+        kwargs['sha256'] = sha256
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.artifacts_list_call_get_all_results(
+            client.list_generic_artifacts,
+            compartment_id=compartment_id,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.artifacts_list_call_get_up_to_limit(
+            client.list_generic_artifacts,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_generic_artifacts(
+            compartment_id=compartment_id,
+            repository_id=repository_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

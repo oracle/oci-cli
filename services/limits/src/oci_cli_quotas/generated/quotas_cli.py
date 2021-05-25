@@ -15,13 +15,13 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.limits.src.oci_cli_limits.generated import limits_service_cli
 
 
-@click.command(cli_util.override('quotas.quotas_root_group.command_name', 'quotas'), cls=CommandGroupWithAlias, help=cli_util.override('quotas.quotas_root_group.help', """APIs that interact with the resource limits of a specific resource type"""), short_help=cli_util.override('quotas.quotas_root_group.short_help', """Service Limits APIs"""))
+@click.command(cli_util.override('quotas.quotas_root_group.command_name', 'quotas'), cls=CommandGroupWithAlias, help=cli_util.override('quotas.quotas_root_group.help', """APIs that interact with the resource limits of a specific resource type."""), short_help=cli_util.override('quotas.quotas_root_group.short_help', """Service Limits APIs"""))
 @cli_util.help_option_group
 def quotas_root_group():
     pass
 
 
-@click.command(cli_util.override('quotas.quota_group.command_name', 'quota'), cls=CommandGroupWithAlias, help="""Quotas are applied on top of the service limits and inherited through the nested compartment hierarchy. They allow compartment admins to limit resource consumption and set boundaries around acceptable resource use. The word \"quota\" is used by people in different ways:   * An individual statement written in the declarative language   * A collection of statements in a single, named \"quota\" object (which has an Oracle Cloud ID (OCID) assigned to it)   * The overall body of quotas your organization uses to control access to resources""")
+@click.command(cli_util.override('quotas.quota_group.command_name', 'quota'), cls=CommandGroupWithAlias, help="""Quotas are applied on top of the service limits and inherited through the nested compartment hierarchy. Quotas allow compartment admins to limit resource consumption and set boundaries around acceptable resource use. The term \"quota\" can be interpreted as the following:   * An individual statement written in the declarative language.   * A collection of statements in a single, named \"quota\" object (which has an Oracle Cloud ID (OCID) assigned to it).   * The overall body of quotas your organization uses to control access to resources.""")
 @cli_util.help_option_group
 def quota_group():
     pass
@@ -96,7 +96,7 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @quota_group.command(name=cli_util.override('quotas.delete_quota.command_name', 'delete'), help=u"""Deletes the quota corresponding to the given OCID. \n[Command Reference](deleteQuota)""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -180,14 +180,14 @@ def get_quota(ctx, from_json, quota_id):
     cli_util.render_response(result, ctx)
 
 
-@quota_group.command(name=cli_util.override('quotas.list_quotas.command_name', 'list'), help=u"""Lists all quotas on resources from the given compartment \n[Command Reference](listQuotas)""")
+@quota_group.command(name=cli_util.override('quotas.list_quotas.command_name', 'list'), help=u"""Lists all quotas on resources from the given compartment. \n[Command Reference](listQuotas)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--name', help=u"""name""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""Filters returned quotas based on whether the given state.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default it will be ascending.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. Only one sort order may be provided. Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""Filters returned quotas based on the given state.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default, it is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. Only one sort order can be provided. Time created is default ordered as descending. Display name is default ordered as ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -246,7 +246,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @cli_util.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative quota statement language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

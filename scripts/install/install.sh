@@ -271,7 +271,7 @@ if [ $? -eq 0 ]; then
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ] &&  ["${OFFLINE_INSTALL}" != "true" ]; then
                 while true
                 do
-                  read -p "Python 2.7+ will be deprecated on May 25th, 2021. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. Would you like to upgrade to Python 3? Please enter Y or N. " answer
+                  read -p "After August 1st, 2021, new releases of the OCI CLI will only run on Python 3.6 or higher. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. To keep using Python 2.X, you would need to set OCI_CLI_ALLOW_PYTHON2=True after installation is complete. Would you like to upgrade to Python 3? Please enter Y or N. " answer
                   case $answer in
                    [yY]* ) echo "Installing Python 3...";
                       need_to_install_python=true;

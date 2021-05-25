@@ -21,7 +21,7 @@ import oci
 from oci.object_storage.transfer.constants import MEBIBYTE
 from . import test_config_container
 from conftest import runner
-from oci_cli import ALL_SERVICES_DIR
+from oci_cli.dynamic_loader import ALL_SERVICES_DIR
 
 try:
     # PY3+

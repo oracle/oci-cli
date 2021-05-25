@@ -14,7 +14,7 @@ logger.setLevel(logging.DEBUG)
 class Metrics():
 
     CLI_STANDARD_PRE_INVOCATION_DELAY_VAR = "OCI_CLI_METRICS_INV_DELAY"
-    CLI_STANDARD_PRE_INVOCATION_DELAY = 5  # seconds
+    CLI_STANDARD_PRE_INVOCATION_DELAY = 2  # seconds
     CLOUDSHELL_ENV_VAR = "OCI_CLI_METRICS_PATH"
 
     METRICS = {
@@ -30,11 +30,11 @@ class Metrics():
         delay = Metrics.CLI_STANDARD_PRE_INVOCATION_DELAY
         if Metrics.CLI_STANDARD_PRE_INVOCATION_DELAY_VAR in os.environ:
             try:
-                delay = int(os.getenv(Metrics.CLI_STANDARD_PRE_INVOCATION_DELAY_VAR))
+                delay = abs(int(os.getenv(Metrics.CLI_STANDARD_PRE_INVOCATION_DELAY_VAR)))
             except Exception:
                 pass
 
-        return max(delay, Metrics.CLI_STANDARD_PRE_INVOCATION_DELAY)
+        return delay
 
     @classmethod
     def is_metrics_enabled(cls):
