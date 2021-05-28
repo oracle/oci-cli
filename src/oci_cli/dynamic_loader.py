@@ -4,11 +4,11 @@
 
 import sys
 from inspect import getsourcefile
-from os import listdir, path
+from os import listdir, path, environ
 from .service_mapping import service_mapping
-from .final_command_processor import process
 
 ALL_SERVICES_DIR = "services"
+NON_SERVICE_TOP_LEVEL_COMMANDS = ["raw-request", "session", "setup"]
 
 # Add platformization directories to the python system path (PYTHONPATH)
 # This has to be done prior to importing cli_root.
@@ -24,6 +24,46 @@ sys.path.append(python_cli_root_dir)
 services_dir = path.join(python_cli_root_dir, ALL_SERVICES_DIR)
 
 
+def load_required_services_for_invocation():
+    """
+    Loads services required for the currently executing command.
+
+    This includes loading the necessary services for an autocomplete
+    invocation.
+    """
+    if "COMP_WORDS" in environ:
+        cli_autocomplete()
+    else:
+        load_service_from_command(sys.argv)
+
+
+def cli_autocomplete():
+    words = environ["COMP_WORDS"].split()
+    if len(words) == 1:
+        # if we're completing "oci" we can short circuit click autocomplete
+        # and provide the top level command options in our code
+        complete_top_level_commands()
+        sys.exit(1)
+    elif len(words) == 2:
+        # if we're completing a root parameter (e.g. "oci --" -> "oci --help")
+        # we don't need to load any services
+        # if we're completing a service (e.g. "oci com") use the prefix to load
+        # all potentially matching services
+        if not words[1].startswith("-"):
+            for service in service_mapping:
+                if service.startswith(words[1]):
+                    load_service(service)
+    elif len(words) > 2:
+        # we have at least "oci {service}" so we can load the specific service
+        load_service_from_command(words)
+
+
+def complete_top_level_commands():
+    all_top_level_commands = sorted(NON_SERVICE_TOP_LEVEL_COMMANDS + list(service_mapping.keys()))
+    for command in all_top_level_commands:
+        print(command)
+
+
 def load_service_from_command(command):
     for arg in command:
         if arg in service_mapping:
@@ -33,17 +73,19 @@ def load_service_from_command(command):
 
 def load_service(service):
     if service in service_mapping:
-        load_modules(path.join(services_dir, service_mapping[service][0]), service_mapping[service][0])
-        process()
+        load_service_modules(path.join(services_dir, service_mapping[service][0]), service_mapping[service][0])
+
+
+def load_service_dir(service):
+    load_service_modules(path.join(services_dir, service), service)
 
 
 def load_all_services():
     for service in [dir for dir in listdir(services_dir) if path.isdir(path.join(services_dir, dir))]:
-        load_modules(path.join(services_dir, service), service)
-    process()
+        load_service_modules(path.join(services_dir, service), service)
 
 
-def load_modules(service_dir, service):
+def load_service_modules(service_dir, service):
     modules = path.join(service_dir, 'src')
     if path.isdir(modules):
         for mod in [dir for dir in sorted(listdir(modules)) if 'oci_cli' in dir]:

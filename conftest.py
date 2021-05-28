@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
-from oci_cli import cli_constants, cli_util, cli_setup
+from oci_cli import cli_constants, cli_util, cli_setup, dynamic_loader, final_command_processor
 from oci import object_storage, core, file_storage, identity, dns
 
 import click
@@ -22,7 +22,6 @@ import random
 import time
 import configparser
 import sys
-import oci_cli.dynamic_loader
 
 from inspect import getsourcefile
 from os.path import abspath
@@ -44,7 +43,8 @@ vcr_log.setLevel(logging.INFO)
 if not os.path.exists(os.path.join('tests', 'temp')):
     os.makedirs(os.path.join('tests', 'temp'))
 
-oci_cli.dynamic_loader.load_all_services()
+dynamic_loader.load_all_services()
+final_command_processor.process()
 
 
 def pytest_addoption(parser):

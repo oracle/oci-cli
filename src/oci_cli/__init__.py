@@ -3,7 +3,6 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import os
-import sys
 
 os.environ["OCI_PYTHON_SDK_NO_SERVICE_IMPORTS"] = "1"
 
@@ -27,13 +26,11 @@ from .custom_types import cli_datetime  # noqa: F401,E402
 from .custom_types import cli_from_json  # noqa: F401,E402
 from . import dynamic_loader as dl  # noqa: F401,E402
 
-dl.load_service_from_command(sys.argv)
-
-if "COMP_WORDS" in os.environ:
-    dl.load_all_services()
+dl.load_required_services_for_invocation()
 
 from . import aliasing  # noqa: F401,E402
 from . import file_filters  # noqa: F401,E402
+from . import final_command_processor  # noqa: F401,E402
 from . import cli_setup  # noqa: F401,E402
 from . import cli_session  # noqa: F401,E402
 from . import cli_setup_bootstrap  # noqa: F401,E402
@@ -45,3 +42,5 @@ from . import help_text_producer  # noqa: F401,E402
 from . import raw_request_cli  # noqa: F401,E402
 from oci import config  # noqa: F401,E402
 from .version import __version__  # noqa: F401,E402
+
+final_command_processor.process()

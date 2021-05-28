@@ -450,6 +450,9 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_details.database_software_image_id = kwargs['database_software_image_id']
 
+    if 'is_desupported_version' in kwargs and kwargs['is_desupported_version']:
+        create_db_home_details.is_desupported_version = kwargs['is_desupported_version']
+
     db_backup_config = oci.database.models.DbBackupConfig()
 
     create_database_details = oci.database.models.CreateDatabaseDetails()
@@ -599,6 +602,9 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
 
+    if 'is_desupported_version' in kwargs and kwargs['is_desupported_version']:
+        create_db_home_with_system_details.is_desupported_version = kwargs['is_desupported_version']
+
     create_db_home_with_system_details.database = create_database_details
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -717,6 +723,9 @@ def create_database_from_another_database(ctx, wait_for_state, max_wait_seconds,
 
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
+
+    if 'is_desupported_version' in kwargs and kwargs['is_desupported_version']:
+        create_db_home_with_system_details.is_desupported_version = kwargs['is_desupported_version']
 
     create_db_home_with_system_details.source = 'DATABASE'
 
@@ -1449,6 +1458,9 @@ def create_db_home(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds,
         db_home_details.database_software_image_id = kwargs['database_software_image_id']
     if kwargs['display_name'] is not None:
         db_home_details.display_name = kwargs['display_name']
+    if kwargs['is_desupported_version'] is not None:
+        db_home_details.is_desupported_version = kwargs['is_desupported_version']
+
     db_system_shape = get_db_system_response.data.shape
     # For Exadata systems create db home is called
     if EXADATA_SHAPE_PREFIX in db_system_shape:
@@ -2233,3 +2245,7 @@ def enable_external_pluggable_database_operations_insights_extended(ctx, **kwarg
         kwargs.pop('external_pdb_id')
 
     ctx.invoke(database_cli.enable_external_pluggable_database_operations_insights, **kwargs)
+
+
+# oci db autonomous-database configure-autonomous-database-vault-key -> oci db autonomous-database configure-key
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.configure_autonomous_database_vault_key, "configure-key")

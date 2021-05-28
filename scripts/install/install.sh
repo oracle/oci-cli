@@ -328,7 +328,7 @@ if [ "$need_to_install_python" = true ]; then
     then
         echo "Attempting to install Python 3."
         $sudo_cmd yum $yum_opts check-update
-        $sudo_cmd yum $yum_opts install gcc libffi-devel python-devel openssl-devel
+        $sudo_cmd yum $yum_opts install gcc libffi-devel python3-devel openssl-devel
         $sudo_cmd yum $yum_opts install make
         if [ $? -ne 0 ]; then
             echo "ERROR: Required native dependencies were not installed, exiting install script. If you did not receive a prompt to install native dependencies please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""

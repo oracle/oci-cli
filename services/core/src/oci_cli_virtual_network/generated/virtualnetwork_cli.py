@@ -8299,8 +8299,9 @@ def list_network_security_group_vnics(ctx, from_json, all_pages, page_size, netw
     cli_util.render_response(result, ctx)
 
 
-@network_security_group_group.command(name=cli_util.override('virtual_network.list_network_security_groups.command_name', 'list'), help=u"""Lists the network security groups in the specified compartment. \n[Command Reference](listNetworkSecurityGroups)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@network_security_group_group.command(name=cli_util.override('virtual_network.list_network_security_groups.command_name', 'list'), help=u"""Lists either the network security groups in the specified compartment, or those associated with the specified VLAN. You must specify either a `vlanId` or a `compartmentId`, but not both. If you specify a `vlanId`, all other parameters are ignored. \n[Command Reference](listNetworkSecurityGroups)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vlan-id', help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -8319,12 +8320,16 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[NetworkSecurityGroup]'})
 @cli_util.wrap_exceptions
-def list_network_security_groups(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_network_security_groups(ctx, from_json, all_pages, page_size, compartment_id, vlan_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if vlan_id is not None:
+        kwargs['vlan_id'] = vlan_id
     if vcn_id is not None:
         kwargs['vcn_id'] = vcn_id
     if limit is not None:
@@ -8346,7 +8351,6 @@ def list_network_security_groups(ctx, from_json, all_pages, page_size, compartme
 
         result = cli_util.list_call_get_all_results(
             client.list_network_security_groups,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -8354,12 +8358,10 @@ def list_network_security_groups(ctx, from_json, all_pages, page_size, compartme
             client.list_network_security_groups,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_network_security_groups(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
