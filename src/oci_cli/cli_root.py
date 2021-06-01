@@ -448,7 +448,7 @@ def echo_help(ctx):
     help_text = help_text[0] + help_text[1]
     command_list = []
     for command in help_text_commands:
-        command_list.append(tuple(command.strip().split(" ", 1)))
+        command_list.append(tuple(command.strip().split(None, 1)))
     formatter = click.formatting.HelpFormatter()
     for service in sorted(service_mapping):
         command_list.append((service, service_mapping[service][1]))

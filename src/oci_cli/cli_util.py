@@ -48,6 +48,7 @@ from . import string_utils
 from . import help_text_producer
 from . import cli_constants
 from . import cli_metrics
+from . import dynamic_loader
 
 try:
     # PY3+
@@ -457,6 +458,8 @@ def build_client(spec_name, service_name, ctx):
 
     # Build the client, then fix up a few properties.
     try:
+        if spec_name not in CLIENT_MAP:
+            dynamic_loader.load_service_dir(spec_name)
         client_class = CLIENT_MAP[spec_name][service_name]
 
         # The constructors for these clients need an endpoint
