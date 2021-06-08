@@ -281,6 +281,7 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the  boot volume.""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--encryption-in-transit-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "BM_ENCRYPTION_IN_TRANSIT"]), help=u"""Refer the top-level definition of encryptionInTransitType. The default value is NONE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -289,7 +290,7 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, instance_id, display_name):
+def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, instance_id, display_name, encryption_in_transit_type):
 
     kwargs = {}
 
@@ -299,6 +300,9 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if encryption_in_transit_type is not None:
+        _details['encryptionInTransitType'] = encryption_in_transit_type
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_boot_volume(
@@ -601,6 +605,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--use-chap', type=click.BOOL, help=u"""Whether to use CHAP authentication for the volume attachment. Defaults to false.""")
+@cli_util.option('--encryption-in-transit-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "BM_ENCRYPTION_IN_TRANSIT"]), help=u"""Refer the top-level definition of encryptionInTransitType. The default value is NONE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -609,7 +614,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable, use_chap):
+def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable, use_chap, encryption_in_transit_type):
 
     kwargs = {}
 
@@ -631,6 +636,9 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 
     if use_chap is not None:
         _details['useChap'] = use_chap
+
+    if encryption_in_transit_type is not None:
+        _details['encryptionInTransitType'] = encryption_in_transit_type
 
     _details['type'] = 'iscsi'
 
@@ -5923,6 +5931,65 @@ def update_instance_console_connection(ctx, from_json, force, wait_for_state, ma
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_instance_console_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_attachment_group.command(name=cli_util.override('compute.update_volume_attachment.command_name', 'update'), help=u"""Updates information about the specified volume attachment. \n[Command Reference](updateVolumeAttachment)""")
+@cli_util.option('--volume-attachment-id', required=True, help=u"""The OCID of the volume attachment.""")
+@cli_util.option('--iscsi-login-state', type=custom_types.CliCaseInsensitiveChoice(["UNKNOWN", "LOGGING_IN", "LOGIN_SUCCEEDED", "LOGIN_FAILED", "LOGGING_OUT", "LOGOUT_SUCCEEDED", "LOGOUT_FAILED"]), help=u"""The iscsi login state of the volume attachment. For a multipath volume attachment, all iscsi sessions need to be all logged-in or logged-out to be in logged-in or logged-out state.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@cli_util.wrap_exceptions
+def update_volume_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_attachment_id, iscsi_login_state, if_match):
+
+    if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if iscsi_login_state is not None:
+        _details['iscsiLoginState'] = iscsi_login_state
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_volume_attachment(
+        volume_attachment_id=volume_attachment_id,
+        update_volume_attachment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

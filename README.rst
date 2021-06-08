@@ -41,6 +41,28 @@ See the `installation guide`__ for detailed installation instructions, options a
 
 __ https://docs.cloud.oracle.com/Content/API/SDKDocs/cliinstall.htm
 
+Offline Installation
+====================
+
+1. Go to the `CLI releases page`__ and locate the required CLI version.
+
+2. For the release, go to the "Assets" area.
+
+3. Download and copy the zip file for your Operating System to the environment where you want to install CLI.
+
+4. Unzip the file and execute the following from inside the unzipped folder:
+
+ a. Linux:
+     ::
+
+          bash install.sh --offline-install
+
+ b. Windows
+     ::
+
+          install.ps1 -OfflineInstall
+
+__ https://github.com/oracle/oci-cli/releases
 
 Usage
 =====
@@ -96,9 +118,10 @@ __ https://github.com/oracle/oci-cli/blob/master/CONTRIBUTING.rst
 
 Known Issues
 ============
-You can find information on any known issues with the CLI here__ and under the “Issues__” tab of this project's `GitHub repository`__.
+You can find information on any known issues with the CLI here__, here__ and under the “Issues__” tab of this project's `GitHub repository`__.
 
 __ https://docs.cloud.oracle.com/Content/knownissues.htm
+__ https://github.com/oracle/oci-cli/blob/master/COMMON_ISSUES.rst
 __ https://github.com/oracle/oci-cli/issues
 __ https://github.com/oracle/oci-cli
 

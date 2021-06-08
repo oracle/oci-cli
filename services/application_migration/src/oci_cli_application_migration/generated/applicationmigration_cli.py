@@ -1016,6 +1016,94 @@ def create_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@source_group.command(name=cli_util.override('application_migration.create_source_import_source_details.command_name', 'create-source-import-source-details'), help=u"""Creates a source in the specified compartment. In Application Migration, a source refers to the environment from which the application is being migrated. For more information, see [Manage Sources].
+
+All Oracle Cloud Infrastructure resources, including sources, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+
+After you send your request, a source is created in the specified compartment. The new source's lifecycle state will temporarily be <code>CREATING</code>. Application Migration connects to the source environment with the authentication credentials that you have provided. If the connection is established, the status of the source changes to <code>ACTIVE</code> and Application Migration fetches the list of applications that are available for migration in the source environment.
+
+To track the progress of the operation, you can monitor the status of the Create Source work request by using the <code>[GetWorkRequest]</code> REST API operation on the work request or by viewing the status of the work request in the console.
+
+Ensure that the state of the source has changed to <code>ACTIVE</code>, before you retrieve the list of applications from the source environment using the <code>[ListSourceApplications]</code> REST API call. \n[Command Reference](createSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the source.""")
+@cli_util.option('--source-details-manifest', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details-namespace', required=True, help=u"""the object storage namespace where the bucket and uploaded object resides""")
+@cli_util.option('--source-details-bucket', required=True, help=u"""the bucket wherein the export archive exists in object storage""")
+@cli_util.option('--source-details-object-name', required=True, help=u"""the name of the archive as it exists in object storage""")
+@cli_util.option('--display-name', help=u"""Name of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--description', help=u"""Description of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--authorization-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}, 'source-details-manifest': {'module': 'application_migration', 'class': 'ImportManifest'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}, 'source-details-manifest': {'module': 'application_migration', 'class': 'ImportManifest'}}, output_type={'module': 'application_migration', 'class': 'Source'})
+@cli_util.wrap_exceptions
+def create_source_import_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_manifest, source_details_namespace, source_details_bucket, source_details_object_name, display_name, description, authorization_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['manifest'] = cli_util.parse_json_parameter("source_details_manifest", source_details_manifest)
+    _details['sourceDetails']['namespace'] = source_details_namespace
+    _details['sourceDetails']['bucket'] = source_details_bucket
+    _details['sourceDetails']['objectName'] = source_details_object_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if authorization_details is not None:
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['sourceDetails']['type'] = 'IMPORT'
+
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
+    result = client.create_source(
+        create_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @source_group.command(name=cli_util.override('application_migration.create_source_occ_source_details.command_name', 'create-source-occ-source-details'), help=u"""Creates a source in the specified compartment. In Application Migration, a source refers to the environment from which the application is being migrated. For more information, see [Manage Sources].
 
 All Oracle Cloud Infrastructure resources, including sources, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
@@ -3001,6 +3089,99 @@ def update_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
+    result = client.update_source(
+        source_id=source_id,
+        update_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@source_group.command(name=cli_util.override('application_migration.update_source_import_source_details.command_name', 'update-source-import-source-details'), help=u"""You can update the authorization details to access the source environment from which you want to migrate applications to Oracle Cloud Infrastructure. You can also update the description and tags of a source.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API. \n[Command Reference](updateSource)""")
+@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source.""")
+@cli_util.option('--source-details-manifest', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details-namespace', required=True, help=u"""the object storage namespace where the bucket and uploaded object resides""")
+@cli_util.option('--source-details-bucket', required=True, help=u"""the bucket wherein the export archive exists in object storage""")
+@cli_util.option('--source-details-object-name', required=True, help=u"""the name of the archive as it exists in object storage""")
+@cli_util.option('--display-name', help=u"""Name of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--description', help=u"""Description of the source. This helps you to identify the appropriate source environment when you have multiple sources defined.""")
+@cli_util.option('--authorization-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}, 'source-details-manifest': {'module': 'application_migration', 'class': 'ImportManifest'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'authorization-details': {'module': 'application_migration', 'class': 'AuthorizationDetails'}, 'freeform-tags': {'module': 'application_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'application_migration', 'class': 'dict(str, dict(str, object))'}, 'source-details-manifest': {'module': 'application_migration', 'class': 'ImportManifest'}})
+@cli_util.wrap_exceptions
+def update_source_import_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, source_id, source_details_manifest, source_details_namespace, source_details_bucket, source_details_object_name, display_name, description, authorization_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(source_id, six.string_types) and len(source_id.strip()) == 0:
+        raise click.UsageError('Parameter --source-id cannot be whitespace or empty string')
+    if not force:
+        if authorization_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to authorization-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['sourceDetails']['manifest'] = cli_util.parse_json_parameter("source_details_manifest", source_details_manifest)
+    _details['sourceDetails']['namespace'] = source_details_namespace
+    _details['sourceDetails']['bucket'] = source_details_bucket
+    _details['sourceDetails']['objectName'] = source_details_object_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if authorization_details is not None:
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['sourceDetails']['type'] = 'IMPORT'
 
     client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
