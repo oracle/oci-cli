@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.25.2 - 2021-06-08
+-------------------
+Added
+~~~~~
+
+* Support for Java Management Service
+
+  * ``oci jms``
+
+* Support to update iscsi Login State for a Volume Attachment in Compute service
+
+  * ``oci compute volume-attachment update --iscsi-login-state``
+
+* Support for 'host-name' and 'is-database-instance-level-metrics' query parameters in Operations Insights service
+
+  * ``oci opsi database-insights summarize-database-insight-resource-capacity-trend``
+  * ``oci opsi database-insights summarize-database-insight-resource-forecast-trend``
+  * ``oci opsi database-insights summarize-database-insight-resource-statistics``
+  * ``oci opsi database-insights summarize-database-insight-resource-usage``
+  * ``oci opsi database-insights summarize-database-insight-resource-usage-trend``
+  * ``oci opsi database-insights summarize-database-insight-resource-utilization-insight``
+  * ``oci opsi database-insights summarize-sql-insights``
+  * ``oci opsi database-insights summarize-sql-statistics``
+  * ``oci opsi database-insights summarize-sql-statistics-time-series``
+
+* Support for listing database configurations in Operations Insights service
+
+  * ``oci opsi database-insights list-database-configurations``
+
+* Added support for a new type of Source called Import for use with the Export tool in Application Migration service
+
+  * ``oci application-migration source create-source-import-source-details``
+  * ``oci application-migration source update-source-import-source-details``
+
 2.25.1 - 2021-06-01
 -------------------
 Added
@@ -13,26 +47,26 @@ Added
 
 * Support for configuration of autonomous database KMS keys in the Database service
 
-    * ``oci db autonomous-database configure-autonomous-database-vault-key``
+  * ``oci db autonomous-database configure-autonomous-database-vault-key``
 
 * Support for creating database software images from an existing database home in the Database service
 
-    * ``oci db database-software-image create --source-db-home-id ``
+  * ``oci db database-software-image create --source-db-home-id``
 
 * Support for creating database software images with any supported RUs in the Database service
 
-    * ``oci db database-software-image create --database-version [optional], --patch-set[optional]``
+  * ``oci db database-software-image create --database-version [optional], --patch-set[optional]``
 
 *  ``--is-desupported-version`` flag is added to take customer acknowledgment for creating database-software images with release older than N-3
 
-    * ``oci db database create --is-desupported-version``
-    * ``oci db database create-from-backup --is-desupported-version``
-    * ``oci db database create-from-database --is-desupported-version``
-    * ``oci db db-home create --is-desupported-version``
+  * ``oci db database create --is-desupported-version``
+  * ``oci db database create-from-backup --is-desupported-version``
+  * ``oci db database create-from-database --is-desupported-version``
+  * ``oci db db-home create --is-desupported-version``
 
 * Support for listing all NSGs associated with a given VLAN in the Networking service
 
-    * ``oci network nsg list --compartment-id [optional]``
+  * ``oci network nsg list --compartment-id [optional]``
 
 Changed
 ~~~~~~~

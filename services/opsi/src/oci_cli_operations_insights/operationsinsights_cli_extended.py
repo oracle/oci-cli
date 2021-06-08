@@ -66,6 +66,20 @@ operationsinsights_cli.host_insights_group.commands.pop(operationsinsights_cli.u
 operationsinsights_cli.host_insights_group.commands.pop(operationsinsights_cli.enable_database_insight.name)
 
 
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.list_database_configurations, params_to_exclude=['enterprise_manager_bridge_id'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.list_database_configurations.name, help=operationsinsights_cli.list_database_configurations.help)
+@cli_util.option('--em-bridge-id', help=u"""OPSI Enterprise Manager Bridge OCID""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'operationsinsights', 'class': 'list[string]'}, 'database-id': {'module': 'operationsinsights', 'class': 'list[string]'}, 'host-name': {'module': 'operationsinsights', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'DatabaseConfigurationCollection'})
+@cli_util.wrap_exceptions
+def list_database_configurations(ctx, **kwargs):
+    if 'em_bridge_id' in kwargs:
+        kwargs['enterprise_manager_bridge_id'] = kwargs['em_bridge_id']
+        kwargs.pop('em_bridge_id')
+
+    ctx.invoke(operationsinsights_cli.list_database_configurations, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(operationsinsights_cli.create_database_insight_create_em_managed_external_database_insight_details, params_to_exclude=['enterprise_manager_bridge_id', 'enterprise_manager_entity_identifier', 'enterprise_manager_identifier'])
 @operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.create_database_insight_create_em_managed_external_database_insight_details.name, help="""Create an Enterprise Mananger External Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started.""")
 @cli_util.option('--em-id', required=True, help="""Enterprise Manager Unqiue Identifier [required]""")

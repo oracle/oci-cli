@@ -79,7 +79,7 @@ def volume_group_backup_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.block_volume_replica_group.command_name', 'block-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a block volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Block Volume Replicas] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+@click.command(cli_util.override('blockstorage.block_volume_replica_group.command_name', 'block-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a block volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Cross-Region Volume Replication] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -87,7 +87,7 @@ def block_volume_replica_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.boot_volume_replica_group.command_name', 'boot-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Block Volume Replicas] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+@click.command(cli_util.override('blockstorage.boot_volume_replica_group.command_name', 'boot-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Cross-Region Volume Replication] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -441,11 +441,11 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume.command_name', 'create'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -475,14 +475,16 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
     _details = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -543,11 +545,11 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_backup_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume backup.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -577,15 +579,17 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
     _details = {}
     _details['sourceDetails'] = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['id'] = source_details_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -648,11 +652,11 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -682,15 +686,17 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
     _details = {}
     _details['sourceDetails'] = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['id'] = source_details_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -753,11 +759,11 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_replica_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-replica-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the boot volume replica.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -787,15 +793,17 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
 
     kwargs = {}
 
     _details = {}
     _details['sourceDetails'] = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['id'] = source_details_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -932,10 +940,10 @@ def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume.
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -970,13 +978,15 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
     _details = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -1050,11 +1060,11 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the block volume replica.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1088,15 +1098,17 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
     _details = {}
     _details['sourceDetails'] = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['id'] = source_details_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -1169,11 +1181,11 @@ def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1207,15 +1219,17 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
     _details = {}
     _details['sourceDetails'] = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['id'] = source_details_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -1288,11 +1302,11 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume.
-
-Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
 @cli_util.option('--source-details-id', required=True, help=u"""The OCID of the volume backup.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1326,15 +1340,17 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
 
     kwargs = {}
 
     _details = {}
     _details['sourceDetails'] = {}
-    _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
     _details['sourceDetails']['id'] = source_details_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
 
     if backup_policy_id is not None:
         _details['backupPolicyId'] = backup_policy_id
@@ -1547,7 +1563,7 @@ def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group.command_name', 'create'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group.command_name', 'create'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1621,7 +1637,7 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1698,7 +1714,7 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volumes_details.command_name', 'create-volume-group-volume-group-source-from-volumes-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volumes_details.command_name', 'create-volume-group-volume-group-source-from-volumes-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1775,7 +1791,7 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_backup_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-backup-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_backup_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-backup-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")

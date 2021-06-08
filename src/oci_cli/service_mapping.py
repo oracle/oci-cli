@@ -159,6 +159,10 @@ service_mapping = {
         "integration",
         "Oracle Integration"
     ],
+    "jms": [
+        "jms",
+        "Java Management Service Query"
+    ],
     "kms": [
         "key_management",
         "Key Management"
