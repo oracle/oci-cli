@@ -6,6 +6,56 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.25.3 - 2021-06-15
+-------------------
+Added
+~~~~~~~~
+
+* Support for migrating an OKE cluster not integrated with your VCN to a VCN-Native cluster in Container Engine
+
+  * ``oci ce cluster cluster-migrate-to-native-vcn``
+  * ``oci ce cluster cluster-migrate-to-native-vcn-status``
+
+* Support for filtering of applications based on spark version in Data Flow service
+
+  * ``oci data-flow application list --spark-version``
+
+* Support for registration and management of target databases in Data Safe service.
+
+  * ``oci data-safe target-database create``
+
+* Support for Elastic Storage feature for Exadata Infrastructure resources for ExaCC in Database service.
+
+  * ``oci db exadata-infrastructure create --compute-count``
+  * ``oci db exadata-infrastructure update --additional-storage-count``
+  * ``oci db exadata-infrastructure add --exadata-infrastructure-id``
+
+* New parameter --parameters-config has been added to the below commands in Management Dashboard service
+
+  * ``oci management-dashboard dashboard create --parameters-config``
+  * ``oci management-dashboard dashboard update``
+  * ``oci management-dashboard saved-search create``
+  * ``oci management-dashboard saved-search update``
+
+Changed
+~~~~~~~
+
+* PyYAML version requirement relaxed from PyYAML==5.4.1 to PyYAML>=5.4,<6
+
+* Default thread count for multipart upload/download using ``oci os object put | get`` is 10.
+
+* Multipart download is now default for ``oci os object get``. Please use ``--no-multipart`` to disable multipart download.
+
+* Changed multipart download chunk size to maximum instead of 1Mb
+
+Fixed
+~~~~~~~
+* Parameter --compartment-id was existing twice in change compartment for rove node in Rover service
+
+  * ``oci rover node change-compartment --compartment-id``
+
+* Issue with multipart download - progress bar was only showing 50% even though full file was uploaded.
+
 2.25.2 - 2021-06-08
 -------------------
 Added

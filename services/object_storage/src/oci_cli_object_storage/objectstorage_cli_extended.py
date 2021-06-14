@@ -90,6 +90,11 @@ final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(remove_namespace_req
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_VERSION_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
+DEFAULT_PARALLEL_UPLOAD_COUNT = 10
+MAXIMUM_PARALLEL_UPLOAD_COUNT = 1000
+DEFAULT_PARALLEL_DOWNLOAD_COUNT = 10
+MAXIMUM_PARALLEL_DOWNLOAD_COUNT = 1000
+
 
 MAX_MULTIPART_SIZE = 10000
 MEBIBYTE = constants.MEBIBYTE
@@ -487,8 +492,8 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
                  help='Part size (in MiB) to use when uploading objects using multipart upload operations. The default part size is 128 MiB.')
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
-@cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=None,
-                 help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3 and the maximum is 1000.')
+@cli_util.option('--parallel-upload-count', type=click.IntRange(1, MAXIMUM_PARALLEL_UPLOAD_COUNT), default=None,
+                 help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to ' + str(DEFAULT_PARALLEL_UPLOAD_COUNT) + ' and the maximum is ' + str(MAXIMUM_PARALLEL_UPLOAD_COUNT) + '.')
 @cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file. Compares the checksum value provided by the service with a locally generated checksum value. If the values do not match, return code is 1')
 @cli_util.option('--content-disposition', help=u"""The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.""")
 @cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
@@ -624,8 +629,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         if disable_parallel_uploads:
             upload_manager.allow_parallel_uploads = False
 
-        if parallel_upload_count:
-            upload_manager.parallel_process_count = parallel_upload_count
+        upload_manager.parallel_process_count = parallel_upload_count if parallel_upload_count else DEFAULT_PARALLEL_UPLOAD_COUNT
 
         # The total_size won't be accurate for pipes, so give the bar some arbitrary size. If the
         # progress bar gets full, we'll rotate it back to the beginning
@@ -678,10 +682,9 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         if disable_parallel_uploads:
             kwargs['allow_parallel_uploads'] = False
 
-        if parallel_upload_count is not None:
-            kwargs['parallel_process_count'] = parallel_upload_count
+        kwargs['parallel_process_count'] = parallel_upload_count if parallel_upload_count is not None else DEFAULT_PARALLEL_UPLOAD_COUNT
 
-        UploadManager._add_adapter_to_service_client(client, not disable_parallel_uploads, parallel_upload_count)
+        UploadManager._add_adapter_to_service_client(client, not disable_parallel_uploads, kwargs['parallel_process_count'])
 
         ma = MultipartObjectAssembler(client,
                                       namespace,
@@ -704,7 +707,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
                 ma.upload(retry_strategy=retry_strategy, progress_callback=bar.update)
             except RuntimeError as re:
                 if 'thread' in str(re) or 'Thread' in str(re):
-                    raise Exception('Cannot start that many threads, please reduce the parallel-upload-count. The default is 3.')
+                    raise Exception('Cannot start that many threads, please reduce the parallel-upload-count. The default is ' + str(DEFAULT_PARALLEL_UPLOAD_COUNT))
                 else:
                     raise re
             except Exception as e:
@@ -745,8 +748,8 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
                  help='Part size (in MiB) to use if uploading via multipart upload operations. This applies to all files which will be uploaded in multiple parts. Part size must be greater than 10 MiB')
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='[DEPRECATED] This option is no longer used. If a file in the directory will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel. This applies to all files being uploaded in multiple parts')
-@cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth. The maximum is 1000.')
+@cli_util.option('--parallel-upload-count', type=click.IntRange(1, MAXIMUM_PARALLEL_UPLOAD_COUNT), default=DEFAULT_PARALLEL_UPLOAD_COUNT, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth. The maximum is ' + str(MAXIMUM_PARALLEL_UPLOAD_COUNT) + '.')
 @cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
 @cli_util.option('--include', multiple=True, help="""Only upload files which match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
@@ -966,7 +969,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                     reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Uploading'))
 
                 if not ctx.obj['debug']:
-                    base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading part for')).update
+                    base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading parts for')).update
 
                 if is_python2():
                     object_name = object_name.encode("utf-8")
@@ -1027,10 +1030,12 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @cli_util.option('--if-none-match', help='The entity tag to avoid matching.')
 @cli_util.option('--range',
                  help='Byte range to fetch. Follows https://tools.ietf.org/html/rfc7233#section-2.1. Example: bytes=2-10')
-@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), default=128, help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
 @cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
-@cli_util.option('--parallel-download-count', type=click.INT, default=10, show_default=True,
+@cli_util.option('--parallel-download-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT), default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
                  help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
+@cli_util.option('--no-multipart', is_flag=True,
+                 help='Do not use multipart downloads to download the file in parts. By default files above 128 MiB will be downloaded in multiple parts.')
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @cli_util.option('--http-response-content-disposition', help=u"""This value will be used in Content-Disposition header of the response.""")
@@ -1044,16 +1049,13 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count, encryption_key_file, http_response_content_disposition, http_response_cache_control, http_response_content_type, http_response_content_language, http_response_content_encoding, http_response_expires):
+def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count, no_multipart, encryption_key_file, http_response_content_disposition, http_response_cache_control, http_response_content_type, http_response_content_language, http_response_content_encoding, http_response_expires):
     """
     Gets the metadata and body of an object.
 
     Example:
         oci os object get -ns mynamespace -bn mybucket --name myfile.txt --file /Users/me/myfile.txt
     """
-    # No defaulting of the file so that we don't inadvertently overwrite the same file or stream each time
-    if range and multipart_download_threshold:
-        raise click.UsageError("Cannot specify both the --range and --multipart-download-threshold parameters")
 
     encryption_key_params = {}
     if encryption_key_file:
@@ -1083,7 +1085,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
         bar = ProgressBar(total_bytes=object_size_bytes, label='Downloading object')
 
     # If we aren't doing multipart, or we are doing multipart but there would only be a single part
-    if not multipart_download_threshold or (multipart_download_threshold and part_size >= object_size_bytes):
+    if range or no_multipart or (multipart_download_threshold and part_size >= object_size_bytes):
         response = client.get_object(
             namespace,
             bucket_name,
@@ -1157,9 +1159,9 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
 @cli_util.option('--download-dir', required=True, help='The directory where retrieved objects will be placed as files. This directory will be created if it does not exist.')
 @cli_util.option('--overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, overwrite it. If neither this flag nor --no-overwrite is specified, you will be prompted each time a file would be overwritten.')
 @cli_util.option('--no-overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
-@cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
+@cli_util.option('--parallel-operations-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT), default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
                  help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the download process will consume more system resources and network bandwidth.')
-@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), default=128, help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
 @cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
 @cli_util.option('--include', multiple=True, help="""Only download objects which match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
@@ -2061,7 +2063,7 @@ def restore_objects(ctx, **kwargs):
     )
 
     if result.status == 200:
-        click.echo("This object will be available for download in about 4 hours. Use 'oci os object restore-status -ns {ns} -bn {bn} --name {name}' command to check the status.".format(ns=namespace, bn=bucket, name=name), file=sys.stderr)
+        click.echo("This object will be available for download in about 1 hour. Use 'oci os object restore-status -ns {ns} -bn {bn} --name {name}' command to check the status.".format(ns=namespace, bn=bucket, name=name), file=sys.stderr)
     else:
         render_response(result, ctx)
 
@@ -2096,7 +2098,7 @@ def restore_status(ctx, from_json, namespace, bucket_name, name):
     elif archival_state.lower() == 'archived':
         msg = "Archived, this object is not available for download. Use 'oci os object restore -ns {ns} -bn {bn} --name {name}' command to start restoring the object.".format(ns=namespace, bn=bucket_name, name=name)
     elif archival_state.lower() == 'restoring':
-        msg = "Restoring, this object is being restored and will be available for download in about 4 hours from the time you issued the restore command."
+        msg = "Restoring, this object is being restored and will be available for download in about 1 hour from the time you issued the restore command."
     elif archival_state.lower() == 'restored':
         try:
             # expected format: Literal Z at the end for UTC with milliseconds

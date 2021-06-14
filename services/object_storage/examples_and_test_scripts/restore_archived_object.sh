@@ -2,10 +2,10 @@
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 # Restore an archived object and download it
-# The archived object is not available for download initialy. Issue the restore
+# The archived object is not available for download initially. Issue the restore
 # command will kick off the process and it will be available for download in about
-# 4 hours.
-# Example run: ./scripts/restore_archived_object.sh namespace buckect object file
+# 1 hour.
+# Example run: ./scripts/restore_archived_object.sh namespace bucket object file
 
 set -e
 
@@ -49,7 +49,7 @@ then
     STATUS=$(oci os object restore-status -ns $NS -bn $BUCKET --name $OBJECT 2>&1)
 fi
 
-# Object is in restoring process it could take up to 4 hours to be available for download
+# Object is in restoring process it could take up to 1 hour to be available for download
 # Pulling every 10 minutes to check the status
 if [[ $STATUS == Restoring* ]] ;
 then

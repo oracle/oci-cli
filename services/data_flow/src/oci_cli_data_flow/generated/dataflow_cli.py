@@ -819,6 +819,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--display-name', help=u"""The query parameter for the Spark application name.""")
 @cli_util.option('--owner-principal-id', help=u"""The OCID of the user who created the resource.""")
 @cli_util.option('--display-name-starts-with', help=u"""The displayName prefix.""")
+@cli_util.option('--spark-version', help=u"""The Spark version utilized to run the application.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -826,7 +827,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'list[ApplicationSummary]'})
 @cli_util.wrap_exceptions
-def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, display_name, owner_principal_id, display_name_starts_with):
+def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, display_name, owner_principal_id, display_name_starts_with, spark_version):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -846,6 +847,8 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
         kwargs['owner_principal_id'] = owner_principal_id
     if display_name_starts_with is not None:
         kwargs['display_name_starts_with'] = display_name_starts_with
+    if spark_version is not None:
+        kwargs['spark_version'] = spark_version
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     if all_pages:

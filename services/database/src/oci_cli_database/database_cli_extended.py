@@ -2249,3 +2249,6 @@ def enable_external_pluggable_database_operations_insights_extended(ctx, **kwarg
 
 # oci db autonomous-database configure-autonomous-database-vault-key -> oci db autonomous-database configure-key
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.configure_autonomous_database_vault_key, "configure-key")
+
+# oci db exadata-infrastructure add -> oci db exadata-infrastructure add-storage-capacity
+cli_util.rename_command(database_cli, database_cli.exadata_infrastructure_group, database_cli.add_storage_capacity_exadata_infrastructure, "add-storage-capacity")
