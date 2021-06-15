@@ -106,7 +106,9 @@ def change_management_saved_searches_compartment(ctx, from_json, management_save
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.create_management_dashboard.command_name', 'create'), help=u"""Creates a new dashboard.  Limit for number of saved searches in a dashboard is 20. \n[Command Reference](createManagementDashboard)""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.create_management_dashboard.command_name', 'create'), help=u"""Creates a new dashboard.  Limit for number of saved searches in a dashboard is 20. To get an example of what needs to be passed to CREATE, one can use GET API. oci management-dashboard dashboard get --management-dashboard-id  \"ocid1.managementdashboard.oc1..dashboardId1\" --query data > Create.json
+
+Modify the Create.json by removing \"id\" attribute and other desired changes, then do oci management-dashboard dashboard create  --from-json file://Create.json \n[Command Reference](createManagementDashboard)""")
 @cli_util.option('--provider-id', required=True, help=u"""ID of the service (for example, log-analytics) that owns the dashboard. Each service has a unique ID.""")
 @cli_util.option('--provider-name', required=True, help=u"""Name of the service (for example, Logging Analytics) that owns the dashboard.""")
 @cli_util.option('--provider-version', required=True, help=u"""Version of the service that owns the dashboard.""")
@@ -125,14 +127,18 @@ def change_management_saved_searches_compartment(ctx, from_json, management_save
 @cli_util.option('--type', required=True, help=u"""Type of dashboard. NORMAL denotes a single dashboard and SET denotes a dashboard set.""")
 @cli_util.option('--is-favorite', required=True, type=click.BOOL, help=u"""Determines whether the dashboard is set as favorite.""")
 @cli_util.option('--dashboard-id', help=u"""ID of the dashboard, which must only be provided for Out-of-the-Box (OOB) dashboards.""")
+@cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the dashboard.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
 @cli_util.wrap_exceptions
-def create_management_dashboard(ctx, from_json, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, dashboard_id, freeform_tags, defined_tags):
+def create_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, dashboard_id, parameters_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -159,6 +165,9 @@ def create_management_dashboard(ctx, from_json, provider_id, provider_name, prov
     if dashboard_id is not None:
         _details['dashboardId'] = dashboard_id
 
+    if parameters_config is not None:
+        _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -170,10 +179,35 @@ def create_management_dashboard(ctx, from_json, provider_id, provider_name, prov
         create_management_dashboard_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_dashboard') and callable(getattr(client, 'get_management_dashboard')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_management_dashboard(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.create_management_saved_search.command_name', 'create'), help=u"""Creates a new saved search. \n[Command Reference](createManagementSavedSearch)""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.create_management_saved_search.command_name', 'create'), help=u"""Creates a new saved search. To get an example of what needs to be passed to CREATE, one can use GET API. oci management-dashboard saved-search get --management-saved-search-id ocid1.managementsavedsearch.oc1..savedsearchId1 --query data > Create.json
+
+Modify the Create.json by removing \"id\" attribute and other desired changes, then do oci management-dashboard saved-search create  --from-json file://Create.json \n[Command Reference](createManagementSavedSearch)""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the saved search.""")
 @cli_util.option('--provider-id', required=True, help=u"""ID of the service (for example log-analytics) that owns the saved search. Each service has a unique ID.""")
 @cli_util.option('--provider-version', required=True, help=u"""Version of the service that owns this saved search.""")
@@ -190,14 +224,18 @@ def create_management_dashboard(ctx, from_json, provider_id, provider_name, prov
 @cli_util.option('--widget-template', required=True, help=u"""Reference to the HTML file of the widget.""")
 @cli_util.option('--widget-vm', required=True, help=u"""Reference to the view model of the widget.""")
 @cli_util.option('--id', help=u"""ID of the saved search, which must only be provided for Out-of-the-Box (OOB) saved search.""")
+@cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the saved search.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
 @cli_util.wrap_exceptions
-def create_management_saved_search(ctx, from_json, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, id, freeform_tags, defined_tags):
+def create_management_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, id, parameters_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -222,6 +260,9 @@ def create_management_saved_search(ctx, from_json, display_name, provider_id, pr
     if id is not None:
         _details['id'] = id
 
+    if parameters_config is not None:
+        _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -233,6 +274,29 @@ def create_management_saved_search(ctx, from_json, display_name, provider_id, pr
         create_management_saved_search_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_saved_search') and callable(getattr(client, 'get_management_saved_search')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_management_saved_search(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -240,12 +304,15 @@ def create_management_saved_search(ctx, from_json, display_name, provider_id, pr
 @cli_util.option('--management-dashboard-id', required=True, help=u"""A unique dashboard identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_management_dashboard(ctx, from_json, management_dashboard_id, if_match):
+def delete_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, if_match):
 
     if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
@@ -259,6 +326,41 @@ def delete_management_dashboard(ctx, from_json, management_dashboard_id, if_matc
         management_dashboard_id=management_dashboard_id,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_dashboard') and callable(getattr(client, 'get_management_dashboard')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_management_dashboard(management_dashboard_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -266,12 +368,15 @@ def delete_management_dashboard(ctx, from_json, management_dashboard_id, if_matc
 @cli_util.option('--management-saved-search-id', required=True, help=u"""A unique saved search identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_management_saved_search(ctx, from_json, management_saved_search_id, if_match):
+def delete_management_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, if_match):
 
     if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
@@ -285,11 +390,46 @@ def delete_management_saved_search(ctx, from_json, management_saved_search_id, i
         management_saved_search_id=management_saved_search_id,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_saved_search') and callable(getattr(client, 'get_management_saved_search')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_management_saved_search(management_saved_search_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches. \n[Command Reference](exportDashboard)""")
-@cli_util.option('--export-dashboard-id', required=True, help=u"""{\"dashboardIds\":[\"dashboardId1\", \"dashboardId2\", ...]}""")
+@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches. Export is designed to work with importDashboard. An example using OCI CLI is $oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > dashboards.json $oci management-dashboard dashboard import --from-json file://dashboards.json \n[Command Reference](exportDashboard)""")
+@cli_util.option('--export-dashboard-id', required=True, help=u"""List of dashboardIds in plain text. The syntaxt is '{\"dashboardIds\":[\"dashboardId1\", \"dashboardId2\", ...]}'. Escaping is needed when using in OCI CLI. For example, \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\" .""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -354,7 +494,7 @@ def get_management_saved_search(ctx, from_json, management_saved_search_id):
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Imports an array of dashboards and their saved searches. \n[Command Reference](importDashboard)""")
+@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Imports an array of dashboards and their saved searches. Import is designed to work with exportDashboard. An example using OCI CLI is     $oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > dashboards.json     $oci management-dashboard dashboard import --from-json file://dashboards.json \n[Command Reference](importDashboard)""")
 @cli_util.option('--dashboards', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of dashboards.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -388,7 +528,7 @@ def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_management_dashboards.command_name', 'list'), help=u"""Gets the list of dashboards and their saved searches in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listManagementDashboards)""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_management_dashboards.command_name', 'list'), help=u"""Gets the list of dashboards in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listManagementDashboards)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -523,22 +663,26 @@ This option is a JSON list with items of type ManagementDashboardTileDetails.  F
 @cli_util.option('--data-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of JSON that contain data source options.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', help=u"""Type of dashboard. NORMAL denotes a single dashboard and SET denotes a dashboard set.""")
 @cli_util.option('--is-favorite', type=click.BOOL, help=u"""Determines whether the dashboard is set as favorite.""")
+@cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the dashboard.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
 @cli_util.wrap_exceptions
-def update_management_dashboard(ctx, from_json, force, management_dashboard_id, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, freeform_tags, defined_tags, if_match):
+def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, parameters_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
     if not force:
-        if tiles or nls or ui_config or data_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to tiles and nls and ui-config and data-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if tiles or nls or ui_config or data_config or parameters_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to tiles and nls and ui-config and data-config and parameters-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -599,6 +743,9 @@ def update_management_dashboard(ctx, from_json, force, management_dashboard_id, 
     if is_favorite is not None:
         _details['isFavorite'] = is_favorite
 
+    if parameters_config is not None:
+        _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -611,6 +758,29 @@ def update_management_dashboard(ctx, from_json, force, management_dashboard_id, 
         update_management_dashboard_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_dashboard') and callable(getattr(client, 'get_management_dashboard')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_management_dashboard(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -631,22 +801,26 @@ def update_management_dashboard(ctx, from_json, force, management_dashboard_id, 
 @cli_util.option('--metadata-version', help=u"""Version of the metadata.""")
 @cli_util.option('--widget-template', help=u"""Reference to the HTML file of the widget.""")
 @cli_util.option('--widget-vm', help=u"""Reference to the view model of the widget.""")
+@cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the saved search.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
 @cli_util.wrap_exceptions
-def update_management_saved_search(ctx, from_json, force, management_saved_search_id, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, freeform_tags, defined_tags, if_match):
+def update_management_saved_search(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, parameters_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
     if not force:
-        if nls or ui_config or data_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nls and ui-config and data-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nls or ui_config or data_config or parameters_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nls and ui-config and data-config and parameters-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -701,6 +875,9 @@ def update_management_saved_search(ctx, from_json, force, management_saved_searc
     if widget_vm is not None:
         _details['widgetVM'] = widget_vm
 
+    if parameters_config is not None:
+        _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -713,4 +890,27 @@ def update_management_saved_search(ctx, from_json, force, management_saved_searc
         update_management_saved_search_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_saved_search') and callable(getattr(client, 'get_management_saved_search')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_management_saved_search(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

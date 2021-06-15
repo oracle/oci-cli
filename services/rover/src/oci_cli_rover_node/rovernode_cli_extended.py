@@ -453,7 +453,6 @@ def list_workload(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(rovernode_cli.change_rover_node_compartment, params_to_exclude=['rover_node_id'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.change_rover_node_compartment.name, help=rovernode_cli.change_rover_node_compartment.help)
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})

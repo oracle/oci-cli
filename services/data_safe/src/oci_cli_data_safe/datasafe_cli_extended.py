@@ -107,3 +107,43 @@ cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_configuration_group
 # From:  oci data-safe work-request-log-entry list-work-request-logs --work-request-id, --all, -? | -h | --help
 # To: oci data-safe work-request-log-entry list --work-request-id, --all, -? | -h | --help
 cli_util.rename_command(datasafe_cli, datasafe_cli.work_request_log_entry_group, datasafe_cli.list_work_request_logs, "list")
+
+
+# Remove create-target-database-autonomous-database-details from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.create_target_database_autonomous_database_details.name)
+
+
+# Remove create-target-database-database-cloud-service-details from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.create_target_database_database_cloud_service_details.name)
+
+
+# Remove create-target-database-installed-database-details from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.create_target_database_installed_database_details.name)
+
+
+# Remove create-target-database-on-premise-connector from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.create_target_database_on_premise_connector.name)
+
+
+# Remove create-target-database-private-endpoint from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.create_target_database_private_endpoint.name)
+
+
+# Remove update-target-database-autonomous-database-details from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_database_autonomous_database_details.name)
+
+
+# Remove update-target-database-database-cloud-service-details from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_database_database_cloud_service_details.name)
+
+
+# Remove update-target-database-installed-database-details from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_database_installed_database_details.name)
+
+
+# Remove update-target-database-on-premise-connector from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_database_on_premise_connector.name)
+
+
+# Remove update-target-database-private-endpoint from oci data-safe target-database
+datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_database_private_endpoint.name)
