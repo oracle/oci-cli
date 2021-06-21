@@ -324,7 +324,12 @@ fi
 
 if [ "$need_to_install_python" = true ]; then
     # Many docker containers won't have sudo installed since they are already run as root.
-    if command -v yum
+    if command -v dnf 
+    then
+        echo "Attempting to install Python 3."
+        $sudo_cmd dnf install $yum_opts python3
+        python_exe=python3
+    elif command -v yum
     then
         echo "Attempting to install Python 3."
         $sudo_cmd yum $yum_opts check-update

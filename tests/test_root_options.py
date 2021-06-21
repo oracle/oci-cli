@@ -8,6 +8,7 @@ import os
 import six.moves
 import traceback
 from mock import patch
+from oci_cli.cli_constants import OCI_CONFIG_REQUIRED_VARS as config_required_vars
 
 
 def test_control_case(runner, config_file):
@@ -78,17 +79,21 @@ def test_profile_env_var_overrides_default_setting(runner, config_file):
 
 
 def test_default_profile_setting_from_cli_rc_file(runner, config_file):
+    env_vars = copy_config_required_vars()
     result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
     assert "ERROR: Profile 'INAVLID_PROFILE' not found in config file" in result.output
     assert 1 == result.exit_code
+    os.environ.update(env_vars)
 
 
 def test_rc_file_location_environment_variable(runner, config_file):
+    env_vars = copy_config_required_vars()
     os.environ[oci_cli.cli_constants.OCI_CLI_RC_FILE_ENV_VAR] = 'tests/resources/default_files/settings_with_invalid_default_profile'
     result = invoke_example_operation(runner, [], config_file)
     del os.environ[oci_cli.cli_constants.OCI_CLI_RC_FILE_ENV_VAR]
     assert "ERROR: Profile 'INAVLID_PROFILE' not found in config file" in result.output
     assert 1 == result.exit_code
+    os.environ.update(env_vars)
 
 
 def test_config_file_location_environment_variable(runner, config_file):
@@ -98,6 +103,23 @@ def test_config_file_location_environment_variable(runner, config_file):
     del os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
     assert 1 == result.exit_code
     assert 'tests/invalid_config' in result.output
+
+    # restore OCI_CLI_CONFIG_FILE env variable env variable as it used in other tests.
+    os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
+
+
+def test_config_values_from_environment_variable_mock_config(runner, config_file):
+    result = invoke_example_operation(runner, [], None)
+    assert 0 == result.exit_code
+
+    if oci_cli.cli_constants.OCI_CLI_USER_ENV_VAR in os.environ:
+        del os.environ[oci_cli.cli_constants.OCI_CLI_USER_ENV_VAR]
+
+    original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
+    os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = 'tests/invalid_config'
+
+    result = invoke_example_operation(runner, [], None)
+    assert 1 == result.exit_code
 
     # restore OCI_CLI_CONFIG_FILE env variable env variable as it used in other tests.
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
@@ -116,7 +138,7 @@ def test_config_values_from_environment_variable_overrides_default_settings(runn
         os.environ[key] = 'invalid_value'
         result = invoke_example_operation(runner, [], config_file)
         del os.environ[key]
-        if key not in [oci_cli.cli_constants.OCI_CLI_DELEGATION_TOKEN_FILE_ENV_VAR, oci_cli.cli_constants.OCI_CLI_SECURITY_TOKEN_FILE_ENV_VAR]:
+        if key not in [oci_cli.cli_constants.OCI_CLI_DELEGATION_TOKEN_FILE_ENV_VAR, oci_cli.cli_constants.OCI_CLI_SECURITY_TOKEN_FILE_ENV_VAR, oci_cli.cli_constants.OCI_CLI_PASSPHRASE_ENV_VAR]:
             assert 0 != result.exit_code
 
 
@@ -208,3 +230,14 @@ def teardown_module(module):
 def invoke_example_operation(runner, root_args, config_file):
     args = root_args + (['--config-file', config_file] if config_file else []) + ['os', 'ns', 'get']
     return runner.invoke(oci_cli.cli, args)
+
+
+# Copies the env vars which are required to mock a config and removes them
+# Needed for some tests if we've set env vars to mock a config but want to use an invalid config instead
+def copy_config_required_vars():
+    config_env_vars = {}
+    for key in config_required_vars:
+        if config_required_vars[key] in os.environ:
+            config_env_vars.update({config_required_vars[key]: os.environ[config_required_vars[key]]})
+            os.environ.pop(config_required_vars[key])
+    return config_env_vars

@@ -336,8 +336,15 @@ def create_config_and_signer_based_on_click_context(ctx):
             client_config["auth_type"] = cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
         elif "auth_purpose" in ctx.obj:
             client_config["auth_purpose"] = ctx.obj["auth_purpose"]
+        if ctx.obj['debug']:
+            if instance_principal_auth:
+                logger.debug("auth: instance_principal")
+            else:
+                logger.debug("auth: delegation_token")
         signer = get_instance_principal_signer(ctx, client_config)
     elif session_token_auth:
+        if ctx.obj['debug']:
+            logger.debug("auth: session_token")
         signer = get_session_token_signer(client_config)
     elif resource_principal_auth:
         # The following environment variables are expected to be set for this to work.
@@ -353,6 +360,8 @@ def create_config_and_signer_based_on_click_context(ctx):
         # OCI_RESOURCE_PRINCIPAL_RPST_ENDPOINT
         if ctx.obj['region']:
             client_config["region"] = ctx.obj['region']
+        if ctx.obj['debug']:
+            logger.debug("auth: resource_principal")
         signer = oci.auth.signers.resource_principals_signer.get_resource_principals_signer()
     kwargs['signer'] = signer
 
@@ -508,10 +517,15 @@ def build_config(command_args):
     if "region" not in config.REQUIRED:
         config.REQUIRED.add("region")
 
-    try:
-        client_config = config.from_file(file_location=command_args['config_file'], profile_name=command_args['profile'])
-    except (exceptions.ProfileNotFound, exceptions.InvalidKeyFilePath) as e:
-        sys.exit("ERROR: " + str(e))
+    if is_config_valid_from_env():
+        client_config = build_empty_config()
+    else:
+        try:
+            client_config = config.from_file(file_location=command_args['config_file'], profile_name=command_args['profile'])
+            if command_args['debug']:
+                logger.debug("Config File: %s", client_config.keys())
+        except (exceptions.ProfileNotFound, exceptions.InvalidKeyFilePath) as e:
+            sys.exit("ERROR: " + str(e))
 
     FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
 
@@ -519,6 +533,8 @@ def build_config(command_args):
     for env in cli_constants.OCI_CONFIG_ENV_VARS:
         if env in os.environ:
             client_config[cli_constants.OCI_CONFIG_ENV_VARS[env]] = os.environ[env]
+            if command_args['debug']:
+                logger.debug("%s: Environment Variable", cli_constants.OCI_CONFIG_ENV_VARS[env])
 
     client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
 
@@ -527,6 +543,8 @@ def build_config(command_args):
 
     if command_args['debug']:
         client_config["log_requests"] = True
+        if command_args['debug']:
+            logger.debug("region: Environment Variable or Parameter")
 
     if command_args['endpoint']:
         # The SDK does support endpoint in the config, and uses that when validating during client creation.
@@ -535,6 +553,8 @@ def build_config(command_args):
         client_config["endpoint"] = command_args['endpoint']
         if "region" in config.REQUIRED:
             config.REQUIRED.remove("region")
+        if command_args['debug']:
+            logger.debug("endpoint: Environment Variable or Parameter")
     else:
         # Do not allow an endpoint to be set in the config file. (This can be removed
         # once the SDK removes support for this.)
@@ -2344,6 +2364,22 @@ def convert_time_elapsed(time_elapsed):
     if time_elapsed < 0.001:
         return "<1ms"
     return str(time_elapsed)
+
+
+# Checks that enough env variables have been set to mock a config
+def is_config_valid_from_env():
+    for required_key in cli_constants.OCI_CONFIG_REQUIRED_VARS:
+        if not cli_constants.OCI_CONFIG_REQUIRED_VARS[required_key] in os.environ:
+            return False
+    return True
+
+
+# Returns an empty config dict
+def build_empty_config():
+    empty_config = dict(config.DEFAULT_CONFIG)
+    empty_config["log_requests"] = config._as_bool(empty_config["log_requests"])
+
+    return empty_config
 
 
 class CommandExample:

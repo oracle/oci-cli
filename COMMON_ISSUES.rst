@@ -33,3 +33,16 @@ Offline Installation issues
   * Error "command 'gcc' failed with exit status 1"
 
     * To fix the above error, please install the packages gcc, zlib-devel, python3-devel and OpenSSL 1.1.1-latest in the System and try the installation again
+
+================
+Troubleshooting
+================
+
+* Error: Got unexpected extra arguments, can be caused by one of the following reasons
+
+  * You are passing an extra argument to one of the parameters
+  * One of the parameters has an invalid value
+
+* Service Errors
+
+  * Any operation resulting in a service error causes an error of type "ServiceError" to be returned by the CLI. See `API Errors <https://docs.oracle.com/en-us/iaas/Content/API/References/apierrors.htm#API_Errors>`__

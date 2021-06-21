@@ -18,6 +18,7 @@ import os
 import sys
 import uuid
 import webbrowser
+from oci import identity
 
 try:
     from urllib.parse import urlparse, parse_qs, urlencode
@@ -56,7 +57,7 @@ def bootstrap_oci_cli(ctx):
 
     # create initial SDK client which targets region that user specified
     signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
-    client = oci.identity.IdentityClient({'region': region}, signer=signer)
+    client = identity.IdentityClient({'region': region}, signer=signer)
 
     # find home region and create new client targeting home region to use for subsequent identity requests
     result = client.list_region_subscriptions(tenancy_ocid)
@@ -65,9 +66,9 @@ def bootstrap_oci_cli(ctx):
             home_region = r.region_name
             break
 
-    client = oci.identity.IdentityClient({'region': home_region}, signer=signer)
+    client = identity.IdentityClient({'region': home_region}, signer=signer)
 
-    create_api_key_details = oci.identity.models.CreateApiKeyDetails()
+    create_api_key_details = identity.models.CreateApiKeyDetails()
     create_api_key_details.key = cli_util.serialize_key(public_key=public_key).decode('UTF-8')
 
     try:

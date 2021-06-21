@@ -39,23 +39,29 @@ def is_windows():
     return sys.platform == 'win32'
 
 
-def get_linux_distribution_name():
-    # An example of a line in /etc/os-release is NAME="Ubuntu"
+def get_linux_distribution_id_like():
+    # An example of a line in /etc/os-release is ID_LIKE=ubuntu
+    # An example of a line in /etc/os-release is ID=debian
+    # See ID, ID_LIKE on https://www.freedesktop.org/software/systemd/man/os-release.html
+
+    id_value = id_like_value = None
     try:
         with open('/etc/os-release') as lines:
             for line in lines:
                 if "=" in line:
                     key, value = line.split("=", 1)
-                    if key.lower() == "name":
-                        return value.lower()
-            return None
+                    if key.lower() == "id_like":
+                        id_like_value = value.lower()
+                    if key.lower() == "id":
+                        id_value = value.lower()
+            return id_value, id_like_value
     except Exception as e:
-        return None
+        return id_value, id_like_value
 
 
 def is_ubuntu_or_debian():
-    linux_distribution_name = get_linux_distribution_name()
-    return linux_distribution_name and any(x in linux_distribution_name for x in ['ubuntu', 'debian'])
+    linux_distribution_id, linux_distribution_id_like = get_linux_distribution_id_like()
+    return (linux_distribution_id_like and any(x in linux_distribution_id_like for x in ['ubuntu', 'debian'])) or (linux_distribution_id and any(x in linux_distribution_id for x in ['ubuntu', 'debian']))
 
 
 def get_ubuntu_version():
