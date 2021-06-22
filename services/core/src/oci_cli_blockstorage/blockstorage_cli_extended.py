@@ -77,8 +77,6 @@ def create_volume_extended(ctx, **kwargs):
 
     if kwargs['source_volume_id']:
         source_volume = client.get_volume(volume_id=kwargs['source_volume_id'])
-        if not kwargs['availability_domain']:
-            kwargs['availability_domain'] = source_volume.data.availability_domain
         if not kwargs['compartment_id']:
             kwargs['compartment_id'] = source_volume.data.compartment_id
 
@@ -149,8 +147,6 @@ def create_boot_volume_extended(ctx, **kwargs):
 
     if kwargs['source_boot_volume_id']:
         source_boot_volume = client.get_boot_volume(boot_volume_id=kwargs['source_boot_volume_id'])
-        if not kwargs['availability_domain']:
-            kwargs['availability_domain'] = source_boot_volume.data.availability_domain
         if not kwargs['compartment_id']:
             kwargs['compartment_id'] = source_boot_volume.data.compartment_id
 

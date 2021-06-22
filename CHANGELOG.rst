@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.25.4 - 2021-06-22
+-------------------
+Added
+~~~~~
+
+* Users can authenticate the CLI with only environment variables, a config does not need to exist
+
+  * The following environment variables need to be set, OCI_CLI_USER, OCI_CLI_TENANCY, OCI_CLI_FINGERPRINT, OCI_CLI_KEY_FILE, OCI_CLI_REGION
+  * Optional variable for passphrase, OCI_CLI_PASSPHRASE
+
+* Support for VMBM Pluggable Database feature as a part of the Database Service
+
+  * ``oci db pluggable-database``
+
+Changed
+~~~~~~~
+
+* Support for cross-tenancy volume clone in Block Storage service
+
+  * ``oci bv volume create --source-volume-id``
+  * ``oci bv boot-volume create --source-volume-id``
+
+* Changed allowed versions of cryptography package to a range from 3.2.1 to 3.4.7
+
+* Following updates in installer scripts:
+  
+  * Use dnf, if available, to install python
+  * Updated check for ubuntu/debian systems to use ID_LIKE/ID instead of NAME in /etc/os-release
+
+Fixed
+~~~~~
+
+* oci setup bootstrap was causing a ``AttributeError: module 'oci' has no attribute 'identity'``
+
 2.25.3 - 2021-06-15
 -------------------
 Added
