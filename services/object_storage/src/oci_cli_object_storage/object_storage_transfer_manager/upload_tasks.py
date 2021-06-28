@@ -4,9 +4,8 @@
 
 from oci.object_storage import UploadManager
 from .work_pool_task import WorkPoolTask
-from retrying import retry
-from oci_cli import retry_utils
 from oci_cli import cli_util
+from oci.retry import DEFAULT_RETRY_STRATEGY
 
 
 # A simple task which uploads a single file to Object Storage
@@ -31,8 +30,7 @@ class SimpleSingleUploadTask(WorkPoolTask):
         multipart_hash = cli_util.verify_checksum(self.file_path, no_multipart=True, ma=None) if self.verify_checksum else None
         return self._make_retrying_upload_file_call(), multipart_hash
 
-    @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-           retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
     def _make_retrying_upload_file_call(self):
+        self.kwargs["retry_strategy"] = DEFAULT_RETRY_STRATEGY
         upload_manager = UploadManager(self.object_storage_client, allow_multipart_uploads=False)
         return upload_manager.upload_file(self.namespace_name, self.bucket_name, self.object_name, self.file_path, **self.kwargs)

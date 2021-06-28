@@ -189,6 +189,12 @@ def attribute_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_catalog.metastore_group.command_name', 'metastore'), cls=CommandGroupWithAlias, help="""A Data Catalog Metastore provides a centralized metastore repository for use by other OCI services.""")
+@cli_util.help_option_group
+def metastore_group():
+    pass
+
+
 @click.command(cli_util.override('data_catalog.folder_tag_group.command_name', 'folder-tag'), cls=CommandGroupWithAlias, help="""Represents an association of a folder to a term.""")
 @cli_util.help_option_group
 def folder_tag_group():
@@ -307,6 +313,7 @@ data_catalog_root_group.add_command(job_execution_group)
 data_catalog_root_group.add_command(connection_collection_group)
 data_catalog_root_group.add_command(entity_tag_group)
 data_catalog_root_group.add_command(attribute_collection_group)
+data_catalog_root_group.add_command(metastore_group)
 data_catalog_root_group.add_command(folder_tag_group)
 data_catalog_root_group.add_command(search_result_group)
 data_catalog_root_group.add_command(data_asset_tag_group)
@@ -390,6 +397,7 @@ def add_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--type-key', required=True, help=u"""Unique type key.""")
 @cli_util.option('--custom-property-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""array of custom property Ids""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-event-enabled', type=click.BOOL, help=u"""If an OCI Event will be emitted when the custom property is modified.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -399,7 +407,7 @@ def add_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-ids': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'Type'})
 @cli_util.wrap_exceptions
-def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, if_match):
+def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, is_event_enabled, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -416,6 +424,9 @@ def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if custom_property_ids is not None:
         _details['customPropertyIds'] = cli_util.parse_json_parameter("custom_property_ids", custom_property_ids)
+
+    if is_event_enabled is not None:
+        _details['isEventEnabled'] = is_event_enabled
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.associate_custom_property(
@@ -593,6 +604,63 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
     result = client.change_catalog_private_endpoint_compartment(
         catalog_private_endpoint_id=catalog_private_endpoint_id,
         change_catalog_private_endpoint_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@metastore_group.command(name=cli_util.override('data_catalog.change_metastore_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeMetastoreCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the metastore should be moved.""")
+@cli_util.option('--metastore-id', required=True, help=u"""The metastore's OCID.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_metastore_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, metastore_id, if_match):
+
+    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+        raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.change_metastore_compartment(
+        metastore_id=metastore_id,
+        change_metastore_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1042,6 +1110,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--is-editable', type=click.BOOL, help=u"""If this field is a editable field""")
 @cli_util.option('--is-shown-in-list', type=click.BOOL, help=u"""If this field is displayed in a list view of applicable objects.""")
 @cli_util.option('--is-hidden-in-search', type=click.BOOL, help=u"""If this field is allowed to pop in search results""")
+@cli_util.option('--is-event-enabled', type=click.BOOL, help=u"""If an OCI Event will be emitted when the custom property is modified.""")
 @cli_util.option('--allowed-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed values for the custom property if any""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the data asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. To determine the set of optional and required properties for a data asset type, a query can be done on '/types?type=dataAsset' that returns a collection of all data asset types. The appropriate data asset type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1052,7 +1121,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
 @cli_util.wrap_exceptions
-def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, data_type, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, allowed_values, properties):
+def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, data_type, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, is_event_enabled, allowed_values, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1092,6 +1161,9 @@ def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if is_hidden_in_search is not None:
         _details['isHiddenInSearch'] = is_hidden_in_search
+
+    if is_event_enabled is not None:
+        _details['isEventEnabled'] = is_event_enabled
 
     if allowed_values is not None:
         _details['allowedValues'] = cli_util.parse_json_parameter("allowed_values", allowed_values)
@@ -1756,7 +1828,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @job_definition_group.command(name=cli_util.override('data_catalog.create_job_definition.command_name', 'create'), help=u"""Creates a new job definition. \n[Command Reference](createJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE"]), help=u"""Type of the job definition.""")
+@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Type of the job definition.""")
 @cli_util.option('--description', help=u"""Detailed description of the job definition.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Specifies if the job definition is incremental or full.""")
 @cli_util.option('--data-asset-key', help=u"""The key of the data asset for which the job is defined.""")
@@ -1841,7 +1913,7 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE"]), help=u"""Type of the job execution.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Type of the job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""Time that job execution started. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution ended or null if it hasn't yet completed. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1947,6 +2019,71 @@ def create_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@metastore_group.command(name=cli_util.override('data_catalog.create_metastore.command_name', 'create'), help=u"""Creates a new metastore. \n[Command Reference](createMetastore)""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment which holds the metastore.""")
+@cli_util.option('--default-managed-table-location', required=True, help=u"""Location under which managed tables will be created by default. This references Object Storage using an HDFS URI format. Example: oci://bucket@namespace/sub-dir/""")
+@cli_util.option('--default-external-table-location', required=True, help=u"""Location under which external tables will be created by default. This references Object Storage using an HDFS URI format. Example: oci://bucket@namespace/sub-dir/""")
+@cli_util.option('--display-name', help=u"""Mutable name of the metastore.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_catalog', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_catalog', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_catalog', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_catalog', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_metastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, default_managed_table_location, default_external_table_location, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['defaultManagedTableLocation'] = default_managed_table_location
+    _details['defaultExternalTableLocation'] = default_external_table_location
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.create_metastore(
+        create_metastore_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2822,6 +2959,58 @@ def delete_job_definition(ctx, from_json, catalog_id, job_definition_key, if_mat
     cli_util.render_response(result, ctx)
 
 
+@metastore_group.command(name=cli_util.override('data_catalog.delete_metastore.command_name', 'delete'), help=u"""Deletes a metastore resource by identifier. \n[Command Reference](deleteMetastore)""")
+@cli_util.option('--metastore-id', required=True, help=u"""The metastore's OCID.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_metastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metastore_id, if_match):
+
+    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+        raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.delete_metastore(
+        metastore_id=metastore_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @namespace_group.command(name=cli_util.override('data_catalog.delete_namespace.command_name', 'delete'), help=u"""Deletes a specific Namespace identified by it's key. \n[Command Reference](deleteNamespace)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
@@ -3022,6 +3211,7 @@ def detach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--type-key', required=True, help=u"""Unique type key.""")
 @cli_util.option('--custom-property-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""array of custom property Ids""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-event-enabled', type=click.BOOL, help=u"""If an OCI Event will be emitted when the custom property is modified.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3031,7 +3221,7 @@ def detach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-ids': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'Type'})
 @cli_util.wrap_exceptions
-def disassociate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, if_match):
+def disassociate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, is_event_enabled, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -3048,6 +3238,9 @@ def disassociate_custom_property(ctx, from_json, wait_for_state, max_wait_second
 
     if custom_property_ids is not None:
         _details['customPropertyIds'] = cli_util.parse_json_parameter("custom_property_ids", custom_property_ids)
+
+    if is_event_enabled is not None:
+        _details['isEventEnabled'] = is_event_enabled
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.disassociate_custom_property(
@@ -3144,13 +3337,14 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--attribute-key', required=True, help=u"""Unique attribute key.""")
+@cli_util.option('--is-include-object-relationships', type=click.BOOL, help=u"""Indicates whether the list of objects and their relationships to this object will be provided in the response.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "externalDataType", "externalKey", "isIncrementalData", "isNullable", "length", "position", "precision", "scale", "timeExternal", "uri", "properties", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attribute_key, fields):
+def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attribute_key, is_include_object_relationships, fields):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -3165,6 +3359,8 @@ def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attrib
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_include_object_relationships is not None:
+        kwargs['is_include_object_relationships'] = is_include_object_relationships
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3407,13 +3603,14 @@ def get_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, fiel
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
+@cli_util.option('--is-include-object-relationships', type=click.BOOL, help=u"""Indicates whether the list of objects and their relationships to this object will be provided in the response.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "lifecycleState", "externalKey", "timeExternal", "timeStatusUpdated", "isLogical", "isPartition", "folderKey", "folderName", "typeKey", "path", "harvestStatus", "lastJobKey", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Entity'})
 @cli_util.wrap_exceptions
-def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, fields):
+def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, is_include_object_relationships, fields):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -3425,6 +3622,8 @@ def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, fields):
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_include_object_relationships is not None:
+        kwargs['is_include_object_relationships'] = is_include_object_relationships
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3482,13 +3681,14 @@ def get_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, tag_k
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
+@cli_util.option('--is-include-object-relationships', type=click.BOOL, help=u"""Indicates whether the list of objects and their relationships to this object will be provided in the response.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "parentFolderKey", "path", "dataAssetKey", "properties", "externalKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "timeExternal", "lifecycleState", "harvestStatus", "lastJobKey", "uri"]), multiple=True, help=u"""Specifies the fields to return in a folder response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Folder'})
 @cli_util.wrap_exceptions
-def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, fields):
+def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, is_include_object_relationships, fields):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -3500,6 +3700,8 @@ def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, fields):
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_include_object_relationships is not None:
+        kwargs['is_include_object_relationships'] = is_include_object_relationships
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3758,6 +3960,28 @@ def get_job_metrics(ctx, from_json, catalog_id, job_key, job_execution_key, job_
     cli_util.render_response(result, ctx)
 
 
+@metastore_group.command(name=cli_util.override('data_catalog.get_metastore.command_name', 'get'), help=u"""Gets a metastore by identifier. \n[Command Reference](getMetastore)""")
+@cli_util.option('--metastore-id', required=True, help=u"""The metastore's OCID.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Metastore'})
+@cli_util.wrap_exceptions
+def get_metastore(ctx, from_json, metastore_id):
+
+    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+        raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.get_metastore(
+        metastore_id=metastore_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @namespace_group.command(name=cli_util.override('data_catalog.get_namespace.command_name', 'get'), help=u"""Gets a specific namespace for the given key within a data catalog. \n[Command Reference](getNamespace)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
@@ -3980,6 +4204,44 @@ def import_connection(ctx, from_json, catalog_id, data_asset_key, connection_pay
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         import_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_catalog.import_data_asset.command_name', 'import'), help=u"""Import technical objects to a Data Asset \n[Command Reference](importDataAsset)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--import-file-contents', required=True, help=u"""The file contents to be imported. File size not to exceed 10 MB.""")
+@cli_util.option('--import-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_PROPERTY_VALUES", "ALL"]), multiple=True, help=u"""Type of import.""")
+@cli_util.option('--is-missing-value-ignored', type=click.BOOL, help=u"""Specify whether to ignore the missing values in the import file.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'ImportDataAssetJobResult'})
+@cli_util.wrap_exceptions
+def import_data_asset(ctx, from_json, catalog_id, data_asset_key, import_file_contents, import_type, is_missing_value_ignored):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_missing_value_ignored is not None:
+        kwargs['is_missing_value_ignored'] = is_missing_value_ignored
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['importFileContents'] = import_file_contents
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.import_data_asset(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        import_type=import_type,
+        import_data_asset_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4550,7 +4812,7 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--data-types', type=custom_types.CliCaseInsensitiveChoice(["TEXT", "RICH_TEXT", "BOOLEAN", "NUMBER", "DATE"]), multiple=True, help=u"""Return the custom properties which has specified data types""")
-@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET", "MESSAGE", "UNRECOGNIZED_FILE"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
+@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "ORACLE_ANALYTICS_SERVER", "ORACLE_ANALYTICS_CLOUD", "ORACLE_ANALYTICS_SUBJECT_AREA", "ORACLE_ANALYTICS_DASHBOARD", "ORACLE_ANALYTICS_BUSINESS_MODEL", "ORACLE_ANALYTICS_PHYSICAL_DATABASE", "ORACLE_ANALYTICS_PHYSICAL_SCHEMA", "ORACLE_ANALYTICS_PRESENTATION_TABLE", "ORACLE_ANALYTICS_LOGICAL_TABLE", "ORACLE_ANALYTICS_PHYSICAL_TABLE", "ORACLE_ANALYTICS_ANALYSIS", "DATABASE_SCHEMA", "TOPIC", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET", "MESSAGE", "UNRECOGNIZED_FILE"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5387,7 +5649,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--job-execution-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "INACTIVE", "FAILED", "SUCCEEDED", "CANCELED", "SUCCEEDED_WITH_WARNINGS"]), help=u"""Job execution state.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Whether job definition is an incremental harvest (true) or a full harvest (false).""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', help=u"""Unique connection key.""")
@@ -5488,7 +5750,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution was started or in the case of a future time, the time when the job will start. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5500,7 +5762,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
 @cli_util.option('--event-key', help=u"""Event that triggered the execution of this job or null.""")
 @cli_util.option('--data-entity-key', help=u"""Unique entity key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "jobKey", "jobType", "parentKey", "scheduleInstanceKey", "lifecycleState", "timeCreated", "timeStarted", "timeEnded", "uri"]), multiple=True, help=u"""Specifies the fields to return in a job execution summary response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED"]), help=u"""The field to sort by. Only one sort order may be provided; the default is descending. Use sortOrder query param to specify order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5806,7 +6068,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--job-definition-key', help=u"""Unique job definition key.""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
 @cli_util.option('--schedule-cron-expression', help=u"""Schedule specified in the cron expression format that has seven fields for second, minute, hour, day-of-month, month, day-of-week, year. It can also include special characters like * for all and ? for any. There are also pre-defined schedules that can be specified using special strings. For example, @hourly will run the job every hour.""")
@@ -5903,6 +6165,66 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
     else:
         result = client.list_jobs(
             catalog_id=catalog_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@metastore_group.command(name=cli_util.override('data_catalog.list_metastores.command_name', 'list'), help=u"""Returns a list of all metastores in the specified compartment. \n[Command Reference](listMetastores)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'list[MetastoreSummary]'})
+@cli_util.wrap_exceptions
+def list_metastores(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, lifecycle_state, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_metastores,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_metastores,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_metastores(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6965,6 +7287,68 @@ def suggest_matches(ctx, from_json, catalog_id, input_text, timeout, limit):
     cli_util.render_response(result, ctx)
 
 
+@data_asset_group.command(name=cli_util.override('data_catalog.synchronous_export_data_asset.command_name', 'synchronous-export'), help=u"""Export technical objects from a Data Asset \n[Command Reference](synchronousExportDataAsset)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--export-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_PROPERTY_VALUES", "ALL"]), multiple=True, help=u"""Type of export.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--export-scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of objects and their child types to be selected for export.
+
+This option is a JSON list with items of type DataAssetExportScope.  For documentation on DataAssetExportScope please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/DataAssetExportScope.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'export-scope': {'module': 'data_catalog', 'class': 'list[DataAssetExportScope]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-scope': {'module': 'data_catalog', 'class': 'list[DataAssetExportScope]'}})
+@cli_util.wrap_exceptions
+def synchronous_export_data_asset(ctx, from_json, file, catalog_id, data_asset_key, export_type, export_scope):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if export_scope is not None:
+        _details['exportScope'] = cli_util.parse_json_parameter("export_scope", export_scope)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.synchronous_export_data_asset(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        export_type=export_type,
+        synchronous_export_data_asset_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @connection_group.command(name=cli_util.override('data_catalog.test_connection.command_name', 'test'), help=u"""Test the connection by connecting to the data asset using credentials in the metadata. \n[Command Reference](testConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -7399,6 +7783,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--is-editable', type=click.BOOL, help=u"""If this field is a editable field""")
 @cli_util.option('--is-shown-in-list', type=click.BOOL, help=u"""If this field is displayed in a list view of applicable objects.""")
 @cli_util.option('--is-hidden-in-search', type=click.BOOL, help=u"""If this field is allowed to pop in search results""")
+@cli_util.option('--is-event-enabled', type=click.BOOL, help=u"""If an OCI Event will be emitted when the custom property is modified.""")
 @cli_util.option('--allowed-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed values for the custom property if any""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7411,7 +7796,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
 @cli_util.wrap_exceptions
-def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, custom_property_key, display_name, description, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, allowed_values, properties, if_match):
+def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, custom_property_key, display_name, description, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, is_event_enabled, allowed_values, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -7459,6 +7844,9 @@ def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if is_hidden_in_search is not None:
         _details['isHiddenInSearch'] = is_hidden_in_search
+
+    if is_event_enabled is not None:
+        _details['isEventEnabled'] = is_event_enabled
 
     if allowed_values is not None:
         _details['allowedValues'] = cli_util.parse_json_parameter("allowed_values", allowed_values)
@@ -8069,6 +8457,78 @@ def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_second
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_job_definition(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@metastore_group.command(name=cli_util.override('data_catalog.update_metastore.command_name', 'update'), help=u"""Updates a metastore resource by identifier. \n[Command Reference](updateMetastore)""")
+@cli_util.option('--metastore-id', required=True, help=u"""The metastore's OCID.""")
+@cli_util.option('--display-name', help=u"""Mutable name of the metastore.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_catalog', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_catalog', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_catalog', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_catalog', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_catalog', 'class': 'Metastore'})
+@cli_util.wrap_exceptions
+def update_metastore(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metastore_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+        raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.update_metastore(
+        metastore_id=metastore_id,
+        update_metastore_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_metastore') and callable(getattr(client, 'get_metastore')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_metastore(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

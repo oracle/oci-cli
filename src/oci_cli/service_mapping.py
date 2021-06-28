@@ -115,6 +115,10 @@ service_mapping = {
         "database",
         "Database Service"
     ],
+    "devops": [
+        "devops",
+        "DevOps"
+    ],
     "dns": [
         "dns",
         "DNS"

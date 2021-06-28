@@ -11,11 +11,11 @@ class TestNodePoolCreateUpdate(unittest.TestCase):
         pass
 
     def test_nodepool_create(self):
-        result = util.invoke_command(['ce', 'node-pool', 'create', '--size', '1', '--placement-configs', 'config'])
+        result = util.invoke_command(['ce', 'node-pool', 'create', '--size', '1', '--nsg-ids', 'nsgs', '--placement-configs', 'config'])
         assert 'Error: Missing option(s)' in result.output
 
     def test_nodepool_update(self):
-        result = util.invoke_command(['ce', 'node-pool', 'update', '--size', '1', '--placement-configs', 'config', '--node-source-details', '{"foo", "bar"}', '--ssh-public-key', 'key', '--node-shape', 'shape', '--node-metadata', '{"foo", "bar"}'])
+        result = util.invoke_command(['ce', 'node-pool', 'update', '--size', '1', '--nsg-ids', 'nsgs', '--placement-configs', 'config', '--node-source-details', '{"foo", "bar"}', '--ssh-public-key', 'key', '--node-shape', 'shape', '--node-metadata', '{"foo", "bar"}'])
         assert 'Error: Missing option(s) --node-pool-id.' in result.output
 
     def test_nodepool_create_via_imageId_and_bootVolumeSize_shortcuts(self):

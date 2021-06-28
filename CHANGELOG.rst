@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.26.0 - 2021-06-29
+-------------------
+Added
+~~~~~
+
+* Support for passing in private key content as a environment variable. A private key file is not required if this variable is set
+
+  * Export ``OCI_CLI_KEY_CONTENT`` with the private key content enclosed with single quotes
+
+* Support for the DevOps service
+
+  * ``oci devops``
+
+* Support for configuring network security groups for node pools in the container engine for Kubernetes service
+
+  * ``oci ce node-pool create --nsg-ids``
+  * ``oci ce node-pool update --nsg-ids``
+
+* Support for optionally specifying CPU core count and data storage size when creating autonomous databases in the Database service
+
+  * ``oci db autonomous-database create --data-storage-size-in-gbs``
+
+*  Support for metastore and initial data asset import/export in the Data Catalog service
+
+  * ``oci data-catalog metastore``
+  * ``oci data-catalog data-asset import``
+  * ``oci data-catalog data-asset synchronous-export``
+  * [Breaking] ``DISPLAYNAME`` removed from --sort-by option
+
+* Support for Email Domain in the Email Delivery service
+
+  * ``oci email domain change-compartment --compartment-id --email-domain-id``
+  * ``oci email domain create --compartment-id --name``
+  * ``oci email domain delete --email-domain-id``
+  * ``oci email domain get --email-domain-id``
+  * ``oci email domain list --compartment-id``
+  * ``oci email domain update --email-domain-id``
+
+* Support for Domain Key Identified Mail in the Email Delivery service
+
+  * ``oci email dkim create --email-domain-id``
+  * ``oci email dkim delete --dkim-id``
+  * ``oci email dkim get --dkim-id``
+  * ``oci email dkim list --email-domain-id``
+  * ``oci email dkim update --dkim-id``
+
+* Support for new API to list work requests for Email Domain and DKIM in the Email Delivery service
+
+  * ``oci email work-request get --work-request-id``
+  * ``oci email work-request list --compartment-id``
+  * ``oci email work-request-error-collection list --work-request-id``
+  * ``oci email work-request-log list --work-request-id``
+
+* Support for ``--domain`` field in the response for ``oci email sender`` in the Email Delivery service
+
+* Support for changing the number of retries for a CLI command (``--max-retries``)
+
 2.25.4 - 2021-06-22
 -------------------
 Added

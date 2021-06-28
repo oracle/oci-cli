@@ -40,6 +40,7 @@ from . import cli_exceptions
 from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
 from oci import exceptions, config, Response
+from oci.retry import RetryStrategyBuilder
 from oci._vendor import requests
 
 from .version import __version__
@@ -464,6 +465,13 @@ def build_client(spec_name, service_name, ctx):
     # unless the user has explicitly turned off retries using the --no-retry flag, use the default retry strategy
     if not ctx.obj['no_retry']:
         kwargs['retry_strategy'] = oci.retry.DEFAULT_RETRY_STRATEGY
+        if ctx.obj['max_attempts']:
+            kwargs['retry_strategy'] = RetryStrategyBuilder().add_max_attempts(max_attempts=ctx.obj['max_attempts']) \
+                .add_total_elapsed_time() \
+                .add_service_error_check() \
+                .get_retry_strategy()
+    else:
+        kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
     # Build the client, then fix up a few properties.
     try:
@@ -2371,7 +2379,7 @@ def is_config_valid_from_env():
     for required_key in cli_constants.OCI_CONFIG_REQUIRED_VARS:
         if not cli_constants.OCI_CONFIG_REQUIRED_VARS[required_key] in os.environ:
             return False
-    return True
+    return cli_constants.OCI_CLI_KEY_FILE_ENV_VAR in os.environ or cli_constants.OCI_CLI_KEY_CONTENT_ENV_VAR in os.environ
 
 
 # Returns an empty config dict

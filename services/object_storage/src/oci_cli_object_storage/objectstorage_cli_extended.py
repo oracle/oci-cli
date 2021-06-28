@@ -21,8 +21,6 @@ from oci_cli.cli_util import render, render_response, parse_json_parameter, help
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
-from retrying import retry
-from oci_cli import retry_utils
 from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
@@ -94,6 +92,7 @@ DEFAULT_PARALLEL_UPLOAD_COUNT = 10
 MAXIMUM_PARALLEL_UPLOAD_COUNT = 1000
 DEFAULT_PARALLEL_DOWNLOAD_COUNT = 10
 MAXIMUM_PARALLEL_DOWNLOAD_COUNT = 1000
+MULTIPART_MAX_RETRIES = 60
 
 
 MAX_MULTIPART_SIZE = 10000
@@ -522,9 +521,6 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
     Example:
         oci os object put -ns mynamespace -bn mybucket --name myfile.txt --file /Users/me/myfile.txt --metadata '{"key1":"value1","key2":"value2"}'
     """
-    # explicitly disallow retries for object put because we may not be able to re-read the input source
-    no_retry = ctx.obj['no_retry']
-    ctx.obj['no_retry'] = True
 
     client = build_client('object_storage', 'object_storage', ctx)
 
@@ -624,6 +620,10 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         # As an aside, for the here string the total size is known, but for data being piped its not determinable (without reading
         # all the data off)
 
+        # explicitly disallow retries for object put because we may not be able to re-read the input source
+        ctx.obj['no_retry'] = True
+
+        client = build_client('object_storage', 'object_storage', ctx)
         upload_manager = UploadManager(client)
 
         if disable_parallel_uploads:
@@ -664,12 +664,9 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
             upload_manager = UploadManager(client, allow_multipart_uploads=False)
             response = upload_manager.upload_file(namespace, bucket_name, name, file.name, **kwargs)
         except Exception as e:
-            if not no_retry and retry_utils.retry_on_timeouts_connection_internal_server_and_throttles(e):
-                response = SingleUploadRetry(client, namespace, bucket_name, name, file.name, bar, total_size, **kwargs).retrying_upload_file_call()
-            else:
-                if bar:
-                    bar.render_finish()
-                raise e
+            if bar:
+                bar.render_finish()
+            raise e
 
         if bar:
             bar.render_finish()
@@ -691,13 +688,16 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
                                       bucket_name,
                                       name,
                                       **kwargs)
+
         ma.new_upload()
         click.echo('Upload ID: {}'.format(ma.manifest["uploadId"]), file=sys.stderr)
         ma.add_parts_from_file(file.name)
         click.echo('Split file into {} parts for upload.'.format(len(ma.manifest["parts"])), file=sys.stderr)
 
-        # 60 retries - with exponential sleep time and a max wait of 60 secs.
-        retry_strategy = RetryStrategyBuilder(retry_max_wait_between_calls_seconds=60).add_max_attempts(60)\
+        max_attempts = MULTIPART_MAX_RETRIES if not ctx.obj['max_attempts'] else ctx.obj['max_attempts']
+
+        # max_attempts retries - with exponential sleep time and a max wait of 60 secs.
+        retry_strategy = RetryStrategyBuilder(retry_max_wait_between_calls_seconds=60).add_max_attempts(max_attempts)\
             .no_total_elapsed_time() \
             .add_service_error_check() \
             .get_retry_strategy()
@@ -711,10 +711,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
                 else:
                     raise re
             except Exception as e:
-                if not no_retry and retry_utils.retry_on_timeouts_connection_internal_server_and_throttles(e) and file.name != '<stdin>':
-                    RetryResumeUpload(ma, ma.manifest["uploadId"], total_size, bar).retrying_resume_multipart_upload()
-                else:
-                    raise e
+                raise e
         response = ma.commit(retry_strategy=retry_strategy)
 
     display_headers = filter_object_headers(response.headers, OBJECT_PUT_DISPLAY_HEADERS)
@@ -809,8 +806,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     If a file being uploaded already exists in Object Storage with the same name, it can be preserved (not overwritten) without a
     prompt by using the --no-overwrite flag.
     """
-    # there is existing retry logic for bulk_put so we don't want the Python SDK level retries to interfere / overlap with that
-    ctx.obj['no_retry'] = True
+
     auto_content_type = False
 
     if include and exclude:
@@ -857,13 +853,16 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     # Progress bar which we can reuse over and over again
     reusable_progress_bar = ProgressBar(0, '')
 
+    multipart_max_retries = MULTIPART_MAX_RETRIES if not ctx.obj['max_attempts'] else ctx.obj['max_attempts']
+
     transfer_manager = TransferManager(
         client,
         TransferManagerConfig(
             max_object_storage_requests=parallel_upload_count,
             max_object_storage_multipart_requests=parallel_upload_count,
             max_multipart_files_to_process=parallel_upload_count,
-            use_multipart_uploads=(not no_multipart)
+            use_multipart_uploads=(not no_multipart),
+            multipart_max_retries=multipart_max_retries
         )
     )
     head_object_results = {}
@@ -2477,14 +2476,6 @@ def normalize_object_name_path_for_object_storage(object_name_path, path_separat
     return object_name_path.replace(path_separator, '/')
 
 
-# Calls list_object with retries:
-#
-#    - Max of 3 attempts
-#    - Exponential back off of (2 ^ retries) seconds
-#    - Random jitter between retries of 0-2 seconds
-#    - Retry on timeouts, connection errors, internal server errors and throttles
-@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-       retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
 def _make_retrying_list_call(client, namespace, bucket_name, **kwargs):
     return client.list_objects(
         namespace,
@@ -2493,14 +2484,6 @@ def _make_retrying_list_call(client, namespace, bucket_name, **kwargs):
     )
 
 
-# Calls list_object_versions with retries:
-#
-#    - Max of 3 attempts
-#    - Exponential back off of (2 ^ retries) seconds
-#    - Random jitter between retries of 0-2 seconds
-#    - Retry on timeouts, connection errors, internal server errors and throttles
-@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-       retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
 def _make_retrying_list_versions_call(client, namespace, bucket_name, **kwargs):
     return client.list_object_versions(
         namespace,
@@ -2509,17 +2492,6 @@ def _make_retrying_list_versions_call(client, namespace, bucket_name, **kwargs):
     )
 
 
-# HEADs an object to retrieve its metadata. This has the following retry conditions:
-#
-#    - Max of 3 attempts
-#    - Exponential back off of (2 ^ retries) seconds
-#    - Random jitter between retries of 0-2 seconds
-#    - Retry on timeouts, connection errors, internal server errors and throttles
-#
-# 404s are not retried but they will also not result in the exception bubbling up. Instead, they will result in None
-# being returned
-@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-       retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
 def _make_retrying_head_object_call(client, namespace, bucket_name, name, client_request_id):
     kwargs = {'opc_client_request_id': client_request_id}
 
@@ -2717,57 +2689,3 @@ class ProgressBar:
 
     def render_finish(self):
         self._progressbar.render_finish()
-
-
-class SingleUploadRetry():
-    def __init__(self, object_storage_client, namespace_name, bucket_name, object_name, file_path, bar, total_size, **kwargs):
-        self.object_storage_client = object_storage_client
-        self.namespace_name = namespace_name
-        self.bucket_name = bucket_name
-        self.object_name = object_name
-        self.file_path = file_path
-        self.bar = bar
-        self.total_size = total_size
-        self.kwargs = kwargs.copy()  # Copy because we're going to potentially do some destructive stuff to the dict below
-
-        # These are not valid for single uploads, so remove them if present
-        self.kwargs.pop('allow_parallel_uploads', None)
-        self.kwargs.pop('parallel_process_count', None)
-        self.kwargs.pop('part_size', None)
-
-    @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-           retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
-    def retrying_upload_file_call(self):
-        if self.bar:
-            self.bar.render_finish()
-        click.echo("Retrying upload", file=sys.stderr)
-        if self.total_size > 0:
-            self.bar = ProgressBar(self.total_size, 'Uploading object')
-            self.kwargs['progress_callback'] = self.bar.update
-        upload_manager = UploadManager(self.object_storage_client, allow_multipart_uploads=False)
-        return upload_manager.upload_file(self.namespace_name, self.bucket_name, self.object_name, self.file_path, **self.kwargs)
-
-
-# A class to retry resume upload for failed multipart object put
-class RetryResumeUpload():
-    def __init__(self, ma, upload_id, total_size, bar):
-        self.ma = ma
-        self.upload_id = upload_id
-        self.total_size = total_size
-        self.bar = bar
-
-    @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000, retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
-    def retrying_resume_multipart_upload(self):
-        self.bar.render_finish()
-        click.echo("Retrying multipart upload", file=sys.stderr)
-
-        try:
-            with ProgressBar(self.total_size, 'Uploading object') as self.bar:
-                resume_kwargs = {}
-                resume_kwargs['progress_callback'] = self.bar.update
-                self.ma.resume(upload_id=self.upload_id, **resume_kwargs)
-        except RuntimeError as re:
-            if 'thread' in str(re) or 'Thread' in str(re):
-                raise Exception('Cannot start that many threads, please reduce the parallel-upload-count. The default is 3.')
-            else:
-                raise re

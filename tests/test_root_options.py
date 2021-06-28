@@ -193,18 +193,6 @@ def test_auth_instance_principal_env_var_invalid(runner, config_file):
     assert 'Invalid value for OCI_CLI_AUTH' in result.output
 
 
-def test_no_retry_disables_retries(runner, config_file):
-    fake_endpoint = 'https://fakenamenotexist.netcom'
-    result = invoke_example_operation(runner, ['--debug', '--no-retry', '--endpoint', fake_endpoint], config_file)
-    stack_trace = traceback.format_tb(result.exc_info[2])
-    found_make_retrying_call = False
-    for trace in stack_trace:
-        if 'make_retrying_call' in trace:
-            found_make_retrying_call = True
-
-    assert not found_make_retrying_call
-
-
 def test_operation_retries_if_no_retry_not_supplied(runner, config_file):
     fake_endpoint = 'https://fakenamenotexist.netcom'
     result = invoke_example_operation(runner, ['--debug', '--endpoint', fake_endpoint], config_file)

@@ -63,9 +63,10 @@ class TransferManager():
             upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container, verify_checksum, **kwargs)
             return self._object_storage_request_pool.submit(upload_task)
         else:
+            max_retries = self._config.multipart_max_retries
             multipart_upload_processor_task = MultipartUploadProcessorTask(
                 self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container,
-                self._object_storage_multipart_request_pool, part_size, verify_checksum,
+                self._object_storage_multipart_request_pool, part_size, verify_checksum, max_retries,
                 **kwargs
             )
             return self._multipart_upload_processor_pool.submit(multipart_upload_processor_task)
