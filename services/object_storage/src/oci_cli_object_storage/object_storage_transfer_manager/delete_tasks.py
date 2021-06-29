@@ -4,9 +4,6 @@
 
 from .work_pool_task import WorkPoolTask
 
-from retrying import retry
-from oci_cli import retry_utils
-
 
 # A task which deletes objects from Object Storage
 class DeleteObjectTask(WorkPoolTask):
@@ -19,8 +16,6 @@ class DeleteObjectTask(WorkPoolTask):
     def do_work_hook(self):
         self._make_retrying_delete_object_call(self.object_storage_client, **self.kwargs)
 
-    @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-           retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
     def _make_retrying_delete_object_call(self, client, **kwargs):
         client.delete_object(
             kwargs['namespace'],

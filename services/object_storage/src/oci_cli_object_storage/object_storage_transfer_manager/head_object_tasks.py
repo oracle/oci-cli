@@ -3,9 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from oci import exceptions
-from retrying import retry
 from .work_pool_task import WorkPoolTask
-from oci_cli import retry_utils
 
 
 # A task which can HEAD an object from Object Storage
@@ -19,8 +17,6 @@ class HeadObjectTask(WorkPoolTask):
     def do_work_hook(self):
         return self._make_retrying_head_object_call()
 
-    @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-           retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
     def _make_retrying_head_object_call(self):
         try:
             return self.object_storage_client.head_object(**self.kwargs)

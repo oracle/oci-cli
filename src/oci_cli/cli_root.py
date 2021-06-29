@@ -331,12 +331,17 @@ This JSON document can be saved to a file, modified with the appropriate option 
 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
+@click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, generate_full_command_json_input, generate_param_json_input, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, help):
     if sys.version_info < (3, 6, 0) and not os.environ.get("OCI_CLI_ALLOW_PYTHON2"):
         click.echo(click.style(PYTHON2_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
+
+    if max_retries and no_retry:
+        raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
+
     # Show help in any case if there are no subcommands, or if the help option
     # is used but there are subcommands, then set a flag for user later.
     if not ctx.invoked_subcommand:
@@ -382,7 +387,8 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         'debug': debug,
         'no_retry': no_retry,
         'auth': auth,
-        'auth_purpose': auth_purpose
+        'auth_purpose': auth_purpose,
+        'max_attempts': max_retries
     }
 
     if not ctx.obj:

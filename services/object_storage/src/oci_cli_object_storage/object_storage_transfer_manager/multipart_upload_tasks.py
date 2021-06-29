@@ -5,6 +5,7 @@
 from .pooled_multipart_object_assembler import PooledMultipartObjectAssembler
 from .work_pool_task import WorkPoolTask
 from oci_cli import cli_util
+from oci.retry import RetryStrategyBuilder
 
 
 # A task which prepares a multipart upload by:
@@ -14,7 +15,7 @@ from oci_cli import cli_util
 #   - Sending the upload tasks to the main request pool
 #   - Committing the multipart upload when done
 class MultipartUploadProcessorTask(WorkPoolTask):
-    def __init__(self, object_storage_client, namespace_name, bucket_name, object_name, file_path, callbacks_container, object_storage_request_pool, part_size, verify_checksum, **multipart_kwargs):
+    def __init__(self, object_storage_client, namespace_name, bucket_name, object_name, file_path, callbacks_container, object_storage_request_pool, part_size, verify_checksum, max_retries, **multipart_kwargs):
         super(MultipartUploadProcessorTask, self).__init__(callbacks_container=callbacks_container)
 
         self.object_storage_client = object_storage_client
@@ -26,6 +27,7 @@ class MultipartUploadProcessorTask(WorkPoolTask):
         self.part_size = part_size
         self.object_storage_request_pool = object_storage_request_pool
         self.verify_checksum = verify_checksum
+        self.max_retries = max_retries
 
         if 'multipart_part_completion_callback' in self.multipart_kwargs:
             self.multipart_part_completion_callback = self.multipart_kwargs['multipart_part_completion_callback']
@@ -41,11 +43,18 @@ class MultipartUploadProcessorTask(WorkPoolTask):
         ma = PooledMultipartObjectAssembler(self.object_storage_client, self.namespace_name, self.bucket_name, self.object_name, self.object_storage_request_pool, **self.multipart_kwargs)
 
         ma.new_upload()
+
+        # max_attempts retries - with exponential sleep time and a max wait of 60 secs.
+        retry_strategy = RetryStrategyBuilder(retry_max_wait_between_calls_seconds=60).add_max_attempts(self.max_retries)\
+            .no_total_elapsed_time() \
+            .add_service_error_check() \
+            .get_retry_strategy()
+
         ma.add_parts_from_file(self.file_path)
         if self.multipart_part_completion_callback:
             ma.upload(progress_callback=self.multipart_part_completion_callback)
         else:
-            ma.upload()
+            ma.upload(retry_strategy=retry_strategy)
         response = ma.commit()
 
         multipart_hash = cli_util.verify_checksum(self.file_path, no_multipart=False, ma=ma) if self.verify_checksum else None

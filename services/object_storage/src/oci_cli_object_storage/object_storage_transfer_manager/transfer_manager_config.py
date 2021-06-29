@@ -17,16 +17,19 @@ class TransferManagerConfig():
     DEFAULT_MAX_REQUESTS = 10
     DEFAULT_MAX_MULTIPART_TO_PROCESS = 10
     DEFAULT_MAX_MULTIPART_REQUESTS = 10
+    DEFAULT_MULTIPART_MAX_RETRIES = 60
 
     def __init__(self,
                  max_object_storage_requests=DEFAULT_MAX_REQUESTS,
                  max_object_storage_multipart_requests=DEFAULT_MAX_MULTIPART_REQUESTS,
                  max_multipart_files_to_process=DEFAULT_MAX_MULTIPART_TO_PROCESS,
                  multipart_part_size=constants.DEFAULT_PART_SIZE,
-                 use_multipart_uploads=True
+                 use_multipart_uploads=True,
+                 multipart_max_retries=DEFAULT_MULTIPART_MAX_RETRIES
                  ):
         self.max_object_storage_requests = max_object_storage_requests
         self.max_object_storage_multipart_requests = max_object_storage_multipart_requests
         self.max_multipart_files_to_process = max_multipart_files_to_process
         self.multipart_part_size = multipart_part_size
         self.use_multipart_uploads = use_multipart_uploads
+        self.multipart_max_retries = multipart_max_retries

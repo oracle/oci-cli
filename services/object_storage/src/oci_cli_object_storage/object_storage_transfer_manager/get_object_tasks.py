@@ -6,9 +6,6 @@ from .work_pool import WorkPool
 from .work_pool_task import WorkPoolTask
 from .work_pool_task import WorkPoolTaskCallbacksContainer, WorkPoolTaskErrorCallback
 
-from retrying import retry
-from oci_cli import retry_utils
-
 import heapq
 import oci
 import six
@@ -19,8 +16,6 @@ MEBIBYTE = 1024 * 1024
 OBJECT_GET_CHUNK_SIZE = MEBIBYTE
 
 
-@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-       retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
 def _make_retrying_get_call(object_storage_client, **kwargs):
     return object_storage_client.get_object(
         kwargs['namespace'],
@@ -214,8 +209,6 @@ class GetObjectMultipartTask(WorkPoolTask):
 
         raise RuntimeError('Error downloading parts: {}'.format('\n'.join(errors)))
 
-    @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
-           retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
     def _make_retrying_head_object_call(self):
         try:
             return self.object_storage_client.head_object(
@@ -271,7 +264,7 @@ class GetObjectRangeTask(WorkPoolTask):
             self.downloaded_data.write(chunk)
             total_size += len(chunk)
             if self.chunk_written_callback:
-                self.chunk_written_callback(len(chunk) / 2)
+                self.chunk_written_callback(len(chunk))
 
         if self.part_completed_callback:
             self.part_completed_callback(total_size)
