@@ -122,7 +122,7 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--upgrade-schedule', help=u"""Upgrade schedule type representing service to be upgraded immediately whenever latest version is released or delay upgrade of the service to previous released version""")
 @cli_util.option('--waf-primary-domain', help=u"""Web Application Firewall(WAF) primary domain""")
 @cli_util.option('--instance-access-type', type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help=u"""Flag indicating whether the instance access is private or public""")
-@cli_util.option('--instance-license-type', type=custom_types.CliCaseInsensitiveChoice(["NEW", "BYOL"]), help=u"""Flag indicating whether the instance license is new cloud or bring your own license""")
+@cli_util.option('--instance-license-type', type=custom_types.CliCaseInsensitiveChoice(["NEW", "BYOL", "PREMIUM", "STARTER"]), help=u"""Flag indicating whether the instance license is new cloud or bring your own license""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -303,6 +303,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @oce_instance_group.command(name=cli_util.override('oce.list_oce_instances.command_name', 'list'), help=u"""Returns a list of OceInstances. \n[Command Reference](listOceInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--tenancy-id', help=u"""The ID of the tenancy in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -318,12 +319,14 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'oce', 'class': 'list[OceInstanceSummary]'})
 @cli_util.wrap_exceptions
-def list_oce_instances(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state):
+def list_oce_instances(ctx, from_json, all_pages, page_size, compartment_id, tenancy_id, display_name, limit, page, sort_order, sort_by, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if tenancy_id is not None:
+        kwargs['tenancy_id'] = tenancy_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if limit is not None:
@@ -520,7 +523,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
 @cli_util.option('--description', help=u"""OceInstance description""")
 @cli_util.option('--waf-primary-domain', help=u"""Web Application Firewall(WAF) primary domain""")
-@cli_util.option('--instance-license-type', type=custom_types.CliCaseInsensitiveChoice(["NEW", "BYOL"]), help=u"""Flag indicating whether the instance license is new cloud or bring your own license""")
+@cli_util.option('--instance-license-type', type=custom_types.CliCaseInsensitiveChoice(["NEW", "BYOL", "PREMIUM", "STARTER"]), help=u"""Flag indicating whether the instance license is new cloud or bring your own license""")
 @cli_util.option('--instance-usage-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "NONPRIMARY"]), help=u"""Instance type based on its usage""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

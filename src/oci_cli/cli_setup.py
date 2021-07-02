@@ -23,6 +23,7 @@ from oci.regions import is_region
 from oci.regions import REGIONS
 from oci import config
 
+import platform
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
@@ -134,6 +135,8 @@ DEFAULT_KEY_NAME = 'oci_api_key'
 DEFAULT_PROFILE_NAME = 'DEFAULT'
 DEFAULT_TOKEN_DIRECTORY = os.path.join(DEFAULT_DIRECTORY, 'sessions')
 DEFAULT_CONFIG_LOCATION = os.path.join(DEFAULT_DIRECTORY, 'config')
+USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
+USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
 
 
 @cli.group('setup', help="""Setup commands for CLI""")
@@ -333,18 +336,82 @@ def setup_autocomplete_windows():
         return
 
 
+def _get_default_rc_file():
+    bashrc_exists = os.path.isfile(USER_BASH_RC)
+    bash_profile_exists = os.path.isfile(USER_BASH_PROFILE)
+    if not bashrc_exists and bash_profile_exists:
+        return USER_BASH_PROFILE
+    if bashrc_exists and bash_profile_exists and platform.system().lower() == 'darwin':
+        return USER_BASH_PROFILE
+    return USER_BASH_RC if bashrc_exists else None
+
+
+class CLIInstallError(Exception):
+    pass
+
+
+def prompt_y_n(msg, default=None):
+    if default not in [None, 'y', 'n']:
+        raise ValueError("Valid values for default are 'y', 'n' or None")
+    y = 'Y' if default == 'y' else 'y'
+    n = 'N' if default == 'n' else 'n'
+
+    while True:
+        ans = prompt_input('{} ({}/{}): '.format(msg, y, n))
+        if ans.lower() == n.lower():
+            return False
+        if ans.lower() == y.lower():
+            return True
+        if default and not ans:
+            return default == y.lower()
+
+
+def _default_rc_file_creation_step():
+    rcfile = USER_BASH_PROFILE if platform.system().lower() == 'darwin' else USER_BASH_RC
+    ans_yes = prompt_y_n('Could not automatically find a suitable file to use. Create {} now?'.format(rcfile), default='y')
+    if ans_yes:
+        open(rcfile, 'a').close()
+        return rcfile
+    return None
+
+
+def get_rc_file_path():
+    rc_file = None
+    default_rc_file = _get_default_rc_file()
+    if not default_rc_file:
+        rc_file = _default_rc_file_creation_step()
+    rc_file = rc_file or prompt_input_with_default('Enter a path to an rc file to update (file will be created if it does not exist)', default_rc_file)
+    if rc_file:
+        rc_file_path = os.path.realpath(os.path.expanduser(rc_file))
+        if not os.path.isfile(rc_file_path):
+            print_status("Automatically created rc file at '{}'".format(rc_file_path))
+        return rc_file_path
+    return None
+
+
+def print_status(msg=''):
+    print('-- ' + msg)
+
+
+def prompt_input(msg):
+    if sys.version_info >= (3, 0):
+        return input('\n===> ' + msg)
+    else:
+        return raw_input('\n===> ' + msg)  # noqa: F821
+
+
+def prompt_input_with_default(msg, default):
+    if default:
+        return prompt_input("{} (leave blank to use '{}'): ".format(msg, default)) or default
+    else:
+        return prompt_input('{}: '.format(msg))
+
+
 def setup_autocomplete_non_windows():
-    # guidance from click is to add to .bashrc so if user has a .bashrc file, use that
-    # if .bashrc does not exist but .bash_profile does exist, we fall back to that
-    # if neither exist, we must create one. On Linux we use bashrc as recommended by click,
-    # but Mac terminal does not source .bashrc by default so use .bash_profile instead
-    bash_profile_location = os.path.expanduser('~/.bash_profile')
-    bash_rc_location = os.path.expanduser('~/.bashrc')
-    bash_config_location = bash_profile_location if sys.platform == 'darwin' else bash_rc_location
-    if os.path.exists(bash_rc_location):
-        bash_config_location = bash_rc_location
-    elif os.path.exists(bash_profile_location):
-        bash_config_location = bash_profile_location
+    click.echo("To set up autocomplete, we would update few lines in rc/bash_profile file.")
+    rc_file_path = get_rc_file_path()
+    if not rc_file_path:
+        raise CLIInstallError('No suitable profile file found.')
 
     # source bash completion script in CLI install directory
     script_relative_path = os.path.join('bin', 'oci_autocomplete.sh')
@@ -355,21 +422,39 @@ def setup_autocomplete_non_windows():
         sys.exit(1)
 
     click.echo("Using tab completion script at: {}".format(completion_script_file))
-
-    bash_profile_line = '[[ -e "{completion_script_file}" ]] && source "{completion_script_file}"'.format(completion_script_file=completion_script_file)
-    confirm_prompt = 'To set up autocomplete, we need to add a few lines to your {bash_config_location} file. Please confirm this is ok.'.format(bash_config_location=bash_config_location)
+    soft_link = os.path.expanduser("~/lib/oci_autocomplete.sh")
+    soft_link_completion_script_file = soft_link
+    bash_profile_line = '[[ -e "{soft_link_completion_script_file}" ]] && source "{soft_link_completion_script_file}"'.format(soft_link_completion_script_file=soft_link_completion_script_file)
+    confirm_prompt = 'We need to add a few lines to your {rc_file_path} file. Please confirm this is ok.'.format(rc_file_path=rc_file_path)
 
     if click.confirm(confirm_prompt, default=True):
-        with open(bash_config_location, mode='a+') as f:
+        with open(rc_file_path, mode='a+') as f:
             f.seek(0)
             content = f.read()
 
             # this check is not foolproof but we want to avoid adding a bunch of lines to .bash_profile/.bashrc if the user re-runs the command
-            if script_relative_path in content:
-                click.echo("It looks like tab completion for oci is already configured in {bash_config_location}. If you want to re-run the setup command please remove the line containing '{script_relative_path}' from {bash_config_location}.".format(script_relative_path=script_relative_path, bash_config_location=bash_config_location))
+            if "lib/oci_autocomplete.sh" in content:
+                click.echo("It looks like tab completion for oci is already configured in {rc_file_path}. If you want to re-run the setup command please remove the line containing 'oci_autocomplete.sh' from {rc_file_path}.".format(rc_file_path=rc_file_path))
                 return
 
             f.write('\n{}\n'.format(bash_profile_line))
+        if os.path.exists(soft_link):
+            os.chmod(soft_link, stat.S_IWRITE)
+            os.remove(soft_link)
+        try:
+            src = completion_script_file
+            dst = soft_link
+
+            if not os.path.isdir(os.path.dirname(dst)):
+                os.makedirs(os.path.dirname(dst))
+            os.symlink(src, dst)
+            # os.symlink(completion_script_file, soft_link)
+        except Exception:
+            click.echo("Unable to create simlink to ~/lib/oci_autocomplete.sh. Please add following to your rc file.")
+            click.echo(
+                "Unable to simlink ~/lib/oci_autocomplete.sh to {}. \nAdd '{}' to your rc file and restart your terminal for the changes to take effect.".format(
+                    bash_profile_line, bash_profile_line))
+            return
 
         click.echo("Success!\nRun '{}' or restart your terminal for the changes to take effect.".format(bash_profile_line))
     else:

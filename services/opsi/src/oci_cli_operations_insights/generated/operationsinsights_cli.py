@@ -352,9 +352,9 @@ def create_database_insight_create_em_managed_external_database_insight_details(
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier of the Enterprise Manager bridge""")
 @cli_util.option('--display-name', required=True, help=u"""User-friedly name of Enterprise Manager Bridge that does not have to be unique.""")
 @cli_util.option('--object-storage-bucket-name', required=True, help=u"""Object Storage Bucket Name""")
-@cli_util.option('--freeform-tags', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Description of Enterprise Manager Bridge""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -363,7 +363,7 @@ def create_database_insight_create_em_managed_external_database_insight_details(
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'EnterpriseManagerBridge'})
 @cli_util.wrap_exceptions
-def create_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, object_storage_bucket_name, freeform_tags, defined_tags, description):
+def create_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, object_storage_bucket_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -372,11 +372,15 @@ def create_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_se
     _details['compartmentId'] = compartment_id
     _details['displayName'] = display_name
     _details['objectStorageBucketName'] = object_storage_bucket_name
-    _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-    _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.create_enterprise_manager_bridge(
@@ -1381,7 +1385,7 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["compartmentId", "databaseName", "databaseDisplayName", "databaseType", "databaseVersion", "databaseHostNames", "freeformTags", "definedTags"]), multiple=True, help=u"""Specifies the fields to return in a database summary response. By default all fields are returned if omitted.""")
@@ -1454,7 +1458,7 @@ def list_database_insights(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--id', help=u"""Unique Enterprise Manager bridge identifier""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -1516,7 +1520,7 @@ def list_enterprise_manager_bridges(ctx, from_json, all_pages, page_size, compar
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible value is EXTERNAL-HOST.""")
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")

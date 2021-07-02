@@ -535,7 +535,7 @@ def build_config(command_args):
         except (exceptions.ProfileNotFound, exceptions.InvalidKeyFilePath) as e:
             sys.exit("ERROR: " + str(e))
 
-    FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
+        FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
 
     # READ config keys from env variables.
     for env in cli_constants.OCI_CONFIG_ENV_VARS:
