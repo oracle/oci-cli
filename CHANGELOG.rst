@@ -6,6 +6,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.26.1 - 2021-07-06
+-------------------
+Added
+~~~~~
+
+* Support for Order Activation features in the Organizations Service
+
+  * oci organizations order activate
+  * oci organizations order get
+
+* Support new OCE instance license type - Starter Edition in the OCE service. The new license type is: STARTER
+
+  * ``oci oce oce-instance create --instance-license-type STARTER``
+  * ``oci oce oce-instance update --instance-license-type STARTER``
+
+* Expanded DRG functionality in the Networking Service
+
+  * More than one VCN can be attached to a DRG
+  * Flexible routing inside DRG enables packet flow between any two attachments
+  * Routing policy to customize dynamic import/export of routes
+
+* Operations Insights
+
+  * Support for resource principal authorization for enterprise manager bridge resource
+  * New lifecycle state "NEEDS_ATTENTION" to indicate issues with the bridge resource, and new field "objectStorageBucketStatusDetails" to provide detail
+
+    * ``oci opsi host-insights list --lifecycle-state NEEDS_ATTENTION``
+    * ``oci opsi enterprise-manager-bridges list --lifecycle-state NEEDS_ATTENTION``
+    * ``oci opsi database-insights list --lifecycle-state NEEDS_ATTENTION``
+
+Changed
+~~~~~~~
+
+* Changed ``oci setup autocomplete`` to create a symlink pointing to current CLI version oci_autocomplete.sh script
+
+Fixed
+~~~~~
+
+* Issue with environment based config throwing ``FileNotFoundError:`` for a non-required config
+
 2.26.0 - 2021-06-29
 -------------------
 Added

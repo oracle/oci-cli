@@ -19,6 +19,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import platform
 
 TEMP_DIR = os.path.join('tests', 'temp')
 
@@ -29,6 +30,8 @@ PASSPHRASE_FILE = os.path.join('tests', 'resources', 'test_passphrase_file.txt')
 
 PUBLIC_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key_public.pem')
 PRIVATE_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key.pem')
+USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
+USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
 
 
 class TestSetup(unittest.TestCase):
@@ -55,6 +58,7 @@ class TestSetup(unittest.TestCase):
         self.subtest_repair_file_permissions()
 
         self.subtest_oci_cli_rc_file()
+        self.subtest_setup_autocomplete_non_windows()
 
     @util.log_test
     def subtest_keys(self):
@@ -478,8 +482,7 @@ class TestSetup(unittest.TestCase):
         # fully testing the command would edit the machine's bash_profile / bash_rc
         # this test rejects the prompt to edit the bash_profile but provides a basic smoke test for the command
         result = self.invoke(
-            ['setup', 'autocomplete'], input='n')
-
+            ['setup', 'autocomplete'], input='n\nn\nn\n')
         assert result.exit_code == 0
 
         # on windows the command quits with an error message
@@ -571,6 +574,60 @@ class TestSetup(unittest.TestCase):
         assert 'Predefined queries will not be written as the specified file already contains a section for these queries' in result.output
         assert 'Command aliases will not be written as the specified file already contains a section for command aliases' in result.output
         assert 'Parameter aliases will not be written as the specified file already contains a section for parameter aliases' in result.output
+
+    def _get_default_rc_file(self):
+        bashrc_exists = os.path.isfile(USER_BASH_RC)
+        bash_profile_exists = os.path.isfile(USER_BASH_PROFILE)
+        if not bashrc_exists and bash_profile_exists:
+            return USER_BASH_PROFILE
+        if bashrc_exists and bash_profile_exists and platform.system().lower() == 'darwin':
+            return USER_BASH_PROFILE
+        return USER_BASH_RC if bashrc_exists else None
+
+    @util.log_test
+    def subtest_setup_autocomplete_non_windows(self):
+        if oci_cli.cli_util.is_windows():
+            return
+
+        # fully testing the command would edit the machine's bash_profile / bash_rc
+        # So we create a fake RC file and update and delete it after test is executed
+        soft_link_completion_script_file = os.path.expanduser("~/lib/oci_autocomplete.sh")
+        home_dir = os.path.expanduser("~")
+        fake_rc_file_path = os.path.join(home_dir, "fakercfile")
+        default_rc_file = self._get_default_rc_file()
+        if not default_rc_file:
+            # Provide a custom file to  create default RC file
+            result = self.invoke(['setup', 'autocomplete'], input="{}\nY\n".format(fake_rc_file_path))
+            assert result.exit_code == 0
+            assert os.readlink(soft_link_completion_script_file)
+            # Check if new RC file created
+            if not os.path.isfile(fake_rc_file_path):
+                assert "{} not found".format(fake_rc_file_path)
+
+            # Check if new RC file is updated with softlink path
+            with open(fake_rc_file_path) as f:
+                if 'oci_autocomplete.sh' not in f.read():
+                    assert "{} not found in {}".format("oci_autocomplete.sh", fake_rc_file_path)
+            try:
+                os.remove(fake_rc_file_path)
+                os.remove(fake_rc_file_path)
+            except OSError:
+                pass
+            # Automatically create default RC file
+            result = self.invoke(['setup', 'autocomplete'], input="Y\n")
+            assert result.exit_code == 0
+            assert os.readlink(soft_link_completion_script_file)
+
+            # Check if default RC is present
+            default_rc_file = self._get_default_rc_file()
+            assert os.path.isfile(default_rc_file)
+
+        # Clean up after running the test
+        try:
+            os.remove(soft_link_completion_script_file)
+            os.remove(fake_rc_file_path)
+        except OSError:
+            pass
 
     def cleanup_default_generated_files(self):
         # ensure that keys don't already exists
