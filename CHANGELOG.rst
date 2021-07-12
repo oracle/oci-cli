@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.26.2 - 2021-07-13
+-------------------
+Added
+~~~~~
+
+* Support for AI Anomaly Detection service
+
+  * ``oci anomaly-detection``
+
+* Support for retrieving a DNS zone as a zone file in DNS service
+
+  * ``oci dns zone get-zone-content --file``
+
+* Support for Search domain type for DHCP options to support multi-level search domain in Network Service.
+
+  * ``oci network dhcp-options create --domain-name-type``
+  * ``oci network dhcp-options update --domain-name-type``
+
+* Support for searching Marketplace Listings
+
+  * ``oci marketplace listing-summary search-listings``
+  * ``oci marketplace listing-summary search-listings-free-text``
+  * ``oci marketplace listing-summary search-listings-structured``
+
+Changed
+~~~~~~~~
+
+* Parameter --availability-domain is now optional in create VLAN in Network service.
+
+  * ``oci network vlan create--availability-domain``
+
 2.26.1 - 2021-07-06
 -------------------
 Added

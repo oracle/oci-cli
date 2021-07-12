@@ -15,15 +15,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('bds.bds_root_group.command_name', 'bds'), cls=CommandGroupWithAlias, help=cli_util.override('bds.bds_root_group.help', """API for the Big Data Service. Use this API to build, deploy, and manage fully elastic Big Data Service
-build on Hadoop, Spark and Data Science distribution, which can be fully integrated with existing enterprise
-data in Oracle Database and Oracle Applications.."""), short_help=cli_util.override('bds.bds_root_group.short_help', """Big Data Service API"""))
+@cli.command(cli_util.override('bds.bds_root_group.command_name', 'bds'), cls=CommandGroupWithAlias, help=cli_util.override('bds.bds_root_group.help', """REST API for Oracle Big Data Service. Use this API to build, deploy, and manage fully elastic Big Data Service clusters. Build on Hadoop, Spark and Data Science distributions, which can be fully integrated with existing enterprise data in Oracle Database and Oracle applications."""), short_help=cli_util.override('bds.bds_root_group.short_help', """Big Data Service API"""))
 @cli_util.help_option_group
 def bds_root_group():
     pass
 
 
-@click.command(cli_util.override('bds.bds_instance_group.command_name', 'bds-instance'), cls=CommandGroupWithAlias, help="""Description of the BDS instance""")
+@click.command(cli_util.override('bds.bds_instance_group.command_name', 'bds-instance'), cls=CommandGroupWithAlias, help="""Description of the cluster.""")
 @cli_util.help_option_group
 def bds_instance_group():
     pass
@@ -41,7 +39,7 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('bds.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
+@click.command(cli_util.override('bds.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Description of the work request status.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
@@ -53,13 +51,13 @@ bds_root_group.add_command(work_request_log_entry_group)
 bds_root_group.add_command(work_request_group)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.add_auto_scaling_configuration.command_name', 'add'), help=u"""Add autoscaling configuration. \n[Command Reference](addAutoScalingConfiguration)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscaling configuration. The only supported type is WORKER.""")
-@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@bds_instance_group.command(name=cli_util.override('bds.add_auto_scaling_configuration.command_name', 'add'), help=u"""Add an autoscale configuration to the cluster. \n[Command Reference](addAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--node-type', required=True, help=u"""A node type that is managed by an autoscale configuration. The only supported type is WORKER.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--policy', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -120,10 +118,10 @@ def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.add_block_storage.command_name', 'add'), help=u"""Adds storage to existing worker nodes. The same amount of storage will be added to all workers. No change will be made to already attached storage. Block Storage once added cannot be removed. \n[Command Reference](addBlockStorage)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
-@cli_util.option('--block-volume-size-in-gbs', required=True, type=click.INT, help=u"""The size of block volume in GB that needs to be added to each worker node. All the necessary details needed for attachment are managed by service itself.""")
+@bds_instance_group.command(name=cli_util.override('bds.add_block_storage.command_name', 'add'), help=u"""Adds block storage to existing worker nodes. The same amount of  storage will be added to all worker nodes. No change will be made  to storage that is already attached. Block storage cannot be removed. \n[Command Reference](addBlockStorage)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--block-volume-size-in-gbs', required=True, type=click.INT, help=u"""The size of block volume in GB to be added to each worker node. All the details needed for attaching the block volume are managed by service itself.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -179,11 +177,11 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.add_cloud_sql.command_name', 'add'), help=u"""Adds Cloud SQL to your cluster. This will add a query server node to the cluster and create cell servers on all your worker nodes. \n[Command Reference](addCloudSql)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--shape', required=True, help=u"""Shape of the node""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
-@cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB that needs to be attached to a given node. All the necessary details needed for attachment are managed by service itself.""")
+@bds_instance_group.command(name=cli_util.override('bds.add_cloud_sql.command_name', 'add'), help=u"""Adds Cloud SQL to your cluster. You can use Cloud SQL to query against non-relational data stored in multiple big data sources, including Apache Hive, HDFS, Oracle NoSQL Database, and Apache HBase. Adding Cloud SQL adds a query server node to the cluster and creates cell servers on all the worker nodes in the cluster. \n[Command Reference](addCloudSql)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--shape', required=True, help=u"""Shape of the node.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. All details needed for attaching the block volume are managed by the service itself.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -242,10 +240,10 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.add_worker_nodes.command_name', 'add'), help=u"""Add worker nodes to an existing cluster. The worker nodes added will be based on an identical shape and have the same amount of attached block storage as other worker nodes in the cluster. \n[Command Reference](addWorkerNodes)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
-@cli_util.option('--number-of-worker-nodes', required=True, type=click.INT, help=u"""Number of additional worker nodes for the BDS instance""")
+@bds_instance_group.command(name=cli_util.override('bds.add_worker_nodes.command_name', 'add'), help=u"""Increases the size (scales out) a cluster by adding worker nodes. The added worker nodes will have the same shape and will have the same amount of attached block storage as other worker nodes in the cluster. \n[Command Reference](addWorkerNodes)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--number-of-worker-nodes', required=True, type=click.INT, help=u"""Number of additional worker nodes for the cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -301,9 +299,9 @@ def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.change_bds_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a BDS instance into a different compartment. \n[Command Reference](changeBdsInstanceCompartment)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment""")
+@bds_instance_group.command(name=cli_util.override('bds.change_bds_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a Big Data Service cluster into a different compartment. \n[Command Reference](changeBdsInstanceCompartment)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -358,9 +356,9 @@ def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.change_shape.command_name', 'change-shape'), help=u"""Scale-up/down individial nodes (per role type) in the cluster. Customer can choose arbitrarty VM_STANDARD shape to scale-up/down the instance. Only VM_STANDARD nodes can be re-shaped. \n[Command Reference](changeShape)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@bds_instance_group.command(name=cli_util.override('bds.change_shape.command_name', 'change-shape'), help=u"""Changes the size of a cluster by scaling up or scaling down the nodes. Nodes are scaled up or down by changing the shapes of all the nodes of the same type to the next larger or smaller shape. The node types are master, utility, worker, and Cloud SQL. Only nodes with VM-STANDARD shapes can be scaled. \n[Command Reference](changeShape)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -417,18 +415,18 @@ def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.create_bds_instance.command_name', 'create'), help=u"""Creates a new BDS instance. \n[Command Reference](createBdsInstance)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment""")
-@cli_util.option('--display-name', required=True, help=u"""Name of the BDS instance""")
-@cli_util.option('--cluster-version', required=True, help=u"""Version of the Hadoop distribution""")
+@bds_instance_group.command(name=cli_util.override('bds.create_bds_instance.command_name', 'create'), help=u"""Creates a Big Data Service cluster. \n[Command Reference](createBdsInstance)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""Name of the Big Data Service cluster.""")
+@cli_util.option('--cluster-version', required=True, help=u"""Version of the Hadoop distribution.""")
 @cli_util.option('--cluster-public-key', required=True, help=u"""The SSH public key used to authenticate the cluster connection.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
-@cli_util.option('--is-high-availability', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster is HA""")
-@cli_util.option('--is-secure', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster should be setup as secure.""")
-@cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of nodes in the BDS instance""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--is-high-availability', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster is highly available (HA).""")
+@cli_util.option('--is-secure', required=True, type=click.BOOL, help=u"""Boolean flag specifying whether or not the cluster should be set up as secure.""")
+@cli_util.option('--nodes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of nodes in the Big Data Service cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. For example, `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example, `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -492,8 +490,8 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.delete_bds_instance.command_name', 'delete'), help=u"""Deletes a BDS instance by identifier \n[Command Reference](deleteBdsInstance)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@bds_instance_group.command(name=cli_util.override('bds.delete_bds_instance.command_name', 'delete'), help=u"""Deletes the cluster identified by the given ID. \n[Command Reference](deleteBdsInstance)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -544,9 +542,9 @@ def delete_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.get_auto_scaling_configuration.command_name', 'get-auto-scaling-configuration'), help=u"""Gets information about the specified autoscaling configuration. \n[Command Reference](getAutoScalingConfiguration)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscaling configuration.""")
+@bds_instance_group.command(name=cli_util.override('bds.get_auto_scaling_configuration.command_name', 'get-auto-scaling-configuration'), help=u"""Returns details of the autoscale configuration identified by the given ID. \n[Command Reference](getAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscale configuration.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -571,8 +569,8 @@ def get_auto_scaling_configuration(ctx, from_json, bds_instance_id, auto_scaling
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.get_bds_instance.command_name', 'get'), help=u"""Gets a BDS instance by identifier \n[Command Reference](getBdsInstance)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@bds_instance_group.command(name=cli_util.override('bds.get_bds_instance.command_name', 'get'), help=u"""Returns information about the Big Data Service cluster identified by the given ID. \n[Command Reference](getBdsInstance)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -593,7 +591,7 @@ def get_bds_instance(ctx, from_json, bds_instance_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('bds.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('bds.get_work_request.command_name', 'get'), help=u"""Returns the status of the work request identified by the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -615,15 +613,15 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.list_auto_scaling_configurations.command_name', 'list-auto-scaling-configurations'), help=u"""Gets information about the  autoscaling configuration. \n[Command Reference](listAutoScalingConfigurations)""")
+@bds_instance_group.command(name=cli_util.override('bds.list_auto_scaling_configurations.command_name', 'list-auto-scaling-configurations'), help=u"""Returns information about the autoscaling configurations for a cluster. \n[Command Reference](listAutoScalingConfigurations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the autoscaling configuration.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the autoscale configuration.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -682,9 +680,9 @@ def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.list_bds_instances.command_name', 'list'), help=u"""Returns a list of BDS instances. \n[Command Reference](listBdsInstances)""")
+@bds_instance_group.command(name=cli_util.override('bds.list_bds_instances.command_name', 'list'), help=u"""Returns a list of all Big Data Service clusters in a compartment. \n[Command Reference](listBdsInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "SUSPENDING", "SUSPENDED", "RESUMING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the BDS instance.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "SUSPENDING", "SUSPENDED", "RESUMING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the cluster.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
@@ -742,7 +740,7 @@ def list_bds_instances(ctx, from_json, all_pages, page_size, compartment_id, lif
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('bds.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('bds.list_work_request_errors.command_name', 'list'), help=u"""Returns a paginated list of errors for a work request identified by the given ID. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -799,7 +797,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('bds.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_entry_group.command(name=cli_util.override('bds.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns a paginated list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -913,10 +911,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.remove_auto_scaling_configuration.command_name', 'remove'), help=u"""Remove autoscaling configuration. \n[Command Reference](removeAutoScalingConfiguration)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscaling configuration.""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@bds_instance_group.command(name=cli_util.override('bds.remove_auto_scaling_configuration.command_name', 'remove'), help=u"""Deletes an autoscale configuration. \n[Command Reference](removeAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscale configuration.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -975,9 +973,9 @@ def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.remove_cloud_sql.command_name', 'remove'), help=u"""Remove Cloud SQL capability. \n[Command Reference](removeCloudSql)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@bds_instance_group.command(name=cli_util.override('bds.remove_cloud_sql.command_name', 'remove'), help=u"""Removes Cloud SQL from the cluster. \n[Command Reference](removeCloudSql)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1032,9 +1030,9 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.restart_node.command_name', 'restart-node'), help=u"""Restarts a single node of a BDS instance. \n[Command Reference](restartNode)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--node-id', required=True, help=u"""OCID of the BDS node which should be restarted""")
+@bds_instance_group.command(name=cli_util.override('bds.restart_node.command_name', 'restart-node'), help=u"""Restarts a single node of a Big Data Service cluster \n[Command Reference](restartNode)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--node-id', required=True, help=u"""OCID of the node to be restarted.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1089,12 +1087,12 @@ def restart_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.update_auto_scaling_configuration.command_name', 'update-auto-scaling-configuration'), help=u"""Updates certain fields on the specified autoscaling configuration, such as the name, the threshold value, and whether the autoscaling configuration is enabled. \n[Command Reference](updateAutoScalingConfiguration)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscaling configuration.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
-@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for Cloudera Manager admin user""")
+@bds_instance_group.command(name=cli_util.override('bds.update_auto_scaling_configuration.command_name', 'update-auto-scaling-configuration'), help=u"""Updates fields on an autoscale configuration, including the name, the threshold value, and whether the autoscale configuration is enabled. \n[Command Reference](updateAutoScalingConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscale configuration.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscale configuration is enabled.""")
+@cli_util.option('--cluster-admin-password', help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -1170,11 +1168,11 @@ def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.update_bds_instance.command_name', 'update'), help=u"""Update the BDS instance identified by the id \n[Command Reference](updateBdsInstance)""")
-@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the BDS instance""")
-@cli_util.option('--display-name', help=u"""Name of the BDS instance""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@bds_instance_group.command(name=cli_util.override('bds.update_bds_instance.command_name', 'update'), help=u"""Updates the Big Data Service cluster identified by the given ID. \n[Command Reference](updateBdsInstance)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--display-name', help=u"""Name of the cluster.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. For example, `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example, `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
