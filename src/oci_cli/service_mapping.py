@@ -15,6 +15,10 @@ service_mapping = {
         "announcements_service",
         "Announcements Service"
     ],
+    "anomaly-detection": [
+        "ai_anomaly_detection",
+        "Oracle Cloud AI Services"
+    ],
     "api-gateway": [
         "apigateway",
         "API Gateway"

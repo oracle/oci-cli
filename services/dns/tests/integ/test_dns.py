@@ -30,7 +30,7 @@ def zone(dns_client, runner, config_file, config_profile):
     # Since zone names are global, if the name is used in another tenancy or even another instance
     # of this test, it would make this test fail.  So by varying the zone name, we have less
     # chances of name collision.
-    zone_name = 'dnszone_' + str(random.randint(0, 1000000)) + '.com'
+    zone_name = 'clitest-dnszone-' + str(random.randint(0, 1000000)) + '.test'
     params = [
         'zone', 'create',
         '--name', zone_name,
@@ -41,7 +41,7 @@ def zone(dns_client, runner, config_file, config_profile):
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
 
-    oci.wait_until(dns_client, dns_client.get_zone(zone_name), evaluate_response=lambda r: r.data.id != '', max_wait_seconds=300)
+    oci.wait_until(dns_client, dns_client.get_zone(zone_name), evaluate_response=lambda r: r.data.lifecycle_state == 'ACTIVE', max_wait_seconds=360)
     # The zone name from a cassette response will not match the zone name randomly generated.
     zone_name = json.loads(result.output)['data']['name']
     zone_id = dns_client.get_zone(zone_name).data.id
@@ -61,6 +61,7 @@ def zone(dns_client, runner, config_file, config_profile):
         print("deleted zone_id=" + str(zone_id) + ", zone_name=" + str(zone_name))
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_update_zone(zone, runner, config_file, config_profile):
     zone_name = zone[1]
     params = [
@@ -74,6 +75,7 @@ def test_update_zone(zone, runner, config_file, config_profile):
     util.validate_response(result)
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_get_dns_zone(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     params = [
@@ -94,6 +96,7 @@ def test_get_dns_zone(zone, runner, config_file, config_profile):
     util.validate_response(result)
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_list_dns_zones(runner, config_file, config_profile):
     params = [
         'zone', 'list',
@@ -104,6 +107,7 @@ def test_list_dns_zones(runner, config_file, config_profile):
     util.validate_response(result)
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_get_zone_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     params = [
@@ -148,6 +152,7 @@ def test_get_zone_records(zone, runner, config_file, config_profile):
     assert_all_records_in_list_have_not_none_fields(parsed_result['data']['items'])
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_patch_zone_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -253,6 +258,7 @@ def test_patch_zone_records(zone, runner, config_file, config_profile):
     assert len(remaining_txt_records) == 0
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_update_zone_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -332,6 +338,7 @@ def test_update_zone_records(zone, runner, config_file, config_profile):
     util.validate_response(result)
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_get_domain_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -380,6 +387,7 @@ def test_get_domain_records(zone, runner, config_file, config_profile):
     assert_all_records_in_list_have_not_none_fields(parsed_result['data']['items'])
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_patch_domain_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -498,6 +506,7 @@ def test_patch_domain_records(zone, runner, config_file, config_profile):
     assert len(remaining_txt_records) == 0
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_update_domain_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -563,6 +572,7 @@ def test_update_domain_records(zone, runner, config_file, config_profile):
     util.validate_response(result)
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_get_rrset_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -619,6 +629,7 @@ def test_get_rrset_records(zone, runner, config_file, config_profile):
         assert item['rtype'] == 'NS'
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_patch_rrset_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]
@@ -734,6 +745,7 @@ def test_patch_rrset_records(zone, runner, config_file, config_profile):
     assert len(remaining_a_records) == 0
 
 
+@pytest.mark.skip('DEXREQ-2415')
 def test_update_rrset_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
     zone_name = zone[1]

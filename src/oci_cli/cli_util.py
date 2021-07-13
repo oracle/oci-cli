@@ -1742,7 +1742,7 @@ def option(*param_decls, **attrs):
             # add [required] to help text for this param
             if 'help' in attrs:
                 spacer = '' if attrs['help'].endswith(' ') else ' '
-                attrs['help'] = '{}{}{}'.format(attrs['help'], spacer, '[required]')
+                attrs['help'] = u'{}{}{}'.format(attrs['help'], spacer, '[required]')
 
             # for click purposes mark everything as optional so our default file lookup logic still has a chance to run
             del attrs['required']
