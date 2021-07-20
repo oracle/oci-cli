@@ -2,21 +2,25 @@
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 import base64
+import datetime
 import filecmp
 import json
-import pytest
-import oci
-import services.object_storage.src.oci_cli_object_storage as oci_cli_object_storage
 import os
 import random
 import shutil
-import six
 import string
-from tests import util
-from tests import test_config_container
 from mimetypes import guess_type
 import sys
 
+import oci
+import pytest
+import six
+from oci.object_storage.models import CreatePreauthenticatedRequestDetails, CreateReplicationPolicyDetails, \
+    CreateMultipartUploadDetails
+
+import services.object_storage.src.oci_cli_object_storage as oci_cli_object_storage
+from tests import test_config_container
+from tests import util
 
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
 OBJECTS_TO_CREATE_IN_FOLDER_FOR_BULK_PUT = 20
@@ -251,19 +255,19 @@ def test_get_files_skipped():
 
     # We should skip over all objects since there is no --overwrite. There should be prompts
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert 'Are you sure you want to overwrite it?' in result.output
     assert len(parsed_result['skipped-objects']) == len(bulk_get_object_to_content)
 
     # We should skip over all objects since we say --no-overwrite. Additionally there should be no prompts
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--no-overwrite'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert 'Are you sure you want to overwrite it?' not in result.output
     assert len(parsed_result['skipped-objects']) == len(bulk_get_object_to_content)
 
     # We should skip over no objects since we --overwrite
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--overwrite'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert len(parsed_result['skipped-objects']) == 0
 
     shutil.rmtree(download_folder)
@@ -375,7 +379,7 @@ def test_bulk_put_default_options(customer_key):
                      '--src-dir', root_bulk_put_folder] + ssec_params)
 
     # No failures or skips and we uploaded everything
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -400,7 +404,7 @@ def test_bulk_put_default_options(customer_key):
     # If we try and put it in the same bucket without --overwrite then everything should be skipped. There should be prompts
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
                      '--src-dir', root_bulk_put_folder] + ssec_params)
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert 'Are you sure you want to overwrite it?' in result.output
     assert set(parsed_result['skipped-objects']) == object_name_set
     assert parsed_result['upload-failures'] == {}
@@ -409,7 +413,7 @@ def test_bulk_put_default_options(customer_key):
     # If we say to --no-overwrite then everything should be skipped. There should be no prompts
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
                      '--src-dir', root_bulk_put_folder, '--no-overwrite'] + ssec_params)
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert 'Are you sure you want to overwrite it?' not in result.output
     assert set(parsed_result['skipped-objects']) == object_name_set
     assert parsed_result['upload-failures'] == {}
@@ -418,7 +422,7 @@ def test_bulk_put_default_options(customer_key):
     # Now we force it
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
                      '--src-dir', root_bulk_put_folder, '--overwrite'] + ssec_params)
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == len(object_name_set)
@@ -429,7 +433,7 @@ def test_bulk_put_default_options(customer_key):
                      '--src-dir', root_bulk_put_folder, '--overwrite', '--verify-checksum'] + ssec_params)
 
     # No failures or skips and we uploaded everything
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -445,7 +449,7 @@ def test_bulk_put_auto_content_type():
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--content-type', 'auto', '--overwrite'])
 
     # No failures or skips and we uploaded everything
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -457,7 +461,7 @@ def test_bulk_put_auto_content_type():
         '--src-dir', root_bulk_put_folder,
         '--content-type', 'auto', '--overwrite', '--verify-checksum'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -504,7 +508,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--part-size', '10',
         '--storage-tier', 'InfrequentAccess'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -525,7 +529,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--overwrite',
         '--storage-tier', 'InfrequentAccess'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -544,7 +548,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--src-dir', root_bulk_put_folder,
         '--no-multipart', '--overwrite', '--verify-checksum'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -559,7 +563,7 @@ def test_bulk_put_with_prefix():
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--object-prefix', 'bulk_put_prefix_test/'])
 
     # No failures or skips and we uploaded everything
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -571,7 +575,7 @@ def test_bulk_put_with_prefix():
         '--src-dir', root_bulk_put_folder,
         '--object-prefix', 'bulk_put_prefix_test/', '--overwrite', '--verify-checksum'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -641,7 +645,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
         '--include', 'subfolder/[b]lah.pdf',  # Matches subfolder/blah.pdf
         '--include', '*/[ax]yz.jpg'  # Matches subfolder/subfolder2/xyz.jpg
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
 
@@ -710,7 +714,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
         '--include', 'subfolder/blah.pdf',
         '--dry-run'
     ])
-    parsed_dry_run_result = parse_json_response_from_mixed_output(result.output)
+    parsed_dry_run_result = util.parse_json_response_from_mixed_output(result.output)
     assert len(parsed_dry_run_result['deleted-objects']) == 4
 
     result = invoke([
@@ -722,7 +726,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
         '--include', 'subfolder/blah.pdf',
         '--force'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
 
@@ -787,7 +791,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
         '--exclude', 'subfolder/subfolder2/xyz.jpg',
         '--exclude', 'subfolder/[spqr]lah.pdf'  # blah.pdf should still be included because it's not slah.pdf, plah.pdf, qlah.pdf or rlah.pdf
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
 
@@ -852,7 +856,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
         '--exclude', 'subfolder/blah.pdf',
         '--dry-run'
     ])
-    parsed_dry_run_result = parse_json_response_from_mixed_output(result.output)
+    parsed_dry_run_result = util.parse_json_response_from_mixed_output(result.output)
     assert len(parsed_dry_run_result['deleted-objects']) == 3
 
     result = invoke([
@@ -864,7 +868,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
         '--exclude', 'subfolder/blah.pdf',
         '--force'
     ])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
 
@@ -946,7 +950,7 @@ def test_delete(object_storage_client):
     assert confirm_prompt in result.output
 
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--force'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == num_objects_to_delete
 
@@ -971,10 +975,11 @@ def test_bulk_operation_table_output_query(object_storage_client, test_id):
 
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run', '--output', 'table'])
     assert 'action' in result.output
-    assert 'object' in result.output
+    assert 'name' in result.output
+    assert 'type' in result.output
     assert '/a/Object_1' in result.output
 
-    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run', '--output', 'table', '--query', "[?object=='Object_0'][object]"])
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run', '--output', 'table', '--query', "[?name=='Object_0'][name]"])
     assert 'action' not in result.output
     assert '/a/Object_1' not in result.output
     assert 'Object_0' in result.output
@@ -993,9 +998,10 @@ def test_bulk_operation_table_output_query(object_storage_client, test_id):
     shutil.rmtree(target_download_folder)
 
 
-def generate_data_bulk_delete_versions(object_storage_client, bucket_name):
+def generate_data_bulk_delete_object(object_storage_client, bucket_name,
+                                     count=OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET):
     # Create items at various heirarchy levels (to be surfaced as different directories on disk)
-    for i in range(OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET):
+    for i in range(count):
         if i % 5 == 4:
             object_name = 'a/b/c/d/Object_{}'.format(i)
             bulk_get_prefix_to_object['a/b/c/d'].append(object_name)
@@ -1044,7 +1050,7 @@ def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug,
                      bucket_name, '--versioning', 'Enabled'], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
-    generate_data_bulk_delete_versions(object_storage_client, bucket_name)
+    generate_data_bulk_delete_object(object_storage_client, bucket_name)
 
     num_versions_to_delete = get_number_of_versions_in_bucket(object_storage_client, bucket_name, None)
 
@@ -1056,31 +1062,31 @@ def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug,
 
     # Dry-run against entire bucket
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--dry-run'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == num_versions_to_delete
 
     # Dry-run against a folder and all subfolders
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--prefix', 'a/b/', '--dry-run'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     expected_objects = set().union(bulk_get_prefix_to_object['a/b'], bulk_get_prefix_to_object['a/b/c'], bulk_get_prefix_to_object['a/b/c/d'])
     assert len(parsed_result['deleted-objects']) == len(expected_objects)
 
     # Dry-run against a folder and no subfolders
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--prefix', 'a/b/', '--delimiter', '/', '--dry-run'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
 
     # Dry-run with a single object-name
     num_object_name_versions = get_number_of_versions_in_bucket(object_storage_client, bucket_name, 'Object_5')
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
                      '--object-name', 'Object_5', '--dry-run'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert len(parsed_result['deleted-objects']) == num_object_name_versions
 
     # delete-versions after --dry-run test
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == num_versions_to_delete
 
@@ -1099,9 +1105,9 @@ def test_bulk_delete_versions(object_storage_client, debug, test_id):
     validate_response(result, includes_debug_data=debug)
 
     # generate object-names
-    generate_data_bulk_delete_versions(object_storage_client, bucket_name)
+    generate_data_bulk_delete_object(object_storage_client, bucket_name)
     # generate versions
-    generate_data_bulk_delete_versions(object_storage_client, bucket_name)
+    generate_data_bulk_delete_object(object_storage_client, bucket_name)
     num_versions_to_delete = get_number_of_versions_in_bucket(object_storage_client, bucket_name, None)
 
     # Sanity check that the bucket has things in it
@@ -1116,7 +1122,7 @@ def test_bulk_delete_versions(object_storage_client, debug, test_id):
     assert confirm_prompt in result.output
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == num_versions_to_delete
 
@@ -1141,7 +1147,7 @@ def test_basic_bulk_delete_versions_object_name(object_storage_client, debug, te
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
                      '--object-name', 'Object_1', '--force'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == 1
 
@@ -1151,7 +1157,7 @@ def test_basic_bulk_delete_versions_object_name(object_storage_client, debug, te
     assert "Object_3" in result.output
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == 2
 
@@ -1183,12 +1189,342 @@ def test_bulk_delete_versions_paging(object_storage_client, debug, test_id):
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
                      '--object-name', object_name, '--force'])
-    parsed_result = parse_json_response_from_mixed_output(result.output)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
     # delete-failure might contain a 404 due to retry. So not asserting it
     # assert parsed_result['delete-failures'] == {}
     assert len(parsed_result['deleted-objects']) == num_versions_objname
 
     object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+
+
+# delete bucket tests with empty and dry-run options
+@util.skip_while_rerecording
+def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id)
+    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id)
+
+
+@util.skip_while_rerecording
+def test_delete_bucket_empty_dry_run_versioned(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBucketDelete_Versioned_{}'.format(test_id)
+    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, is_versioned=True)
+
+
+def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, test_id, is_versioned=False):
+    # this is a test helper for bucket delete command. It tests and validates the output from --dry-run as well
+    # as --empty along with the prompts
+    clear_and_create_new_bucket(object_storage_client, source_bucket_name, debug, is_versioned)
+
+    # create a bucket in a different region
+    dest_bucket_name = 'ObjectStorageBucketDelete_Rep_{}'.format(test_id)
+    if is_versioned:
+        dest_bucket_name = 'ObjectStorageBucketDelete_Versioned_Rep_{}'.format(test_id)
+    n_pars, n_uploads = 10, 10
+
+    # create replication bucket
+    create_replication_bucket(dest_bucket_name, debug)
+    generate_all_data_in_bucket(object_storage_client, source_bucket_name, debug, dest_bucket_name, n_pars, n_uploads,
+                                True, is_versioned)
+
+    if is_versioned:
+        n_objects = get_number_of_versions_in_bucket(object_storage_client, source_bucket_name, None)
+    else:
+        n_objects = get_number_of_objects_in_bucket(object_storage_client, source_bucket_name)
+    # Sanity check that the bucket has things in it
+    assert n_objects > 0
+
+    # Dry-run without specifying empty first should result in an error
+    result = invoke(
+        ['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', source_bucket_name, '--dry-run'])
+    assert 'UsageError' in result.output
+    assert '--empty' in result.output
+
+    # # Dry-run for the whole bucket
+    # result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', source_bucket_name,
+    #                  '--empty', '--dry-run'])
+    # parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    # verify_bucket_delete_output(parsed_result, n_objects, n_pars, n_uploads)
+
+    # delete bucket after --dry-run test, use --empty with force for actual deletion without prompt
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', source_bucket_name,
+                     '--empty', '--force'])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    verify_bucket_delete_output(parsed_result, n_objects, n_pars, n_uploads)
+    assert_that_bucket_is_deleted(source_bucket_name, debug)
+
+    clean_up_replication_bucket(dest_bucket_name, debug)
+
+
+@util.skip_while_rerecording
+def test_delete_bucket_without_objects(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBucketDelete_WithoutObjects_{}'.format(test_id)
+    clear_and_create_new_bucket(object_storage_client, bucket_name, debug)
+
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name])
+    assert 'Are you sure you want to delete this bucket?' in result.output
+
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
+    assert result.output == ''
+
+    assert_that_bucket_is_deleted(bucket_name, debug)
+
+
+@util.skip_while_rerecording
+def test_delete_bucket_with_par_rep_policy_uploads_but_no_objects(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBucketDelete_WithoutObject_WithParUploadRepPolicy_{}'.format(test_id)
+    clear_and_create_new_bucket(object_storage_client, bucket_name, debug)
+
+    rep_policy_dest_bucket = 'ObjectStorageBucketDelete_WithoutObjects_WithParUploadRepPolicy_Rep_{}'.format(test_id)
+    create_replication_bucket(rep_policy_dest_bucket, debug)
+    generate_all_data_in_bucket(object_storage_client, bucket_name, debug, rep_policy_dest_bucket, 10, 10, False, False)
+
+    # delete bucket after --dry-run test, use --empty with force for actual deletion without prompt
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--empty', '--force'])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    verify_bucket_delete_output(parsed_result, 0, 10, 10)
+    assert_that_bucket_is_deleted(bucket_name, debug)
+
+    # clean up the replication bucket
+    clean_up_replication_bucket(rep_policy_dest_bucket, debug)
+
+
+@util.skip_while_rerecording
+def test_delete_bucket_with_objects_paging(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBucketDelete_Paging_{}'.format(test_id)
+    clear_and_create_new_bucket(object_storage_client, bucket_name, debug)
+
+    objects_to_create = 1100
+    for i in range(objects_to_create):
+        object_name = 'Object_{}'.format(i)
+        object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name, object_content)
+
+    no_of_objects_from_list = get_number_of_objects_in_bucket(object_storage_client, bucket_name)
+    assert no_of_objects_from_list == objects_to_create
+
+    # delete bucket after --dry-run test, use --empty with force for actual deletion without prompt
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty'])
+    assert 'pre-authenticated requests' in result.output
+
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty',
+                    '--force'])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    verify_bucket_delete_output(parsed_result, no_of_objects_from_list, 0, 0, 0)
+    assert_that_bucket_is_deleted(bucket_name, debug)
+
+
+@util.skip_while_rerecording
+def test_delete_bucket_with_object_versions_paging(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBucketDelete_Versioned_Paging_{}'.format(test_id)
+    clear_and_create_new_bucket(object_storage_client, bucket_name, debug, is_versioned=True)
+
+    num_versions = 1100
+    object_name = 'Object_103'
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    for i in range(num_versions):
+        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name, object_content)
+
+    no_of_object_versions = get_number_of_versions_in_bucket(object_storage_client, bucket_name, object_name)
+    assert no_of_object_versions == num_versions
+
+    # delete bucket after --dry-run test, use --empty with force for actual deletion without prompt
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty'])
+    assert 'pre-authenticated requests' in result.output
+
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty',
+                     '--force'])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    verify_bucket_delete_output(parsed_result, no_of_object_versions, 0, 0, 0)
+    assert_that_bucket_is_deleted(bucket_name, debug)
+
+
+@util.skip_while_rerecording
+def test_clear_test_data_util_with_same_prefix(object_storage_client, debug, test_id):
+    bucket_prefix = "ObjectStorageClearTest"
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_prefix)
+
+    # create a non versioned bucket
+    bucket_1 = "{}Bucket_{}".format(bucket_prefix, test_id)
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID,
+                     '--name', bucket_1], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+    generate_data_bulk_delete_object(object_storage_client, bucket_1, 10)
+
+    # create a versioned bucket
+    bucket_2 = "{}VersionedBucket_{}".format(bucket_prefix, test_id)
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID,
+                     '--name', bucket_2, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+    generate_data_bulk_delete_object(object_storage_client, bucket_2, 10)
+    generate_data_bulk_delete_object(object_storage_client, bucket_2, 10)
+
+    # clear both the buckets
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_prefix)
+
+    # verify that no bucket exists
+    assert_that_bucket_is_deleted(bucket_1, debug)
+    assert_that_bucket_is_deleted(bucket_2, debug)
+
+
+@util.skip_while_rerecording
+def test_clear_test_data_util_with_different_prefix(object_storage_client, debug, test_id):
+    common_prefix = "ObjectStorageClearTest"
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, common_prefix)
+
+    # try to create a random bucket with prefix and versioning
+    idx_with_diff_prefix = random.randint(0, 2)
+    idx_with_versioning = random.randint(0, 2)
+    bucket_names = []
+    for idx in range(3):
+        bucket_prefix = common_prefix + 'FirstPrefix'
+        if idx == idx_with_diff_prefix:
+            bucket_prefix = common_prefix + 'SecondPrefix'
+        # create a non versioned bucket
+        bucket_name = "{}Bucket_{}_{}".format(bucket_prefix, idx, test_id)
+        bucket_names.append(bucket_name)
+        command = ['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID,
+                   '--name', bucket_name]
+        if idx == idx_with_versioning:
+            command.extend(['--versioning', 'Enabled'])
+        result = invoke(command, debug=debug)
+        validate_response(result, includes_debug_data=debug)
+        generate_data_bulk_delete_object(object_storage_client, bucket_name, 10)
+        if idx == idx_with_versioning:
+            generate_data_bulk_delete_object(object_storage_client, bucket_name, 10)
+
+    # clear the buckets with first prefix
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, common_prefix + 'FirstPrefix')
+
+    # verify that no bucket with the prefix exist
+    for idx, bucket_name in enumerate(bucket_names):
+        # validate and clear the bucket with second prefix
+        if 'SecondPrefix' in bucket_name:
+            assert_that_bucket_exists(bucket_name, debug)
+            util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, common_prefix + 'SecondPrefix')
+            assert_that_bucket_is_deleted(bucket_name, debug)
+        else:
+            assert_that_bucket_is_deleted(bucket_name, debug)
+
+
+def assert_that_bucket_is_deleted(bucket_name, debug, region=None):
+    parsed_result = get_bucket_with_region(bucket_name, debug, region)
+
+    assert parsed_result.get('status') is not None
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+
+def assert_that_bucket_exists(bucket_name, debug, region=None):
+    parsed_result = get_bucket_with_region(bucket_name, debug, region)
+
+    assert parsed_result.get('data') is not None
+    assert parsed_result['data'].get('name') is not None
+    assert parsed_result['data']['name'] == bucket_name
+
+
+def get_bucket_with_region(bucket_name, debug, region):
+    command = ['os', 'bucket', 'get', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name]
+    if region:
+        command.extend(['--region', region])
+    result = invoke(command, debug=debug)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    return parsed_result
+
+
+def clear_and_create_new_bucket(object_storage_client, bucket_name, debug, is_versioned=False):
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+    command = ['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID,
+               '--name', bucket_name]
+    if is_versioned:
+        command.extend(['--versioning', 'Enabled'])
+    result = invoke(command, debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+
+def clean_up_replication_bucket(rep_bucket_name, debug):
+    parsed_result = get_bucket_with_region(rep_bucket_name, debug, util.OS_REPLICATION_DESTINATION_REGION)
+    if parsed_result.get('data'):
+        print('Cleaning up replication bucket: {}'.format(rep_bucket_name))
+        invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name',
+                rep_bucket_name, '--empty', '--force', '--region', util.OS_REPLICATION_DESTINATION_REGION])
+        assert_that_bucket_is_deleted(rep_bucket_name, debug, region=util.OS_REPLICATION_DESTINATION_REGION)
+
+
+def generate_all_data_in_bucket(object_storage_client, bucket_name, debug, rep_bucket_name, n_pars, n_upload,
+                                generate_objects, is_versioned):
+    if generate_objects:
+        # generate object names
+        generate_data_bulk_delete_object(object_storage_client, bucket_name, 10)
+        if is_versioned:
+            # generate object versions by overwriting the same data
+            generate_data_bulk_delete_object(object_storage_client, bucket_name, 10)
+    generate_data_preauth_request(object_storage_client, bucket_name, n_pars)
+    generate_data_replication_policy(object_storage_client, bucket_name, rep_bucket_name)
+    generate_data_multipart_upload(object_storage_client, bucket_name, n_upload)
+
+
+def create_replication_bucket(rep_bucket_name, debug):
+    clean_up_replication_bucket(rep_bucket_name, debug)
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     rep_bucket_name, '--region', util.OS_REPLICATION_DESTINATION_REGION], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+
+def verify_bucket_delete_output(parsed_result, num_objects_to_delete, no_of_pars_to_create, no_of_multipart_uploads,
+                                no_of_rep_policy=1):
+    for key in parsed_result.keys():
+        assert parsed_result[key]['delete-failures'] == {}
+        objects_ = parsed_result[key]['deleted-objects']
+        if key == 'object':
+            assert len(objects_) == num_objects_to_delete
+        elif key == 'preauth-request':
+            assert len(objects_) == no_of_pars_to_create
+        elif key == 'multipart-upload':
+            assert len(objects_) == no_of_multipart_uploads
+        else:
+            assert len(objects_) == no_of_rep_policy
+
+
+def generate_data_preauth_request(object_storage_client, bucket_name, no_of_objects):
+    for i in range(no_of_objects):
+        create_par_request = CreatePreauthenticatedRequestDetails()
+        create_par_request.name = "test_par_" + str(i)
+        if i % 5 == 4:
+            create_par_request.access_type = CreatePreauthenticatedRequestDetails.ACCESS_TYPE_ANY_OBJECT_WRITE
+            create_par_request.bucket_listing_action = "Deny"
+        elif i % 5 == 3:
+            create_par_request.access_type = CreatePreauthenticatedRequestDetails.ACCESS_TYPE_ANY_OBJECT_READ
+            create_par_request.bucket_listing_action = "ListObjects"
+        elif i % 5 == 2:
+            create_par_request.access_type = CreatePreauthenticatedRequestDetails.ACCESS_TYPE_ANY_OBJECT_READ_WRITE
+            create_par_request.bucket_listing_action = "ListObjects"
+        elif i % 5 == 1:
+            create_par_request.access_type = CreatePreauthenticatedRequestDetails.ACCESS_TYPE_ANY_OBJECT_READ_WRITE
+            create_par_request.bucket_listing_action = "ListObjects"
+            create_par_request.object_name = "prefix/"
+        else:
+            create_par_request.access_type = CreatePreauthenticatedRequestDetails.ACCESS_TYPE_OBJECT_READ_WRITE
+            create_par_request.object_name = "Object_{}".format(i)
+
+        create_par_request.time_expires = datetime.datetime.now() + datetime.timedelta(days=1)
+        object_storage_client.create_preauthenticated_request(util.NAMESPACE, bucket_name, create_par_request)
+
+
+def generate_data_replication_policy(object_storage_client, source_bucket, destination_bucket):
+    # create one replication policy per bucket
+    create_rep_policy_request = CreateReplicationPolicyDetails()
+    create_rep_policy_request.name = "test_rep_policy"
+    create_rep_policy_request.destination_region_name = util.OS_REPLICATION_DESTINATION_REGION
+    create_rep_policy_request.destination_bucket_name = destination_bucket
+    object_storage_client.create_replication_policy(util.NAMESPACE, source_bucket, create_rep_policy_request)
+
+
+def generate_data_multipart_upload(object_storage_client, bucket_name, no_of_objects):
+    for i in range(no_of_objects):
+        create_multipart_upload_request = CreateMultipartUploadDetails()
+        create_multipart_upload_request.object = "Object_{}".format(i)
+        object_storage_client.create_multipart_upload(util.NAMESPACE, bucket_name, create_multipart_upload_request)
 
 
 def invoke(commands, debug=False, ** args):
@@ -1210,19 +1546,6 @@ def generate_random_string(length):
         return 'a' * length
     else:
         return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
-
-
-# Pull JSON data out of output which may have stuff other than JSON in it. Assumes that nothing
-# comes after the JSON data
-def parse_json_response_from_mixed_output(output):
-    lines = output.split('\n')
-    json_str = ''
-    object_begun = False
-    for line in lines:
-        if object_begun or line.startswith('{'):
-            object_begun = True
-            json_str += line
-    return json.loads(json_str)
 
 
 # For the bulk operations, object names are taken from the file path of the thing we uploaded. Normalize to
@@ -1283,8 +1606,8 @@ def get_number_of_versions_in_bucket(object_storage_client, bucket_name, object_
         end=None,
         limit=1000,
         delimiter=None,
-        page=None,
         fields='name',
+        page=None,
         retrieve_all=True
     )
     num_versions_in_bucket = 0

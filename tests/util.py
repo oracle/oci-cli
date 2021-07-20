@@ -3,25 +3,28 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
+
 import contextlib
 import functools
 import json
-import random
 import os
-from os.path import abspath
-import pytest
-import six
+import random
 import sys
 import time
 import traceback
 from inspect import getsourcefile
-from six import StringIO
-import oci_cli.cli_util
+from os.path import abspath
+
 import oci
+import pytest
+import six
 from oci.object_storage.transfer.constants import MEBIBYTE
-from . import test_config_container
+from six import StringIO
+
+import oci_cli.cli_util
 from conftest import runner
 from oci_cli.dynamic_loader import ALL_SERVICES_DIR
+from . import test_config_container
 
 try:
     # PY3+
@@ -667,10 +670,10 @@ total_buckets: {bucket_count}
 
 def clear_test_data(api, namespace, compartment, bucket_prefix):
     print('Deleting test data.')
-    bucket_no_versioned_list = []
-    bucket_versioned_list = []
     next_page = None
-    count = 0
+    list_bucket_page_count = 0
+    object_count = 0
+    bucket_count = 0
     start_time = time.time()
     while True:
         if next_page:
@@ -678,85 +681,23 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
         else:
             response = api.list_buckets(namespace, compartment)
         for bucket in response.data:
-            bucket_response = api.get_bucket(namespace, bucket.name)
-            if bucket_response.data.versioning == 'Enabled':
-                bucket_versioned_list.extend([bucket.name])
-            else:
-                bucket_no_versioned_list.extend([bucket.name])
+            if bucket_prefix not in bucket.name:
+                continue
 
-        count += 1
-        if count > 100:
+            result = invoke_command(['os', 'bucket', 'delete', '--namespace', namespace, '--bucket-name', bucket.name,
+                                     '--empty', '--force'])
+            parsed_result = parse_json_response_from_mixed_output(result.output)
+            bucket_count += 1
+            object_count += len(parsed_result["object"]['deleted-objects'])
+            show_progress()
+
+        list_bucket_page_count += 1
+        if list_bucket_page_count > 100:
             raise RuntimeError("Too many pages, something is probably wrong.")
 
         if not response.has_next_page:
             break
         next_page = response.next_page
-    object_count = 0
-    bucket_count = 0
-    for bucket in bucket_no_versioned_list:
-        # only delete buckets starting with prefix (i.e. CliReadOnlyTestBucket)
-        if bucket_prefix not in bucket:
-            continue
-
-        abort_multipart_uploading(api, namespace, bucket)
-
-        object_list = []
-        next_start = None
-        count = 0
-        while True:
-            if next_start:
-                response = api.list_objects(namespace, bucket, start=next_start)
-            else:
-                response = api.list_objects(namespace, bucket)
-
-            object_list.extend([obj.name for obj in response.data.objects])
-
-            count += 1
-            if count > 100:
-                raise RuntimeError("Too many pages, something is probably wrong.")
-
-            next_start = response.data.next_start_with
-            if next_start is None:
-                break
-
-        for obj in object_list:
-            api.delete_object(namespace, bucket, obj)
-
-        object_count += len(object_list)
-        bucket_count += 1
-        api.delete_bucket(namespace, bucket)
-        show_progress()
-
-    for bucket in bucket_versioned_list:
-        # only delete buckets starting with prefix (i.e. CliReadOnlyTestBucket)
-        if bucket_prefix not in bucket:
-            continue
-
-        abort_multipart_uploading(api, namespace, bucket)
-
-        object_list = []
-        list_args = {}
-        list_args['page-size'] = 100
-        next_page = None
-        count = 0
-        while count == 0 or next_page is not None:
-            response = api.list_object_versions(namespace, bucket, **list_args)
-            items = response.data.items
-            next_page = response.headers.get('opc-next-page')
-            object_list.extend([(obj.name, obj.version_id) for obj in items])
-            count += 1
-            if count > 100:
-                raise RuntimeError("Too many pages, something is probably wrong.")
-            if next_page:
-                list_args['page'] = next_page
-
-        for obj_tuple in object_list:
-            api.delete_object(namespace, bucket, obj_tuple[0], version_id=obj_tuple[1])
-
-        object_count += len(object_list)
-        bucket_count += 1
-        api.delete_bucket(namespace, bucket)
-        show_progress()
 
     print(CLEAN_UP_STATS.format(
         total_time=str(time.time() - start_time),
@@ -894,3 +835,16 @@ class Obj(dict):
     def __setitem__(self, key, value):
         super(Obj, self).__setitem__(key, value)
         self.__dict__.update({key: value})
+
+
+# Pull JSON data out of output which may have stuff other than JSON in it. Assumes that nothing
+# comes after the JSON data
+def parse_json_response_from_mixed_output(output):
+    lines = output.split('\n')
+    json_str = ''
+    object_begun = False
+    for line in lines:
+        if object_begun or line.startswith('{'):
+            object_begun = True
+            json_str += line
+    return json.loads(json_str)

@@ -20,7 +20,7 @@ def test_list_objects_does_not_retry_on_client_error():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli_object_storage.objectstorage_cli_extended.retrying_list_call_single_page(mock_client.list_objects, None, "namespace", "bucket_name", "prefix", None, None, 100, None, fields='name')
     assert mock_client.list_objects.call_count == 1
     assert exception.value.status == 400
 
@@ -45,7 +45,7 @@ def test_list_objects_does_not_retry_on_random_exception():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(Exception):
-        oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli_object_storage.objectstorage_cli_extended.retrying_list_call_single_page(mock_client.list_objects, None, "namespace", "bucket_name", "prefix", None, None, 100, None, fields='name')
     assert mock_client.list_objects.call_count == 1
 
     mock_client.list_objects.reset_mock()

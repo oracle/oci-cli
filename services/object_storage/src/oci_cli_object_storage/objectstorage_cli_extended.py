@@ -4,35 +4,43 @@
 
 from __future__ import division
 from __future__ import print_function
-import arrow
+
 import base64
-import click
 import hashlib
 import math
 import os
 import os.path
 import stat
 import sys
-import six  # noqa: F401
-import services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager  # noqa: F401,E402
-from oci import exceptions
-from oci.object_storage.transfer import constants
-from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param, copy_help_from_generated_code, stream_page_object
-from oci.object_storage import UploadManager, MultipartObjectAssembler
-from oci_cli.file_filters import BaseFileFilterCollection
-from oci_cli.file_filters import SingleTypeFileFilterCollection
-from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
-from oci_cli import json_skeleton_utils
-from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli import custom_types  # noqa: F401
-from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
-from services.object_storage.src.oci_cli_object_storage.generated import objectstorage_cli
-from oci_cli import cli_util
 from mimetypes import guess_type
+
+import arrow
+import click
+import six  # noqa: F401
+from oci import exceptions
+from oci.object_storage import UploadManager, MultipartObjectAssembler
+from oci.object_storage.transfer import constants
+from oci.retry import RetryStrategyBuilder
+
 import oci_cli.cli_root as cli_root
 import oci_cli.final_command_processor as final_command_processor
+import services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager  # noqa: F401,E402
 from oci_cli import cli_exceptions
-from oci.retry import RetryStrategyBuilder
+from oci_cli import cli_util
+from oci_cli import custom_types  # noqa: F401
+from oci_cli import json_skeleton_utils
+from oci_cli.aliasing import CommandGroupWithAlias
+from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, \
+    build_client, wrap_exceptions, filter_object_headers, get_param, copy_help_from_generated_code, stream_page_object
+from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
+from oci_cli.file_filters import BaseFileFilterCollection
+from oci_cli.file_filters import SingleTypeFileFilterCollection
+from services.object_storage.src.oci_cli_object_storage.generated import objectstorage_cli
+from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager import TransferManager, \
+    TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, \
+    WorkPoolTaskCallbacksContainer
+from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager.delete_tasks import \
+    DeleteUploadTask, DeleteReplicationPolicyTask, DeletePreAuthenticatedRequestTask, DeleteObjectTask
 
 
 def is_python2():
@@ -1251,7 +1259,6 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
         os.makedirs(expanded_directory)
 
     kwargs = {
-        'client': client,
         'request_id': ctx.obj['request_id'],
         'namespace': namespace,
         'bucket_name': bucket_name,
@@ -1280,7 +1287,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     file_filter_collection = _get_file_filter_collection(expanded_directory, include, exclude, prefix)
 
     while keep_paginating:
-        list_objects_response = retrying_list_objects_single_page(**kwargs)
+        list_objects_response = retrying_list_call_single_page(client.list_objects, **kwargs)
         next_start = list_objects_response.data.next_start_with
         to_download = []
 
@@ -1583,119 +1590,11 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
         render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
         ctx.exit()
 
-    # Based on the rules for --force:
-    #
-    # CLI should do a list for 1000 items, and ask for confirmation with a message saying either that more than 1000 items will be deleted,
-    # or the exact number of items that will be deleted
-    list_objects_responses = retrying_list_objects(
-        client=client,
-        request_id=ctx.obj['request_id'],
-        namespace=namespace,
-        bucket_name=bucket_name,
-        prefix=prefix,
-        start=None,
-        end=None,
-        limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
-        delimiter=delimiter,
-        fields='name',
-        retrieve_all=False
-    )
-
-    objects_to_delete = []
-    for response in list_objects_responses:
-        objects_to_delete.extend(map(lambda obj: obj.name.encode("utf-8") if is_python2() else obj.name, response.data.objects))
-
-    if not force:
-        if include or exclude:
-            # If we specify this, the approximate or exact objects to delete is not determinable without paging through the entire list (e.g. in the
-            # case that the only matching items are on the last few pages). So in this case just use a generic message
-            confirm_prompt = u'WARNING: This command will delete all matching objects in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'
-        else:
-            if list_objects_responses[-1].data.next_start_with:
-                # There are more pages of data
-                confirm_prompt = u'WARNING: This command will delete at least {} objects. Are you sure you wish to continue?'.format(len(objects_to_delete))
-            else:
-                if len(objects_to_delete) == 0:
-                    # There are no objects anyway, so just terminate here
-                    click.echo(u'There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
-                    ctx.exit()
-                else:
-                    confirm_prompt = u'WARNING: This command will delete {} objects. Are you sure you wish to continue?'.format(len(objects_to_delete))
-
-        if not click.confirm(confirm_prompt):
-            ctx.abort()
-
-    transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
-    reusable_progress_bar = ProgressBar(100, '')
-
-    next_start_with = list_objects_responses[-1].data.next_start_with
-    while next_start_with or len(objects_to_delete) > 0:
-        for obj in objects_to_delete:
-            if file_filter_collection:
-                pseudo_path = os.path.join(bucket_name, obj)
-                if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
-                    continue
-
-            try:
-
-                if ctx.obj['debug']:
-                    update_progress_kwargs = {'message': u"Deleted {}".format(obj)}
-                    update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
-                else:
-                    update_progress_kwargs = {'new_label': _get_progress_bar_label(None, obj.decode("utf-8") if is_python2() else obj, 'Deleted')}
-                    update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
-
-                add_to_deleted_kwargs = {'deleted': obj}
-                error_callback_kwargs = {'failed_item': obj}
-                add_to_deleted_objects_callback = WorkPoolTaskCallback(output.add_deleted, **add_to_deleted_kwargs)
-                add_to_delete_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
-
-                callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], success_callbacks=[add_to_deleted_objects_callback], error_callbacks=[add_to_delete_failures_callback])
-
-                delete_kwargs = {
-                    'namespace': namespace,
-                    'bucket_name': bucket_name,
-                    'object_name': obj,
-                    'if_match': None,
-                    'request_id': ctx.obj['request_id']
-                }
-
-                if ctx.obj['debug']:
-                    click.echo(u'Deleting {}'.format(obj), file=sys.stderr)
-                else:
-                    reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, obj.decode("utf-8") if is_python2() else obj, 'Deleting'))
-                transfer_manager.delete_object(callbacks_container, **delete_kwargs)
-            except Exception as e:
-                # Don't let one get failure fail the entire batch, but store the error for output later
-                output.add_failure(obj, callback_exception=e)
-
-                if ctx.obj['debug']:
-                    click.echo('Failed to delete {}'.format(obj), file=sys.stderr)
-
-        objects_to_delete = []  # New list (though we could also clear the existing list) in case we need to delete more stuff
-        if next_start_with:
-            # Because we may not be deleting objects for a while when there are filters, show a dummy message so the caller still knows that there
-            # is progress
-            if include or exclude:
-                reusable_progress_bar.reset_progress(100, 'Searching for matching objects to delete')
-
-            list_objects_response = retrying_list_objects_single_page(
-                client=client,
-                request_id=ctx.obj['request_id'],
-                namespace=namespace,
-                bucket_name=bucket_name,
-                prefix=prefix,
-                start=next_start_with,
-                end=None,
-                limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
-                delimiter=delimiter,
-                fields='name'
-            )
-            objects_to_delete.extend(map(lambda obj: obj.name.encode("utf-8") if is_python2() else obj.name, list_objects_response.data.objects))
-            next_start_with = list_objects_response.data.next_start_with
-
-    transfer_manager.wait_for_completion()
-    reusable_progress_bar.render_finish()
+    # Start bulk delete of objects
+    _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, None, force, delimiter, include, exclude,
+                                    prefix, file_filter_collection, output, parallel_operations_count,
+                                    retrying_list_objects, lambda r: r.data.next_start_with,
+                                    lambda res: res.data.objects)
 
     render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
@@ -1833,10 +1732,9 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
             end=None,
             limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
             delimiter=delimiter,
-            page=None,
             fields='name',
-            retrieve_all=True
-        )
+            page=None,
+            retrieve_all=True)
 
         for response in list_all_object_versions_responses:
             for obj in response.data.items:
@@ -1850,23 +1748,28 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
         render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
         ctx.exit()
 
-    reusable_progress_bar = ProgressBar(100, '')
+    # Start bulk delete of object versions
+    _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, include,
+                                    exclude, prefix, file_filter_collection, output, parallel_operations_count,
+                                    retrying_list_object_versions, lambda r: r.headers.get('opc-next-page'),
+                                    lambda res: res.data.items, is_versioned=True)
 
-    # Based on the rules for --force:
-    #
-    # CLI should do a list for 1000 items, and ask for confirmation with a message saying either that more than 1000 items will be deleted,
-    # or the exact number of items that will be deleted
-    #
-    # Moving transfer manager inside while loop since we should wait for pool completion after delete
-    # before list is called again
-    #
-    # Always list first page of versions that match given criteria and delete versions,
-    # next_page_exists is not used for anything except to find out if next page exists or not
-    #
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+    if output.has_failures():
+        sys.exit(1)
+
+
+# Common helper method to paginate through objects/versions list and delete them using a pool
+def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, include,
+                                    exclude, prefix, file_filter_collection, output, parallel_operations_count,
+                                    _list_fn, _next_page_fn, _get_obj_fn, is_versioned=False):
+    reusable_progress_bar = ProgressBar(100, 'Delete Object')
+
     while True:
-
-        transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
-        list_all_object_versions_responses = retrying_list_object_versions(
+        transfer_manager = TransferManager(client,
+                                           TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+        list_objects_responses = _list_fn(
             client=client,
             request_id=ctx.obj['request_id'],
             namespace=namespace,
@@ -1876,96 +1779,84 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
             end=None,
             limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
             delimiter=delimiter,
-            page=None,
             fields='name',
             retrieve_all=False
         )
 
-        # if --object-name is provided, we should only delete objects that match
-        object_versions_to_delete = []
-        for response in list_all_object_versions_responses:
-            for obj in response.data.items:
+        objects_to_delete = []
+        for response in list_objects_responses:
+            for obj in _get_obj_fn(response):
                 if object_name and object_name != obj.name:
                     continue
-                object_versions_to_delete.append(obj)
+                objects_to_delete.append(obj)
 
+        # Based on the rules for --force:
+        #
+        # CLI should do a list for 1000 items, and ask for confirmation with a message saying either that
+        # more than 1000 items will be deleted, or the exact number of items that will be deleted
+        #
+        # Moving transfer manager inside while loop since we should wait for pool completion after delete
+        # before list is called again
+        #
+        # Always list first page of versions that match given criteria and delete versions,
+        # next_page_exists is not used for anything except to find out if next page exists or not
         if not force:
+            o_type = 'object versions' if is_versioned else 'objects'
             if include or exclude:
                 # If we specify this, the approximate or exact objects to delete is not determinable without paging through the entire list (e.g. in the
                 # case that the only matching items are on the last few pages). So in this case just use a generic message
-                confirm_prompt = 'WARNING: This command will delete all matching object versions in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'
+                confirm_prompt = 'WARNING: This command will delete all matching {} in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'.format(o_type)
             else:
-                if list_all_object_versions_responses[-1].headers.get('opc-next-page'):
+                if _next_page_fn(list_objects_responses[-1]):
                     # There are more pages of data
-                    confirm_prompt = 'WARNING: This command will delete at least {} object versions. Are you sure you wish to continue?'.format(len(object_versions_to_delete))
+                    confirm_prompt = 'WARNING: This command will delete at least {} {}. Are you sure you wish to continue?'.format(
+                        len(objects_to_delete), o_type)
                 else:
-                    if len(object_versions_to_delete) == 0:
+                    if len(objects_to_delete) == 0:
                         # There are no objects anyway, so just terminate here
                         click.echo('There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
                         sys.exit()
                     else:
-                        confirm_prompt = 'WARNING: This command will delete {} object versions. Are you sure you wish to continue?'.format(len(object_versions_to_delete))
+                        confirm_prompt = 'WARNING: This command will delete {} {}. Are you sure you wish to continue?'.format(
+                            len(objects_to_delete), o_type)
 
             if not click.confirm(confirm_prompt):
                 ctx.abort()
 
-        for obj in object_versions_to_delete:
+        for obj in objects_to_delete:
             if file_filter_collection:
                 pseudo_path = os.path.join(bucket_name, obj.name)
                 if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
                     continue
 
-            try:
-                if ctx.obj['debug']:
-                    update_progress_kwargs = {'message': 'Deleted object {} , version_id {}'.format(obj.name, obj.version_id)}
-                    update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
-                else:
-                    update_progress_kwargs = {'new_label': _get_progress_bar_label(None, obj.name + "," + obj.version_id, 'Deleted')}
-                    update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
+            qualified_name = obj.name
+            delete_kwargs = {
+                'namespace': namespace,
+                'bucket_name': bucket_name,
+                'object_name': obj.name,
+                'if_match': None,
+                'request_id': ctx.obj['request_id']
+            }
 
-                add_to_deleted_kwargs = {'deleted': obj.name + "," + obj.version_id}
-                error_callback_kwargs = {'failed_item': obj.name + "," + obj.version_id}
-                add_to_deleted_objects_callback = WorkPoolTaskCallback(output.add_deleted, **add_to_deleted_kwargs)
-                add_to_delete_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
+            # handle special case for object version
+            if is_versioned:
+                delete_kwargs['version_id'] = obj.version_id
+                qualified_name = obj.name + "," + obj.version_id
 
-                callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], success_callbacks=[add_to_deleted_objects_callback], error_callbacks=[add_to_delete_failures_callback])
-                delete_kwargs = {
-                    'namespace': namespace,
-                    'bucket_name': bucket_name,
-                    'object_name': obj.name,
-                    'if_match': None,
-                    'request_id': ctx.obj['request_id'],
-                    'version_id': obj.version_id
-                }
-                if ctx.obj['debug']:
-                    click.echo('Deleting object name {}, version-id {}'.format(obj.name, obj.version_id), file=sys.stderr)
-                else:
-                    reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, obj.name + "," + obj.version_id, 'Deleting'))
-
-                transfer_manager.delete_object(callbacks_container, **delete_kwargs)
-            except Exception as e:
-                # Don't let one get failure fail the entire batch, but store the error for output later
-                output.add_failure(obj.name + "," + obj.version_id, callback_exception=e)
-
-                if ctx.obj['debug']:
-                    click.echo('Failed to delete object name {}, version-id {} '.format(obj.name, obj.version_id), file=sys.stderr)
+            _add_to_delete_pool(ctx, qualified_name, output, reusable_progress_bar, transfer_manager,
+                                DeleteObjectTask, delete_kwargs)
 
         transfer_manager.wait_for_completion()
 
-        if list_all_object_versions_responses[-1].headers.get('opc-next-page') is None:
+        if _next_page_fn(list_objects_responses[-1]) is None:
             break
 
-        # Because we may not be deleting objects for a while when there are filters, show a dummy message so the caller still knows that there
-        # is progress
+        # Because we may not be deleting objects for a while when there are filters,
+        # show a dummy message so the caller still knows that there is progress
         if include or exclude:
             reusable_progress_bar.reset_progress(100, 'Searching for matching objects to delete')
 
     reusable_progress_bar.render_finish()
-
-    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-
-    if output.has_failures():
-        sys.exit(1)
 
 
 @objectstorage_cli.object_group.command(name='resume-put')
@@ -2360,46 +2251,292 @@ def update_retention_rule(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
-# Retrieves a single page of objects, retrying the call if we received a retryable exception. This will return the
-# raw response and it is up to the caller to handle pagination etc
-def retrying_list_objects_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, fields):
-    args = {
-        'fields': fields,
+@cli_util.copy_params_from_generated_command(objectstorage_cli.delete_bucket, params_to_exclude=['force'])
+@objectstorage_cli.bucket_group.command(name='delete', help="Deletes a bucket if the bucket is already empty. If not empty and the --empty option is specified, all objects, pre-authenticated requests, uncommitted multipart uploads and replication policies associated with the bucket are also deleted. \n[Command Reference](deleteBucket)")
+@cli_util.option('--force', is_flag=True, help="Perform deletion without prompting for confirmation.")
+@cli_util.option('--empty', is_flag=True, help="Delete all objects, pre-authenticated requests, uncommitted multipart uploads and replication policies associated with the bucket.")
+@cli_util.option('--dry-run', is_flag=True, help="When specified with the --empty option, displays a list of objects which would be deleted by this command if it were run without --dry-run. No objects will actually be deleted.")
+@cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True, help="When specified with the --empty option, specifies the number of parallel delete operations to perform. Decreasing this value will make empty less resource intensive but it may take longer. Increasing this value may improve empty times, but it will consume more system resources and network bandwidth.")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry_run, parallel_operations_count, if_match):
+
+    if dry_run and not empty:
+        raise click.UsageError('The option --dry-run is applicable only when the --empty option is specified')
+
+    if not force and not dry_run:
+        if empty:
+            confirm_prompt = 'This command will delete the bucket as well as all objects, ' \
+                             'pre-authenticated requests, uncommitted multipart uploads and replication policies ' \
+                             'associated with it. Are you sure you wish to continue?'
+        else:
+            confirm_prompt = "Are you sure you want to delete this bucket?"
+
+        if not click.confirm(confirm_prompt):
+            ctx.abort()
+
+    kwargs = {'opc_client_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+
+    if empty:
+        output_object = BulkDeleteOperationOutput()
+        output_par = BulkDeleteOperationOutput('preauth-request')
+        output_rep_policy = BulkDeleteOperationOutput('replication-policy')
+        output_upload = BulkDeleteOperationOutput('multipart-upload')
+
+        # Get bucket status
+        result = client.get_bucket(namespace_name=namespace_name, bucket_name=bucket_name, **kwargs)
+
+        response = cli_util.to_dict(result.data)
+        versioning = response.get("versioning")
+
+        if dry_run:
+            # list object/ object versions
+            list_obj_params = {
+                'client': client,
+                'request_id': ctx.obj['request_id'],
+                'namespace': namespace_name,
+                'bucket_name': bucket_name,
+                'prefix': None,
+                'start': None,
+                'end': None,
+                'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+                'delimiter': None,
+                'fields': 'name',
+                'retrieve_all': True
+            }
+            if versioning.lower() == "disabled":
+                list_all_objects_responses = retrying_list_objects(**list_obj_params)
+                for response in list_all_objects_responses:
+                    for obj in response.data.objects:
+                        output_object.add_deleted(obj.name)
+            else:
+                list_all_objects_responses = retrying_list_object_versions(**list_obj_params)
+                for response in list_all_objects_responses:
+                    for obj in response.data.items:
+                        output_object.add_deleted(obj.name + "," + obj.version_id)
+
+            list_params = {
+                'request_id': ctx.obj['request_id'],
+                'namespace': namespace_name,
+                'bucket_name': bucket_name,
+                'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+                'retrieve_all': True
+            }
+            # list pre-authenticated requests
+            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
+            for response in par_list_response:
+                for par_object in response.data:
+                    output_par.add_deleted(par_object.name)
+
+            # list replication policies
+            rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
+            for response in rep_policy_list_response:
+                for rep_policy_obj in response.data:
+                    output_rep_policy.add_deleted(rep_policy_obj.name)
+
+            # list un-committed uploads
+            list_uploads_response = retrying_list_call(client.list_multipart_uploads, **list_params)
+            for response in list_uploads_response:
+                for upload_obj in response.data:
+                    output_upload.add_deleted(upload_obj.object)
+
+            combined_out = _combine_output(ctx.obj['output'], dry_run, output_object, output_par, output_rep_policy,
+                                           output_upload)
+            # final output
+            render(data=combined_out, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+            sys.exit()
+
+        # Actual deletion starts here
+        common_delete_kwargs = {
+            'namespace': namespace_name,
+            'bucket_name': bucket_name,
+            'if_match': if_match,
+            'request_id': ctx.obj['request_id']
+        }
+
+        if versioning.lower() == "disabled":
+            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, None, None,
+                                            None, None, output_object, parallel_operations_count, retrying_list_objects,
+                                            lambda r: r.data.next_start_with, lambda res: res.data.objects)
+        else:
+            # bulk-delete object versions
+            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, None, None,
+                                            None, None, output_object, parallel_operations_count,
+                                            retrying_list_object_versions, lambda r: r.headers.get('opc-next-page'),
+                                            lambda res: res.data.items, is_versioned=True)
+
+        list_params = {
+            'request_id': ctx.obj['request_id'],
+            'namespace': namespace_name,
+            'bucket_name': bucket_name,
+            'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+            'retrieve_all': False
+        }
+
+        # Deleting PreAuthenticated Requests
+        par_delete_kwargs = common_delete_kwargs.copy()
+        reusable_progress_bar = ProgressBar(100, 'Deleting Preauthenticated Requests')
+        while True:
+            transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
+
+            for response in par_list_response:
+                for p_obj in response.data:
+                    par_delete_kwargs['par_id'] = p_obj.id
+                    _add_to_delete_pool(ctx, p_obj.name, output_par, reusable_progress_bar, transfer_manager,
+                                        DeletePreAuthenticatedRequestTask, par_delete_kwargs)
+
+            transfer_manager.wait_for_completion()
+            if par_list_response[-1].headers.get('opc-next-page') is None:
+                break
+        reusable_progress_bar.render_finish()
+
+        # Deleting Replication Policies
+        rep_policy_delete_kwargs = common_delete_kwargs.copy()
+        reusable_progress_bar = ProgressBar(100, 'Deleting Replication Policies')
+        while True:
+            transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+            rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
+
+            for response in rep_policy_list_response:
+                for r_obj in response.data:
+                    rep_policy_delete_kwargs['replication_id'] = r_obj.id
+                    _add_to_delete_pool(ctx, r_obj.name, output_rep_policy, reusable_progress_bar, transfer_manager,
+                                        DeleteReplicationPolicyTask, rep_policy_delete_kwargs)
+
+            transfer_manager.wait_for_completion()
+            if rep_policy_list_response[-1].headers.get('opc-next-page') is None:
+                break
+        reusable_progress_bar.render_finish()
+
+        # Deleting uncommitted uploads
+        upload_delete_kwargs = common_delete_kwargs.copy()
+        reusable_progress_bar = ProgressBar(100, 'Deleting uncommitted uploads')
+        while True:
+            transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+            uploads_list_response = retrying_list_call(client.list_multipart_uploads, **list_params)
+
+            for response in uploads_list_response:
+                for u_obj in response.data:
+                    upload_delete_kwargs['object_name'] = u_obj.object
+                    upload_delete_kwargs['upload_id'] = u_obj.upload_id
+                    _add_to_delete_pool(ctx, u_obj.object, output_upload, reusable_progress_bar, transfer_manager,
+                                        DeleteUploadTask, upload_delete_kwargs)
+
+            transfer_manager.wait_for_completion()
+            if uploads_list_response[-1].headers.get('opc-next-page') is None:
+                break
+        reusable_progress_bar.render_finish()
+
+        combined_out = _combine_output(ctx.obj['output'], dry_run, output_object, output_par, output_rep_policy, output_upload)
+        # final output
+        render(data=combined_out, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+        for output in [output_object, output_par, output_rep_policy, output_upload]:
+            if output.has_failures():
+                sys.exit(1)
+
+    # Try to delete the bucket
+    ctx.invoke(objectstorage_cli.delete_bucket,
+               from_json=from_json,
+               namespace_name=namespace_name,
+               bucket_name=bucket_name,
+               if_match=if_match)
+
+
+def _combine_output(output_format, dry_run, *args):
+    if output_format == 'json':
+        return {o.get_type(): o.get_output(output_format, dry_run=dry_run) for o in args}
+    else:
+        final_table_output = []
+        for output in args:
+            final_table_output.extend(output.get_output(output_format, dry_run=dry_run))
+        return final_table_output
+
+
+# Adds an object to a delete pool for parallel processing
+def _add_to_delete_pool(ctx, qualified_name, output, reusable_progress_bar, transfer_manager, task_handler, delete_kwargs):
+    try:
+        if ctx.obj['debug']:
+            update_progress_kwargs = {'message': 'Deleted {} {}'.format(output.get_type, qualified_name)}
+            update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
+        else:
+            update_progress_kwargs = {
+                'new_label': _get_progress_bar_label(None, qualified_name, 'Deleted {}'.format(output.get_type()))}
+            update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end,
+                                                            **update_progress_kwargs)
+
+        add_to_deleted_kwargs = {'deleted': qualified_name}
+        error_callback_kwargs = {'failed_item': qualified_name}
+        add_to_deleted_objects_callback = WorkPoolTaskCallback(output.add_deleted, **add_to_deleted_kwargs)
+        add_to_delete_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
+
+        callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback],
+                                                             success_callbacks=[add_to_deleted_objects_callback],
+                                                             error_callbacks=[add_to_delete_failures_callback])
+        if ctx.obj['debug']:
+            confirmation_msg = 'Deleting object name {}'.format(qualified_name)
+            click.echo(confirmation_msg, file=sys.stderr)
+        else:
+            reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, qualified_name, 'Deleting'))
+
+        transfer_manager.delete_object(callbacks_container, task_handler, **delete_kwargs)
+    except Exception as e:
+        # Don't let one get failure fail the entire batch, but store the error for output later
+        output.add_failure(qualified_name, callback_exception=e)
+        if ctx.obj['debug']:
+            failure_msg = 'Failed to delete object name {} '.format(qualified_name)
+            click.echo(failure_msg, file=sys.stderr)
+
+
+def retrying_list_call(func_ref, request_id, namespace, bucket_name, limit, prefix=None, start=None, end=None,
+                       delimiter=None, page=None, fields=None, retrieve_all=False):
+    all_responses = list()
+    if retrieve_all:
+        response = retrying_list_call_single_page(func_ref, request_id, namespace, bucket_name, prefix, start, end,
+                                                  limit, delimiter, page, fields)
+        all_responses.append(response)
+        page = response.headers.get('opc-next-page')
+        while page:
+            response = retrying_list_call_single_page(func_ref, request_id, namespace, bucket_name, prefix, start, end,
+                                                      limit, delimiter, page, fields)
+            all_responses.append(response)
+            page = response.headers.get('opc-next-page')
+    else:
+        while limit > 0:
+            response = retrying_list_call_single_page(func_ref, request_id, namespace, bucket_name, prefix, start, end,
+                                                      limit, delimiter, page, fields)
+            all_responses.append(response)
+            page = response.headers.get('opc-next-page')
+            if page:
+                limit -= len(response.data.items)
+            else:
+                limit = 0
+    return all_responses
+
+
+def retrying_list_call_single_page(func_ref, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter,
+                                   page=None, fields=None):
+    kwargs = {
         'opc_client_request_id': request_id,
         'limit': limit
     }
     if delimiter is not None:
-        args['delimiter'] = delimiter
+        kwargs['delimiter'] = delimiter
     if prefix is not None:
-        args['prefix'] = prefix
-    if start:
-        args['start'] = start
-    if end is not None:
-        args['end'] = end
-
-    return _make_retrying_list_call(client, namespace, bucket_name, **args)
-
-
-# Retrieves a single page of object versions, retrying the call if we received a retryable exception. This will return the
-# raw response and it is up to the caller to handle pagination etc
-def retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields):
-    args = {
-        'fields': fields,
-        'opc_client_request_id': request_id,
-        'limit': limit
-    }
-    if delimiter is not None:
-        args['delimiter'] = delimiter
-    if prefix is not None:
-        args['prefix'] = prefix
+        kwargs['prefix'] = prefix
     if start is not None:
-        args['start'] = start
+        kwargs['start'] = start
     if end is not None:
-        args['end'] = end
+        kwargs['end'] = end
     if page is not None:
-        args['page'] = page
+        kwargs['page'] = page
+    if fields is not None:
+        kwargs['fields'] = fields
 
-    return _make_retrying_list_versions_call(client, namespace, bucket_name, **args)
+    return func_ref(namespace_name=namespace, bucket_name=bucket_name, **kwargs)
 
 
 # Retrieves multiple pages of objects, retrying each list page call if we received a retryable exception. This will return a list of
@@ -2410,19 +2547,19 @@ def retrying_list_objects(client, request_id, namespace, bucket_name, prefix, st
     all_responses = list()
 
     if retrieve_all:
-        response = retrying_list_objects_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, fields)
+        response = retrying_list_call_single_page(client.list_objects, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, fields=fields)
         all_responses.append(response)
         next_start = response.data.next_start_with
 
         while next_start:
-            response = retrying_list_objects_single_page(client, request_id, namespace, bucket_name, prefix, next_start, end, limit, delimiter, fields)
+            response = retrying_list_call_single_page(client.list_objects, request_id, namespace, bucket_name, prefix, next_start, end, limit, delimiter, fields=fields)
 
             all_responses.append(response)
             next_start = response.data.next_start_with
     else:
         next_start = start
         while limit > 0:
-            response = retrying_list_objects_single_page(client, request_id, namespace, bucket_name, prefix, next_start, end, limit, delimiter, fields)
+            response = retrying_list_call_single_page(client.list_objects, request_id, namespace, bucket_name, prefix, next_start, end, limit, delimiter, fields=fields)
 
             all_responses.append(response)
             next_start = response.data.next_start_with
@@ -2439,32 +2576,10 @@ def retrying_list_objects(client, request_id, namespace, bucket_name, prefix, st
 # the raw responses we received in the order we received them
 #
 # This method can retrieve all matching object versions or only up to a given limit. The default is only to retrieve up to the given limit
-def retrying_list_object_versions(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields, retrieve_all=False):
-    all_responses = list()
-
-    if retrieve_all:
-        response = retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields)
-        all_responses.append(response)
-        page = response.headers.get('opc-next-page')
-
-        while page:
-            response = retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields)
-
-            all_responses.append(response)
-            page = response.headers.get('opc-next-page')
-    else:
-        while limit > 0:
-            response = retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields)
-
-            all_responses.append(response)
-            page = response.headers.get('opc-next-page')
-
-            if page:
-                limit -= len(response.data.items)
-            else:
-                limit = 0
-
-    return all_responses
+def retrying_list_object_versions(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter,
+                                  fields, page=None, retrieve_all=False):
+    return retrying_list_call(client.list_object_versions, request_id, namespace, bucket_name, limit, prefix, start, end,
+                              delimiter, page, fields, retrieve_all)
 
 
 # Normalizes the object name path of an object we're going to upload to object storage (e.g. a/b/c/object.txt) so that
@@ -2474,22 +2589,6 @@ def retrying_list_object_versions(client, request_id, namespace, bucket_name, pr
 # the Windows path separator (\) with /
 def normalize_object_name_path_for_object_storage(object_name_path, path_separator=os.sep):
     return object_name_path.replace(path_separator, '/')
-
-
-def _make_retrying_list_call(client, namespace, bucket_name, **kwargs):
-    return client.list_objects(
-        namespace,
-        bucket_name,
-        **kwargs
-    )
-
-
-def _make_retrying_list_versions_call(client, namespace, bucket_name, **kwargs):
-    return client.list_object_versions(
-        namespace,
-        bucket_name,
-        **kwargs
-    )
 
 
 def _make_retrying_head_object_call(client, namespace, bucket_name, name, client_request_id):

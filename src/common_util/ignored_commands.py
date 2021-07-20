@@ -97,6 +97,7 @@ IGNORED_COMMANDS = [
     ['database-migration', 'connection', 'create'],
     ['database-migration', 'connection', 'update'],
     ['artifacts', 'generic', 'artifact', 'upload-by-path'],
+    ['data-integration', 'task', 'update-task-from-rest-task'],
     ['os-management', 'work-request-summary'],
 ]
 

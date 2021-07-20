@@ -547,7 +547,260 @@ def create_task_validation_create_task_validation_from_pipeline_task(ctx, **kwar
     ctx.invoke(dataintegration_cli.create_task_validation_create_task_validation_from_pipeline_task, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_schedule, params_to_exclude=['is_daylight_adjustment_enabled'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.create_schedule, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.create_schedule, 'is_daylight_adjustment_enabled').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.create_schedule.command_name', 'create'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'frequency-details': {'module': 'data_integration', 'class': 'AbstractFrequencyDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+    ctx.invoke(dataintegration_cli.create_schedule, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_schedule, params_to_exclude=['is_daylight_adjustment_enabled'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.update_schedule, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.update_schedule, 'is_daylight_adjustment_enabled').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.update_schedule.command_name', 'update'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'frequency-details': {'module': 'data_integration', 'class': 'AbstractFrequencyDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+    ctx.invoke(dataintegration_cli.update_schedule, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.schedule_group, dataintegration_cli.create_schedule_daily_frequency_details, "create-daily-frequency")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_schedule_daily_frequency_details, params_to_exclude=['is_daylight_adjustment_enabled', 'frequency_details_frequency', 'frequency_details_interval'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.create_schedule_daily_frequency_details, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.create_schedule_daily_frequency_details, 'is_daylight_adjustment_enabled').help)
+@cli_util.option('--frequency', type=get_param(dataintegration_cli.create_schedule_daily_frequency_details, 'frequency_details_frequency').type, help=get_param(dataintegration_cli.create_schedule_daily_frequency_details, 'frequency_details_frequency').help)
+@cli_util.option('--interval', type=get_param(dataintegration_cli.create_schedule_daily_frequency_details, 'frequency_details_interval').type, help=get_param(dataintegration_cli.create_schedule_daily_frequency_details, 'frequency_details_interval').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.create_schedule_daily_frequency_details.command_name', 'create-daily-frequency'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_daily_frequency_details_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+
+    if 'frequency' in kwargs:
+        kwargs['frequency_details_frequency'] = kwargs['frequency']
+        kwargs.pop('frequency')
+
+    if 'interval' in kwargs:
+        kwargs['frequency_details_interval'] = kwargs['interval']
+        kwargs.pop('interval')
+
+    ctx.invoke(dataintegration_cli.create_schedule_daily_frequency_details, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.schedule_group, dataintegration_cli.update_schedule_daily_frequency_details, "update-daily-frequency")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_schedule_daily_frequency_details, params_to_exclude=['is_daylight_adjustment_enabled', 'frequency_details_frequency', 'frequency_details_interval'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.update_schedule_daily_frequency_details, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.update_schedule_daily_frequency_details, 'is_daylight_adjustment_enabled').help)
+@cli_util.option('--frequency', type=get_param(dataintegration_cli.update_schedule_daily_frequency_details, 'frequency_details_frequency').type, help=get_param(dataintegration_cli.update_schedule_daily_frequency_details, 'frequency_details_frequency').help)
+@cli_util.option('--interval', type=get_param(dataintegration_cli.update_schedule_daily_frequency_details, 'frequency_details_interval').type, help=get_param(dataintegration_cli.update_schedule_daily_frequency_details, 'frequency_details_interval').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.update_schedule_daily_frequency_details.command_name', 'update-daily-frequency'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_daily_frequency_details_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+
+    if 'frequency' in kwargs:
+        kwargs['frequency_details_frequency'] = kwargs['frequency']
+        kwargs.pop('frequency')
+
+    if 'interval' in kwargs:
+        kwargs['frequency_details_interval'] = kwargs['interval']
+        kwargs.pop('interval')
+
+    ctx.invoke(dataintegration_cli.update_schedule_daily_frequency_details, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.schedule_group, dataintegration_cli.create_schedule_hourly_frequency_details, "create-hourly-frequency")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_schedule_hourly_frequency_details, params_to_exclude=['is_daylight_adjustment_enabled', 'frequency_details_frequency', 'frequency_details_interval'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.create_schedule_hourly_frequency_details, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.create_schedule_hourly_frequency_details, 'is_daylight_adjustment_enabled').help)
+@cli_util.option('--frequency', type=get_param(dataintegration_cli.create_schedule_hourly_frequency_details, 'frequency_details_frequency').type, help=get_param(dataintegration_cli.create_schedule_hourly_frequency_details, 'frequency_details_frequency').help)
+@cli_util.option('--interval', type=get_param(dataintegration_cli.create_schedule_hourly_frequency_details, 'frequency_details_interval').type, help=get_param(dataintegration_cli.create_schedule_hourly_frequency_details, 'frequency_details_interval').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.create_schedule_hourly_frequency_details.command_name', 'create-hourly-frequency'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_hourly_frequency_details_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+
+    if 'frequency' in kwargs:
+        kwargs['frequency_details_frequency'] = kwargs['frequency']
+        kwargs.pop('frequency')
+
+    if 'interval' in kwargs:
+        kwargs['frequency_details_interval'] = kwargs['interval']
+        kwargs.pop('interval')
+
+    ctx.invoke(dataintegration_cli.create_schedule_hourly_frequency_details, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.schedule_group, dataintegration_cli.update_schedule_hourly_frequency_details, "update-hourly-frequency")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_schedule_hourly_frequency_details, params_to_exclude=['is_daylight_adjustment_enabled', 'frequency_details_frequency', 'frequency_details_interval'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.update_schedule_hourly_frequency_details, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.update_schedule_hourly_frequency_details, 'is_daylight_adjustment_enabled').help)
+@cli_util.option('--frequency', type=get_param(dataintegration_cli.update_schedule_hourly_frequency_details, 'frequency_details_frequency').type, help=get_param(dataintegration_cli.update_schedule_hourly_frequency_details, 'frequency_details_frequency').help)
+@cli_util.option('--interval', type=get_param(dataintegration_cli.update_schedule_hourly_frequency_details, 'frequency_details_interval').type, help=get_param(dataintegration_cli.update_schedule_hourly_frequency_details, 'frequency_details_interval').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.update_schedule_hourly_frequency_details.command_name', 'update-hourly-frequency'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_hourly_frequency_details_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+
+    if 'frequency' in kwargs:
+        kwargs['frequency_details_frequency'] = kwargs['frequency']
+        kwargs.pop('frequency')
+
+    if 'interval' in kwargs:
+        kwargs['frequency_details_interval'] = kwargs['interval']
+        kwargs.pop('interval')
+
+    ctx.invoke(dataintegration_cli.update_schedule_hourly_frequency_details, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.schedule_group, dataintegration_cli.create_schedule_monthly_frequency_details, "create-monthly-frequency")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_schedule_monthly_frequency_details, params_to_exclude=['is_daylight_adjustment_enabled', 'frequency_details_frequency', 'frequency_details_interval'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.create_schedule_monthly_frequency_details, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.create_schedule_monthly_frequency_details, 'is_daylight_adjustment_enabled').help)
+@cli_util.option('--frequency', type=get_param(dataintegration_cli.create_schedule_monthly_frequency_details, 'frequency_details_frequency').type, help=get_param(dataintegration_cli.create_schedule_monthly_frequency_details, 'frequency_details_frequency').help)
+@cli_util.option('--interval', type=get_param(dataintegration_cli.create_schedule_monthly_frequency_details, 'frequency_details_interval').type, help=get_param(dataintegration_cli.create_schedule_monthly_frequency_details, 'frequency_details_interval').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.create_schedule_monthly_frequency_details.command_name', 'create-monthly-frequency'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}, 'frequency-details-days': {'module': 'data_integration', 'class': 'list[integer]'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_monthly_frequency_details_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+
+    if 'frequency' in kwargs:
+        kwargs['frequency_details_frequency'] = kwargs['frequency']
+        kwargs.pop('frequency')
+
+    if 'interval' in kwargs:
+        kwargs['frequency_details_interval'] = kwargs['interval']
+        kwargs.pop('interval')
+
+    ctx.invoke(dataintegration_cli.create_schedule_monthly_frequency_details, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.schedule_group, dataintegration_cli.update_schedule_monthly_frequency_details, "update-monthly-frequency")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_schedule_monthly_frequency_details, params_to_exclude=['is_daylight_adjustment_enabled', 'frequency_details_frequency', 'frequency_details_interval'])
+@cli_util.option('--is-daylight-adj-enabled', type=get_param(dataintegration_cli.update_schedule_monthly_frequency_details, 'is_daylight_adjustment_enabled').type, help=get_param(dataintegration_cli.update_schedule_monthly_frequency_details, 'is_daylight_adjustment_enabled').help)
+@cli_util.option('--frequency', type=get_param(dataintegration_cli.update_schedule_monthly_frequency_details, 'frequency_details_frequency').type, help=get_param(dataintegration_cli.update_schedule_monthly_frequency_details, 'frequency_details_frequency').help)
+@cli_util.option('--interval', type=get_param(dataintegration_cli.update_schedule_monthly_frequency_details, 'frequency_details_interval').type, help=get_param(dataintegration_cli.update_schedule_monthly_frequency_details, 'frequency_details_interval').help)
+@dataintegration_cli.schedule_group.command(name=cli_util.override('data_integration.update_schedule_monthly_frequency_details.command_name', 'update-monthly-frequency'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}, 'frequency-details-days': {'module': 'data_integration', 'class': 'list[integer]'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_monthly_frequency_details_extended(ctx, **kwargs):
+    if 'is_daylight_adj_enabled' in kwargs:
+        kwargs['is_daylight_adjustment_enabled'] = kwargs['is_daylight_adj_enabled']
+        kwargs.pop('is_daylight_adj_enabled')
+
+    if 'frequency' in kwargs:
+        kwargs['frequency_details_frequency'] = kwargs['frequency']
+        kwargs.pop('frequency')
+
+    if 'interval' in kwargs:
+        kwargs['frequency_details_interval'] = kwargs['interval']
+        kwargs.pop('interval')
+
+    ctx.invoke(dataintegration_cli.update_schedule_monthly_frequency_details, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.create_task_create_task_from_sql_task, "create-task-from-sql-task")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_task_create_task_from_sql_task, params_to_exclude=['config_provider_delegate'])
+@cli_util.option('--config-provider', type=get_param(dataintegration_cli.create_task_create_task_from_sql_task, 'config_provider_delegate').type, help=get_param(dataintegration_cli.create_task_create_task_from_sql_task, 'config_provider_delegate').help)
+@dataintegration_cli.task_group.command(name=cli_util.override('data_integration.create_task_create_task_from_sql_task.command_name', 'create-task-from-sql-task'), help=u"""Creates a new task ready for performing data integrations. There are specialized types of tasks that include data loader and integration tasks. \n[Command Reference](createTask)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'script': {'module': 'data_integration', 'class': 'Script'}, 'operation': {'module': 'data_integration', 'class': 'object'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@cli_util.wrap_exceptions
+def create_task_create_task_from_sql_task_extended(ctx, **kwargs):
+    if 'config_provider' in kwargs:
+        kwargs['config_provider_delegate'] = kwargs['config_provider']
+        kwargs.pop('config_provider')
+    ctx.invoke(dataintegration_cli.create_task_create_task_from_sql_task, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.update_task_update_task_from_sql_task, "update-task-from-sql-task")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_task_update_task_from_sql_task, params_to_exclude=['config_provider_delegate'])
+@cli_util.option('--config-provider', type=get_param(dataintegration_cli.update_task_update_task_from_sql_task, 'config_provider_delegate').type, help=get_param(dataintegration_cli.update_task_update_task_from_sql_task, 'config_provider_delegate').help)
+@dataintegration_cli.task_group.command(name=cli_util.override('data_integration.update_task_update_task_from_sql_task.command_name', 'update-task-update-task-from-sql-task'), help=u"""Updates a specific task. For example, you can update the task description or move the task to a different folder by changing the `aggregatorKey` to a different folder in the registry. \n[Command Reference](updateTask)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'script': {'module': 'data_integration', 'class': 'Script'}, 'operation': {'module': 'data_integration', 'class': 'object'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@cli_util.wrap_exceptions
+def update_task_update_task_from_sql_task_extended(ctx, **kwargs):
+    if 'config_provider' in kwargs:
+        kwargs['config_provider_delegate'] = kwargs['config_provider']
+        kwargs.pop('config_provider')
+    ctx.invoke(dataintegration_cli.update_task_update_task_from_sql_task, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.create_task_create_task_from_rest_task, "create-task-from-rest-task")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.create_task_create_task_from_rest_task, params_to_exclude=['endpoint_parameterconflict'])
+@cli_util.option('--apiendpoint', type=get_param(dataintegration_cli.create_task_create_task_from_rest_task, 'endpoint_parameterconflict').type, help=get_param(dataintegration_cli.create_task_create_task_from_rest_task, 'endpoint_parameterconflict').help)
+@dataintegration_cli.task_group.command(name=cli_util.override('data_integration.create_task_create_task_from_rest_task.command_name', 'create-task-create-task-from-rest-task'), help=u"""Creates a new task ready for performing data integrations. There are specialized types of tasks that include data loader and integration tasks. \n[Command Reference](createTask)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'apiendpoint': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@cli_util.wrap_exceptions
+def create_task_create_task_from_rest_task_extended(ctx, **kwargs):
+    if 'apiendpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['apiendpoint']
+        kwargs.pop('apiendpoint')
+    ctx.invoke(dataintegration_cli.create_task_create_task_from_rest_task, **kwargs)
+
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.update_task_update_task_from_rest_task, "update-task-from-rest-task")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.update_task_update_task_from_rest_task, params_to_exclude=['endpoint_parameterconflict'])
+@cli_util.option('--apiendpoint', type=get_param(dataintegration_cli.update_task_update_task_from_rest_task, 'endpoint_parameterconflict').type, help=get_param(dataintegration_cli.update_task_update_task_from_rest_task, 'endpoint_parameterconflict').help)
+@dataintegration_cli.task_group.command(name=cli_util.override('data_integration.update_task_update_task_from_rest_task.command_name', 'update-task-update-task-from-rest-task'), help=u"""Updates a specific task. For example, you can update the task description or move the task to a different folder by changing the `aggregatorKey` to a different folder in the registry. \n[Command Reference](updateTask)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@cli_util.wrap_exceptions
+def update_task_update_task_from_rest_task_extended(ctx, **kwargs):
+    if 'apiendpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['apiendpoint']
+        kwargs.pop('apiendpoint')
+    ctx.invoke(dataintegration_cli.update_task_update_task_from_rest_task, **kwargs)
+
+
 cli_util.rename_command(dataintegration_cli, dataintegration_cli.data_entity_group, dataintegration_cli.create_entity_shape_create_entity_shape_from_file, "create-entity-shape-from-file")
+
 
 dataintegration_cli.task_validation_group.commands.pop(dataintegration_cli.create_task_validation.name)
 cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_validation_group, dataintegration_cli.create_task_validation_create_task_validation_from_integration_task, "create-from-integration-task")
@@ -582,3 +835,18 @@ dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_dat
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_my_sql.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_jdbc.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_my_sql.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_amazon_s3.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_amazon_s3.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_bicc.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_bicc.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_amazon_s3.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_bicc.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_fusion_app.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_fusion_app.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_amazon_s3.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_fusion_app.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_amazon_s3.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_amazon_s3.name)
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.create_task_create_task_from_oci_dataflow_task, "create-task-from-dataflow-task")
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.update_task_update_task_from_oci_dataflow_task, "update-task-from-dataflow-task")

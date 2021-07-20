@@ -101,11 +101,17 @@ def db_system_shape_group():
     pass
 
 
-@click.command(cli_util.override('db.pluggable_database_group.command_name', 'pluggable-database'), cls=CommandGroupWithAlias, help="""A pluggable database (PDB) is portable collection of schemas, schema objects, and non-schema objects that appears to an Oracle client as a non-container database. To use a PDB, it needs to be plugged into a CDB. To use any of the API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+@click.command(cli_util.override('db.pluggable_database_group.command_name', 'pluggable-database'), cls=CommandGroupWithAlias, help="""A pluggable database (PDB) is portable collection of schemas, schema objects, and non-schema objects that appears to an Oracle client as a non-container database. To use a PDB, it needs to be plugged into a CDB. To use any of the API operations, you must be authorized in an IAM policy. If you are not authorized, talk to a tenancy administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def pluggable_database_group():
+    pass
+
+
+@click.command(cli_util.override('db.vm_cluster_update_history_entry_group.command_name', 'vm-cluster-update-history-entry'), cls=CommandGroupWithAlias, help="""The record of a maintenance update action performed on a specified VM cluster. Applies to Exadata Cloud@Customer instances only.""")
+@cli_util.help_option_group
+def vm_cluster_update_history_entry_group():
     pass
 
 
@@ -313,6 +319,14 @@ def external_database_connector_group():
     pass
 
 
+@click.command(cli_util.override('db.vm_cluster_update_group.command_name', 'vm-cluster-update'), cls=CommandGroupWithAlias, help="""A maintenance update for a VM cluster. Applies to Exadata Cloud@Customer instances only.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def vm_cluster_update_group():
+    pass
+
+
 db_root_group.add_command(update_history_entry_group)
 db_root_group.add_command(backup_group)
 db_root_group.add_command(external_non_container_database_group)
@@ -327,6 +341,7 @@ db_root_group.add_command(autonomous_database_wallet_group)
 db_root_group.add_command(database_group)
 db_root_group.add_command(db_system_shape_group)
 db_root_group.add_command(pluggable_database_group)
+db_root_group.add_command(vm_cluster_update_history_entry_group)
 db_root_group.add_command(database_software_image_group)
 db_root_group.add_command(data_guard_association_group)
 db_root_group.add_command(autonomous_database_backup_group)
@@ -359,6 +374,7 @@ db_root_group.add_command(backup_destination_summary_group)
 db_root_group.add_command(db_node_group)
 db_root_group.add_command(console_connection_group)
 db_root_group.add_command(external_database_connector_group)
+db_root_group.add_command(vm_cluster_update_group)
 
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.activate_exadata_infrastructure.command_name', 'activate'), help=u"""Activates the specified Exadata infrastructure resource. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](activateExadataInfrastructure)""")
@@ -1827,13 +1843,25 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database.command_name', 'create'), help=u"""Creates a new Autonomous Database. \n[Command Reference](createAutonomousDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Database.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the database.
+
+The following points apply: - For Autonomous Databases on dedicated Exadata infrastructure, to provision less than 1 core, enter a fractional value in an increment of 0.1. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. (Note that fractional OCPU values are not supported for Autonomous Databasese on shared Exadata infrastructure.) - To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available for the infrastructure shape. For example, you can provision 2 cores or 3 cores, but not 2.5 cores. This applies to Autonomous Databases on both shared and dedicated Exadata infrastructure.
+
+For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX"]), help=u"""The Autonomous Database workload type. The following values are valid:
 
 - OLTP - indicates an Autonomous Transaction Processing database - DW - indicates an Autonomous Data Warehouse database - AJD - indicates an Autonomous JSON Database - APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. The maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Notes** - This parameter is only supported for dedicated Exadata infrastructure. - This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
@@ -2014,13 +2042,25 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that you will clone to create a new Autonomous Database.""")
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA"]), help=u"""The Autonomous Database clone type.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the database.
+
+The following points apply: - For Autonomous Databases on dedicated Exadata infrastructure, to provision less than 1 core, enter a fractional value in an increment of 0.1. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. (Note that fractional OCPU values are not supported for Autonomous Databasese on shared Exadata infrastructure.) - To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available for the infrastructure shape. For example, you can provision 2 cores or 3 cores, but not 2.5 cores. This applies to Autonomous Databases on both shared and dedicated Exadata infrastructure.
+
+For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX"]), help=u"""The Autonomous Database workload type. The following values are valid:
 
 - OLTP - indicates an Autonomous Transaction Processing database - DW - indicates an Autonomous Data Warehouse database - AJD - indicates an Autonomous JSON Database - APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. The maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Notes** - This parameter is only supported for dedicated Exadata infrastructure. - This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
@@ -2198,13 +2238,25 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Database.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that you will clone to create a new Autonomous Database.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the database.
+
+The following points apply: - For Autonomous Databases on dedicated Exadata infrastructure, to provision less than 1 core, enter a fractional value in an increment of 0.1. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. (Note that fractional OCPU values are not supported for Autonomous Databasese on shared Exadata infrastructure.) - To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available for the infrastructure shape. For example, you can provision 2 cores or 3 cores, but not 2.5 cores. This applies to Autonomous Databases on both shared and dedicated Exadata infrastructure.
+
+For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX"]), help=u"""The Autonomous Database workload type. The following values are valid:
 
 - OLTP - indicates an Autonomous Transaction Processing database - DW - indicates an Autonomous Data Warehouse database - AJD - indicates an Autonomous JSON Database - APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. The maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Notes** - This parameter is only supported for dedicated Exadata infrastructure. - This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
@@ -2386,13 +2438,25 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--autonomous-database-backup-id', required=True, help=u"""The [OCID] of the source Autonomous Database Backup that you will clone to create a new Autonomous Database.""")
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA"]), help=u"""The Autonomous Database clone type.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the database.
+
+The following points apply: - For Autonomous Databases on dedicated Exadata infrastructure, to provision less than 1 core, enter a fractional value in an increment of 0.1. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. (Note that fractional OCPU values are not supported for Autonomous Databasese on shared Exadata infrastructure.) - To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available for the infrastructure shape. For example, you can provision 2 cores or 3 cores, but not 2.5 cores. This applies to Autonomous Databases on both shared and dedicated Exadata infrastructure.
+
+For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX"]), help=u"""The Autonomous Database workload type. The following values are valid:
 
 - OLTP - indicates an Autonomous Transaction Processing database - DW - indicates an Autonomous Data Warehouse database - AJD - indicates an Autonomous JSON Database - APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. The maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Notes** - This parameter is only supported for dedicated Exadata infrastructure. - This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
@@ -2572,13 +2636,25 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the source Autonomous Database that you will clone to create a new Autonomous Database.""")
 @cli_util.option('--timestamp', required=True, type=custom_types.CLI_DATETIME, help=u"""The timestamp specified for the point-in-time clone of the source Autonomous Database. The timestamp must be in the past.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA"]), help=u"""The Autonomous Database clone type.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the database.
+
+The following points apply: - For Autonomous Databases on dedicated Exadata infrastructure, to provision less than 1 core, enter a fractional value in an increment of 0.1. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. (Note that fractional OCPU values are not supported for Autonomous Databasese on shared Exadata infrastructure.) - To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available for the infrastructure shape. For example, you can provision 2 cores or 3 cores, but not 2.5 cores. This applies to Autonomous Databases on both shared and dedicated Exadata infrastructure.
+
+For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX"]), help=u"""The Autonomous Database workload type. The following values are valid:
 
 - OLTP - indicates an Autonomous Transaction Processing database - DW - indicates an Autonomous Data Warehouse database - AJD - indicates an Autonomous JSON Database - APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. The maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Notes** - This parameter is only supported for dedicated Exadata infrastructure. - This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
@@ -2756,13 +2832,25 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_details.command_name', 'create-autonomous-database-create-autonomous-database-details'), help=u"""Creates a new Autonomous Database. \n[Command Reference](createAutonomousDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Database.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the database.
+
+The following points apply: - For Autonomous Databases on dedicated Exadata infrastructure, to provision less than 1 core, enter a fractional value in an increment of 0.1. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. (Note that fractional OCPU values are not supported for Autonomous Databasese on shared Exadata infrastructure.) - To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available for the infrastructure shape. For example, you can provision 2 cores or 3 cores, but not 2.5 cores. This applies to Autonomous Databases on both shared and dedicated Exadata infrastructure.
+
+For Autonomous Databases on dedicated Exadata infrastructure, the maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW", "AJD", "APEX"]), help=u"""The Autonomous Database workload type. The following values are valid:
 
 - OLTP - indicates an Autonomous Transaction Processing database - DW - indicates an Autonomous Data Warehouse database - AJD - indicates an Autonomous JSON Database - APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed. The maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Notes** - This parameter is only supported for dedicated Exadata infrastructure. - This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
@@ -5342,8 +5430,8 @@ def create_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database.command_name', 'create'), help=u"""Create and start a pluggable database in the specified container database. If needed call actions/stop to stop the PDB. \n[Command Reference](createPluggableDatabase)""")
-@cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database. The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
+@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database.command_name', 'create'), help=u"""Creates and starts a pluggable database in the specified container database. Use the [StartPluggableDatabase](#/en/database/latest/PluggableDatabase/StartPluggableDatabase] and [StopPluggableDatabase](#/en/database/latest/PluggableDatabase/StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
+@cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
 @cli_util.option('--container-database-id', required=True, help=u"""The [OCID] of the CDB""")
 @cli_util.option('--pdb-admin-password', required=True, help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
 @cli_util.option('--tde-wallet-password', required=True, help=u"""The existing TDE wallet password of the CDB.""")
@@ -6503,7 +6591,7 @@ def delete_key_store(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.delete_pluggable_database.command_name', 'delete'), help=u"""Delete a pluggable database \n[Command Reference](deletePluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.delete_pluggable_database.command_name', 'delete'), help=u"""Deletes the specified pluggable database. \n[Command Reference](deletePluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -7098,6 +7186,56 @@ def download_exadata_infrastructure_config_file(ctx, from_json, file, exadata_in
     client = cli_util.build_client('database', 'database', ctx)
     result = client.download_exadata_infrastructure_config_file(
         exadata_infrastructure_id=exadata_infrastructure_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@vm_cluster_network_group.command(name=cli_util.override('db.download_validation_report.command_name', 'download-validation-report'), help=u"""Downloads the network validation report file for the specified VM cluster network. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](downloadValidationReport)""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_validation_report(ctx, from_json, file, exadata_infrastructure_id, vm_cluster_network_id):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.download_validation_report(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_id=vm_cluster_network_id,
         **kwargs
     )
 
@@ -8742,7 +8880,7 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.get_pluggable_database.command_name', 'get'), help=u"""Gets information about a specific pluggable database \n[Command Reference](getPluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.get_pluggable_database.command_name', 'get'), help=u"""Gets information about the specified pluggable database. \n[Command Reference](getPluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -8859,6 +8997,60 @@ def get_vm_cluster_patch_history_entry(ctx, from_json, vm_cluster_id, patch_hist
     result = client.get_vm_cluster_patch_history_entry(
         vm_cluster_id=vm_cluster_id,
         patch_history_entry_id=patch_history_entry_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_update_group.command(name=cli_util.override('db.get_vm_cluster_update.command_name', 'get'), help=u"""Gets information about a specified maintenance update package for a VM cluster. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](getVmClusterUpdate)""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--update-id', required=True, help=u"""The [OCID] of the maintenance update.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'VmClusterUpdate'})
+@cli_util.wrap_exceptions
+def get_vm_cluster_update(ctx, from_json, vm_cluster_id, update_id):
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    if isinstance(update_id, six.string_types) and len(update_id.strip()) == 0:
+        raise click.UsageError('Parameter --update-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_vm_cluster_update(
+        vm_cluster_id=vm_cluster_id,
+        update_id=update_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_update_history_entry_group.command(name=cli_util.override('db.get_vm_cluster_update_history_entry.command_name', 'get'), help=u"""Gets the maintenance update history details for the specified update history entry. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](getVmClusterUpdateHistoryEntry)""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--update-history-entry-id', required=True, help=u"""The [OCID] of the maintenance update history entry.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'VmClusterUpdateHistoryEntry'})
+@cli_util.wrap_exceptions
+def get_vm_cluster_update_history_entry(ctx, from_json, vm_cluster_id, update_history_entry_id):
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    if isinstance(update_history_entry_id, six.string_types) and len(update_history_entry_id.strip()) == 0:
+        raise click.UsageError('Parameter --update-history-entry-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_vm_cluster_update_history_entry(
+        vm_cluster_id=vm_cluster_id,
+        update_history_entry_id=update_history_entry_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -12237,7 +12429,7 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.list_pluggable_databases.command_name', 'list'), help=u"""Gets a list of the pluggable databases based on databaseId or compartmentId specified. Either one of the query parameters must be provided. \n[Command Reference](listPluggableDatabases)""")
+@pluggable_database_group.command(name=cli_util.override('db.list_pluggable_databases.command_name', 'list'), help=u"""Gets a list of the pluggable databases in a database or compartment. You must provide either a `databaseId` or `compartmentId` value. \n[Command Reference](listPluggableDatabases)""")
 @cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -12465,6 +12657,120 @@ def list_vm_cluster_patches(ctx, from_json, all_pages, page_size, vm_cluster_id,
     cli_util.render_response(result, ctx)
 
 
+@vm_cluster_update_history_entry_group.command(name=cli_util.override('db.list_vm_cluster_update_history_entries.command_name', 'list'), help=u"""Gets the history of the maintenance update actions performed on the specified VM cluster. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](listVmClusterUpdateHistoryEntries)""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["GI_UPGRADE", "GI_PATCH", "OS_UPDATE"]), help=u"""A filter to return only resources that match the given update type exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCEEDED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[VmClusterUpdateHistoryEntrySummary]'})
+@cli_util.wrap_exceptions
+def list_vm_cluster_update_history_entries(ctx, from_json, all_pages, page_size, vm_cluster_id, update_type, lifecycle_state, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if update_type is not None:
+        kwargs['update_type'] = update_type
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vm_cluster_update_history_entries,
+            vm_cluster_id=vm_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vm_cluster_update_history_entries,
+            limit,
+            page_size,
+            vm_cluster_id=vm_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vm_cluster_update_history_entries(
+            vm_cluster_id=vm_cluster_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_update_group.command(name=cli_util.override('db.list_vm_cluster_updates.command_name', 'list'), help=u"""Lists the maintenance updates that can be applied to the specified VM cluster. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](listVmClusterUpdates)""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["GI_UPGRADE", "GI_PATCH", "OS_UPDATE"]), help=u"""A filter to return only resources that match the given update type exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SUCCESS", "IN_PROGRESS", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[VmClusterUpdateSummary]'})
+@cli_util.wrap_exceptions
+def list_vm_cluster_updates(ctx, from_json, all_pages, page_size, vm_cluster_id, update_type, lifecycle_state, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if update_type is not None:
+        kwargs['update_type'] = update_type
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vm_cluster_updates,
+            vm_cluster_id=vm_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vm_cluster_updates,
+            limit,
+            page_size,
+            vm_cluster_id=vm_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vm_cluster_updates(
+            vm_cluster_id=vm_cluster_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @vm_cluster_group.command(name=cli_util.override('db.list_vm_clusters.command_name', 'list'), help=u"""Lists the VM clusters in the specified compartment. Applies to Exadata Cloud@Customer instances only. To list the cloud VM clusters in an Exadata Cloud Service instance, use the [ListCloudVmClusters ] operation. \n[Command Reference](listVmClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
@@ -12528,8 +12834,8 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.local_clone_pluggable_database.command_name', 'local-clone'), help=u"""Clone and start a pluggable database on the same CDB. Only a started pluggable database can be cloned. \n[Command Reference](localClonePluggableDatabase)""")
-@cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database. The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
+@pluggable_database_group.command(name=cli_util.override('db.local_clone_pluggable_database.command_name', 'local-clone'), help=u"""Clones and starts a pluggable database (PDB) in the same database (CDB) as the source PDB. The source PDB must be in the `READ_WRITE` openMode to perform the clone operation. \n[Command Reference](localClonePluggableDatabase)""")
+@cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
 @cli_util.option('--pdb-admin-password', required=True, help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
 @cli_util.option('--target-tde-wallet-password', required=True, help=u"""The existing TDE wallet password of the target CDB.""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
@@ -12853,10 +13159,10 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.remote_clone_pluggable_database.command_name', 'remote-clone'), help=u"""Clone and start a pluggable database on a different CDB. Only a started pluggable database can be cloned. \n[Command Reference](remoteClonePluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.remote_clone_pluggable_database.command_name', 'remote-clone'), help=u"""Clones a pluggable database (PDB) to a different database from the source PDB. The cloned PDB will be started upon completion of the clone operation. The source PDB must be in the `READ_WRITE` openMode when performing the clone. \n[Command Reference](remoteClonePluggableDatabase)""")
 @cli_util.option('--target-container-database-id', required=True, help=u"""The [OCID] of the target CDB""")
 @cli_util.option('--source-container-db-admin-password', required=True, help=u"""The DB system administrator password of the source CDB.""")
-@cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database. The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
+@cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
 @cli_util.option('--pdb-admin-password', required=True, help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
 @cli_util.option('--target-tde-wallet-password', required=True, help=u"""The existing TDE wallet password of the target CDB.""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
@@ -13528,7 +13834,7 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.start_pluggable_database.command_name', 'start'), help=u"""start a stopped pluggable database. The openMode of the pluggable database will be READ_WRITE upon completion. \n[Command Reference](startPluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.start_pluggable_database.command_name', 'start'), help=u"""Starts a stopped pluggable database. The `openMode` value of the pluggable database will be `READ_WRITE` upon completion. \n[Command Reference](startPluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -13630,7 +13936,7 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.stop_pluggable_database.command_name', 'stop'), help=u"""stop a started pluggable database. The openMode of the pluggable database will be MOUNTED upon completion. \n[Command Reference](stopPluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.stop_pluggable_database.command_name', 'stop'), help=u"""Stops a pluggable database. The `openMode` value of the pluggable database will be `MOUNTED` upon completion. \n[Command Reference](stopPluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -14103,11 +14409,21 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 
 @autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database.command_name', 'update'), help=u"""Updates one or more attributes of the specified Autonomous Database. See the UpdateAutonomousDatabaseDetails resource for a full list of attributes that can be updated. \n[Command Reference](updateAutonomousDatabase)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to be made available to the database.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of Fractional OCPU cores to be made available to the database.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be attached to the database.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, of the data volume that will be attached to the database.""")
-@cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique. Can only be updated for Autonomous Databases using dedicated Exadata infrastructure.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores to be made available to the Autonomous Database.
+
+**Note:** This parameter cannot be used with the `ocpuCount` parameter.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the Autonomous Database. To provision less than 1 core, enter a fractional value in an increment of 0.1. To provision 1 or more cores, you must enter an integer between 1 and the maximum number of cores available to the infrastructure shape. For example, you can provision 0.3 or 0.4 cores, but not 0.35 cores. Likewise, you can provision 2 cores or 3 cores, but not 2.5 cores. The maximum number of cores is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `cpuCoreCount` parameter.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. For Autonomous Databases on dedicated Exadata infrastructure, the maximum storage value is determined by the infrastructure shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInGBs` parameter.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Applies to dedicated Exadata infrastructure only.
+
+The size, in gigabytes, of the data volume that will be created and attached to the database. The maximum storage value depends on the system shape. See [Characteristics of Infrastructure Shapes] for shape details.
+
+**Note:** This parameter cannot be used with the `dataStorageSizeInTBs` parameter.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique. The display name can only be updated for Autonomous Databases using dedicated Exadata infrastructure.""")
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing. It must be different from the last four passwords and it must not be a password used within the last 24 hours.""")
 @cli_util.option('--db-name', help=u"""New name for this Autonomous Database. For databases using dedicated Exadata infrastructure, the name must begin with an alphabetic character, and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. For databases using shared Exadata infrastructure, the name must begin with an alphabetic character, and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
@@ -14894,6 +15210,92 @@ def update_cloud_vm_cluster_iorm_config(ctx, from_json, force, cloud_vm_cluster_
         cloud_vm_cluster_iorm_config_update_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@data_guard_association_group.command(name=cli_util.override('db.update_data_guard_association.command_name', 'update'), help=u"""Updates the Data Guard association the specified database. This API can be used to change the `protectionMode` and `transportType` of the Data Guard association. \n[Command Reference](updateDataGuardAssociation)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
+@cli_util.option('--database-admin-password', help=u"""A strong password for the 'SYS', 'SYSTEM', and 'PDB Admin' users to apply during standby creation.
+
+The password must contain no fewer than nine characters and include:
+
+* At least two uppercase characters.
+
+* At least two lowercase characters.
+
+* At least two numeric characters.
+
+* At least two special characters. Valid special characters include \"_\", \"#\", and \"-\" only.
+
+**The password MUST be the same as the primary admin password.**""")
+@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE", "MAXIMUM_PROTECTION"]), help=u"""The protection mode for the Data Guard association's primary and standby database. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
+@cli_util.option('--transport-type', type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help=u"""The redo transport type to use for this Data Guard association.  Valid values depend on the specified 'protectionMode': * MAXIMUM_AVAILABILITY - Use SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - Use ASYNC * MAXIMUM_PROTECTION - Use SYNC
+
+For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, protection_mode, transport_type, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if database_admin_password is not None:
+        _details['databaseAdminPassword'] = database_admin_password
+
+    if protection_mode is not None:
+        _details['protectionMode'] = protection_mode
+
+    if transport_type is not None:
+        _details['transportType'] = transport_type
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_data_guard_association(
+        database_id=database_id,
+        data_guard_association_id=data_guard_association_id,
+        update_data_guard_association_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -16056,7 +16458,7 @@ def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.update_pluggable_database.command_name', 'update'), help=u"""Update a pluggable database \n[Command Reference](updatePluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.update_pluggable_database.command_name', 'update'), help=u"""Updates the specified pluggable database. \n[Command Reference](updatePluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -16134,6 +16536,7 @@ def update_pluggable_database(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--version-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16143,18 +16546,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, license_model, ssh_public_keys, version_parameterconflict, freeform_tags, defined_tags, if_match):
+def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, license_model, ssh_public_keys, version_parameterconflict, update_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
     if not force:
-        if ssh_public_keys or version_parameterconflict or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to ssh-public-keys and version-parameterconflict and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if ssh_public_keys or version_parameterconflict or update_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to ssh-public-keys and version-parameterconflict and update-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -16184,6 +16587,9 @@ def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if version_parameterconflict is not None:
         _details['version'] = cli_util.parse_json_parameter("version_parameterconflict", version_parameterconflict)
+
+    if update_details is not None:
+        _details['updateDetails'] = cli_util.parse_json_parameter("update_details", update_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
