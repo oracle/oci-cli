@@ -6,7 +6,6 @@ from oci._vendor import requests
 from oci.object_storage import UploadManager
 
 from .work_pool import WorkPool
-from .delete_tasks import DeleteObjectTask
 from .get_object_tasks import GetObjectTask, GetObjectMultipartTask
 from .head_object_tasks import HeadObjectTask
 from .multipart_upload_tasks import MultipartUploadProcessorTask
@@ -79,8 +78,8 @@ class TransferManager():
         get_object_multipart_task = GetObjectMultipartTask(self._client, callbacks_container, self._object_storage_multipart_request_pool, destination_file_handle, **kwargs)
         return self._object_storage_request_pool.submit(get_object_multipart_task)
 
-    def delete_object(self, callbacks_container, **kwargs):
-        delete_task = DeleteObjectTask(self._client, callbacks_container, **kwargs)
+    def delete_object(self, callbacks_container, task_handler, **kwargs):
+        delete_task = task_handler(self._client, callbacks_container, **kwargs)
         return self._object_storage_request_pool.submit(delete_task)
 
     def head_object(self, callbacks_container, **kwargs):

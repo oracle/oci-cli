@@ -115,12 +115,16 @@ class BulkGetOperationOutput(BulkObjectStorageOperationOutput):
 
 
 class BulkDeleteOperationOutput(BulkObjectStorageOperationOutput):
-    def __init__(self):
+    def __init__(self, object_type='object'):
         super(BulkDeleteOperationOutput, self).__init__()
         self._deleted = []
+        self._type = object_type
 
     def add_deleted(self, deleted):
         self._deleted.append(deleted)
+
+    def get_type(self):
+        return self._type
 
     def get_output(self, output_format, dry_run=False):
         self.validate_output_format(output_format)
@@ -136,14 +140,14 @@ class BulkDeleteOperationOutput(BulkObjectStorageOperationOutput):
             for deleted_obj, failure in six.iteritems(self._failures):
                 consolidated_result.append({
                     'action': 'Failed',
-                    'object': deleted_obj,
+                    self._type: deleted_obj,
                     'error-message': failure
                 })
 
             for deleted in self._deleted:
                 if dry_run:
-                    consolidated_result.append({'action': 'Dry Run', 'object': deleted})
+                    consolidated_result.append({'action': 'Dry Run', 'type': self._type, 'name': deleted})
                 else:
-                    consolidated_result.append({'action': 'Deleted', 'object': deleted})
+                    consolidated_result.append({'action': 'Deleted', 'type': self._type, 'name': deleted})
 
             return consolidated_result

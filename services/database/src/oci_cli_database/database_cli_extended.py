@@ -1030,12 +1030,29 @@ def patch_db_system(ctx, **kwargs):
     cli_util.render(db_system, None, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_vm_cluster, params_to_exclude=['version_parameterconflict'])
+# DEX-11726 Bring exacc vm cluster update and update-history-entry into vm-cluster group
+# This would change "oci db vm-cluster-update get/list" commands to "oci db vm-cluster get-update/list-updates"
+# and change "oci db vm-cluster-update-history-entry get/list" to "oci db vm-cluster get-update-history/list-update-histories"
+cli_util.rename_command(database_cli, database_cli.vm_cluster_update_group, database_cli.get_vm_cluster_update, "get-update")
+cli_util.rename_command(database_cli, database_cli.vm_cluster_update_group, database_cli.list_vm_cluster_updates, "list-updates")
+cli_util.rename_command(database_cli, database_cli.vm_cluster_update_history_entry_group, database_cli.get_vm_cluster_update_history_entry, "get-update-history")
+cli_util.rename_command(database_cli, database_cli.vm_cluster_update_history_entry_group, database_cli.list_vm_cluster_update_history_entries, "list-update-histories")
+database_cli.vm_cluster_group.add_command(database_cli.get_vm_cluster_update)
+database_cli.vm_cluster_group.add_command(database_cli.list_vm_cluster_updates)
+database_cli.vm_cluster_group.add_command(database_cli.get_vm_cluster_update_history_entry)
+database_cli.vm_cluster_group.add_command(database_cli.list_vm_cluster_update_history_entries)
+database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_group.name)
+database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_history_entry_group.name)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_vm_cluster, params_to_exclude=['version_parameterconflict', 'update_details'])
 @database_cli.vm_cluster_group.command(name='update', help=database_cli.update_vm_cluster.help)
 @cli_util.option('--patch-action', help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', help="""The OCID of the patch.""")
+@cli_util.option('--update-action', help="""The action to perform on the update.""")
+@cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
 def update_vm_cluster_extended(ctx, **kwargs):
     patch_action = kwargs.get('patch_action')
@@ -1050,9 +1067,23 @@ def update_vm_cluster_extended(ctx, **kwargs):
             "patchId": patch_id
         }
 
+    update_action = kwargs.get('update_action')
+    update_id = kwargs.get('update_id')
+    if update_action and not update_id:
+        raise click.UsageError('--update-id is required if --update-action is specified')
+    elif update_id and not update_action:
+        raise click.UsageError('--update-action is required if --update-id is specified')
+    elif update_id and update_action:
+        kwargs['update_details'] = {
+            "updateAction": update_action,
+            "updateId": update_id
+        }
+
     # remove kwargs that update_vm_cluster wont recognize
     del kwargs['patch_action']
     del kwargs['patch_id']
+    del kwargs['update_action']
+    del kwargs['update_id']
 
     ctx.invoke(database_cli.update_vm_cluster, **kwargs)
 

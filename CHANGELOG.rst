@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.26.3 - 2021-07-20
+-------------------
+Added
+~~~~~
+
+* Support for empty and dry-run options while deleting buckets in Object Storage service
+
+  * ``oci os bucket delete --empty  --dry-run``
+  * ``oci os bucket delete --empty``
+
+* Support for schedules and tasks in Data Integration service
+
+  * ``oci data-integration schedule``
+  * ``oci data-integration task``
+
+* Database service
+
+  * Support for getting available updates and updating histories for a VM cluster
+
+    * ``oci db vm-cluster get-update --update-id <Update OCID> --vm-cluster-id <VM Cluster OCID>``
+    * ``oci db vm-cluster list-updates --vm-cluster-id <VM Cluster OCID> --update-type <GI_PATCH/GI_UPGRADE/OS_UPDATE>``
+    * ``oci db vm-cluster get-update-history --update-history-entry-id <UpdateHistory OCID> --vm-cluster-id <VM Cluster OCID>``
+    * ``oci db vm-cluster list-update-histories --vm-cluster-id <VM Cluster OCID> --update-type <GI_PATCH/GI_UPGRADE/OS_UPDATE>``
+
+  * Support for updating dataguard
+
+    * ``oci db data-guard-association update``
+
+  * Support for downloading network validation report file for VM Cluster Networks
+
+    * ``oci db vm-cluster-network download-validation-report --exadata-infrastructure-id, --file, --vm-cluster-network-id``
+
+Changed
+~~~~~~~
+
+* Support patch and upgrade of Grid Infrastructure (GI) and update of DomU OS software for a VM cluster
+
+  * ``oci db vm-cluster update --update-id <Update OCID> --update-action <PRECHECK/ROLLING_APPLY/ROLLBACK>``
+
 2.26.2 - 2021-07-13
 -------------------
 Added

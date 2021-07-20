@@ -310,3 +310,123 @@ class TestDataIntegration(unittest.TestCase):
         result = util.invoke_command(
             ['data-integration', 'task', 'update-task-update-task-from-pipeline-task'])
         assert 'Error: No such command "update-task-update-task-from-pipeline-task".' in result.output
+
+    def test_create_sql_task_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'create-task-create-task-from-sql-task'])
+        assert 'Error: No such command "create-task-create-task-from-sql-task".' in result.output
+
+    def test_update_sql_task_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'update-task-update-task-from-sql-task'])
+        assert 'Error: No such command "update-task-update-task-from-sql-task".' in result.output
+
+    def test_create_amazon_s3_connection_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection', 'create-connection-create-connection-from-amazon-s3'])
+        assert 'Error: No such command "create-connection-create-connection-from-amazon-s3".' in result.output
+
+    def test_create_bicc_connection_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection', 'create-connection-create-connection-from-bicc'])
+        assert 'Error: No such command "create-connection-create-connection-from-bicc".' in result.output
+
+    def test_update_amazon_s3_connection_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection', 'update-connection-update-connection-from-amazon-s3'])
+        assert 'Error: No such command "update-connection-update-connection-from-amazon-s3".' in result.output
+
+    def test_update_bicc_connection_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection', 'update-connection-update-connection-from-bicc'])
+        assert 'Error: No such command "update-connection-update-connection-from-bicc".' in result.output
+
+    def test_create_connection_validation_from_amazon_s3_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection-validation', 'create-connection-validation-create-connection-from-amazon-s3'])
+        assert 'Error: No such command "create-connection-validation-create-connection-from-amazon-s3".' in result.output
+
+    def test_create_connection_validation_from_bicc_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection-validation', 'create-connection-validation-create-connection-from-bicc'])
+        assert 'Error: No such command "create-connection-validation-create-connection-from-bicc".' in result.output
+
+    def test_create_connection_validation_from_fusion_app_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection-validation', 'create-connection-validation-create-data-asset-from-fusion-app'])
+        assert 'Error: No such command "create-connection-validation-create-data-asset-from-fusion-app".' in result.output
+
+    def test_create_data_asset_from_fusion_app_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'create-data-asset-create-data-asset-from-fusion-app'])
+        assert 'Error: No such command "create-data-asset-create-data-asset-from-fusion-app".' in result.output
+
+    def test_update_data_asset_from_amazon_s3_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'update-data-asset-update-data-asset-from-amazon-s3'])
+        assert 'Error: No such command "update-data-asset-update-data-asset-from-amazon-s3".' in result.output
+
+    def test_update_data_asset_from_fusion_app_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'update-data-asset-update-data-asset-from-fusion-app'])
+        assert 'Error: No such command "update-data-asset-update-data-asset-from-fusion-app".' in result.output
+
+    def test_create_daily_schedule_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'schedule', 'create-schedule-daily-frequency-details'])
+        assert 'Error: No such command "create-schedule-daily-frequency-details".' in result.output
+
+    def test_create_hourly_schedule_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'schedule', 'create-schedule-hourly-frequency-details'])
+        assert 'Error: No such command "create-schedule-hourly-frequency-details".' in result.output
+
+    def test_create_monthly_schedule_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'schedule', 'create-schedule-monthly-frequency-details'])
+        assert 'Error: No such command "create-schedule-monthly-frequency-details".' in result.output
+
+    def test_update_daily_schedule_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'schedule', 'update-schedule-daily-frequency-details'])
+        assert 'Error: No such command "update-schedule-daily-frequency-details".' in result.output
+
+    def test_update_hourly_schedule_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'schedule', 'update-schedule-hourly-frequency-details'])
+        assert 'Error: No such command "update-schedule-hourly-frequency-details".' in result.output
+
+    def test_update_monthly_schedule_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'schedule', 'update-schedule-monthly-frequency-details'])
+        assert 'Error: No such command "update-schedule-monthly-frequency-details".' in result.output
+
+    def test_create_dataflow_task_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'create-task-create-task-from-oci-dataflow-task'])
+        assert 'Error: No such command "create-task-create-task-from-oci-dataflow-task".' in result.output
+
+    def test_update_dataflow_task_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'update-task-update-task-from-oci-dataflow-task'])
+        assert 'Error: No such command "update-task-update-task-from-oci-dataflow-task".' in result.output
+
+    def test_create_rest_task_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'create-task-create-task-from-rest-task'])
+        assert 'Error: No such command "create-task-create-task-from-rest-task".' in result.output
+
+    def test_update_rest_task_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'task', 'update-task-update-task-from-rest-task'])
+        assert 'Error: No such command "update-task-update-task-from-rest-task".' in result.output
+
+    def test_create_connection_validation_from_amazon_s3_data_asset_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'connection-validation', 'create-connection-validation-create-data-asset-from-amazon-s3'])
+        assert 'Error: No such command "create-connection-validation-create-data-asset-from-amazon-s3".' in result.output
+
+    def test_create_data_asset_from_amazon_s3_data_asset_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'create-data-asset-create-data-asset-from-amazon-s3'])
+        assert 'Error: No such command "create-data-asset-create-data-asset-from-amazon-s3".' in result.output
