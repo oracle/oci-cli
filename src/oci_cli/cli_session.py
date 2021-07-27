@@ -51,7 +51,7 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location):
     user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
 
     # persist the session to a config (including the token value)
-    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, persist_token=True)
+    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, persist_token=True, session_auth=True)
 
     click.echo('Config written to: {}'.format(config))
 
@@ -70,7 +70,6 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location):
 def validate(ctx, local):
     # manually set authentication mode to session so that we attempt to use the session token
     ctx.obj['auth'] = cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
-    ctx.obj['config_file'] = cli_setup.DEFAULT_CONFIG_LOCATION
 
     client_config = cli_util.build_config(ctx.obj)
     profile_name = ctx.obj['profile']
@@ -113,8 +112,6 @@ def validate(ctx, local):
 @click.pass_context
 @cli_util.wrap_exceptions
 def terminate(ctx):
-    ctx.obj['config_file'] = cli_setup.DEFAULT_CONFIG_LOCATION
-
     client_config = cli_util.build_config(ctx.obj)
 
     token = client_config.get('security_token_file')
@@ -169,7 +166,12 @@ def refresh(ctx):
     with open(expanded_security_token_location, 'r') as security_token_file:
         token = security_token_file.read()
 
-    auth = oci.auth.signers.SecurityTokenSigner(token, oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase')))
+    try:
+        private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
+    except oci.exceptions.MissingPrivateKeyPassphrase:
+        client_config['pass_phrase'] = cli_util.prompt_for_passphrase()
+        private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
+    auth = oci.auth.signers.SecurityTokenSigner(token, private_key)
 
     refresh_url = "{endpoint}/v1/authentication/refresh".format(endpoint=oci.regions.endpoint_for("auth", client_config.get('region')))
     click.echo("Attempting to refresh token from {refresh_url}".format(refresh_url=refresh_url), file=sys.stderr)

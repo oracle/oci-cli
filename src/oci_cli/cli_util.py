@@ -302,7 +302,7 @@ def get_session_token_signer(client_config):
         private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
     except exceptions.MissingPrivateKeyPassphrase:
         client_config['pass_phrase'] = prompt_for_passphrase()
-        signer = oci.Signer.from_config(client_config)
+        private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
 
     signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
     return signer
