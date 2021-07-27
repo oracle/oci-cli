@@ -1441,7 +1441,7 @@ def get_cloud_exadata_infrastructure(ctx, **kwargs):
 @database_cli.cloud_exadata_infrastructure_group.command('update', help=database_cli.update_cloud_exadata_infrastructure.help)
 @cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
 @cli_util.wrap_exceptions
 def update_cloud_exadata_infrastructure(ctx, **kwargs):
     kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
@@ -1691,6 +1691,7 @@ This property is applicable only to Autonomous Databases on the Exadata Cloud@Cu
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs):
+
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
         kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
 
@@ -1709,6 +1710,7 @@ This property is applicable only to Autonomous Databases on the Exadata Cloud@Cu
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_clone_details(ctx, **kwargs):
+
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
         kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
 
@@ -1742,6 +1744,7 @@ def update_autonomous_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, **kwargs):
+
     ctx.invoke(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, **kwargs)
 
 
@@ -1752,6 +1755,7 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, **kwargs):
+
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, **kwargs)
 
 
@@ -1762,6 +1766,7 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, **kwargs):
+
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, **kwargs)
 
 
@@ -2283,3 +2288,6 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 
 # oci db exadata-infrastructure add -> oci db exadata-infrastructure add-storage-capacity
 cli_util.rename_command(database_cli, database_cli.exadata_infrastructure_group, database_cli.add_storage_capacity_exadata_infrastructure, "add-storage-capacity")
+
+# oci db autonomous-database create-autonomous-database-create-cross-region-autonomous-database-data-guard-details -> oci db autonomous-database create-adb-cross-region-data-guard-details
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details, "create-adb-cross-region-data-guard-details")

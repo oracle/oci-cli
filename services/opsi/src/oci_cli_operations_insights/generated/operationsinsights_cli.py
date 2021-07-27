@@ -1315,7 +1315,7 @@ def ingest_sql_text(ctx, from_json, items, compartment_id, database_id, id, if_m
 @database_insights_group.command(name=cli_util.override('opsi.list_database_configurations.command_name', 'list-database-configurations'), help=u"""Gets a list of database insight configurations based on the query parameters specified. Either compartmentId or databaseInsightId query parameter must be specified. \n[Command Reference](listDatabaseConfigurations)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -1323,14 +1323,18 @@ def ingest_sql_text(ctx, from_json, items, compartment_id, database_id, id, if_m
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["databaseName", "databaseDisplayName", "databaseType"]), help=u"""Database configuration list sort options. If `fields` parameter is selected, the `sortBy` parameter must be one of the fields specified.""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'DatabaseConfigurationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'DatabaseConfigurationCollection'})
 @cli_util.wrap_exceptions
-def list_database_configurations(ctx, from_json, all_pages, page_size, compartment_id, enterprise_manager_bridge_id, id, database_id, database_type, limit, page, sort_order, sort_by, host_name):
+def list_database_configurations(ctx, from_json, all_pages, page_size, compartment_id, enterprise_manager_bridge_id, id, database_id, database_type, limit, page, sort_order, sort_by, host_name, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1356,6 +1360,14 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
         kwargs['sort_by'] = sort_by
     if host_name is not None and len(host_name) > 0:
         kwargs['host_name'] = host_name
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -1383,7 +1395,7 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 @database_insights_group.command(name=cli_util.override('opsi.list_database_insights.command_name', 'list'), help=u"""Gets a list of database insights based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listDatabaseInsights)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
@@ -1518,7 +1530,7 @@ def list_enterprise_manager_bridges(ctx, from_json, all_pages, page_size, compar
 
 @host_insights_group.command(name=cli_util.override('opsi.list_host_insights.command_name', 'list'), help=u"""Gets a list of host insights based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listHostInsights)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible value is EXTERNAL-HOST.""")
@@ -1754,13 +1766,17 @@ def list_sql_plans(ctx, from_json, all_pages, compartment_id, sql_identifier, pl
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SqlSearchCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlSearchCollection'})
 @cli_util.wrap_exceptions
-def list_sql_searches(ctx, from_json, all_pages, compartment_id, sql_identifier, analysis_time_interval, time_interval_start, time_interval_end, page):
+def list_sql_searches(ctx, from_json, all_pages, compartment_id, sql_identifier, analysis_time_interval, time_interval_start, time_interval_end, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -1771,6 +1787,14 @@ def list_sql_searches(ctx, from_json, all_pages, compartment_id, sql_identifier,
         kwargs['time_interval_end'] = time_interval_end
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -1795,13 +1819,17 @@ def list_sql_searches(ctx, from_json, all_pages, compartment_id, sql_identifier,
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the assosicated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database [OCIDs] of the database insight resource.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
-@json_skeleton_utils.get_cli_json_input_option({'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlTextCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlTextCollection'})
 @cli_util.wrap_exceptions
-def list_sql_texts(ctx, from_json, all_pages, compartment_id, sql_identifier, database_id, id, page):
+def list_sql_texts(ctx, from_json, all_pages, compartment_id, sql_identifier, database_id, id, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if database_id is not None and len(database_id) > 0:
@@ -1810,6 +1838,14 @@ def list_sql_texts(ctx, from_json, all_pages, compartment_id, sql_identifier, da
         kwargs['id'] = id
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -1986,7 +2022,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--utilization-level', type=custom_types.CliCaseInsensitiveChoice(["HIGH_UTILIZATION", "LOW_UTILIZATION", "MEDIUM_HIGH_UTILIZATION", "MEDIUM_LOW_UTILIZATION"]), help=u"""Filter by utilization level by the following buckets:   - HIGH_UTILIZATION: DBs with utilization greater or equal than 75.   - LOW_UTILIZATION: DBs with utilization lower than 25.   - MEDIUM_HIGH_UTILIZATION: DBs with utilization greater or equal than 50 but lower than 75.   - MEDIUM_LOW_UTILIZATION: DBs with utilization greater or equal than 25 but lower than 50.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -1994,12 +2030,16 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.option('--tablespace-name', help=u"""Tablespace name for a database""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--is-database-instance-level-metrics', type=click.BOOL, help=u"""Flag to indicate if database instance level metrics should be returned. The flag is ignored when a host name filter is not applied. When a hostname filter is applied this flag will determine whether to return metrics for the instances located on the specified host or for the whole database which contains an instance on this host.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceCapacityTrendAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceCapacityTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, utilization_level, page, sort_order, sort_by, tablespace_name, host_name, is_database_instance_level_metrics):
+def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, utilization_level, page, sort_order, sort_by, tablespace_name, host_name, is_database_instance_level_metrics, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2028,6 +2068,14 @@ def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartme
         kwargs['host_name'] = host_name
     if is_database_instance_level_metrics is not None:
         kwargs['is_database_instance_level_metrics'] = is_database_instance_level_metrics
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_database_insight_resource_capacity_trend(
@@ -2046,7 +2094,7 @@ def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartme
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
 @cli_util.option('--forecast-model', type=custom_types.CliCaseInsensitiveChoice(["LINEAR", "ML_AUTO", "ML_NO_AUTO"]), help=u"""Choose algorithm model for the forecasting. Possible values:   - LINEAR: Uses linear regression algorithm for forecasting.   - ML_AUTO: Automatically detects best algorithm to use for forecasting.   - ML_NO_AUTO: Automatically detects seasonality of the data for forecasting using linear or seasonal algorithm.""")
@@ -2056,12 +2104,16 @@ def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartme
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--tablespace-name', help=u"""Tablespace name for a database""")
 @cli_util.option('--is-database-instance-level-metrics', type=click.BOOL, help=u"""Flag to indicate if database instance level metrics should be returned. The flag is ignored when a host name filter is not applied. When a hostname filter is applied this flag will determine whether to return metrics for the instances located on the specified host or for the whole database which contains an instance on this host.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceForecastTrendAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceForecastTrendAggregation'})
 @cli_util.wrap_exceptions
-def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, statistic, forecast_days, forecast_model, utilization_level, confidence, page, host_name, tablespace_name, is_database_instance_level_metrics):
+def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, statistic, forecast_days, forecast_model, utilization_level, confidence, page, host_name, tablespace_name, is_database_instance_level_metrics, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2094,6 +2146,14 @@ def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartme
         kwargs['tablespace_name'] = tablespace_name
     if is_database_instance_level_metrics is not None:
         kwargs['is_database_instance_level_metrics'] = is_database_instance_level_metrics
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_database_insight_resource_forecast_trend(
@@ -2112,7 +2172,7 @@ def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartme
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--percentile', type=click.INT, help=u"""Percentile values of daily usage to be used for computing the aggregate resource usage.""")
 @cli_util.option('--insight-by', help=u"""Return data of a specific insight Possible values are High Utilization, Low Utilization, Any ,High Utilization Forecast, Low Utilization Forecast""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
@@ -2122,12 +2182,16 @@ def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartme
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["utilizationPercent", "usage", "usageChangePercent", "databaseName", "databaseType"]), help=u"""The order in which resource statistics records are listed""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--is-database-instance-level-metrics', type=click.BOOL, help=u"""Flag to indicate if database instance level metrics should be returned. The flag is ignored when a host name filter is not applied. When a hostname filter is applied this flag will determine whether to return metrics for the instances located on the specified host or for the whole database which contains an instance on this host.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceStatisticsAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceStatisticsAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_database_insight_resource_statistics(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, percentile, insight_by, forecast_days, limit, page, sort_order, sort_by, host_name, is_database_instance_level_metrics):
+def summarize_database_insight_resource_statistics(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, percentile, insight_by, forecast_days, limit, page, sort_order, sort_by, host_name, is_database_instance_level_metrics, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2160,6 +2224,14 @@ def summarize_database_insight_resource_statistics(ctx, from_json, compartment_i
         kwargs['host_name'] = host_name
     if is_database_instance_level_metrics is not None:
         kwargs['is_database_instance_level_metrics'] = is_database_instance_level_metrics
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_database_insight_resource_statistics(
@@ -2178,17 +2250,21 @@ def summarize_database_insight_resource_statistics(ctx, from_json, compartment_i
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--is-database-instance-level-metrics', type=click.BOOL, help=u"""Flag to indicate if database instance level metrics should be returned. The flag is ignored when a host name filter is not applied. When a hostname filter is applied this flag will determine whether to return metrics for the instances located on the specified host or for the whole database which contains an instance on this host.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--percentile', type=click.INT, help=u"""Percentile values of daily usage to be used for computing the aggregate resource usage.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceUsageAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceUsageAggregation'})
 @cli_util.wrap_exceptions
-def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, host_name, is_database_instance_level_metrics, page, percentile):
+def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, host_name, is_database_instance_level_metrics, page, percentile, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2211,6 +2287,14 @@ def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, re
         kwargs['page'] = page
     if percentile is not None:
         kwargs['percentile'] = percentile
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_database_insight_resource_usage(
@@ -2229,18 +2313,22 @@ def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, re
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["endTimestamp", "usage", "capacity"]), help=u"""Sorts using end timestamp, usage or capacity""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--is-database-instance-level-metrics', type=click.BOOL, help=u"""Flag to indicate if database instance level metrics should be returned. The flag is ignored when a host name filter is not applied. When a hostname filter is applied this flag will determine whether to return metrics for the instances located on the specified host or for the whole database which contains an instance on this host.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceUsageTrendAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceUsageTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, page, sort_order, sort_by, host_name, is_database_instance_level_metrics):
+def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, page, sort_order, sort_by, host_name, is_database_instance_level_metrics, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2265,6 +2353,14 @@ def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_
         kwargs['host_name'] = host_name
     if is_database_instance_level_metrics is not None:
         kwargs['is_database_instance_level_metrics'] = is_database_instance_level_metrics
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_database_insight_resource_usage_trend(
@@ -2283,17 +2379,21 @@ def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--is-database-instance-level-metrics', type=click.BOOL, help=u"""Flag to indicate if database instance level metrics should be returned. The flag is ignored when a host name filter is not applied. When a hostname filter is applied this flag will determine whether to return metrics for the instances located on the specified host or for the whole database which contains an instance on this host.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceUtilizationInsightAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeDatabaseInsightResourceUtilizationInsightAggregation'})
 @cli_util.wrap_exceptions
-def summarize_database_insight_resource_utilization_insight(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, forecast_days, host_name, is_database_instance_level_metrics, page):
+def summarize_database_insight_resource_utilization_insight(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, database_type, database_id, id, forecast_days, host_name, is_database_instance_level_metrics, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2316,6 +2416,14 @@ def summarize_database_insight_resource_utilization_insight(ctx, from_json, comp
         kwargs['is_database_instance_level_metrics'] = is_database_instance_level_metrics
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_database_insight_resource_utilization_insight(
@@ -2373,17 +2481,21 @@ def summarize_database_insight_tablespace_usage_trend(ctx, from_json, compartmen
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--utilization-level', type=custom_types.CliCaseInsensitiveChoice(["HIGH_UTILIZATION", "LOW_UTILIZATION", "MEDIUM_HIGH_UTILIZATION", "MEDIUM_LOW_UTILIZATION"]), help=u"""Filter by utilization level by the following buckets:   - HIGH_UTILIZATION: DBs with utilization greater or equal than 75.   - LOW_UTILIZATION: DBs with utilization lower than 25.   - MEDIUM_HIGH_UTILIZATION: DBs with utilization greater or equal than 50 but lower than 75.   - MEDIUM_LOW_UTILIZATION: DBs with utilization greater or equal than 25 but lower than 50.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["endTimestamp", "capacity"]), help=u"""Sorts using end timestamp or capacity""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceCapacityTrendAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceCapacityTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, utilization_level, page, sort_order, sort_by):
+def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, utilization_level, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2404,6 +2516,14 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_capacity_trend(
@@ -2421,19 +2541,23 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
 @cli_util.option('--forecast-model', type=custom_types.CliCaseInsensitiveChoice(["LINEAR", "ML_AUTO", "ML_NO_AUTO"]), help=u"""Choose algorithm model for the forecasting. Possible values:   - LINEAR: Uses linear regression algorithm for forecasting.   - ML_AUTO: Automatically detects best algorithm to use for forecasting.   - ML_NO_AUTO: Automatically detects seasonality of the data for forecasting using linear or seasonal algorithm.""")
 @cli_util.option('--utilization-level', type=custom_types.CliCaseInsensitiveChoice(["HIGH_UTILIZATION", "LOW_UTILIZATION", "MEDIUM_HIGH_UTILIZATION", "MEDIUM_LOW_UTILIZATION"]), help=u"""Filter by utilization level by the following buckets:   - HIGH_UTILIZATION: DBs with utilization greater or equal than 75.   - LOW_UTILIZATION: DBs with utilization lower than 25.   - MEDIUM_HIGH_UTILIZATION: DBs with utilization greater or equal than 50 but lower than 75.   - MEDIUM_LOW_UTILIZATION: DBs with utilization greater or equal than 25 but lower than 50.""")
 @cli_util.option('--confidence', type=click.INT, help=u"""This parameter is used to change data's confidence level, this data is ingested by the forecast algorithm. Confidence is the probability of an interval to contain the expected population parameter. Manipulation of this value will lead to different results. If not set, default confidence value is 95%.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceForecastTrendAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceForecastTrendAggregation'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, statistic, forecast_days, forecast_model, utilization_level, confidence, page):
+def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, statistic, forecast_days, forecast_model, utilization_level, confidence, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2458,6 +2582,14 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
         kwargs['confidence'] = confidence
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_forecast_trend(
@@ -2475,7 +2607,7 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--percentile', type=click.INT, help=u"""Percentile values of daily usage to be used for computing the aggregate resource usage.""")
 @cli_util.option('--insight-by', help=u"""Return data of a specific insight Possible values are High Utilization, Low Utilization, Any ,High Utilization Forecast, Low Utilization Forecast""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
@@ -2483,12 +2615,16 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["utilizationPercent", "usage", "usageChangePercent", "hostName", "platformType"]), help=u"""The order in which resource statistics records are listed.""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceStatisticsAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceStatisticsAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, percentile, insight_by, forecast_days, limit, page, sort_order, sort_by):
+def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, percentile, insight_by, forecast_days, limit, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2515,6 +2651,14 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_statistics(
@@ -2532,15 +2676,19 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--percentile', type=click.INT, help=u"""Percentile values of daily usage to be used for computing the aggregate resource usage.""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUsageAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUsageAggregation'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, page, percentile):
+def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, page, percentile, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2557,6 +2705,14 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
         kwargs['page'] = page
     if percentile is not None:
         kwargs['percentile'] = percentile
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_usage(
@@ -2574,16 +2730,20 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["endTimestamp", "usage", "capacity"]), help=u"""Sorts using end timestamp, usage or capacity""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUsageTrendAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUsageTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, page, sort_order, sort_by):
+def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2602,6 +2762,14 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_usage_trend(
@@ -2619,15 +2787,19 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX"]), multiple=True, help=u"""Filter by one or more platform types. Possible value is LINUX.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs] of the host insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUtilizationInsightAggregation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUtilizationInsightAggregation'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, forecast_days, page):
+def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, forecast_days, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -2644,6 +2816,14 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
         kwargs['forecast_days'] = forecast_days
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_utilization_insight(
@@ -2658,19 +2838,23 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--database-time-pct-greater-than', help=u"""Filter sqls by percentage of db time.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlInsightAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlInsightAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_sql_insights(ctx, from_json, compartment_id, database_type, database_id, id, host_name, database_time_pct_greater_than, analysis_time_interval, time_interval_start, time_interval_end, page):
+def summarize_sql_insights(ctx, from_json, compartment_id, database_type, database_id, id, host_name, database_time_pct_greater_than, analysis_time_interval, time_interval_start, time_interval_end, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if database_type is not None and len(database_type) > 0:
@@ -2691,6 +2875,14 @@ def summarize_sql_insights(ctx, from_json, compartment_id, database_type, databa
         kwargs['time_interval_end'] = time_interval_end
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_sql_insights(
@@ -2782,7 +2974,7 @@ def summarize_sql_response_time_distributions(ctx, from_json, compartment_id, sq
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
-@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs] of the database insight resource.""")
+@cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--host-name', multiple=True, help=u"""Filter by one or more hostname.""")
 @cli_util.option('--database-time-pct-greater-than', help=u"""Filter sqls by percentage of db time.""")
 @cli_util.option('--sql-identifier', multiple=True, help=u"""One or more unique SQL_IDs for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
@@ -2794,12 +2986,16 @@ def summarize_sql_response_time_distributions(ctx, from_json, compartment_id, sq
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["databaseTimeInSec", "executionsPerHour", "executionsCount", "cpuTimeInSec", "ioTimeInSec", "inefficientWaitTimeInSec", "responseTimeInSec", "planCount", "variability", "averageActiveSessions", "databaseTimePct", "inefficiencyInPct", "changeInCpuTimeInPct", "changeInIoTimeInPct", "changeInInefficientWaitTimeInPct", "changeInResponseTimeInPct", "changeInAverageActiveSessionsInPct", "changeInExecutionsPerHourInPct", "changeInInefficiencyInPct"]), help=u"""The field to use when sorting SQL statistics. Example: databaseTimeInSec""")
 @cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["DEGRADING", "VARIANT", "INEFFICIENT", "CHANGING_PLANS", "IMPROVING", "DEGRADING_VARIANT", "DEGRADING_INEFFICIENT", "DEGRADING_CHANGING_PLANS", "DEGRADING_INCREASING_IO", "DEGRADING_INCREASING_CPU", "DEGRADING_INCREASING_INEFFICIENT_WAIT", "DEGRADING_CHANGING_PLANS_AND_INCREASING_IO", "DEGRADING_CHANGING_PLANS_AND_INCREASING_CPU", "DEGRADING_CHANGING_PLANS_AND_INCREASING_INEFFICIENT_WAIT", "VARIANT_INEFFICIENT", "VARIANT_CHANGING_PLANS", "VARIANT_INCREASING_IO", "VARIANT_INCREASING_CPU", "VARIANT_INCREASING_INEFFICIENT_WAIT", "VARIANT_CHANGING_PLANS_AND_INCREASING_IO", "VARIANT_CHANGING_PLANS_AND_INCREASING_CPU", "VARIANT_CHANGING_PLANS_AND_INCREASING_INEFFICIENT_WAIT", "INEFFICIENT_CHANGING_PLANS", "INEFFICIENT_INCREASING_INEFFICIENT_WAIT", "INEFFICIENT_CHANGING_PLANS_AND_INCREASING_INEFFICIENT_WAIT"]), multiple=True, help=u"""Filter sqls by one or more performance categories.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlStatisticAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'sql-identifier': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlStatisticAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_sql_statistics(ctx, from_json, compartment_id, database_type, database_id, id, host_name, database_time_pct_greater_than, sql_identifier, analysis_time_interval, time_interval_start, time_interval_end, limit, page, sort_order, sort_by, category):
+def summarize_sql_statistics(ctx, from_json, compartment_id, database_type, database_id, id, host_name, database_time_pct_greater_than, sql_identifier, analysis_time_interval, time_interval_start, time_interval_end, limit, page, sort_order, sort_by, category, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if database_type is not None and len(database_type) > 0:
@@ -2830,6 +3026,14 @@ def summarize_sql_statistics(ctx, from_json, compartment_id, database_type, data
         kwargs['sort_by'] = sort_by
     if category is not None and len(category) > 0:
         kwargs['category'] = category
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_sql_statistics(
@@ -2849,12 +3053,16 @@ def summarize_sql_statistics(ctx, from_json, compartment_id, database_type, data
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlStatisticsTimeSeriesAggregationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SqlStatisticsTimeSeriesAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_sql_statistics_time_series(ctx, from_json, compartment_id, sql_identifier, database_id, id, host_name, analysis_time_interval, time_interval_start, time_interval_end, page):
+def summarize_sql_statistics_time_series(ctx, from_json, compartment_id, sql_identifier, database_id, id, host_name, analysis_time_interval, time_interval_start, time_interval_end, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if database_id is not None and len(database_id) > 0:
@@ -2871,6 +3079,14 @@ def summarize_sql_statistics_time_series(ctx, from_json, compartment_id, sql_ide
         kwargs['time_interval_end'] = time_interval_end
     if page is not None:
         kwargs['page'] = page
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_sql_statistics_time_series(

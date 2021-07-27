@@ -201,7 +201,7 @@ def create_user_session(region='', tenancy_name=None):
     return UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
 
 
-def persist_user_session(user_session, profile_name=None, config=None, persist_token=False, bootstrap=False):
+def persist_user_session(user_session, profile_name=None, config=None, persist_token=False, bootstrap=False, session_auth=False):
     if not profile_name:
         # prompt for location of user config
         config_location, profile_name = cli_setup.prompt_session_for_profile()
@@ -226,7 +226,7 @@ def persist_user_session(user_session, profile_name=None, config=None, persist_t
         sys.exit(0)
 
     key_passphrase = ''
-    if bootstrap:
+    if bootstrap or session_auth:
         key_passphrase = click.prompt(text='Enter a passphrase for your private key (empty for no passphrase)',
                                       default='', hide_input=True, show_default=False, confirmation_prompt=True)
 
@@ -247,6 +247,9 @@ def persist_user_session(user_session, profile_name=None, config=None, persist_t
     userId = None
     if bootstrap:
         userId = user_session.user_ocid
+
+    if session_auth and key_passphrase and not click.confirm('Do you want to write your passphrase to the config file? (If not, you will need to enter it when prompted each time you run an oci command)', default=False):
+        key_passphrase = None
 
     cli_setup.write_config(
         filename=config_location,

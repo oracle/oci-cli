@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.26.4 - 2021-07-27
+-------------------
+Added
+~~~~~
+
+* Support for filtering by tag on capacity planning and SQL warehouse list operations in the Operations Insights service
+
+  * Parameters ``defined-tag-equals``, ``freeform-tag-equals``, ``defined-tag-exists``, ``freeform-tag-exists`` are added for some commands under ``oci opsi database-insights``
+  
+* Support for creating cross-region autonomous data guards in the Database service
+  
+*  ``oci db autonomous-database create-cross-region-data-guard``
+*  ``oci db autonomous-database fail-over --peer-db-id``
+*  ``oci db autonomous-database switchover --peer-db-id``
+*  ``oci db autonomous-database update --peer-db-id``
+
+* Support for the customer contacts feature on cloud exadata infrastructure in the Database service
+
+  * ``oci db cloud-exa-infra create --customer-contacts``
+  * ``oci db cloud-exa-infra update --customer-contacts``
+
+* Support for cost analysis custom tables in the Usage service
+
+  * ``oci usage-api custom-table``
+
+* Support non-default config file locations for ``oci session validate`` and ``oci session terminate``
+
+* Support to add passphrase for session authentication (``oci session authenticate``)
+
+
 2.26.3 - 2021-07-20
 -------------------
 Added

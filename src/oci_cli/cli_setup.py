@@ -227,7 +227,7 @@ def generate_oci_config():
         fingerprint = public_key_to_fingerprint(private_key.public_key())
         click.echo("Fingerprint: {}".format(fingerprint))
 
-    if key_passphrase and not click.confirm('Do you want to write your passphrase to the config file? (if not, you will need to supply it as an argument to the CLI)', default=False):
+    if key_passphrase and not click.confirm('Do you want to write your passphrase to the config file? (If not, you will need to enter it when prompted each time you run an oci command)', default=False):
         key_passphrase = None
 
     write_config(
