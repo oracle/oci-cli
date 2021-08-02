@@ -13,10 +13,7 @@ import vcr
 
 from oci._vendor.urllib3 import connectionpool
 
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
+import unittest.mock as mock
 
 # Save the original types for our vendored version of requests and urllib3 so we can reset/unmock them later
 _OCIVendoredVerifiedHTTPSConnection = connectionpool.VerifiedHTTPSConnection

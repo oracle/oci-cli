@@ -25,13 +25,7 @@ import oci_cli.cli_util
 from conftest import runner
 from oci_cli.dynamic_loader import ALL_SERVICES_DIR
 from . import test_config_container
-
-try:
-    # PY3+
-    import collections.abc as abc
-except ImportError:
-    # PY2
-    import collections as abc
+import collections.abc as abc
 
 TEST_DATA_VERSION = '1'
 
@@ -247,7 +241,7 @@ def remove_outer_quotes(text):
 
 def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False):
     try:
-        assert result.exit_code == 0
+        assert result.exit_code == 0 or result.exit_code is None
 
         if includes_debug_data:
             assert 'opc-request-id' in result.output

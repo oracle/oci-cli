@@ -256,10 +256,13 @@ need_to_install_python=true
 # This is needed for Offline installation, since Offline installation requires Python 3 to be installed
 python3_is_installed=false
 command -v python >/dev/null 2>&1
-if [ $? -eq 0 ]; then
+py_ver=$?
+command -v python3 >/dev/null 2>&1
+py3_ver=$?
+if [ $py_ver -eq 0 ] || [ $py3_ver -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    python -c "import sys; v = sys.version_info; valid = v >= (2, 7, 5) if v[0] == 2 else v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
+    python -c "import sys; v = sys.version_info; valid = v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
     if [ $? -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
@@ -271,7 +274,7 @@ if [ $? -eq 0 ]; then
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ] &&  ["${OFFLINE_INSTALL}" != "true" ]; then
                 while true
                 do
-                  read -p "After August 1st, 2021, new releases of the OCI CLI will only run on Python 3.6 or higher. You will not be able to upgrade to a newer version of CLI after this date without Python 3.6+. To keep using Python 2.X, you would need to set OCI_CLI_ALLOW_PYTHON2=True after installation is complete. Would you like to upgrade to Python 3? Please enter Y or N. " answer
+                  read -p "OCI CLI will only run on Python 3.6 or higher. Would you like to upgrade to Python 3? Please enter Y or N. " answer
                   case $answer in
                    [yY]* ) echo "Installing Python 3...";
                       need_to_install_python=true;
@@ -298,7 +301,7 @@ command -v python3 >/dev/null 2>&1
 if [ $? -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    python3 -c "import sys; v = sys.version_info; valid = v >= (2, 7, 5) if v[0] == 2 else v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
+    python3 -c "import sys; v = sys.version_info; valid = v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
     if [ $? -eq 0 ]; then
         python_exe=python3
         # if python is installed and meets the version requirements then we dont need to install it

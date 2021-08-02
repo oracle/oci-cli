@@ -40,7 +40,6 @@ from .service_mapping import service_mapping    # noqa: E402
 # Users can increase this to DEBUG with -d, but we don't want to suppress
 # important security information.
 logging.basicConfig(level=logging.WARN)
-PYTHON2_DEPRECATION_NOTICE = """***Warning*** After August 1st, 2021, new releases of the OCI CLI will only run on Python 3.6 or higher. Please upgrade your Python environment to Python3.6+ and reinstall OCI CLI before this date. To keep using Python 2.X and to stop seeing this message, set the following environment variable OCI_CLI_ALLOW_PYTHON2=True."""
 
 OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
 
@@ -238,11 +237,11 @@ def find_latest_release_info(ctx, param, value):
                 if key == version:
                     if version_up_to_date:
                         click.echo(click.style("Version {} is up to date with latest release".format(version)))
-                    ctx.exit()
+                    sys.exit()
                 version_up_to_date = False
                 click.echo(key)
                 click.echo(od[key])
-    ctx.exit()
+    sys.exit()
 
 
 def find_latest_release_version(ctx, param, value):
@@ -279,7 +278,7 @@ def find_latest_release_version(ctx, param, value):
                                    " https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliupgrading.htm".format(current_version, latest_version), fg='red'))
             exit_code = 1
 
-    ctx.exit(exit_code)
+    sys.exit(exit_code)
 
 
 @click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True,
@@ -335,9 +334,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, help):
-    if sys.version_info < (3, 6, 0) and not os.environ.get("OCI_CLI_ALLOW_PYTHON2"):
-        click.echo(click.style(PYTHON2_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, help):
 
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
@@ -346,7 +343,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
     # is used but there are subcommands, then set a flag for user later.
     if not ctx.invoked_subcommand:
         echo_help(ctx)
-        ctx.exit()
+        sys.exit()
 
     if profile == Sentinel(DEFAULT_PROFILE):
         # if --profile is not supplied, fallback accordingly:
@@ -374,7 +371,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
     initial_dict = {
         'config_file': config_file,
         'profile': profile,
-        'defaults_file': defaults_file,
+        'cli_rc_file': cli_rc_file,
         'request_id': request_id,
         'region': region,
         'endpoint': endpoint,
@@ -396,7 +393,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
     else:
         ctx.obj.update(initial_dict)
 
-    load_default_values(ctx, defaults_file, profile)
+    load_default_values(ctx, cli_rc_file, profile)
 
     if help:
         ctx.obj['help'] = True
@@ -435,8 +432,8 @@ def is_top_level_help(ctx):
     return False
 
 
-def load_default_values(ctx, defaults_file, profile):
-    file_location = os.path.expandvars(os.path.expanduser(defaults_file))
+def load_default_values(ctx, cli_rc_file, profile):
+    file_location = os.path.expandvars(os.path.expanduser(cli_rc_file))
     ctx.obj['default_values_from_file'] = {}
     if os.path.exists(file_location):
         parser = configparser.ConfigParser(interpolation=None)

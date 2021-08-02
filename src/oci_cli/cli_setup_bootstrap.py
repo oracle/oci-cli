@@ -20,16 +20,8 @@ import uuid
 import webbrowser
 from oci import identity
 
-try:
-    from urllib.parse import urlparse, parse_qs, urlencode
-except ImportError:
-    from urlparse import urlparse, parse_qs
-    from urllib import urlencode
-
-try:
-    from http.server import BaseHTTPRequestHandler, HTTPServer
-except ImportError:
-    from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse, parse_qs, urlencode
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 BOOTSTRAP_SERVICE_PORT = 8181
 BOOTSTRAP_PROCESS_CANCELED_MESSAGE = 'Bootstrap process canceled.'

@@ -440,6 +440,72 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.copy_volume_group_backup.command_name', 'copy'), help=u"""Creates a volume group backup copy in specified region. For general information about volume group backups, see [Overview of Block Volume Service Backups] \n[Command Reference](copyVolumeGroupBackup)""")
+@cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
+@cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
+
+Example: `us-ashburn-1`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied volume group backup. If you do not specify this attribute the volume group backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+
+ For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "COMMITTED", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeGroupBackup'})
+@cli_util.wrap_exceptions
+def copy_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_backup_id, destination_region, display_name, kms_key_id):
+
+    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['destinationRegion'] = destination_region
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.copy_volume_group_backup(
+        volume_group_backup_id=volume_group_backup_id,
+        copy_volume_group_backup_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_volume_group_backup') and callable(getattr(client, 'get_volume_group_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_group_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume.command_name', 'create'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

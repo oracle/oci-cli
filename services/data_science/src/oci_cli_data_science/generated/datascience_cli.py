@@ -27,7 +27,7 @@ def model_deployment_shape_group():
     pass
 
 
-@click.command(cli_util.override('data_science.model_deployment_group.command_name', 'model-deployment'), cls=CommandGroupWithAlias, help="""Model deployments are interactive coding environments for data scientists.""")
+@click.command(cli_util.override('data_science.model_deployment_group.command_name', 'model-deployment'), cls=CommandGroupWithAlias, help="""Model deployments are used by data scientists to perform predictions from the model hosted on an HTTP server.""")
 @cli_util.help_option_group
 def model_deployment_group():
     pass
@@ -382,15 +382,23 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @cli_util.option('--description', help=u"""A short description of the model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-metadata-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of custom metadata details for the model.
+
+This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-metadata-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of defined metadata details for the model.
+
+This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-schema', help=u"""Input schema file content in String format""")
+@cli_util.option('--output-schema', help=u"""Output schema file content in String format""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Model'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}}, output_type={'module': 'data_science', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, freeform_tags, defined_tags):
+def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, input_schema, output_schema):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -410,6 +418,18 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if custom_metadata_list is not None:
+        _details['customMetadataList'] = cli_util.parse_json_parameter("custom_metadata_list", custom_metadata_list)
+
+    if defined_metadata_list is not None:
+        _details['definedMetadataList'] = cli_util.parse_json_parameter("defined_metadata_list", defined_metadata_list)
+
+    if input_schema is not None:
+        _details['inputSchema'] = input_schema
+
+    if output_schema is not None:
+        _details['outputSchema'] = output_schema
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model(
@@ -446,7 +466,7 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--model-artifact', required=True, help=u"""The model artifact to upload.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
-@cli_util.option('--content-disposition', help=u"""The content disposition of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -632,12 +652,13 @@ def create_model_deployment_single_model_deployment_configuration_details(ctx, f
 @cli_util.option('--git-commit', help=u"""For model reproducibility purposes. Commit ID of the git repository associated with model training.""")
 @cli_util.option('--script-dir', help=u"""For model reproducibility purposes. Path to model artifacts.""")
 @cli_util.option('--training-script', help=u"""For model reproducibility purposes. Path to the python script or notebook in which the model was trained.\"""")
+@cli_util.option('--training-id', help=u"""The [OCID] of a training session(Job or NotebookSession) in which the model was trained. It is used for model reproducibility purposes.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelProvenance'})
 @cli_util.wrap_exceptions
-def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch, git_commit, script_dir, training_script):
+def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch, git_commit, script_dir, training_script, training_id):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -661,6 +682,9 @@ def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch
 
     if training_script is not None:
         _details['trainingScript'] = training_script
+
+    if training_id is not None:
+        _details['trainingId'] = training_id
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model_provenance(
@@ -1888,23 +1912,29 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
 @cli_util.option('--description', help=u"""A short description of the model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-metadata-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of custom metadata details for the model.
+
+This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-metadata-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of defined metadata details for the model.
+
+This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Model'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}}, output_type={'module': 'data_science', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, if_match):
+def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, if_match):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or custom_metadata_list or defined_metadata_list:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-metadata-list and defined-metadata-list will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1925,6 +1955,12 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if custom_metadata_list is not None:
+        _details['customMetadataList'] = cli_util.parse_json_parameter("custom_metadata_list", custom_metadata_list)
+
+    if defined_metadata_list is not None:
+        _details['definedMetadataList'] = cli_util.parse_json_parameter("defined_metadata_list", defined_metadata_list)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model(
@@ -1958,7 +1994,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment.command_name', 'update'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE i.e `instanceShapeName` can be updated along with `modelId`, similarly `logId` can be updated along with `logGroupId`. But `instanceShapeName` or `modelId` cannot be updated along with `logId` or `logGroupId`. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
+@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment.command_name', 'update'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment\u2019s lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
 @cli_util.option('--description', help=u"""A short description of the model deployment.""")
@@ -2042,7 +2078,7 @@ def update_model_deployment(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_single_model_deployment_configuration_details.command_name', 'update-model-deployment-update-single-model-deployment-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE i.e `instanceShapeName` can be updated along with `modelId`, similarly `logId` can be updated along with `logGroupId`. But `instanceShapeName` or `modelId` cannot be updated along with `logId` or `logGroupId`. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
+@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_single_model_deployment_configuration_details.command_name', 'update-model-deployment-update-single-model-deployment-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment\u2019s lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
 @cli_util.option('--description', help=u"""A short description of the model deployment.""")
@@ -2136,13 +2172,14 @@ def update_model_deployment_update_single_model_deployment_configuration_details
 @cli_util.option('--git-commit', help=u"""For model reproducibility purposes. Commit ID of the git repository associated with model training.""")
 @cli_util.option('--script-dir', help=u"""For model reproducibility purposes. Path to model artifacts.""")
 @cli_util.option('--training-script', help=u"""For model reproducibility purposes. Path to the python script or notebook in which the model was trained.\"""")
+@cli_util.option('--training-id', help=u"""The [OCID] of a training session(Job or NotebookSession) in which the model was trained. It is used for model reproducibility purposes.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelProvenance'})
 @cli_util.wrap_exceptions
-def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch, git_commit, script_dir, training_script, if_match):
+def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch, git_commit, script_dir, training_script, training_id, if_match):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -2168,6 +2205,9 @@ def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch
 
     if training_script is not None:
         _details['trainingScript'] = training_script
+
+    if training_id is not None:
+        _details['trainingId'] = training_id
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model_provenance(

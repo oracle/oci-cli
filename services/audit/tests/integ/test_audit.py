@@ -37,7 +37,7 @@ class TestAudit(unittest.TestCase):
         start_time = end_time + datetime.timedelta(days=-197)
 
         result = self.invoke(['audit', 'event', 'list', '--compartment-id', util.COMPARTMENT_ID, '--start-time', start_time.strftime(DATETIME_FORMAT), '--end-time', end_time.strftime(DATETIME_FORMAT)])
-        assert result.exit_code == 0
+        assert result.exit_code == 0 or result.exit_code is None
         if result.output:
             response = json.loads(result.output)
             # Some jitter because audit needs a RFC3339 date but only works with minute precision
@@ -131,7 +131,7 @@ class TestAudit(unittest.TestCase):
                 '--compartment-id', util.COMPARTMENT_ID,
                 '--start-time', start_time.strftime(DATETIME_FORMAT),
                 '--end-time', end_time.strftime(DATETIME_FORMAT)])
-        assert result.exit_code == 0
+        assert result.exit_code == 0 or result.exit_code is None
         response = json.loads(result.output)
         events = response["data"]
         for event in events:

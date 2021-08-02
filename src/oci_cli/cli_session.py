@@ -149,8 +149,6 @@ def terminate(ctx):
 @click.pass_context
 @cli_util.wrap_exceptions
 def refresh(ctx):
-    ctx.obj['config_file'] = cli_setup.DEFAULT_CONFIG_LOCATION
-
     client_config = cli_util.build_config(ctx.obj)
 
     security_token_file = client_config.get('security_token_file')
@@ -209,7 +207,7 @@ The session exported is the active profile (specified either by defaults or the 
 @click.pass_context
 @cli_util.wrap_exceptions
 def export(ctx, output_file, force):
-    config_file = cli_setup.DEFAULT_CONFIG_LOCATION
+    config_file = ctx.obj['config_file']
     profile = ctx.obj['profile']
 
     config = configparser.ConfigParser()
@@ -257,7 +255,7 @@ def import_session(ctx, session_archive, force):
         click.echo('File {} does not exist.'.format(session_archive), file=sys.stderr)
         sys.exit(1)
 
-    config_file = cli_setup.DEFAULT_CONFIG_LOCATION
+    config_file = ctx.obj['config_file']
     profile = ctx.obj['profile']
 
     config = configparser.ConfigParser()

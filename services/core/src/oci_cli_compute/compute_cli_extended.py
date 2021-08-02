@@ -345,6 +345,9 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
@@ -357,7 +360,7 @@ Example: `500`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vnic]'})
 @cli_util.wrap_exceptions
-def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pages, page_size):
+def list_vnics(ctx, from_json, compartment_id, availability_domain, instance_id, limit, page, all_pages, page_size):
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
@@ -369,6 +372,8 @@ def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pag
         compartment_id = client.get_instance(instance_id=instance_id).data.compartment_id
 
     kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:

@@ -6,6 +6,7 @@ from __future__ import division
 from __future__ import print_function
 
 import base64
+import datetime
 import hashlib
 import math
 import os
@@ -16,6 +17,8 @@ from mimetypes import guess_type
 
 import arrow
 import click
+import dateutil.parser
+import pytz
 import six  # noqa: F401
 from oci import exceptions
 from oci.object_storage import UploadManager, MultipartObjectAssembler
@@ -101,7 +104,6 @@ MAXIMUM_PARALLEL_UPLOAD_COUNT = 1000
 DEFAULT_PARALLEL_DOWNLOAD_COUNT = 10
 MAXIMUM_PARALLEL_DOWNLOAD_COUNT = 1000
 MULTIPART_MAX_RETRIES = 60
-
 
 MAX_MULTIPART_SIZE = 10000
 MEBIBYTE = constants.MEBIBYTE
@@ -241,12 +243,33 @@ cli_util.update_param_help(objectstorage_cli.get_bucket, 'fields', """This param
 cli_util.update_param_help(objectstorage_cli.update_object_storage_tier, 'bucket_name', """The name of the bucket. Example: `my-bucket1`""", append=False)
 cli_util.update_param_help(objectstorage_cli.update_object_storage_tier, 'object_name', """The name of the object for which the storage tier needs to be changed.""", append=False)
 
+# Create and store extended parameters which are used in multiple operations
+content_type_option_help_text = 'The optional Content-Type header that defines the standard MIME type format of the object to be returned in GetObject and HeadObject responses. Content type defaults to \'application/octet-stream\' if not specified. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and perform special operations on text only objects.'
+content_language_option_help_text = 'The optional Content-Language header that defines the content language of the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and differentiate objects based on a particular language.'
+content_encoding_option_help_text = 'The optional Content-Encoding header that defines the content encoding of the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to determine what decoding mechanisms need to be applied to obtain the media-type specified by the Content-Type header of the object.'
+content_disposition_option_help_text = 'The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.'
+cache_control_option_help_text = 'The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.'
+metadata_option_help_text = 'Arbitrary string keys and values for user-defined metadata. This will be applied to all files being uploaded. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\''
+storage_tier_option_help_text = 'The storage tier that the objects should be stored in. If not specified, the objects will be stored in the same storage tier as the bucket.'
+no_follow_symlinks_option_help_text = 'Symbolic links will be ignored while traversing the local filesystem.'
+no_multipart_option_help_text = 'Do not transfer the file in multiple parts. By default, files above 128 MiB will be transferred in multiple parts, then combined.'
+parallel_operations_count_option_help_text = 'The number of parallel operations to perform. Decreasing this value will make the process less resource intensive but it may take longer. Increasing this value may decrease the time taken, but the process will consume more system resources and network bandwidth. The maximum is 1000.'
+part_size_option_help_text = 'Part size (in MiB) to use when the file is split into multiple parts and then combined. Part size must be greater than 10 MiB and defaults to 128 MiB.'
+include_option_help_text = """Only process files which match the specified pattern. Patterns are applied relative to the current directory. This option can be specified multiple times to match on multiple patterns. Supported pattern symbols are:
+\b
+{}
+""".format(INCLUDE_EXCLUDE_PATTERN)
+exclude_option_help_text = """Only process files which do not match the specified pattern. Patterns are applied relative to the current directory. This option can be specified multiple times to match on multiple patterns. Supported pattern symbols are:
+\b
+{}
+""".format(INCLUDE_EXCLUDE_PATTERN)
+
 
 @objectstorage_cli.object_group.command(name='list-object-versions', help=u"""Lists the object versions in a bucket.
 
 To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
-@cli_util.option('--namespace', '--namespace-name', '-ns', required=True, help=u"""The Object Storage namespace used for the request.""")
-@cli_util.option('--bucket', '--bucket-name', '-bn', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--namespace-name', '--namespace', '-ns', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket-name', '--bucket', '-bn', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
 @cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
 @cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
@@ -487,32 +510,40 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
      "The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)"
 """)
-@cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@cli_util.option('--content-type', help=u"""The optional Content-Type header that defines the standard MIME type format of the object. Content type defaults to \'application/octet-stream\' if not specified in the PutObject call. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and perform special operations on text only objects.""")
-@cli_util.option('--content-language', help=u"""The optional Content-Language header that defines the content language of the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and differentiate objects based on a particular language.""")
-@cli_util.option('--content-encoding', help=u"""The optional Content-Encoding header that defines the content encodings that were applied to the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to determine what decoding mechanisms need to be applied to obtain the media-type specified by the Content-Type header of the object.""")
-@cli_util.option('--force', is_flag=True, help='If the object name already exists, overwrite the existing object without a confirmation prompt.')
-@cli_util.option('--no-overwrite', is_flag=True, help='If the object name already exists, do not overwrite the existing object.')
-@cli_util.option('--no-multipart', is_flag=True,
-                 help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side.')
-@cli_util.option('--part-size', type=click.INT,
-                 help='Part size (in MiB) to use when uploading objects using multipart upload operations. The default part size is 128 MiB.')
+@cli_util.option('--metadata', help=metadata_option_help_text)
+@cli_util.option('--content-type', help=content_type_option_help_text)
+@cli_util.option('--content-language', help=content_language_option_help_text)
+@cli_util.option('--content-encoding', help=content_encoding_option_help_text)
+@cli_util.option('--force', is_flag=True,
+                 help='If the object name already exists, overwrite the existing object without a confirmation prompt.')
+@cli_util.option('--no-overwrite', is_flag=True,
+                 help='If the object name already exists, do not overwrite the existing object.')
+@cli_util.option('--no-multipart', is_flag=True, help=no_multipart_option_help_text)
+@cli_util.option('--part-size', type=click.INT, help=part_size_option_help_text)
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
 @cli_util.option('--parallel-upload-count', type=click.IntRange(1, MAXIMUM_PARALLEL_UPLOAD_COUNT), default=None,
-                 help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to ' + str(DEFAULT_PARALLEL_UPLOAD_COUNT) + ' and the maximum is ' + str(MAXIMUM_PARALLEL_UPLOAD_COUNT) + '.')
-@cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file. Compares the checksum value provided by the service with a locally generated checksum value. If the values do not match, return code is 1')
-@cli_util.option('--content-disposition', help=u"""The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.""")
-@cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
+                 help=parallel_operations_count_option_help_text)
+@cli_util.option('--verify-checksum', is_flag=True,
+                 help='Verify the checksum of the uploaded object with the local file.')
+@cli_util.option('--content-disposition', help=content_disposition_option_help_text)
+@cli_util.option('--cache-control', help=cache_control_option_help_text)
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
-@cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be stored in. If not specified, the object will be stored in the same storage tier as the bucket.""")
+@cli_util.option('--storage-tier',
+                 type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]),
+                 help=storage_tier_option_help_text)
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}},
+    output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control, encryption_key_file, storage_tier):
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type,
+               content_language, content_encoding, force, no_overwrite, no_multipart, part_size,
+               disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control,
+               encryption_key_file, storage_tier):
     """
     Creates a new object or overwrites an existing one.
 
@@ -562,7 +593,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
             kwargs['if_match'] = etag
             if no_overwrite:
                 click.echo('The object already exists and was not overwritten', file=sys.stderr)
-                ctx.exit(0)
+                sys.exit(0)
             if not click.confirm("WARNING: This object already exists. Are you sure you want to overwrite it?"):
                 ctx.abort()
 
@@ -736,43 +767,48 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 @objectstorage_cli.object_group.command(name='bulk-upload')
 @cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='Object Storage namespace.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
-@cli_util.option('--src-dir', required=True, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.', type=click.UNPROCESSED)
-@cli_util.option('--object-prefix', help='A prefix to apply to the names of all files being uploaded')
-@cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. This will be applied to all files being uploaded. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@cli_util.option('--content-type', help='The content type to apply to all files being uploaded. If content type is set to auto, then the CLI will guess the content type of the file.')
-@cli_util.option('--content-language', help='The content language to apply to all files being uploaded.')
-@cli_util.option('--content-encoding', help='The content encoding to apply to all files being uploaded.')
-@cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the objects should be stored in. If not specified, the objects will be stored in the same storage tier as the bucket.""")
+@cli_util.option('--src-dir', required=True,
+                 help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.')
+@cli_util.option('--prefix', '--object-prefix', 'object_prefix', help='A prefix to apply to the names of all files being uploaded')
+@cli_util.option('--metadata', help=metadata_option_help_text)
+@cli_util.option('--content-type', help=content_type_option_help_text)
+@cli_util.option('--content-language', help=content_language_option_help_text)
+@cli_util.option('--content-encoding', help=content_encoding_option_help_text)
+@cli_util.option('--cache-control', help=cache_control_option_help_text)
+@cli_util.option('--content-disposition', help=content_disposition_option_help_text)
+@cli_util.option('--storage-tier',
+                 type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]),
+                 help=storage_tier_option_help_text)
 @cli_util.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage with the same name, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object with the same name would be overwritten.
 
 Specifying this flag will also allow for faster uploads as the CLI will not initially check whether or not the files with the same name already exist in Object Storage.""")
-@cli_util.option('--no-overwrite', is_flag=True, help='If a file being uploaded already exists in Object Storage with the same name, do not overwite the object. If neither this flag nor --overwrite is specified, you will be prompted each time an object with the same name would be overwritten.')
-@cli_util.option('--no-multipart', is_flag=True,
-                 help='Do not use multipart uploads to upload the file in parts. By default, files above 128 MiB will be uploaded in multiple parts, then combined server-side. This applies to all files being uploaded')
-@cli_util.option('--part-size', type=click.INT,
-                 help='Part size (in MiB) to use if uploading via multipart upload operations. This applies to all files which will be uploaded in multiple parts. Part size must be greater than 10 MiB')
+@cli_util.option('--no-overwrite', is_flag=True,
+                 help='If a file being uploaded already exists in Object Storage with the same name, do not overwite the object. If neither this flag nor --overwrite is specified, you will be prompted each time an object with the same name would be overwritten.')
+@cli_util.option('--no-multipart', is_flag=True, help=no_multipart_option_help_text)
+@cli_util.option('--part-size', type=click.INT, default=128, help=part_size_option_help_text)
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='[DEPRECATED] This option is no longer used. If a file in the directory will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel. This applies to all files being uploaded in multiple parts')
-@cli_util.option('--parallel-upload-count', type=click.IntRange(1, MAXIMUM_PARALLEL_UPLOAD_COUNT), default=DEFAULT_PARALLEL_UPLOAD_COUNT, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth. The maximum is ' + str(MAXIMUM_PARALLEL_UPLOAD_COUNT) + '.')
-@cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
-@cli_util.option('--include', multiple=True, help="""Only upload files which match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
-@cli_util.option('--exclude', multiple=True, help="""Only upload files which do not match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
+@cli_util.option('--parallel-upload-count', type=click.IntRange(1, MAXIMUM_PARALLEL_UPLOAD_COUNT),
+                 default=DEFAULT_PARALLEL_UPLOAD_COUNT, show_default=True,
+                 help=parallel_operations_count_option_help_text)
+@cli_util.option('--verify-checksum', is_flag=True,
+                 help='Verify the checksum of the uploaded object with the local file.')
+@cli_util.option('--include', multiple=True, help=include_option_help_text)
+@cli_util.option('--exclude', multiple=True, help=exclude_option_help_text)
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @cli_util.option('--dry-run', is_flag=True, help="""Prints the list of files to be uploaded.""")
+@cli_util.option('--no-follow-symlinks', is_flag=True, help=no_follow_symlinks_option_help_text)
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @wrap_exceptions
-def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, storage_tier, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude, encryption_key_file, dry_run):
+def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type,
+                    content_language, cache_control, content_disposition, content_encoding, storage_tier, overwrite,
+                    no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count,
+                    verify_checksum, include, exclude, encryption_key_file, dry_run, no_follow_symlinks):
     """
     Uploads all files in a given directory and all subdirectories.
 
@@ -815,26 +851,44 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     prompt by using the --no-overwrite flag.
     """
 
-    auto_content_type = False
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
 
+    _, _, output = _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, content_disposition,
+                                content_encoding, content_language, content_type, dry_run, encryption_key_file, exclude,
+                                include, metadata, no_multipart, no_overwrite, overwrite, parallel_upload_count,
+                                part_size, object_prefix, storage_tier, verify_checksum,
+                                no_follow_symlinks=no_follow_symlinks)
+
+    if dry_run:
+        sys.exit(0)
+
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+    if output.has_failures():
+        sys.exit(1)
+
+
+def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, content_disposition, content_encoding,
+                 content_language, content_type, dry_run, encryption_key_file, exclude, include, metadata, no_multipart,
+                 no_overwrite, overwrite, parallel_upload_count, part_size, prefix, storage_tier, verify_checksum,
+                 syncing=False, no_follow_symlinks=True):
+    auto_content_type = False
     if include and exclude:
         raise click.UsageError('The --include and --exclude parameters cannot both be provided.')
-
     expanded_directory = os.path.expandvars(os.path.expanduser(src_dir))
     if not os.path.exists(expanded_directory):
-        raise click.UsageError('The specified --src-dir {} (expanded to: {}) does not exist'.format(src_dir, expanded_directory))
+        raise click.UsageError(
+            'The specified --src-dir {} (expanded to: {}) does not exist'.format(src_dir, expanded_directory))
+    else:
+        if not os.access(expanded_directory, os.R_OK):
+            raise click.UsageError(
+                'The specified --src-dir {} (expanded to: {}) does not have read permissions'.format(src_dir, expanded_directory))
 
     file_filter_collection = _get_file_filter_collection(expanded_directory, include, exclude, None)
 
-    if part_size is not None and no_multipart:
-        raise click.UsageError('The option --part-size is not applicable when using the --no-multipart flag.')
-
     if overwrite and no_overwrite:
         raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
-
-    client = build_client('object_storage', 'object_storage', ctx)
     client_request_id = ctx.obj['request_id']
-
     base_kwargs = {'opc_client_request_id': client_request_id}
     if metadata is not None:
         base_kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
@@ -848,21 +902,21 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
         base_kwargs['content_language'] = content_language
     if content_encoding is not None:
         base_kwargs['content_encoding'] = content_encoding
+    if content_disposition is not None:
+        base_kwargs['content_disposition'] = content_disposition
+    if cache_control is not None:
+        base_kwargs['cache_control'] = cache_control
     if part_size is not None:
         base_kwargs['part_size'] = part_size * MEBIBYTE
-
     if encryption_key_file:
         sse_args = _get_encryption_key_params(encryption_key_file)
         if sse_args:
             base_kwargs.update(sse_args)
 
-    output = BulkPutOperationOutput()
-
+    upload_output = BulkPutOperationOutput()
     # Progress bar which we can reuse over and over again
     reusable_progress_bar = ProgressBar(0, '')
-
     multipart_max_retries = MULTIPART_MAX_RETRIES if not ctx.obj['max_attempts'] else ctx.obj['max_attempts']
-
     transfer_manager = TransferManager(
         client,
         TransferManagerConfig(
@@ -874,23 +928,25 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
         )
     )
     head_object_results = {}
-
+    upload_transfers = set()
+    upload_skipped = set()
     # If we need to check for overwrites then we'll need to make HEAD object calls. We can queue these up in the
     # transfer_manager to be processed by the worker pool in the background so we potentially have to wait less per loop iteration.
     # This window variable controls how much (how many objects) we should look ahead by so that we make sure that all the HEAD requests
     # don't monopolise the processes in the transfer_manager's underlying pool of work
     parallel_head_object_look_ahead_window = int(parallel_upload_count / 2)
-
-    for dir_name, subdir_list, file_list in os.walk(expanded_directory):
+    for dir_name, subdir_list, file_list in os.walk(expanded_directory, followlinks=not no_follow_symlinks):
         for idx, file in enumerate(file_list):
             full_file_path = os.path.join(dir_name, file)
+
+            # os.walk by default only skips the directories which are symlink. We need to check if any file symlink
+            # is present and skip those if no_follow_symlink is specified
+            if no_follow_symlinks and os.path.islink(full_file_path):
+                continue
 
             if file_filter_collection:
                 if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
                     continue
-            if dry_run:
-                print(full_file_path)
-                continue
 
             object_name = normalize_object_name_path_for_object_storage(full_file_path[len(expanded_directory):])
             if is_python2():
@@ -903,8 +959,8 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
             if object_name[0] == '/':
                 object_name = object_name[1:]
 
-            if object_prefix:
-                object_name = u'{}{}'.format(object_prefix, object_name)
+            if prefix:
+                object_name = '{}{}'.format(prefix, object_name)
 
             # If content type is set to auto, then the CLI will guess the content type of the file
             if auto_content_type:
@@ -914,11 +970,12 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                     if len(file_list) > (idx + parallel_head_object_look_ahead_window):
                         for i in range(parallel_head_object_look_ahead_window):
                             look_ahead_file_path = os.path.join(dir_name, file_list[idx + i])
-                            look_ahead_object_name = normalize_object_name_path_for_object_storage(look_ahead_file_path[len(expanded_directory):])
+                            look_ahead_object_name = normalize_object_name_path_for_object_storage(
+                                look_ahead_file_path[len(expanded_directory):])
                             if look_ahead_object_name[0] == '/':
                                 look_ahead_object_name = look_ahead_object_name[1:]
-                            if object_prefix:
-                                look_ahead_object_name = u'{}{}'.format(object_prefix, look_ahead_object_name)
+                            if prefix:
+                                look_ahead_object_name = '{}{}'.format(prefix, look_ahead_object_name)
 
                             if look_ahead_object_name not in head_object_results:
                                 head_object_kwargs = {
@@ -927,48 +984,69 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                                     'object_name': look_ahead_object_name,
                                     'opc_client_request_id': client_request_id
                                 }
-                                head_object_results[look_ahead_object_name] = transfer_manager.head_object(WorkPoolTaskCallbacksContainer(), **head_object_kwargs)
+                                head_object_results[look_ahead_object_name] = transfer_manager.head_object(
+                                    WorkPoolTaskCallbacksContainer(), **head_object_kwargs)
+
                     if is_python2():
                         object_name = object_name.encode("utf-8")
 
-                    # Pull the result from the future (this will block until the result is available) or, if we don't have a future, just make a request
+                    # Pull the result from the future (this will block until the result is available) or,
+                    # if we don't have a future, just make a request
                     if object_name in head_object_results:
                         head_object = head_object_results.pop(object_name).result()
                     else:
-                        head_object = _make_retrying_head_object_call(client, namespace, bucket_name, object_name, client_request_id)
-                    if is_python2():
-                        object_name = object_name.decode("utf-8")
+                        head_object = _make_retrying_head_object_call(client, namespace, bucket_name, object_name,
+                                                                      client_request_id)
 
                     if head_object is None:
                         # Object does not exist, so make sure that the put fails if one is created in the meantime.
                         base_kwargs['if_none_match'] = '*'
                     else:
-                        if no_overwrite:
-                            output.add_skipped(object_name)
+                        r_file_size = int(head_object.headers['content-length'])
+                        r_file_mtime = dateutil.parser.parse(head_object.headers['last-modified'])
+                        if no_overwrite or (syncing and not requires_sync(full_file_path, r_file_size, r_file_mtime)):
+                            upload_output.add_skipped(object_name)
+                            upload_skipped.add(object_name)
                             continue
 
                         base_kwargs['if_match'] = head_object.headers['etag']
-                        if not click.confirm(u'WARNING: {} already exists. Are you sure you want to overwrite it?'.format(object_name)):
-                            output.add_skipped(object_name)
+
+                        if not syncing and not click.confirm(
+                                'WARNING: {} already exists. Are you sure you want to overwrite it?'.format(
+                                    object_name)):
+                            upload_output.add_skipped(object_name)
+                            upload_skipped.add(object_name)
                             continue
 
-                with open(full_file_path, 'rb') as file_object:
-                    file_size = os.fstat(file_object.fileno()).st_size
+                upload_transfers.add(object_name)
+                if dry_run:
+                    if syncing:
+                        print("Uploading file:", end=" ")
+                    print(full_file_path)
+                    continue
+
+                file_size = os.stat(full_file_path).st_size
 
                 if ctx.obj['debug']:
                     update_progress_kwargs = {'message': u'Uploaded {}'.format(object_name)}
                     update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
                 else:
                     update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Uploaded')}
-                    update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
+                    update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end,
+                                                                    **update_progress_kwargs)
 
                 error_callback_kwargs = {'failed_item': object_name}
                 success_callback_kwargs = {'uploaded_object': object_name}
 
-                add_to_uploaded_objects_callback = WorkPoolTaskSuccessCallback(output.add_uploaded, **success_callback_kwargs)
-                add_to_upload_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
+                add_to_uploaded_objects_callback = WorkPoolTaskSuccessCallback(upload_output.add_uploaded,
+                                                                               **success_callback_kwargs)
+                add_to_upload_failures_callback = WorkPoolTaskErrorCallback(upload_output.add_failure,
+                                                                            **error_callback_kwargs)
 
-                callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], success_callbacks=[add_to_uploaded_objects_callback], error_callbacks=[add_to_upload_failures_callback])
+                callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback],
+                                                                     success_callbacks=[
+                                                                         add_to_uploaded_objects_callback],
+                                                                     error_callbacks=[add_to_upload_failures_callback])
 
                 if ctx.obj['debug']:
                     click.echo('Uploading {}'.format(full_file_path), file=sys.stderr)
@@ -976,7 +1054,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                     reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Uploading'))
 
                 if not ctx.obj['debug']:
-                    base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading parts for')).update
+                    base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(
+                        reusable_progress_bar, file_size,
+                        _get_progress_bar_label(None, object_name, 'Uploading parts for')).update
 
                 if is_python2():
                     object_name = object_name.encode("utf-8")
@@ -984,7 +1064,8 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                 if storage_tier:
                     base_kwargs['storage_tier'] = storage_tier
 
-                transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path, file_size, verify_checksum, **base_kwargs)
+                transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path,
+                                               file_size, verify_checksum, **base_kwargs)
 
                 # These can vary per request, so remove them if they exist so we have a blank slate for the next iteration
                 base_kwargs.pop('if_none_match', None)
@@ -993,20 +1074,15 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
             except Exception as e:
                 # Don't let one failure here (either HEADing to see if the object exists, or actaully uploading the object)
                 # fail the entire batch, but store the error for output later
-                output.add_failure(object_name, callback_exception=e)
+                upload_output.add_failure(object_name, callback_exception=e)
 
                 if ctx.obj['debug']:
-                    click.echo(u'Failed to upload {}'.format(object_name), file=sys.stderr)
-    if dry_run:
-        sys.exit(0)
+                    click.echo('Failed to upload {}'.format(object_name), file=sys.stderr)
+    if not dry_run:
+        transfer_manager.wait_for_completion()
+        reusable_progress_bar.render_finish()
 
-    transfer_manager.wait_for_completion()
-    reusable_progress_bar.render_finish()
-
-    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-
-    if output.has_failures():
-        sys.exit(1)
+    return upload_transfers, upload_skipped, upload_output
 
 
 def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_match):
@@ -1038,11 +1114,10 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @cli_util.option('--range',
                  help='Byte range to fetch. Follows https://tools.ietf.org/html/rfc7233#section-2.1. Example: bytes=2-10')
 @cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), default=128, help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
-@cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
+@cli_util.option('--part-size', type=click.IntRange(128, None), help=part_size_option_help_text)
 @cli_util.option('--parallel-download-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT), default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
                  help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
-@cli_util.option('--no-multipart', is_flag=True,
-                 help='Do not use multipart downloads to download the file in parts. By default files above 128 MiB will be downloaded in multiple parts.')
+@cli_util.option('--no-multipart', is_flag=True, help=no_multipart_option_help_text)
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @cli_util.option('--http-response-content-disposition', help=u"""This value will be used in Content-Disposition header of the response.""")
@@ -1154,30 +1229,32 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
 
 
 @objectstorage_cli.object_group.command(name='bulk-download')
-@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True,
+                 help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
-@cli_util.option('--prefix', help='Retrieve all objects with the given prefix. Omit this parameter to get all objects in the bucket')
+@cli_util.option('--prefix',
+                 help='Retrieve all objects with the given prefix. Omit this parameter to get all objects in the bucket')
 @cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
-                 "delimiter character (after an optionally specified prefix) are returned. "
-                 "Scanned objects whose names contain the delimiter have part of their name "
-                 "up to the last occurrence of the delimiter (after the optional prefix) "
-                 "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
-                 "character at this time.")
-@cli_util.option('--download-dir', required=True, help='The directory where retrieved objects will be placed as files. This directory will be created if it does not exist.')
-@cli_util.option('--overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, overwrite it. If neither this flag nor --no-overwrite is specified, you will be prompted each time a file would be overwritten.')
-@cli_util.option('--no-overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
-@cli_util.option('--parallel-operations-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT), default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the download process will consume more system resources and network bandwidth.')
-@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), default=128, help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
-@cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
-@cli_util.option('--include', multiple=True, help="""Only download objects which match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
-@cli_util.option('--exclude', multiple=True, help="""Only download objects which do not match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
+                                     "delimiter character (after an optionally specified prefix) are returned. "
+                                     "Scanned objects whose names contain the delimiter have part of their name "
+                                     "up to the last occurrence of the delimiter (after the optional prefix) "
+                                     "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
+                                     "character at this time.")
+@cli_util.option('--dest-dir', '--download-dir', 'download_dir', required=True,
+                 help='The directory where retrieved objects will be placed as files. This directory will be created if it does not exist.')
+@cli_util.option('--overwrite', is_flag=True,
+                 help='If a file with the same name as an object already exists in the download directory, overwrite it. If neither this flag nor --no-overwrite is specified, you will be prompted each time a file would be overwritten.')
+@cli_util.option('--no-overwrite', is_flag=True,
+                 help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
+@cli_util.option('--parallel-operations-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT),
+                 default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
+                 help=parallel_operations_count_option_help_text)
+@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), default=128,
+                 help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@cli_util.option('--no-multipart', is_flag=True, help=no_multipart_option_help_text)
+@cli_util.option('--part-size', type=click.IntRange(128, None), default=128, help=part_size_option_help_text)
+@cli_util.option('--include', multiple=True, help=include_option_help_text)
+@cli_util.option('--exclude', multiple=True, help=exclude_option_help_text)
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @cli_util.option('--dry-run', is_flag=True, help="""Prints the list of files to be downloaded.""")
@@ -1186,7 +1263,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, part_size, encryption_key_file, dry_run):
+def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, no_multipart, part_size, encryption_key_file, dry_run):
     """
     Downloads all objects which match the given prefix to a given directory.
 
@@ -1241,22 +1318,38 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     If files with the same name as the objects being downloaded already exist in the download directory, you can opt to overwrite them with the
     --overwrite option, or preserve them with the --no-overwrite option.
     """
-    if include and exclude:
-        raise click.UsageError('The --include and --exclude parameters cannot both be provided.')
-
-    if not part_size:
-        part_size = 128 * MEBIBYTE
-    else:
-        part_size = part_size * MEBIBYTE
 
     client = build_client('object_storage', 'object_storage', ctx)
 
+    _, _, output = _bulk_download(ctx, client, namespace, bucket_name, download_dir, dry_run, delimiter,
+                                  encryption_key_file, exclude, include, multipart_download_threshold, no_multipart,
+                                  no_overwrite, overwrite, parallel_operations_count, part_size, prefix)
+
+    if dry_run:
+        sys.exit(0)
+
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+    if output.has_failures():
+        sys.exit(1)
+
+
+def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delimiter, encryption_key_file, exclude,
+                   include, multipart_download_threshold, no_multipart, no_overwrite, overwrite,
+                   parallel_operations_count, part_size, prefix, syncing=False):
+    if include and exclude:
+        raise click.UsageError('The --include and --exclude parameters cannot both be provided.')
+
+    part_size = part_size * MEBIBYTE
+
     if overwrite and no_overwrite:
         raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
-
-    expanded_directory = os.path.expandvars(os.path.expanduser(download_dir))
+    expanded_directory = os.path.expandvars(os.path.expanduser(dest_dir))
     if not os.path.exists(expanded_directory):
         os.makedirs(expanded_directory)
+    else:
+        if not os.access(expanded_directory, os.W_OK):
+            raise click.UsageError('The specified --dest-dir {} (expanded to: {}) does not have write permissions'.format(dest_dir, expanded_directory))
 
     kwargs = {
         'request_id': ctx.obj['request_id'],
@@ -1267,156 +1360,439 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
         'end': None,
         'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
         'delimiter': delimiter,
-        'fields': 'name,size'
+        'fields': 'name,size,timeModified,archivalState'
     }
     keep_paginating = True
-    ask_overwrite = True
-
+    ask_overwrite = not (overwrite or no_overwrite or syncing or dry_run)
     encryption_key_params = {}
     if encryption_key_file:
         sse_args = _get_encryption_key_params(encryption_key_file)
         if sse_args:
             encryption_key_params = sse_args
-
-    output = BulkGetOperationOutput()
-
+    download_output = BulkGetOperationOutput()
     # Progress bar which we can reuse over and over again
     reusable_progress_bar = ProgressBar(0, '')
-
-    transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+    transfer_manager = TransferManager(client,
+                                       TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
     file_filter_collection = _get_file_filter_collection(expanded_directory, include, exclude, prefix)
+    files_to_process = []
+    download_transfers = set()
+    download_skipped = set()
+    try:
+        while keep_paginating:
+            list_objects_response = retrying_list_call_single_page(client.list_objects, **kwargs)
+            next_start = list_objects_response.data.next_start_with
+            to_download = []
 
-    while keep_paginating:
-        list_objects_response = retrying_list_call_single_page(client.list_objects, **kwargs)
-        next_start = list_objects_response.data.next_start_with
-        to_download = []
+            if next_start is not None and ask_overwrite:
+                if click.confirm("You are downloading more than {} objects, do you want to overwrite all?".format(
+                        OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS)):
+                    overwrite = True
+                ask_overwrite = False
 
-        if next_start is not None and not overwrite and not no_overwrite and ask_overwrite and not dry_run:
-            if click.confirm("You are downloading more than {} objects, do you want to overwrite all?".format(OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS)):
-                overwrite = True
-            ask_overwrite = False
+            # Process the current batch and write to disk
+            for obj in list_objects_response.data.objects:
+                object_name = obj.name
 
-        # Process the current batch and write to disk
-        for obj in list_objects_response.data.objects:
-            object_name = obj.name
+                # For syncing we want to strip the prefix if provided
+                if syncing and prefix is not None:
+                    object_name = object_name[len(prefix):]
 
-            # If the object name starts with the path separator (account for Unix and Windows paths) then remove it when we
-            # do the joining to create a full file name, otherwise we could get an unexpected result
-            if object_name[0] == '/' or object_name[0] == '\\':
-                full_file_path = os.path.join(expanded_directory, object_name[1:])
-            else:
-                full_file_path = os.path.join(expanded_directory, object_name)
+                # If the object name starts with the path separator (account for Unix and Windows paths) then remove it when we
+                # do the joining to create a full file name, otherwise we could get an unexpected result
+                if object_name[0] == '/' or object_name[0] == '\\':
+                    full_file_path = os.path.join(expanded_directory, object_name[1:])
+                else:
+                    full_file_path = os.path.join(expanded_directory, object_name)
 
-            if file_filter_collection:
-                if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
-                    continue
-
-            if os.path.exists(full_file_path):
-                if no_overwrite:
-                    output.add_skipped(object_name)
-                    continue
-
-                if not overwrite and not dry_run:
-                    confirm = click.prompt(u'WARNING: {} already exists. Are you sure you want to overwrite it? [y/N/yes to (a)ll]'.format(object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
-                    if confirm == 'N':
-                        output.add_skipped(object_name)
+                if file_filter_collection:
+                    if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
                         continue
-                    elif confirm == 'A':
-                        overwrite = True
 
-            dl_obj = {
-                "name": obj.name,
-                "size": obj.size,
-                "full_file_path": full_file_path
-            }
-            to_download.append(dl_obj)
-            list_objects_response = None
-        if dry_run:
-            for obj in to_download:
-                click.echo(click.style("{}").format(obj['name']))
-        else:
-            for obj in to_download:
-                object_name = obj['name']
-                object_size = obj['size']
-                full_file_path = obj['full_file_path']
+                # We skip the objects in the Archived/Restoring state and don't consider them for further evaluations
+                if syncing and obj.archival_state and obj.archival_state.lower() != 'restored':
+                    download_output.add_skipped(obj.name)
+                    download_skipped.add(full_file_path)
+                    continue
 
-                directory_for_file = os.path.dirname(full_file_path)
-                if not os.path.exists(directory_for_file):
-                    os.makedirs(directory_for_file)
+                # HEAD operation doesn't have microsecond information which is being used while uploading. To have
+                # a balance between upload and download ignoring the microsecond information while listing objects.
+                last_modified = obj.time_modified.replace(microsecond=0)
+                if os.path.exists(full_file_path):
+                    # for syncing we add an additional behaviour to check for the size and last modified time between
+                    # source and destination
+                    not_syncing = syncing and not requires_sync(full_file_path, obj.size, last_modified, to_remote=False)
+                    if not overwrite and (no_overwrite or not_syncing):
+                        download_output.add_skipped(obj.name)
+                        download_skipped.add(full_file_path)
+                        continue
 
-                try:
-                    get_object_kwargs = {
-                        'namespace': namespace,
-                        'bucket_name': bucket_name,
-                        'object_name': object_name.encode("utf-8") if is_python2() else object_name,
-                        'full_file_path': full_file_path,
-                        'request_id': ctx.obj['request_id']
-                    }
-                    get_object_kwargs.update(encryption_key_params)
+                    if not overwrite and not dry_run and not syncing:
+                        confirm = click.prompt(
+                            'WARNING: {} already exists. Are you sure you want to overwrite it? [y/N/yes to (a)ll]'.format(
+                                object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
+                        if confirm == 'N':
+                            download_output.add_skipped(obj.name)
+                            download_skipped.add(full_file_path)
+                            continue
+                        elif confirm == 'A':
+                            overwrite = True
 
-                    if ctx.obj['debug']:
-                        update_progress_kwargs = {'message': u'Downloaded {}'.format(object_name)}
-                        update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
-                    else:
-                        update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Downloaded')}
-                        update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
+                dl_obj = {
+                    "name": obj.name,
+                    "size": obj.size,
+                    "full_file_path": full_file_path
+                }
+                to_download.append(dl_obj)
+                download_transfers.add(full_file_path)
+                if syncing:
+                    files_to_process.append({"last_modified": last_modified, "full_file_path": full_file_path})
+                list_objects_response = None
+            if dry_run:
+                for obj in to_download:
+                    if syncing:
+                        print("Downloading object:", end=" ")
+                    click.echo(click.style("{}").format(obj['name']))
 
-                    error_callback_kwargs = {'failed_item': object_name}
-                    add_to_download_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
+            else:
+                for obj in to_download:
+                    object_name = obj['name']
+                    object_size = obj['size']
+                    full_file_path = obj['full_file_path']
 
-                    callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], error_callbacks=[add_to_download_failures_callback])
+                    directory_for_file = os.path.dirname(full_file_path)
+                    if not os.path.exists(directory_for_file):
+                        os.makedirs(directory_for_file)
 
-                    if ctx.obj['debug']:
-                        click.echo(u'Downloading {} to {}'.format(object_name, full_file_path), file=sys.stderr)
-                    else:
-                        reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Downloading'))
+                    try:
+                        get_object_kwargs = {
+                            'namespace': namespace,
+                            'bucket_name': bucket_name,
+                            'object_name': object_name,
+                            'full_file_path': full_file_path,
+                            'request_id': ctx.obj['request_id']
+                        }
+                        get_object_kwargs.update(encryption_key_params)
 
-                    # If it's not multipart, or it is but we would only have a single part then just download it, otherwise do a multipart get
-                    # If the part size is somehow not known then use a multipart download by default (the multipart download will
-                    # try and figure out the size via a HEAD and then take the appropriate action based on the size and threshold)
-                    if not multipart_download_threshold or (multipart_download_threshold and (object_size is not None and part_size >= object_size)):
-                        transfer_manager.get_object(callbacks_container, **get_object_kwargs)
-                    else:
-                        if object_size:
-                            multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, object_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
-
-                            get_object_kwargs['total_size'] = object_size
-                            if not ctx.obj['debug']:
-                                get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
-                                get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+                        if ctx.obj['debug']:
+                            update_progress_kwargs = {'message': 'Downloaded {}'.format(object_name)}
+                            update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
                         else:
-                            multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, 5 * part_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+                            update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Downloaded')}
+                            update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end,
+                                                                            **update_progress_kwargs)
 
-                            # Since we don't know the total here, give some arbitrary size and the task will update it later
-                            if not ctx.obj['debug']:
-                                get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
-                                get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+                        error_callback_kwargs = {'failed_item': object_name}
+                        success_callback_kwargs = {'downloaded_object': object_name}
+                        add_to_downloaded_objects_callback = WorkPoolTaskSuccessCallback(download_output.add_downloaded,
+                                                                                         **success_callback_kwargs)
+                        add_to_download_failures_callback = WorkPoolTaskErrorCallback(download_output.add_failure,
+                                                                                      **error_callback_kwargs)
 
-                        get_object_kwargs['part_size'] = part_size
-                        get_object_kwargs['multipart_download_threshold'] = multipart_download_threshold
+                        callbacks_container = WorkPoolTaskCallbacksContainer(
+                            success_callbacks=[add_to_downloaded_objects_callback],
+                            completion_callbacks=[update_progress_callback],
+                            error_callbacks=[add_to_download_failures_callback])
 
-                        get_object_kwargs.pop('full_file_path')
+                        if ctx.obj['debug']:
+                            click.echo('Downloading {} to {}'.format(object_name, full_file_path), file=sys.stderr)
+                        else:
+                            reusable_progress_bar.reset_progress(100,
+                                                                 _get_progress_bar_label(None, object_name, 'Downloading'))
 
-                        transfer_manager.get_object_multipart(callbacks_container, full_file_path, **get_object_kwargs)
-                except Exception as e:
-                    # Don't let one get failure fail the entire batch, but store the error for output later
-                    output.add_failure(object_name, callback_exception=e)
+                        # If it's not multipart, or it is but we would only have a single part then just download it, otherwise do a multipart get
+                        # If the part size is somehow not known then use a multipart download by default (the multipart download will
+                        # try and figure out the size via a HEAD and then take the appropriate action based on the size and threshold)
+                        if no_multipart or (multipart_download_threshold and (object_size is not None and part_size >= object_size)):
+                            transfer_manager.get_object(callbacks_container, **get_object_kwargs)
+                        else:
+                            if object_size:
+                                multipart_callback_reference = BulkOperationMultipartUploadProgressBar(
+                                    reusable_progress_bar, object_size,
+                                    _get_progress_bar_label(None, object_name, 'Downloading part for')).update
 
-                    if ctx.obj['debug']:
-                        click.echo(u'Failed to download {}'.format(object_name), file=sys.stderr)
+                                get_object_kwargs['total_size'] = object_size
+                                if not ctx.obj['debug']:
+                                    get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
+                                    get_object_kwargs['part_completed_callback'] = multipart_callback_reference
+                            else:
+                                multipart_callback_reference = BulkOperationMultipartUploadProgressBar(
+                                    reusable_progress_bar, 5 * part_size,
+                                    _get_progress_bar_label(None, object_name, 'Downloading part for')).update
 
-        # Keep going if we have more pages
-        kwargs['start'] = next_start
-        keep_paginating = (next_start is not None)
+                                # Since we don't know the total here, give some arbitrary size and the task will update it later
+                                if not ctx.obj['debug']:
+                                    get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
+                                    get_object_kwargs['part_completed_callback'] = multipart_callback_reference
 
-    if dry_run:
-        sys.exit(0)
-    transfer_manager.wait_for_completion()
-    reusable_progress_bar.render_finish()
-    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+                            get_object_kwargs['part_size'] = part_size
+                            get_object_kwargs['multipart_download_threshold'] = multipart_download_threshold
 
-    if output.has_failures():
-        sys.exit(1)
+                            get_object_kwargs.pop('full_file_path')
+
+                            transfer_manager.get_object_multipart(callbacks_container, full_file_path, **get_object_kwargs)
+                    except Exception as e:
+                        # Don't let one get failure fail the entire batch, but store the error for output later
+                        download_output.add_failure(object_name, callback_exception=e)
+
+                        if ctx.obj['debug']:
+                            click.echo('Failed to download {}'.format(object_name), file=sys.stderr)
+
+            # Keep going if we have more pages
+            kwargs['start'] = next_start
+            keep_paginating = (next_start is not None)
+
+        if not dry_run:
+            transfer_manager.wait_for_completion()
+            reusable_progress_bar.render_finish()
+
+    # ensure that we always set the last mod time
+    finally:
+        if not dry_run and syncing:
+            update_local_file_mtime(files_to_process)
+
+    return download_transfers, download_skipped, download_output
+
+
+def update_local_file_mtime(files_to_process):
+    for file in files_to_process:
+        try:
+            m_time = file['last_modified'].timestamp()
+            os.utime(file['full_file_path'], (m_time, m_time))
+        except FileNotFoundError:
+            # we might have situations where the file was sent to transfer_manager but not downloaded yet.
+            # So it'd be present in the list but not in file system
+            continue
+
+
+@objectstorage_cli.object_group.command(name='sync',
+                                        help='Synchronizes a filesystem directory with objects in a bucket. '
+                                             'Traverses sub-directories copying new and modified files or objects '
+                                             'from the source to the destination and optionally deleting those '
+                                             'that are not present in the source.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True,
+                 help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--src-dir',
+                 help='The directory from which the files will be synced to a bucket as objects. A local file will require uploading if the size of the local file is different than the size of the object, the last modified time of the local file is newer than the last modified time of the object, or the local file does not exist under the specified bucket and prefix.')
+@cli_util.option('--dest-dir',
+                 help='The directory into which objects in a bucket will be synced as files. This directory will be created if it does not exist. An object will require downloading if it does not exist in the local directory or if it exists, either the size of the object differs from the size of the local file or the last modified time of the object is newer than the last modified time of the local file. Objects in Archive tier which have not been restored will not be downloaded.')
+@cli_util.option('--cache-control', help=cache_control_option_help_text)
+@cli_util.option('--content-disposition', help=content_disposition_option_help_text)
+@cli_util.option('--content-encoding', help=content_encoding_option_help_text)
+@cli_util.option('--content-language', help=content_language_option_help_text)
+@cli_util.option('--content-type', help=content_type_option_help_text)
+@cli_util.option('--delete', is_flag=True,
+                 help='delete files/objects that exist in the destination but not in the source. No files or objects are deleted by default.')
+@cli_util.option('--dry-run', is_flag=True,
+                 help='Prints the list of files that would be uploaded, downloaded or deleted without actually performing any actions.')
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--exclude', multiple=True, help=exclude_option_help_text)
+@cli_util.option('--include', multiple=True, help=include_option_help_text)
+@cli_util.option('--metadata', help=metadata_option_help_text)
+@cli_util.option('--no-follow-symlinks', is_flag=True, help=no_follow_symlinks_option_help_text)
+@cli_util.option('--no-multipart', is_flag=True, help=no_multipart_option_help_text)
+@cli_util.option('--parallel-operations-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT), default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the download process will consume more system resources and network bandwidth.')
+@cli_util.option('--part-size', type=click.IntRange(128, None), default=128, help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
+@cli_util.option('--prefix', help='When specified with --src-dir, the files are uploaded as objects with the specified prefix. When specified with --dest-dir, only objects with the specified prefix are downloaded but the prefix is not added to the file names.')
+@cli_util.option('--storage-tier',
+                 type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]),
+                 help=storage_tier_option_help_text)
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
+@wrap_exceptions
+def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_control, content_disposition, content_encoding,
+         content_language, content_type, delete, dry_run, encryption_key_file, exclude, include, metadata,
+         no_follow_symlinks, no_multipart, parallel_operations_count, part_size, prefix, storage_tier):
+
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    output_format = ctx.obj['output']
+
+    if src_dir and dest_dir:
+        raise click.UsageError('Only one of --src-dir or --dest-dir options can be specified at a time')
+    elif src_dir:
+        # upload local files to object storage
+        upload_transfers, upload_skipped, sync_output = \
+            _bulk_upload(ctx,
+                         client=client,
+                         namespace=namespace,
+                         bucket_name=bucket_name,
+                         src_dir=src_dir,
+                         cache_control=cache_control,
+                         content_disposition=content_disposition,
+                         content_encoding=content_encoding,
+                         content_language=content_language,
+                         content_type=content_type,
+                         dry_run=dry_run,
+                         encryption_key_file=encryption_key_file,
+                         exclude=exclude,
+                         include=include,
+                         metadata=metadata,
+                         no_multipart=no_multipart,
+                         no_overwrite=False,
+                         overwrite=False,
+                         parallel_upload_count=parallel_operations_count,
+                         part_size=part_size,
+                         prefix=prefix,
+                         storage_tier=storage_tier,
+                         verify_checksum=False,
+                         syncing=True,
+                         no_follow_symlinks=no_follow_symlinks)
+
+        output_data = sync_output.get_output(output_format)
+        expanded_directory = os.path.expandvars(os.path.expanduser(src_dir))
+        if dry_run:
+            for on in upload_skipped:
+                if prefix is not None:
+                    on = on[len(prefix):]
+                print('Skipping file:', os.path.join(expanded_directory, on))
+
+        if delete:
+            # while deleting we want to exclude all the items in scope, which would consist of the items that actually
+            # gets transferred + the items which were supposed to get transferred but for skipped for some reason.
+            excluded_object_set = upload_transfers.union(upload_skipped)
+
+            _filter = _get_file_filter_collection(bucket_name, include, exclude, prefix)
+            # delete the extra files in remote which are not there in source
+            stacked_output = _delete_bucket_components(ctx, client, namespace, bucket_name, dry_run, _filter,
+                                                       excluded_object_set, parallel_operations_count, prefix,
+                                                       del_pars=False, del_rep_pol=False, del_uploads=False)
+
+            # combine upload output with delete data based on output format
+            delete_output_data = stacked_output[0].get_output(output_format)
+            if output_format == 'json':
+                output_data.update(delete_output_data)
+            elif output_format == 'table':
+                output_data.extend(delete_output_data)
+
+            if dry_run:
+                if output_data['deleted-objects']:
+                    for o in output_data['deleted-objects']:
+                        print('Deleting object:', o)
+            else:
+                if stacked_output[0].has_failures():
+                    sys.exit(1)
+
+        if dry_run:
+            sys.exit(0)
+
+        render(data=output_data, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+        if sync_output.has_failures():
+            sys.exit(1)
+
+    elif dest_dir:
+        raise_usage_error_for_flags('dest-dir',
+                                    ('cache-control', cache_control),
+                                    ('content-disposition', content_disposition),
+                                    ('content-encoding', content_encoding),
+                                    ('content-language', content_language),
+                                    ('content-type', content_type),
+                                    ('metadata', metadata),
+                                    ('storage-tier', storage_tier))
+
+        download_transfers, download_skipped, sync_output = \
+            _bulk_download(ctx,
+                           client=client,
+                           namespace=namespace,
+                           bucket_name=bucket_name,
+                           dest_dir=dest_dir,
+                           dry_run=dry_run,
+                           delimiter=None,
+                           encryption_key_file=encryption_key_file,
+                           exclude=exclude,
+                           include=include,
+                           multipart_download_threshold=128,  # setting multipart_download_threshold as default
+                           no_multipart=no_multipart,
+                           no_overwrite=False,
+                           overwrite=False,
+                           parallel_operations_count=parallel_operations_count,
+                           part_size=part_size,
+                           prefix=prefix,
+                           syncing=True)
+
+        output_data = sync_output.get_output(output_format)
+        expanded_directory = os.path.expandvars(os.path.expanduser(dest_dir))
+        if dry_run:
+            for on in download_skipped:
+                on = on[len(expanded_directory):].strip('/')
+                if prefix is not None:
+                    on = prefix + on
+                print('Skipping object:', on)
+
+        if delete:
+            # while deleting we want to exclude all the items in scope, which would consist of the items that actually
+            # gets transferred + the items which were supposed to get transferred but for skipped for some reason.
+            excluded_local_objects = download_transfers.union(download_skipped)
+
+            _filter = _get_file_filter_collection(expanded_directory, include, exclude, prefix)
+            deleted_objects = []
+            for dir_name, subdir_list, file_list in os.walk(expanded_directory, topdown=False, followlinks=not no_follow_symlinks):
+                for file in file_list:
+                    full_file_path = os.path.join(dir_name, file)
+                    # ignore symlinks while delete as well when no_follow_symlink is specified
+                    if no_follow_symlinks and os.path.islink(full_file_path):
+                        continue
+
+                    if _filter and _filter.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
+                        continue
+
+                    if full_file_path in excluded_local_objects:
+                        continue
+
+                    print('Deleting file:', full_file_path)
+                    if not dry_run:
+                        os.remove(full_file_path)
+                    deleted_objects.append(full_file_path)
+
+                # after deleting the files check and delete the empty parent directories
+                try:
+                    os.rmdir(dir_name)
+                except OSError:
+                    pass
+
+            # combine download output data with delete data based on output format
+            if output_format == 'json':
+                output_data['deleted-files'] = deleted_objects
+            elif output_format == 'table':
+                for del_object in deleted_objects:
+                    output_data.append({'action': 'Deleted', 'name': del_object, 'type': 'file'})
+
+        if dry_run:
+            sys.exit(0)
+        render(data=output_data, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+        if sync_output.has_failures():
+            sys.exit(1)
+
+    else:
+        raise click.UsageError('Either --src-dir or --dest-dir options must be specified')
+
+
+def raise_usage_error_for_flags(parent_option_name, *un_wanted_options):
+    for flag_name, flag_value in un_wanted_options:
+        # if flag is of boolean type then check that the value is false
+        if flag_value is not None:
+            if not flag_value:
+                continue
+            raise click.UsageError('Option --{} cannot be specified with --{}'.format(flag_name, parent_option_name))
+
+
+# specifies if the file should be synced between source and destination
+def requires_sync(local_file, remote_file_size, remote_file_mtime, to_remote=True):
+    expanded_file = os.path.expandvars(os.path.expanduser(local_file))
+    f_stat = os.stat(expanded_file)
+    local_file_size = f_stat.st_size
+    # local file time is in epoch time
+    local_file_mtime = datetime.datetime.fromtimestamp(f_stat.st_mtime, tz=pytz.utc)
+    if to_remote:
+        return local_file_size != remote_file_size or local_file_mtime > remote_file_mtime
+    else:
+        return local_file_size != remote_file_size or local_file_mtime < remote_file_mtime
 
 
 @objectstorage_cli.object_group.command(name='head')
@@ -1473,15 +1849,9 @@ def object_head(ctx, from_json, namespace, bucket_name, name, version_id, if_mat
 @cli_util.option('--dry-run', is_flag=True, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
 @cli_util.option('--force', is_flag=True, help='Do not ask for confirmation prior to performing the bulk delete.')
 @cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the bulk delete process will consume more system resources and network bandwidth.')
-@cli_util.option('--include', multiple=True, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
-@cli_util.option('--exclude', multiple=True, help="""Only download objects which do not match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
+                 help=parallel_operations_count_option_help_text)
+@cli_util.option('--include', multiple=True, help=include_option_help_text)
+@cli_util.option('--exclude', multiple=True, help=exclude_option_help_text)
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -1588,11 +1958,12 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
                 output.add_deleted(obj.name)
 
         render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-        ctx.exit()
+
+        sys.exit(0)
 
     # Start bulk delete of objects
-    _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, None, force, delimiter, include, exclude,
-                                    prefix, file_filter_collection, output, parallel_operations_count,
+    _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, None, force, delimiter, prefix,
+                                    file_filter_collection, None, output, parallel_operations_count,
                                     retrying_list_objects, lambda r: r.data.next_start_with,
                                     lambda res: res.data.objects)
 
@@ -1620,15 +1991,9 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
 @cli_util.option('--dry-run', is_flag=True, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
 @cli_util.option('--force', is_flag=True, help='Do not ask for confirmation prior to performing the bulk delete.')
 @cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the bulk-delete-versions process will consume more system resources and network bandwidth.')
-@cli_util.option('--include', multiple=True, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
-@cli_util.option('--exclude', multiple=True, help="""Only delete objects which do not match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
-\b
-{}
-""".format(INCLUDE_EXCLUDE_PATTERN))
+                 help=parallel_operations_count_option_help_text)
+@cli_util.option('--include', multiple=True, help=include_option_help_text)
+@cli_util.option('--exclude', multiple=True, help=exclude_option_help_text)
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -1746,11 +2111,12 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
                     continue
                 output.add_deleted(obj.name + "," + obj.version_id)
         render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-        ctx.exit()
+
+        sys.exit(0)
 
     # Start bulk delete of object versions
-    _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, include,
-                                    exclude, prefix, file_filter_collection, output, parallel_operations_count,
+    _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, prefix,
+                                    file_filter_collection, None, output, parallel_operations_count,
                                     retrying_list_object_versions, lambda r: r.headers.get('opc-next-page'),
                                     lambda res: res.data.items, is_versioned=True)
 
@@ -1761,8 +2127,8 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
 
 
 # Common helper method to paginate through objects/versions list and delete them using a pool
-def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, include,
-                                    exclude, prefix, file_filter_collection, output, parallel_operations_count,
+def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, prefix,
+                                    file_filter_collection, excluded_object_set, output, parallel_operations_count,
                                     _list_fn, _next_page_fn, _get_obj_fn, is_versioned=False):
     reusable_progress_bar = ProgressBar(100, 'Delete Object')
 
@@ -1788,6 +2154,16 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
             for obj in _get_obj_fn(response):
                 if object_name and object_name != obj.name:
                     continue
+
+                if file_filter_collection:
+                    pseudo_path = os.path.join(bucket_name, obj.name)
+                    if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
+                        continue
+
+                # check in the excluded object set and if present exclude the object
+                if excluded_object_set and obj.name in excluded_object_set:
+                    continue
+
                 objects_to_delete.append(obj)
 
         # Based on the rules for --force:
@@ -1802,7 +2178,7 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
         # next_page_exists is not used for anything except to find out if next page exists or not
         if not force:
             o_type = 'object versions' if is_versioned else 'objects'
-            if include or exclude:
+            if file_filter_collection:
                 # If we specify this, the approximate or exact objects to delete is not determinable without paging through the entire list (e.g. in the
                 # case that the only matching items are on the last few pages). So in this case just use a generic message
                 confirm_prompt = 'WARNING: This command will delete all matching {} in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'.format(o_type)
@@ -1815,7 +2191,7 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
                     if len(objects_to_delete) == 0:
                         # There are no objects anyway, so just terminate here
                         click.echo('There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
-                        sys.exit()
+                        sys.exit(0)
                     else:
                         confirm_prompt = 'WARNING: This command will delete {} {}. Are you sure you wish to continue?'.format(
                             len(objects_to_delete), o_type)
@@ -1824,10 +2200,6 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
                 ctx.abort()
 
         for obj in objects_to_delete:
-            if file_filter_collection:
-                pseudo_path = os.path.join(bucket_name, obj.name)
-                if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
-                    continue
 
             qualified_name = obj.name
             delete_kwargs = {
@@ -1853,7 +2225,7 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
 
         # Because we may not be deleting objects for a while when there are filters,
         # show a dummy message so the caller still knows that there is progress
-        if include or exclude:
+        if file_filter_collection:
             reusable_progress_bar.reset_progress(100, 'Searching for matching objects to delete')
 
     reusable_progress_bar.render_finish()
@@ -1866,12 +2238,11 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
 @cli_util.option('--name',
                  help='The name of the object. Default value is the filename excluding the path.')
 @cli_util.option('--upload-id', required=True, help='Upload ID to resume.')
-@cli_util.option('--part-size', type=click.INT,
-                 help='Part size in MiB')
+@cli_util.option('--part-size', type=click.INT, help=part_size_option_help_text)
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
 @cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=None,
-                 help='This option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads. Defaults to 3 and the maximum is 1000.')
+                 help=parallel_operations_count_option_help_text)
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -2276,29 +2647,56 @@ def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry
         if not click.confirm(confirm_prompt):
             ctx.abort()
 
-    kwargs = {'opc_client_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
-    client = cli_util.build_client('object_storage', 'object_storage', ctx)
-
     if empty:
-        output_object = BulkDeleteOperationOutput()
-        output_par = BulkDeleteOperationOutput('preauth-request')
-        output_rep_policy = BulkDeleteOperationOutput('replication-policy')
-        output_upload = BulkDeleteOperationOutput('multipart-upload')
-
-        # Get bucket status
+        kwargs = {'opc_client_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
+        client = cli_util.build_client('object_storage', 'object_storage', ctx)
+        # Get bucket status for versioning
         result = client.get_bucket(namespace_name=namespace_name, bucket_name=bucket_name, **kwargs)
-
         response = cli_util.to_dict(result.data)
         versioning = response.get("versioning")
+        delete_versions = versioning.lower() != "disabled"
+
+        stacked_output = _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run, None, None,
+                                                   parallel_operations_count, None, versioned=delete_versions)
+
+        # render the combined output
+        combined_out = _combine_output(ctx.obj['output'], dry_run, *stacked_output)
+        render(data=combined_out, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
         if dry_run:
+            sys.exit()
+
+        for output in stacked_output:
+            if output.has_failures():
+                sys.exit(1)
+
+    # Try to delete the bucket
+    ctx.invoke(objectstorage_cli.delete_bucket,
+               from_json=from_json,
+               namespace_name=namespace_name,
+               bucket_name=bucket_name,
+               if_match=if_match)
+
+
+def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run, file_filter_collection,
+                              excluded_object_set, parallel_operations_count, prefix, del_objects=True, versioned=False,
+                              del_pars=True, del_rep_pol=True, del_uploads=True):
+
+    stacked_output = []  # this will store the output from deletion of different bucket components (e.g object, par etc)
+    output_object = BulkDeleteOperationOutput()
+    output_par = BulkDeleteOperationOutput('preauth-request')
+    output_rep_policy = BulkDeleteOperationOutput('replication-policy')
+    output_upload = BulkDeleteOperationOutput('multipart-upload')
+
+    if dry_run:
+        if del_objects:
             # list object/ object versions
             list_obj_params = {
                 'client': client,
                 'request_id': ctx.obj['request_id'],
                 'namespace': namespace_name,
                 'bucket_name': bucket_name,
-                'prefix': None,
+                'prefix': prefix,
                 'start': None,
                 'end': None,
                 'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
@@ -2306,80 +2704,99 @@ def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry
                 'fields': 'name',
                 'retrieve_all': True
             }
-            if versioning.lower() == "disabled":
+            if not versioned:
                 list_all_objects_responses = retrying_list_objects(**list_obj_params)
                 for response in list_all_objects_responses:
                     for obj in response.data.objects:
+                        if file_filter_collection:
+                            pseudo_path = os.path.join(bucket_name, obj.name)
+                            if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
+                                continue
+                        if excluded_object_set and obj.name in excluded_object_set:
+                            continue
                         output_object.add_deleted(obj.name)
             else:
                 list_all_objects_responses = retrying_list_object_versions(**list_obj_params)
                 for response in list_all_objects_responses:
                     for obj in response.data.items:
+                        if file_filter_collection:
+                            pseudo_path = os.path.join(bucket_name, obj.name)
+                            if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
+                                continue
+                        if excluded_object_set and obj.name in excluded_object_set:
+                            continue
                         output_object.add_deleted(obj.name + "," + obj.version_id)
-
-            list_params = {
-                'request_id': ctx.obj['request_id'],
-                'namespace': namespace_name,
-                'bucket_name': bucket_name,
-                'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
-                'retrieve_all': True
-            }
-            # list pre-authenticated requests
-            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
-            for response in par_list_response:
-                for par_object in response.data:
-                    output_par.add_deleted(par_object.name)
-
-            # list replication policies
-            rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
-            for response in rep_policy_list_response:
-                for rep_policy_obj in response.data:
-                    output_rep_policy.add_deleted(rep_policy_obj.name)
-
-            # list un-committed uploads
-            list_uploads_response = retrying_list_call(client.list_multipart_uploads, **list_params)
-            for response in list_uploads_response:
-                for upload_obj in response.data:
-                    output_upload.add_deleted(upload_obj.object)
-
-            combined_out = _combine_output(ctx.obj['output'], dry_run, output_object, output_par, output_rep_policy,
-                                           output_upload)
-            # final output
-            render(data=combined_out, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-            sys.exit()
-
-        # Actual deletion starts here
-        common_delete_kwargs = {
-            'namespace': namespace_name,
-            'bucket_name': bucket_name,
-            'if_match': if_match,
-            'request_id': ctx.obj['request_id']
-        }
-
-        if versioning.lower() == "disabled":
-            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, None, None,
-                                            None, None, output_object, parallel_operations_count, retrying_list_objects,
-                                            lambda r: r.data.next_start_with, lambda res: res.data.objects)
-        else:
-            # bulk-delete object versions
-            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, None, None,
-                                            None, None, output_object, parallel_operations_count,
-                                            retrying_list_object_versions, lambda r: r.headers.get('opc-next-page'),
-                                            lambda res: res.data.items, is_versioned=True)
+            stacked_output.append(output_object)
 
         list_params = {
             'request_id': ctx.obj['request_id'],
             'namespace': namespace_name,
             'bucket_name': bucket_name,
             'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
-            'retrieve_all': False
+            'retrieve_all': True
         }
+        if del_pars:
+            # list pre-authenticated requests
+            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
+            for response in par_list_response:
+                for par_object in response.data:
+                    output_par.add_deleted(par_object.name)
+            stacked_output.append(output_par)
 
+        if del_rep_pol:
+            # list replication policies
+            rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
+            for response in rep_policy_list_response:
+                for rep_policy_obj in response.data:
+                    output_rep_policy.add_deleted(rep_policy_obj.name)
+            stacked_output.append(output_rep_policy)
+
+        if del_uploads:
+            # list un-committed uploads
+            list_uploads_response = retrying_list_call(client.list_multipart_uploads, **list_params)
+            for response in list_uploads_response:
+                for upload_obj in response.data:
+                    output_upload.add_deleted(upload_obj.object)
+            stacked_output.append(output_upload)
+
+        return stacked_output
+
+    # Actual deletion starts here
+    common_delete_kwargs = {
+        'namespace': namespace_name,
+        'bucket_name': bucket_name,
+        'request_id': ctx.obj['request_id']
+    }
+    if del_objects:
+        if not versioned:
+            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
+                                            file_filter_collection, excluded_object_set, output_object,
+                                            parallel_operations_count, retrying_list_objects,
+                                            lambda r: r.data.next_start_with, lambda res: res.data.objects)
+        else:
+            # bulk-delete object versions
+            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
+                                            file_filter_collection, excluded_object_set, output_object,
+                                            parallel_operations_count, retrying_list_object_versions,
+                                            lambda r: r.headers.get('opc-next-page'), lambda res: res.data.items,
+                                            is_versioned=True)
+        stacked_output.append(output_object)
+
+    list_params = {
+        'request_id': ctx.obj['request_id'],
+        'namespace': namespace_name,
+        'bucket_name': bucket_name,
+        'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+        'retrieve_all': False
+    }
+    if del_pars:
         # Deleting PreAuthenticated Requests
         par_delete_kwargs = common_delete_kwargs.copy()
         reusable_progress_bar = ProgressBar(100, 'Deleting Preauthenticated Requests')
         while True:
-            transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+            transfer_manager = TransferManager(client,
+                                               TransferManagerConfig(
+                                                   max_object_storage_requests=parallel_operations_count))
             par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
 
             for response in par_list_response:
@@ -2392,12 +2809,16 @@ def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry
             if par_list_response[-1].headers.get('opc-next-page') is None:
                 break
         reusable_progress_bar.render_finish()
+        stacked_output.append(output_par)
 
+    if del_rep_pol:
         # Deleting Replication Policies
         rep_policy_delete_kwargs = common_delete_kwargs.copy()
         reusable_progress_bar = ProgressBar(100, 'Deleting Replication Policies')
         while True:
-            transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+            transfer_manager = TransferManager(client,
+                                               TransferManagerConfig(
+                                                   max_object_storage_requests=parallel_operations_count))
             rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
 
             for response in rep_policy_list_response:
@@ -2410,12 +2831,16 @@ def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry
             if rep_policy_list_response[-1].headers.get('opc-next-page') is None:
                 break
         reusable_progress_bar.render_finish()
+        stacked_output.append(output_rep_policy)
 
+    if del_uploads:
         # Deleting uncommitted uploads
         upload_delete_kwargs = common_delete_kwargs.copy()
         reusable_progress_bar = ProgressBar(100, 'Deleting uncommitted uploads')
         while True:
-            transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+            transfer_manager = TransferManager(client,
+                                               TransferManagerConfig(
+                                                   max_object_storage_requests=parallel_operations_count))
             uploads_list_response = retrying_list_call(client.list_multipart_uploads, **list_params)
 
             for response in uploads_list_response:
@@ -2429,21 +2854,9 @@ def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry
             if uploads_list_response[-1].headers.get('opc-next-page') is None:
                 break
         reusable_progress_bar.render_finish()
+        stacked_output.append(output_upload)
 
-        combined_out = _combine_output(ctx.obj['output'], dry_run, output_object, output_par, output_rep_policy, output_upload)
-        # final output
-        render(data=combined_out, headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-
-        for output in [output_object, output_par, output_rep_policy, output_upload]:
-            if output.has_failures():
-                sys.exit(1)
-
-    # Try to delete the bucket
-    ctx.invoke(objectstorage_cli.delete_bucket,
-               from_json=from_json,
-               namespace_name=namespace_name,
-               bucket_name=bucket_name,
-               if_match=if_match)
+    return stacked_output
 
 
 def _combine_output(output_format, dry_run, *args):
