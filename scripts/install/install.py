@@ -21,18 +21,8 @@ import hashlib
 import glob
 import ssl
 import traceback
-try:
-    # Attempt to load python 3 module
-    from urllib.request import urlopen
-    from urllib.error import URLError
-except ImportError:
-    from urllib2 import urlopen, URLError
-
-try:
-    input = raw_input
-except NameError:
-    # Python 3 doesn't have raw_input
-    pass
+from urllib.request import urlopen
+from urllib.error import URLError
 
 
 def is_windows():

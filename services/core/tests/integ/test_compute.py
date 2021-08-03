@@ -182,6 +182,12 @@ class TestCompute(unittest.TestCase):
         json_data = json.loads(result.output)
         assert (len(json_data['data']) > 0)
 
+        # Check that the command works with the --availability-domain option
+        result = self.invoke(['compute', 'instance', 'list-vnics', '--compartment-id', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain()])
+        util.validate_response(result)
+        json_data = json.loads(result.output)
+        assert (len(json_data['data']) > 0)
+
         result = self.invoke(['compute', 'instance', 'list-vnics', '--instance-id', self.instance_ocid])
         util.validate_response(result)
         json_data = json.loads(result.output)

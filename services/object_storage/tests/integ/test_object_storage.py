@@ -608,6 +608,8 @@ def test_object_options(runner, config_file, config_profile, test_id, content_in
         util.validate_service_error(result, 'EPIPE')
 
     result = invoke(runner, config_file, config_profile, required_args)
+    if result.exit_code is None:
+        result.exit_code = 0
     assertEqual(0, result.exit_code)
     json_output = json.loads(result.output)
     etag = json_output['etag']

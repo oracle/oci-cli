@@ -89,7 +89,7 @@ class TestObjectStorage(unittest.TestCase):
         # Sorted lists of commands that should support --encryption-key-file and --source-encryption-file respectively
         encryption_key_file_cmd_list = sorted([
             'object put', 'object bulk-upload', 'object get', 'object bulk-download', 'object head',
-            'object copy', 'object reencrypt'
+            'object copy', 'object reencrypt', 'object sync'
         ])
         source_encryption_key_file_cmd_list = sorted(['object copy', 'object reencrypt'])
 

@@ -15,12 +15,7 @@ from . import cli_exceptions
 from .custom_types import CliFromJson, CLI_DATETIME
 from .string_utils import camelize, underscore
 
-try:
-    # PY3+
-    import collections.abc as abc
-except ImportError:
-    # PY2
-    import collections as abc
+import collections.abc as abc
 
 CLICK_TYPES_TO_EXAMPLE_VALUES = {
     click.STRING: 'string',
@@ -135,14 +130,14 @@ def generate_json_skeleton_for_option(ctx, option_name):
     else:
         print(json.dumps(generate_input_dict_for_skeleton(ctx, option_name), indent=2, sort_keys=True))
 
-    ctx.exit(0)
+    sys.exit(0)
 
 
 # Generates a JSON skeleton for a full command. We assume that all the command information is available in the
 # provided context
 def generate_json_skeleton_for_full_command(ctx):
     print(json.dumps(generate_input_dict_for_skeleton(ctx), indent=2, sort_keys=True))
-    ctx.exit(0)
+    sys.exit(0)
 
 
 # Based on the current command (we assume all the information is available in the click Context), generate a dict

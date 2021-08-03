@@ -32,7 +32,7 @@ from services.dts.src.oci_cli_transfer_job.transferjob_cli_extended import show_
 from tests import test_config_container
 from tests import util
 
-import mock
+import unittest.mock as mock
 from oci.object_storage.models import Bucket
 from oci.response import Response
 from oci.request import Request
@@ -487,7 +487,7 @@ class UnitTestDTS(unittest.TestCase):
                 return UnitTestDTS.TestResult.Success
             else:
                 self._print_error(
-                    command, sub_command_def["sub_command"], "Incorrect result:**#%s#**" % result.output_bytes)
+                    command, sub_command_def["sub_command"], "Incorrect result:**#%s#**" % result.stdout_bytes)
                 return UnitTestDTS.TestResult.Failed
         elif test_type == self.TestType.GenFullCommandFromJson:
             if "Error:" in result.output:

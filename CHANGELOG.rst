@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.0.0 - 2021-08-03
+-------------------
+[BREAKING] Drop support for Python 2
+
+Added
+~~~~~
+* Support for ``os object sync`` command that synchronizes a filesystem directory with an Object Storage bucket in the Object Storage service.
+
+  * ``oci os object sync``
+
+* Support for --availability-domain option when listing VNICs attached to an instance in the Compute service
+
+  * ``oci compute instance list-vnics --availability-domain``
+
+* Support for Autonomous Database Create with Early Patching via a new parameter (maintenance-schedule-type) in the Database service.
+
+  * ``oci db autonomous-database create --maintenance-schedule-type``
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details --maintenance-schedule-type``
+  * ``oci db autonomous-database create-from-backup-id --maintenance-schedule-type``
+  * ``oci db autonomous-database create-from-backup-timestamp --maintenance-schedule-type``
+  * ``oci db autonomous-database create-from-clone --maintenance-schedule-type``
+  * ``oci db autonomous-database create-virtual-clone --maintenance-schedule-type``
+
+* Support for non-default config file locations for the below commands
+
+  * ``oci session refresh``
+  * ``oci session export``
+  * ``oci session import``
+
+* Support for Model Catalog v2.0 features including Provenance, Metadata, Schema, Artifact introspection
+
+  * ``oci data-science model``
+
+* Support for new parameter --metastore-id to specify external hive metastore for Application in the Data Flow service
+
+  * ``oci data-flow application create --metastore-id``
+  * ``oci data-flow application update --metastore-id``
+
+* Support for manual copy of volume group backups across regions in the Block Storage service
+
+  * ``oci bv volume-group-backup copy``
+
+* Support for MDS Backup Change Compartment in MySql service
+
+  * ``oci mysql backup change-compartment``
+
+Changed
+~~~~~~~
+
+* Block volume backup copy operations now wait for their associated work requests to complete
+
+  * ``oci bv boot-volume-backup copy``
+  * ``oci bv backup copy``
+
 2.26.4 - 2021-07-27
 -------------------
 Added

@@ -5,10 +5,7 @@
 import unittest
 import datetime
 
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
+import unittest.mock as mock
 
 from oci.object_storage.models.list_objects import ListObjects
 from oci.object_storage.models.object_summary import ObjectSummary

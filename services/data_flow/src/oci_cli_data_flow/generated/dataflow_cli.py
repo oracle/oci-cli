@@ -209,6 +209,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 @cli_util.option('--execute', help=u"""The input used for spark-submit command. For more details see https://spark.apache.org/docs/latest/submitting-applications.html#launching-applications-with-spark-submit. Supported options include ``--class``, ``--file``, ``--jars``, ``--conf``, ``--py-files``, and main application file with arguments. Example: ``--jars oci://path/to/a.jar,oci://path/to/b.jar --files oci://path/to/a.json,oci://path/to/b.csv --py-files oci://path/to/a.py,oci://path/to/b.py --conf spark.sql.crossJoin.enabled=true --class org.apache.spark.examples.SparkPi oci://path/to/main.jar 10`` Note: If execute is specified together with applicationId, className, configuration, fileUri, language, arguments, parameters during application create/update, or run create/submit, Data Flow service will use derived information from execute input only.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--metastore-id', help=u"""The OCID of OCI Hive Metastore.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -222,7 +223,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, file_uri, language, num_executors, spark_version, archive_uri, arguments, class_name, configuration, defined_tags, description, execute, freeform_tags, logs_bucket_uri, parameters, private_endpoint_id, warehouse_bucket_uri):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, file_uri, language, num_executors, spark_version, archive_uri, arguments, class_name, configuration, defined_tags, description, execute, freeform_tags, logs_bucket_uri, metastore_id, parameters, private_endpoint_id, warehouse_bucket_uri):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -263,6 +264,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if logs_bucket_uri is not None:
         _details['logsBucketUri'] = logs_bucket_uri
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
 
     if parameters is not None:
         _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
@@ -394,6 +398,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--executor-shape', help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--metastore-id', help=u"""The OCID of OCI Hive Metastore.""")
 @cli_util.option('--num-executors', type=click.INT, help=u"""The number of executor VMs requested.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
@@ -408,7 +413,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
 @cli_util.wrap_exceptions
-def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, execute, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, spark_version, warehouse_bucket_uri):
+def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, execute, executor_shape, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, spark_version, warehouse_bucket_uri):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -448,6 +453,9 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if logs_bucket_uri is not None:
         _details['logsBucketUri'] = logs_bucket_uri
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
 
     if num_executors is not None:
         _details['numExecutors'] = num_executors
@@ -1232,6 +1240,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 @cli_util.option('--executor-shape', help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--metastore-id', help=u"""The OCID of OCI Hive Metastore.""")
 @cli_util.option('--num-executors', type=click.INT, help=u"""The number of executor VMs requested.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
@@ -1248,7 +1257,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, execute, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, execute, executor_shape, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
@@ -1308,6 +1317,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if logs_bucket_uri is not None:
         _details['logsBucketUri'] = logs_bucket_uri
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
 
     if num_executors is not None:
         _details['numExecutors'] = num_executors

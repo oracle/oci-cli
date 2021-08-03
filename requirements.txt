@@ -6,7 +6,7 @@ appdirs==1.4.3
 arrow==0.17.0
 certifi
 cffi>=1.9.1
-click==6.7
+click==7.0
 configparser==4.0.2
 coverage==4.5.2
 cryptography==3.3.2
@@ -15,7 +15,7 @@ Jinja2==2.11.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.43.1
+oci==2.43.2
 packaging==20.2
 pluggy==0.13.0
 py==1.10.0
@@ -30,8 +30,8 @@ pytz>=2016.10
 requests==2.21.0
 setuptools<45
 six==1.14.0
-sphinx==1.6.4
-sphinx-rtd-theme==0.2.5b1
+sphinx==2.2.1
+sphinx-rtd-theme==0.4.3
 terminaltables==3.1.0
 tox==3.23.0
 vcrpy==1.13.0

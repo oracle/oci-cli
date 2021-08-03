@@ -1,25 +1,3 @@
-build-py27:
-  box: python:2.7
-  steps:
-    # Does a pip install -r requirements.txt to install dependencies
-    - pip-install
-
-    # Install the SDK via pip install -e .
-    - pip-install:
-      requirements_file: ""
-      extra_args: "-e ."
-    
-    # Verify via our script. Since we don't have a configuration file on the image 
-    # (i.e. an actual command to, say, list instances would fail) here we just ensure 
-    # that the CLI can be run via its `oci` entrypoint
-    - script:
-      name: make sure CLI can be invoked
-      code: |
-        python --version
-        oci
-        oci --version
-        oci compute instance launch --generate-full-command-json-input
-
 build-py36:
   box: python:3.6
   steps:

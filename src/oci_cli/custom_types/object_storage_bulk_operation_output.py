@@ -65,19 +65,20 @@ class BulkPutOperationOutput(BulkObjectStorageOperationOutput):
             consolidated_result = []
 
             for uploaded_object, result in six.iteritems(self._uploaded):
-                output_result = {'action': 'Uploaded', 'file': uploaded_object}
+                output_result = {'action': 'Uploaded', 'name': uploaded_object, 'type': 'file'}
                 output_result.update(result)
                 consolidated_result.append(output_result)
 
             for uploaded_object, failure in six.iteritems(self._failures):
                 consolidated_result.append({
                     'action': 'Failed',
-                    'file': uploaded_object,
+                    'name': uploaded_object,
+                    'type': 'file',
                     'error-message': failure
                 })
 
             for skip in self._skipped:
-                consolidated_result.append({'action': 'Skipped', 'file': skip})
+                consolidated_result.append({'action': 'Skipped', 'name': skip, 'type': 'file'})
 
             return consolidated_result
 
@@ -85,7 +86,11 @@ class BulkPutOperationOutput(BulkObjectStorageOperationOutput):
 class BulkGetOperationOutput(BulkObjectStorageOperationOutput):
     def __init__(self):
         super(BulkGetOperationOutput, self).__init__()
+        self._downloaded = []
         self._skipped = []
+
+    def add_downloaded(self, downloaded_object, **kwargs):
+        self._downloaded.append(downloaded_object)
 
     def add_skipped(self, skipped):
         self._skipped.append(skipped)
@@ -95,21 +100,30 @@ class BulkGetOperationOutput(BulkObjectStorageOperationOutput):
 
         if output_format == 'json':
             return {
+                'downloaded-objects': self._downloaded,
                 'download-failures': self._failures,
                 'skipped-objects': self._skipped
             }
         elif output_format == 'table':
             consolidated_result = []
 
+            for downloaded_obj in self._downloaded:
+                consolidated_result.append({
+                    'action': 'Downloaded',
+                    'name': downloaded_obj,
+                    'type': 'object'
+                })
+
             for downloaded_obj, failure in six.iteritems(self._failures):
                 consolidated_result.append({
                     'action': 'Failed',
-                    'object': downloaded_obj,
+                    'name': downloaded_obj,
+                    'type': 'object',
                     'error-message': failure
                 })
 
             for skip in self._skipped:
-                consolidated_result.append({'action': 'Skipped', 'object': skip})
+                consolidated_result.append({'action': 'Skipped', 'name': skip, 'type': 'object'})
 
             return consolidated_result
 

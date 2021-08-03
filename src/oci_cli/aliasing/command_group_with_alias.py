@@ -4,7 +4,7 @@
 
 import click
 import sys
-from oci_cli import dynamic_loader
+from oci_cli import dynamic_loader, cli_root
 
 
 class CommandGroupWithAlias(click.Group):
@@ -13,6 +13,8 @@ class CommandGroupWithAlias(click.Group):
 
         rv = click.Group.get_command(self, ctx, cmd_name)
         if rv is not None:
+            if not ctx.obj:
+                cli_root.eager_load_cli_rc_file(ctx, None, "")
             if cmd_name in ctx.obj['global_command_alias']:
                 # An alias existed with this cmd_name but it matched a pre-defined name exactly, so we discard the alias
                 click.echo(

@@ -148,8 +148,8 @@ def generate_test_data(object_storage_client, test_id):
     yield
 
     # Tear down stuff by deleting all the things and then deleting the buckets
-    delete_bucket_and_all_items(object_storage_client, bulk_get_bucket_name)
-    delete_bucket_and_all_items(object_storage_client, bulk_put_bucket_name)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bulk_get_bucket_name)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bulk_put_bucket_name)
 
     # remove the SSE-C key file
     if os.path.exists(GENERATED_ENC_KEY_FILE):
@@ -380,8 +380,8 @@ def test_bulk_put_default_options(customer_key):
 
     # No failures or skips and we uploaded everything
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
     # Pull everything down and verify that the files match (everything in source appears in destination and they are equal)
@@ -405,26 +405,26 @@ def test_bulk_put_default_options(customer_key):
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
                      '--src-dir', root_bulk_put_folder] + ssec_params)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
     assert 'Are you sure you want to overwrite it?' in result.output
     assert set(parsed_result['skipped-objects']) == object_name_set
-    assert parsed_result['upload-failures'] == {}
     assert parsed_result['uploaded-objects'] == {}
 
     # If we say to --no-overwrite then everything should be skipped. There should be no prompts
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
                      '--src-dir', root_bulk_put_folder, '--no-overwrite'] + ssec_params)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
     assert 'Are you sure you want to overwrite it?' not in result.output
     assert set(parsed_result['skipped-objects']) == object_name_set
-    assert parsed_result['upload-failures'] == {}
     assert parsed_result['uploaded-objects'] == {}
 
     # Now we force it
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
                      '--src-dir', root_bulk_put_folder, '--overwrite'] + ssec_params)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == len(object_name_set)
     for object_name in object_name_set:
         assert object_name in parsed_result['uploaded-objects']
@@ -434,8 +434,8 @@ def test_bulk_put_default_options(customer_key):
 
     # No failures or skips and we uploaded everything
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
     for uploaded_object_name in parsed_result['uploaded-objects']:
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
@@ -450,8 +450,8 @@ def test_bulk_put_auto_content_type():
 
     # No failures or skips and we uploaded everything
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
     result = invoke([
@@ -462,8 +462,8 @@ def test_bulk_put_auto_content_type():
         '--content-type', 'auto', '--overwrite', '--verify-checksum'
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
     for uploaded_object_name in parsed_result['uploaded-objects']:
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
@@ -509,8 +509,8 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--storage-tier', 'InfrequentAccess'
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
     result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--fields=name,size,storageTier', '--all', '--page-size', '1000'])
@@ -530,8 +530,8 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--storage-tier', 'InfrequentAccess'
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
     result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--fields=name,size,storageTier', '--all', '--page-size', '1000'])
@@ -549,8 +549,8 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         '--no-multipart', '--overwrite', '--verify-checksum'
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
     for uploaded_object_name in parsed_result['uploaded-objects']:
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
@@ -564,8 +564,8 @@ def test_bulk_put_with_prefix():
 
     # No failures or skips and we uploaded everything
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
     result = invoke([
@@ -576,8 +576,8 @@ def test_bulk_put_with_prefix():
         '--object-prefix', 'bulk_put_prefix_test/', '--overwrite', '--verify-checksum'
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
     for uploaded_object_name in parsed_result['uploaded-objects']:
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
@@ -646,8 +646,8 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
         '--include', '*/[ax]yz.jpg'  # Matches subfolder/subfolder2/xyz.jpg
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
 
     expected_uploaded_files = [
         '{}{}'.format('inclusion_test/', 'test_file1.txt'),
@@ -792,8 +792,8 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
         '--exclude', 'subfolder/[spqr]lah.pdf'  # blah.pdf should still be included because it's not slah.pdf, plah.pdf, qlah.pdf or rlah.pdf
     ])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
 
     expected_uploaded_files = [
         '{}{}'.format('exclusion_test/', 'test_file2.png'),
@@ -968,7 +968,7 @@ def test_bulk_operation_table_output_query(object_storage_client, test_id):
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder, '--output', 'table', '--query', "[?action=='Uploaded'].{file: file, \"opc-content-md5\": \"opc-content-md5\"}"])
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder, '--output', 'table', '--query', "[?action=='Uploaded'].{file: name, \"opc-content-md5\": \"opc-content-md5\"}"])
     assert 'file' in result.output
     assert 'opc-content-md5' in result.output
     assert 'etag' not in result.output

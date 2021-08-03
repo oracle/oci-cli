@@ -37,7 +37,7 @@ def _render_help_windows(ctx, command_chain):
             man_page_content = f.read()
         p.communicate(input=man_page_content)
 
-        ctx.exit()
+        sys.exit()
 
 
 def _render_help_posix_with_groff(ctx, command_chain):
@@ -62,7 +62,7 @@ def _render_help_posix_with_groff(ctx, command_chain):
                 p = Popen(['less', '-R'], stdin=PIPE)
                 p.communicate(input=groff_output)
 
-        ctx.exit()
+        sys.exit()
 
 
 def _get_command_chain(ctx):

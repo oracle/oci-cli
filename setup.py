@@ -4,7 +4,6 @@
 
 import io
 import os
-import sys
 import re
 from setuptools import setup, find_packages
 
@@ -30,10 +29,10 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.43.1',
+    'oci==2.43.2',
     'arrow==0.17.0',
     'certifi',
-    'click==6.7',
+    'click==7.0',
     'configparser==4.0.2',
     'cryptography>=3.2.1,<=3.4.7',
     'jmespath==0.10.0',
@@ -91,6 +90,7 @@ setup(
     packages=all_packages,
     package_dir=package_dirs,
     include_package_data=True,
+    python_requires='>=3.6',
     license="Universal Permissive License 1.0 or Apache License 2.0",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -99,6 +99,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "License :: OSI Approved :: Universal Permissive License (UPL)",
+        "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

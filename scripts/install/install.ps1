@@ -66,8 +66,7 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
 $PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
 $FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.5"    # version of Python to install if none exists
-$MinValidPython2Version = "2.7.5"
-$MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
+$MinValidPython3Version = "3.6.0"    # minimum required version of Python 3 on system
 
 function LogOutput($Output) {
     Write-Verbose $Output -Verbose
@@ -120,16 +119,12 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
     # need to escape spaces in the path for Invoke-Expression
     $EscapedExecutable = $PythonExecutable
     $PythonVersion = Invoke-Expression "& `"$EscapedExecutable`" -c 'import platform;print(platform.python_version())'"
-    $MinVersionToCheck = $MinValidPython2Version
-    # Offline installation requires Python3
-    if ($PythonVersion.StartsWith("3") -Or $OfflineInstall) {
-        $MinVersionToCheck = $MinValidPython3Version
-    }
+    $MinVersionToCheck = $MinValidPython3Version
 
     if (VersionMeetsMinimumRequirements $PythonVersion $MinVersionToCheck) {
         # If there is a valid python and it is not python 3
         if ( (-Not $AcceptAllDefaults) -And $PythonVersion.StartsWith("2") -And ($MinVersionToCheck -ne $MinValidPython3Version)){
-            $message  = 'OCI-CLI recommends python 3. Do you want to install Python 3?'
+            $message  = 'OCI-CLI requires python 3. Do you want to install Python 3?'
             $question = 'Install Python 3 now? (Entering "n" will install OCI CLI using existing Python)'
 
             $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]

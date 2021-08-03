@@ -1682,7 +1682,8 @@ def update_okv_keystore(ctx, **kwargs):
 
 
 # DEX-9562 Rename parameter name for create_autonomous_database
-@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_details, params_to_exclude=['is_access_control_enabled', 'autonomous_maintenance_schedule_type'])
+@cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help="""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
 @cli_util.option('--is-acl-enabled', required=False, type=click.BOOL, help="""Indicates if the database-level access control is enabled. If disabled, database access is defined by the network security rules. If enabled, database access is restricted to the IP addresses defined by the rules specified with the `whitelistedIps` property. While specifying `whitelistedIps` rules is optional,  if database-level access control is enabled and no rules are specified, the database will become inaccessible. The rules can be added later using the `UpdateAutonomousDatabase` API operation or edit option in console. When creating a database clone, the desired access control setting should be specified. By default, database-level access control will be disabled for the clone.
 
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -1691,6 +1692,10 @@ This property is applicable only to Autonomous Databases on the Exadata Cloud@Cu
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs):
+
+    if 'maintenance_schedule_type' in kwargs:
+        kwargs['autonomous_maintenance_schedule_type'] = kwargs['maintenance_schedule_type']
+        kwargs.pop('maintenance_schedule_type')
 
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
         kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
@@ -1701,7 +1706,8 @@ def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs)
 
 
 # Rename parameter name for create_autonomous_database_create_autonomous_database_clone_details
-@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled', 'autonomous_maintenance_schedule_type'])
+@cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help="""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
 @cli_util.option('--is-acl-enabled', required=False, type=click.BOOL, help="""Indicates if the database-level access control is enabled. If disabled, database access is defined by the network security rules. If enabled, database access is restricted to the IP addresses defined by the rules specified with the `whitelistedIps` property. While specifying `whitelistedIps` rules is optional,  if database-level access control is enabled and no rules are specified, the database will become inaccessible. The rules can be added later using the `UpdateAutonomousDatabase` API operation or edit option in console. When creating a database clone, the desired access control setting should be specified. By default, database-level access control will be disabled for the clone.
 
 This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -1710,6 +1716,10 @@ This property is applicable only to Autonomous Databases on the Exadata Cloud@Cu
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_clone_details(ctx, **kwargs):
+
+    if 'maintenance_schedule_type' in kwargs:
+        kwargs['autonomous_maintenance_schedule_type'] = kwargs['maintenance_schedule_type']
+        kwargs.pop('maintenance_schedule_type')
 
     if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
         kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
@@ -1738,34 +1748,49 @@ def update_autonomous_database(ctx, **kwargs):
 
 
 # Hide --is-access-control-enabled from following command
-@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled', 'autonomous_maintenance_schedule_type'])
 @database_cli.autonomous_database_group.command(name='create-refreshable-clone', help=database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details.help)
+@cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help="""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, **kwargs):
 
+    if 'maintenance_schedule_type' in kwargs:
+        kwargs['autonomous_maintenance_schedule_type'] = kwargs['maintenance_schedule_type']
+        kwargs.pop('maintenance_schedule_type')
+
     ctx.invoke(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, **kwargs)
 
 
 # Hide --is-access-control-enabled from following command
-@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, params_to_exclude=['is_access_control_enabled', 'autonomous_maintenance_schedule_type'])
 @database_cli.autonomous_database_group.command(name='create-from-backup-id', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_details.help)
+@cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help="""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, **kwargs):
 
+    if 'maintenance_schedule_type' in kwargs:
+        kwargs['autonomous_maintenance_schedule_type'] = kwargs['maintenance_schedule_type']
+        kwargs.pop('maintenance_schedule_type')
+
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, **kwargs)
 
 
 # Hide --is-access-control-enabled from following command
-@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, params_to_exclude=['is_access_control_enabled', 'autonomous_maintenance_schedule_type'])
 @database_cli.autonomous_database_group.command(name='create-from-backup-timestamp', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details.help)
+@cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help="""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, **kwargs):
+
+    if 'maintenance_schedule_type' in kwargs:
+        kwargs['autonomous_maintenance_schedule_type'] = kwargs['maintenance_schedule_type']
+        kwargs.pop('maintenance_schedule_type')
 
     ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, **kwargs)
 
