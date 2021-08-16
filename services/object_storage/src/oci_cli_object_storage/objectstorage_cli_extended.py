@@ -890,6 +890,10 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
         raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
     client_request_id = ctx.obj['request_id']
     base_kwargs = {'opc_client_request_id': client_request_id}
+
+    # check if the bucket exists
+    client.get_bucket(namespace, bucket_name, **base_kwargs)
+
     if metadata is not None:
         base_kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
     if content_type is not None:

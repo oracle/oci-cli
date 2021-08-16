@@ -66,18 +66,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 cryptography
 =============
-LICENSE: https://github.com/pyca/cryptography/blob/3.2.x/LICENSE
+LICENSE: https://github.com/pyca/cryptography/blob/3.3.x/LICENSE
 
 This software is made available under the terms of *either* of the licenses
 found in LICENSE.APACHE or LICENSE.BSD. Contributions to cryptography are made
 under the terms of *both* these licenses.
 
-The code used in the OpenSSL locking callback and OS random engine is derived
-from CPython, and is licensed under the terms of the PSF License Agreement.
-
+The code used in the OS random engine is derived from CPython, and is licensed
+under the terms of the PSF License Agreement.
 ___________________________________________________________________________
 
-LICENSE.APACHE: https://github.com/pyca/cryptography/blob/3.2.x/LICENSE.APACHE
+LICENSE.APACHE: https://github.com/pyca/cryptography/blob/3.3.x/LICENSE.APACHE
+
 
                                  Apache License
                            Version 2.0, January 2004
@@ -283,7 +283,7 @@ LICENSE.APACHE: https://github.com/pyca/cryptography/blob/3.2.x/LICENSE.APACHE
 
 ___________________________________________________________________________
 
-LICENSE.BSD: https://github.com/pyca/cryptography/blob/3.2.x/LICENSE.BSD
+LICENSE.BSD: https://github.com/pyca/cryptography/blob/3.3.x/LICENSE.BSD
 
 Copyright (c) Individual contributors.
 All rights reserved.
@@ -728,7 +728,8 @@ retrying
 
 six
 =============
-Copyright (c) 2010-2017 Benjamin Peterson
+
+Copyright (c) 2010-2020 Benjamin Peterson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
