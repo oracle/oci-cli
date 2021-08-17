@@ -39,10 +39,11 @@ def session_group():
 @click.option('--tenancy-name', help='Name of the tenancy')
 @click.option('--profile-name', help='Name of the profile you are creating')
 @click.option('--config-location', help='Path to the config for the new session')
+@click.option('--use-passphrase', is_flag=True, help='Provide a passphrase to be used to encrypt the private key from the generated key pair')
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def authenticate(ctx, region, tenancy_name, profile_name, config_location):
+def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase):
     region = ctx.obj['region']
     if region is None:
         region = cli_setup.prompt_for_region()
@@ -51,7 +52,7 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location):
     user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
 
     # persist the session to a config (including the token value)
-    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, persist_token=True, session_auth=True)
+    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True)
 
     click.echo('Config written to: {}'.format(config))
 

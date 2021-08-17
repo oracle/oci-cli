@@ -10,6 +10,7 @@ import click
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from services.management_agent.src.oci_cli_management_agent.generated import managementagent_cli
+from oci_cli import custom_types  # noqa: F401
 
 
 # Group name shortening
@@ -142,3 +143,30 @@ cli_util.rename_command(managementagent_cli, managementagent_cli.management_agen
 # to
 #  oci management-agent plugin list
 cli_util.rename_command(managementagent_cli, managementagent_cli.management_agent_root_group, managementagent_cli.management_agent_plugin_group, "plugin")
+
+
+# Rename
+#  oci management-agent agent summarize-management-agent-counts
+# to
+#  oci management-agent agent summarize-agent-counts
+cli_util.rename_command(managementagent_cli, managementagent_cli.management_agent_group, managementagent_cli.summarize_management_agent_counts, "summarize-agent-counts")
+
+# Rename
+#  oci management-agent agent summarize-management-agent-plugin-counts
+# to
+#  oci management-agent agent summarize-plugin-counts
+cli_util.rename_command(managementagent_cli, managementagent_cli.management_agent_group, managementagent_cli.summarize_management_agent_plugin_counts, "summarize-plugin-counts")
+
+
+#  oci management-agent agent summarize-management-agent-plugin-counts --group-by   clashes with --group-by for agent
+@cli_util.copy_params_from_generated_command(managementagent_cli.summarize_management_agent_plugin_counts, params_to_exclude=['group_by'])
+@managementagent_cli.management_agent_group.command(name=cli_util.override('management_agent.summarize-plugin-counts.command_name', 'summarize-plugin-counts'), help=u"""Gets count of the inventory of management agent plugins for a given compartment id and group by parameter. Supported groupBy parameter: pluginName \n[Command Reference](summarizeManagementAgentPluginCounts)""")
+@cli_util.option('--plugin-group-by', required=True, type=custom_types.CliCaseInsensitiveChoice(["pluginName"]), help=u"""The field by which to group Management Agent Plugins""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'ManagementAgentPluginAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_management_agent_plugin_counts(ctx, **kwargs):
+    if 'plugin_group_by' in kwargs:
+        kwargs['group_by'] = kwargs['plugin_group_by']
+        kwargs.pop('plugin_group_by')
+    ctx.invoke(managementagent_cli.summarize_management_agent_plugin_counts, **kwargs)

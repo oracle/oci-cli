@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.0.1 - 2021-08-17
+-------------------
+Added
+~~~~~
+* Support for identifying Management Agent hosts eligible to create Operations Insights Host resources on
+
+  * ``oci opsi host-insights list-importable-agent-entities``
+
+* Support for summarize-agen-counts and summarize-plugin-counts in Management Agent service
+
+  * ``oci management-agent agent summarize-agent-counts``
+  * ``oci management-agent agent summarize-plugin-counts``
+
+* Support for additional filters when listing management agents in Management Agent service
+
+  * ``oci management-agent agent list --availability-status, --host-id, --is-customer-deployed``
+
+Changed
+~~~~~~~
+
+* Modified supported versions for the following packages: six (>=0.15.0).
+
+* Check the bucket exists before bulk and sync operations in Object Storage service
+
+  * ``oci os object bulk-upload``
+  * ``oci os object bulk-download``
+  * ``oci os object sync``
+
+* Session authentication now has no private key passphrase prompt by default; private key passphrase can be provided by running session authenticate with --use-passphrase option
+
+  * ``oci session authenticate``
+
 3.0.0 - 2021-08-03
 -------------------
 [BREAKING] Drop support for Python 2

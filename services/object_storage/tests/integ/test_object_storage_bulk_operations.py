@@ -896,6 +896,48 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     shutil.rmtree(exclusion_test_folder)
 
 
+def test_bulk_get_when_bucket_name_is_invalid(debug):
+    """
+    Run the bulk-download command using an invalid bucket name and validate that it throws a ServiceError
+    """
+
+    invalid_bucket_name = 'invalid_bucket'
+    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name',
+                     invalid_bucket_name, '--download-dir', bulk_get_bucket_name, '--dry-run'], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name',
+                     invalid_bucket_name, '--download-dir', bulk_get_bucket_name], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+
+def test_bulk_put_when_bucket_name_is_invalid(debug):
+    """
+    Run the bulk-upload command using an invalid bucket name and validate that it throws a ServiceError
+    """
+
+    invalid_bucket_name = 'invalid_bucket'
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name',
+                     invalid_bucket_name, '--src-dir', root_bulk_put_folder, '--dry-run'], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name',
+                     invalid_bucket_name, '--src-dir', root_bulk_put_folder], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+
 @util.skip_while_rerecording
 def test_delete_when_no_objects_in_bucket(vcr_fixture, object_storage_client, test_id):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()

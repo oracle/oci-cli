@@ -4,6 +4,7 @@
 import os
 import random
 import shutil
+import time
 from io import StringIO
 from pathlib import Path
 
@@ -127,25 +128,34 @@ def test_sync_src_updated_objects(object_storage_client):
 
     # write one local object with different content
     f_diff_content = random.choice(list(sync_local_object_content))
-    f_same_content = random.choice([o for o in sync_local_object_content if o != f_diff_content])
-    new_content = bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH)
+    new_content = bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH_SHORT)
     sync_local_object_content[f_diff_content] = new_content
     with open(os.path.join(sync_upload_test_dir, f_diff_content), 'w') as fh:
         fh.write(new_content)
-    # re-upload another object with same content
-    with open(os.path.join(sync_upload_test_dir, f_same_content), 'w') as fh:
-        fh.write(sync_local_object_content[f_same_content])
 
-    # invoke sync
-    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_upload_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
-    parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['upload-failures'] == {}
-    assert set(parsed_result['uploaded-objects']) == {f_diff_content, f_same_content}
-    assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys()) - 2
+    f_same_content = random.choice([o for o in sync_local_object_content if o != f_diff_content])
+    fp_f_same_content = os.path.join(sync_upload_test_dir, f_same_content)
+    original_mtime = os.stat(fp_f_same_content).st_mtime
+    # Update the last modification time of one file while keeping the content same.
+    # setting local file modification time to a future date (+5 sec)  so that sync properly works
+    # otherwise the m_time of the new object might be too close to it's counterpart in remote
+    # and we might end up skipping it as local writes are very fast
+    updated_mtime = time.time() + 5
+    os.utime(fp_f_same_content, (updated_mtime, updated_mtime))
 
-    compare_file_content_to_remote(object_storage_client, sync_local_object_content,
-                                   objects_in_scope=[f_diff_content, f_same_content])
+    try:
+        result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                        sync_upload_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
+        parsed_result = util.parse_json_response_from_mixed_output(result.output)
+        assert parsed_result['upload-failures'] == {}
+        assert set(parsed_result['uploaded-objects']) == {f_diff_content, f_same_content}
+        assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys()) - 2
+
+        compare_file_content_to_remote(object_storage_client, sync_local_object_content,
+                                       objects_in_scope=[f_diff_content, f_same_content])
+    finally:
+        # set the original time back to the f_same_content file so that it doesn't get picked up by subsequent tests
+        os.utime(fp_f_same_content, (original_mtime, original_mtime))
 
 
 def test_sync_src_new_objects(object_storage_client):
@@ -154,6 +164,7 @@ def test_sync_src_new_objects(object_storage_client):
     2. Create a new file in local
     3. When we try to sync against remote again only the new object should get uploaded and
         rest of the files should get skipped as they are already present.
+    4. Remove the newly created file after test
     """
 
     upload_and_validate_all_objects(object_storage_client, debug)
@@ -164,16 +175,17 @@ def test_sync_src_new_objects(object_storage_client):
     with open(new_file_path, 'w') as fh:
         fh.write(new_file_contents[new_object_name])
 
-    # invoke sync
-    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_upload_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
-    parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['upload-failures'] == {}
-    assert set(parsed_result['uploaded-objects'].keys()) == {new_object_name}
-    assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys())
-    compare_file_content_to_remote(object_storage_client, new_file_contents, objects_in_scope=[new_object_name])
-    # clean up the new object from local
-    os.remove(new_file_path)
+    try:
+        result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                        sync_upload_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
+        parsed_result = util.parse_json_response_from_mixed_output(result.output)
+        assert parsed_result['upload-failures'] == {}
+        assert set(parsed_result['uploaded-objects'].keys()) == {new_object_name}
+        assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys())
+
+        compare_file_content_to_remote(object_storage_client, new_file_contents, objects_in_scope=[new_object_name])
+    finally:
+        os.remove(new_file_path)
 
 
 def test_sync_src_include_dry_run(debug):
@@ -837,6 +849,27 @@ def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
                                    {os.path.join(symlink_pref, k): v for k, v in dir_content_with_symlink.items()},
                                    prefix_to_test=symlink_pref)
     os.unlink(symlink_fp)
+
+
+def test_sync_src_when_bucket_name_is_invalid(debug):
+    """
+    Run the sync command specifying --src-dir using an invalid bucket name and validate that it throws a ServiceError
+    """
+
+    invalid_bucket_name = 'invalid_bucket'
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    invalid_bucket_name, '--src-dir', sync_upload_test_dir, '--dry-run'], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    invalid_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
 
 
 def create_symlink(src_path_abs, symlink_fp, is_directory=False):

@@ -458,7 +458,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--time-availability-status-started-less-than', type=custom_types.CLI_DATETIME, help=u"""Filter to limit the availability history results to that of time before the input time including the boundary record Defaulted to current date. The date and time to be given as described in [RFC 3339], section 14.29.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAvailabilityStatusStarted"]), help=u"""The field to sort by. Default order for timeAvailabilityStatusStarted is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -516,7 +516,7 @@ def list_availability_histories(ctx, from_json, all_pages, page_size, management
 
 
 @management_agent_image_group.command(name=cli_util.override('management_agent.list_management_agent_images.command_name', 'list'), help=u"""Get supported agent image information \n[Command Reference](listManagementAgentImages)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -576,7 +576,7 @@ def list_management_agent_images(ctx, from_json, all_pages, page_size, compartme
 
 
 @management_agent_install_key_group.command(name=cli_util.override('management_agent.list_management_agent_install_keys.command_name', 'list'), help=u"""Returns a list of Management Agent installed Keys. \n[Command Reference](listManagementAgentInstallKeys)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""if set to true then it fetches install key for all compartments where user has access to else only on the compartment specified.""")
 @cli_util.option('--access-level', help=u"""Value of this is always \"ACCESSIBLE\" and any other value is not supported.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
@@ -624,13 +624,14 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
 
 
 @management_agent_plugin_group.command(name=cli_util.override('management_agent.list_management_agent_plugins.command_name', 'list'), help=u"""Returns a list of managementAgentPlugins. \n[Command Reference](listManagementAgentPlugins)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--display-name', help=u"""Filter to return only Management Agent Plugins having the particular display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -638,7 +639,7 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentPluginSummary]'})
 @cli_util.wrap_exceptions
-def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state):
+def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state, platform_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -656,6 +657,8 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
         kwargs['sort_by'] = sort_by
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if platform_type is not None and len(platform_type) > 0:
+        kwargs['platform_type'] = platform_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('management_agent', 'management_agent', ctx)
     if all_pages:
@@ -684,39 +687,48 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
 
 
 @management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agent. \n[Command Reference](listManagementAgents)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
-@cli_util.option('--plugin-name', help=u"""Filter to return only Management Agents having the particular Plugin installed.""")
-@cli_util.option('--version-parameterconflict', help=u"""Filter to return only Management Agents having the particular agent version.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--plugin-name', multiple=True, help=u"""Filter to return only Management Agents having the particular Plugin installed. A special pluginName of 'None' can be provided and this will return only Management Agents having no plugin installed.""")
+@cli_util.option('--version-parameterconflict', multiple=True, help=u"""Filter to return only Management Agents having the particular agent version.""")
 @cli_util.option('--display-name', help=u"""Filter to return only Management Agents having the particular display name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS"]), help=u"""Filter to return only Management Agents having the particular platform type.""")
+@cli_util.option('--availability-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "SILENT", "NOT_AVAILABLE"]), help=u"""Filter to return only Management Agents in the particular availability status.""")
+@cli_util.option('--host-id', help=u"""Filter to return only Management Agents having the particular agent host id.""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
+@cli_util.option('--is-customer-deployed', type=click.BOOL, help=u"""true, if the agent image is manually downloaded and installed. false, if the agent is deployed as a plugin in Oracle Cloud Agent.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "host", "availabilityStatus", "platformType", "pluginDisplayNames", "version"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'plugin-name': {'module': 'management_agent', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'management_agent', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentSummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'plugin-name': {'module': 'management_agent', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'management_agent', 'class': 'list[string]'}}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentSummary]'})
 @cli_util.wrap_exceptions
-def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id, plugin_name, version_parameterconflict, display_name, lifecycle_state, platform_type, limit, page, sort_order, sort_by):
+def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id, plugin_name, version_parameterconflict, display_name, lifecycle_state, availability_status, host_id, platform_type, is_customer_deployed, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if plugin_name is not None:
+    if plugin_name is not None and len(plugin_name) > 0:
         kwargs['plugin_name'] = plugin_name
-    if version_parameterconflict is not None:
+    if version_parameterconflict is not None and len(version_parameterconflict) > 0:
         kwargs['version'] = version_parameterconflict
     if display_name is not None:
         kwargs['display_name'] = display_name
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    if platform_type is not None:
+    if availability_status is not None:
+        kwargs['availability_status'] = availability_status
+    if host_id is not None:
+        kwargs['host_id'] = host_id
+    if platform_type is not None and len(platform_type) > 0:
         kwargs['platform_type'] = platform_type
+    if is_customer_deployed is not None:
+        kwargs['is_customer_deployed'] = is_customer_deployed
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -867,7 +879,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('management_agent.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--agent-id', help=u"""The ManagementAgentID of the agent from which the Management Agents to be filtered.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -929,9 +941,60 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, age
     cli_util.render_response(result, ctx)
 
 
+@management_agent_group.command(name=cli_util.override('management_agent.summarize_management_agent_counts.command_name', 'summarize-management-agent-counts'), help=u"""Gets count of the inventory of agents for a given compartment id, group by, and isPluginDeployed parameters. Supported groupBy parameters: availabilityStatus, platformType, version \n[Command Reference](summarizeManagementAgentCounts)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--group-by', required=True, type=custom_types.CliCaseInsensitiveChoice(["availabilityStatus", "platformType", "version"]), multiple=True, help=u"""The field by which to group Management Agents. Currently, only one groupBy dimension is supported at a time.""")
+@cli_util.option('--has-plugins', type=click.BOOL, help=u"""When set to true then agents that have at least one plugin deployed will be returned. When set to false only agents that have no plugins deployed will be returned.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'ManagementAgentAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_management_agent_counts(ctx, from_json, compartment_id, group_by, has_plugins, page):
+
+    kwargs = {}
+    if has_plugins is not None:
+        kwargs['has_plugins'] = has_plugins
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.summarize_management_agent_counts(
+        compartment_id=compartment_id,
+        group_by=group_by,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@management_agent_group.command(name=cli_util.override('management_agent.summarize_management_agent_plugin_counts.command_name', 'summarize-management-agent-plugin-counts'), help=u"""Gets count of the inventory of management agent plugins for a given compartment id and group by parameter. Supported groupBy parameter: pluginName \n[Command Reference](summarizeManagementAgentPluginCounts)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--group-by', required=True, type=custom_types.CliCaseInsensitiveChoice(["pluginName"]), help=u"""The field by which to group Management Agent Plugins""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'ManagementAgentPluginAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_management_agent_plugin_counts(ctx, from_json, compartment_id, group_by, page):
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.summarize_management_agent_plugin_counts(
+        compartment_id=compartment_id,
+        group_by=group_by,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @management_agent_group.command(name=cli_util.override('management_agent.update_management_agent.command_name', 'update'), help=u"""API to update the console managed properties of the Management Agent. \n[Command Reference](updateManagementAgent)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
-@cli_util.option('--is-agent-auto-upgradable', type=click.BOOL, help=u"""true if the agent can be upgraded automatically; false if it must be upgraded manually. true is currently unsupported.""")
+@cli_util.option('--is-agent-auto-upgradable', type=click.BOOL, help=u"""Setting of this flag is no longer supported.""")
 @cli_util.option('--display-name', help=u"""New displayName of Agent.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

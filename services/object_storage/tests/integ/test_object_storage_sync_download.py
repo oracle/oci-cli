@@ -82,6 +82,13 @@ def generate_files_in_remote(object_storage_client, test_id):
         shutil.rmtree(sync_download_test_dir)
 
 
+@pytest.fixture(autouse=True)
+def teardown(debug):
+    yield
+    if os.path.exists(sync_download_test_dir):
+        shutil.rmtree(sync_download_test_dir)
+
+
 def test_sync_dest_dry_run(debug):
     """
     1. Check for UsageError for incorrect params
@@ -126,7 +133,6 @@ def test_sync_dest():
 
     assert len(sync_remote_object_content) == bulk_operation.get_count_of_files_in_folder_and_subfolders(
         sync_download_test_dir)
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_updated_objects(object_storage_client):
@@ -161,7 +167,6 @@ def test_sync_dest_updated_objects(object_storage_client):
 
     compare_file_content_to_local(sync_remote_object_content, sync_download_test_dir,
                                   files_in_scope=[f_diff_content, f_same_content])
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_new_objects(object_storage_client):
@@ -179,15 +184,16 @@ def test_sync_dest_new_objects(object_storage_client):
     object_storage_client.put_object(util.NAMESPACE, sync_download_bucket_name, new_object_name,
                                      new_file_contents[new_object_name])
 
-    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir], debug=debug)
-    parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    assert parsed_result['download-failures'] == {}
-    assert set(parsed_result['downloaded-objects']) == {new_object_name}
-    assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
-    compare_file_content_to_local(new_file_contents, sync_download_test_dir)
-    object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, new_object_name)
-    shutil.rmtree(sync_download_test_dir)
+    try:
+        result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                        sync_download_bucket_name, '--dest-dir', sync_download_test_dir], debug=debug)
+        parsed_result = util.parse_json_response_from_mixed_output(result.output)
+        assert parsed_result['download-failures'] == {}
+        assert set(parsed_result['downloaded-objects']) == {new_object_name}
+        assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
+        compare_file_content_to_local(new_file_contents, sync_download_test_dir)
+    finally:
+        object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, new_object_name)
 
 
 def test_sync_dest_include_dry_run(debug):
@@ -233,7 +239,6 @@ def test_sync_dest_include(debug):
     assert parsed_result['download-failures'] == {}
     assert parsed_result['downloaded-objects'] == []
     assert file_name_to_include in parsed_result['skipped-objects']
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_exclude_dry_run(debug):
@@ -249,7 +254,6 @@ def test_sync_dest_exclude_dry_run(debug):
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
     assert len(downloaded_set) == len(sync_remote_object_content.keys()) - 1
     assert file_name_to_exclude not in downloaded_set
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_exclude(debug):
@@ -270,7 +274,6 @@ def test_sync_dest_exclude(debug):
     assert bulk_operation.get_count_of_files_in_folder_and_subfolders(sync_download_test_dir) == len(sync_remote_object_content.keys()) - 1
     compare_file_content_to_local(slice_dict_by_key(sync_remote_object_content, {file_name_to_exclude}, False),
                                   sync_download_test_dir)
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_dir_prefix(debug):
@@ -316,7 +319,6 @@ def test_sync_dest_dir_prefix(debug):
             new_object_content_map[n_o_name] = sync_remote_object_content[o_name]
 
     compare_file_content_to_local(new_object_content_map, sync_download_test_dir)
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_with_delete(debug):
@@ -364,7 +366,6 @@ def test_sync_dest_with_delete(debug):
     assert parsed_result['downloaded-objects'] == []
     assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
     assert set(parsed_result['deleted-files']) == new_local_file_set
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_with_delete_and_include(object_storage_client):
@@ -422,7 +423,6 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     assert set(parsed_result['deleted-files']) == l_file_set_1
 
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_with_delete_and_exclude(object_storage_client):
@@ -480,7 +480,6 @@ def test_sync_dest_with_delete_and_exclude(object_storage_client):
     assert set(parsed_result['deleted-files']) == l_file_set_2
 
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_with_delete_and_prefix(debug):
@@ -528,7 +527,6 @@ def test_sync_dest_with_delete_and_prefix(debug):
     # verify that prefixes are removed while downloading and validate the file contents
     compare_file_content_to_local({k[len(prefix_to_sync):]: v for k, v in sync_remote_object_content.items()
                                    if k.startswith(prefix_to_sync)}, prefix_test_path)
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
@@ -598,7 +596,6 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     assert set(parsed_result['deleted-files']) == l_file_set_1
 
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2).union(r_obj_set_3))
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
@@ -664,7 +661,6 @@ def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
     assert set(parsed_result['deleted-files']) == l_file_set_2
 
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_between_src_and_dest(debug):
@@ -716,7 +712,6 @@ def test_sync_between_src_and_dest(debug):
     assert parsed_result['upload-failures'] == {}
     assert parsed_result['uploaded-objects'] == {}
     assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
-    shutil.rmtree(sync_download_test_dir)
 
 
 def test_sync_dest_validate_unsupported_params(debug):
@@ -776,7 +771,27 @@ def test_sync_dest_skip_archived_objects(object_storage_client, debug):
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert any(filter(lambda f_n: archived_object in f_n, parsed_result['skipped-objects']))
     object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, archived_object)
-    shutil.rmtree(sync_download_test_dir)
+
+
+def test_sync_dest_when_bucket_name_is_invalid(debug):
+    """
+    Run the sync command specifying --dest-dir using an invalid bucket name and validate that it throws a ServiceError
+    """
+
+    invalid_bucket_name = 'invalid_bucket'
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    invalid_bucket_name, '--dest-dir', sync_download_test_dir, '--dry-run'], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
+
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    invalid_bucket_name, '--dest-dir', sync_download_test_dir], debug=debug)
+    assert 'ServiceError:' in result.output
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['status'] == 404
+    assert parsed_result['code'] == 'BucketNotFound'
 
 
 def download_and_validate_all_objects():
