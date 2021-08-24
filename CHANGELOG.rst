@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.0.2 - 2021-08-24
+-------------------
+Added
+~~~~~
+* Support to generate recommended vm cluster network and create vm cluster network with given customer listener port in the Database service
+
+  * ``oci db exadata-infrastructure generate-recommended-vm-cluster-network --scan-listener-port-tcp, --scan-listener-port-tcp-ssl``
+  * ``oci db vm-cluster-network create --scans``
+
+* Prompt to create a config file with a CLI session profile if a CLI command is run with a nonexistent config file and --auth security_token
+
+* Prompt to re-authenticate a CLI session profile if a CLI command is run with an expired session token and --auth security_token
+
+Changed
+~~~~~~~
+* Modified supported versions for the following packages: cryptography (>3.2.1, <=3.4.7), click (7.1.2).
+
 3.0.1 - 2021-08-17
 -------------------
 Added

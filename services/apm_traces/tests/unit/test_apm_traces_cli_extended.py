@@ -31,7 +31,7 @@ class TestAPMTraces(unittest.TestCase):
 
     def test_query_old_is_removed(self):
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'query-old'])
-        assert 'Error: No such command "query-old".' in result.output  # Confirming removal of query-old
+        assert "Error: No such command 'query-old'." in result.output  # Confirming removal of query-old
 
     def test_run_query_options(self):
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query'])

@@ -54,7 +54,7 @@ class TestCompute(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
 
         result = util.invoke_command(['compute', 'volume-attachment', 'attach', '--type', 'x'])
-        assert 'Error: Invalid value for "--type":' in result.output
+        assert "Error: Invalid value for '--type':" in result.output
         assert '(choose from service_determined, emulated, iscsi, paravirtualized)' in result.output
 
         result = util.invoke_command(['compute', 'volume-attachment', 'attach', '--type', 'service_determined'])

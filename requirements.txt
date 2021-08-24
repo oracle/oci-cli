@@ -6,7 +6,7 @@ appdirs==1.4.3
 arrow==0.17.0
 certifi
 cffi>=1.9.1
-click==7.0
+click==7.1.2
 configparser==4.0.2
 coverage==4.5.2
 cryptography==3.3.2
@@ -15,7 +15,7 @@ Jinja2==2.11.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.44.0
+oci==2.44.1
 packaging==20.2
 pluggy==0.13.0
 py==1.10.0

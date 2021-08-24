@@ -12,7 +12,7 @@ class TestBudget(unittest.TestCase):
 
     def test_top_level_name(self):
         result = util.invoke_command(['budget'])
-        assert 'Error: No such command "budget"' in result.output
+        assert "Error: No such command 'budget'" in result.output
         result = util.invoke_command(['budgets'])
         assert 'Usage: oci budgets' in result.output
 

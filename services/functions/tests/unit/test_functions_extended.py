@@ -79,7 +79,7 @@ class TestFunctions(unittest.TestCase):
         assert '--image' in result.output
         assert '--memory-in-mbs' in result.output
         result = util.invoke_command(['fn', 'function', 'create', '--memory-in-mbs', 'x'])
-        assert 'Error: Invalid value for "--memory-in-mbs": x is not a valid integer' in result.output
+        assert "Error: Invalid value for '--memory-in-mbs': x is not a valid integer" in result.output
         result = util.invoke_command(['fn', 'function', 'create', '--config'])
         assert 'Error: --config option requires an argument' in result.output
 
@@ -93,7 +93,7 @@ class TestFunctions(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--function-id' in result.output
         result = util.invoke_command(['fn', 'function', 'update', '--memory-in-mbs', 'x'])
-        assert 'Error: Invalid value for "--memory-in-mbs": x is not a valid integer' in result.output
+        assert "Error: Invalid value for '--memory-in-mbs': x is not a valid integer" in result.output
         result = util.invoke_command(['fn', 'function', 'update', '--image'])
         assert 'Error: --image option requires an argument' in result.output
         result = util.invoke_command(['fn', 'function', 'update', '--config'])
@@ -116,6 +116,6 @@ class TestFunctions(unittest.TestCase):
         assert '--body' in result.output
         assert '--file' in result.output
         result = util.invoke_command(['fn', 'function', 'invoke', '--fn-intent', 'x'])
-        assert 'Error: Invalid value for "--fn-intent": invalid choice: x. (choose from httprequest, cloudevent)' in result.output
+        assert "Error: Invalid value for '--fn-intent': invalid choice: x. (choose from httprequest, cloudevent)" in result.output
         result = util.invoke_command(['fn', 'function', 'invoke', '--fn-invoke-type', 'x'])
-        assert 'Error: Invalid value for "--fn-invoke-type": invalid choice: x. (choose from detached, sync)' in result.output
+        assert "Error: Invalid value for '--fn-invoke-type': invalid choice: x. (choose from detached, sync)" in result.output

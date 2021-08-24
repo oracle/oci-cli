@@ -88,31 +88,31 @@ class TestAnalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command([
             'analytics', 'analytics-instance', 'create-analytics-instance-public-endpoint-details'
         ])
-        assert 'Error: No such command "create-analytics-instance-public-endpoint-details".' in result.output
+        assert "Error: No such command 'create-analytics-instance-public-endpoint-details'." in result.output
 
         # Check that command "create-analytics-instance-private-endpoint-details" was removed from the API.
         result = util.invoke_command([
             'analytics', 'analytics-instance', 'create-analytics-instance-private-endpoint-details'
         ])
-        assert 'Error: No such command "create-analytics-instance-private-endpoint-details".' in result.output
+        assert "Error: No such command 'create-analytics-instance-private-endpoint-details'." in result.output
 
         # Check that command "change-analytics-instance-network-endpoint-public-endpoint-details" was removed from the API.
         result = util.invoke_command([
             'analytics', 'analytics-instance', 'change-analytics-instance-network-endpoint-public-endpoint-details'
         ])
-        assert 'Error: No such command "change-analytics-instance-network-endpoint-public-endpoint-details".' in result.output
+        assert "Error: No such command 'change-analytics-instance-network-endpoint-public-endpoint-details'." in result.output
 
         # Check that command "change-analytics-instance-network-endpoint-private-endpoint-details" was removed from the API.
         result = util.invoke_command([
             'analytics', 'analytics-instance', 'change-analytics-instance-network-endpoint-private-endpoint-details'
         ])
-        assert 'Error: No such command "change-analytics-instance-network-endpoint-private-endpoint-details".' in result.output
+        assert "Error: No such command 'change-analytics-instance-network-endpoint-private-endpoint-details'." in result.output
 
         # Check that command "change-analytics-instance-network-endpoint" was removed from the API.
         result = util.invoke_command([
             'analytics', 'analytics-instance', 'change-analytics-instance-network-endpoint'
         ])
-        assert 'Error: No such command "change-analytics-instance-network-endpoint".' in result.output
+        assert "Error: No such command 'change-analytics-instance-network-endpoint'." in result.output
 
         # Check that command "change-network-endpoint" exists.
         result = util.invoke_command([

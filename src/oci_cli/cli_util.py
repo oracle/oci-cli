@@ -299,6 +299,23 @@ def get_session_token_signer(client_config):
         client_config['pass_phrase'] = prompt_for_passphrase()
         private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
 
+    security_token_container = oci.auth.security_token_container.SecurityTokenContainer(None, token)
+    if not security_token_container.valid():
+        click.echo('ERROR: This CLI session has expired, so it cannot currently be used to run commands')
+        if click.confirm('Do you want to re-authenticate your CLI session profile?', default=True):
+            ctx = click.get_current_context()
+            from .cli_session import authenticate
+            # if the expired session profile used a private key passphrase, then prompt for a passphrase during re-authentication; otherwise, don't prompt for passphrase during re-authentication
+            passphrase_prompt = client_config['pass_phrase'] is not None
+            ctx.invoke(authenticate, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']), use_passphrase=passphrase_prompt)
+            # if there are any issues with the authentication, they should be handled by the session authenticate process itself
+            # so these lines below will only be reached if the session authenticate command finished successfully
+            click.echo('Successfully re-authenticated your CLI session profile {}'.format(ctx.obj['profile']))
+            click.echo('You can now re-run your command to use your re-authenticated profile')
+            sys.exit(0)
+        else:
+            sys.exit(1)
+
     signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
     return signer
 
@@ -322,7 +339,21 @@ def create_config_and_signer_based_on_click_context(ctx):
     except exceptions.ConfigFileNotFound as e:
         # config file is not required to be present for instance principal auth or resource principal auth
         if not (instance_principal_auth or resource_principal_auth):
-            sys.exit("ERROR: " + str(e))
+            # if user requests session authentication without a config file, prompt them to create a session profile
+            if session_token_auth:
+                click.echo('ERROR: Could not find config file at {}'.format(os.path.expanduser(ctx.obj['config_file'])))
+                if click.confirm('Do you want to create a new config file with a CLI session profile that can be used with --auth {}?'.format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN), default=True):
+                    from .cli_session import authenticate
+                    ctx.invoke(authenticate, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']))
+                    # if there are any issues with the authentication, they should be handled by the session authenticate process itself
+                    # so these lines below will only be reached if the session authenticate command finished successfully
+                    click.echo('Successfully created config file {} with your new CLI session profile {}'.format(os.path.expanduser(ctx.obj['config_file']), ctx.obj['profile']))
+                    click.echo('You can now re-run your command to use your new session profile')
+                    sys.exit(0)
+                else:
+                    sys.exit(1)
+            else:
+                sys.exit("ERROR: " + str(e))
         client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
         if ctx.obj['debug']:
             client_config["log_requests"] = True

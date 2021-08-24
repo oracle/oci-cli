@@ -17,7 +17,7 @@ class TestNoSQLCliExtended(unittest.TestCase):
         result = util.invoke_command(['nosql', 'query', 'prepare'])
         assert 'Error: Missing option(s)' in result.output
         result = util.invoke_command(['nosql', 'query', 'summarize-statement'])
-        assert 'Error: No such command "summarize-statement".' in result.output
+        assert "Error: No such command 'summarize-statement'." in result.output
 
     def test_nosql_work_request_error(self):
         result = util.invoke_command(['nosql', 'work-request-error', 'list'])

@@ -76,7 +76,7 @@ class TestKMS(unittest.TestCase):
 
     def test_kms_vault_usage_get(self):
         result = util.invoke_command(['kms', 'management', 'vault-usage'])
-        assert 'Error: No such command "vault-usage"' in result.output
+        assert "Error: No such command 'vault-usage'" in result.output
         result = util.invoke_command(['kms', 'management', 'vault', 'usage'])
         assert 'Usage: oci kms management vault usage' in result.output
         result = util.invoke_command(['kms', 'management', 'vault', 'usage', 'get'])
