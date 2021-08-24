@@ -12,7 +12,7 @@ class TestApplicationMigrationCLI(unittest.TestCase):
 
     def check_non_existing_command(self, command, subcommand):
         usage_message = 'Usage: oci application-migration {} [OPTIONS] COMMAND [ARGS]...'.format(command)
-        error_message = 'Error: No such command "{}".'.format(subcommand)
+        error_message = "Error: No such command '{}'.".format(subcommand)
         result = util.invoke_command(['application-migration', command, subcommand])
 
         # Deliberately testing independently rather than combine into one.

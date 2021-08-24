@@ -18,7 +18,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_log_change_log_group(self):
         result = util.invoke_command(['logging', 'log', 'change_log_log_group'])
-        assert 'No such command "change_log_log_group"' in result.output
+        assert "No such command 'change_log_log_group'" in result.output
 
         result = util.invoke_command(['logging', 'log', 'change-log-group'])
         assert 'Error: Missing option(s)' in result.output
@@ -78,7 +78,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_agent_configuration_create(self):
         result = util.invoke_command(['logging', 'unified-agent-configurationn', 'create'])
-        assert 'No such command "unified-agent-configurationn"' in result.output
+        assert "No such command 'unified-agent-configurationn'" in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'create'])
         assert 'Error: Missing option(s)' in result.output
@@ -92,7 +92,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_create_unified_agent_logging_configuration(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'create-unified-agent-configuration-unified-agent-logging-configuration'])
-        assert 'No such command "create-unified-agent-configuration-unified-agent-logging-configuration"' in result.output
+        assert "No such command 'create-unified-agent-configuration-unified-agent-logging-configuration'" in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'create-log-configuration', '--service-conf-destination', 'sampleDestination', '--service-conf-sources'])
         assert 'requires an argument' in result.output
@@ -106,7 +106,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_update_unified_agent_logging_configuration(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'update-unified-agent-configuration-unified-agent-logging-configuration'])
-        assert 'No such command "update-unified-agent-configuration-unified-agent-logging-configuration"' in result.output
+        assert "No such command 'update-unified-agent-configuration-unified-agent-logging-configuration'" in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'update-log-configuration', '--service-conf-destination', 'sampleDestination', '--service-conf-sources', 'sampleSource', '--config-id'])
         assert 'requires an argument' in result.output

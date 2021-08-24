@@ -18,7 +18,7 @@ class TestRunLogChanges(unittest.TestCase):
     # Test 1.1: get-run-log is removed
     def test_get_run_log_removed(self):
         result = util.invoke_command(['data-flow', 'run', 'get-run-log'])
-        assert 'Error: No such command "get-run-log".' in result.output
+        assert "Error: No such command 'get-run-log'." in result.output
 
     # Test 1.2: get-log is added
     def test_get_log_added(self):
@@ -32,7 +32,7 @@ class TestRunLogChanges(unittest.TestCase):
     # Test 2.1: run-log-summary is removed
     def test_run_log_summary_removed(self):
         result = util.invoke_command(['data-flow', 'run-log-summary'])
-        assert 'Error: No such command "run-log-summary".' in result.output
+        assert "Error: No such command 'run-log-summary'." in result.output
 
     # Test 2.1: list-logs is added
     def test_list_logs_added(self):
