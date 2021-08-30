@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.0.3 - 2021-08-31
+-------------------
+Added
+~~~~~
+* Prompt to create a config file with a profile using API key pair authentication if a CLI command is run with a nonexistent config file and api_key auth
+
+* Support for Oracle Analytics Cloud and OCI Vault integration on connections in Data Catalog service
+
+  * ``oci data-catalog data-asset parse-connection --wallet-secret-id, --wallet-secret-name``
+
+* Support for critical event monitoring in the OS Management service
+  
+  * ``oci os-management event``
+  * ``oci os-management managed-instance install-all-updates --update-type``
+  * ``oci os-management managed-instance install-all-windows-updates --update-type``
+  * ``oci os-management managed-instance-group install-all-updates``
+  * ``oci os-management scheduled-job list --is-restricted``
+  * ``oci os-management update-managed-instance-details update-managed-instance``
+  * ``oci os-management work-request-summary``
+
+Changed
+~~~~~~~
+* Modified supported version for the following package: arrow (>=1.0.0), cryptography (>=3.2.1, <=3.4.7)
+
+* Configparser has been removed from the requirements
+
 3.0.2 - 2021-08-24
 -------------------
 Added
