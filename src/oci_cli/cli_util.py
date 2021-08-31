@@ -339,21 +339,27 @@ def create_config_and_signer_based_on_click_context(ctx):
     except exceptions.ConfigFileNotFound as e:
         # config file is not required to be present for instance principal auth or resource principal auth
         if not (instance_principal_auth or resource_principal_auth):
-            # if user requests session authentication without a config file, prompt them to create a session profile
-            if session_token_auth:
-                click.echo('ERROR: Could not find config file at {}'.format(os.path.expanduser(ctx.obj['config_file'])))
-                if click.confirm('Do you want to create a new config file with a CLI session profile that can be used with --auth {}?'.format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN), default=True):
-                    from .cli_session import authenticate
-                    ctx.invoke(authenticate, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']))
-                    # if there are any issues with the authentication, they should be handled by the session authenticate process itself
-                    # so these lines below will only be reached if the session authenticate command finished successfully
-                    click.echo('Successfully created config file {} with your new CLI session profile {}'.format(os.path.expanduser(ctx.obj['config_file']), ctx.obj['profile']))
-                    click.echo('You can now re-run your command to use your new session profile')
-                    sys.exit(0)
-                else:
-                    sys.exit(1)
+            click.echo('ERROR: Could not find config file at {}'.format(os.path.expanduser(ctx.obj['config_file'])))
+            # if user requests session authentication without a config file, prompt them to create a config file with a session profile
+            # otherwise, prompt them to create the config file with a profile that uses API key pair authentication
+            if session_token_auth and click.confirm('Do you want to create a new config file with a CLI session profile that can be used with --auth {}?'.format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN), default=True):
+                from .cli_session import authenticate
+                ctx.invoke(authenticate, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']))
+                # if there are any issues with the authentication, they should be handled by the session authenticate process itself
+                # so these lines below will only be reached if the session authenticate command finished successfully
+                click.echo('Successfully created config file {} with your new CLI session profile {}'.format(os.path.expanduser(ctx.obj['config_file']), ctx.obj['profile']))
+                click.echo('You can now re-run your command to use your new session profile')
+                sys.exit(0)
+            elif (not session_token_auth) and click.confirm('Do you want to create a new config file?', default=True):
+                from .cli_setup import generate_oci_config
+                ctx.invoke(generate_oci_config)
+                # if there are any issues with the config setup, they should be handled by the setup config process itself
+                # so these lines below will only be reached if the setup config command finished successfully
+                click.echo('Successfully created config file with your new CLI user profile')
+                click.echo('Once you have uploaded your public key through the console (instructions above), you can re-run your command to use your new config file and user profile')
+                sys.exit(0)
             else:
-                sys.exit("ERROR: " + str(e))
+                sys.exit(1)
         client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
         if ctx.obj['debug']:
             client_config["log_requests"] = True

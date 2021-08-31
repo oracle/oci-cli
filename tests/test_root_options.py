@@ -99,7 +99,7 @@ def test_rc_file_location_environment_variable(runner, config_file):
 def test_config_file_location_environment_variable(runner, config_file):
     original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = 'tests/invalid_config'
-    result = invoke_example_operation(runner, [], None)
+    result = invoke_example_operation(runner, [], None, command_input='n')
     del os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
     assert 1 == result.exit_code
     assert 'tests/invalid_config' in result.output
@@ -118,7 +118,7 @@ def test_config_values_from_environment_variable_mock_config(runner, config_file
     original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = 'tests/invalid_config'
 
-    result = invoke_example_operation(runner, [], None)
+    result = invoke_example_operation(runner, [], None, command_input='n')
     assert 1 == result.exit_code
 
     # restore OCI_CLI_CONFIG_FILE env variable env variable as it used in other tests.
@@ -215,9 +215,9 @@ def teardown_module(module):
     six.moves.http_client.HTTPConnection.debuglevel = 0
 
 
-def invoke_example_operation(runner, root_args, config_file):
+def invoke_example_operation(runner, root_args, config_file, command_input=None):
     args = root_args + (['--config-file', config_file] if config_file else []) + ['os', 'ns', 'get']
-    return runner.invoke(oci_cli.cli, args)
+    return runner.invoke(oci_cli.cli, args, input=command_input)
 
 
 # Copies the env vars which are required to mock a config and removes them

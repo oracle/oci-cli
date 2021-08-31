@@ -15,7 +15,8 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('data_catalog.data_catalog_root_group.command_name', 'data-catalog'), cls=CommandGroupWithAlias, help=cli_util.override('data_catalog.data_catalog_root_group.help', """Use the Data Catalog APIs to collect, organize, find, access, understand, enrich, and activate technical, business, and operational metadata."""), short_help=cli_util.override('data_catalog.data_catalog_root_group.short_help', """Data Catalog API"""))
+@cli.command(cli_util.override('data_catalog.data_catalog_root_group.command_name', 'data-catalog'), cls=CommandGroupWithAlias, help=cli_util.override('data_catalog.data_catalog_root_group.help', """Use the Data Catalog APIs to collect, organize, find, access, understand, enrich, and activate technical, business, and operational metadata.
+For more information, see [Data Catalog]."""), short_help=cli_util.override('data_catalog.data_catalog_root_group.short_help', """Data Catalog API"""))
 @cli_util.help_option_group
 def data_catalog_root_group():
     pass
@@ -4483,8 +4484,8 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--position', type=click.INT, help=u"""Position of the attribute in the record definition.""")
 @cli_util.option('--precision', type=click.INT, help=u"""Precision of the attribute value usually applies to float data type.""")
 @cli_util.option('--scale', type=click.INT, help=u"""Scale of the attribute value usually applies to float data type.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "precision", "scale", "isNullable", "uri", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "precision", "scale", "isNullable", "uri", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey", "position"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "POSITION"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. Default order for POSITION is ascending. If no value is specified POSITION is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4812,7 +4813,7 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--data-types', type=custom_types.CliCaseInsensitiveChoice(["TEXT", "RICH_TEXT", "BOOLEAN", "NUMBER", "DATE"]), multiple=True, help=u"""Return the custom properties which has specified data types""")
-@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "ORACLE_ANALYTICS_SERVER", "ORACLE_ANALYTICS_CLOUD", "ORACLE_ANALYTICS_SUBJECT_AREA", "ORACLE_ANALYTICS_DASHBOARD", "ORACLE_ANALYTICS_BUSINESS_MODEL", "ORACLE_ANALYTICS_PHYSICAL_DATABASE", "ORACLE_ANALYTICS_PHYSICAL_SCHEMA", "ORACLE_ANALYTICS_PRESENTATION_TABLE", "ORACLE_ANALYTICS_LOGICAL_TABLE", "ORACLE_ANALYTICS_PHYSICAL_TABLE", "ORACLE_ANALYTICS_ANALYSIS", "DATABASE_SCHEMA", "TOPIC", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET", "MESSAGE", "UNRECOGNIZED_FILE"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
+@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "ORACLE_ANALYTICS_SUBJECT_AREA_COLUMN", "ORACLE_ANALYTICS_LOGICAL_COLUMN", "ORACLE_ANALYTICS_PHYSICAL_COLUMN", "ORACLE_ANALYTICS_ANALYSIS_COLUMN", "ORACLE_ANALYTICS_SERVER", "ORACLE_ANALYTICS_CLOUD", "ORACLE_ANALYTICS_SUBJECT_AREA", "ORACLE_ANALYTICS_DASHBOARD", "ORACLE_ANALYTICS_BUSINESS_MODEL", "ORACLE_ANALYTICS_PHYSICAL_DATABASE", "ORACLE_ANALYTICS_PHYSICAL_SCHEMA", "ORACLE_ANALYTICS_PRESENTATION_TABLE", "ORACLE_ANALYTICS_LOGICAL_TABLE", "ORACLE_ANALYTICS_PHYSICAL_TABLE", "ORACLE_ANALYTICS_ANALYSIS", "DATABASE_SCHEMA", "TOPIC", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET", "MESSAGE", "UNRECOGNIZED_FILE"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7018,13 +7019,15 @@ def object_stats(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-detail', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-payload', help=u"""The information used to parse the connection from the wallet file payload.""")
+@cli_util.option('--wallet-secret-id', help=u"""OCID of the OCI Vault secret holding the Oracle wallet to parse.""")
+@cli_util.option('--wallet-secret-name', help=u"""Name of the OCI Vault secret holding the Oracle wallet to parse.""")
 @cli_util.option('--connection-key', help=u"""Unique connection key.""")
 @json_skeleton_utils.get_cli_json_input_option({'connection-detail': {'module': 'data_catalog', 'class': 'Connection'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-detail': {'module': 'data_catalog', 'class': 'Connection'}}, output_type={'module': 'data_catalog', 'class': 'list[ConnectionAliasSummary]'})
 @cli_util.wrap_exceptions
-def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_detail, connection_payload, connection_key):
+def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_detail, connection_payload, wallet_secret_id, wallet_secret_name, connection_key):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -7044,6 +7047,12 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
 
     if connection_payload is not None:
         _details['connectionPayload'] = connection_payload
+
+    if wallet_secret_id is not None:
+        _details['walletSecretId'] = wallet_secret_id
+
+    if wallet_secret_name is not None:
+        _details['walletSecretName'] = wallet_secret_name
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.parse_connection(

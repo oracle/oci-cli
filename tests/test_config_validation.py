@@ -217,6 +217,61 @@ def test_auth_security_token_with_expired_session(runner):
         os.environ['OCI_CLI_CONFIG_FILE'] = 'internal_resources/config'
 
 
+def test_command_with_no_config(runner):
+    try:
+        # create a temporary config file path that will be treated as the default config that does not exist
+        temp_dir = tempfile.mkdtemp()
+        oci_cli.cli_setup.DEFAULT_DIRECTORY = temp_dir
+        config_file = os.path.join(temp_dir, 'config')
+        oci_cli.cli_setup.DEFAULT_CONFIG_LOCATION = config_file
+        os.environ['OCI_CLI_CONFIG_FILE'] = config_file
+
+        test_ocid = 'ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq'
+        test_tenancy = 'ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq'
+        region = 'us-phoenix-1'
+
+        # make sure config file does not exist yet
+        assert not os.path.exists(config_file)
+
+        stdin = [
+            'n',  # choose not to create new config file
+        ]
+
+        # test CLI command with no config file, and choose not to create new config file
+        result = invoke_example_operation(runner, config_file, 'DEFAULT', command_input='\n'.join(stdin))
+        assert 'Could not find config file' in result.output
+        assert result.exit_code == 1
+
+        stdin = [
+            'Y',  # choose to create new config file
+            config_file,  # location for the new config file
+            test_ocid,
+            test_tenancy,
+            region,
+            'Y',  # generate new key pair
+            temp_dir,  # directory for the keys
+            'oci_api_key',
+            '',  # no private key passphrase
+        ]
+
+        # test CLI command with no config file, and choose to create new config file
+        result = invoke_example_operation(runner, config_file, 'DEFAULT', command_input='\n'.join(stdin))
+        assert 'Could not find config file' in result.output
+        assert 'Do you want to create a new config file' in result.output
+        assert 'Config written to' in result.output
+        assert result.exit_code == 0
+
+        # make sure config file now exists
+        assert os.path.exists(config_file)
+
+        # test CLI command with security_token auth and existing config file, and make sure new config file prompt does not appear
+        result = invoke_example_operation(runner, config_file, 'DEFAULT', ['--auth', 'security_token'], command_input='\n'.join(stdin))
+        assert 'Could not find config file' not in result.output
+    finally:
+        shutil.rmtree(temp_dir)
+        os.environ['OCI_CLI_CONFIG_FILE'] = 'internal_resources/config'
+
+
 def validate_missing_param_error(result, key, message):
     assert 1 == result.exit_code
     assert message in result.output
