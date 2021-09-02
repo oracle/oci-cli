@@ -307,9 +307,11 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
 
     elif OFFLINE_INSTALL:
         # Since cffi is a 4th party library which cryptography uses, it needs to be installed first in the offline installation
-        cmd = [path_to_pip, 'install', 'cffi', '--find-links', 'cli-deps', '--no-index']
+        cmd = [path_to_pip, 'install', 'cffi', '--find-links', 'cli-deps', '--no-index', '--verbose', '--verbose', '--verbose']
         exec_command(cmd, env=env)
-        cmd = [path_to_pip, 'install', cli_package_name, '--find-links', 'cli-deps', '--no-index']
+        cmd = [path_to_pip, 'install', 'cryptography', '--find-links', 'cli-deps', '--no-index', '--verbose', '--verbose', '--verbose']
+        exec_command(cmd, env=env)
+        cmd = [path_to_pip, 'install', cli_package_name, '--find-links', 'cli-deps', '--no-index', '--verbose', '--verbose', '--verbose']
     else:
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
 
