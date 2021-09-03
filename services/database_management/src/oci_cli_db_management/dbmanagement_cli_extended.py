@@ -84,3 +84,112 @@ def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums,
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+# oci database-management job update-job-object-storage-job-execution-result-location -> oci database-management job update-result-location
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.job_group, dbmanagement_cli.update_job_object_storage_job_execution_result_location, "update-result-location")
+
+
+# oci database-management job update-job-update-sql-job-details -> oci database-management job update-sql-job-details
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.job_group, dbmanagement_cli.update_job_update_sql_job_details, "update-sql-job-details")
+
+
+# oci database-management job-executions-status-summary-collection -> oci database-management job-executions-status
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.database_management_root_group, dbmanagement_cli.job_executions_status_summary_collection_group, "job-executions-status")
+
+
+# oci database-management job-executions-status-summary-collection summarize-job-executions-statuses -> oci database-management job-executions-status-summary-collection summarize
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.job_executions_status_summary_collection_group, dbmanagement_cli.summarize_job_executions_statuses, "summarize")
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.update_job_object_storage_job_execution_result_location, params_to_exclude=['result_location_bucket_name', 'result_location_namespace_name'])
+@dbmanagement_cli.job_group.command(name=dbmanagement_cli.update_job_object_storage_job_execution_result_location.name, help=dbmanagement_cli.update_job_object_storage_job_execution_result_location.help)
+@cli_util.option('--bucket-name', help=u"""The name of the bucket used for job execution result storage.""")
+@cli_util.option('--namespace-name', help=u"""The Object Storage namespace used for job execution result storage.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def update_job_object_storage_job_execution_result_location_extended(ctx, **kwargs):
+    if 'bucket_name' in kwargs:
+        kwargs['result_location_bucket_name'] = kwargs['bucket_name']
+        kwargs.pop('bucket_name')
+
+    if 'namespace_name' in kwargs:
+        kwargs['result_location_namespace_name'] = kwargs['namespace_name']
+        kwargs.pop('namespace_name')
+
+    ctx.invoke(dbmanagement_cli.update_job_object_storage_job_execution_result_location, **kwargs)
+
+
+# oci database-management db-management-private-endpoint -> oci database-management private-endpoint
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.database_management_root_group, dbmanagement_cli.db_management_private_endpoint_group, "private-endpoint")
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_db_management_private_endpoint_compartment, params_to_exclude=['db_management_private_endpoint_id'])
+@dbmanagement_cli.db_management_private_endpoint_group.command(name=dbmanagement_cli.change_db_management_private_endpoint_compartment.name, help=dbmanagement_cli.change_db_management_private_endpoint_compartment.help)
+@cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_db_management_private_endpoint_compartment_extended(ctx, **kwargs):
+    if 'private_endpoint_id' in kwargs:
+        kwargs['db_management_private_endpoint_id'] = kwargs['private_endpoint_id']
+        kwargs.pop('private_endpoint_id')
+
+    ctx.invoke(dbmanagement_cli.change_db_management_private_endpoint_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.delete_db_management_private_endpoint, params_to_exclude=['db_management_private_endpoint_id'])
+@dbmanagement_cli.db_management_private_endpoint_group.command(name=dbmanagement_cli.delete_db_management_private_endpoint.name, help=dbmanagement_cli.delete_db_management_private_endpoint.help)
+@cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_db_management_private_endpoint_extended(ctx, **kwargs):
+    if 'private_endpoint_id' in kwargs:
+        kwargs['db_management_private_endpoint_id'] = kwargs['private_endpoint_id']
+        kwargs.pop('private_endpoint_id')
+
+    ctx.invoke(dbmanagement_cli.delete_db_management_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.get_db_management_private_endpoint, params_to_exclude=['db_management_private_endpoint_id'])
+@dbmanagement_cli.db_management_private_endpoint_group.command(name=dbmanagement_cli.get_db_management_private_endpoint.name, help=dbmanagement_cli.get_db_management_private_endpoint.help)
+@cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_db_management_private_endpoint_extended(ctx, **kwargs):
+    if 'private_endpoint_id' in kwargs:
+        kwargs['db_management_private_endpoint_id'] = kwargs['private_endpoint_id']
+        kwargs.pop('private_endpoint_id')
+
+    ctx.invoke(dbmanagement_cli.get_db_management_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.update_db_management_private_endpoint, params_to_exclude=['db_management_private_endpoint_id'])
+@dbmanagement_cli.db_management_private_endpoint_group.command(name=dbmanagement_cli.update_db_management_private_endpoint.name, help=dbmanagement_cli.update_db_management_private_endpoint.help)
+@cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def update_db_management_private_endpoint_extended(ctx, **kwargs):
+    if 'private_endpoint_id' in kwargs:
+        kwargs['db_management_private_endpoint_id'] = kwargs['private_endpoint_id']
+        kwargs.pop('private_endpoint_id')
+
+    ctx.invoke(dbmanagement_cli.update_db_management_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.list_associated_databases, params_to_exclude=['db_management_private_endpoint_id'])
+@dbmanagement_cli.associated_database_summary_group.command(name=dbmanagement_cli.list_associated_databases.name, help=dbmanagement_cli.list_associated_databases.help)
+@cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AssociatedDatabaseCollection'})
+@cli_util.wrap_exceptions
+def list_associated_databases_extended(ctx, **kwargs):
+    if 'private_endpoint_id' in kwargs:
+        kwargs['db_management_private_endpoint_id'] = kwargs['private_endpoint_id']
+        kwargs.pop('private_endpoint_id')
+
+    ctx.invoke(dbmanagement_cli.list_associated_databases, **kwargs)

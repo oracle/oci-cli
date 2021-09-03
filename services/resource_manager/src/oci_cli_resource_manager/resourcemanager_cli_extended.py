@@ -180,13 +180,19 @@ resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create
 
 
 # params_to_exclude will remove unwanted params
-@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_plan_job_operation_details, params_to_exclude=['operation', 'apply_job_plan_resolution'])
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_plan_job_operation_details, params_to_exclude=['operation', 'apply_job_plan_resolution', 'job_operation_details_terraform_advanced_options'])
 # Create a new command with name 'create-plan-job'
 @resourcemanager_cli.job_group.command(name='create-plan-job', help=resourcemanager_cli.create_job_create_plan_job_operation_details.help)
+# New/Renamed options
+@cli_util.option('--terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies advanced options for Terraform commands. These options are not necessary for normal usage of Terraform.\n""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
 def create_plan_job(ctx, **kwargs):
+    # Extract the renamed options and construct original options.
+    if 'terraform_advanced_options' in kwargs:
+        kwargs['job_operation_details_terraform_advanced_options'] = kwargs['terraform_advanced_options']
+        del kwargs['terraform_advanced_options']
     # invoke generated command.
     ctx.invoke(resourcemanager_cli.create_job_create_plan_job_operation_details, **kwargs)
 
@@ -197,12 +203,13 @@ resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create
 
 
 # params_to_exclude will remove unwanted params
-@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_apply_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_strategy', 'job_operation_details_execution_plan_job_id', 'operation', 'apply_job_plan_resolution'])
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_apply_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_strategy', 'job_operation_details_execution_plan_job_id', 'operation', 'apply_job_plan_resolution', 'job_operation_details_terraform_advanced_options'])
 # Create a new command with name 'create-apply-job'
 @resourcemanager_cli.job_group.command(name='create-apply-job', help=resourcemanager_cli.create_job_create_apply_job_operation_details.help)
 # New/Renamed options
 @cli_util.option('--execution-plan-job-id', help=u"""Specifies the source of the execution plan to apply. Use `AUTO_APPROVED` to run the job without an execution plan.""")
 @cli_util.option('--execution-plan-strategy', required=True, help=u"""The OCID of a plan job, for use when specifying `FROM_PLAN_JOB_ID` as the `executionPlanStrategy`.""")
+@cli_util.option('--terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies advanced options for Terraform commands. These options are not necessary for normal usage of Terraform.\n""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
@@ -214,6 +221,9 @@ def create_apply_job(ctx, **kwargs):
     if 'execution_plan_job_id' in kwargs:
         kwargs['job_operation_details_execution_plan_job_id'] = kwargs['execution_plan_job_id']
         del kwargs['execution_plan_job_id']
+    if 'terraform_advanced_options' in kwargs:
+        kwargs['job_operation_details_terraform_advanced_options'] = kwargs['terraform_advanced_options']
+        del kwargs['terraform_advanced_options']
 
     # invoke generated command.
     ctx.invoke(resourcemanager_cli.create_job_create_apply_job_operation_details, **kwargs)
@@ -225,11 +235,12 @@ resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create
 
 
 # params_to_exclude will remove unwanted params
-@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_destroy_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_strategy', 'operation', 'apply_job_plan_resolution'])
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_destroy_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_strategy', 'operation', 'apply_job_plan_resolution', 'job_operation_details_terraform_advanced_options'])
 # Create a new command with name 'create-destroy-job'
 @resourcemanager_cli.job_group.command(name='create-destroy-job', help=resourcemanager_cli.create_job_create_destroy_job_operation_details.help)
 # New/Renamed options
 @cli_util.option('--execution-plan-strategy', required=True, help=u"""Specifies the source of the execution plan to apply. Currently, only `AUTO_APPROVED` is allowed, which indicates that the job will be run without an execution plan.""")
+@cli_util.option('--terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies advanced options for Terraform commands. These options are not necessary for normal usage of Terraform.\n""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
@@ -238,6 +249,9 @@ def create_destroy_job(ctx, **kwargs):
     if 'execution_plan_strategy' in kwargs:
         kwargs['job_operation_details_execution_plan_strategy'] = kwargs['execution_plan_strategy']
         del kwargs['execution_plan_strategy']
+    if 'terraform_advanced_options' in kwargs:
+        kwargs['job_operation_details_terraform_advanced_options'] = kwargs['terraform_advanced_options']
+        del kwargs['terraform_advanced_options']
 
     # invoke generated command.
     ctx.invoke(resourcemanager_cli.create_job_create_destroy_job_operation_details, **kwargs)
@@ -688,3 +702,6 @@ def get_source_stack_tf_config_base64encoded_zip(stack_id, stack_tf_config_respo
 
 
 resourcemanager_cli.stack_group.add_command(copy_stack)
+
+# oci resource-manager job get-job-detailed-log-content -> oci resource-manager job get-detailed-log-content
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.job_group, resourcemanager_cli.get_job_detailed_log_content, "get-detailed-log-content")

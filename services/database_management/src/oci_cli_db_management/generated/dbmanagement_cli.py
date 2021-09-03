@@ -23,6 +23,42 @@ def database_management_root_group():
     pass
 
 
+@click.command(cli_util.override('database_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
+@cli_util.help_option_group
+def cluster_cache_metric_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
+@cli_util.help_option_group
+def work_request_log_entry_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.managed_database_group_group.command_name', 'managed-database-group'), cls=CommandGroupWithAlias, help="""The details of a Managed Database Group.""")
+@cli_util.help_option_group
+def managed_database_group_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.pdb_metrics_group.command_name', 'pdb-metrics'), cls=CommandGroupWithAlias, help="""The summary of Pdb's and it's resource usage metrics (CPU, IO, Storage and Active sessions) for a specified Container database.""")
+@cli_util.help_option_group
+def pdb_metrics_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.database_home_metrics_group.command_name', 'database-home-metrics'), cls=CommandGroupWithAlias, help="""The response containing the metric collection for a specific database.""")
+@cli_util.help_option_group
+def database_home_metrics_group():
+    pass
+
+
 @click.command(cli_util.override('database_management.database_fleet_health_metrics_group.command_name', 'database-fleet-health-metrics'), cls=CommandGroupWithAlias, help="""The details of the fleet health metrics.""")
 @cli_util.help_option_group
 def database_fleet_health_metrics_group():
@@ -35,15 +71,27 @@ def tablespace_group():
     pass
 
 
-@click.command(cli_util.override('database_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
+@click.command(cli_util.override('database_management.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
-def managed_database_group():
+def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('database_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
+@click.command(cli_util.override('database_management.db_management_private_endpoint_group.command_name', 'db-management-private-endpoint'), cls=CommandGroupWithAlias, help="""A Database Management private endpoint that allows Database Management services to connect to databases in a customer's virtual cloud network (VCN).""")
 @cli_util.help_option_group
-def cluster_cache_metric_group():
+def db_management_private_endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.job_executions_status_summary_collection_group.command_name', 'job-executions-status-summary-collection'), cls=CommandGroupWithAlias, help="""A collection of job execution status summary objects.""")
+@cli_util.help_option_group
+def job_executions_status_summary_collection_group():
+    pass
+
+
+@click.command(cli_util.override('database_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
+@cli_util.help_option_group
+def managed_database_group():
     pass
 
 
@@ -59,15 +107,9 @@ def job_execution_group():
     pass
 
 
-@click.command(cli_util.override('database_management.managed_database_group_group.command_name', 'managed-database-group'), cls=CommandGroupWithAlias, help="""The details of a Managed Database Group.""")
+@click.command(cli_util.override('database_management.associated_database_summary_group.command_name', 'associated-database-summary'), cls=CommandGroupWithAlias, help="""Summary of a Database currently using a Private Endpoint.""")
 @cli_util.help_option_group
-def managed_database_group_group():
-    pass
-
-
-@click.command(cli_util.override('database_management.database_home_metrics_group.command_name', 'database-home-metrics'), cls=CommandGroupWithAlias, help="""The response containing the metric collection for a specific database.""")
-@cli_util.help_option_group
-def database_home_metrics_group():
+def associated_database_summary_group():
     pass
 
 
@@ -77,14 +119,21 @@ def job_group():
     pass
 
 
+database_management_root_group.add_command(cluster_cache_metric_group)
+database_management_root_group.add_command(work_request_log_entry_group)
+database_management_root_group.add_command(managed_database_group_group)
+database_management_root_group.add_command(pdb_metrics_group)
+database_management_root_group.add_command(work_request_group)
+database_management_root_group.add_command(database_home_metrics_group)
 database_management_root_group.add_command(database_fleet_health_metrics_group)
 database_management_root_group.add_command(tablespace_group)
+database_management_root_group.add_command(work_request_error_group)
+database_management_root_group.add_command(db_management_private_endpoint_group)
+database_management_root_group.add_command(job_executions_status_summary_collection_group)
 database_management_root_group.add_command(managed_database_group)
-database_management_root_group.add_command(cluster_cache_metric_group)
 database_management_root_group.add_command(job_run_group)
 database_management_root_group.add_command(job_execution_group)
-database_management_root_group.add_command(managed_database_group_group)
-database_management_root_group.add_command(database_home_metrics_group)
+database_management_root_group.add_command(associated_database_summary_group)
 database_management_root_group.add_command(job_group)
 
 
@@ -154,6 +203,39 @@ def change_database_parameters(ctx, from_json, managed_database_id, credentials,
     cli_util.render_response(result, ctx)
 
 
+@db_management_private_endpoint_group.command(name=cli_util.override('database_management.change_db_management_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves the Database Management private endpoint and its dependent resources to the specified compartment. \n[Command Reference](changeDbManagementPrivateEndpointCompartment)""")
+@cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the new compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_db_management_private_endpoint_compartment(ctx, from_json, db_management_private_endpoint_id, compartment_id, if_match):
+
+    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_db_management_private_endpoint_compartment(
+        db_management_private_endpoint_id=db_management_private_endpoint_id,
+        change_db_management_private_endpoint_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('database_management.change_job_compartment.command_name', 'change-compartment'), help=u"""Moves a job. \n[Command Reference](changeJobCompartment)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the job should be moved.""")
@@ -216,6 +298,67 @@ def change_managed_database_group_compartment(ctx, from_json, managed_database_g
     cli_util.render_response(result, ctx)
 
 
+@db_management_private_endpoint_group.command(name=cli_util.override('database_management.create_db_management_private_endpoint.command_name', 'create'), help=u"""Creates a new Database Management private endpoint. \n[Command Reference](createDbManagementPrivateEndpoint)""")
+@cli_util.option('--name', required=True, help=u"""The display name for the private endpoint. It is changeable.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
+@cli_util.option('--description', help=u"""The description of the private endpoint.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, description, nsg_ids):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['subnetId'] = subnet_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_db_management_private_endpoint(
+        create_db_management_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('database_management.create_job.command_name', 'create'), help=u"""Creates a job to be executed on a Managed Database or Managed Database Group. Only one of the parameters, managedDatabaseId or managedDatabaseGroupId should be provided as input in CreateJobDetails resource in request body. \n[Command Reference](createJob)""")
 @cli_util.option('--name', required=True, help=u"""The name of the job. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the job cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the job resides.""")
@@ -227,15 +370,16 @@ def change_managed_database_group_compartment(ctx, from_json, managed_database_g
 @cli_util.option('--database-sub-type', type=custom_types.CliCaseInsensitiveChoice(["CDB", "PDB", "NON_CDB"]), help=u"""The subtype of the Oracle Database where the job has to be executed. Only applicable when managedDatabaseGroupId is provided.""")
 @cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
 @cli_util.option('--result-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}})
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, job_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location):
+def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, job_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, schedule_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -263,6 +407,9 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if result_location is not None:
         _details['resultLocation'] = cli_util.parse_json_parameter("result_location", result_location)
+
+    if schedule_details is not None:
+        _details['scheduleDetails'] = cli_util.parse_json_parameter("schedule_details", schedule_details)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_job(
@@ -306,20 +453,22 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--database-sub-type', type=custom_types.CliCaseInsensitiveChoice(["CDB", "PDB", "NON_CDB"]), help=u"""The subtype of the Oracle Database where the job has to be executed. Only applicable when managedDatabaseGroupId is provided.""")
 @cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
 @cli_util.option('--result-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-text', help=u"""The SQL text to be executed as part of the job.""")
 @cli_util.option('--sql-type', help=u"""""")
 @cli_util.option('--user-name', help=u"""The database user name used to execute the SQL job. If the job is being executed on a Managed Database Group, then the user name should exist on all the databases in the group with the same password.""")
 @cli_util.option('--password', help=u"""The password for the database user name used to execute the SQL job.""")
+@cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}})
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, operation_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, sql_text, sql_type, user_name, password, role):
+def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, operation_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, schedule_details, sql_text, sql_type, user_name, password, secret_id, role):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -348,6 +497,9 @@ def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_s
     if result_location is not None:
         _details['resultLocation'] = cli_util.parse_json_parameter("result_location", result_location)
 
+    if schedule_details is not None:
+        _details['scheduleDetails'] = cli_util.parse_json_parameter("schedule_details", schedule_details)
+
     if sql_text is not None:
         _details['sqlText'] = sql_text
 
@@ -359,6 +511,9 @@ def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_s
 
     if password is not None:
         _details['password'] = password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
 
     if role is not None:
         _details['role'] = role
@@ -405,17 +560,18 @@ def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--managed-database-id', help=u"""The [OCID] of the Managed Database where the job has to be executed.""")
 @cli_util.option('--database-sub-type', type=custom_types.CliCaseInsensitiveChoice(["CDB", "PDB", "NON_CDB"]), help=u"""The subtype of the Oracle Database where the job has to be executed. Only applicable when managedDatabaseGroupId is provided.""")
 @cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
+@cli_util.option('--schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--result-location-namespace-name', help=u"""The Object Storage namespace used for job execution result storage.""")
 @cli_util.option('--result-location-bucket-name', help=u"""The name of the bucket used for job execution result storage.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_object_storage_job_execution_result_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location_namespace_name, result_location_bucket_name):
+def create_job_object_storage_job_execution_result_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, schedule_details, result_location_namespace_name, result_location_bucket_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -440,6 +596,9 @@ def create_job_object_storage_job_execution_result_location(ctx, from_json, wait
 
     if timeout is not None:
         _details['timeout'] = timeout
+
+    if schedule_details is not None:
+        _details['scheduleDetails'] = cli_util.parse_json_parameter("schedule_details", schedule_details)
 
     if result_location_namespace_name is not None:
         _details['resultLocation']['namespaceName'] = result_location_namespace_name
@@ -532,6 +691,58 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@db_management_private_endpoint_group.command(name=cli_util.override('database_management.delete_db_management_private_endpoint.command_name', 'delete'), help=u"""Deletes the specified Database Management private endpoint. \n[Command Reference](deleteDbManagementPrivateEndpoint)""")
+@cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, if_match):
+
+    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_db_management_private_endpoint(
+        db_management_private_endpoint_id=db_management_private_endpoint_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -663,9 +874,9 @@ def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.get_awr_db_report.command_name', 'get-awr-db-report'), help=u"""Gets the AWR report for the specified Managed Database. \n[Command Reference](getAwrDbReport)""")
+@managed_database_group.command(name=cli_util.override('database_management.get_awr_db_report.command_name', 'get-awr-db-report'), help=u"""Gets the AWR report for the specific database. \n[Command Reference](getAwrDbReport)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-nums', multiple=True, help=u"""The optional multiple value query parameter to filter the database instance numbers.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
 @cli_util.option('--end-sn-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot ID.""")
@@ -714,9 +925,9 @@ def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums,
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.get_awr_db_sql_report.command_name', 'get-awr-db-sql-report'), help=u"""Get a AWR SQL report for one SQL. \n[Command Reference](getAwrDbSqlReport)""")
+@managed_database_group.command(name=cli_util.override('database_management.get_awr_db_sql_report.command_name', 'get-awr-db-sql-report'), help=u"""Gets the SQL health check report for one SQL of the specific database. \n[Command Reference](getAwrDbSqlReport)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--sql-id', required=True, help=u"""The parameter to filter SQL by ID. Note that the SQL ID is generated internally by Oracle for each SQL statement and can be retrieved from AWR Report API (/managedDatabases/{managedDatabaseId}/awrDbs/{awrDbId}/awrDbReport) or Performance Hub API (/internal/managedDatabases/{managedDatabaseId}/actions/retrievePerformanceData)""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
@@ -766,8 +977,8 @@ def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id
 
 @cluster_cache_metric_group.command(name=cli_util.override('database_management.get_cluster_cache_metric.command_name', 'get'), help=u"""Gets the metrics related to cluster cache for the Oracle Real Application Clusters (Oracle RAC) database specified by managedDatabaseId. \n[Command Reference](getClusterCacheMetric)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--start-time', required=True, help=u"""The start time for the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
-@cli_util.option('--end-time', required=True, help=u"""The end time for the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -799,12 +1010,14 @@ def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, en
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--filter-by-database-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database type.""")
 @cli_util.option('--filter-by-database-sub-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database subtype.""")
+@cli_util.option('--filter-by-database-deployment-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database deployment type.""")
+@cli_util.option('--filter-by-database-version', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DatabaseFleetHealthMetrics'})
 @cli_util.wrap_exceptions
-def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, compare_target_time, managed_database_group_id, compartment_id, compare_type, filter_by_metric_names, filter_by_database_type, filter_by_database_sub_type):
+def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, compare_target_time, managed_database_group_id, compartment_id, compare_type, filter_by_metric_names, filter_by_database_type, filter_by_database_sub_type, filter_by_database_deployment_type, filter_by_database_version):
 
     kwargs = {}
     if managed_database_group_id is not None:
@@ -819,6 +1032,10 @@ def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, com
         kwargs['filter_by_database_type'] = filter_by_database_type
     if filter_by_database_sub_type is not None:
         kwargs['filter_by_database_sub_type'] = filter_by_database_sub_type
+    if filter_by_database_deployment_type is not None:
+        kwargs['filter_by_database_deployment_type'] = filter_by_database_deployment_type
+    if filter_by_database_version is not None:
+        kwargs['filter_by_database_version'] = filter_by_database_version
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_database_fleet_health_metrics(
@@ -831,8 +1048,8 @@ def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, com
 
 @database_home_metrics_group.command(name=cli_util.override('database_management.get_database_home_metrics.command_name', 'get'), help=u"""Gets a summary of the activity and resource usage metrics like DB Time, CPU, User I/O, Wait, Storage, and Memory for a Managed Database. \n[Command Reference](getDatabaseHomeMetrics)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--start-time', required=True, help=u"""The start time for the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
-@cli_util.option('--end-time', required=True, help=u"""The end time for the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -847,6 +1064,28 @@ def get_database_home_metrics(ctx, from_json, managed_database_id, start_time, e
         managed_database_id=managed_database_id,
         start_time=start_time,
         end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@db_management_private_endpoint_group.command(name=cli_util.override('database_management.get_db_management_private_endpoint.command_name', 'get'), help=u"""Gets the details of the specified Database Management private endpoint. \n[Command Reference](getDbManagementPrivateEndpoint)""")
+@cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_db_management_private_endpoint(ctx, from_json, db_management_private_endpoint_id):
+
+    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_db_management_private_endpoint(
+        db_management_private_endpoint_id=db_management_private_endpoint_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -962,9 +1201,127 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
     cli_util.render_response(result, ctx)
 
 
+@pdb_metrics_group.command(name=cli_util.override('database_management.get_pdb_metrics.command_name', 'get'), help=u"""Gets a summary of the resource usage metrics like DB Time, CPU, User I/O, Wait, Storage, and Memory for each Pdb under specified Container database in same compartment as container database. If comparmentId is provided then for each Pdb under specified compartmentId. \n[Command Reference](getPdbMetrics)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY"]), help=u"""The time window used for metrics comparison.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PdbMetrics'})
+@cli_util.wrap_exceptions
+def get_pdb_metrics(ctx, from_json, managed_database_id, start_time, end_time, compartment_id, compare_type, filter_by_metric_names):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compare_type is not None:
+        kwargs['compare_type'] = compare_type
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_pdb_metrics(
+        managed_database_id=managed_database_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('database_management.get_work_request.command_name', 'get'), help=u"""Gets information of the work request with the given Work Request Id. \n[Command Reference](getWorkRequest)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the async Work Request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'WorkRequest'})
+@cli_util.wrap_exceptions
+def get_work_request(ctx, from_json, work_request_id):
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_work_request(
+        work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@associated_database_summary_group.command(name=cli_util.override('database_management.list_associated_databases.command_name', 'list-associated-databases'), help=u"""Gets the list of Databases using the specified Database Management private endpoint. \n[Command Reference](listAssociatedDatabases)""")
+@cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
+@cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeRegistered"]), help=u"""The field to sort Databases using a specific Database Management Private Endpoint""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AssociatedDatabaseCollection'})
+@cli_util.wrap_exceptions
+def list_associated_databases(ctx, from_json, all_pages, page_size, db_management_private_endpoint_id, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_associated_databases,
+            db_management_private_endpoint_id=db_management_private_endpoint_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_associated_databases,
+            limit,
+            page_size,
+            db_management_private_endpoint_id=db_management_private_endpoint_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_associated_databases(
+            db_management_private_endpoint_id=db_management_private_endpoint_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('database_management.list_awr_db_snapshots.command_name', 'list-awr-db-snapshots'), help=u"""Lists AWR snapshots for the specified database in the AWR. \n[Command Reference](listAwrDbSnapshots)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
 @cli_util.option('--end-sn-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot ID.""")
@@ -974,7 +1331,7 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "SNAPSHOT_ID"]), help=u"""The option to sort the AWR snapshot summary data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1052,7 +1409,7 @@ def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["END_INTERVAL_TIME", "NAME"]), help=u"""The option to sort the AWR summary data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1116,7 +1473,7 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
 @cli_util.option('--name', help=u"""A filter to return all parameters that have the text given in their names.""")
 @cli_util.option('--is-allowed-values-included', type=click.BOOL, help=u"""When true, results include a list of valid values for parameters (if applicable).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1148,7 +1505,70 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
     cli_util.render_response(result, ctx)
 
 
-@job_execution_group.command(name=cli_util.override('database_management.list_job_executions.command_name', 'list'), help=u"""Gets the job execution for a specific ID or the list of job executions for a job, Managed Database or Managed Database Group in a specific compartment. Only one of the parameters, ID, jobId, managedDatabaseId or managedDatabaseGroupId should be provided. If none of these parameters is provided, all the job executions in the compartment are listed. Job executions can also be filtered based on the name and status parameters. \n[Command Reference](listJobExecutions)""")
+@db_management_private_endpoint_group.command(name=cli_util.override('database_management.list_db_management_private_endpoints.command_name', 'list'), help=u"""Gets a list of Database Management private endpoints. \n[Command Reference](listDbManagementPrivateEndpoints)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of a resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
+@cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpointCollection'})
+@cli_util.wrap_exceptions
+def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id, name, vcn_id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_db_management_private_endpoints,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_db_management_private_endpoints,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_management_private_endpoints(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@job_execution_group.command(name=cli_util.override('database_management.list_job_executions.command_name', 'list'), help=u"""Gets the job execution for a specific ID or the list of job executions for a job, job run, Managed Database or Managed Database Group in a specific compartment. Only one of the parameters, ID, jobId, jobRunId, managedDatabaseId or managedDatabaseGroupId should be provided. If none of these parameters is provided, all the job executions in the compartment are listed. Job executions can also be filtered based on the name and status parameters. \n[Command Reference](listJobExecutions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--job-id', help=u"""The identifier of the job.""")
@@ -1159,7 +1579,8 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--job-run-id', help=u"""The identifier of the job run.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1167,7 +1588,7 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'JobExecutionCollection'})
 @cli_util.wrap_exceptions
-def list_job_executions(ctx, from_json, all_pages, page_size, compartment_id, id, job_id, managed_database_id, managed_database_group_id, status, name, limit, page, sort_by, sort_order):
+def list_job_executions(ctx, from_json, all_pages, page_size, compartment_id, id, job_id, managed_database_id, managed_database_group_id, status, name, limit, page, sort_by, sort_order, job_run_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1193,6 +1614,8 @@ def list_job_executions(ctx, from_json, all_pages, page_size, compartment_id, id
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if job_run_id is not None:
+        kwargs['job_run_id'] = job_run_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -1231,7 +1654,7 @@ def list_job_executions(ctx, from_json, all_pages, page_size, compartment_id, id
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1302,7 +1725,7 @@ def list_job_runs(ctx, from_json, all_pages, page_size, compartment_id, id, job_
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1369,7 +1792,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, id, managed_
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1424,14 +1847,16 @@ def list_managed_database_groups(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.list_managed_databases.command_name', 'list'), help=u"""Gets the Managed Database for a specific ID or the list of Managed Databases in a specific compartment. Managed Databases can also be filtered based on the name parameter. Only one of the parameters, ID or name should be provided. If none of these parameters is provided, all the Managed Databases in the compartment are listed. \n[Command Reference](listManagedDatabases)""")
+@managed_database_group.command(name=cli_util.override('database_management.list_managed_databases.command_name', 'list'), help=u"""Gets the Managed Database for a specific ID or the list of Managed Databases in a specific compartment. Managed Databases can be filtered based on the name parameter. Only one of the parameters, ID or name should be provided. If neither of these parameters is provided, all the Managed Databases in the compartment are listed. Managed Databases can also be filtered based on the deployment type and management option. If the deployment type is not specified or if it is `ONPREMISE`, then the management option is not considered and Managed Databases with `ADVANCED` management option are listed. \n[Command Reference](listManagedDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
+@cli_util.option('--management-option', type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""A filter to return Managed Databases with the specified management option.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["ONPREMISE", "BM", "VM", "EXADATA", "EXADATA_CC"]), help=u"""A filter to return Managed Databases of the specified deployment type.""")
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1439,7 +1864,7 @@ def list_managed_database_groups(ctx, from_json, all_pages, page_size, compartme
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ManagedDatabaseCollection'})
 @cli_util.wrap_exceptions
-def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id, id, name, page, limit, sort_by, sort_order):
+def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id, id, name, management_option, deployment_type, page, limit, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1449,6 +1874,10 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['id'] = id
     if name is not None:
         kwargs['name'] = name
+    if management_option is not None:
+        kwargs['management_option'] = management_option
+    if deployment_type is not None:
+        kwargs['deployment_type'] = deployment_type
     if page is not None:
         kwargs['page'] = page
     if limit is not None:
@@ -1488,7 +1917,7 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1539,6 +1968,183 @@ def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, 
     else:
         result = client.list_tablespaces(
             managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_error_group.command(name=cli_util.override('database_management.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the async Work Request.""")
+@cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'WorkRequestErrorCollection'})
+@cli_util.wrap_exceptions
+def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_id, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_request_errors,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_request_errors,
+            limit,
+            page_size,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_request_errors(
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_log_entry_group.command(name=cli_util.override('database_management.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the async Work Request.""")
+@cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'WorkRequestLogEntryCollection'})
+@cli_util.wrap_exceptions
+def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_request_logs,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_request_logs,
+            limit,
+            page_size,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_request_logs(
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('database_management.list_work_requests.command_name', 'list'), help=u"""Lists all the work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")
+@cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their status matches the given WorkRequestStatus.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'WorkRequestCollection'})
+@cli_util.wrap_exceptions
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, resource_id, work_request_id, status, sort_order, sort_by, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
+    if work_request_id is not None:
+        kwargs['work_request_id'] = work_request_id
+    if status is not None:
+        kwargs['status'] = status
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_requests,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_requests,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_requests(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1608,7 +2214,7 @@ def reset_database_parameters(ctx, from_json, managed_database_id, credentials, 
 
 @managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_cpu_usages.command_name', 'summarize-awr-db-cpu-usages'), help=u"""Summarizes the AWR CPU resource limits and metrics for the specified database in AWR. \n[Command Reference](summarizeAwrDbCpuUsages)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
 @cli_util.option('--end-sn-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot ID.""")
@@ -1619,7 +2225,7 @@ def reset_database_parameters(ctx, from_json, managed_database_id, credentials, 
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_SAMPLED", "AVG_VALUE"]), help=u"""The option to sort the AWR CPU usage summary data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1668,7 +2274,7 @@ def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, 
 
 @managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_metrics.command_name', 'summarize-awr-db-metrics'), help=u"""Summarizes the metric samples for the specified database in the AWR. The metric samples are summarized based on the Time dimension for each metric. \n[Command Reference](summarizeAwrDbMetrics)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--name', required=True, multiple=True, help=u"""The required multiple value query parameter to filter the entity name.""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
@@ -1679,7 +2285,7 @@ def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, 
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMESTAMP", "NAME"]), help=u"""The option to sort the AWR time series summary data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -1725,9 +2331,9 @@ def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, nam
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_parameter_changes.command_name', 'summarize-awr-db-parameter-changes'), help=u"""Summarizes the AWR database parameter change history for one database parameter of the specified Managed Database. One change history record contains the previous value, the changed value, and the corresponding time range. If the database parameter value was changed multiple times within the time range, then multiple change history records are created for the same parameter. Note that this API only returns information on change history details for one database parameter. To get a list of all the database parameters whose values were changed during a specified time range, use the following API endpoint: /managedDatabases/{managedDatabaseId}/awrDbs/{awrDbId}/awrDbParameters \n[Command Reference](summarizeAwrDbParameterChanges)""")
+@managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_parameter_changes.command_name', 'summarize-awr-db-parameter-changes'), help=u"""Summarizes the database parameter change history for one database parameter of the specified database in AWR. One change history record contains the previous value, the changed value, and the corresponding time range. If the database parameter value was changed multiple times within the time range, then multiple change history records are created for the same parameter. Note that this API only returns information on change history details for one database parameter. To get a list of all the database parameters whose values were changed during a specified time range, use the following API endpoint: /managedDatabases/{managedDatabaseId}/awrDbs/{awrDbId}/awrDbParameters \n[Command Reference](summarizeAwrDbParameterChanges)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--name', required=True, help=u"""The required single value query parameter to filter the entity name.""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
@@ -1738,7 +2344,7 @@ def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, nam
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["IS_CHANGED", "NAME"]), help=u"""The option to sort the AWR database parameter change history data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1784,9 +2390,13 @@ def summarize_awr_db_parameter_changes(ctx, from_json, managed_database_id, awr_
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_parameters.command_name', 'summarize-awr-db-parameters'), help=u"""Summarizes the AWR database parameter history for the specified Managed Database. This includes the list of database parameters, with information on whether the parameter values were modified within the query time range. Note that each database parameter is only listed once. The returned summary gets all the database parameters, which include:  -Each parameter whose value was changed during the time range: AwrDbParameterValueOptionalQueryParam (valueChanged =\"Y\")  -Each parameter whose value was unchanged during the time range: AwrDbParameterValueOptionalQueryParam (valueChanged =\"N\")  -Each parameter whose value was changed at the system level during the time range: (valueChanged =\"Y\"  and valueModified = \"SYSTEM_MOD\").  -Each parameter whose value was unchanged during the time range, however, the value is not the default value: (valueChanged =\"N\" and  valueDefault = \"FALSE\") Note that this API does not return information on the number of times each database parameter has been changed within the time range. To get the database parameter value change history for a specific parameter, use the following API endpoint: /managedDatabases/{managedDatabaseId}/awrDbs/{awrDbId}/awrDbParameterChanges \n[Command Reference](summarizeAwrDbParameters)""")
+@managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_parameters.command_name', 'summarize-awr-db-parameters'), help=u"""Summarizes the database parameter history for the specified database in AWR. This includes the list of database parameters, with information on whether the parameter values were modified within the query time range. Note that each database parameter is only listed once. Depending on the optional query parameters, the returned summary gets all the database parameters, which include:
+
+- Each parameter whose value was changed during the time range:  (valueChanged =\"Y\") - Each parameter whose value was unchanged during the time range:  (valueChanged =\"N\") - Each parameter whose value was changed at the system level during the time range: (valueChanged =\"Y\"  and valueModified = \"SYSTEM_MOD\") - Each parameter whose value was unchanged during the time range, however, the value is not the default value: (valueChanged =\"N\" and  valueDefault = \"FALSE\")
+
+Note that this API does not return information on the number of times each database parameter has been changed within the time range. To get the database parameter value change history for a specific parameter, use the following API endpoint: /managedDatabases/{managedDatabaseId}/awrDbs/{awrDbId}/awrDbParameterChanges \n[Command Reference](summarizeAwrDbParameters)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
 @cli_util.option('--end-sn-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot ID.""")
@@ -1801,7 +2411,7 @@ def summarize_awr_db_parameter_changes(ctx, from_json, managed_database_id, awr_
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["IS_CHANGED", "NAME"]), help=u"""The option to sort the AWR database parameter change history data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -1864,7 +2474,7 @@ def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, 
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["END_INTERVAL_TIME", "NAME"]), help=u"""The option to sort the AWR summary data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1901,7 +2511,7 @@ def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, 
 
 @managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_sysstats.command_name', 'summarize-awr-db-sysstats'), help=u"""Summarizes the AWR SYSSTAT sample data for the specified database in AWR. The statistical data is summarized based on the Time dimension for each statistic. \n[Command Reference](summarizeAwrDbSysstats)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--name', required=True, multiple=True, help=u"""The required multiple value query parameter to filter the entity name.""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
@@ -1912,7 +2522,7 @@ def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, 
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "NAME"]), help=u"""The option to sort the data within a time period.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -1960,7 +2570,7 @@ def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, na
 
 @managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_top_wait_events.command_name', 'summarize-awr-db-top-wait-events'), help=u"""Summarizes the AWR top wait events. \n[Command Reference](summarizeAwrDbTopWaitEvents)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
 @cli_util.option('--end-sn-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot ID.""")
@@ -1970,7 +2580,7 @@ def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, na
 @cli_util.option('--container-id', type=click.INT, help=u"""The optional query parameter to filter the database container by an exact ID value. Note that the database container ID can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbSnapshotRanges""")
 @cli_util.option('--top-n', type=click.INT, help=u"""The optional query parameter to filter the number of top categories to be returned.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["WAITS_PERSEC", "AVG_WAIT_TIME_PERSEC"]), help=u"""The option to sort the AWR top event summary data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2017,7 +2627,7 @@ def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db
 
 @managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_wait_event_buckets.command_name', 'summarize-awr-db-wait-event-buckets'), help=u"""Summarizes AWR wait event data into value buckets and frequency, for the specified database in the AWR. \n[Command Reference](summarizeAwrDbWaitEventBuckets)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--name', required=True, help=u"""The required single value query parameter to filter the entity name.""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
@@ -2031,7 +2641,7 @@ def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["CATEGORY", "PERCENTAGE"]), help=u"""The option to sort distribution data.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2085,7 +2695,7 @@ def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr
 
 @managed_database_group.command(name=cli_util.override('database_management.summarize_awr_db_wait_events.command_name', 'summarize-awr-db-wait-events'), help=u"""Summarizes the AWR wait event sample data for the specified database in the AWR. The event data is summarized based on the Time dimension for each event. \n[Command Reference](summarizeAwrDbWaitEvents)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs:""")
+@cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-num', help=u"""The optional single value query parameter to filter the database instance number.""")
 @cli_util.option('--begin-sn-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
 @cli_util.option('--end-sn-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot ID.""")
@@ -2097,7 +2707,7 @@ def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr
 @cli_util.option('--page', help=u"""The page token representing the page, from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "NAME"]), help=u"""The option to sort the data within a time period.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the the default order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2143,6 +2753,384 @@ def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id,
         awr_db_id=awr_db_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@job_executions_status_summary_collection_group.command(name=cli_util.override('database_management.summarize_job_executions_statuses.command_name', 'summarize-job-executions-statuses'), help=u"""Gets the number of job executions grouped by status for a job, Managed Database, or Database Group in a specific compartment. Only one of the parameters, jobId, managedDatabaseId, or managedDatabaseGroupId should be provided. \n[Command Reference](summarizeJobExecutionsStatuses)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the status summary of job executions in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the status summary of job executions in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--id', help=u"""The identifier of the resource.""")
+@cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
+@cli_util.option('--managed-database-id', help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'JobExecutionsStatusSummaryCollection'})
+@cli_util.wrap_exceptions
+def summarize_job_executions_statuses(ctx, from_json, compartment_id, start_time, end_time, id, managed_database_group_id, managed_database_id, name, sort_by, sort_order):
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if managed_database_group_id is not None:
+        kwargs['managed_database_group_id'] = managed_database_group_id
+    if managed_database_id is not None:
+        kwargs['managed_database_id'] = managed_database_id
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_job_executions_statuses(
+        compartment_id=compartment_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@db_management_private_endpoint_group.command(name=cli_util.override('database_management.update_db_management_private_endpoint.command_name', 'update'), help=u"""Updates one or more attributes of the specified Database Management private endpoint. \n[Command Reference](updateDbManagementPrivateEndpoint)""")
+@cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
+@cli_util.option('--name', help=u"""The display name of the private endpoint.""")
+@cli_util.option('--description', help=u"""The description of the private endpoint.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, name, description, nsg_ids, if_match):
+
+    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
+    if not force:
+        if nsg_ids:
+            if not click.confirm("WARNING: Updates to nsg-ids will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_db_management_private_endpoint(
+        db_management_private_endpoint_id=db_management_private_endpoint_id,
+        update_db_management_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_management_private_endpoint') and callable(getattr(client, 'get_db_management_private_endpoint')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_management_private_endpoint(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('database_management.update_job.command_name', 'update'), help=u"""Updates the details for the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
+@cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
+@cli_util.option('--description', help=u"""The description of the job.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["SQL"]), help=u"""The type of job.""")
+@cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
+@cli_util.option('--result-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, job_type, timeout, result_location, schedule_details, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+    if not force:
+        if result_location or schedule_details:
+            if not click.confirm("WARNING: Updates to result-location and schedule-details will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if job_type is not None:
+        _details['jobType'] = job_type
+
+    if timeout is not None:
+        _details['timeout'] = timeout
+
+    if result_location is not None:
+        _details['resultLocation'] = cli_util.parse_json_parameter("result_location", result_location)
+
+    if schedule_details is not None:
+        _details['scheduleDetails'] = cli_util.parse_json_parameter("schedule_details", schedule_details)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_job(
+        job_id=job_id,
+        update_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('database_management.update_job_update_sql_job_details.command_name', 'update-job-update-sql-job-details'), help=u"""Updates the details for the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
+@cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
+@cli_util.option('--description', help=u"""The description of the job.""")
+@cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
+@cli_util.option('--result-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-text', help=u"""The SQL text to be executed as part of the job.""")
+@cli_util.option('--sql-type', help=u"""""")
+@cli_util.option('--user-name', help=u"""The database user name used to execute the SQL job. If the job is being executed on a Managed Database Group, then the user name should exist on all the databases in the group with the same password.""")
+@cli_util.option('--password', help=u"""The password for the database user name used to execute the SQL job.""")
+@cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
+@cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, result_location, schedule_details, sql_text, sql_type, user_name, password, secret_id, role, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+    if not force:
+        if result_location or schedule_details:
+            if not click.confirm("WARNING: Updates to result-location and schedule-details will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if timeout is not None:
+        _details['timeout'] = timeout
+
+    if result_location is not None:
+        _details['resultLocation'] = cli_util.parse_json_parameter("result_location", result_location)
+
+    if schedule_details is not None:
+        _details['scheduleDetails'] = cli_util.parse_json_parameter("schedule_details", schedule_details)
+
+    if sql_text is not None:
+        _details['sqlText'] = sql_text
+
+    if sql_type is not None:
+        _details['sqlType'] = sql_type
+
+    if user_name is not None:
+        _details['userName'] = user_name
+
+    if password is not None:
+        _details['password'] = password
+
+    if secret_id is not None:
+        _details['secretId'] = secret_id
+
+    if role is not None:
+        _details['role'] = role
+
+    _details['jobType'] = 'SQL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_job(
+        job_id=job_id,
+        update_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('database_management.update_job_object_storage_job_execution_result_location.command_name', 'update-job-object-storage-job-execution-result-location'), help=u"""Updates the details for the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
+@cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
+@cli_util.option('--description', help=u"""The description of the job.""")
+@cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
+@cli_util.option('--schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--result-location-namespace-name', help=u"""The Object Storage namespace used for job execution result storage.""")
+@cli_util.option('--result-location-bucket-name', help=u"""The name of the bucket used for job execution result storage.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def update_job_object_storage_job_execution_result_location(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, schedule_details, if_match, result_location_namespace_name, result_location_bucket_name):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+    if not force:
+        if schedule_details:
+            if not click.confirm("WARNING: Updates to schedule-details will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['resultLocation'] = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if timeout is not None:
+        _details['timeout'] = timeout
+
+    if schedule_details is not None:
+        _details['scheduleDetails'] = cli_util.parse_json_parameter("schedule_details", schedule_details)
+
+    if result_location_namespace_name is not None:
+        _details['resultLocation']['namespaceName'] = result_location_namespace_name
+
+    if result_location_bucket_name is not None:
+        _details['resultLocation']['bucketName'] = result_location_bucket_name
+
+    _details['resultLocation']['type'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_job(
+        job_id=job_id,
+        update_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
