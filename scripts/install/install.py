@@ -13,7 +13,6 @@ import os.path
 import sys
 import platform
 import stat
-import tarfile
 import tempfile
 import shutil
 import subprocess
@@ -23,6 +22,11 @@ import ssl
 import traceback
 from urllib.request import urlopen
 from urllib.error import URLError
+
+
+sudo_cmd = 'sudo'
+if os.geteuid() == 0:
+    sudo_cmd = ""
 
 
 def is_windows():
@@ -70,10 +74,11 @@ optional_feature_list = ['db (will install cx_Oracle)']
 
 ACCEPT_ALL_DEFAULTS = False
 
-VIRTUALENV_VERSION = '15.0.0'
-VIRTUALENV_ARCHIVE = VIRTUALENV_VERSION + '.tar.gz'
-VIRTUALENV_DOWNLOAD_URL = 'https://github.com/pypa/virtualenv/archive/' + VIRTUALENV_ARCHIVE
-VIRTUALENV_ARCHIVE_SHA256 = 'a9759798e8bf7398084ef08c5ba98d4fb38bf2d2d9897deb01ee5412af8804b8'
+VIRTUALENV_VERSION = '20.6.0'
+VIRTUALENV_ARCHIVE = 'virtualenv-{}.pyz'.format(VIRTUALENV_VERSION)
+VIRTUALENV_DOWNLOAD_URL = 'https://github.com/pypa/get-virtualenv/blob/{}/public/virtualenv.pyz?raw=true'.format(VIRTUALENV_VERSION)
+VIRTUALENV_ARCHIVE_SHA256 = 'a5d9b1f27bc790423f7910876c0e46cf476044f4ebd76d29dc6c06a3ab019e93'
+
 
 DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
 DEFAULT_EXEC_DIR = os.path.expanduser(os.path.join('~', 'bin'))
@@ -174,13 +179,7 @@ def download_and_create_virtualenv(tmp_dir, install_dir):
         print_status("Checksum of {} OK.".format(download_location))
     else:
         raise CLIInstallError("The checksum of the downloaded virtualenv package does not match.")
-    print_status("Extracting '{}' to '{}'.".format(download_location, tmp_dir))
-    package_tar = tarfile.open(download_location)
-    package_tar.extractall(path=tmp_dir)
-    package_tar.close()
-    virtualenv_dir_name = 'virtualenv-' + VIRTUALENV_VERSION
-    working_dir = os.path.join(tmp_dir, virtualenv_dir_name)
-
+    working_dir = tmp_dir
     # due to an issue with virtualenv on windows, we need to explicitly copy some dlls into the virtual environment
     # or the python executable in the virtualenv will crash upon invocation
     # for python 3 one possible alternative is to use venv instead of virtualenv
@@ -192,19 +191,19 @@ def download_and_create_virtualenv(tmp_dir, install_dir):
         for dll in glob.glob(os.path.join(src_dir, '*.dll')):
             print_status('Copying {} to {}'.format(dll, dest_dir))
             shutil.copy(dll, dest_dir)
-    cmd = [sys.executable, 'virtualenv.py', '--python', sys.executable, install_dir]
+    cmd = [sys.executable, VIRTUALENV_ARCHIVE, install_dir]
     exec_command(cmd, cwd=working_dir)
 
 
 def install_python3_venv():
-    cmd = ['sudo', 'apt-get', 'update']
+    cmd = [sudo_cmd, 'apt-get', 'update']
     if DRY_RUN:
         print_status('dry-run: Skipping apt-get update, cmd=' + str(cmd))
     else:
         exec_command(cmd)
 
     print_status('Installing python3-venv.')
-    cmd = ['sudo', 'apt-get', 'install', 'python3-venv', '-y']
+    cmd = [sudo_cmd, 'apt-get', 'install', 'python3-venv', '-y']
     if DRY_RUN:
         print_status('dry-run: Skipping apt-get install python3-venv, cmd=' + str(cmd))
     else:
@@ -585,7 +584,7 @@ def install_native_dependencies_for_ubuntu():
     is_python3 = sys.version_info[0] == 3
     python_dep = 'python3-dev' if is_python3 else 'python-dev'
     dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
-    cmd = ['sudo', 'apt-get', '--assume-yes', 'install']
+    cmd = [sudo_cmd, 'apt-get', '--assume-yes', 'install']
     cmd.extend(dep_list)
     exec_command(cmd)
 

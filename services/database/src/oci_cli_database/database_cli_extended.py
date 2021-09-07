@@ -1747,6 +1747,53 @@ def update_autonomous_database(ctx, **kwargs):
     ctx.invoke(database_cli.update_autonomous_database, **kwargs)
 
 
+# Simplifying complex parameter credential_details, enable_database_management
+@cli_util.copy_params_from_generated_command(database_cli.enable_database_management, params_to_exclude=['credential_details'])
+@database_cli.database_group.command(name='enable-database-management', help=u"""Enables the Database Management service for an Oracle Database located in Oracle Cloud Infrastructure. This service allows the database to access tools including Metrics and Performance hub. Database Management is enabled at the container database (CDB) level.""")
+@cli_util.option('--user-name', required=True, help=u"""The name of the Oracle Database user that will be used to connect to the database.""")
+@cli_util.option('--password-secret-id', required=True, help=u"""The OCID of the Oracle Cloud Infrastructure secret.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_database_management_extended(ctx, **kwargs):
+    credential_details = {}
+    if 'user_name' in kwargs and kwargs['user_name'] is not None:
+        credential_details['userName'] = kwargs['user_name']
+        kwargs.pop('user_name')
+
+    if 'password_secret_id' in kwargs and kwargs['password_secret_id'] is not None:
+        credential_details['passwordSecretId'] = kwargs['password_secret_id']
+        kwargs.pop('password_secret_id')
+
+    if len(credential_details) > 0:
+        kwargs['credential_details'] = json.dumps(credential_details)
+
+    ctx.invoke(database_cli.enable_database_management, **kwargs)
+
+
+# Simplifying complex parameter credential_details, modify_database_management
+@cli_util.copy_params_from_generated_command(database_cli.modify_database_management, params_to_exclude=['credential_details'])
+@database_cli.database_group.command(name='modify-database-management', help=u"""Updates one or more attributes of the Database Management service for the database.""")
+@cli_util.option('--user-name', help=u"""The name of the Oracle Database user that will be used to connect to the database.""")
+@cli_util.option('--password-secret-id', help=u"""The OCID of the Oracle Cloud Infrastructure secret.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def modify_database_management_extended(ctx, **kwargs):
+    credential_details = {}
+    if 'user_name' in kwargs and kwargs['user_name'] is not None:
+        credential_details['userName'] = kwargs['user_name']
+
+    if 'password_secret_id' in kwargs and kwargs['password_secret_id'] is not None:
+        credential_details['passwordSecretId'] = kwargs['password_secret_id']
+
+    if len(credential_details) > 0:
+        kwargs['credential_details'] = json.dumps(credential_details)
+    kwargs.pop('user_name')
+    kwargs.pop('password_secret_id')
+    ctx.invoke(database_cli.modify_database_management, **kwargs)
+
+
 # Hide --is-access-control-enabled from following command
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled', 'autonomous_maintenance_schedule_type'])
 @database_cli.autonomous_database_group.command(name='create-refreshable-clone', help=database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details.help)

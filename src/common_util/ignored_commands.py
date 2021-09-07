@@ -101,6 +101,9 @@ IGNORED_COMMANDS = [
     ['artifacts', 'generic', 'artifact', 'upload-by-path'],
     ['data-integration', 'task', 'update-task-from-rest-task'],
     ['os-management', 'work-request-summary'],
+    ['resource-manager', 'job', 'create-plan-job'],
+    ['resource-manager', 'job', 'create-apply-job'],
+    ['resource-manager', 'job', 'create-destroy-job']
 ]
 
 IGNORED_COMMANDS_DOCS = [

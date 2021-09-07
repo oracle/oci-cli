@@ -6,6 +6,69 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.0.4 - 2021-09-07
+-------------------
+Added
+~~~~~
+
+* Support for scheduled jobs in Database Management service
+
+  * Create scheduled jobs for managed databases
+    * ``oci database-management job``
+
+  * Update a schedule job
+    * ``oci database-management job update``
+
+  * Get summary of job execution status
+    * ``oci database-management job-executions-status summarize``
+
+*  Support for a unified way of managing both external and cloud databases in the Database Management service
+
+  * Create private endpoints to be used for managing Cloud databases as part of Database Management service
+    * ``oci database-management private-endpoint``
+
+  * List databases that are managed using specified private endpoint
+    * ``oci database-management associated-database-summary list-associated-databases``
+
+  * Get metrics for a specified Pluggable Database (PDB) managed by Database Management service
+    * ``oci database-management pdb-metrics``
+
+  * Get health metrics for a fleet of databases filtered by database deployment type and database version
+    * ``oci database-management fleet-health-metrics``
+
+  * Support for using Secrets for executing a SQL job in Database Management service
+    * ``oci database-management job``
+
+  * Filter Managed Databases by their deployment type and management option
+    * ``oci database-management managed-database``
+
+* Support for enable, disable, modify in Database Management service
+  * ``oci db database enable-database-management``
+  * ``oci db database disable-database-management ``
+  * ``oci db database modify-database-management``
+
+* Support for getting the detailed log content of a job in the Resource Manager service
+  * ``oci resource-manager job get-job-detailed-log-content``
+
+* Support for ``--max-wait-seconds``, ``--wait-for-state``, ``--wait-interval-seconds`` to Management Dashboard service
+  * ``oci management-dashboard dashboard change-compartment``
+  * ``oci management-dashboard saved-search change-compartment``
+
+Changed
+~~~~~~~
+
+* Support for terraform advanced options (detailed log level, refresh, and parallelism) on jobs in the Resource Manager service
+  * ``oci resource-manager job create-plan-job --terraform-advanced-options``
+  * ``oci resource-manager job create-apply-job --terraform-advanced-options``
+  * ``oci resource-manager job create-destroy-job --terraform-advanced-options``
+
+* Support for forced cancellation when cancelling jobs in the Resource Manager service
+  * ``oci resource-manager job cancel --is-forced``
+
+* Updated fallback virtualenv url in install.py script
+
+* Updated install.py for "root" user to be able to install cli on ubuntu without sudo.
+
 3.0.3 - 2021-08-31
 -------------------
 Added

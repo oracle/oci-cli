@@ -48,12 +48,15 @@ management_dashboard_root_group.add_command(management_dashboard_group)
 @cli_util.option('--management-dashboard-id', required=True, help=u"""A unique dashboard identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the dashboard is being moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
 @cli_util.wrap_exceptions
-def change_management_dashboards_compartment(ctx, from_json, management_dashboard_id, compartment_id, if_match):
+def change_management_dashboards_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, compartment_id, if_match):
 
     if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
@@ -72,6 +75,29 @@ def change_management_dashboards_compartment(ctx, from_json, management_dashboar
         change_management_dashboards_compartment_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_dashboard') and callable(getattr(client, 'get_management_dashboard')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_management_dashboard(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -79,12 +105,15 @@ def change_management_dashboards_compartment(ctx, from_json, management_dashboar
 @cli_util.option('--management-saved-search-id', required=True, help=u"""A unique saved search identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the saved search is being moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
 @cli_util.wrap_exceptions
-def change_management_saved_searches_compartment(ctx, from_json, management_saved_search_id, compartment_id, if_match):
+def change_management_saved_searches_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, compartment_id, if_match):
 
     if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
@@ -103,12 +132,33 @@ def change_management_saved_searches_compartment(ctx, from_json, management_save
         change_management_saved_searches_compartment_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_management_saved_search') and callable(getattr(client, 'get_management_saved_search')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_management_saved_search(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.create_management_dashboard.command_name', 'create'), help=u"""Creates a new dashboard.  Limit for number of saved searches in a dashboard is 20. To get an example of what needs to be passed to CREATE, one can use GET API. oci management-dashboard dashboard get --management-dashboard-id  \"ocid1.managementdashboard.oc1..dashboardId1\" --query data > Create.json
-
-Modify the Create.json by removing \"id\" attribute and other desired changes, then do oci management-dashboard dashboard create  --from-json file://Create.json \n[Command Reference](createManagementDashboard)""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.create_management_dashboard.command_name', 'create'), help=u"""Creates a new dashboard.  Limit for number of saved searches in a dashboard is 20. Here's an example of how you can use CLI to create a dashboard. For information on the details that must be passed to CREATE, you can use the GET API to obtain the Create.json file: oci management-dashboard dashboard get --management-dashboard-id  \"ocid1.managementdashboard.oc1..dashboardId1\" --query data > Create.json. You can then modify the Create.json file by removing the\"id\" attribute and making other required changes, and use the oci management-dashboard dashboard create command. \n[Command Reference](createManagementDashboard)""")
 @cli_util.option('--provider-id', required=True, help=u"""ID of the service (for example, log-analytics) that owns the dashboard. Each service has a unique ID.""")
 @cli_util.option('--provider-name', required=True, help=u"""Name of the service (for example, Logging Analytics) that owns the dashboard.""")
 @cli_util.option('--provider-version', required=True, help=u"""Version of the service that owns the dashboard.""")
@@ -205,9 +255,9 @@ def create_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.create_management_saved_search.command_name', 'create'), help=u"""Creates a new saved search. To get an example of what needs to be passed to CREATE, one can use GET API. oci management-dashboard saved-search get --management-saved-search-id ocid1.managementsavedsearch.oc1..savedsearchId1 --query data > Create.json
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.create_management_saved_search.command_name', 'create'), help=u"""Creates a new saved search. Here's an example of how you can use CLI to create a saved search. For information on the details that must be passed to CREATE, you can use the GET API to obtain the Create.json file:
 
-Modify the Create.json by removing \"id\" attribute and other desired changes, then do oci management-dashboard saved-search create  --from-json file://Create.json \n[Command Reference](createManagementSavedSearch)""")
+oci management-dashboard saved-search get --management-saved-search-id ocid1.managementsavedsearch.oc1..savedsearchId1 --query data > Create.json. You can then modify the Create.json file by removing the \"id\" attribute and making other required changes, and use the oci management-dashboard saved-search create command. \n[Command Reference](createManagementSavedSearch)""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the saved search.""")
 @cli_util.option('--provider-id', required=True, help=u"""ID of the service (for example log-analytics) that owns the saved search. Each service has a unique ID.""")
 @cli_util.option('--provider-version', required=True, help=u"""Version of the service that owns this saved search.""")
@@ -428,8 +478,8 @@ def delete_management_saved_search(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches. Export is designed to work with importDashboard. An example using OCI CLI is $oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > dashboards.json $oci management-dashboard dashboard import --from-json file://dashboards.json \n[Command Reference](exportDashboard)""")
-@cli_util.option('--export-dashboard-id', required=True, help=u"""List of dashboardIds in plain text. The syntaxt is '{\"dashboardIds\":[\"dashboardId1\", \"dashboardId2\", ...]}'. Escaping is needed when using in OCI CLI. For example, \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\" .""")
+@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches. Export is designed to work with importDashboard. Here's an example of how you can use CLI to export a dashboard. $oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > dashboards.json \n[Command Reference](exportDashboard)""")
+@cli_util.option('--export-dashboard-id', required=True, help=u"""List of dashboardIds in plain text. The syntax is '{\"dashboardIds\":[\"dashboardId1\", \"dashboardId2\", ...]}'. Escaping is needed when using in OCI CLI. For example, \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\" .""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -494,7 +544,9 @@ def get_management_saved_search(ctx, from_json, management_saved_search_id):
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Imports an array of dashboards and their saved searches. Import is designed to work with exportDashboard. An example using OCI CLI is     $oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > dashboards.json     $oci management-dashboard dashboard import --from-json file://dashboards.json \n[Command Reference](importDashboard)""")
+@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Imports an array of dashboards and their saved searches. Here's an example of how you can use CLI to import a dashboard. For information on the details that must be passed to IMPORT, you can use the EXPORT API to obtain the Import.json file: oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > Import.json. Note that import API updates the resource if it already exist, and creates a new resource if it does not exist. To import to a different compartment, edit and change the compartmentId to the desired compartment OCID. Here is an example of how you can use CLI to do import:
+
+oci management-dashboard dashboard import --from-json file://Import.json \n[Command Reference](importDashboard)""")
 @cli_util.option('--dashboards', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of dashboards.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
