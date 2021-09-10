@@ -24,11 +24,6 @@ from urllib.request import urlopen
 from urllib.error import URLError
 
 
-sudo_cmd = 'sudo'
-if os.geteuid() == 0:
-    sudo_cmd = ""
-
-
 def is_windows():
     return sys.platform == 'win32'
 
@@ -56,6 +51,12 @@ def get_linux_distribution_id_like():
 def is_ubuntu_or_debian():
     linux_distribution_id, linux_distribution_id_like = get_linux_distribution_id_like()
     return (linux_distribution_id_like and any(x in linux_distribution_id_like for x in ['ubuntu', 'debian'])) or (linux_distribution_id and any(x in linux_distribution_id for x in ['ubuntu', 'debian']))
+
+
+sudo_cmd = 'sudo'
+if is_ubuntu_or_debian():
+    if os.geteuid() == 0:
+        sudo_cmd = ""
 
 
 def get_ubuntu_version():
