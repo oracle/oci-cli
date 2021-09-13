@@ -107,3 +107,19 @@ def create_app_catalog_subscription(ctx, **kwargs):
         kwargs['listing_resource_version'] = kwargs['resource_version']
         kwargs.pop('resource_version')
     ctx.invoke(compute_cli.create_app_catalog_subscription, **kwargs)
+
+
+# Remove launch-instance-amd-rome-bm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_rome_bm_launch_instance_platform_config.name)
+
+
+# Remove launch-instance-amd-vm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_vm_launch_instance_platform_config.name)
+
+
+# Remove launch-instance-intel-skylake-bm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_intel_skylake_bm_launch_instance_platform_config.name)
+
+
+# Remove launch-instance-intel-vm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_intel_vm_launch_instance_platform_config.name)

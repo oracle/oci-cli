@@ -20,10 +20,13 @@ import subprocess
 import sys
 import tempfile
 import platform
+import vcr
+import json
 
 TEMP_DIR = os.path.join('tests', 'temp')
 
 CONFIG_FILENAME = os.path.join(TEMP_DIR, 'config')
+PERMANENT_CONFIG_FILENAME = 'internal_resources/config'
 REGION = 'us-phoenix-1'
 PASSPHRASE = 'passphrase'
 PASSPHRASE_FILE = os.path.join('tests', 'resources', 'test_passphrase_file.txt')
@@ -33,10 +36,16 @@ PRIVATE_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key.pem')
 USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
 USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
 
+TEST_INSTANCE_OCIDS = json.loads(os.environ['OCI_CLI_TEST_INSTANCE_OCIDS'])
+TEST_COMPARTMENT_OCID = os.environ['OCI_CLI_TEST_COMPARTMENT_OCID']
+TEST_DYNAMIC_GROUP_OCID = os.environ['OCI_CLI_TEST_DYNAMIC_GROUP_OCID']
+TEST_POLICY_OCID = os.environ['OCI_CLI_TEST_POLICY_OCID']
+
 
 class TestSetup(unittest.TestCase):
 
     @util.log_test
+    @vcr.use_cassette('tests/fixtures/cassettes/test_cli_setup_instance_principal.yaml')
     def test_all_operations(self):
         self.subtest_keys()
         self.subtest_keys_with_passphrase_option()
@@ -52,6 +61,15 @@ class TestSetup(unittest.TestCase):
         self.subtest_config_region_with_valid_index()
         self.subtest_config_invalid_region_by_index_or_name_with_not_continue()
         self.subtest_config_invalid_region_by_index_or_name_with_continue()
+
+        # vcr cassette is used for these tests
+        self.subtest_instance_principal_setup_with_no_existing_instance()
+        self.subtest_instance_principal_setup_with_new_dynamic_group()
+        self.subtest_instance_principal_setup_with_new_dynamic_group_and_other_policy_compartment()
+        self.subtest_instance_principal_setup_with_existing_dynamic_group_and_new_policy()
+        self.subtest_instance_principal_setup_with_existing_dynamic_group_and_no_update_existing_policy()
+        self.subtest_instance_principal_setup_with_update_existing_dynamic_group_and_update_existing_policy()
+        self.subtest_instance_principal_setup_invalid_inputs()
 
         self.subtest_autocomplete_deny_bash_rc_access()
 
@@ -465,6 +483,156 @@ class TestSetup(unittest.TestCase):
 
             # clean up config and keys
             self.cleanup_default_generated_files()
+
+    @util.log_test
+    def subtest_instance_principal_setup_with_no_existing_instance(self):
+
+        stdin = [
+            'n',  # don't have an existing instance
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Please create a compute instance and then run this command again' in result.output
+        assert result.exit_code == 1
+
+    @util.log_test
+    def subtest_instance_principal_setup_with_new_dynamic_group(self):
+
+        stdin = [
+            'Y',  # have an existing instance
+            TEST_INSTANCE_OCIDS[0],  # instance OCID
+            'N',  # don't add this instance to an existing dynamic group
+            'Instance-Principal-Setup-Test-Group-1',  # new dynamic group name
+            'Test dynamic group for instance principal setup',  # new dynamic group description
+            '',  # use default matching rule for new dynamic group
+            'Instance-Principal-Setup-Test-Policy-1',  # new policy name
+            'Test policy for instance principal setup',  # new policy description
+            '',  # use default statement for new policy
+            'N',  # don't add the policy to a different compartment
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Successfully set up instance principal authentication for your instance!' in result.output
+        assert result.exit_code == 0
+
+    @util.log_test
+    def subtest_instance_principal_setup_with_new_dynamic_group_and_other_policy_compartment(self):
+
+        stdin = [
+            'Y',  # have an existing instance
+            TEST_INSTANCE_OCIDS[0],  # instance OCID
+            'N',  # don't add this instance to an existing dynamic group
+            'Instance-Principal-Setup-Test-Group-2',  # new dynamic group name
+            'Test dynamic group for instance principal setup',  # new dynamic group description
+            '',  # use default matching rule for new dynamic group
+            'Instance-Principal-Setup-Test-Policy-2',  # new policy name
+            'Test policy for instance principal setup',  # new policy description
+            '',  # use default statement for new policy
+            'y',  # add the policy to a different compartment
+            TEST_COMPARTMENT_OCID,  # compartment OCID
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Successfully set up instance principal authentication for your instance!' in result.output
+        assert result.exit_code == 0
+
+    @util.log_test
+    def subtest_instance_principal_setup_with_existing_dynamic_group_and_new_policy(self):
+
+        stdin = [
+            'Y',  # have an existing instance
+            TEST_INSTANCE_OCIDS[0],  # instance OCID
+            'y',  # add this instance to an existing dynamic group
+            TEST_DYNAMIC_GROUP_OCID,  # dynamic group OCID
+            '',  # use default updated matching rule for dynamic group
+            'y',  # create new policy
+            'Instance-Principal-Setup-Test-Policy-3',  # new policy name
+            'Test policy for instance principal setup',  # new policy description
+            '',  # use default statement for new policy
+            'N',  # don't add the policy to a different compartment
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Successfully set up instance principal authentication for your instance!' in result.output
+        assert result.exit_code == 0
+
+    @util.log_test
+    def subtest_instance_principal_setup_with_existing_dynamic_group_and_no_update_existing_policy(self):
+
+        stdin = [
+            'Y',  # have an existing instance
+            TEST_INSTANCE_OCIDS[1],  # instance OCID
+            'y',  # add this instance to an existing dynamic group
+            TEST_DYNAMIC_GROUP_OCID,  # dynamic group OCID
+            '',  # use default updated matching rule for dynamic group
+            'N',  # don't create new policy
+            'N',  # don't update existing policy
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Successfully set up instance principal authentication for your instance!' in result.output
+        assert result.exit_code == 0
+
+    @util.log_test
+    def subtest_instance_principal_setup_with_update_existing_dynamic_group_and_update_existing_policy(self):
+
+        stdin = [
+            'Y',  # have an existing instance
+            TEST_INSTANCE_OCIDS[1],  # instance OCID
+            'y',  # add this instance to an existing dynamic group
+            TEST_DYNAMIC_GROUP_OCID,  # dynamic group OCID
+            "Any {{instance.id = '{}'}}".format(TEST_INSTANCE_OCIDS[1]),  # update matching rule for dynamic group
+            'N',  # don't create new policy
+            'y',  # update existing policy
+            TEST_POLICY_OCID,  # policy OCID
+            '["Allow dynamic-group Instance-Principal-Setup-Test-Group-3 to read all-resources in compartment TeamSandbox"]',  # new policy statement
+            'y',  # confirm policy update
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Successfully set up instance principal authentication for your instance!' in result.output
+        assert result.exit_code == 0
+
+    @util.log_test
+    def subtest_instance_principal_setup_invalid_inputs(self):
+
+        stdin = [
+            'Y',  # have an existing instance
+            'abcd',  # enter invalid instance OCID format; should re-prompt for instance OCID
+            'ocid1.instance.oc1.phx.abc',  # enter nonexistent instance OCID; should re-prompt for instance OCID
+            TEST_INSTANCE_OCIDS[0],  # enter valid instance OCID
+            'y',  # use existing dynamic group
+            'abcd',  # enter invalid dynamic group OCID; should re-prompt for dynamic group OCID
+            'ocid1.dynamicgroup.oc1..abc',  # enter nonexistent dynamic group OCID; should re-prompt for dynamic group OCID
+            TEST_DYNAMIC_GROUP_OCID,  # enter valid dynamic group OCID
+            'invalid matching rule',  # enter invalid matching rule
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Invalid OCID format' in result.output
+        assert 'Could not find instance with the given OCID' in result.output
+        assert 'Could not find dynamic group with the given OCID' in result.output
+        assert 'ServiceError' in result.output
+        assert result.exit_code != 0
+
+        stdin = [
+            'Y',  # have an existing instance
+            TEST_INSTANCE_OCIDS[0],  # enter valid instance OCID
+            'N',  # don't use existing dynamic group
+            'Invalid Group Name',  # enter invalid dynamic group name; should re-prompt for dynamic group name
+            'Instance-Principal-Setup-Test-Group-7',  # enter valid dynamic group name
+            'Test dynamic group for instance principal setup',  # enter dynamic group description
+            '',  # use default matching rule
+            'Invalid Policy Name',  # enter invalid policy name; should re-prompt for policy name
+            'Test-Policy',  # enter valid policy name
+            'Test policy',  # enter policy description
+            '["invalid policy statement"]',  # enter invalid policy statement
+        ]
+
+        result = self.invoke(['setup', 'instance-principal', '--config-file', PERMANENT_CONFIG_FILENAME, '--profile', 'ADMIN'], input='\n'.join(stdin))
+        assert 'Invalid resource name' in result.output
+        assert 'ServiceError' in result.output
+        assert result.exit_code != 0
 
     @util.log_test
     def subtest_autocomplete_deny_bash_rc_access(self):

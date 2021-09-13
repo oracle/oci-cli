@@ -1,12 +1,12 @@
 # o - a smart oci-cli wrapper
-**``O``** accelerates your use the Oracle Cloud Infrastructure's ``oci`` command line interface.  With **``o``** you can
+**`O`** accelerates your use the Oracle Cloud Infrastructure's `oci` command line interface.  With **`o`** you can
  - quickly find the right command
  - get concise usage help
- - build the ``oci`` command using *resource names*, not OCIDs
+ - build the `oci` command using *resource names*, not OCIDs
  - get easy-to-read output in multiple formats
  - use shortcuts for *all* commands, parameters, resource names - no need to predefine aliases!
 
-With **``o``**  you can run most ``oci`` commands with no scripting. You no longer have to save OCIDs to variables in order to build a command.
+With **`o`**  you can run most ``oci`` commands with no scripting. You no longer have to save OCIDs to variables in order to build a command.
 
 Through clever substitution, **``o``** instantly transforms this
 ```
@@ -45,7 +45,7 @@ Public Subnet VLKn:US-ASHBURN-AD-3 AVAILABLE 10.0.2.0/24 sales
 Public Subnet VLKn:US-ASHBURN-AD-2 AVAILABLE 10.0.1.0/24 sales
 Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
 ```
-**``o``** shows a table of commonly useful fields by default, but makes it easy to pick and choose just what you want.
+**``o``** default output is a table of commonly useful fields, but **``o``** makes it easy to pick just what you want (as seen in the above example).
 
 ## Things you can do with ``o``
 
@@ -60,7 +60,8 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
    - resources can be identified by *compartment/name*
    - finds match for partial entry of *name*, *display-name*, *compartment*/*name*
    - identical names can be resolved by using partial OCID.
-     -  For example, ``-c ujfa`` would specify the *sales* compartment in the above examples
+     - for example, ``-c ujfa`` would specify the *sales* compartment. Four or five characters will uniquely identify most resources.
+   - handy when your resource names contain spaces or special characters
  - support [complex type] parameters where a list of OCIDs is expected
    - comma-separated resource names are converted to a JSON list
  - simplify [datetime] parameters
@@ -94,13 +95,13 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
 
  - You add option and parameter shortcuts, and **``o``** shows you the complete ``oci`` command line after performing command, option, and parameter expansions and substitutions.
 
- - **`o`** options such as `o -o field#list` must appear *before* the `oci` service-resource-command specification. `oci` options must appear *after*.  While this ordering may not be required with `oci`, it is needed for `o` to tell which options are for `o` and which are for `oci`.
+ - **`o`** options such as `o -o field#list` must appear *before* the `<service resource command>`  specification. `oci` options must appear *after* `command`.  While this option ordering is not strictly required by `oci`, `o` needs this ordering to tell which options are for `o` and which are for `oci`.
 
  - Add "go" to the end of the command and **``o``** will execute the ``oci`` command.  ``oci`` typically returns JSON data when you create, get, list, or update resources.
 
  - **``o``** inspects the JSON results and collects selected of details about your OCI resources whenever you run any command with ``o ... go``. Most importantly, **``o``** captures resource names and Oracle Cloud IDs (OCIDs). Details are saved to your *$HOME/.oci/ocids* file. **``o``** uses this information to find resources by name, and to translate names to IDs.
 
- - Once **``o``** receives JSON results from oci, it scans the returned data dict for key names that match or partially match any of your ``-o key/word/list``.  The key words determine *what* presented, while the **``/``** separator character determines *how* they are presented.
+ - Once **``o``** receives JSON results from oci, it scans the returned data dict for key names that match or partially match any of your <nobr>``-o key/word/list``</nobr>.  The key words determine *what* presented, while the **``/``** separator character determines *how* they are presented.
 
 ##  Requirements
 
@@ -122,9 +123,20 @@ You will need:
 o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
 where=$(which oci) && wget -q $o_src -O ${where%ci} && chmod a+x ${where%ci}
 ```
-When you first run **``o``** it will tell you how to create the commands file ``$HOME/.oci/oci_commands``, and then how to seed your ``$HOME/.oci/ocids`` file.
+When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
 
-**Advanced setup:**  If you have multiple tenancies, or multiple profiles in your ``.oci/config`` file, setenv OCI_CLI_PROFILE for each profile as you run ``o <tenancy_ocid>`` to set up the ``$HOME/.oci/ocids`` file. This ensures that the profile is passed to the ``oci`` command on "go", and is especially important during tenancy setup, when **``o``** executes four ``oci`` commands.
+**Advanced Setup and Usage**
+
+When you run `o oci_commands`, it takes about a minute to create a list of thousands of possible `oci` commands and their options, and save this to *$HOME/.oci/ocids*.  In some cases your `oci` command line environment may be installed without preformatted documentation.  In this case it may take 30 to 60 minutes to gather the command information.
+
+If you use ``oci`` with *instance_principal* authentication, set `` OCI_CLI_AUTH=instance_principal`` in your environment
+(rather than use <nobr>``--auth instance_principal``</nobr> with each command).
+
+If you have multiple profiles in your *.oci/config* file, set OCI_CLI_PROFILE for the desired profile before running ``o <tenancy_ocid>`` to set up your *.oci/ocids* file for that profile, or before running other ``o`` commands.
+
+Use [CLI Environment Variables](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clienvironmentvariables.htm) to ensure these settings are passed on to the ``oci`` commands run by ``o``.  This is especially important during tenancy setup, when **``o``** executes four ``oci`` commands to seed the *.oci/ocids* file, but you may find environment variables more convenient than adding extra parameters to each command.
+
+If you use ``oci`` for multiple tenancies, by default ``o`` will save OCIDs for all tenancies in the same *$HOME/.oci/ocids* file.  However, if you want to keep the OCIDs separated, ``o`` will first look in the current working directory for *./ocids* before looking for *$HOME/.oci/ocids*.  The file is always initially created in *.oci/ocids*, but you can copy this to a tenancy specific directory.  Then when you run ``o`` while in that directory it will use the tenancy specific *ocids* file.  Remember to secure your *ocids* files with permissions set to 0600.
 
 ## Supported platforms
 

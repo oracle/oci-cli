@@ -33,11 +33,14 @@ Provides an interactive process to create a CLI config file using username / pas
 Also handles generating API keys and uploading them to your Oracle Cloud Infrastructure account.
 
 Note that port {port} must be available in order for this command to complete properly.""".format(port=BOOTSTRAP_SERVICE_PORT))
+@click.option('--profile-name', help='Name of the profile you are creating')
+@click.option('--config-location', help='Path to the config for the new profile')
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def bootstrap_oci_cli(ctx):
-    user_session = create_user_session()
+def bootstrap_oci_cli(ctx, profile_name, config_location):
+    region_param = ctx.obj['region'] if ctx.obj['region'] else ''
+    user_session = create_user_session(region=region_param)
 
     public_key = user_session.public_key
     private_key = user_session.private_key
@@ -94,7 +97,8 @@ def bootstrap_oci_cli(ctx):
     click.echo('Uploaded new API key with fingerprint: {}'.format(fingerprint))
 
     # write credentials to filesystem
-    profile_name, config_location = persist_user_session(user_session, persist_token=False, bootstrap=True)
+    config_loc = os.path.expanduser(config_location) if config_location else None
+    profile_name, config_location = persist_user_session(user_session, profile_name=profile_name, config=config_loc, persist_token=False, bootstrap=True)
 
     click.echo('Config written to: {}'.format(config_location))
 

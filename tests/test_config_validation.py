@@ -8,6 +8,14 @@ import os
 import tempfile
 import shutil
 import unittest.mock as mock
+import click
+
+REGION = 'us-phoenix-1'
+TEST_JWT_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTc2MDAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.i9PP_5up4UAgFx7usppp_okaFDRpmzF0YECDsfN-gjU'
+LIST_REGION_SUBSCRIPTIONS_RESPONSE = Response(status=None, headers=None, data=[
+    identity.models.RegionSubscription(region_name="non-home-region", is_home_region=False),
+    identity.models.RegionSubscription(region_name=REGION, is_home_region=True)
+], request=None)
 
 
 def test_missing_user(runner, malformed_config_file):
@@ -55,18 +63,11 @@ def test_auth_security_token_with_no_config(runner):
         oci_cli.cli_setup.DEFAULT_CONFIG_LOCATION = config_file
         os.environ['OCI_CLI_CONFIG_FILE'] = config_file
 
-        region = 'us-phoenix-1'
-        test_jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTc2MDAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.i9PP_5up4UAgFx7usppp_okaFDRpmzF0YECDsfN-gjU'
-        list_region_subscriptions_response = Response(status=None, headers=None, data=[
-            identity.models.RegionSubscription(region_name="non-home-region", is_home_region=False),
-            identity.models.RegionSubscription(region_name=region, is_home_region=True)
-        ], request=None)
-
         with mock.patch('oci_cli.cli_setup_bootstrap.webbrowser') as mock_webbrowser:
             with mock.patch('oci.identity.IdentityClient') as mock_identity_client_class:
                 with mock.patch('oci_cli.cli_setup_bootstrap.StoppableHttpServer') as mock_stoppable_http_server:
-                    mock_stoppable_http_server.return_value.serve_forever.return_value = test_jwt_token
-                    mock_identity_client_class.return_value.list_region_subscriptions.return_value = list_region_subscriptions_response
+                    mock_stoppable_http_server.return_value.serve_forever.return_value = TEST_JWT_TOKEN
+                    mock_identity_client_class.return_value.list_region_subscriptions.return_value = LIST_REGION_SUBSCRIPTIONS_RESPONSE
 
                     # do not launch the web browser when running test
                     mock_webbrowser.open_new = mock.Mock(return_value=True)
@@ -85,7 +86,7 @@ def test_auth_security_token_with_no_config(runner):
 
                     stdin = [
                         'Y',  # choose to create new config file
-                        region
+                        REGION
                     ]
 
                     # test CLI command with security_token auth and no config file, and choose to create new config file
@@ -115,7 +116,6 @@ def test_auth_security_token_with_expired_session(runner):
         oci_cli.cli_setup.DEFAULT_CONFIG_LOCATION = config_file
         os.environ['OCI_CLI_CONFIG_FILE'] = config_file
 
-        region = 'us-phoenix-1'
         profile_name = 'TESTSESSION'
         expired_test_jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTYwMzAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.D6siip7uDVm7-aNFbwYyVx4U-eGPGWAtXX0Hl_Q0BC8'
         valid_test_jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTc2MDAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.i9PP_5up4UAgFx7usppp_okaFDRpmzF0YECDsfN-gjU'
@@ -148,16 +148,12 @@ def test_auth_security_token_with_expired_session(runner):
             'x8liaJMyPiPM42GhJZDYvpqLdmubD/9dG6Fyz4E3W4z4Ms8AQOY=\n',
             '-----END RSA PRIVATE KEY-----'
         ]
-        list_region_subscriptions_response = Response(status=None, headers=None, data=[
-            identity.models.RegionSubscription(region_name="non-home-region", is_home_region=False),
-            identity.models.RegionSubscription(region_name=region, is_home_region=True)
-        ], request=None)
 
         sessions_dir = os.path.join(temp_dir, 'sessions')
         os.mkdir(sessions_dir)
         session_dir = os.path.join(sessions_dir, profile_name)
         os.mkdir(session_dir)
-        key_file = os.path.join(session_dir, 'oci_api_key.pem')
+        key_file = os.path.join(session_dir, oci_cli.cli_setup.DEFAULT_KEY_NAME + oci_cli.cli_setup.PRIVATE_KEY_FILENAME_SUFFIX)
         token_file = os.path.join(session_dir, 'token')
 
         profile = [
@@ -165,7 +161,7 @@ def test_auth_security_token_with_expired_session(runner):
             'fingerprint = test_fingerprint\n',
             'key_file = {}\n'.format(key_file),
             'tenancy = test_tenancy\n',
-            'region = {}\n'.format(region),
+            'region = {}\n'.format(REGION),
             'security_token_file = {}'.format(token_file)
         ]
 
@@ -183,7 +179,7 @@ def test_auth_security_token_with_expired_session(runner):
                 with mock.patch('oci_cli.cli_setup_bootstrap.StoppableHttpServer') as mock_stoppable_http_server:
                     # return "valid" token to simulate re-authenticated token
                     mock_stoppable_http_server.return_value.serve_forever.return_value = valid_test_jwt_token
-                    mock_identity_client_class.return_value.list_region_subscriptions.return_value = list_region_subscriptions_response
+                    mock_identity_client_class.return_value.list_region_subscriptions.return_value = LIST_REGION_SUBSCRIPTIONS_RESPONSE
 
                     # do not launch the web browser when running test
                     mock_webbrowser.open_new = mock.Mock(return_value=True)
@@ -199,7 +195,7 @@ def test_auth_security_token_with_expired_session(runner):
 
                     stdin = [
                         'Y',  # choose to re-authenticate session
-                        region
+                        REGION
                     ]
 
                     # test CLI command with security_token auth and expired session profile, and choose to re-authenticate the session
@@ -228,7 +224,6 @@ def test_command_with_no_config(runner):
 
         test_ocid = 'ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq'
         test_tenancy = 'ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq'
-        region = 'us-phoenix-1'
 
         # make sure config file does not exist yet
         assert not os.path.exists(config_file)
@@ -244,17 +239,18 @@ def test_command_with_no_config(runner):
 
         stdin = [
             'Y',  # choose to create new config file
+            'n',  # choose not to use browser login (no setup bootstrap)
             config_file,  # location for the new config file
             test_ocid,
             test_tenancy,
-            region,
+            REGION,
             'Y',  # generate new key pair
             temp_dir,  # directory for the keys
-            'oci_api_key',
+            oci_cli.cli_setup.DEFAULT_KEY_NAME,
             '',  # no private key passphrase
         ]
 
-        # test CLI command with no config file, and choose to create new config file
+        # test CLI command with no config file, and choose to create new config file with browserless setup
         result = invoke_example_operation(runner, config_file, 'DEFAULT', command_input='\n'.join(stdin))
         assert 'Could not find config file' in result.output
         assert 'Do you want to create a new config file' in result.output
@@ -264,9 +260,56 @@ def test_command_with_no_config(runner):
         # make sure config file now exists
         assert os.path.exists(config_file)
 
-        # test CLI command with security_token auth and existing config file, and make sure new config file prompt does not appear
-        result = invoke_example_operation(runner, config_file, 'DEFAULT', ['--auth', 'security_token'], command_input='\n'.join(stdin))
+        # test CLI command with existing config file, and make sure new config file prompt does not appear
+        result = invoke_example_operation(runner, config_file, 'DEFAULT', command_input='\n'.join(stdin))
         assert 'Could not find config file' not in result.output
+
+        # remove the config file and api keys
+        os.remove(config_file)
+        os.remove(os.path.join(temp_dir, oci_cli.cli_setup.DEFAULT_KEY_NAME + oci_cli.cli_setup.PRIVATE_KEY_FILENAME_SUFFIX))
+        os.remove(os.path.join(temp_dir, oci_cli.cli_setup.DEFAULT_KEY_NAME + oci_cli.cli_setup.PUBLIC_KEY_FILENAME_SUFFIX))
+
+        with mock.patch('oci_cli.cli_setup_bootstrap.webbrowser') as mock_webbrowser:
+            with mock.patch('oci.identity.IdentityClient') as mock_identity_client_class:
+                with mock.patch('oci_cli.cli_setup_bootstrap.StoppableHttpServer') as mock_stoppable_http_server:
+                    mock_stoppable_http_server.return_value.serve_forever.return_value = TEST_JWT_TOKEN
+                    mock_identity_client_class.return_value.list_region_subscriptions.return_value = LIST_REGION_SUBSCRIPTIONS_RESPONSE
+
+                    # do not launch the web browser when running unit test
+                    mock_webbrowser.open_new = mock.Mock(return_value=True)
+
+                    # make sure config file does not exist yet
+                    assert not os.path.exists(config_file)
+
+                    # when this test is being run, there might not be a runnable browser, in which case the oci setup config function would be used
+                    # so, this forces oci setup bootstrap to be used for the purposes of this test
+                    def config_setup_function():
+                        if click.confirm('Do you want to create your config file by logging in through a browser?', default=True):
+                            return oci_cli.cli_setup_bootstrap.bootstrap_oci_cli
+                        # this won't be used during this test since the input given to the prompt above will be 'Y'
+                        return oci_cli.cli_setup.generate_oci_config
+                    oci_cli.cli_util.get_config_setup_function = config_setup_function
+
+                    stdin = [
+                        'Y',  # choose to create new config file
+                        'Y',  # choose to use browser login (setup bootstrap)
+                        REGION,
+                        '',  # no private key passphrase
+                    ]
+
+                    # test CLI command with no config file, and choose to create new config file with browser-based setup
+                    result = invoke_example_operation(runner, config_file, 'DEFAULT', command_input='\n'.join(stdin))
+                    assert 'Could not find config file' in result.output
+                    assert 'Do you want to create a new config file' in result.output
+                    assert 'Config written to' in result.output
+                    assert result.exit_code == 0
+
+                    # make sure config file now exists
+                    assert os.path.exists(config_file)
+
+                    # test CLI command with existing config file, and make sure new config file prompt does not appear
+                    result = invoke_example_operation(runner, config_file, 'DEFAULT', command_input='\n'.join(stdin))
+                    assert 'Could not find config file' not in result.output
     finally:
         shutil.rmtree(temp_dir)
         os.environ['OCI_CLI_CONFIG_FILE'] = 'internal_resources/config'
