@@ -20,8 +20,8 @@ import os
 import fcntl
 import errno
 import datetime
-VERSION = "1.0"
-UPDATED = "2021-05-17"
+VERSION = "1.1"
+UPDATED = "2021-09-08"
 
 # ==============================================================================
 # Global variables
@@ -48,15 +48,16 @@ default_out_spec = 'name{:.30}#shape#cidr-block#prohibit-public{:5.5}' \
     '#created{:16.16}#compartment{:.20}#instance-id' \
     '#id{:>8.8}' \
     '#direction#destination' \
-    '#public-ip#private-ip' \
-    '#vnic-id#desc{:.40}'
+    '#ip-address#public-ip#private-ip' \
+    '#vnic-id#desc{:.40}' \
+    '#access-uri'
 
 matches = []        # list of commands that match user input
 best_match = None   # matches[best_match] is the closest match
 all_options_for_this_cmd = ''  # for best_match
 remaining_options = ''  # for best_match
 options_out = []    # list of expanded options to be passed to oci cli
-oci_command_line = '' # the complete oci cli command in string form
+oci_command_line = ''  # the complete oci cli command in string form
 column = {}         # field format info: format:'{:}', offset:0, maxwidth:n
 use_bold = True     # enable xterm bold highlighting
 wrap = 120          # wrap at column <wrap>
@@ -69,14 +70,14 @@ def usage(s=''):
     print("""
     o - a friendly helper for Oracle Cloud Infrastructure CLI
 
-    usage: o [<o options>] <oci-command> [<oci-options>] go
+    usage: o [<o options>] <oci-command> [<oci-options>] [go]
 
       <o options>
-         -o name#life#time{{:.16}}  Table out; show fields whose keys match
-                            "name", "life" or "time"
-                            Truncate "time" value at 16 characters
-         -o name,life,time  CSV out
-         -o name/life/time  Text out - one field per line
+         -o name#life#time{:.16}  Table output
+                            Show fields that match "name", "life" or "time"
+                            Truncate "time" at 16 characters
+         -o name,life,time  CSV output
+         -o name/life/time  Text output - one field per line
          -o /               Show all fields in text
          -o json            JSON format - unfiltered oci output""")
     if s == "help":
@@ -92,11 +93,10 @@ def usage(s=''):
          help          This help.  Use "--help go" for oci help""")
     print("""
       <oci-command>    The oci "service resource action" specification
-      [<oci-options>]      Options and parameters for <oci-command>
-                       <oci-command> and <oci-options> will be expanded to
-                       build a more correct oci command
+      <oci-options>    Options and parameters for <oci-command>
+                       These will be expanded into a more correct oci command
 
-      go               Execute the command; go must be last
+      go               Run the oci command if the line ends with "go"
 
     o Version {} - {}
     """.format(VERSION, UPDATED))
@@ -167,6 +167,11 @@ def read_oci_commands_file():
         msg = "{0}".format(e)
         print(bold(msg))
         exit(1)
+    if len(command_list) < 1000:
+        print(bold('File ' + oci_commands_file + ' is incomplete.'))
+        print('Re-create it with:')
+        print(bold('    o oci_commands'))
+        exit(1)
     return command_list
 
 # ==============================================================================
@@ -199,7 +204,7 @@ def get_from_oci_config(key):
         config_file = s.split()[s.split().index('--config')+1]
 
     if not os.path.exists(config_file) and os.path.exists('/etc/oci/config'):
-        oci_config_file = '/etc/oci/config'
+        config_file = '/etc/oci/config'
 
     try:
         value = None
@@ -395,11 +400,11 @@ def get_new_ocids_from_returned_items(items):
                     'type':  'regionlist',
                     'alias': 'regionlist',
                     'id':    'regionlist',
-                    'data':  items} }
+                    'data':  items}}
 
     if oci_command_line.startswith('oci search'):
         for i in items:
-            if 'identifier' in i and not 'id' in i:
+            if 'identifier' in i and 'id' not in i:
                 i['id'] = i['identifier']
 
     if not items or 'id' not in items[0]:
@@ -413,6 +418,8 @@ def get_new_ocids_from_returned_items(items):
             ID = item['id']
             if 'availability' in item['id']:
                 ID = item['name']
+            if 'retention-rule' in oci_command_line:
+                type = 'retentionrule'
 
             # Still need to validate with many OCID types:
             #    cpe, cross-connect, fast-connect, ip-sec, local-peering, nsg,
@@ -640,8 +647,11 @@ def get_item_parents(i):
         else:
             return get_item_parents(ocid[i['compartment-id']]) + [i['alias']]
     else:
-        print(bold('Not found in ocids: ' + i['compartment-id']))
-        print(bold('Parent missing for ' + i['type'] + ' ' + i['alias']))
+        itemname = i['alias'][-10:] if 'ocid1.' in i['alias'] else i['alias']
+        print(bold('Parent missing:'), i['type'], ('ocid..'
+              if i['alias'].startswith('ocid1') else '') + itemname)
+        print('Clean up stale reference with:',
+              bold('o prune ' + itemname + ' go'))
         return [i['alias']]
 
 # ==============================================================================
@@ -712,6 +722,9 @@ def type_match(option, item_type):
             or (option == 'dhcp' and item_type == 'dhcpoptions')
             or (option == 'application' and item_type == 'fnapp')
             or (option == 'function' and item_type == 'fnfunc')
+            or (option == 'asset' and item_type in
+                ('volume', 'bootvolume', 'volumegroup'))
+            or (option == 'sddc' and item_type == 'vmwaresddc')
             or (option == 'avail' and len(item_type) == 1)):
         return True
     return False
@@ -796,32 +809,26 @@ def get_region():
     """
 
     if 'regionlist' not in ocid:
-        return '',''
+        return '', ''
 
     r = ''
-    s = oci_command_line
-    if '--region ' in s:
-        r = s.split()[s.split().index('--region')+1]
+    if '--region ' in oci_command_line:
+        ocl = oci_command_line.split()
+        r = ocl[ocl.index('--region')+1]
     elif os.getenv('OCI_CLI_REGION'):
         r = os.getenv('OCI_CLI_REGION')
-    if '--profile' in s:
-        p = s.split()[s.split().index('--profile')+1]
-    elif os.getenv('OCI_CLI_PROFILE'):
-        p = os.getenv('OCI_CLI_PROFILE')
-    else:
-        p = 'DEFAULT'
 
     # If region not set, get it from config file
     if not r:
         r = get_from_oci_config('region')
     if not r:
-        return None,None
+        return None, None
 
-    rmatch = [ i for i in ocid['regionlist']['data']
-          if r.upper() == i['key'] or r in i['name'] ]
+    rmatch = [i for i in ocid['regionlist']['data']
+              if r.upper() == i['key'] or r in i['name']]
     if rmatch:
-        return rmatch[0]['key'].lower(),rmatch[0]['name']
-    return None,None
+        return rmatch[0]['key'].lower(), rmatch[0]['name']
+    return None, None
 
 # ==============================================================================
 
@@ -831,7 +838,8 @@ def region_match(id):
     region_from_id = (id+'....').split('.')[3]
     if not region_code \
             or region_from_id == '' \
-            or region_from_id == region_code:
+            or region_from_id == region_code \
+            or region_from_id == region:
         return True
     return False
 
@@ -856,17 +864,17 @@ def get_matching_ocid(option, value):
             opt_type = 'ormjob'
 
     matches = [item for k, item in ocid.items() if
-            type_match( opt_type, item['type'])
-            and region_match(item['id'])
-            and alias_match(value, item)]
+               type_match(opt_type, item['type'])
+               and region_match(item['id'])
+               and alias_match(value, item)]
     if not matches:
         matches = [item for k, item in ocid.items() if
-                type_match( opt_type, item['type'])
-                and alias_match(value, item)]
+                   type_match(opt_type, item['type'])
+                   and alias_match(value, item)]
         if matches:
             print(bold('\n' + value + ' found in ' +
-                matches[0]['id'].split('.')[3].upper() + ' region,' +
-                ' but you are working in ' + region_code.upper()))
+                  matches[0]['id'].split('.')[3].upper() + ' region,' +
+                  ' but you are working in ' + region_code.upper()))
     matches = sorted(matches, key=lambda i: i['score'], reverse=True)
 
     if not matches:
@@ -878,7 +886,10 @@ def get_matching_ocid(option, value):
     # Is this match unique, or is it strong relative to other matches?
     if len(matches) == 1 or matches[0]['score'] > 5 + matches[1]['score']:
         if matches[0]['type'] in ('availabilitydomain', 'bucket'):
-            return matches[0]['name']
+            if 'name' in matches[0]:
+                return matches[0]['name']
+            if 'display-name' in matches[0]:
+                return matches[0]['display-name']
         return matches[0]['id']
 
     ambiguous_value(option, value, matches)
@@ -1079,9 +1090,7 @@ def show_item(item, fields, sep):
         else:
             out.append(
                 column[field]['format'].format(
-                    re.sub(
-                        r'[{}\'[\]]', '', str(
-                            item[field]))[
+                    re.sub(r'[{}\'[\]]', '', value)[
                         column[field]['offset']:]))
 
     # one field per line
@@ -1089,12 +1098,15 @@ def show_item(item, fields, sep):
         indent = '   ' + ' ' * maxkeylen
         for k, value in zip(fields, out):
             # Wrap long lines
-            print(column['keyfmt'].format(k), ' ',
-                  textwrap.fill(value,
-                                subsequent_indent=indent,
-                                break_on_hyphens=True,
-                                break_long_words=True,
-                                width=wrap - maxkeylen - 3))
+            if k == 'access-uri':
+                print(column['keyfmt'].format(k), ' ', value)
+            else:
+                print(column['keyfmt'].format(k), ' ',
+                      textwrap.fill(value,
+                                    subsequent_indent=indent,
+                                    break_on_hyphens=True,
+                                    break_long_words=True,
+                                    width=wrap - maxkeylen - 3))
         if len(fields) > 1:
             print('')
 
@@ -1408,7 +1420,10 @@ def prune(argv):
     # start of prune()
     # ==========================================================================
 
-    if 'go' == argv[-1]:
+    if len(argv) == 0:
+        usage('help')
+        exit(0)
+    if argv[-1] in ('go', '!', '.'):
         go = True
         argv.pop(-1)
 
@@ -1455,7 +1470,6 @@ def prune(argv):
               'OCIDs remain in ', ocids_file_name)
     exit(0)
 
-
 # ==============================================================================
 
 
@@ -1484,9 +1498,22 @@ def ocid_lookup(argv):
 def get_oci_commands(argv):
     ''' o oci_commands - extract commands and parameters from oci --help '''
 
-    def oci_command_out(cmd):
+    def oci_command_out(cmd, eol=''):
         f.write(cmd + '\n')
-        print('   ', re.sub(r' [+-].*', '', cmd))
+        cmd = re.sub(r' [+-].*', '', cmd)
+        print('\033[2K\r       ', cmd, end=eol, flush=True)
+
+    def clean_up_param(s):
+        # example in:  -c, --compartment-id TEXT
+        #         out: --compartment-id [text]
+        # print(s)
+        param = re.sub(r' [A-Z[].*', '', s)
+        type = s[len(param)+1:]
+        if type and not type.startswith('['):
+            type = '[' + type.lower() + ']'
+        longest_param = max(param.split(', '), key=len).strip()
+        if longest_param != '--help':
+            return longest_param + (' ' + type if type else '')
 
     oci_dir = os.path.expanduser('~/.oci')
     oci_commands_file = os.path.expanduser('~/.oci/oci_commands')
@@ -1507,64 +1534,100 @@ def get_oci_commands(argv):
         f.close()
 
         part2 = re.sub(r'.*Commands:\n', '', out, flags=re.S)
-        for service in part2.splitlines():
-            if len(service) > 3 and service[2] != ' ':
-                svc = service.split()[0]
-                print("Getting {} commands...".format(svc))
-                subprocess.run([sys.argv[0], 'oci_commands', svc])
+        r = re.compile("  [a-z]")
+        services = [re.sub('^  |  .*$', '', s)
+                    for s in list(filter(r.match, part2.splitlines()))]
+        for n, service in enumerate(services, start=1):
+            print('\033[2K\r({}/{}) Getting {} commands...'.format(
+                  n, len(services), service) + 30*' ')
+            subprocess.run([sys.argv[0], 'oci_commands', service])
+        print('\033[2K\rDone.')
+        exit(0)
 
     # o oci_commands <service>
     sp = subprocess.run(['oci'] + sys.argv[2:] + ['--help'],
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out = sp.stdout.decode('utf-8')
+
+    if out.startswith('Usage'):
+        # Click help instead of man page...
+        # Recurse through Commands to get usage for each command individually.
+        # Warn user that this is the slow method
+        if sys.argv[2] == 'raw-request':
+            print(bold("""
+    The oci-cli on this system does not include preformatted help.
+    This means that it'll take up to an hour to collect usage for all
+    commands and save to {}
+""".format(os.path.expanduser('~/.oci/oci_commands'))))
+
+        if re.search(r'\nCommands:\n', out, flags=re.M):
+            commands = re.sub(r'.*\nCommands:\n', '', out, flags=re.S)
+            for line in commands.splitlines():
+                if re.match(r'^  [a-z0-9-]+', line):
+                    cmd = line.strip().split(' ')[0]
+                    subprocess.run([sys.argv[0], 'oci_commands'] +
+                                   sys.argv[2:] + [cmd])
+            print('\033[2K\r', end='')
+            exit(0)
+
+        # Parse usage for individual command from click help
+        m = re.search(r'Usage: (.*?) \[.*]', out, re.S)
+        if m:
+            cmd = re.sub(r'[ \n]+', ' ', m.group(1)).strip()
+        param = ''
+        required = []
+        optional = []
+        for ln in re.sub(r'.*\nOptions:\n', '', out, flags=re.S).splitlines():
+            m = re.match(r'  (-.*?)(  |$)', ln)
+            if m:
+                if param:
+                    optional.append(param)
+                param = clean_up_param(m.group(1))
+            if param and '[required]' in ln:
+                required.append(param)
+                param = ''
+        if param:
+            optional.append(param)
+
+        if required:
+            cmd += ' ' + ' '.join(sorted(required))
+        if optional:
+            cmd += ' + ' + ' '.join(sorted(optional))
+        f = open(oci_commands_file, 'a')
+        oci_command_out(cmd)
+        f.close()
+        exit(0)
+
+    # Parse usage for multiple commands from man page help
     # Remove bold
     lines = re.sub(r'(\x08.|\x1B...)', '', out).splitlines()
+
     f = open(oci_commands_file, 'a')
-
-    ln = 0
     cmd = ''
-    while ln < len(lines):
-        line = lines[ln]
-
-        # look for start of new command
+    for n, line in enumerate(lines):
+        # Look for start of new command
+        # Single command man page has: ^USAGE
+        # Multi-command man page has:  ^   Usage
         if re.match('^(USAGE|   Usage)', line):
-            # end of previous cmd, show it
+            # if previous command in buffer, save it
             if cmd:
                 oci_command_out(cmd)
-            s = re.sub(' .OPTIONS.', '', lines[ln + 1]).strip()
-            cmd = s
+            cmd = re.sub(' .OPTIONS.', '', lines[n + 1]).strip()
 
         # look for parameter specification
         elif re.search(r'^ {6,7}-[a-z0-9\-,]+($|.* \[.+])', line):
-            # Special cases:
-            #    --compartment-id, -c [text]
-            line = re.sub(r', -c', '', line)
-            #    os --namespace-name, --namespace, -ns [text]
-            line = re.sub(r'([a-z]-name), .* \[', r'\1 [', line)
-            #    os -bn, --bucket-name [text]
-            line = re.sub(r'-[a-z][a-z], .*--', r'--', line)
-
-            line = re.sub(r'--(new|src)-obj-if-[\S]+,', '', line)
-            cmd = cmd + ' ' + line.strip()
-            # cmd = cmd + '\n    ' + line.strip()
+            cmd = cmd + ' ' + clean_up_param(line.strip())
 
         elif re.search(r'optional parameters', line, re.I):
             cmd = cmd + ' +'
 
-        elif re.search('Accepted values are:', line):
-            # skip 2 input lines
-            ln = ln + 2
-            line = lines[ln]
+        # elif re.search('Accepted values are:', line):
+        elif line.endswith('Accepted values are:'):
+            s = re.sub(r', ', r'|', lines[n+2].strip())
+            cmd = cmd[:-5] + s + ']'
 
-            line = re.sub(r', ', r'|', line.strip())
-            # if re.search(r'([\w\.].*)/) {
-            cmd = cmd[:-5] + line + ']'
-
-        ln = ln + 1
-
-    oci_command_out(cmd)
+    oci_command_out(cmd, eol='\033[2K\r')
     f.close()
-
     exit(0)
 
 
@@ -1619,9 +1682,13 @@ else:
 if len(CLI_params) == 0:
     usage()
 
-if 'go' == CLI_params[-1]:
+# if 'go' == CLI_params[-1]:
+if CLI_params[-1] in ('go', '!', '.'):
     go = True
     CLI_params.pop(-1)
+elif CLI_params[-1].endswith('!') or CLI_params[-1].endswith('.'):
+    go = True
+    CLI_params[-1] = CLI_params[-1][:-1]
 elif 'help' == CLI_params[-1]:
     if len(CLI_params) == 1:
         usage('help')
@@ -1699,7 +1766,7 @@ while CLI_params and CLI_params[0][0] != '-':
 # Determine the target region for this command, so that we can filter
 # ocids by region.  See if region or profile is on command line...
 for i in range(len(CLI_params)):
-    a=CLI_params[i]
+    a = CLI_params[i]
     if len(a) == 0 or not a.startswith('-'):
         continue
     if option_parameter(a) == '--region':
@@ -1720,7 +1787,8 @@ for a in CLI_params:
         last_option = options_out[-1]
         # don't match the same parameter more than once
         remaining_options = re.sub(last_option + ' ' +
-                '(\[[A-Za-z0-9-_|\]]* )', '', remaining_options)
+                                   r'(\[[A-Za-z0-9-_|\]]* )',
+                                   '', remaining_options)
     else:
         if last_option == '--region':
             rn = len(options_out)
@@ -1733,7 +1801,7 @@ for o in options_out:
     oci_command_line += shell_escape(o) + ' '
 
 # if region is different from what was on command line, fix command line
-if rn and options_out[rn] != region:
+if rn and region and options_out[rn] != region:
     oci_command_line = re.sub('--region ' + options_out[rn],
                               '--region ' + region, oci_command_line)
     options_out[rn] = region
@@ -1834,9 +1902,11 @@ else:
 
 # Try to preserve access-uri from existing record
 for item in results:
-    if ('object-name' in item and 'id' in item and item['id'] in ocid
-            and 'access-uri' in ocid[item['id']]
-            and 'access-uri' not in item):
+    if 'access-uri' in item:
+        item['access-uri'] = 'https://objectstorage.' + region \
+                + '.oraclecloud.com' + item['access-uri']
+    elif ('object-name' in item and 'id' in item and item['id'] in ocid
+            and 'access-uri' in ocid[item['id']]):
         item['access-uri'] = ocid[item['id']]['access-uri']
 
 if not user_out_spec:

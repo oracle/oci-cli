@@ -31,6 +31,7 @@ from terminaltables import AsciiTable
 from timeit import default_timer as timer
 from oci_cli.util import pymd5
 import codecs
+import webbrowser
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -351,12 +352,15 @@ def create_config_and_signer_based_on_click_context(ctx):
                 click.echo('You can now re-run your command to use your new session profile')
                 sys.exit(0)
             elif (not session_token_auth) and click.confirm('Do you want to create a new config file?', default=True):
-                from .cli_setup import generate_oci_config
-                ctx.invoke(generate_oci_config)
-                # if there are any issues with the config setup, they should be handled by the setup config process itself
-                # so these lines below will only be reached if the setup config command finished successfully
+                setup_func = get_config_setup_function()
+                if 'profile_name' in str(setup_func.params) and 'config_location' in str(setup_func.params):
+                    ctx.invoke(setup_func, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']))
+                else:
+                    ctx.invoke(setup_func)
+                # if there are any issues with the config setup, they should be handled by the config setup process itself
+                # so these lines below will only be reached if the config setup command finished successfully
                 click.echo('Successfully created config file with your new CLI user profile')
-                click.echo('Once you have uploaded your public key through the console (instructions above), you can re-run your command to use your new config file and user profile')
+                click.echo('Once your public key is uploaded in the console, you can re-run your command to use your new config file and user profile')
                 sys.exit(0)
             else:
                 sys.exit(1)
@@ -497,7 +501,7 @@ def build_client(spec_name, service_name, ctx):
     # unless the user has explicitly turned off retries using the --no-retry flag, use the default retry strategy
     if not ctx.obj['no_retry']:
         kwargs['retry_strategy'] = oci.retry.DEFAULT_RETRY_STRATEGY
-        if ctx.obj['max_attempts']:
+        if 'max_attempts' in ctx.obj and ctx.obj['max_attempts']:
             kwargs['retry_strategy'] = RetryStrategyBuilder().add_max_attempts(max_attempts=ctx.obj['max_attempts']) \
                 .add_total_elapsed_time() \
                 .add_service_error_check() \
@@ -2420,6 +2424,23 @@ def build_empty_config():
     empty_config["log_requests"] = config._as_bool(empty_config["log_requests"])
 
     return empty_config
+
+
+def get_config_setup_function():
+    if click.confirm('Do you want to create your config file by logging in through a browser?', default=True):
+        try:
+            webbrowser.get()
+            # if a runnable browser was located by webbrowser.get(), we can proceed with `oci setup boostrap`
+            from .cli_setup_bootstrap import bootstrap_oci_cli
+            return bootstrap_oci_cli
+        except webbrowser.Error:
+            # runnable browser was not located by webbrowser.get(), so we have to go with `oci setup config`
+            click.echo('ERROR: Could not locate a runnable browser')
+            click.echo('Switching to browserless config file setup process')
+
+    # this will only be reached if the user says no to the first prompt about browser login, or if they said yes to that prompt but webbrowser.get() couldn't locate a runnable browser
+    from .cli_setup import generate_oci_config
+    return generate_oci_config
 
 
 class CommandExample:

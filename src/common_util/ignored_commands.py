@@ -4,6 +4,7 @@ IGNORED_COMMANDS = [
     ['setup', 'autocomplete'],
     ['setup', 'bootstrap'],
     ['setup', 'config'],
+    ['setup', 'instance-principal'],
     ['setup', 'keys'],
     ['setup', 'repair-file-permissions'],
     ['setup', 'oci-cli-rc'],
@@ -69,6 +70,7 @@ IGNORED_COMMANDS = [
     ['data-flow', 'application', 'update'],
     # input requires a valid file to upload
     ['data-science', 'model', 'create-model-artifact'],
+    ['data-science', 'job', 'create-job-artifact'],
     # this command expects either subnetId or vlanId optional param, therefore, cannot be tested here
     # removing it from here and adding coverage in test_compute_cli_extended.py
     ['compute', 'instance', 'attach-vnic'],
@@ -110,6 +112,7 @@ IGNORED_COMMANDS_DOCS = [
     ['setup', 'autocomplete'],
     ['setup', 'bootstrap'],
     ['setup', 'config'],
+    ['setup', 'instance-principal'],
     ['setup', 'keys'],
     ['setup', 'repair-file-permissions'],
     ['setup', 'oci-cli-rc'],

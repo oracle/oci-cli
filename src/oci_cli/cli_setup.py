@@ -5,8 +5,9 @@
 from __future__ import print_function
 import click
 from .cli_root import cli
-from .cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION
+from .cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION, OCI_CLI_AUTH_API_KEY, OCI_CLI_AUTH_SESSION_TOKEN, OCI_CLI_AUTH_INSTANCE_PRINCIPAL, OCI_CLI_AUTH_RESOURCE_PRINCIPAL
 from . import cli_util
+from services.identity.src.oci_cli_identity.generated import identity_cli
 from .util import pymd5
 
 import base64
@@ -18,10 +19,12 @@ import stat
 import subprocess
 import sys
 import errno
+import json
+import re
 
 from oci.regions import is_region
 from oci.regions import REGIONS
-from oci import config
+from oci import config, exceptions, signer
 
 import platform
 from cryptography.hazmat.primitives import serialization
@@ -53,6 +56,71 @@ generate_oci_config_instructions = """
 
     \n
 
+"""
+
+instance_principal_setup_instructions = """
+    This command provides a walkthrough of setting up instance principal authentication for an OCI compute instance.
+
+    The following links provide information about topics and resources referenced by this script:
+
+    Resource OCIDs:
+
+
+    \b
+    https://docs.oracle.com/en-us/iaas/Content/General/Concepts/identifiers.htm
+
+
+    Compute Instances:
+
+
+    \b
+    https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/computeoverview.htm
+
+
+    Dynamic Groups:
+
+
+    \b
+    https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingdynamicgroups.htm
+
+
+    Policies:
+
+
+    \b
+    https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policies.htm
+
+
+    In order to successfully run this command, you must:
+
+
+        - have an existing instance from which you want to run commands using instance principal authentication
+
+        - be an administrator in your tenancy so that you can create/update the necessary dynamic group and policy used to enable instance principal authentication for your instance
+
+
+    This script also requires an existing form of valid authentication to successfully run. If you do not have an existing config file and you ran this command using {api_key_auth} or {security_token_auth} auth, you will be prompted to create a new config file to use for authentication during this instance principal setup process.
+
+    \n
+
+""".format(api_key_auth=OCI_CLI_AUTH_API_KEY, security_token_auth=OCI_CLI_AUTH_SESSION_TOKEN)
+
+instance_principal_setup_end_message = """
+    \n
+    If you haven't already, you can install the CLI on your instance by connecting to your instance using SSH and running the following command:
+
+
+    \b
+    bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
+
+
+    After you have installed the CLI on your instance, you can test out your instance principal authentication by connecting to your instance using SSH and running the following example command (Note: if you entered a custom policy that does not allow your dynamic group to view all compute instances in your instance's compartment, then the following example command will not work):
+
+
+    \b
+    oci compute instance list --compartment-id {compartment_id} --auth {auth}
+
+    \n
 """
 
 upload_public_key_instructions = """
@@ -243,6 +311,101 @@ def generate_oci_config():
 
     click.echo('Config written to {}'.format(config_location))
     click.echo(click.wrap_text(upload_public_key_instructions, preserve_paragraphs=True))
+
+
+@setup_group.command('instance-principal', help="""Interactive script to set up instance principal authentication for an existing compute instance.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def setup_instance_principal(ctx):
+    click.echo(click.wrap_text(text=instance_principal_setup_instructions, preserve_paragraphs=True))
+
+    # get the private key passphrase (applicable for api key pair and session token auth), and if the passphrase is not None, then return it each time the passphrase is requested during this script
+    passphrase = None
+    if ctx.obj['auth'] == OCI_CLI_AUTH_API_KEY or ctx.obj['auth'] == OCI_CLI_AUTH_SESSION_TOKEN:
+        passphrase = get_passphrase(ctx)
+    if passphrase:
+        def passphrase_provider():
+            return passphrase
+        cli_util.prompt_for_passphrase = passphrase_provider
+
+    # build necessary client objects; these functions also handle authentication
+    compute_client = cli_util.build_client('core', 'compute', ctx)
+    identity_client = cli_util.build_client('identity', 'identity', ctx)
+
+    # build the config object (applicable for auth types other than instance principal or resource principal)
+    config_obj = None
+    if ctx.obj['auth'] != OCI_CLI_AUTH_INSTANCE_PRINCIPAL and ctx.obj['auth'] != OCI_CLI_AUTH_RESOURCE_PRINCIPAL:
+        config_obj = cli_util.build_config(ctx.obj)
+
+    if not click.confirm('Do you have an existing compute instance for which you would like to set up instance principal authentication?', default=True):
+        click.echo('Please create a compute instance and then run this command again. For information regarding how to create a compute instance, please visit https://docs.oracle.com/en-us/iaas/Content/GSG/Reference/overviewworkflow.htm')
+        sys.exit(1)
+
+    # get the instance OCID and the name of the compartment that the instance is in
+    instance_ocid, result = get_resource('instance', compute_client.get_instance)
+    instance_compartment_ocid = result.data.compartment_id
+    result = identity_client.get_compartment(instance_compartment_ocid)
+    instance_compartment_name = result.data.name
+
+    if click.confirm('Do you want to add this instance to an existing dynamic group?', default=False):
+        # get dynamic group OCID and update its matching rules
+        group_ocid, result = get_resource('dynamic group', identity_client.get_dynamic_group)
+        group_name = result.data.name
+        click.echo('For information about dynamic group matching rule syntax, please visit https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingdynamicgroups.htm#Writing')
+        current_rule = result.data.matching_rule
+        if instance_ocid in current_rule:
+            default_group_rule = current_rule
+        elif '{' in current_rule:
+            default_group_rule = "Any " + current_rule[current_rule.index('{'):current_rule.rindex('}')] + ", instance.id = '{}'}}".format(instance_ocid)
+        else:
+            default_group_rule = "Any {" + current_rule + ", instance.id = '{}'}}".format(instance_ocid)
+        group_rule = click.prompt('Enter the matching rule(s) you would like to set for this dynamic group', default=default_group_rule)
+        ctx.invoke(identity_cli.update_dynamic_group, wait_for_state='ACTIVE', dynamic_group_id=group_ocid, matching_rule=group_rule)
+
+        # check if the user wants to create/update a policy for this group
+        if click.confirm('Do you want to create a new policy for this group?', default=False):
+            new_policy = True
+        else:
+            new_policy = False
+
+        if (not new_policy) and click.confirm('Do you want to update a policy for this group?', default=False):
+            policy_ocid, result = get_resource('policy', identity_client.get_policy)
+            click.echo('For information about policy syntax, please visit https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policysyntax.htm')
+            default_policy_statement = json.dumps(result.data.statements)
+            policy_statement = click.prompt('Enter the statement(s) you would like to set for this policy (please enter your statements in JSON format, as a bracket-enclosed list of strings)', default=default_policy_statement, value_proc=lambda statements: validate_statements(statements))
+            ctx.invoke(identity_cli.update_policy, wait_for_state='ACTIVE', policy_id=policy_ocid, statements=policy_statement)
+    else:
+        # create dynamic group and add this instance to the group using a matching rule
+        if config_obj:
+            tenancy_ocid = config_obj['tenancy']
+        else:
+            tenancy_ocid, result = get_resource('tenancy', identity_client.get_tenancy)
+        group_name = click.prompt('Enter a name for your new dynamic group', value_proc=lambda name: validate_resource_name(name))
+        group_description = click.prompt('Enter a description for your new dynamic group')
+        click.echo('For information about dynamic group matching rule syntax, please visit https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingdynamicgroups.htm#Writing')
+        default_group_rule = "Any {{instance.id = '{}'}}".format(instance_ocid)
+        group_rule = click.prompt('Enter the matching rule(s) you would like to set for this dynamic group', default=default_group_rule)
+        ctx.invoke(identity_cli.create_dynamic_group, wait_for_state='ACTIVE', compartment_id=tenancy_ocid, name=group_name, matching_rule=group_rule, description=group_description)
+
+        # since this is a new group that won't have an existing policy, have the user go through policy creation flow
+        new_policy = True
+
+    if new_policy:
+        # create policy for the new dynamic group
+        policy_name = click.prompt('Enter a name for the new policy to be used for your new dynamic group', value_proc=lambda name: validate_resource_name(name))
+        policy_description = click.prompt('Enter a description for the new policy to be used for your new dynamic group')
+        click.echo('WARNING: Using the default policy at the prompt below will grant all permissions for all your OCI resources to every instance in the dynamic group. Please ensure that this is the policy you want to use. If not, you can enter your custom policy statement(s) at the prompt.')
+        click.echo('For information about policy syntax, please visit https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policysyntax.htm')
+        default_policy_statement = '["Allow dynamic-group {} to manage all-resources in compartment {}"]'.format(group_name, instance_compartment_name)
+        policy_statement = click.prompt('Enter the statement(s) you would like to set for this policy (please enter your statements in JSON format, as a bracket-enclosed list of strings)', default=default_policy_statement, value_proc=lambda statements: validate_statements(statements))
+        policy_compartment_ocid = instance_compartment_ocid
+        if click.confirm('This policy is currently set to be put in compartment {}, which is the compartment that your instance is in. Do you want to create this policy in a different compartment?'.format(instance_compartment_name), default=False):
+            policy_compartment_ocid, result = get_resource('compartment', identity_client.get_compartment)
+        ctx.invoke(identity_cli.create_policy, wait_for_state='ACTIVE', compartment_id=policy_compartment_ocid, name=policy_name, statements=policy_statement, description=policy_description)
+
+    click.echo('Successfully set up instance principal authentication for your instance!')
+    click.echo(click.wrap_text(text=instance_principal_setup_end_message.format(compartment_id=instance_compartment_ocid, auth=OCI_CLI_AUTH_INSTANCE_PRINCIPAL), preserve_paragraphs=True))
 
 
 @setup_group.command('oci-cli-rc', help="""Generates a oci_cli_rc file that can contain parameter default values and other configuration information such as command aliases and predefined queries.
@@ -652,6 +815,33 @@ def validate_ocid(ocid, pattern):
     return ocid
 
 
+def validate_resource_ocid(ocid):
+    # the link provided in the error message in the validate_ocid function is not applicable for general resource OCIDs
+    # so, the validate_ocid function should not be used to validate general resource OCIDs since the link in the error message could be misleading
+    pattern = re.compile("^(ocid1.)([0-9a-zA-Z-_]+.)(oc[1-3].)([0-9a-zA-Z-_]*.)([0-9a-zA-Z-_]+)$")
+    if not pattern.match(ocid):
+        raise click.BadParameter("Invalid OCID format. OCID syntax can be found here: https://docs.oracle.com/en-us/iaas/Content/General/Concepts/identifiers.htm#Oracle")
+
+    return ocid
+
+
+def validate_statements(statements):
+    try:
+        json.loads(statements)
+    except ValueError:
+        raise click.BadParameter("Please enter your statements in JSON format, as a bracket-enclosed list of strings")
+
+    return statements
+
+
+def validate_resource_name(name):
+    pattern = re.compile("^[a-zA-Z0-9._-]+$")
+    if not pattern.match(name):
+        raise click.BadParameter("Invalid resource name. The name cannot contain spaces; only letters, numerals, hyphens, periods, or underscores are allowed.")
+
+    return name
+
+
 def create_directory(dirname):
     os.makedirs(dirname)
     apply_user_only_access_permissions(dirname)
@@ -746,3 +936,38 @@ def remove_profile_from_config(config_file, profile_name_to_terminate):
     config.remove_section(profile_name_to_terminate)
     with open(config_file, 'w') as config_file_handle:
         config.write(config_file_handle)
+
+
+def get_resource(resource_type, get_func):
+    prompt_ocid = True
+    while prompt_ocid:
+        resource_ocid = click.prompt('Enter the {resource} OCID'.format(resource=resource_type), value_proc=lambda ocid: validate_resource_ocid(ocid))
+        try:
+            result = get_func(resource_ocid)
+            prompt_ocid = False
+        except exceptions.ServiceError as e:
+            if e.code == 'NotAuthorizedOrNotFound':
+                click.echo('Error: Could not find {resource} with the given OCID; please ensure that you have entered the correct {resource} OCID and that you are authorized to access the {resource}'.format(resource=resource_type))
+            else:
+                click.echo('Error: ' + e.message)
+                sys.exit(1)
+
+    return resource_ocid, result
+
+
+def get_passphrase(ctx):
+    try:
+        client_config = cli_util.build_config(ctx.obj)
+        private_key = signer.load_private_key_from_file(client_config['key_file'], client_config['pass_phrase'])
+    except exceptions.ConfigFileNotFound:
+        # if the user is missing a config file, they will be prompted to create one during the build_client flow, which is called later in the instance principal setup process
+        # so, we don't have to handle this exception here, and can just return None as the passphrase
+        return None
+    except exceptions.MissingPrivateKeyPassphrase:
+        # if this exception is thrown, then the client_config was built successfully, but the private key was encrypted with a passphrase that isn't in the config
+        # so, we can prompt for the private key passphrase once, and then have it be returned each time this script invokes another CLI function that needs the passphrase
+        # if the entered passphrase is incorrect, the script will terminate with the exception thrown by load_private_key_from_file
+        passphrase = cli_util.prompt_for_passphrase()
+        private_key = signer.load_private_key_from_file(client_config['key_file'], passphrase)
+        return passphrase
+    return None

@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.0.5 - 2021-09-14
+-------------------
+Added
+~~~~~
+
+* Interactive command for instance principal authentication setup for an existing Compute instance
+  * ``oci setup instance-principal``
+
+* Support for browser-based config file creation for CLI commands that are run with a nonexistent config file and api_key auth
+
+* Support for --region, --config-location, and --profile-name options for browser-based CLI config file creation
+  * ``oci setup bootstrap --region --config-location --profile-name``
+
+* Support for Shielded Instances in the Compute service
+
+  * ``oci compute measured-boot-report``
+
+* Support for ML Jobs in the Data Science service
+
+  * ``oci data-science job``
+  * ``oci data-science job-run``
+  * ``oci data-science job-shape``
+
 3.0.4 - 2021-09-07
 -------------------
 Added

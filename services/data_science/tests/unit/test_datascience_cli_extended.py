@@ -42,3 +42,13 @@ class TestDatascienceCLI(unittest.TestCase):
         result = util.invoke_command(['data-science', 'model', 'create-model-artifact'])
         tokens = re.split('[ .]', result.output)
         assert '--model-artifact-file' in tokens
+
+    def test_create_job_artifact_job_artifact(self):
+        result = util.invoke_command(['data-science', 'job', 'create-job-artifact'])
+        tokens = re.split('[ .]', result.output)
+        assert '--job-artifact' not in tokens
+
+    def test_create_job_artifact_job_artifact_file(self):
+        result = util.invoke_command(['data-science', 'job', 'create-job-artifact'])
+        tokens = re.split('[ .]', result.output)
+        assert '--job-artifact-file' in tokens
