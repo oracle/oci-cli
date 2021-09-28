@@ -496,7 +496,7 @@ def test_scheduled_job_crud(managed_instance_id_fixture, runner, config_file, co
         # test list upcoming scheduled jobs
         params = [
             'os-management', 'scheduled-job', 'list-upcoming',
-            '--time-end', '2025-09-15T20:30:00.123Z',
+            '--time-end', '2025-09-15T20:30:00.123000Z',
             '--compartment-id', util.COMPARTMENT_ID
         ]
 

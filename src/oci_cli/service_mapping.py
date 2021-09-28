@@ -169,7 +169,7 @@ service_mapping = {
     ],
     "jms": [
         "jms",
-        "Java Management Service Query"
+        "Java Management Service"
     ],
     "kms": [
         "key_management",

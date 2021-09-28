@@ -236,6 +236,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @cli_util.option('--opc-source-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm to use to decrypt the source object. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-source-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to decrypt the source object. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-source-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key used to decrypt the source object. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -244,7 +245,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destination-object-metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
-def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name, source_object_name, destination_region, destination_namespace, destination_bucket, destination_object_name, source_object_if_match_e_tag, source_version_id, destination_object_if_match_e_tag, destination_object_if_none_match_e_tag, destination_object_metadata, destination_object_storage_tier, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_source_sse_customer_algorithm, opc_source_sse_customer_key, opc_source_sse_customer_key_sha256):
+def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name, source_object_name, destination_region, destination_namespace, destination_bucket, destination_object_name, source_object_if_match_e_tag, source_version_id, destination_object_if_match_e_tag, destination_object_if_none_match_e_tag, destination_object_metadata, destination_object_storage_tier, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_source_sse_customer_algorithm, opc_source_sse_customer_key, opc_source_sse_customer_key_sha256, opc_sse_kms_key_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -265,6 +266,8 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         kwargs['opc_source_sse_customer_key'] = opc_source_sse_customer_key
     if opc_source_sse_customer_key_sha256 is not None:
         kwargs['opc_source_sse_customer_key_sha256'] = opc_source_sse_customer_key_sha256
+    if opc_sse_kms_key_id is not None:
+        kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -407,12 +410,13 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'MultipartUpload'})
 @cli_util.wrap_exceptions
-def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, storage_tier, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
+def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, storage_tier, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -431,6 +435,8 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
         kwargs['opc_sse_customer_key'] = opc_sse_customer_key
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
+    if opc_sse_kms_key_id is not None:
+        kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -799,7 +805,7 @@ def delete_retention_rule(ctx, from_json, namespace_name, bucket_name, retention
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. Wildcards ('*') are not allowed. If the specified ETag does not match the ETag of the existing resource, the request returns the expected response. If the ETag matches the ETag of the existing resource, the request returns an HTTP 304 status without a response body.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateCount", "approximateSize", "autoTiering"]), multiple=True, help=u"""Bucket summary includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'approximateCount' (approximate number of objects), 'approximateSize' (total approximate size in bytes of all objects) and 'autoTiering' (state of auto tiering on the bucket). For example 'approximateCount,approximateSize,autoTiering'.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -884,7 +890,7 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. Wildcards ('*') are not allowed. If the specified ETag does not match the ETag of the existing resource, the request returns the expected response. If the ETag matches the ETag of the existing resource, the request returns an HTTP 304 status without a response body.""")
 @cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233]. Note that only a single range of bytes is supported.""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -1120,7 +1126,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. Wildcards ('*') are not allowed. If the specified ETag does not match the ETag of the existing resource, the request returns the expected response. If the ETag matches the ETag of the existing resource, the request returns an HTTP 304 status without a response body.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1155,7 +1161,7 @@ def head_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_m
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
-@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. Wildcards ('*') are not allowed. If the specified ETag does not match the ETag of the existing resource, the request returns the expected response. If the ETag matches the ETag of the existing resource, the request returns an HTTP 304 status without a response body.""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -1937,6 +1943,7 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]), help=u"""The storage tier that the object should be stored in. If not specified, the object will be stored in the same storage tier as the bucket.""")
 @cli_util.option('--opc-meta-', help=u"""Optional user-defined metadata key and value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1944,7 +1951,7 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, storage_tier, opc_meta_):
+def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id, storage_tier, opc_meta_):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1982,6 +1989,8 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
         kwargs['opc_sse_customer_key'] = opc_sse_customer_key
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
+    if opc_sse_kms_key_id is not None:
+        kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
     if storage_tier is not None:
         kwargs['storage_tier'] = storage_tier
     if opc_meta_ is not None:
@@ -2171,7 +2180,7 @@ See [Object Names] for object naming requirements. \n[Command Reference](renameO
 @cli_util.option('--new-name', required=True, help=u"""The new name of the source object. Avoid entering confidential information.""")
 @cli_util.option('--src-obj-if-match-e-tag', help=u"""The if-match entity tag (ETag) of the source object.""")
 @cli_util.option('--new-obj-if-match-e-tag', help=u"""The if-match entity tag (ETag) of the new object.""")
-@cli_util.option('--new-obj-if-none-match-e-tag', help=u"""The if-none-match entity tag (ETag) of the new object.""")
+@cli_util.option('--new-obj-if-none-match-e-tag', help=u"""The if-none-match entity tag (ETag) of the new object. The only valid value is '*', which indicates request should fail if the new object already exists.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2475,12 +2484,13 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload_id, upload_part_num, upload_part_body, content_length, if_match, if_none_match, expect, content_md5, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
+def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload_id, upload_part_num, upload_part_body, content_length, if_match, if_none_match, expect, content_md5, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2508,6 +2518,8 @@ def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload
         kwargs['opc_sse_customer_key'] = opc_sse_customer_key
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
+    if opc_sse_kms_key_id is not None:
+        kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs

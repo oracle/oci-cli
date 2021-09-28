@@ -533,6 +533,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--storage-tier',
                  type=custom_types.CliCaseInsensitiveChoice(["Standard", "InfrequentAccess", "Archive"]),
                  help=storage_tier_option_help_text)
+@cli_util.option('--opc-sse-kms-key-id', help=u"""The OCID of a master encryption key used to call the Key Management Service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
@@ -543,7 +544,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type,
                content_language, content_encoding, force, no_overwrite, no_multipart, part_size,
                disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control,
-               encryption_key_file, storage_tier):
+               encryption_key_file, storage_tier, opc_sse_kms_key_id):
     """
     Creates a new object or overwrites an existing one.
 
@@ -640,6 +641,9 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
     if storage_tier is not None:
         kwargs['storage_tier'] = storage_tier
+
+    if opc_sse_kms_key_id is not None:
+        kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
 
     if math.ceil(total_size / part_size_mib) > MAX_MULTIPART_SIZE:
         part_size = math.ceil(math.ceil(total_size / MAX_MULTIPART_SIZE) / MEBIBYTE)
@@ -799,6 +803,7 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @cli_util.option('--dry-run', is_flag=True, help="""Prints the list of files to be uploaded.""")
 @cli_util.option('--no-follow-symlinks', is_flag=True, help=no_follow_symlinks_option_help_text)
+@cli_util.option('--opc-sse-kms-key-id', help=u"""The OCID of a master encryption key used to call the Key Management Service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
@@ -808,7 +813,7 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
 def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type,
                     content_language, cache_control, content_disposition, content_encoding, storage_tier, overwrite,
                     no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count,
-                    verify_checksum, include, exclude, encryption_key_file, dry_run, no_follow_symlinks):
+                    verify_checksum, include, exclude, encryption_key_file, opc_sse_kms_key_id, dry_run, no_follow_symlinks):
     """
     Uploads all files in a given directory and all subdirectories.
 
@@ -854,10 +859,10 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
 
     _, _, output = _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, content_disposition,
-                                content_encoding, content_language, content_type, dry_run, encryption_key_file, exclude,
-                                include, metadata, no_multipart, no_overwrite, overwrite, parallel_upload_count,
+                                content_encoding, content_language, content_type, dry_run, encryption_key_file,
+                                exclude, include, metadata, no_multipart, no_overwrite, overwrite, parallel_upload_count,
                                 part_size, object_prefix, storage_tier, verify_checksum,
-                                no_follow_symlinks=no_follow_symlinks)
+                                no_follow_symlinks=no_follow_symlinks, opc_sse_kms_key_id=opc_sse_kms_key_id)
 
     if dry_run:
         sys.exit(0)
@@ -869,9 +874,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
 
 
 def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, content_disposition, content_encoding,
-                 content_language, content_type, dry_run, encryption_key_file, exclude, include, metadata, no_multipart,
-                 no_overwrite, overwrite, parallel_upload_count, part_size, prefix, storage_tier, verify_checksum,
-                 syncing=False, no_follow_symlinks=True):
+                 content_language, content_type, dry_run, encryption_key_file, exclude, include, metadata,
+                 no_multipart, no_overwrite, overwrite, parallel_upload_count, part_size, prefix, storage_tier, verify_checksum,
+                 syncing=False, no_follow_symlinks=True, opc_sse_kms_key_id=None):
     auto_content_type = False
     if include and exclude:
         raise click.UsageError('The --include and --exclude parameters cannot both be provided.')
@@ -918,6 +923,9 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
             base_kwargs.update(sse_args)
 
     upload_output = BulkPutOperationOutput()
+    if opc_sse_kms_key_id is not None:
+        base_kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
+
     # Progress bar which we can reuse over and over again
     reusable_progress_bar = ProgressBar(0, '')
     multipart_max_retries = MULTIPART_MAX_RETRIES if not ctx.obj['max_attempts'] else ctx.obj['max_attempts']

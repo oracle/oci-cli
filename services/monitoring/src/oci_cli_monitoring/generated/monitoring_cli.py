@@ -27,7 +27,7 @@ def monitoring_root_group():
 
 Limits information for returned data follows.
 
-* Data points: 100,000. * Metric streams* within data points: 2,000. * Time range returned for 1-hour resolution: 90 days. * Time range returned for 5-minute resolution: 30 days. * Time range returned for any other resolution: 7 days.
+* Data points: 100,000. * Metric streams* within data points: 2,000. * Time range returned for 1-day resolution: 90 days. * Time range returned for 1-hour resolution: 90 days. * Time range returned for 5-minute resolution: 30 days. * Time range returned for 1-minute resolution: 7 days.
 
 *A metric stream is an individual set of aggregated data for a metric, typically specific to a single resource. Metric streams cannot be aggregated across metric groups. A metric group is the combination of a given metric, metric namespace, and tenancy for the purpose of determining limits. For more information about metric-related concepts, see [Monitoring Concepts].""")
 @cli_util.help_option_group
@@ -67,9 +67,7 @@ def alarm_group():
     pass
 
 
-@click.command(cli_util.override('monitoring.suppression_group.command_name', 'suppression'), cls=CommandGroupWithAlias, help="""The configuration details for suppressing an alarm. For information about alarms, see [Alarms Overview].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('monitoring.suppression_group.command_name', 'suppression'), cls=CommandGroupWithAlias, help="""The configuration details for suppressing an alarm. For information about alarms, see [Alarms Overview].""")
 @cli_util.help_option_group
 def suppression_group():
     pass
@@ -129,7 +127,7 @@ Example: `High CPU Utilization`""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -156,7 +154,7 @@ Example: `true`""")
 @cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help=u"""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
 
 Example: `true`""")
-@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+@cli_util.option('--resource-group', help=u"""Resource group that you want to match. A null value returns only metric data that has no resource groups. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
 
 Example: `frontend-fleet`""")
 @cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
@@ -172,6 +170,7 @@ Example: `PT5M`""")
 @cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
+@cli_util.option('--message-format', type=custom_types.CliCaseInsensitiveChoice(["RAW", "PRETTY_JSON", "ONS_OPTIMIZED"]), help=u"""The format to use for notification messages sent from this alarm. The formats are: * `RAW` - Raw JSON blob. Default value. * `PRETTY_JSON`: JSON with new lines and indents. * `ONS_OPTIMIZED`: Simplified, user-friendly layout. Applies only to messages sent through the Notifications service to the following subscription types: Email.""")
 @cli_util.option('--repeat-notification-duration', help=u"""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
 
 Default value: null (notifications are not re-submitted).
@@ -188,7 +187,7 @@ Example: `PT2H`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, repeat_notification_duration, suppression, freeform_tags, defined_tags):
+def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -217,6 +216,9 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if body is not None:
         _details['body'] = body
+
+    if message_format is not None:
+        _details['messageFormat'] = message_format
 
     if repeat_notification_duration is not None:
         _details['repeatNotificationDuration'] = repeat_notification_duration
@@ -559,12 +561,12 @@ Example: `CpuUtilization`""")
 @cli_util.option('--namespace', help=u"""The source service or application to use when searching for metric definitions.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The specified resource group must exist in the definition of the posted metric. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+@cli_util.option('--resource-group', help=u"""Resource group that you want to match. A null value returns only metric data that has no resource groups. The specified resource group must exist in the definition of the posted metric. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($).
 
 Example: `frontend-fleet`""")
 @cli_util.option('--dimension-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Qualifiers that you want to use when searching for metric definitions. Available dimensions vary by metric namespace. Each dimension takes the form of a key-value pair.
 
-Example: { \"resourceId\": \"<var>&lt;instance_OCID&gt;</var>\" }""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+Example: `\"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Group metrics by these fields in the response. For example, to list all metric namespaces available           in a compartment, groupBy the \"namespace\" field. Supported fields: namespace, name, resourceGroup.
 
 Example - group by namespace: `[ \"namespace\" ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -729,14 +731,14 @@ Example: `ocid1.compartment.oc1..exampleuniqueID`""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application to use when searching for metric data points to aggregate.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to use when searching for metric data points to aggregate. The query must specify a metric, statistic, and interval. Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`.
+@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to use when searching for metric data points to aggregate. The query must specify a metric, statistic, and interval. Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`.
 
 Construct your query to avoid exceeding limits on returned data. See [MetricData Reference].
 
 For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example: `CpuUtilization[1m].sum()`""")
-@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The specified resource group must exist in the definition of the posted metric. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+@cli_util.option('--resource-group', help=u"""Resource group that you want to match. A null value returns only metric data that has no resource groups. The specified resource group must exist in the definition of the posted metric. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($).
 
 Example: `frontend-fleet`""")
 @cli_util.option('--start-time', type=custom_types.CLI_DATETIME, help=u"""The beginning of the time range to use when searching for metric data points. Format is defined by RFC3339. The response includes metric data points for the startTime. Default value: the timestamp 3 hours before the call was sent.
@@ -745,7 +747,7 @@ Example: `2019-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help=u"""The end of the time range to use when searching for metric data points. Format is defined by RFC3339. The response excludes metric data points for the endTime. Default value: the timestamp representing when the call was sent.
 
 Example: `2019-02-01T02:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--resolution', help=u"""The time between calculated aggregation windows. Use with the query interval to vary the frequency at which aggregated data points are returned. For example, use a query interval of 5 minutes with a resolution of 1 minute to retrieve five-minute aggregations at a one-minute frequency. The resolution must be equal or less than the interval in the query. The default resolution is 1m (one minute). Supported values: `1m`-`60m` (also `1h`).
+@cli_util.option('--resolution', help=u"""The time between calculated aggregation windows. Use with the query interval to vary the frequency at which aggregated data points are returned. For example, use a query interval of 5 minutes with a resolution of 1 minute to retrieve five-minute aggregations at a one-minute frequency. The resolution must be equal or less than the interval in the query. The default resolution is 1m (one minute). Supported values: `1m`-`60m`, `1h`-`24h`, `1d`.
 
 Example: `5m`""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
@@ -803,10 +805,10 @@ Example: `true`""")
 @cli_util.option('--namespace', help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+@cli_util.option('--resource-group', help=u"""Resource group that you want to match. A null value returns only metric data that has no resource groups. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
 
 Example: `frontend-fleet`""")
-@cli_util.option('--query-parameterconflict', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query-parameterconflict', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -839,6 +841,7 @@ Example: `CRITICAL`""")
 @cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
+@cli_util.option('--message-format', type=custom_types.CliCaseInsensitiveChoice(["RAW", "PRETTY_JSON", "ONS_OPTIMIZED"]), help=u"""The format to use for notification messages sent from this alarm. The formats are: * `RAW` - Raw JSON blob. Default value. * `PRETTY_JSON`: JSON with new lines and indents. * `ONS_OPTIMIZED`: Simplified, user-friendly layout. Applies only to messages sent through the Notifications service to the following subscription types: Email.""")
 @cli_util.option('--destinations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of destinations to which the notifications for this alarm will be delivered. Each destination is represented by an [OCID] related to the supported destination service. For example, a destination using the Notifications service is represented by a topic OCID. Supported destination services: Notifications Service. Limit: One destination per supported destination service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-notification-duration', help=u"""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
 
@@ -861,7 +864,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
+def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
@@ -909,6 +912,9 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if body is not None:
         _details['body'] = body
+
+    if message_format is not None:
+        _details['messageFormat'] = message_format
 
     if destinations is not None:
         _details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)

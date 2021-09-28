@@ -581,12 +581,13 @@ def get_api(ctx, from_json, api_id):
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--range', help=u"""The Range HTTP request header indicates the part of a document that the server should return. [RFC 7233]. Note that only a single range of bytes is supported.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def get_api_content(ctx, from_json, file, api_id, if_match):
+def get_api_content(ctx, from_json, file, api_id, if_match, range):
 
     if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
@@ -594,6 +595,8 @@ def get_api_content(ctx, from_json, file, api_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if range is not None:
+        kwargs['range'] = range
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     result = client.get_api_content(
