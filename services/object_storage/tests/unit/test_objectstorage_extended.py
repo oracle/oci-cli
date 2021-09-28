@@ -122,6 +122,21 @@ class TestObjectStorage(unittest.TestCase):
         print(result.output)
         assert "Missing option(s)" in result.output
 
+    def test_verify_ssec_kms_params(self):
+        """ Checks whether the opc-sse-kms-key-id params are present for the relevant object commands """
+        # Sorted lists of commands that should support --opc-sse-kms-key-id
+        ssec_kms_cmd_list = sorted(['object put', 'object bulk-upload', 'object copy'])
+
+        # dictionary that holds the result of parsing the various commands looking for --opc-sse-kms-key-id
+        ssec_kms_cmd_results = {}
+        commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
+        for command in commands:
+            key = command.parent.name + ' ' + command.name
+            for param in command.params:
+                if '--opc-sse-kms-key-id' in param.opts:
+                    ssec_kms_cmd_results[key] = True
+        assert sorted(list(ssec_kms_cmd_results.keys())) == ssec_kms_cmd_list
+
     def test_get_encryption_key_params(self):
         # create a random 32 byte array to represent an AES256 key and compute its SHA256 checksum
         test_key_bytes = os.urandom(32)

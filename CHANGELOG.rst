@@ -6,6 +6,70 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+3.1.0 - 2021-09-28
+-------------------
+Added
+~~~~~
+* Support for One-way TLS Connections in Database service
+
+    * Support for creating autonomous database and clones on shared infrastructure that do not require mTLS
+        * ``oci db autonomous-database create --is-mtls-connection-required false``
+
+    * Support for updating autonomous database and clones on shared infrastructure to not require mTLS
+        * ``oci db autonomous-database update --is-mtls-connection-required false``
+
+    * Support to check if an autonomous database on shared infrastructure requires mTLS, with added field isMtlsRequired
+        * ``oci db autonomous-database get --autonomous-database-id <ocid>``
+
+    * Support to get connection string profiles for an autonomous database on shared infrastructure, with added field profiles in connectionStrings
+        * ``oci db autonomous-database get --autonomous-database-id <ocid>``
+
+* Support for Server side encryption using object specific KMS key in Object Storage Service
+
+    * New parameter --opc-sse-kms-key-id has been added to the below commands for passing kms key id
+        * ``oci os object put --opc-sse-kms-key-id <target_key_id>``
+        * ``oci os object copy --opc-sse-kms-key-id <target_key_id>``
+
+* Allow filter based on operating system family and sort by operating system name in JMS service
+    * ``oci jms application-usage summarize --os-family --sort-by``
+    * ``oci jms installation-usage summarize --os-family --sort-by``
+    * ``oci jms jre-usage summarize --os-family --sort-by``
+    * ``oci jms managed-instance-usage summarize --os-family --sort-by``
+
+* Support for using Network Security Groups with API Gateway service
+    * ``oci api-gateway gateway create --network-security-group-ids``
+    * ``oci api-gateway gateway update --network-security-group-ids``
+
+* Support for Network Security Groups in Functions service
+    * ``oci fn application create --network-security-group-ids``
+
+* Support for a new parameter ``image-policy-config`` for Applications in Functions service
+    * ``oci fn application create --image-policy-config``
+    * ``oci fn application update --image-policy-config``
+
+* Support for a new optional field "messageFormat" which will enable customers to chose the format of alert message while creating and updating alarms in Monitoring service
+    * ``oci monitoring alarm create --message-format``
+    * ``oci monitoring alarm update --message-format``
+
+* Support for DataSafe User and Security Assessment features in Data Safe service
+    * ``oci data-safe security-assessment``
+    * ``oci data-safe user-assessment``
+
+* Support for upto micro-second precision for datatime parameters
+
+Changed
+~~~~~~~~~
+* [BREAKING] Remove redundant request-summarized operations.
+
+    * ``oci jms application-usage request-summarized``
+    * ``oci jms installation-usage request-summarized``
+    * ``oci jms jre-usage request-summarized``
+    * ``oci jms managed-instance-usage request-summarized``
+
+* Fixed bug in Management Dashborad service
+    * ``oci management-dashboard dashboard export``
+
 3.0.5 - 2021-09-14
 -------------------
 Added

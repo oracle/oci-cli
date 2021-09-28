@@ -108,6 +108,7 @@ Example: `PUBLIC` or `PRIVATE`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--response-cache-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -119,12 +120,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
 @cli_util.wrap_exceptions
-def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, display_name, certificate_id, response_cache_details, freeform_tags, defined_tags):
+def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, display_name, network_security_group_ids, certificate_id, response_cache_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -136,6 +137,9 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificate_id is not None:
         _details['certificateId'] = certificate_id
@@ -194,6 +198,7 @@ Example: `PUBLIC` or `PRIVATE`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -209,12 +214,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
 @cli_util.wrap_exceptions
-def create_gateway_external_resp_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, response_cache_details_servers, response_cache_details_authentication_secret_id, response_cache_details_authentication_secret_version_number, display_name, certificate_id, freeform_tags, defined_tags, response_cache_details_is_ssl_enabled, response_cache_details_is_ssl_verify_disabled, response_cache_details_connect_timeout_in_ms, response_cache_details_read_timeout_in_ms, response_cache_details_send_timeout_in_ms):
+def create_gateway_external_resp_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, response_cache_details_servers, response_cache_details_authentication_secret_id, response_cache_details_authentication_secret_version_number, display_name, network_security_group_ids, certificate_id, freeform_tags, defined_tags, response_cache_details_is_ssl_enabled, response_cache_details_is_ssl_verify_disabled, response_cache_details_connect_timeout_in_ms, response_cache_details_read_timeout_in_ms, response_cache_details_send_timeout_in_ms):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -230,6 +235,9 @@ def create_gateway_external_resp_cache(ctx, from_json, wait_for_state, max_wait_
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificate_id is not None:
         _details['certificateId'] = certificate_id
@@ -299,6 +307,7 @@ Example: `PUBLIC` or `PRIVATE`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -309,12 +318,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
 @cli_util.wrap_exceptions
-def create_gateway_no_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, display_name, certificate_id, freeform_tags, defined_tags):
+def create_gateway_no_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, display_name, network_security_group_ids, certificate_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -327,6 +336,9 @@ def create_gateway_no_cache(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificate_id is not None:
         _details['certificateId'] = certificate_id
@@ -520,6 +532,7 @@ def list_gateways(ctx, from_json, all_pages, page_size, compartment_id, certific
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--response-cache-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -533,18 +546,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'response-cache-details': {'module': 'apigateway', 'class': 'ResponseCacheDetails'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, certificate_id, response_cache_details, freeform_tags, defined_tags, if_match):
+def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, network_security_group_ids, certificate_id, response_cache_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
     if not force:
-        if response_cache_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to response-cache-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if network_security_group_ids or response_cache_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to network-security-group-ids and response-cache-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -556,6 +569,9 @@ def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificate_id is not None:
         _details['certificateId'] = certificate_id
@@ -611,6 +627,7 @@ def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -628,18 +645,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'response-cache-details-servers': {'module': 'apigateway', 'class': 'list[ResponseCacheRespServer]'}})
 @cli_util.wrap_exceptions
-def update_gateway_external_resp_cache(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, response_cache_details_servers, response_cache_details_authentication_secret_id, response_cache_details_authentication_secret_version_number, display_name, certificate_id, freeform_tags, defined_tags, if_match, response_cache_details_is_ssl_enabled, response_cache_details_is_ssl_verify_disabled, response_cache_details_connect_timeout_in_ms, response_cache_details_read_timeout_in_ms, response_cache_details_send_timeout_in_ms):
+def update_gateway_external_resp_cache(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, response_cache_details_servers, response_cache_details_authentication_secret_id, response_cache_details_authentication_secret_version_number, display_name, network_security_group_ids, certificate_id, freeform_tags, defined_tags, if_match, response_cache_details_is_ssl_enabled, response_cache_details_is_ssl_verify_disabled, response_cache_details_connect_timeout_in_ms, response_cache_details_read_timeout_in_ms, response_cache_details_send_timeout_in_ms):
 
     if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if network_security_group_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to network-security-group-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -655,6 +672,9 @@ def update_gateway_external_resp_cache(ctx, from_json, force, wait_for_state, ma
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificate_id is not None:
         _details['certificateId'] = certificate_id
@@ -721,6 +741,7 @@ def update_gateway_external_resp_cache(ctx, from_json, force, wait_for_state, ma
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Groups OCIDs associated with this API Gateway.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -733,18 +754,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'apigateway', 'class': 'list[string]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_gateway_no_cache(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, certificate_id, freeform_tags, defined_tags, if_match):
+def update_gateway_no_cache(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, network_security_group_ids, certificate_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if network_security_group_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to network-security-group-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -757,6 +778,9 @@ def update_gateway_no_cache(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificate_id is not None:
         _details['certificateId'] = certificate_id

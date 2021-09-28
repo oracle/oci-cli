@@ -78,6 +78,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID]s of the Network Security Groups to add the application to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--syslog-url', help=u"""A syslog URL to which to send all function logs. Supports tcp, udp, and tcp+tls. The syslog URL must be reachable from all of the subnets configured for the application. Note: If you enable the OCI Logging service for this application, the syslogUrl value is ignored. Function logs are sent to the OCI Logging service, and not to the syslog URL.
 
 Example: `tcp://logserver.myserver:1234`""")
@@ -88,15 +89,16 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Application'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, syslog_url, trace_config, freeform_tags, defined_tags):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -109,6 +111,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
 
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+
     if syslog_url is not None:
         _details['syslogUrl'] = syslog_url
 
@@ -120,6 +125,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if image_policy_config is not None:
+        _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
 
     client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.create_application(
@@ -560,6 +568,7 @@ def list_functions(ctx, from_json, all_pages, page_size, application_id, limit, 
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID]s of the Network Security Groups to add the application to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--syslog-url', help=u"""A syslog URL to which to send all function logs. Supports tcp, udp, and tcp+tls. The syslog URL must be reachable from all of the subnets configured for the application. Note: If you enable the OCI Logging service for this application, the syslogUrl value is ignored. Function logs are sent to the OCI Logging service, and not to the syslog URL.
 
 Example: `tcp://logserver.myserver:1234`""")
@@ -570,23 +579,24 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Application'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, syslog_url, trace_config, freeform_tags, defined_tags, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
     if not force:
-        if config or trace_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to config and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if config or network_security_group_ids or trace_config or freeform_tags or defined_tags or image_policy_config:
+            if not click.confirm("WARNING: Updates to config and network-security-group-ids and trace-config and freeform-tags and defined-tags and image-policy-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -599,6 +609,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
 
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+
     if syslog_url is not None:
         _details['syslogUrl'] = syslog_url
 
@@ -610,6 +623,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if image_policy_config is not None:
+        _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
 
     client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.update_application(

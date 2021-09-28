@@ -1,0 +1,79 @@
+{
+  "dashboards": [
+    {
+      "compartment-id": <REPLACE COMPARTMENT ID>,
+      "dashboard-id": "ocid1.managementdashboard.oc1",
+      "data-config": [],
+      "defined-tags": {},
+      "description": "Dashboard that shows some sample widgets.",
+      "display-name": "GD sample on preprod emdevinfra import",
+      "freeform-tags": {},
+      "is-favorite": false,
+      "is-oob-dashboard": false,
+      "is-show-description": true,
+      "is-show-in-home": false,
+      "metadata-version": "2.0",
+      "nls": {
+        "TARGETS_WITH_STATUS": {
+          "bundle": "resources/nls/DashboardMsg",
+          "key": "dashboardMetadata.agent_dashboard_100.DATA_SENT_TITLE"
+        }
+      },
+      "parameters-config": [],
+      "provider-id": "log-analytics",
+      "provider-name": "Logging Analytics",
+      "provider-version": "2.0",
+      "saved-searches": [
+        {
+          "compartment-id": <REPLACE COMPARTMENT ID>,
+          "data-config": [],
+          "defined-tags": {},
+          "description": "This is a sample Widget to demonstrate saved widget metadata",
+          "display-name": "Widget1",
+          "freeform-tags": {},
+          "id": "ocid1.managementsavedsearch.oc1.1",
+          "is-oob-saved-search": false,
+          "metadata-version": "2.0",
+          "nls": {},
+          "parameters-config": [],
+          "provider-id": "log-analytics",
+          "provider-name": "Logging Analytics",
+          "provider-version": "2.0",
+          "screen-image": "...",
+          "type": "WIDGET_SHOW_IN_DASHBOARD",
+          "ui-config": {
+            "compartment": "OMC",
+            "entity": "qosd1b4joxnanbzk37w4",
+            "option4": "others",
+            "timeSelection": "Last 60 mins"
+          },
+          "widget-template": "visualizations/widgetTemplate1.html",
+          "widget-v-m": "visualizations/Widget1"
+        }
+      ],
+      "screen-image": "....",
+      "tiles": [
+        {
+          "column": 0,
+          "data-config": [],
+          "display-name": "Total Log Trend nls.dashboard.TARGETS_WITH_STATUS",
+          "drilldown-config": [],
+          "height": 3,
+          "nls": {},
+          "parameters-map": {},
+          "row": 0,
+          "saved-search-id": "ocid1.managementsavedsearch.oc1.1",
+          "state": "DEFAULT",
+          "ui-config": {},
+          "width": 6
+        }
+      ],
+      "type": "normal",
+      "ui-config": {
+        "isFilteringEnabled": true,
+        "isRefreshEnabled": true,
+        "isTimeRangeEnabled": true
+      }
+    }
+  ]
+}

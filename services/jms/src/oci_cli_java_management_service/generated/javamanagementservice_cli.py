@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('jms.jms_root_group.command_name', 'jms'), cls=CommandGroupWithAlias, help=cli_util.override('jms.jms_root_group.help', """API for the Java Management Service. Use this API to view and manage Fleets."""), short_help=cli_util.override('jms.jms_root_group.short_help', """Java Management Service Query API"""))
+@cli.command(cli_util.override('jms.jms_root_group.command_name', 'jms'), cls=CommandGroupWithAlias, help=cli_util.override('jms.jms_root_group.help', """API for the Java Management Service. Use this API to view, create, and manage Fleets."""), short_help=cli_util.override('jms.jms_root_group.short_help', """Java Management Service API"""))
 @cli_util.help_option_group
 def jms_root_group():
     pass
@@ -538,326 +538,6 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
     cli_util.render_response(result, ctx)
 
 
-@application_usage_group.command(name=cli_util.override('jms.request_summarized_application_usage.command_name', 'request-summarized'), help=u"""List application usage in a specified Fleet filtered by form parameters. \n[Command Reference](requestSummarizedApplicationUsage)""")
-@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time minus seven days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--display-name', help=u"""The display name of the application.""")
-@cli_util.option('--installation-path', help=u"""The installation path of the related installation.""")
-@cli_util.option('--jre-vendor', help=u"""The vendor of the related Java Runtime.""")
-@cli_util.option('--jre-distribution', help=u"""The distribution of the related Java Runtime.""")
-@cli_util.option('--jre-version', help=u"""The version of the related Java Runtime.""")
-@cli_util.option('--application-id', help=u"""The ID of the application.""")
-@cli_util.option('--application-type', help=u"""The way the application was started.""")
-@cli_util.option('--managed-instance-id', help=u"""The ID of the related managed instance.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort application views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
-@cli_util.option('--fields', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateJreCount', 'approximateInstallationCount' and 'approximateManagedInstanceCount'. For example 'approximateJreCount,approximateInstallationCount'.
-
-This option is a JSON list with items of type SummarizeApplicationUsageFields.  For documentation on SummarizeApplicationUsageFields please see our API reference: https://docs.cloud.oracle.com/api/#/en/javamanagementservice/20210610/datatypes/SummarizeApplicationUsageFields.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'jms', 'class': 'list[SummarizeApplicationUsageFields]'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'jms', 'class': 'list[SummarizeApplicationUsageFields]'}}, output_type={'module': 'jms', 'class': 'ApplicationUsageCollection'})
-@cli_util.wrap_exceptions
-def request_summarized_application_usage(ctx, from_json, fleet_id, time_start, time_end, display_name, installation_path, jre_vendor, jre_distribution, jre_version, application_id, application_type, managed_instance_id, sort_order, sort_by, fields, limit, page):
-
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
-        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if limit is not None:
-        kwargs['limit'] = limit
-    if page is not None:
-        kwargs['page'] = page
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-
-    if time_start is not None:
-        _details['timeStart'] = time_start
-
-    if time_end is not None:
-        _details['timeEnd'] = time_end
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if installation_path is not None:
-        _details['installationPath'] = installation_path
-
-    if jre_vendor is not None:
-        _details['jreVendor'] = jre_vendor
-
-    if jre_distribution is not None:
-        _details['jreDistribution'] = jre_distribution
-
-    if jre_version is not None:
-        _details['jreVersion'] = jre_version
-
-    if application_id is not None:
-        _details['applicationId'] = application_id
-
-    if application_type is not None:
-        _details['applicationType'] = application_type
-
-    if managed_instance_id is not None:
-        _details['managedInstanceId'] = managed_instance_id
-
-    if sort_order is not None:
-        _details['sortOrder'] = sort_order
-
-    if sort_by is not None:
-        _details['sortBy'] = sort_by
-
-    if fields is not None:
-        _details['fields'] = cli_util.parse_json_parameter("fields", fields)
-
-    client = cli_util.build_client('jms', 'java_management_service', ctx)
-    result = client.request_summarized_application_usage(
-        fleet_id=fleet_id,
-        request_summarized_application_usage_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@installation_usage_group.command(name=cli_util.override('jms.request_summarized_installation_usage.command_name', 'request-summarized'), help=u"""List Java installation usage in a specified Fleet filtered by form parameters. \n[Command Reference](requestSummarizedInstallationUsage)""")
-@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time minus seven days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--installation-path', help=u"""The path of the installation.""")
-@cli_util.option('--jre-vendor', help=u"""The vendor of the related Java Runtime.""")
-@cli_util.option('--jre-distribution', help=u"""The distribution of the related Java Runtime.""")
-@cli_util.option('--jre-version', help=u"""The version of the related Java Runtime.""")
-@cli_util.option('--application-id', help=u"""The ID of the related application.""")
-@cli_util.option('--managed-instance-id', help=u"""The ID of the related managed instance.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["jreDistribution", "jreVendor", "jreVersion", "path", "timeFirstSeen", "timeLastSeen", "approximateApplicationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _jreVersion_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _jreDistribution_ and _jreVendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
-@cli_util.option('--fields', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateApplicationCount' and 'approximateManagedInstanceCount'. For example 'approximateApplicationCount,approximateManagedInstanceCount'.
-
-This option is a JSON list with items of type SummarizeInstallationUsageFields.  For documentation on SummarizeInstallationUsageFields please see our API reference: https://docs.cloud.oracle.com/api/#/en/javamanagementservice/20210610/datatypes/SummarizeInstallationUsageFields.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'jms', 'class': 'list[SummarizeInstallationUsageFields]'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'jms', 'class': 'list[SummarizeInstallationUsageFields]'}}, output_type={'module': 'jms', 'class': 'InstallationUsageCollection'})
-@cli_util.wrap_exceptions
-def request_summarized_installation_usage(ctx, from_json, fleet_id, time_start, time_end, installation_path, jre_vendor, jre_distribution, jre_version, application_id, managed_instance_id, sort_order, sort_by, fields, limit, page):
-
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
-        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if limit is not None:
-        kwargs['limit'] = limit
-    if page is not None:
-        kwargs['page'] = page
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-
-    if time_start is not None:
-        _details['timeStart'] = time_start
-
-    if time_end is not None:
-        _details['timeEnd'] = time_end
-
-    if installation_path is not None:
-        _details['installationPath'] = installation_path
-
-    if jre_vendor is not None:
-        _details['jreVendor'] = jre_vendor
-
-    if jre_distribution is not None:
-        _details['jreDistribution'] = jre_distribution
-
-    if jre_version is not None:
-        _details['jreVersion'] = jre_version
-
-    if application_id is not None:
-        _details['applicationId'] = application_id
-
-    if managed_instance_id is not None:
-        _details['managedInstanceId'] = managed_instance_id
-
-    if sort_order is not None:
-        _details['sortOrder'] = sort_order
-
-    if sort_by is not None:
-        _details['sortBy'] = sort_by
-
-    if fields is not None:
-        _details['fields'] = cli_util.parse_json_parameter("fields", fields)
-
-    client = cli_util.build_client('jms', 'java_management_service', ctx)
-    result = client.request_summarized_installation_usage(
-        fleet_id=fleet_id,
-        request_summarized_installation_usage_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@jre_usage_group.command(name=cli_util.override('jms.request_summarized_jre_usage.command_name', 'request-summarized'), help=u"""List Java Runtime usage in a specified Fleet filtered by form parameters. \n[Command Reference](requestSummarizedJreUsage)""")
-@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time minus seven days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--jre-vendor', help=u"""The vendor of the Java Runtime.""")
-@cli_util.option('--jre-distribution', help=u"""The distribution of the Java Runtime.""")
-@cli_util.option('--jre-version', help=u"""The version of the Java Runtime.""")
-@cli_util.option('--application-id', help=u"""The ID of the related application.""")
-@cli_util.option('--managed-instance-id', help=u"""The [OCID] of the related managed instance.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["distribution", "timeFirstSeen", "timeLastSeen", "vendor", "version", "approximateInstallationCount", "approximateApplicationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort Java Runtime views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _version_, _approximateInstallationCount_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _distribution_ and _vendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
-@cli_util.option('--fields', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateApplicationCount', 'approximateInstallationCount' and 'approximateManagedInstanceCount'. For example 'approximateApplicationCount,approximateManagedInstanceCount'.
-
-This option is a JSON list with items of type SummarizeJreUsageFields.  For documentation on SummarizeJreUsageFields please see our API reference: https://docs.cloud.oracle.com/api/#/en/javamanagementservice/20210610/datatypes/SummarizeJreUsageFields.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'jms', 'class': 'list[SummarizeJreUsageFields]'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'jms', 'class': 'list[SummarizeJreUsageFields]'}}, output_type={'module': 'jms', 'class': 'JreUsageCollection'})
-@cli_util.wrap_exceptions
-def request_summarized_jre_usage(ctx, from_json, fleet_id, time_start, time_end, jre_vendor, jre_distribution, jre_version, application_id, managed_instance_id, sort_order, sort_by, fields, limit, page):
-
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
-        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if limit is not None:
-        kwargs['limit'] = limit
-    if page is not None:
-        kwargs['page'] = page
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-
-    if time_start is not None:
-        _details['timeStart'] = time_start
-
-    if time_end is not None:
-        _details['timeEnd'] = time_end
-
-    if jre_vendor is not None:
-        _details['jreVendor'] = jre_vendor
-
-    if jre_distribution is not None:
-        _details['jreDistribution'] = jre_distribution
-
-    if jre_version is not None:
-        _details['jreVersion'] = jre_version
-
-    if application_id is not None:
-        _details['applicationId'] = application_id
-
-    if managed_instance_id is not None:
-        _details['managedInstanceId'] = managed_instance_id
-
-    if sort_order is not None:
-        _details['sortOrder'] = sort_order
-
-    if sort_by is not None:
-        _details['sortBy'] = sort_by
-
-    if fields is not None:
-        _details['fields'] = cli_util.parse_json_parameter("fields", fields)
-
-    client = cli_util.build_client('jms', 'java_management_service', ctx)
-    result = client.request_summarized_jre_usage(
-        fleet_id=fleet_id,
-        request_summarized_jre_usage_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@managed_instance_usage_group.command(name=cli_util.override('jms.request_summarized_managed_instance_usage.command_name', 'request-summarized'), help=u"""List managed instance usage in a specified Fleet filtered by form parameters. \n[Command Reference](requestSummarizedManagedInstanceUsage)""")
-@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time minus seven days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339). Defaults to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--installation-path', help=u"""The installation path of the related installation.""")
-@cli_util.option('--jre-vendor', help=u"""The vendor of the related Java Runtime.""")
-@cli_util.option('--jre-distribution', help=u"""The distribution of the related Java Runtime.""")
-@cli_util.option('--jre-version', help=u"""The version of the related Java Runtime.""")
-@cli_util.option('--application-id', help=u"""The ID of the related application.""")
-@cli_util.option('--managed-instance-id', help=u"""The ID of the managed instance.""")
-@cli_util.option('--managed-instance-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_MANAGEMENT_AGENT"]), help=u"""type of the managed instance""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "approximateJreCount", "approximateInstallationCount", "approximateApplicationCount"]), help=u"""The field to sort managed instance views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, approximateJreCount_, _approximateInstallationCount_ and _approximateApplicationCount_  is **descending**. If no value is specified _timeLastSeen_ is default.""")
-@cli_util.option('--fields', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateJreCount', 'approximateInstallationCount' and 'approximateApplicationCount'. For example 'approximateJreCount,approximateInstallationCount'.
-
-This option is a JSON list with items of type SummarizeManagedInstanceUsageFields.  For documentation on SummarizeManagedInstanceUsageFields please see our API reference: https://docs.cloud.oracle.com/api/#/en/javamanagementservice/20210610/datatypes/SummarizeManagedInstanceUsageFields.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'jms', 'class': 'list[SummarizeManagedInstanceUsageFields]'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'jms', 'class': 'list[SummarizeManagedInstanceUsageFields]'}}, output_type={'module': 'jms', 'class': 'ManagedInstanceUsageCollection'})
-@cli_util.wrap_exceptions
-def request_summarized_managed_instance_usage(ctx, from_json, fleet_id, time_start, time_end, installation_path, jre_vendor, jre_distribution, jre_version, application_id, managed_instance_id, managed_instance_type, sort_order, sort_by, fields, limit, page):
-
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
-        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if limit is not None:
-        kwargs['limit'] = limit
-    if page is not None:
-        kwargs['page'] = page
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-
-    if time_start is not None:
-        _details['timeStart'] = time_start
-
-    if time_end is not None:
-        _details['timeEnd'] = time_end
-
-    if installation_path is not None:
-        _details['installationPath'] = installation_path
-
-    if jre_vendor is not None:
-        _details['jreVendor'] = jre_vendor
-
-    if jre_distribution is not None:
-        _details['jreDistribution'] = jre_distribution
-
-    if jre_version is not None:
-        _details['jreVersion'] = jre_version
-
-    if application_id is not None:
-        _details['applicationId'] = application_id
-
-    if managed_instance_id is not None:
-        _details['managedInstanceId'] = managed_instance_id
-
-    if managed_instance_type is not None:
-        _details['managedInstanceType'] = managed_instance_type
-
-    if sort_order is not None:
-        _details['sortOrder'] = sort_order
-
-    if sort_by is not None:
-        _details['sortBy'] = sort_by
-
-    if fields is not None:
-        _details['fields'] = cli_util.parse_json_parameter("fields", fields)
-
-    client = cli_util.build_client('jms', 'java_management_service', ctx)
-    result = client.request_summarized_managed_instance_usage(
-        fleet_id=fleet_id,
-        request_summarized_managed_instance_usage_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @application_usage_group.command(name=cli_util.override('jms.summarize_application_usage.command_name', 'summarize'), help=u"""List application usage in a Fleet filtered by query parameters. \n[Command Reference](summarizeApplicationUsage)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
@@ -869,18 +549,19 @@ def request_summarized_managed_instance_usage(ctx, from_json, fleet_id, time_sta
 @cli_util.option('--installation-path', help=u"""The file system path of the installation.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount"]), multiple=True, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateJreCount', 'approximateInstallationCount' and 'approximateManagedInstanceCount'. For example 'approximateJreCount,approximateInstallationCount'.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort application views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount", "osName"]), help=u"""The field to sort application views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_ and _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), multiple=True, help=u"""The operating system type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'ApplicationUsageCollection'})
 @cli_util.wrap_exceptions
-def summarize_application_usage(ctx, from_json, fleet_id, application_id, display_name, application_type, jre_vendor, jre_distribution, jre_version, installation_path, managed_instance_id, fields, time_start, time_end, limit, page, sort_order, sort_by):
+def summarize_application_usage(ctx, from_json, fleet_id, application_id, display_name, application_type, jre_vendor, jre_distribution, jre_version, installation_path, managed_instance_id, fields, time_start, time_end, limit, page, sort_order, sort_by, os_family):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -916,6 +597,8 @@ def summarize_application_usage(ctx, from_json, fleet_id, application_id, displa
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if os_family is not None and len(os_family) > 0:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.summarize_application_usage(
@@ -934,18 +617,19 @@ def summarize_application_usage(ctx, from_json, fleet_id, application_id, displa
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the related application.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateApplicationCount", "approximateManagedInstanceCount"]), multiple=True, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateApplicationCount' and 'approximateManagedInstanceCount'. For example 'approximateApplicationCount,approximateManagedInstanceCount'.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["jreDistribution", "jreVendor", "jreVersion", "path", "timeFirstSeen", "timeLastSeen", "approximateApplicationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, and _jreVersion_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _jreDistribution_ and _jreVendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["jreDistribution", "jreVendor", "jreVersion", "path", "timeFirstSeen", "timeLastSeen", "approximateApplicationCount", "approximateManagedInstanceCount", "osName"]), help=u"""The field to sort installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, and _jreVersion_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _jreDistribution_ and _jreVendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), multiple=True, help=u"""The operating system type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'InstallationUsageCollection'})
 @cli_util.wrap_exceptions
-def summarize_installation_usage(ctx, from_json, fleet_id, jre_vendor, jre_distribution, jre_version, installation_path, application_id, managed_instance_id, fields, time_start, time_end, limit, page, sort_order, sort_by):
+def summarize_installation_usage(ctx, from_json, fleet_id, jre_vendor, jre_distribution, jre_version, installation_path, application_id, managed_instance_id, fields, time_start, time_end, limit, page, sort_order, sort_by, os_family):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -977,6 +661,8 @@ def summarize_installation_usage(ctx, from_json, fleet_id, jre_vendor, jre_distr
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if os_family is not None and len(os_family) > 0:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.summarize_installation_usage(
@@ -994,18 +680,19 @@ def summarize_installation_usage(ctx, from_json, fleet_id, jre_vendor, jre_distr
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the related application.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateInstallationCount", "approximateApplicationCount", "approximateManagedInstanceCount"]), multiple=True, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateApplicationCount', 'approximateInstallationCount' and 'approximateManagedInstanceCount'. For example 'approximateApplicationCount,approximateManagedInstanceCount'.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["distribution", "timeFirstSeen", "timeLastSeen", "vendor", "version", "approximateInstallationCount", "approximateApplicationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort JRE usages. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, and _version_ is **descending**. Default order for _timeFirstSeen_, _timeLastSeen_, _version_, _approximateInstallationCount_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _distribution_ and _vendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["distribution", "timeFirstSeen", "timeLastSeen", "vendor", "version", "approximateInstallationCount", "approximateApplicationCount", "approximateManagedInstanceCount", "osName"]), help=u"""The field to sort JRE usages. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, and _version_ is **descending**. Default order for _timeFirstSeen_, _timeLastSeen_, _version_, _approximateInstallationCount_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _distribution_, _vendor_, and _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), multiple=True, help=u"""The operating system type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'JreUsageCollection'})
 @cli_util.wrap_exceptions
-def summarize_jre_usage(ctx, from_json, fleet_id, jre_vendor, jre_distribution, jre_version, application_id, managed_instance_id, fields, time_start, time_end, limit, page, sort_order, sort_by):
+def summarize_jre_usage(ctx, from_json, fleet_id, jre_vendor, jre_distribution, jre_version, application_id, managed_instance_id, fields, time_start, time_end, limit, page, sort_order, sort_by, os_family):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -1035,6 +722,8 @@ def summarize_jre_usage(ctx, from_json, fleet_id, jre_vendor, jre_distribution, 
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if os_family is not None and len(os_family) > 0:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.summarize_jre_usage(
@@ -1054,18 +743,19 @@ def summarize_jre_usage(ctx, from_json, fleet_id, jre_vendor, jre_distribution, 
 @cli_util.option('--installation-path', help=u"""The file system path of the installation.""")
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the related application.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateJreCount", "approximateInstallationCount", "approximateApplicationCount"]), multiple=True, help=u"""Additional fields to include into the returned model on top of the required ones. This parameter can also include 'approximateJreCount', 'approximateInstallationCount' and 'approximateApplicationCount'. For example 'approximateJreCount,approximateInstallationCount'.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "approximateJreCount", "approximateInstallationCount", "approximateApplicationCount"]), help=u"""The field to sort managed instance views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, approximateJreCount_, _approximateInstallationCount_ and _approximateApplicationCount_  is **descending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "approximateJreCount", "approximateInstallationCount", "approximateApplicationCount", "osName"]), help=u"""The field to sort managed instance views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, approximateJreCount_, _approximateInstallationCount_ and _approximateApplicationCount_  is **descending**. Default order for _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), multiple=True, help=u"""The operating system type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'ManagedInstanceUsageCollection'})
 @cli_util.wrap_exceptions
-def summarize_managed_instance_usage(ctx, from_json, fleet_id, managed_instance_id, managed_instance_type, jre_vendor, jre_distribution, jre_version, installation_path, application_id, fields, time_start, time_end, limit, page, sort_order, sort_by):
+def summarize_managed_instance_usage(ctx, from_json, fleet_id, managed_instance_id, managed_instance_type, jre_vendor, jre_distribution, jre_version, installation_path, application_id, fields, time_start, time_end, limit, page, sort_order, sort_by, os_family):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -1099,6 +789,8 @@ def summarize_managed_instance_usage(ctx, from_json, fleet_id, managed_instance_
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if os_family is not None and len(os_family) > 0:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.summarize_managed_instance_usage(

@@ -25,6 +25,13 @@ class CliDatetime(click.ParamType):
         # Datetimes with a literal Z at the end (for UTC)
         ######################################
         {
+            # Literal Z at the end for UTC with microseconds
+            'format_string': 'YYYY-MM-DDTHH:mm:ss.SSSSSS[Z]',
+            'regex_pattern': re.compile(
+                r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]{4,6})[Zz]$"),
+            'use_timezone': None,
+        },
+        {
             # Literal Z at the end for UTC with milliseconds
             'format_string': 'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
             'regex_pattern': re.compile(r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]{1,3})[Zz]$"),
@@ -47,6 +54,13 @@ class CliDatetime(click.ParamType):
         # Datetimes with a numeric timezone offset that is colon separated (e.g. 08:00)
         ######################################
         {
+            # Full RFC 3339 date with microseconds and a colon in the timezone component, e.g. 2018-06-08T10:11:51.456+02:00
+            'format_string': 'YYYY-MM-DDTHH:mm:ss.SSSSSSZZ',
+            'regex_pattern': re.compile(
+                r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]{4,6})([\+|\-]([01][0-9]|2[0-3]):[0-5][0-9])$"),
+            'use_timezone': None
+        },
+        {
             # Full RFC 3339 date with milliseconds and a colon in the timezone component, e.g. 2018-06-08T10:11:51.456+02:00
             'format_string': 'YYYY-MM-DDTHH:mm:ss.SSSZZ',
             'regex_pattern': re.compile(r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]{1,3})([\+|\-]([01][0-9]|2[0-3]):[0-5][0-9])$"),
@@ -68,6 +82,13 @@ class CliDatetime(click.ParamType):
         ######################################
         # Datetimes with a numeric timezone offset that is not colon separated (e.g. 0800)
         ######################################
+        {
+            # Full ISO8601 date with milliseconds and no colon in the timezone component, e.g. 2018-06-08T10:11:51.456+0200
+            'format_string': 'YYYY-MM-DDTHH:mm:ss.SSSSSSZ',
+            'regex_pattern': re.compile(
+                r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]{4,6})([\+|\-]([01][0-9]|2[0-3])[0-5][0-9])$"),
+            'use_timezone': None
+        },
         {
             # Full ISO8601 date with milliseconds and no colon in the timezone component, e.g. 2018-06-08T10:11:51.456+0200
             'format_string': 'YYYY-MM-DDTHH:mm:ss.SSSZ',
@@ -104,9 +125,11 @@ class CliDatetime(click.ParamType):
 
     VALID_DATETIME_EXCEPTION_MESSAGE = """The following datetime formats are supported:
 
+    YYYY-MM-DDTHH:mm:ss.ssssssTZD (UTC) with microseconds, e.g. 2017-09-15T20:30:00.123456Z
     YYYY-MM-DDTHH:mm:ss.sssTZD (UTC) with milliseconds, e.g. 2017-09-15T20:30:00.123Z
     YYYY-MM-DDTHH:mm:ssTZD (UTC) without milliseconds, e.g. 2017-09-15T20:30:00Z
     YYYY-MM-DDTHH:mmTZD (UTC) with minute precision, e.g. 2017-09-15T20:30Z
+    YYYY-MM-DDTHH:mm:ssTZD (timzone with offset) with microseconds, e.g. 2017-09-15T12:30:00.456789-08:00, 2017-09-15T12:30:00.456789-0800
     YYYY-MM-DDTHH:mm:ssTZD (timzone with offset) with milliseconds, e.g. 2017-09-15T12:30:00.456-08:00, 2017-09-15T12:30:00.456-0800
     YYYY-MM-DDTHH:mm:ssTZD (timezone with offset) without milliseconds, e.g. 2017-09-15T12:30:00-08:00, 2017-09-15T12:30:00-0800
     YYYY-MM-DDTHH:mmTZD (timezone with offset) with minute precision, e.g. 2017-09-15T12:35-08:00, 2017-09-15T12:35-0800
@@ -118,6 +141,11 @@ class CliDatetime(click.ParamType):
     VALID_DATETIME_CLI_HELP_MESSAGE = """
 \b
 The following datetime formats are supported:
+\b
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
 \b
 UTC with milliseconds
 ***********************
@@ -133,6 +161,13 @@ UTC with minute precision
 **************************
 Format: YYYY-MM-DDTHH:mmTZD
 Example: 2017-09-15T20:30Z
+\b
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
 \b
 Timezone with milliseconds
 ***************************
@@ -176,6 +211,13 @@ Example: 1412195400
 
     The following datetime formats are supported:
 
+UTC with microseconds
+***********************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+    Example: 2017-09-15T20:30:00.123456Z
+
     UTC with milliseconds
     ***********************
     .. code::
@@ -196,6 +238,13 @@ Example: 1412195400
 
         Format: YYYY-MM-DDTHH:mmTZD
         Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mm:ssTZD
+    Example: 2017-09-15T12:30:00.456789-08:00, 2017-09-15T12:30:00.456789-0800
 
     Timezone with milliseconds
     ***************************
@@ -281,7 +330,7 @@ Example: 1412195400
         # for compatibility with services.
         #
         # Applying the UTC conversion is a no-op if the timezone is already UTC
-        return '{}Z'.format(self.perform_rounding(parsed_value.to('utc')).format('YYYY-MM-DDTHH:mm:ss.SSS'))
+        return '{}Z'.format(self.perform_rounding(parsed_value.to('utc')).format('YYYY-MM-DDTHH:mm:ss.SSSSSS'))
 
     def get_matching_datetime_string_format(self, value):
         # This handles when someone passes us a valid ISO-8601 date, e.g. 2018-03-07 16:03:00+00:00 as the "T" separator

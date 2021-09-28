@@ -21,85 +21,85 @@ def database_migration_root_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.agent_group.command_name', 'agent'), cls=CommandGroupWithAlias, help="""ODMS Agent Details""")
+@click.command(cli_util.override('database_migration.agent_group.command_name', 'agent'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. ODMS Agent Details""")
 @cli_util.help_option_group
 def agent_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.work_request_summary_group.command_name', 'work-request-summary'), cls=CommandGroupWithAlias, help="""A summary of the status of a work request.""")
+@click.command(cli_util.override('database_migration.work_request_summary_group.command_name', 'work-request-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. A summary of the status of a work request.""")
 @cli_util.help_option_group
 def work_request_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from executing an operation that is tracked by a work request.""")
+@click.command(cli_util.override('database_migration.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. A log message from executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@click.command(cli_util.override('database_migration.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. An asynchronous work request.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.agent_summary_group.command_name', 'agent-summary'), cls=CommandGroupWithAlias, help="""ODMS Agent Details""")
+@click.command(cli_util.override('database_migration.agent_summary_group.command_name', 'agent-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. ODMS Agent Details""")
 @cli_util.help_option_group
 def agent_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.migration_summary_group.command_name', 'migration-summary'), cls=CommandGroupWithAlias, help="""Migration resource""")
+@click.command(cli_util.override('database_migration.migration_summary_group.command_name', 'migration-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Migration resource""")
 @cli_util.help_option_group
 def migration_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.agent_image_summary_group.command_name', 'agent-image-summary'), cls=CommandGroupWithAlias, help="""Available ODMS Agent Images.""")
+@click.command(cli_util.override('database_migration.agent_image_summary_group.command_name', 'agent-image-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Available ODMS Agent Images.""")
 @cli_util.help_option_group
 def agent_image_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.connection_summary_group.command_name', 'connection-summary'), cls=CommandGroupWithAlias, help="""Database Connection Summary.""")
+@click.command(cli_util.override('database_migration.connection_summary_group.command_name', 'connection-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Database Connection Summary.""")
 @cli_util.help_option_group
 def connection_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.job_summary_group.command_name', 'job-summary'), cls=CommandGroupWithAlias, help="""Job description""")
+@click.command(cli_util.override('database_migration.job_summary_group.command_name', 'job-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Job description""")
 @cli_util.help_option_group
 def job_summary_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing an operation that is tracked by a work request.""")
+@click.command(cli_util.override('database_migration.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. An error encountered while executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.migration_group.command_name', 'migration'), cls=CommandGroupWithAlias, help="""Migration resource""")
+@click.command(cli_util.override('database_migration.migration_group.command_name', 'migration'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Migration resource""")
 @cli_util.help_option_group
 def migration_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""Database Connection resource used for migrations.""")
+@click.command(cli_util.override('database_migration.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Database Connection resource used for migrations.""")
 @cli_util.help_option_group
 def connection_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Results of a Database Connection search. Contains DatabaseConnectionSummary items.""")
+@click.command(cli_util.override('database_migration.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Results of a Database Connection search. Contains DatabaseConnectionSummary items.""")
 @cli_util.help_option_group
 def job_group():
     pass
 
 
-@click.command(cli_util.override('database_migration.job_output_summary_group.command_name', 'job-output-summary'), cls=CommandGroupWithAlias, help="""Job output summary line.""")
+@click.command(cli_util.override('database_migration.job_output_summary_group.command_name', 'job-output-summary'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Job output summary line.""")
 @cli_util.help_option_group
 def job_output_summary_group():
     pass
@@ -121,7 +121,7 @@ database_migration_root_group.add_command(job_group)
 database_migration_root_group.add_command(job_output_summary_group)
 
 
-@job_group.command(name=cli_util.override('database_migration.abort_job.command_name', 'abort'), help=u"""Aborts a Migration Job (either Evaluation or Migration). \n[Command Reference](abortJob)""")
+@job_group.command(name=cli_util.override('database_migration.abort_job.command_name', 'abort'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Aborts a Migration Job (either Evaluation or Migration). \n[Command Reference](abortJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "UNKNOWN", "TERMINATED", "FAILED", "SUCCEEDED", "WAITING", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -172,7 +172,7 @@ def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.change_agent_compartment.command_name', 'change-compartment'), help=u"""Used to configure an ODMS Agent Compartment ID. \n[Command Reference](changeAgentCompartment)""")
+@agent_group.command(name=cli_util.override('database_migration.change_agent_compartment.command_name', 'change-compartment'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Used to configure an ODMS Agent Compartment ID. \n[Command Reference](changeAgentCompartment)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the resource to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -203,7 +203,7 @@ def change_agent_compartment(ctx, from_json, agent_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.change_connection_compartment.command_name', 'change-compartment'), help=u"""Used to change the Database Connection compartment. \n[Command Reference](changeConnectionCompartment)""")
+@connection_group.command(name=cli_util.override('database_migration.change_connection_compartment.command_name', 'change-compartment'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Used to change the Database Connection compartment. \n[Command Reference](changeConnectionCompartment)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the resource to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -234,7 +234,7 @@ def change_connection_compartment(ctx, from_json, connection_id, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.change_migration_compartment.command_name', 'change-compartment'), help=u"""Used to change the Migration compartment. \n[Command Reference](changeMigrationCompartment)""")
+@migration_group.command(name=cli_util.override('database_migration.change_migration_compartment.command_name', 'change-compartment'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Used to change the Migration compartment. \n[Command Reference](changeMigrationCompartment)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the resource to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -265,7 +265,7 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.clone_migration.command_name', 'clone'), help=u"""Clone a configuration from an existing Migration. \n[Command Reference](cloneMigration)""")
+@migration_group.command(name=cli_util.override('database_migration.clone_migration.command_name', 'clone'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Clone a configuration from an existing Migration. \n[Command Reference](cloneMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
 @cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
@@ -358,7 +358,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.create_connection.command_name', 'create'), help=u"""Create a Database Connection resource that contains the details to connect to either a Source or Target Database in the migration. \n[Command Reference](createConnection)""")
+@connection_group.command(name=cli_util.override('database_migration.create_connection.command_name', 'create'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Create a Database Connection resource that contains the details to connect to either a Source or Target Database in the migration. \n[Command Reference](createConnection)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
 @cli_util.option('--database-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTONOMOUS", "USER_MANAGED_OCI"]), help=u"""Database connection type.""")
 @cli_util.option('--admin-credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -453,7 +453,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.create_migration.command_name', 'create'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
+@migration_group.command(name=cli_util.override('database_migration.create_migration.command_name', 'create'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
 @cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
@@ -550,7 +550,7 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.delete_agent.command_name', 'delete'), help=u"""Delete the ODMS Agent represented by the specified ODMS Agent ID. \n[Command Reference](deleteAgent)""")
+@agent_group.command(name=cli_util.override('database_migration.delete_agent.command_name', 'delete'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Delete the ODMS Agent represented by the specified ODMS Agent ID. \n[Command Reference](deleteAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -602,7 +602,7 @@ def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.delete_connection.command_name', 'delete'), help=u"""Deletes the Database Connection represented by the specified connection ID. \n[Command Reference](deleteConnection)""")
+@connection_group.command(name=cli_util.override('database_migration.delete_connection.command_name', 'delete'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Deletes the Database Connection represented by the specified connection ID. \n[Command Reference](deleteConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -654,7 +654,7 @@ def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.delete_job.command_name', 'delete'), help=u"""Deletes the migration job represented by the given job ID. \n[Command Reference](deleteJob)""")
+@job_group.command(name=cli_util.override('database_migration.delete_job.command_name', 'delete'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Deletes the migration job represented by the given job ID. \n[Command Reference](deleteJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -718,7 +718,7 @@ def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.delete_migration.command_name', 'delete'), help=u"""Deletes the Migration represented by the specified migration ID. \n[Command Reference](deleteMigration)""")
+@migration_group.command(name=cli_util.override('database_migration.delete_migration.command_name', 'delete'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Deletes the Migration represented by the specified migration ID. \n[Command Reference](deleteMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -770,7 +770,7 @@ def delete_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.evaluate_migration.command_name', 'evaluate-migration'), help=u"""Start Validate Migration job. \n[Command Reference](evaluateMigration)""")
+@job_group.command(name=cli_util.override('database_migration.evaluate_migration.command_name', 'evaluate-migration'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Start Validate Migration job. \n[Command Reference](evaluateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -821,7 +821,7 @@ def evaluate_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.get_agent.command_name', 'get'), help=u"""Display the ODMS Agent configuration. \n[Command Reference](getAgent)""")
+@agent_group.command(name=cli_util.override('database_migration.get_agent.command_name', 'get'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Display the ODMS Agent configuration. \n[Command Reference](getAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -843,7 +843,7 @@ def get_agent(ctx, from_json, agent_id):
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.get_connection.command_name', 'get'), help=u"""Display Database Connection details. \n[Command Reference](getConnection)""")
+@connection_group.command(name=cli_util.override('database_migration.get_connection.command_name', 'get'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Display Database Connection details. \n[Command Reference](getConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -865,7 +865,7 @@ def get_connection(ctx, from_json, connection_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.get_job.command_name', 'get'), help=u"""Get a migration job. \n[Command Reference](getJob)""")
+@job_group.command(name=cli_util.override('database_migration.get_job.command_name', 'get'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Get a migration job. \n[Command Reference](getJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -887,7 +887,7 @@ def get_job(ctx, from_json, job_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.get_job_output_content.command_name', 'get-job-output-content'), help=u"""Get the migration Job Output content as a String. \n[Command Reference](getJobOutputContent)""")
+@job_group.command(name=cli_util.override('database_migration.get_job_output_content.command_name', 'get-job-output-content'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Get the migration Job Output content as a String. \n[Command Reference](getJobOutputContent)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -932,7 +932,7 @@ def get_job_output_content(ctx, from_json, file, job_id):
         file.close()
 
 
-@migration_group.command(name=cli_util.override('database_migration.get_migration.command_name', 'get'), help=u"""Display Migration details. \n[Command Reference](getMigration)""")
+@migration_group.command(name=cli_util.override('database_migration.get_migration.command_name', 'get'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Display Migration details. \n[Command Reference](getMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -957,7 +957,7 @@ def get_migration(ctx, from_json, migration_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('database_migration.get_work_request.command_name', 'get'), help=u"""Gets the details of a work request. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('database_migration.get_work_request.command_name', 'get'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Gets the details of a work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -979,7 +979,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@agent_image_summary_group.command(name=cli_util.override('database_migration.list_agent_images.command_name', 'list-agent-images'), help=u"""Get details of the ODMS Agent Images available to install on-premises. \n[Command Reference](listAgentImages)""")
+@agent_image_summary_group.command(name=cli_util.override('database_migration.list_agent_images.command_name', 'list-agent-images'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Get details of the ODMS Agent Images available to install on-premises. \n[Command Reference](listAgentImages)""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1026,7 +1026,7 @@ def list_agent_images(ctx, from_json, all_pages, page_size, limit, page, sort_or
     cli_util.render_response(result, ctx)
 
 
-@agent_summary_group.command(name=cli_util.override('database_migration.list_agents.command_name', 'list-agents'), help=u"""Display the name of all the existing ODMS Agents in the server. \n[Command Reference](listAgents)""")
+@agent_summary_group.command(name=cli_util.override('database_migration.list_agents.command_name', 'list-agents'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Display the name of all the existing ODMS Agents in the server. \n[Command Reference](listAgents)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1086,7 +1086,7 @@ def list_agents(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
     cli_util.render_response(result, ctx)
 
 
-@connection_summary_group.command(name=cli_util.override('database_migration.list_connections.command_name', 'list-connections'), help=u"""List all Database Connections. \n[Command Reference](listConnections)""")
+@connection_summary_group.command(name=cli_util.override('database_migration.list_connections.command_name', 'list-connections'), help=u"""Note: Deprecated. Use the new resource model APIs instead. List all Database Connections. \n[Command Reference](listConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1146,7 +1146,7 @@ def list_connections(ctx, from_json, all_pages, page_size, compartment_id, displ
     cli_util.render_response(result, ctx)
 
 
-@job_output_summary_group.command(name=cli_util.override('database_migration.list_job_outputs.command_name', 'list-job-outputs'), help=u"""List the Job Outputs \n[Command Reference](listJobOutputs)""")
+@job_output_summary_group.command(name=cli_util.override('database_migration.list_job_outputs.command_name', 'list-job-outputs'), help=u"""Note: Deprecated. Use the new resource model APIs instead. List the Job Outputs \n[Command Reference](listJobOutputs)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1197,7 +1197,7 @@ def list_job_outputs(ctx, from_json, all_pages, page_size, job_id, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@job_summary_group.command(name=cli_util.override('database_migration.list_jobs.command_name', 'list-jobs'), help=u"""List all the names of the Migration jobs associated to the specified migration site. \n[Command Reference](listJobs)""")
+@job_summary_group.command(name=cli_util.override('database_migration.list_jobs.command_name', 'list-jobs'), help=u"""Note: Deprecated. Use the new resource model APIs instead. List all the names of the Migration jobs associated to the specified migration site. \n[Command Reference](listJobs)""")
 @cli_util.option('--migration-id', required=True, help=u"""The ID of the migration in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1257,7 +1257,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, migration_id, display_name, 
     cli_util.render_response(result, ctx)
 
 
-@migration_summary_group.command(name=cli_util.override('database_migration.list_migrations.command_name', 'list-migrations'), help=u"""List all Migrations. \n[Command Reference](listMigrations)""")
+@migration_summary_group.command(name=cli_util.override('database_migration.list_migrations.command_name', 'list-migrations'), help=u"""Note: Deprecated. Use the new resource model APIs instead. List all Migrations. \n[Command Reference](listMigrations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1320,7 +1320,7 @@ def list_migrations(ctx, from_json, all_pages, page_size, compartment_id, displa
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('database_migration.list_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('database_migration.list_work_request_errors.command_name', 'list'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Gets the errors for a work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1380,7 +1380,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('database_migration.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for a work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_entry_group.command(name=cli_util.override('database_migration.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Gets the logs for a work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -1440,7 +1440,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_summary_group.command(name=cli_util.override('database_migration.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment or for a specified resource. \n[Command Reference](listWorkRequests)""")
+@work_request_summary_group.command(name=cli_util.override('database_migration.list_work_requests.command_name', 'list-work-requests'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Lists the work requests in a compartment or for a specified resource. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1500,7 +1500,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.resume_job.command_name', 'resume'), help=u"""Resume a migration Job. \n[Command Reference](resumeJob)""")
+@job_group.command(name=cli_util.override('database_migration.resume_job.command_name', 'resume'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Resume a migration Job. \n[Command Reference](resumeJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-after', type=custom_types.CliCaseInsensitiveChoice(["ODMS_VALIDATE_TGT", "ODMS_VALIDATE_SRC", "ODMS_VALIDATE_GG_HUB", "ODMS_VALIDATE_DATAPUMP_SETTINGS", "ODMS_VALIDATE_DATAPUMP_SETTINGS_SRC", "ODMS_VALIDATE_DATAPUMP_SETTINGS_TGT", "ODMS_VALIDATE", "ODMS_PREPARE", "ODMS_INITIAL_LOAD_EXPORT", "ODMS_DATA_UPLOAD", "ODMS_INITIAL_LOAD_IMPORT", "ODMS_POST_INITIAL_LOAD", "ODMS_PREPARE_REPLICATION_TARGET", "ODMS_MONITOR_REPLICATION_LAG", "ODMS_SWITCHOVER", "ODMS_CLEANUP"]), help=u"""Name of a migration phase. The Job will wait after executing this phase until Resume Job endpoint is called again.""")
@@ -1559,7 +1559,7 @@ def resume_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.retrieve_supported_phases.command_name', 'retrieve-supported-phases'), help=u"""Display Migration Phases for a specified migration. \n[Command Reference](retrieveSupportedPhases)""")
+@migration_group.command(name=cli_util.override('database_migration.retrieve_supported_phases.command_name', 'retrieve-supported-phases'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Display Migration Phases for a specified migration. \n[Command Reference](retrieveSupportedPhases)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1581,7 +1581,7 @@ def retrieve_supported_phases(ctx, from_json, migration_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.start_migration.command_name', 'start-migration'), help=u"""Start Migration job. \n[Command Reference](startMigration)""")
+@job_group.command(name=cli_util.override('database_migration.start_migration.command_name', 'start-migration'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Start Migration job. \n[Command Reference](startMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-after', type=custom_types.CliCaseInsensitiveChoice(["ODMS_VALIDATE_TGT", "ODMS_VALIDATE_SRC", "ODMS_VALIDATE_GG_HUB", "ODMS_VALIDATE_DATAPUMP_SETTINGS", "ODMS_VALIDATE_DATAPUMP_SETTINGS_SRC", "ODMS_VALIDATE_DATAPUMP_SETTINGS_TGT", "ODMS_VALIDATE", "ODMS_PREPARE", "ODMS_INITIAL_LOAD_EXPORT", "ODMS_DATA_UPLOAD", "ODMS_INITIAL_LOAD_IMPORT", "ODMS_POST_INITIAL_LOAD", "ODMS_PREPARE_REPLICATION_TARGET", "ODMS_MONITOR_REPLICATION_LAG", "ODMS_SWITCHOVER", "ODMS_CLEANUP"]), help=u"""Name of a migration phase. The Job will wait after executing this phase until the Resume Job endpoint is called.""")
@@ -1640,7 +1640,7 @@ def start_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('database_migration.update_agent.command_name', 'update'), help=u"""Modifies the ODMS Agent represented by the given ODMS Agent ID. \n[Command Reference](updateAgent)""")
+@agent_group.command(name=cli_util.override('database_migration.update_agent.command_name', 'update'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Modifies the ODMS Agent represented by the given ODMS Agent ID. \n[Command Reference](updateAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', help=u"""ODMS Agent name""")
@@ -1728,7 +1728,7 @@ def update_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('database_migration.update_connection.command_name', 'update'), help=u"""Update Database Connection resource details. \n[Command Reference](updateConnection)""")
+@connection_group.command(name=cli_util.override('database_migration.update_connection.command_name', 'update'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Update Database Connection resource details. \n[Command Reference](updateConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
 @cli_util.option('--display-name', help=u"""Database Connection display name identifier.""")
 @cli_util.option('--database-id', help=u"""The OCID of the cloud database.""")
@@ -1836,7 +1836,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('database_migration.update_job.command_name', 'update'), help=u"""Update Migration Job resource details. \n[Command Reference](updateJob)""")
+@job_group.command(name=cli_util.override('database_migration.update_job.command_name', 'update'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Update Migration Job resource details. \n[Command Reference](updateJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--display-name', help=u"""Name of the job.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1908,7 +1908,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('database_migration.update_migration.command_name', 'update'), help=u"""Update Migration resource details. \n[Command Reference](updateMigration)""")
+@migration_group.command(name=cli_util.override('database_migration.update_migration.command_name', 'update'), help=u"""Note: Deprecated. Use the new resource model APIs instead. Update Migration resource details. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
 @cli_util.option('--display-name', help=u"""Migration Display Name""")
