@@ -221,3 +221,7 @@ def update_connection(ctx, **kwargs):
     kwargs.pop('tls_keystore_file')
 
     ctx.invoke(databasemigration_cli.update_connection, **kwargs)
+
+
+# oci database-migration migration-object-type-summary list-migration-object-types -> oci database-migration migration-object-type-summary list
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.migration_object_type_summary_group, databasemigration_cli.list_migration_object_types, "list")

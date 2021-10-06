@@ -166,3 +166,10 @@ def update_deployment_extended(ctx, **kwargs):
         kwargs['ogg_data'] = json.dumps(_ogg_details)
 
     ctx.invoke(goldengate_cli.update_deployment, **kwargs)
+
+
+# Remove cancel from oci goldengate deployment-backup
+goldengate_cli.deployment_backup_group.commands.pop(goldengate_cli.cancel_deployment_backup.name)
+
+# oci goldengate deployment-backup cancel-deployment-backup-default-cancel-deployment-backup-details -> oci goldengate deployment-backup cancel
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, goldengate_cli.cancel_deployment_backup_default_cancel_deployment_backup_details, "cancel")
