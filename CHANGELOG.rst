@@ -6,6 +6,65 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.1.1 - 2021-10-05
+------------------
+Added
+~~~~~
+* Management Agent service
+
+  * Support for set-auto-upgradable-config and get-auto-upgradable-config
+
+    * ``oci management-agent agent set-auto-upgradable-config``
+    * ``oci management-agent agent get-auto-upgradable-config``
+
+  * Support for additional -install-type parameters for List Management Agents, Images and Count operations
+
+    * ``oci management-agent agent list --install-type``
+    * ``oci management-agent agent summarize-agent-counts --install-type``
+    * ``oci management-agent agent-image list --install-type``
+
+* Support for configuring Binlog variables in the MySQL Database service
+
+  * ``oci mysql configuration create --variables '{"binlogRowMetadata": "<MINIMAL|FULL>"}'``
+  * ``oci mysql configuration create --variables '{"binlog-row-value-options": "PARTIAL_JSON"}'``
+  * ``oci mysql configuration create --variables '{"binlog-transaction-compression": <true|false>}'``
+
+* Support for new creation type `OPERATOR` when listing MDS backups in MySQL service
+
+  * ``oci mysql backup list --creation-type OPERATOR``
+
+* Support for deployment upgrade operations and cancelling deployment backups in Golden Gate service
+
+  * ``oci goldengate deployment-upgrade get|list``
+  * ``oci goldengate deployment-backup cancel``
+
+* Database Migration service
+
+  * Support for getting job advisor reports and listing migration object types
+
+    * ``oci database-migration job get-advisor-report``
+    * ``oci database-migration migration-object-type-summary list``
+
+  * Support for advisor settings for migration create and update operations
+
+    * ``oci database-migration migration update --advisor-settings``
+    * ``oci database-migration migration create --advisor-settings``
+
+  * Support for including objects when cloning or creating a database migration job
+
+    * ``oci database-migration migration clone --include-objects``
+    * ``oci database-migration migration create --include-objects``
+
+
+Changed
+~~~~~~~
+
+* Removed --display-name param from work-request operations and --compartment-id param from agent update operation in Database Migration service
+
+  * ``oci database-migration work-request list``
+  * ``oci database-migration work-request-error list``
+  * ``oci database-migration work-request-logs list``
+  * ``oci database-migration agent update``
 
 3.1.0 - 2021-09-28
 -------------------
@@ -13,48 +72,59 @@ Added
 ~~~~~
 * Support for One-way TLS Connections in Database service
 
-    * Support for creating autonomous database and clones on shared infrastructure that do not require mTLS
-        * ``oci db autonomous-database create --is-mtls-connection-required false``
+  * Support for creating autonomous database and clones on shared infrastructure that do not require mTLS
 
-    * Support for updating autonomous database and clones on shared infrastructure to not require mTLS
-        * ``oci db autonomous-database update --is-mtls-connection-required false``
+    * ``oci db autonomous-database create --is-mtls-connection-required false``
 
-    * Support to check if an autonomous database on shared infrastructure requires mTLS, with added field isMtlsRequired
-        * ``oci db autonomous-database get --autonomous-database-id <ocid>``
+  * Support for updating autonomous database and clones on shared infrastructure to not require mTLS
 
-    * Support to get connection string profiles for an autonomous database on shared infrastructure, with added field profiles in connectionStrings
-        * ``oci db autonomous-database get --autonomous-database-id <ocid>``
+    * ``oci db autonomous-database update --is-mtls-connection-required false``
+
+  * Support to check if an autonomous database on shared infrastructure requires mTLS, with added field isMtlsRequired
+
+    * ``oci db autonomous-database get --autonomous-database-id <ocid>``
+
+  * Support to get connection string profiles for an autonomous database on shared infrastructure, with added field profiles in connectionStrings
+
+    * ``oci db autonomous-database get --autonomous-database-id <ocid>``
 
 * Support for Server side encryption using object specific KMS key in Object Storage Service
 
-    * New parameter --opc-sse-kms-key-id has been added to the below commands for passing kms key id
-        * ``oci os object put --opc-sse-kms-key-id <target_key_id>``
-        * ``oci os object copy --opc-sse-kms-key-id <target_key_id>``
+  * New parameter --opc-sse-kms-key-id has been added to the below commands for passing kms key id
+
+    * ``oci os object put --opc-sse-kms-key-id <target_key_id>``
+    * ``oci os object copy --opc-sse-kms-key-id <target_key_id>``
 
 * Allow filter based on operating system family and sort by operating system name in JMS service
-    * ``oci jms application-usage summarize --os-family --sort-by``
-    * ``oci jms installation-usage summarize --os-family --sort-by``
-    * ``oci jms jre-usage summarize --os-family --sort-by``
-    * ``oci jms managed-instance-usage summarize --os-family --sort-by``
+
+  * ``oci jms application-usage summarize --os-family --sort-by``
+  * ``oci jms installation-usage summarize --os-family --sort-by``
+  * ``oci jms jre-usage summarize --os-family --sort-by``
+  * ``oci jms managed-instance-usage summarize --os-family --sort-by``
 
 * Support for using Network Security Groups with API Gateway service
-    * ``oci api-gateway gateway create --network-security-group-ids``
-    * ``oci api-gateway gateway update --network-security-group-ids``
+
+  * ``oci api-gateway gateway create --network-security-group-ids``
+  * ``oci api-gateway gateway update --network-security-group-ids``
 
 * Support for Network Security Groups in Functions service
-    * ``oci fn application create --network-security-group-ids``
+
+  * ``oci fn application create --network-security-group-ids``
 
 * Support for a new parameter ``image-policy-config`` for Applications in Functions service
-    * ``oci fn application create --image-policy-config``
-    * ``oci fn application update --image-policy-config``
+
+  * ``oci fn application create --image-policy-config``
+  * ``oci fn application update --image-policy-config``
 
 * Support for a new optional field "messageFormat" which will enable customers to chose the format of alert message while creating and updating alarms in Monitoring service
-    * ``oci monitoring alarm create --message-format``
-    * ``oci monitoring alarm update --message-format``
+
+  * ``oci monitoring alarm create --message-format``
+  * ``oci monitoring alarm update --message-format``
 
 * Support for DataSafe User and Security Assessment features in Data Safe service
-    * ``oci data-safe security-assessment``
-    * ``oci data-safe user-assessment``
+
+  * ``oci data-safe security-assessment``
+  * ``oci data-safe user-assessment``
 
 * Support for upto micro-second precision for datatime parameters
 
@@ -62,13 +132,13 @@ Changed
 ~~~~~~~~~
 * [BREAKING] Remove redundant request-summarized operations.
 
-    * ``oci jms application-usage request-summarized``
-    * ``oci jms installation-usage request-summarized``
-    * ``oci jms jre-usage request-summarized``
-    * ``oci jms managed-instance-usage request-summarized``
+  * ``oci jms application-usage request-summarized``
+  * ``oci jms installation-usage request-summarized``
+  * ``oci jms jre-usage request-summarized``
+  * ``oci jms managed-instance-usage request-summarized``
 
 * Fixed bug in Management Dashborad service
-    * ``oci management-dashboard dashboard export``
+  * ``oci management-dashboard dashboard export``
 
 3.0.5 - 2021-09-14
 -------------------
@@ -76,11 +146,13 @@ Added
 ~~~~~
 
 * Interactive command for instance principal authentication setup for an existing Compute instance
+
   * ``oci setup instance-principal``
 
 * Support for browser-based config file creation for CLI commands that are run with a nonexistent config file and api_key auth
 
 * Support for --region, --config-location, and --profile-name options for browser-based CLI config file creation
+
   * ``oci setup bootstrap --region --config-location --profile-name``
 
 * Support for Shielded Instances in the Compute service
@@ -101,43 +173,55 @@ Added
 * Support for scheduled jobs in Database Management service
 
   * Create scheduled jobs for managed databases
+
     * ``oci database-management job``
 
   * Update a schedule job
+
     * ``oci database-management job update``
 
   * Get summary of job execution status
+
     * ``oci database-management job-executions-status summarize``
 
 *  Support for a unified way of managing both external and cloud databases in the Database Management service
 
   * Create private endpoints to be used for managing Cloud databases as part of Database Management service
+
     * ``oci database-management private-endpoint``
 
   * List databases that are managed using specified private endpoint
+
     * ``oci database-management associated-database-summary list-associated-databases``
 
   * Get metrics for a specified Pluggable Database (PDB) managed by Database Management service
+
     * ``oci database-management pdb-metrics``
 
   * Get health metrics for a fleet of databases filtered by database deployment type and database version
+
     * ``oci database-management fleet-health-metrics``
 
   * Support for using Secrets for executing a SQL job in Database Management service
+
     * ``oci database-management job``
 
   * Filter Managed Databases by their deployment type and management option
+
     * ``oci database-management managed-database``
 
 * Support for enable, disable, modify in Database Management service
+
   * ``oci db database enable-database-management``
   * ``oci db database disable-database-management ``
   * ``oci db database modify-database-management``
 
 * Support for getting the detailed log content of a job in the Resource Manager service
+
   * ``oci resource-manager job get-job-detailed-log-content``
 
 * Support for ``--max-wait-seconds``, ``--wait-for-state``, ``--wait-interval-seconds`` to Management Dashboard service
+
   * ``oci management-dashboard dashboard change-compartment``
   * ``oci management-dashboard saved-search change-compartment``
 
@@ -145,11 +229,13 @@ Changed
 ~~~~~~~
 
 * Support for terraform advanced options (detailed log level, refresh, and parallelism) on jobs in the Resource Manager service
+
   * ``oci resource-manager job create-plan-job --terraform-advanced-options``
   * ``oci resource-manager job create-apply-job --terraform-advanced-options``
   * ``oci resource-manager job create-destroy-job --terraform-advanced-options``
 
 * Support for forced cancellation when cancelling jobs in the Resource Manager service
+
   * ``oci resource-manager job cancel --is-forced``
 
 * Updated fallback virtualenv url in install.py script

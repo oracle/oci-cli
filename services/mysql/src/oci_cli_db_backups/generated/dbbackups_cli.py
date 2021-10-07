@@ -252,7 +252,7 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Backup Lifecycle State""")
 @cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
-@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTOMATIC"]), help=u"""Backup creationType""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTOMATIC", "OPERATOR"]), help=u"""Backup creationType""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Time fields are default ordered as descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ASC or DESC).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")
