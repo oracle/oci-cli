@@ -58,7 +58,7 @@ DRG_ATT_2_ID=$(oci network drg-attachment create --display-name "Drg Attachment 
 echo "Drg Attachment 2 ID: $DRG_ATT_2_ID"
 
 echo "Creating a new DRG Route Table"
-DRG_ROUTE_TABLE_ID=$(oci network drg-route-table create --display-name "Drg Route Table" --drg-id $DRG_ID --query data.id --raw-output)
+DRG_ROUTE_TABLE_ID=$(oci network drg-route-table create --display-name "Drg Route Table" --drg-id $DRG_ID --wait-for-state AVAILABLE --query data.id --raw-output)
 echo "Drg Route Table ID: $DRG_ROUTE_TABLE_ID"
 
 echo "Assign the newly created DRG route table to drg attachment 1 (with VCN1)."

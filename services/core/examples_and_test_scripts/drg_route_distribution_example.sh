@@ -97,7 +97,7 @@ EOF
 ROUTE_DISTRIBUTION_STATEMENTS=$(oci network drg-route-distribution-statement add --route-distribution-id $DRG_ROUTE_DISTRIBUTION_ID --statements file://$STATEMENTS_TO_ADD --query data --raw-output)
 
 echo "Create a new route table pointing to the route distribution."
-DRG_ROUTE_TABLE=$(oci network drg-route-table create --display-name "Drg Route Table" --drg-id $DRG_ID --import-route-distribution-id $DRG_ROUTE_DISTRIBUTION_ID --query data --raw-output)
+DRG_ROUTE_TABLE=$(oci network drg-route-table create --display-name "Drg Route Table" --drg-id $DRG_ID --wait-for-state AVAILABLE --import-route-distribution-id $DRG_ROUTE_DISTRIBUTION_ID --query data --raw-output)
 DRG_ROUTE_TABLE_ID=$(jq -r '.id' <<< "$DRG_ROUTE_TABLE")
 IMPORT_ROUTE_DISTRIBUTION_ID=$(jq -r '."import-drg-route-distribution-id"' <<< "$DRG_ROUTE_TABLE")
 echo "Drg Route Table ID: $DRG_ROUTE_TABLE_ID"

@@ -41,7 +41,7 @@ def sddc_summary_group():
     pass
 
 
-@click.command(cli_util.override('sddc.supported_sku_summary_group.command_name', 'supported-sku-summary'), cls=CommandGroupWithAlias, help="""A specific SKU. Oracle Cloud Infrastructure VMware Solution supports the following billing interval SKUs: HOUR, MONTH, ONE_YEAR, and THREE_YEARS.""")
+@click.command(cli_util.override('sddc.supported_sku_summary_group.command_name', 'supported-sku-summary'), cls=CommandGroupWithAlias, help="""A specific SKU.""")
 @cli_util.help_option_group
 def supported_sku_summary_group():
     pass
@@ -54,7 +54,7 @@ sddc_root_group.add_command(sddc_summary_group)
 sddc_root_group.add_command(supported_sku_summary_group)
 
 
-@sddc_group.command(name=cli_util.override('sddc.cancel_downgrade_hcx.command_name', 'cancel-downgrade-hcx'), help=u"""Cancel the pending SDDC downgrade from HCX Enterprise to HCX Advanced \n[Command Reference](cancelDowngradeHcx)""")
+@sddc_group.command(name=cli_util.override('sddc.cancel_downgrade_hcx.command_name', 'cancel-downgrade-hcx'), help=u"""Cancel the pending SDDC downgrade from HCX Enterprise to HCX Advanced. \n[Command Reference](cancelDowngradeHcx)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -162,7 +162,7 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--instance-display-name-prefix', help=u"""A prefix used in the name of each ESXi host and Compute instance in the SDDC. If this isn't set, the SDDC's `displayName` is used as the prefix.
 
 For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `mySDDC-2`, and so on.""")
-@cli_util.option('--initial-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""Billing option selected during SDDC creation. Oracle Cloud Infrastructure VMware Solution supports the following billing interval SKUs: HOUR, MONTH, ONE_YEAR, and THREE_YEARS. [ListSupportedSkus].""")
+@cli_util.option('--initial-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""The billing option selected during SDDC creation. [ListSupportedSkus].""")
 @cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX for this SDDC.""")
 @cli_util.option('--hcx-vlan-id', help=u"""The [OCID] of the VLAN to use for the HCX component of the VMware environment. This value is required only when `isHcxEnabled` is true.""")
 @cli_util.option('--is-hcx-enterprise-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX Enterprise for this SDDC.""")
@@ -321,8 +321,8 @@ def delete_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@sddc_group.command(name=cli_util.override('sddc.downgrade_hcx.command_name', 'downgrade-hcx'), help=u"""Downgrade the specified SDDC from HCX Enterprise to HCX Advanced \n[Command Reference](downgradeHcx)""")
-@cli_util.option('--reserving-hcx-on-premise-license-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The HCX on-premise licenses keys to be reserved when downgrade from HCX Enterprise to HCX Advanced.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@sddc_group.command(name=cli_util.override('sddc.downgrade_hcx.command_name', 'downgrade-hcx'), help=u"""Downgrade the specified SDDC from HCX Enterprise to HCX Advanced. Downgrading from HCX Enterprise to HCX Advanced reduces the number of provided license keys from 10 to 3. Downgrade remains in a `PENDING` state until the end of the current billing cycle. You can use [cancelDowngradeHcx] to cancel the downgrade while it's still in a `PENDING` state. \n[Command Reference](downgradeHcx)""")
+@cli_util.option('--reserving-hcx-on-premise-license-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The HCX on-premise license keys to be reserved when downgrading from HCX Enterprise to HCX Advanced.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -467,7 +467,7 @@ def list_sddcs(ctx, from_json, all_pages, page_size, compartment_id, compute_ava
     cli_util.render_response(result, ctx)
 
 
-@supported_sku_summary_group.command(name=cli_util.override('sddc.list_supported_skus.command_name', 'list-supported-skus'), help=u"""Lists supported SKUs. Oracle Cloud Infrastructure VMware Solution supports the following billing interval SKUs: HOUR, MONTH, ONE_YEAR, and THREE_YEARS. \n[Command Reference](listSupportedSkus)""")
+@supported_sku_summary_group.command(name=cli_util.override('sddc.list_supported_skus.command_name', 'list-supported-skus'), help=u"""Lists supported SKUs. \n[Command Reference](listSupportedSkus)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")

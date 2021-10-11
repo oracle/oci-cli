@@ -23,6 +23,10 @@ service_mapping = {
         "apigateway",
         "API Gateway"
     ],
+    "apm-config": [
+        "apm_config",
+        "Apm Configuration"
+    ],
     "apm-control-plane": [
         "apm_control_plane",
         "Application Performance Monitoring (APM) Control Plane"
@@ -98,6 +102,14 @@ service_mapping = {
     "data-integration": [
         "data_integration",
         "Data Integration"
+    ],
+    "data-labeling-service": [
+        "data_labeling_service",
+        "DataLabelingService"
+    ],
+    "data-labeling-service-dataplane": [
+        "data_labeling_service_dataplane",
+        "DlsDataPlane"
     ],
     "data-safe": [
         "data_safe",
@@ -318,6 +330,10 @@ service_mapping = {
     "waas": [
         "waas",
         "Web Application Acceleration and Security Services"
+    ],
+    "waf": [
+        "waf",
+        "Web Application Firewall (WAF)"
     ],
     "work-requests": [
         "work_requests",
