@@ -2275,7 +2275,7 @@ This option is a JSON list with items of type LogAnalyticsSource.  For documenta
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type. Default value is REGEX.""")
 @cli_util.option('--is-user-deleted', type=click.BOOL, help=u"""A flag indicating whether or not the parser has been deleted.""")
-@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON"]), help=u"""The parser type - possible values are XML or JSON.""")
+@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
 @json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2436,7 +2436,7 @@ This option is a JSON list with items of type LogAnalyticsSource.  For documenta
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type. Default value is REGEX.""")
 @cli_util.option('--is-user-deleted', type=click.BOOL, help=u"""A flag indicating whether or not the parser has been deleted.""")
-@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON"]), help=u"""The parser type - possible values are XML or JSON.""")
+@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
 @json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2970,6 +2970,28 @@ def get_log_analytics_object_collection_rule(ctx, from_json, namespace_name, log
     result = client.get_log_analytics_object_collection_rule(
         namespace_name=namespace_name,
         log_analytics_object_collection_rule_id=log_analytics_object_collection_rule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@storage_group.command(name=cli_util.override('log_analytics.get_log_sets_count.command_name', 'get-log-sets-count'), help=u"""This API returns the count of distinct log sets. \n[Command Reference](getLogSetsCount)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogSetsCount'})
+@cli_util.wrap_exceptions
+def get_log_sets_count(ctx, from_json, namespace_name):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.get_log_sets_count(
+        namespace_name=namespace_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4448,14 +4470,15 @@ def list_log_analytics_object_collection_rules(ctx, from_json, all_pages, page_s
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--log-set-name-contains', multiple=True, help=u"""If this filter is present, each of the logsets returned must contain the value of this filter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'log-set-name-contains': {'module': 'log_analytics', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogSetCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-set-name-contains': {'module': 'log_analytics', 'class': 'list[string]'}}, output_type={'module': 'log_analytics', 'class': 'LogSetCollection'})
 @cli_util.wrap_exceptions
-def list_log_sets(ctx, from_json, all_pages, page_size, namespace_name, limit, page, sort_order):
+def list_log_sets(ctx, from_json, all_pages, page_size, namespace_name, limit, page, sort_order, log_set_name_contains):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4470,6 +4493,8 @@ def list_log_sets(ctx, from_json, all_pages, page_size, namespace_name, limit, p
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if log_set_name_contains is not None and len(log_set_name_contains) > 0:
+        kwargs['log_set_name_contains'] = log_set_name_contains
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     if all_pages:

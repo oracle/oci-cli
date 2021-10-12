@@ -73,6 +73,7 @@ apm_synthetics_root_group.add_command(script_group)
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -86,7 +87,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'configuration': {'module': 'apm_synthetics', 'class': 'MonitorConfiguration'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags):
+def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -102,6 +103,9 @@ def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, va
 
     if status is not None:
         _details['status'] = status
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -138,6 +142,7 @@ def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, va
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -146,12 +151,13 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried):
+def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -168,6 +174,9 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
 
     if status is not None:
         _details['status'] = status
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -186,6 +195,9 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
 
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
 
     _details['configuration']['configType'] = 'SCRIPTED_REST_CONFIG'
 
@@ -206,6 +218,7 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -215,12 +228,13 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_certificate_validation_enabled):
+def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -237,6 +251,9 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
 
     if status is not None:
         _details['status'] = status
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -259,6 +276,9 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
     if configuration_is_certificate_validation_enabled is not None:
         _details['configuration']['isCertificateValidationEnabled'] = configuration_is_certificate_validation_enabled
 
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
+
     _details['configuration']['configType'] = 'SCRIPTED_BROWSER_CONFIG'
 
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
@@ -278,6 +298,7 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -300,12 +321,13 @@ This option is a JSON list with items of type RequestQueryParam.  For documentat
 @cli_util.option('--configuration-request-post-body', help=u"""Request post body content.""")
 @cli_util.option('--configuration-verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @cli_util.option('--configuration-verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}})
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes):
+def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -322,6 +344,9 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
 
     if status is not None:
         _details['status'] = status
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -371,6 +396,9 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
     if configuration_verify_response_codes is not None:
         _details['configuration']['verifyResponseCodes'] = cli_util.parse_json_parameter("configuration_verify_response_codes", configuration_verify_response_codes)
 
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
+
     _details['configuration']['configType'] = 'REST_CONFIG'
 
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
@@ -390,6 +418,7 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -402,12 +431,13 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verify all the search strings present in response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}})
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_verify_texts):
+def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_verify_texts, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -424,6 +454,9 @@ def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, 
 
     if status is not None:
         _details['status'] = status
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -448,6 +481,9 @@ def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, 
 
     if configuration_verify_texts is not None:
         _details['configuration']['verifyTexts'] = cli_util.parse_json_parameter("configuration_verify_texts", configuration_verify_texts)
+
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
 
     _details['configuration']['configType'] = 'BROWSER_CONFIG'
 
@@ -587,11 +623,11 @@ def get_monitor(ctx, from_json, apm_domain_id, monitor_id):
     cli_util.render_response(result, ctx)
 
 
-@monitor_result_group.command(name=cli_util.override('apm_synthetics.get_monitor_result.command_name', 'get'), help=u"""Gets the results for a specific execution of a monitor identified by OCID. The results are in a HAR file, Screenshot, or Console Log. \n[Command Reference](getMonitorResult)""")
+@monitor_result_group.command(name=cli_util.override('apm_synthetics.get_monitor_result.command_name', 'get'), help=u"""Gets the results for a specific execution of a monitor identified by OCID. The results are in a HAR file, Screenshot, Console Log or Network details. \n[Command Reference](getMonitorResult)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--vantage-point', required=True, help=u"""The vantagePoint name.""")
-@cli_util.option('--result-type', required=True, help=u"""The result type har or screenshot or log.""")
+@cli_util.option('--result-type', required=True, help=u"""The result type har, screenshot, log or network.""")
 @cli_util.option('--result-content-type', required=True, help=u"""The result content type zip or raw.""")
 @cli_util.option('--execution-time', required=True, help=u"""The time the object was posted.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -846,6 +882,7 @@ def list_scripts(ctx, from_json, all_pages, page_size, apm_domain_id, display_na
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -861,7 +898,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'configuration': {'module': 'apm_synthetics', 'class': 'MonitorConfiguration'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags, if_match):
+def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags, if_match):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -891,6 +928,9 @@ def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_nam
 
     if repeat_interval_in_seconds is not None:
         _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -928,6 +968,7 @@ def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_nam
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -937,13 +978,14 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried):
+def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -975,6 +1017,9 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
     if repeat_interval_in_seconds is not None:
         _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
 
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
+
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
 
@@ -992,6 +1037,9 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
 
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
 
     _details['configuration']['configType'] = 'SCRIPTED_REST_CONFIG'
 
@@ -1013,6 +1061,7 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -1023,13 +1072,14 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_certificate_validation_enabled):
+def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1060,6 +1110,9 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
 
     if repeat_interval_in_seconds is not None:
         _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -1082,6 +1135,9 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
     if configuration_is_certificate_validation_enabled is not None:
         _details['configuration']['isCertificateValidationEnabled'] = configuration_is_certificate_validation_enabled
 
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
+
     _details['configuration']['configType'] = 'SCRIPTED_BROWSER_CONFIG'
 
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
@@ -1102,6 +1158,7 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -1125,13 +1182,14 @@ This option is a JSON list with items of type RequestQueryParam.  For documentat
 @cli_util.option('--configuration-request-post-body', help=u"""Request post body content.""")
 @cli_util.option('--configuration-verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @cli_util.option('--configuration-verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes):
+def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1162,6 +1220,9 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
 
     if repeat_interval_in_seconds is not None:
         _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
@@ -1211,6 +1272,9 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
     if configuration_verify_response_codes is not None:
         _details['configuration']['verifyResponseCodes'] = cli_util.parse_json_parameter("configuration_verify_response_codes", configuration_verify_response_codes)
 
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
+
     _details['configuration']['configType'] = 'REST_CONFIG'
 
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
@@ -1231,6 +1295,7 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
@@ -1244,13 +1309,14 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verify all the search strings present in response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_verify_texts):
+def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_verify_texts, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1282,6 +1348,9 @@ def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_doma
     if repeat_interval_in_seconds is not None:
         _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
 
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
+
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
 
@@ -1305,6 +1374,9 @@ def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_doma
 
     if configuration_verify_texts is not None:
         _details['configuration']['verifyTexts'] = cli_util.parse_json_parameter("configuration_verify_texts", configuration_verify_texts)
+
+    if configuration_network_configuration is not None:
+        _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
 
     _details['configuration']['configType'] = 'BROWSER_CONFIG'
 

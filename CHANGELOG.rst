@@ -6,6 +6,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.1.2 - 2021-10-12
+------------------
+Added
+~~~~~
+* Support for Web Application Firewall service
+
+  * ``oci waf``
+
+* Support for Application Performance Monitoring Configuration service
+
+  * ``oci apm-config``
+
+* Support for Data Labeling Service Control Plane
+
+  * ``oci data-labeling-service``
+
+* Support for Data Labeling Service Data Plane
+
+  * ``oci data-labeling-service-dataplane``
+
+* Log Analytics service
+
+  * Support for partitioning/searching data via logset
+
+    * ``oci log-analytics storage get-log-sets-count``
+
+  * Support for filtering by log-set-name-contains from the existing list-log-sets API
+
+    * ``oci log-analytics storage list-log-sets --log-set-name-contains``
+
+* Application Performance Monitoring Synthetic service
+
+  * Support for run once feature in monitor.
+
+    * ``oci apm-synthetics monitor create-rest-monitor --is-run-once``
+
+  * Support for enabling network data collection on the monitor by providing a network configuration
+
+    * ``oci apm-synthetics monitor create-browser-monitor --configuration-network-configuration``
+
 3.1.1 - 2021-10-05
 ------------------
 Added

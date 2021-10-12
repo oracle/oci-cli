@@ -57,7 +57,7 @@ DRG_ATT_2_ID=$(oci network drg-attachment create --display-name "Drg Attachment 
 echo "Drg Attachment 2 ID: $DRG_ATT_2_ID"
 
 echo "Creating a new DRG Route Table"
-DRG_ROUTE_TABLE=$(oci network drg-route-table create --display-name "Drg Route Table" --drg-id $DRG_ID --query data --raw-output)
+DRG_ROUTE_TABLE=$(oci network drg-route-table create --display-name "Drg Route Table" --drg-id $DRG_ID --wait-for-state AVAILABLE --query data --raw-output)
 DRG_ROUTE_TABLE_ID=$(jq -r '.id' <<< "$DRG_ROUTE_TABLE")
 IMPORT_ROUTE_DISTRIBUTION_ID=$(jq -r '."import-drg-route-distribution-id"' <<< "$DRG_ROUTE_TABLE")
 echo "Drg Route Table ID: $DRG_ROUTE_TABLE_ID"
