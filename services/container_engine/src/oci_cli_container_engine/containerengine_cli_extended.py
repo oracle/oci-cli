@@ -398,6 +398,8 @@ def _merge_kubeconfig(new_kubeconfig, file):
 def _merge_kubeconfig_yaml(dst_yaml, src_yaml, merge_key):
     if src_yaml[merge_key] is None:
         return
+    if dst_yaml[merge_key] is None:
+        dst_yaml[merge_key] = []
     tmp_yaml = dict(dst_yaml)
     for i in src_yaml[merge_key]:
         match = False
