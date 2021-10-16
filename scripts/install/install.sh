@@ -279,8 +279,8 @@ if [ "${python3_is_installed}" == "false" ]; then
           read -p "OCI CLI will only run on Python 3.6 or higher. Would you like to upgrade to Python 3? Please enter Y or N. " answer
           case $answer in
            [yY]* ) echo "Installing Python 3...";
-              need_to_install_python=true;
-              python_exe=python3; break;;
+              need_to_install_python=true
+              break;;
            [nN]* ) break;;
            * )     echo "Please enter Y or N !";;
           esac
