@@ -254,9 +254,10 @@ python_exe=python
 python3_is_installed=false
 
 # if both python and python3 exist and are a sufficiently recent version, we will prefer python3
+# this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
+python_version_check="import sys; valid = sys.version_info >= (3, 6, 0); sys.exit(0 if valid else 1)"
 for try_python_exe in python3 python; do
-    # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    $try_python_exe -c "import sys; v = sys.version_info; valid = v >= (3, 6, 0); sys.exit(0) if valid else sys.exit(1)" >/dev/null 2>&1
+    $try_python_exe -c "$python_version_check" >/dev/null 2>&1
     python_ok=$?
     if [ $python_ok -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
@@ -346,16 +347,9 @@ if [ "$need_to_install_python" = true ]; then
 fi
 
 # Check if Python installation is correct
-# This python command returns an exit code of 1 if there is an exception, otherwise 0
-$python_exe - << EOF
-import sys;
-try:
-  import argparse;
-except:
-  sys.exit(1)
-EOF
+$python_exe -c "$python_version_check" >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-  echo "Python is not working correctly. Please read common errors in the following link. https://github.com/oracle/oci-cli/blob/master/COMMON-ISSUES.rst" && exit
+  echo "Python is not working correctly. Please read common errors in the following link. https://github.com/oracle/oci-cli/blob/master/COMMON_ISSUES.rst" && exit
 fi
 
 # In the future native dependency setup will be done in this script.
