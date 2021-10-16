@@ -266,8 +266,9 @@ if [ $py_ver -eq 0 ] || [ $py3_ver -eq 0 ]; then
     if [ $? -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
-        # if valid python, check if system doesn't have python 3 installed
+        python3_is_installed=true
 
+        # if valid python, check if system doesn't have python 3 installed
         if [ $py3_ver -eq 1 ]; then
             # Ask user if they would like to upgrade to python 3
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ] &&  ["${OFFLINE_INSTALL}" != "true" ]; then
@@ -283,8 +284,6 @@ if [ $py_ver -eq 0 ] || [ $py3_ver -eq 0 ]; then
                   esac
                 done
             fi
-        else
-          python3_is_installed=true
         fi
     else
         echo "System version of Python must be a Python 3 version >= 3.6.0."
