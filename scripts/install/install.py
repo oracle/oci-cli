@@ -559,9 +559,9 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
 def verify_python_version():
     print_status('Verifying Python version.')
     v = sys.version_info
-    valid_version = v >= (2, 7, 5) if v.major == 2 else v >= (3, 6, 0)
+    valid_version = v >= (3, 6, 0)
     if not valid_version:
-        raise CLIInstallError('The CLI does not support Python 3 versions less than 3.6.0.')
+        raise CLIInstallError('The CLI does not support Python versions less than 3.6.0.')
     if 'conda' in sys.version:
         raise CLIInstallError("This script does not support the Python Anaconda environment. "
                               "Create an Anaconda virtual environment and install with 'pip'")
