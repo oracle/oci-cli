@@ -262,7 +262,7 @@ py3_ver=$?
 if [ $py_ver -eq 0 ] || [ $py3_ver -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    python -c "import sys; v = sys.version_info; valid = v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
+    python -c "import sys; v = sys.version_info; valid = v >= (3, 6, 0); sys.exit(0) if valid else sys.exit(1)"
     if [ $? -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
@@ -301,7 +301,7 @@ command -v python3 >/dev/null 2>&1
 if [ $? -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    python3 -c "import sys; v = sys.version_info; valid = v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
+    python3 -c "import sys; v = sys.version_info; valid = v >= (3, 6, 0); sys.exit(0) if valid else sys.exit(1)"
     if [ $? -eq 0 ]; then
         python_exe=python3
         # if python is installed and meets the version requirements then we dont need to install it
