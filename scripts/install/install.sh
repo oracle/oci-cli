@@ -268,8 +268,7 @@ if [ $py_ver -eq 0 ] || [ $py3_ver -eq 0 ]; then
         need_to_install_python=false
         # if valid python, check if system doesn't have python 3 installed
 
-        command -v python3 >/dev/null 2>&1
-        if [ $? -eq 1 ]; then
+        if [ $py3_ver -eq 1 ]; then
             # Ask user if they would like to upgrade to python 3
             if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ] &&  ["${OFFLINE_INSTALL}" != "true" ]; then
                 while true
@@ -297,8 +296,7 @@ fi
 
 # some OSes have python3 as a command but not 'python' (example: Ubuntu 16.04)
 # if both python and python3 exist and are a sufficiently recent version, we will prefer python3
-command -v python3 >/dev/null 2>&1
-if [ $? -eq 0 ]; then
+if [ $py3_ver -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
     python3 -c "import sys; v = sys.version_info; valid = v >= (3, 6, 0); sys.exit(0) if valid else sys.exit(1)"
