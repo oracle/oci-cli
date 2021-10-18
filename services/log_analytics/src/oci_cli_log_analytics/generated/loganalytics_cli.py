@@ -87,6 +87,12 @@ def log_analytics_label_group():
     pass
 
 
+@click.command(cli_util.override('log_analytics.log_analytics_preference_group.command_name', 'log-analytics-preference'), cls=CommandGroupWithAlias, help="""The preference information""")
+@cli_util.help_option_group
+def log_analytics_preference_group():
+    pass
+
+
 @click.command(cli_util.override('log_analytics.char_encoding_collection_group.command_name', 'char-encoding-collection'), cls=CommandGroupWithAlias, help="""List of supported character encodings.""")
 @cli_util.help_option_group
 def char_encoding_collection_group():
@@ -188,6 +194,7 @@ log_analytics_root_group.add_command(work_request_group)
 log_analytics_root_group.add_command(log_analytics_lookup_group)
 log_analytics_root_group.add_command(work_request_log_group)
 log_analytics_root_group.add_command(log_analytics_label_group)
+log_analytics_root_group.add_command(log_analytics_preference_group)
 log_analytics_root_group.add_command(char_encoding_collection_group)
 log_analytics_root_group.add_command(work_request_error_group)
 log_analytics_root_group.add_command(log_analytics_source_group)
@@ -285,6 +292,7 @@ def add_source_event_types(ctx, from_json, namespace_name, source_name, items):
 @cli_util.option('--is-force', type=click.BOOL, help=u"""is force""")
 @cli_util.option('--char-encoding', help=u"""The character encoding of the uploaded file.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -293,7 +301,7 @@ def add_source_event_types(ctx, from_json, namespace_name, source_name, items):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def append_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, append_lookup_file_body, is_force, char_encoding, if_match):
+def append_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, append_lookup_file_body, is_force, char_encoding, if_match, expect):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -308,6 +316,8 @@ def append_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         kwargs['char_encoding'] = char_encoding
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if expect is not None:
+        kwargs['expect'] = expect
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -892,17 +902,18 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
 @cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8859_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether or not this rule is currently enabled.""")
 @cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The override is used to modify some important configuration properties for objects matching a specific pattern inside the bucket. Supported propeties for override are: logSourceName, charEncoding, entityId. Supported matchType for override are \"contains\".""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--object-name-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""When the filters are provided, only the objects matching the filters are picked up for processing. The matchType supported is exact match and accommodates wildcard \"*\". For more information on filters, see [Event Filters].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
-def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, log_source_name, description, collection_type, poll_since, poll_till, entity_id, char_encoding, is_enabled, overrides, defined_tags, freeform_tags):
+def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, log_source_name, description, collection_type, poll_since, poll_till, entity_id, char_encoding, is_enabled, overrides, object_name_filters, defined_tags, freeform_tags):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -941,6 +952,9 @@ def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, 
 
     if overrides is not None:
         _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
+
+    if object_name_filters is not None:
+        _details['objectNameFilters'] = cli_util.parse_json_parameter("object_name_filters", object_name_filters)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -2275,13 +2289,14 @@ This option is a JSON list with items of type LogAnalyticsSource.  For documenta
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type. Default value is REGEX.""")
 @cli_util.option('--is-user-deleted', type=click.BOOL, help=u"""A flag indicating whether or not the parser has been deleted.""")
-@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
+@cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
+@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "DELIMITED"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
 @json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogFieldResults'})
 @cli_util.wrap_exceptions
-def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, parser_type):
+def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, parser_type):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2385,6 +2400,9 @@ def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, 
 
     if is_user_deleted is not None:
         _details['isUserDeleted'] = is_user_deleted
+
+    if is_namespace_aware is not None:
+        _details['isNamespaceAware'] = is_namespace_aware
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.extract_structured_log_field_paths(
@@ -2436,13 +2454,14 @@ This option is a JSON list with items of type LogAnalyticsSource.  For documenta
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type. Default value is REGEX.""")
 @cli_util.option('--is-user-deleted', type=click.BOOL, help=u"""A flag indicating whether or not the parser has been deleted.""")
-@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
+@cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
+@cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "DELIMITED"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
 @json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogHeaderResults'})
 @cli_util.wrap_exceptions
-def extract_structured_log_header_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, parser_type):
+def extract_structured_log_header_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, parser_type):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2546,6 +2565,9 @@ def extract_structured_log_header_paths(ctx, from_json, namespace_name, content,
 
     if is_user_deleted is not None:
         _details['isUserDeleted'] = is_user_deleted
+
+    if is_namespace_aware is not None:
+        _details['isNamespaceAware'] = is_namespace_aware
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.extract_structured_log_header_paths(
@@ -3117,6 +3139,40 @@ def get_parser_summary(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_preference_group.command(name=cli_util.override('log_analytics.get_preferences.command_name', 'get-preferences'), help=u"""Lists the preferences of the tenant. Currently, only \"DEFAULT_HOMEPAGE\" is supported. \n[Command Reference](getPreferences)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The attribute used to sort the returned preferences.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsPreferenceCollection'})
+@cli_util.wrap_exceptions
+def get_preferences(ctx, from_json, namespace_name, sort_order, sort_by, limit, page):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.get_preferences(
+        namespace_name=namespace_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @query_details_group.command(name=cli_util.override('log_analytics.get_query_result.command_name', 'get-query-result'), help=u"""Returns the intermediate results for a query that was specified to run asynchronously if the query has not completed, otherwise the final query results identified by a queryWorkRequestId returned when submitting the query execute asynchronously. \n[Command Reference](getQueryResult)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
@@ -3332,6 +3388,28 @@ def get_storage_work_request(ctx, from_json, work_request_id, namespace_name):
     cli_util.render_response(result, ctx)
 
 
+@upload_group.command(name=cli_util.override('log_analytics.get_unprocessed_data_bucket.command_name', 'get-unprocessed-data-bucket'), help=u"""This API retrieves details of the configured bucket that stores unprocessed payloads. \n[Command Reference](getUnprocessedDataBucket)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'UnprocessedDataBucket'})
+@cli_util.wrap_exceptions
+def get_unprocessed_data_bucket(ctx, from_json, namespace_name):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.get_unprocessed_data_bucket(
+        namespace_name=namespace_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @upload_group.command(name=cli_util.override('log_analytics.get_upload.command_name', 'get'), help=u"""Gets an On-Demand Upload info by reference. \n[Command Reference](getUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer upload container.""")
@@ -3390,12 +3468,13 @@ def get_work_request(ctx, from_json, namespace_name, work_request_id):
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--import-custom-content-file-body', required=True, help=u"""The file to upload which contains the custom content.""")
 @cli_util.option('--is-overwrite', type=click.BOOL, help=u"""A flag indicating whether or not to overwrite existing content if a conflict is found during import content operation.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsImportCustomContent'})
 @cli_util.wrap_exceptions
-def import_custom_content(ctx, from_json, namespace_name, import_custom_content_file_body, is_overwrite):
+def import_custom_content(ctx, from_json, namespace_name, import_custom_content_file_body, is_overwrite, expect):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -3403,6 +3482,8 @@ def import_custom_content(ctx, from_json, namespace_name, import_custom_content_
     kwargs = {}
     if is_overwrite is not None:
         kwargs['is_overwrite'] = is_overwrite
+    if expect is not None:
+        kwargs['expect'] = expect
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -6711,12 +6792,13 @@ def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--description', help=u"""The description for a created lookup.""")
 @cli_util.option('--char-encoding', help=u"""The character encoding of the uploaded file.""")
 @cli_util.option('--is-hidden', type=click.BOOL, help=u"""A flag indicating whether or not the new lookup should be hidden.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookup'})
 @cli_util.wrap_exceptions
-def register_lookup(ctx, from_json, namespace_name, type, register_lookup_content_file_body, name, description, char_encoding, is_hidden):
+def register_lookup(ctx, from_json, namespace_name, type, register_lookup_content_file_body, name, description, char_encoding, is_hidden, expect):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -6730,6 +6812,8 @@ def register_lookup(ctx, from_json, namespace_name, type, register_lookup_conten
         kwargs['char_encoding'] = char_encoding
     if is_hidden is not None:
         kwargs['is_hidden'] = is_hidden
+    if expect is not None:
+        kwargs['expect'] = expect
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -6841,6 +6925,38 @@ def remove_entity_associations(ctx, from_json, namespace_name, log_analytics_ent
         namespace_name=namespace_name,
         log_analytics_entity_id=log_analytics_entity_id,
         remove_entity_associations_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_preference_group.command(name=cli_util.override('log_analytics.remove_preferences.command_name', 'remove'), help=u"""Removes the tenant preferences. Currently, only \"DEFAULT_HOMEPAGE\" is supported. \n[Command Reference](removePreferences)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of tenant preference details.
+
+This option is a JSON list with items of type LogAnalyticsPreference.  For documentation on LogAnalyticsPreference please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsPreference.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsPreference]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsPreference]'}})
+@cli_util.wrap_exceptions
+def remove_preferences(ctx, from_json, namespace_name, items):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.remove_preferences(
+        namespace_name=namespace_name,
+        remove_preferences_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6972,6 +7088,33 @@ def run(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_end)
     cli_util.render_response(result, ctx)
 
 
+@upload_group.command(name=cli_util.override('log_analytics.set_unprocessed_data_bucket.command_name', 'set-unprocessed-data-bucket'), help=u"""This API configures a bucket to store unprocessed payloads. While processing there could be reasons a payload cannot be processed (mismatched structure, corrupted archive format, etc), if configured the payload would be uploaded to the bucket for verification. \n[Command Reference](setUnprocessedDataBucket)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--bucket-name', required=True, help=u"""Name of the Object Storage bucket.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""The enabled flag used for filtering.  Only items with the specified enabled value will be returned.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'UnprocessedDataBucket'})
+@cli_util.wrap_exceptions
+def set_unprocessed_data_bucket(ctx, from_json, namespace_name, bucket_name, is_enabled):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_enabled is not None:
+        kwargs['is_enabled'] = is_enabled
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.set_unprocessed_data_bucket(
+        namespace_name=namespace_name,
+        bucket_name=bucket_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @query_details_group.command(name=cli_util.override('log_analytics.suggest.command_name', 'suggest'), help=u"""Returns a context specific list of either commands, fields, or values to append to the end of the specified query string if applicable. \n[Command Reference](suggest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
@@ -7072,6 +7215,7 @@ This option is a JSON list with items of type LogAnalyticsParserFunction.  For d
 @cli_util.option('--field-delimiter', help=u"""The parser field delimiter.""")
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type.  Default value is REGEX.""")
+@cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["LOG_LINES", "LOG_ENTRIES", "LOG_LINES_LOG_ENTRIES"]), help=u"""The scope used when testing a parser.""")
 @cli_util.option('--req-origin-module', help=u"""The module to test.  A value of 'ParserFunctionTest' will result in testing of the parser functions.""")
 @json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'metadata': {'module': 'log_analytics', 'class': 'UiParserTestMetadata'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}})
@@ -7079,7 +7223,7 @@ This option is a JSON list with items of type LogAnalyticsParserFunction.  For d
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'metadata': {'module': 'log_analytics', 'class': 'UiParserTestMetadata'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}}, output_type={'module': 'log_analytics', 'class': 'ParserTestResult'})
 @cli_util.wrap_exceptions
-def test_parser(ctx, from_json, namespace_name, content, description, display_name, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, metadata, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, scope, req_origin_module):
+def test_parser(ctx, from_json, namespace_name, content, description, display_name, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, metadata, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_namespace_aware, scope, req_origin_module):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7170,6 +7314,9 @@ def test_parser(ctx, from_json, namespace_name, content, description, display_na
 
     if type is not None:
         _details['type'] = type
+
+    if is_namespace_aware is not None:
+        _details['isNamespaceAware'] = is_namespace_aware
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.test_parser(
@@ -7504,6 +7651,7 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
 @cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8859_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether or not this rule is currently enabled.""")
 @cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Use this to override some property values which are defined at bucket level to the scope of object. Supported propeties for override are: logSourceName, charEncoding, entityId. Supported matchType for override are \"contains\".""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--object-name-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""When the filters are provided, only the objects matching the filters are picked up for processing. The matchType supported is exact match and accommodates wildcard \"*\". For more information on filters, see [Event Filters].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7511,12 +7659,12 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
-def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, is_enabled, overrides, defined_tags, freeform_tags, if_match):
+def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, is_enabled, overrides, object_name_filters, defined_tags, freeform_tags, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7524,8 +7672,8 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
     if isinstance(log_analytics_object_collection_rule_id, six.string_types) and len(log_analytics_object_collection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-object-collection-rule-id cannot be whitespace or empty string')
     if not force:
-        if overrides or defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to overrides and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if overrides or object_name_filters or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to overrides and object-name-filters and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7555,6 +7703,9 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
 
     if overrides is not None:
         _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
+
+    if object_name_filters is not None:
+        _details['objectNameFilters'] = cli_util.parse_json_parameter("object_name_filters", object_name_filters)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -7659,6 +7810,7 @@ def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_ma
 @cli_util.option('--is-force', type=click.BOOL, help=u"""is force""")
 @cli_util.option('--char-encoding', help=u"""The character encoding of the uploaded file.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7667,7 +7819,7 @@ def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, update_lookup_file_body, is_force, char_encoding, if_match):
+def update_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, update_lookup_file_body, is_force, char_encoding, if_match, expect):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7682,6 +7834,8 @@ def update_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         kwargs['char_encoding'] = char_encoding
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if expect is not None:
+        kwargs['expect'] = expect
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -7717,6 +7871,38 @@ def update_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_preference_group.command(name=cli_util.override('log_analytics.update_preferences.command_name', 'update-preferences'), help=u"""Updates the tenant preferences. Currently, only \"DEFAULT_HOMEPAGE\" is supported. \n[Command Reference](updatePreferences)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of tenant preference details.
+
+This option is a JSON list with items of type LogAnalyticsPreference.  For documentation on LogAnalyticsPreference please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsPreference.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsPreference]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsPreference]'}})
+@cli_util.wrap_exceptions
+def update_preferences(ctx, from_json, namespace_name, items):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_preferences(
+        namespace_name=namespace_name,
+        update_preferences_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -7937,12 +8123,13 @@ def update_storage(ctx, from_json, force, namespace_name, archiving_configuratio
 @cli_util.option('--log-set', help=u"""The log set that gets associated with the uploaded logs.""")
 @cli_util.option('--payload-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "GZIP", "ZIP"]), help=u"""Identifies the type of request payload.""")
 @cli_util.option('--content-type', help=u"""The content type of the log data.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def upload_log_events_file(ctx, from_json, namespace_name, log_group_id, upload_log_events_file_details, log_set, payload_type, content_type):
+def upload_log_events_file(ctx, from_json, namespace_name, log_group_id, upload_log_events_file_details, log_set, payload_type, content_type, expect):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7954,6 +8141,8 @@ def upload_log_events_file(ctx, from_json, namespace_name, log_group_id, upload_
         kwargs['payload_type'] = payload_type
     if content_type is not None:
         kwargs['content_type'] = content_type
+    if expect is not None:
+        kwargs['expect'] = expect
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -7987,12 +8176,13 @@ def upload_log_events_file(ctx, from_json, namespace_name, log_group_id, upload_
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
 @cli_util.option('--content-type', help=u"""The content type of the log data.""")
 @cli_util.option('--log-set', help=u"""The log set that gets associated with the uploaded logs.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'Upload'})
 @cli_util.wrap_exceptions
-def upload_log_file(ctx, from_json, namespace_name, upload_name, log_source_name, filename, opc_meta_loggrpid, upload_log_file_body, entity_id, timezone, char_encoding, date_format, date_year, invalidate_cache, content_md5, content_type, log_set):
+def upload_log_file(ctx, from_json, namespace_name, upload_name, log_source_name, filename, opc_meta_loggrpid, upload_log_file_body, entity_id, timezone, char_encoding, date_format, date_year, invalidate_cache, content_md5, content_type, log_set, expect):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -8016,6 +8206,8 @@ def upload_log_file(ctx, from_json, namespace_name, upload_name, log_source_name
         kwargs['content_type'] = content_type
     if log_set is not None:
         kwargs['log_set'] = log_set
+    if expect is not None:
+        kwargs['expect'] = expect
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -8253,13 +8445,14 @@ This option is a JSON list with items of type LogAnalyticsParserFunction.  For d
 @cli_util.option('--field-delimiter', help=u"""The parser field delimiter.""")
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type.  Default value is REGEX.""")
+@cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsParser'})
 @cli_util.wrap_exceptions
-def upsert_parser(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, log_type_test_request_version, parser_ignoreline_characters, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, if_match):
+def upsert_parser(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, log_type_test_request_version, parser_ignoreline_characters, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_namespace_aware, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -8342,6 +8535,9 @@ def upsert_parser(ctx, from_json, namespace_name, content, description, display_
 
     if type is not None:
         _details['type'] = type
+
+    if is_namespace_aware is not None:
+        _details['isNamespaceAware'] = is_namespace_aware
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.upsert_parser(

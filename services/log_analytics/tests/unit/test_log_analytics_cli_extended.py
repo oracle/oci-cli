@@ -138,6 +138,22 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--file'])
         assert 'Error: --file option requires an argument' in result.output
 
+    # get-unprocessed-bucket renamed command
+    def test_get_unprocessed_bucket_renamed_command(self):
+        result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-data-bucket'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket'])
+        assert """Usage: oci log-analytics upload get-unprocessed-bucket [OPTIONS]""" in result.output
+
+    # set-unprocessed-bucket renamed command
+    def test_set_unprocessed_bucket_renamed_command(self):
+        result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-data-bucket'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket'])
+        assert """Usage: oci log-analytics upload set-unprocessed-bucket [OPTIONS]""" in result.output
+
     # upload namespace aliases
     def test_upload_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--namespace-name'])
@@ -271,6 +287,20 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--namespace'])
         assert 'Error: --namespace option requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
+        result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket', '-ns'])
         assert 'Error: -ns option requires an argument' in result.output
 
     # log analytics entity type renamed root group command
@@ -654,6 +684,27 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
         result = util.invoke_command(['log-analytics', 'source', 'disable-auto-assoc'])
         assert """Usage: oci log-analytics source disable-auto-assoc""" in result.output
+
+    def test_get_preferences_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-preference', 'get-preferences'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'preference', 'get'])
+        assert """Usage: oci log-analytics preference get""" in result.output
+
+    def test_remove_preferences_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-preference', 'remove'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'preference', 'remove'])
+        assert """Usage: oci log-analytics preference remove""" in result.output
+
+    def test_update_preferences_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-preference', 'update-preferences'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'preference', 'update'])
+        assert """Usage: oci log-analytics preference update""" in result.output
 
     def test_get_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'get', '--log-analytics-log-group-id'])

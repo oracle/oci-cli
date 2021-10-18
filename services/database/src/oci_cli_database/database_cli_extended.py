@@ -360,6 +360,7 @@ def launch_db_system_extended(ctx, **kwargs):
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
+@cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -386,6 +387,9 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     create_db_home_details = {}
     create_db_home_details['database'] = create_database_details
 
+    if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
+        create_db_home_details['databaseSoftwareImageId'] = kwargs['database_software_image_id']
+
     kwargs['db_home'] = json.dumps(create_db_home_details)
 
     if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
@@ -406,6 +410,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     del kwargs['ssh_authorized_keys_file']
     del kwargs['db_name']
     del kwargs['storage_management']
+    del kwargs['database_software_image_id']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_backup_details, **kwargs)
 
@@ -418,7 +423,8 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
-@cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
+@cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the database name and followed by an underscore.""")
+@cli_util.option('--sid-prefix', required=False, help="""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @cli_util.option('--tde-wallet-password', help="""The optional password to open the TDE wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DSS"]), help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
@@ -470,6 +476,9 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 
     if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
         create_database_details.db_unique_name = kwargs['db_unique_name']
+
+    if 'sid_prefix' in kwargs and kwargs['sid_prefix']:
+        create_database_details.sid_prefix = kwargs['sid_prefix']
 
     if 'db_workload' in kwargs and kwargs['db_workload']:
         create_database_details.db_workload = kwargs['db_workload']
@@ -564,6 +573,7 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 @cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
+@cli_util.option('--sid-prefix', required=False, help="""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -598,6 +608,9 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 
     if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
         create_database_details.db_unique_name = kwargs['db_unique_name']
+
+    if 'sid_prefix' in kwargs and kwargs['sid_prefix']:
+        create_database_details.sid_prefix = kwargs['sid_prefix']
 
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
@@ -1105,7 +1118,7 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_system_id, peer_db_home_id):
+def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_system_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
     kwargs = {}
 
     details = {}
@@ -1119,6 +1132,10 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
         details['databaseSoftwareImageId'] = database_software_image_id
     if peer_db_home_id is not None:
         details['peerDbHomeId'] = peer_db_home_id
+    if peer_db_unique_name is not None:
+        details['peerDbUniqueName'] = peer_db_unique_name
+    if peer_sid_prefix is not None:
+        details['peerSidPrefix'] = peer_sid_prefix
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
@@ -1129,7 +1146,7 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'peer_db_unique_name', 'peer_sid_prefix'])
 @create_data_guard_association_group.command('with-new-db-system', help="""Creates a new Data Guard association with a new DB System.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 
@@ -1186,7 +1203,7 @@ All Oracle Cloud Infrastructure resources, including Data Guard associations, ge
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_vm_cluster_id, peer_db_home_id):
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
 
     kwargs = {}
 
@@ -1201,6 +1218,10 @@ def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, datab
         details['databaseSoftwareImageId'] = database_software_image_id
     if peer_db_home_id is not None:
         details['peerDbHomeId'] = peer_db_home_id
+    if peer_db_unique_name is not None:
+        details['peerDbUniqueName'] = peer_db_unique_name
+    if peer_sid_prefix is not None:
+        details['peerSidPrefix'] = peer_sid_prefix
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
@@ -2363,3 +2384,193 @@ cli_util.rename_command(database_cli, database_cli.exadata_infrastructure_group,
 
 # oci db autonomous-database create-autonomous-database-create-cross-region-autonomous-database-data-guard-details -> oci db autonomous-database create-adb-cross-region-data-guard-details
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details, "create-adb-cross-region-data-guard-details")
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details, params_to_exclude=['autonomous_maintenance_schedule_type'])
+@database_cli.autonomous_database_group.command(name=database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details.name, help=database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details.help)
+@cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details_extended(ctx, **kwargs):
+    if 'maintenance_schedule_type' in kwargs:
+        kwargs['autonomous_maintenance_schedule_type'] = kwargs['maintenance_schedule_type']
+        kwargs.pop('maintenance_schedule_type')
+
+    ctx.invoke(database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details, **kwargs)
+
+
+# Renaming DB PDB conversion sub command and history group
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.list_pdb_conversion_history_entries, "list-pdb-conversion-history")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.pdb_conversion_history_entry_group, "pdb-conversion-history")
+
+# Removing the  generated polymorphic  commands as we are redefining them
+database_cli.database_group.commands.pop(database_cli.convert_to_pdb.name)
+database_cli.database_group.commands.pop(database_cli.convert_to_pdb_pdb_conversion_to_new_database_details.name)
+
+
+# Renaming the parameter pdb-conversion-history-entry-id to history-id
+@cli_util.copy_params_from_generated_command(database_cli.get_pdb_conversion_history_entry, params_to_exclude=['pdb_conversion_history_entry_id'])
+@cli_util.option('--history-id', required=True, help=u"""The database conversion history [OCID].""")
+@database_cli.pdb_conversion_history_entry_group.command(name='get', help=database_cli.pdb_conversion_history_entry_group.help)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PdbConversionHistoryEntry'})
+@cli_util.wrap_exceptions
+def pdb_conversion_history_entry_extended(ctx, **kwargs):
+    if 'history_id' in kwargs:
+        kwargs['pdb_conversion_history_entry_id'] = kwargs['history_id']
+        kwargs.pop('history_id')
+
+    ctx.invoke(database_cli.get_pdb_conversion_history_entry, **kwargs)
+
+
+# Renaming the parameter convert-to-pdb-target-details-cdb-name to cdb-name
+# Renaming the parameter convert-to-pdb-target-details-pdb-admin-password to pdb-admin-password
+# Renaming the parameter convert-to-pdb-target-details-cdb-tde-wallet-password to cdb-tde-password
+# Renaming the parameter convert-to-pdb-target-details-additional-cdb-params to additional-cdb-params
+# Renaming the parameter convert-to-pdb-target-details-non-cdb-tde-wallet-password to non-cdb-tde-password
+# Renaming the parameter convert-to-pdb-target-details-cdb-admin-password to cdb-admin-password
+# Renaming the convert-to-pdb-pdb-conversion-to-new-database-detail command to convert-to-new-pdb-precheck and removing parameter action
+@cli_util.copy_params_from_generated_command(database_cli.convert_to_pdb_pdb_conversion_to_new_database_details,
+                                             params_to_exclude=['convert_to_pdb_target_details_cdb_name',
+                                                                'convert_to_pdb_target_details_cdb_admin_password',
+                                                                'convert_to_pdb_target_details_non_cdb_tde_wallet_password',
+                                                                'convert_to_pdb_target_details_additional_cdb_params',
+                                                                'convert_to_pdb_target_details_cdb_tde_wallet_password',
+                                                                'convert_to_pdb_target_details_pdb_admin_password',
+                                                                'action'])
+@cli_util.option('--cdb-name', required=True,
+                 help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
+@cli_util.option('--cdb-admin-password', required=True,
+                 help=u"""A strong password for SYS, SYSTEM, and the plugbable database ADMIN user of the container database after conversion. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--non-cdb-tde-password', required=True,
+                 help=u"""The existing TDE wallet password of the non-container database.""")
+@cli_util.option('--additional-cdb-params',
+                 help=u"""Additional container database parameters. Example: \"_pdb_name_case_sensitive=true\"""")
+@cli_util.option('--cdb-tde-password',
+                 help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
+@cli_util.option('--pdb-admin-password',
+                 help=u"""A strong password for plugbable database ADMIN user of the container database after conversion. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
+@database_cli.database_group.command(name='convert-to-new-pdb-precheck', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def convert_to_pdb_pdb_conversion_to_new_database_details_precheck_extended(ctx, **kwargs):
+    if 'cdb_name' in kwargs and kwargs['cdb_name']:
+        kwargs['convert_to_pdb_target_details_cdb_name'] = kwargs['cdb_name']
+        kwargs.pop('cdb_name')
+
+    if 'cdb_admin_password' in kwargs and kwargs['cdb_admin_password']:
+        kwargs['convert_to_pdb_target_details_cdb_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
+
+    if 'non_cdb_tde_password' in kwargs and kwargs['non_cdb_tde_password']:
+        kwargs['convert_to_pdb_target_details_non_cdb_tde_wallet_password'] = kwargs['non_cdb_tde_password']
+        kwargs.pop('non_cdb_tde_password')
+
+    if 'additional_cdb_params' in kwargs and kwargs['additional_cdb_params']:
+        kwargs['convert_to_pdb_target_details_additional_cdb_params'] = kwargs['additional_cdb_params']
+
+    if 'cdb_tde_password' in kwargs and kwargs['cdb_tde_password']:
+        kwargs['convert_to_pdb_target_details_cdb_tde_wallet_password'] = kwargs['cdb_tde_password']
+
+    if 'pdb_admin_password' in kwargs and kwargs['pdb_admin_password']:
+        kwargs['convert_to_pdb_target_details_pdb_admin_password'] = kwargs['pdb_admin_password']
+
+    kwargs['action'] = "PRECHECK"
+
+    kwargs.pop('additional_cdb_params')
+    kwargs.pop('pdb_admin_password')
+    kwargs.pop('cdb_tde_password')
+
+    ctx.invoke(database_cli.convert_to_pdb_pdb_conversion_to_new_database_details, **kwargs)
+
+
+# Renaming the parameter convert-to-pdb-target-details-cdb-name to cdb-name
+# Renaming the parameter convert-to-pdb-target-details-pdb-admin-password to pdb-admin-password
+# Renaming the parameter convert-to-pdb-target-details-cdb-tde-wallet-password to cdb-tde-password
+# Renaming the parameter convert-to-pdb-target-details-additional-cdb-params to additional-cdb-params
+# Renaming the parameter convert-to-pdb-target-details-non-cdb-tde-wallet-password to non-cdb-tde-password
+# Renaming the parameter convert-to-pdb-target-details-cdb-admin-password to cdb-admin-password
+# Renaming the convert-to-pdb-pdb-conversion-to-new-database-detail command to convert-to-new-pdb and removing parameter action
+@cli_util.copy_params_from_generated_command(database_cli.convert_to_pdb_pdb_conversion_to_new_database_details,
+                                             params_to_exclude=['convert_to_pdb_target_details_cdb_name',
+                                                                'convert_to_pdb_target_details_cdb_admin_password',
+                                                                'convert_to_pdb_target_details_non_cdb_tde_wallet_password',
+                                                                'convert_to_pdb_target_details_additional_cdb_params',
+                                                                'convert_to_pdb_target_details_cdb_tde_wallet_password',
+                                                                'convert_to_pdb_target_details_pdb_admin_password',
+                                                                'action'])
+@cli_util.option('--cdb-name', required=True,
+                 help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
+@cli_util.option('--cdb-admin-password', required=True,
+                 help=u"""A strong password for SYS, SYSTEM, and the plugbable database ADMIN user of the container database after conversion. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--non-cdb-tde-password', required=True,
+                 help=u"""The existing TDE wallet password of the non-container database.""")
+@cli_util.option('--additional-cdb-params',
+                 help=u"""Additional container database parameters. Example: \"_pdb_name_case_sensitive=true\"""")
+@cli_util.option('--cdb-tde-password',
+                 help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
+@cli_util.option('--pdb-admin-password',
+                 help=u"""A strong password for plugbable database ADMIN user of the container database after conversion. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, \\#, or -.""")
+@database_cli.database_group.command(name='convert-to-new-pdb', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def convert_to_pdb_pdb_conversion_to_new_database_details_new_pdb_extended(ctx, **kwargs):
+    if 'cdb_name' in kwargs and kwargs['cdb_name']:
+        kwargs['convert_to_pdb_target_details_cdb_name'] = kwargs['cdb_name']
+        kwargs.pop('cdb_name')
+
+    if 'cdb_admin_password' in kwargs and kwargs['cdb_admin_password']:
+        kwargs['convert_to_pdb_target_details_cdb_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
+
+    if 'non_cdb_tde_password' in kwargs and kwargs['non_cdb_tde_password']:
+        kwargs['convert_to_pdb_target_details_non_cdb_tde_wallet_password'] = kwargs['non_cdb_tde_password']
+        kwargs.pop('non_cdb_tde_password')
+
+    if 'additional_cdb_params' in kwargs and kwargs['additional_cdb_params']:
+        kwargs['convert_to_pdb_target_details_additional_cdb_params'] = kwargs['additional_cdb_params']
+
+    if 'cdb_tde_password' in kwargs and kwargs['cdb_tde_password']:
+        kwargs['convert_to_pdb_target_details_cdb_tde_wallet_password'] = kwargs['cdb_tde_password']
+
+    if 'pdb_admin_password' in kwargs and kwargs['pdb_admin_password']:
+        kwargs['convert_to_pdb_target_details_pdb_admin_password'] = kwargs['pdb_admin_password']
+
+    kwargs['action'] = "CONVERT"
+
+    kwargs.pop('additional_cdb_params')
+    kwargs.pop('pdb_admin_password')
+    kwargs.pop('cdb_tde_password')
+
+    ctx.invoke(database_cli.convert_to_pdb_pdb_conversion_to_new_database_details, **kwargs)
+
+
+# Renaming the convert-to-pdb command to convert-to-pdb-rollback and removing parameter action
+@cli_util.copy_params_from_generated_command(database_cli.convert_to_pdb, params_to_exclude=['action', 'convert_to_pdb_target_details'])
+@database_cli.database_group.command('convert-to-pdb-sync-rollback', help=database_cli.database_group.help)
+@json_skeleton_utils.get_cli_json_input_option({'convert-to-pdb-target-details': {'module': 'database', 'class': 'ConvertToPdbTargetBase'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'convert-to-pdb-target-details': {'module': 'database', 'class': 'ConvertToPdbTargetBase'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def convert_to_pdb_rollback_extended(ctx, **kwargs):
+    kwargs['action'] = "SYNC_ROLLBACK"
+    ctx.invoke(database_cli.convert_to_pdb, **kwargs)
+
+
+# Renaming the convert-to-pdb command to convert-to-pdb-sync and removing parameter action
+@cli_util.copy_params_from_generated_command(database_cli.convert_to_pdb, params_to_exclude=['action', 'convert_to_pdb_target_details'])
+@database_cli.database_group.command('convert-to-pdb-sync', help=database_cli.database_group.help)
+@json_skeleton_utils.get_cli_json_input_option({'convert-to-pdb-target-details': {'module': 'database', 'class': 'ConvertToPdbTargetBase'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'convert-to-pdb-target-details': {'module': 'database', 'class': 'ConvertToPdbTargetBase'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def convert_to_pdb_sync_extended(ctx, **kwargs):
+    kwargs['action'] = "SYNC"
+    ctx.invoke(database_cli.convert_to_pdb, **kwargs)

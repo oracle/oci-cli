@@ -6,6 +6,61 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.2.0 - 2021-10-19
+------------------
+Added
+~~~~~
+* Support for Node subsetting feature for vmcluster resources for ExaCC in Database Service
+
+  * ``oci db vm-cluster add --db-servers``
+  * ``oci db vm-cluster create --db-servers``
+  * ``oci db vm-cluster remove --db-servers``
+
+* Support for convert to pdb, rollback, sync, sync-rollback, list-pdb-conversion-history, get-pdb-conversion-history in Database Service
+
+  * ``oci db database convert-to-new-pdb``
+  * ``oci db database convert-to-new-pdb-precheck``
+  * ``oci db database convert-to-pdb-sync``
+  * ``oci db database convert-to-pdb-sync-rollback``
+  * ``oci db database list-pdb-conversion-history``
+  * ``oci db pdb-conversion-history get --history-id``
+
+* Support to optionally provide peer database unique name AND SID prefix during database creation in ExaCS and ExaCC in Database Service
+
+  * ``oci db database create --sid-prefix``
+  * ``oci db database create-from-backup --sid-prefix``
+  * ``oci db data-guard-association create from-existing-db-system --peer-db-unique-name  --peer-sid-prefix``
+  * ``oci db data-guard-association create from-existing-vm-cluster --peer-db-unique-name  --peer-sid-prefix``
+
+* Support for a parameter for creating db system from the backup with database software image in Database Service
+
+  * ``oci db system launch-from-backup --database-software-image-id``
+
+* Support for preference get/update/remove in Log Analytics Service
+
+  * ``oci log-analytics preference get``
+  * ``oci log-analytics preference update``
+  * ``oci log-analytics preference remove``
+
+* Support for unprocessed data bucket in Log Analytics Service
+
+  * ``oci log-analytics upload set-unprocessed-bucket``
+  * ``oci log-analytics upload get-unprocessed-bucket``
+  * ``oci log-analytics source disable-auto-assoc``
+
+* Support for new parameter ``object-name-filters`` to object collection rule in Log Analytics Service
+
+  * ``oci log-analytics object-collection-rule create --object-name-filters``
+
+Changed
+~~~~~~~
+
+* Logic for CLI retries.
+
+  * Number of attempts is now 8 (previously 5)
+  * Maximum time for retries is now 600s (previously 300s)
+  * Exponential backoff with de-correlated jitter is used
+
 3.1.2 - 2021-10-12
 ------------------
 Added
