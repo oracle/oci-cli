@@ -29,7 +29,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.47.1',
+    'oci==2.48.0',
     'arrow>=1.0.0',
     'certifi',
     'click==7.1.2',
@@ -70,7 +70,7 @@ for package in packages:
         for pkg in package.split("."):
             package_dirs[package] = os.path.join(package_path, pkg)
             package_path = os.path.join(package_path, pkg)
-        all_packages.extend(service_packages)
+all_packages.extend(service_packages)
 
 setup(
     name='oci-cli',

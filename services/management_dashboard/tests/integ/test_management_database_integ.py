@@ -14,15 +14,19 @@ import os
 # Now you can run: oci management-dashboard dashboard export  --export-dashboard-id "{\"dashboardIds\":[\"<Dashboard Id\"]}"
 
 
-CASSETTE_LIBRARY_DIR = 'services/management_dashboard/tests/cassettes'
+CASSETTE_LIBRARY_DIR = 'services/management_dashboard/tests/cassettes/for_generated'
 
 
 @pytest.fixture(autouse=True, scope='function')
 def vcr_fixture(request):
-    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('management_dashboard_{name}.yml'.format(name=request.function.__name__)):
+    custom_vcr = test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR)
+
+    cassette_location = 'management_dashboard_{name}.yml'.format(name=request.function.__name__)
+    with custom_vcr.use_cassette(cassette_location):
         yield
 
 
+@pytest.mark.skip()
 def test_export_import_management_dashboard(runner, config_file, config_profile):
     params = [
         'management-dashboard', 'dashboard', 'export',

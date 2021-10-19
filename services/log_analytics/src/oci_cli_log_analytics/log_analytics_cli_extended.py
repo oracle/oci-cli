@@ -139,7 +139,7 @@ def get_log_analytics_object_collection_rule_extended(ctx, **kwargs):
 @loganalytics_cli.log_analytics_object_collection_rule_group.command(name='update', help=loganalytics_cli.update_log_analytics_object_collection_rule.help)
 @cli_util.option('--object-collection-rule-id', required=True, help="""The Logging Analytics Object Collection Rule [OCID]""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
 def update_log_analytics_object_collection_rule_extended(ctx, **kwargs):
     if 'object_collection_rule_id' in kwargs:
@@ -213,6 +213,16 @@ def upload_log_events_file_extended(ctx, **kwargs):
         ctx.invoke(loganalytics_cli.upload_log_events_file, **kwargs)
 
 
+# get-unprocessed-bucket
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.upload_group,
+                        loganalytics_cli.get_unprocessed_data_bucket, "get-unprocessed-bucket")
+
+
+# set-unprocessed-bucket
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.upload_group,
+                        loganalytics_cli.set_unprocessed_data_bucket, "set-unprocessed-bucket")
+
+
 # namespace aliases for uploads
 get_param(loganalytics_cli.upload_log_file, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.list_uploads, 'namespace_name').opts.extend(['--namespace', '-ns'])
@@ -233,7 +243,8 @@ get_param(loganalytics_cli.update_log_analytics_object_collection_rule, 'namespa
 get_param(loganalytics_cli.delete_log_analytics_object_collection_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.change_log_analytics_object_collection_rule_compartment, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.upload_log_events_file, 'namespace_name').opts.extend(['--namespace', '-ns'])
-
+get_param(loganalytics_cli.get_unprocessed_data_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.set_unprocessed_data_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
 # Entity type command and param changes
 
@@ -562,6 +573,9 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_gr
 # warning commands
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_warning_group, "warning")
 
+# preference commands
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_preference_group, "preference")
+
 # #########################
 # Top Level Commands - End
 # #########################
@@ -623,6 +637,11 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.enable_auto_association, "enable-auto-assoc")
 # disable-auto-association -> disable-auto-assoc
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.disable_auto_association, "disable-auto-assoc")
+
+# get-preferences -> get
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_preference_group, loganalytics_cli.get_preferences, "get")
+# update-preferences -> update
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_preference_group, loganalytics_cli.update_preferences, "update")
 
 # #########################
 # Sub Level Commands - End

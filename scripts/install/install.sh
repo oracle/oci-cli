@@ -342,13 +342,13 @@ if [ "$need_to_install_python" = true ]; then
             echo "ERROR: Required native dependencies were not installed, exiting install script. If you did not receive a prompt to install native dependencies please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
             exit 1
         fi
-        curl --tlsv1.2 -O https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
-        tar -xvzf Python-3.6.5.tgz
-        cd Python-3.6.5
-        python_exe=/usr/local/bin/python3.6
+        curl --tlsv1.2 -O https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
+        tar -xvzf Python-3.8.12.tgz
+        cd Python-3.8.12
+        python_exe=/usr/local/bin/python3.8
         if [ -n "$PYTHON_INSTALL_LOCATION" ]; then
             configure_args="prefix=$PYTHON_INSTALL_LOCATION"
-            python_exe="$PYTHON_INSTALL_LOCATION/bin/python3.6"
+            python_exe="$PYTHON_INSTALL_LOCATION/bin/python3.8"
         fi
         ./configure $configure_args
         make

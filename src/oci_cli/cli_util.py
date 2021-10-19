@@ -41,7 +41,7 @@ from . import cli_exceptions
 from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
 from oci import exceptions, config, Response
-from oci.retry import RetryStrategyBuilder
+from oci.retry import RetryStrategyBuilder, retry_checkers
 from oci._vendor import requests
 
 from .version import __version__
@@ -503,8 +503,9 @@ def build_client(spec_name, service_name, ctx):
         kwargs['retry_strategy'] = oci.retry.DEFAULT_RETRY_STRATEGY
         if 'max_attempts' in ctx.obj and ctx.obj['max_attempts']:
             kwargs['retry_strategy'] = RetryStrategyBuilder().add_max_attempts(max_attempts=ctx.obj['max_attempts']) \
-                .add_total_elapsed_time() \
-                .add_service_error_check() \
+                .add_total_elapsed_time(total_elapsed_time_seconds=600) \
+                .add_service_error_check(service_error_retry_config=retry_checkers.RETRYABLE_STATUSES_AND_CODES,
+                                         service_error_retry_on_any_5xx=True) \
                 .get_retry_strategy()
     else:
         kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()

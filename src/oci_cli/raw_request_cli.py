@@ -10,7 +10,7 @@ import six.moves
 from .cli_root import cli
 from . import cli_util
 from . import custom_types
-from oci.retry import RetryStrategyBuilder, DEFAULT_RETRY_STRATEGY
+from oci.retry import RetryStrategyBuilder, DEFAULT_RETRY_STRATEGY, retry_checkers
 
 
 @cli.command('raw-request', help="""Makes a raw request against an OCI service based on a provided URI, HTTP method and payload. This operation currently only supports JSON payloads.
@@ -63,8 +63,9 @@ def _make_raw_request(ctx, target_uri, http_method, request_body, request_header
     retry_strategy = DEFAULT_RETRY_STRATEGY
     if ctx.obj['max_attempts']:
         retry_strategy = RetryStrategyBuilder().add_max_attempts(max_attempts=ctx.obj['max_attempts']) \
-            .add_total_elapsed_time() \
-            .add_service_error_check() \
+            .add_total_elapsed_time(total_elapsed_time_seconds=600) \
+            .add_service_error_check(service_error_retry_config=retry_checkers.RETRYABLE_STATUSES_AND_CODES,
+                                     service_error_retry_on_any_5xx=True) \
             .get_retry_strategy()
     if ctx.obj['no_retry']:
         retry_strategy = oci.retry.NoneRetryStrategy()
