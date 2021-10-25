@@ -79,6 +79,14 @@ service_mapping = {
         "container_engine",
         "Container Engine for Kubernetes"
     ],
+    "certificates": [
+        "certificates",
+        "Certificates Service Retrieval"
+    ],
+    "certs-mgmt": [
+        "certificates_management",
+        "Certificates Service Management"
+    ],
     "cloud-guard": [
         "cloud_guard",
         "Cloud Guard"

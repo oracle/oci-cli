@@ -141,7 +141,7 @@ def change_sddc_compartment(ctx, from_json, sddc_id, compartment_id, if_match):
 Use the [WorkRequest] operations to track the creation of the SDDC.
 
 **Important:** You must configure the SDDC's networking resources with the security rules detailed in [Security Rules for Oracle Cloud VMware Solution SDDCs]. Otherwise, provisioning the SDDC will fail. The rules are based on the requirements set by VMware. \n[Command Reference](createSddc)""")
-@cli_util.option('--compute-availability-domain', required=True, help=u"""The availability domain to create the SDDC's ESXi hosts in.""")
+@cli_util.option('--compute-availability-domain', required=True, help=u"""The availability domain to create the SDDC's ESXi hosts in. For multi-AD SDDC deployment, set to `multi-AD`.""")
 @cli_util.option('--vmware-software-version', required=True, help=u"""The VMware software bundle to install on the ESXi hosts in the SDDC. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the SDDC.""")
 @cli_util.option('--esxi-hosts-count', required=True, type=click.INT, help=u"""The number of ESXi hosts to create in the SDDC. You can add more hosts later (see [CreateEsxiHost]).

@@ -6,6 +6,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.2.1 - 2021-10-26
+------------------
+Added
+~~~~~
+* Support for OCI Certificates service
+
+  * ``oci certs-mgmt``
+  * ``oci certificates``
+
+* Support for the following features in Devops service
+
+  * Support for build services
+
+    * ``oci devops build-pipeline``
+    * ``oci devops build-run``
+    * ``oci devops connection``
+
+  * Support for creating and managing repositories and triggers
+
+    * ``oci devops repository``
+    * ``oci devops trigger``
+
+* Support for creating child tenancies and managing subscription in Organizations service
+
+  * ``oci organizations organization``
+  * ``oci organizations organization-tenancy``
+  * ``oci organizations child-tenancy``
+  * ``oci organizations assigned-subscription``
+  * ``oci organizations subscription-mapping``
+  * ``oci organizations subscription``
+
+* Support for the following features in Operations Insights service
+
+  * Support for resource lifecycle operations on Enterprise Manager-based Exadata targets and capacity analytics
+
+    * ``oci opsi exadata-insights``
+
+  * Support for creating Enterprise Manager-based Host targets
+
+    * ``oci opsi host-insights create-em-external-host``
+
+* Support for creating esxi-hosts outside of the same AD in Oracle Cloud VMWare Solution service
+
+  * ``oci ocvs esxi-host create --compute-availability-domain``
+
+
 3.2.0 - 2021-10-19
 ------------------
 Added

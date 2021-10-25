@@ -33,7 +33,7 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('work_request.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of work request status.""")
+@click.command(cli_util.override('work_request.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of the work request status.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
