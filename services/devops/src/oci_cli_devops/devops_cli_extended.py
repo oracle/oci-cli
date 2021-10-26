@@ -898,3 +898,40 @@ cli_util.rename_command(devops_cli, devops_cli.work_request_log_entry_group, dev
 
 # Move commands under 'oci devops work-request work-request-log-entry' -> 'oci devops work-request work-request-log'
 cli_util.rename_command(devops_cli, devops_cli.devops_root_group, devops_cli.work_request_log_entry_group, "work-request-log")
+
+
+# oci devops repository put-repository-ref-put-repository-branch-details -> oci devops repository put-repository-ref-branch-details
+cli_util.rename_command(devops_cli, devops_cli.repository_group, devops_cli.put_repository_ref_put_repository_branch_details, "put-repository-ref-branch-details")
+
+
+# oci devops repository put-repository-ref-put-repository-tag-details -> oci devops repository put-repository-ref-tag-details
+cli_util.rename_command(devops_cli, devops_cli.repository_group, devops_cli.put_repository_ref_put_repository_tag_details, "put-repository-ref-tag-details")
+
+
+# Remove put-repository-ref from oci devops repository
+devops_cli.repository_group.commands.pop(devops_cli.put_repository_ref.name)
+
+
+# Move commands under 'oci devops repository-ref' -> 'oci devops repository'
+devops_cli.devops_root_group.commands.pop(devops_cli.repository_ref_group.name)
+devops_cli.repository_group.add_command(devops_cli.list_refs)
+
+
+# Move commands under 'oci devops repository-object' -> 'oci devops repository'
+devops_cli.devops_root_group.commands.pop(devops_cli.repository_object_group.name)
+devops_cli.repository_group.add_command(devops_cli.get_object)
+
+
+# Move commands under 'oci devops repository-commit' -> 'oci devops repository'
+devops_cli.devops_root_group.commands.pop(devops_cli.repository_commit_group.name)
+devops_cli.repository_group.add_command(devops_cli.list_commits)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.delete_ref, params_to_exclude=['is_forced'])
+@devops_cli.repository_group.command(name=devops_cli.delete_ref.name, help=devops_cli.delete_ref.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_ref_extended(ctx, **kwargs):
+
+    ctx.invoke(devops_cli.delete_ref, **kwargs)

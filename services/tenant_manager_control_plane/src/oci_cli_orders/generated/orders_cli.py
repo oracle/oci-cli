@@ -21,7 +21,7 @@ def orders_root_group():
     pass
 
 
-@click.command(cli_util.override('orders.order_group.command_name', 'order'), cls=CommandGroupWithAlias, help="""Order Details for Console plugin display""")
+@click.command(cli_util.override('orders.order_group.command_name', 'order'), cls=CommandGroupWithAlias, help="""Order details.""")
 @cli_util.help_option_group
 def order_group():
     pass
@@ -31,8 +31,8 @@ organizations_service_cli.organizations_service_group.add_command(orders_root_gr
 orders_root_group.add_command(order_group)
 
 
-@order_group.command(name=cli_util.override('orders.activate_order.command_name', 'activate'), help=u"""Triggers an order activation workflow on behalf of the tenant given by compartment id in the body. \n[Command Reference](activateOrder)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Tenant Id to activate the Order.""")
+@order_group.command(name=cli_util.override('orders.activate_order.command_name', 'activate'), help=u"""Triggers an order activation workflow on behalf of the tenant, given by compartment ID in the body. \n[Command Reference](activateOrder)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenant ID to activate the order.""")
 @cli_util.option('--activation-token', required=True, help=u"""Activation Token containing an order id. JWT RFC 7519 formatted string.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

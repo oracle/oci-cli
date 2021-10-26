@@ -21,9 +21,9 @@ def devops_root_group():
     pass
 
 
-@click.command(cli_util.override('devops.deploy_pipeline_group.command_name', 'deploy-pipeline'), cls=CommandGroupWithAlias, help="""A set of stages whose predecessor relation forms a directed acyclic graph.""")
+@click.command(cli_util.override('devops.build_pipeline_collection_group.command_name', 'build-pipeline-collection'), cls=CommandGroupWithAlias, help="""Results of an pipeline search.""")
 @cli_util.help_option_group
-def deploy_pipeline_group():
+def build_pipeline_collection_group():
     pass
 
 
@@ -39,33 +39,15 @@ def project_group():
     pass
 
 
-@click.command(cli_util.override('devops.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
-@cli_util.help_option_group
-def work_request_log_entry_group():
-    pass
-
-
-@click.command(cli_util.override('devops.deploy_artifact_group.command_name', 'deploy-artifact'), cls=CommandGroupWithAlias, help="""Artifacts are deployment manifests that are referenced in a pipeline stage for automated deployment to the target environment.  DevOps artifacts can be an OCI Container image repository, Kubernetes manifest, an Artifact Registry artifact, or defined inline.""")
-@cli_util.help_option_group
-def deploy_artifact_group():
-    pass
-
-
 @click.command(cli_util.override('devops.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Details of the work request status.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('devops.deployment_summary_group.command_name', 'deployment-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment.""")
+@click.command(cli_util.override('devops.repository_group.command_name', 'repository'), cls=CommandGroupWithAlias, help="""Description of Repository.""")
 @cli_util.help_option_group
-def deployment_summary_group():
-    pass
-
-
-@click.command(cli_util.override('devops.deploy_environment_group.command_name', 'deploy-environment'), cls=CommandGroupWithAlias, help="""The target OCI resources, such as Compute instances, Container Engine for Kubernetes(OKE) clusters, or Function, where artifacts will be deployed.""")
-@cli_util.help_option_group
-def deploy_environment_group():
+def repository_group():
     pass
 
 
@@ -81,15 +63,33 @@ def deploy_stage_summary_group():
     pass
 
 
+@click.command(cli_util.override('devops.build_pipeline_group.command_name', 'build-pipeline'), cls=CommandGroupWithAlias, help="""A set of stages whose predecessor relation forms a directed acyclic graph.""")
+@cli_util.help_option_group
+def build_pipeline_group():
+    pass
+
+
+@click.command(cli_util.override('devops.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""The properties that define a connection""")
+@cli_util.help_option_group
+def connection_group():
+    pass
+
+
 @click.command(cli_util.override('devops.project_summary_group.command_name', 'project-summary'), cls=CommandGroupWithAlias, help="""Summary of the project.""")
 @cli_util.help_option_group
 def project_summary_group():
     pass
 
 
-@click.command(cli_util.override('devops.deploy_environment_summary_group.command_name', 'deploy-environment-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment environment.""")
+@click.command(cli_util.override('devops.repository_path_summary_group.command_name', 'repository-path-summary'), cls=CommandGroupWithAlias, help="""Object containing information about files and directories in a repository""")
 @cli_util.help_option_group
-def deploy_environment_summary_group():
+def repository_path_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.connection_collection_group.command_name', 'connection-collection'), cls=CommandGroupWithAlias, help="""Collection of connections.""")
+@cli_util.help_option_group
+def connection_collection_group():
     pass
 
 
@@ -99,33 +99,138 @@ def deploy_stage_group():
     pass
 
 
-@click.command(cli_util.override('devops.deploy_pipeline_summary_group.command_name', 'deploy-pipeline-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment pipeline.""")
-@cli_util.help_option_group
-def deploy_pipeline_summary_group():
-    pass
-
-
 @click.command(cli_util.override('devops.deployment_group.command_name', 'deployment'), cls=CommandGroupWithAlias, help="""A single execution or run of a pipeline.""")
 @cli_util.help_option_group
 def deployment_group():
     pass
 
 
-devops_root_group.add_command(deploy_pipeline_group)
+@click.command(cli_util.override('devops.build_run_summary_group.command_name', 'build-run-summary'), cls=CommandGroupWithAlias, help="""Summary of the BuildRun.""")
+@cli_util.help_option_group
+def build_run_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.deploy_pipeline_group.command_name', 'deploy-pipeline'), cls=CommandGroupWithAlias, help="""A set of stages whose predecessor relation forms a directed acyclic graph.""")
+@cli_util.help_option_group
+def deploy_pipeline_group():
+    pass
+
+
+@click.command(cli_util.override('devops.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
+@cli_util.help_option_group
+def work_request_log_entry_group():
+    pass
+
+
+@click.command(cli_util.override('devops.deploy_artifact_group.command_name', 'deploy-artifact'), cls=CommandGroupWithAlias, help="""Artifacts are deployment manifests that are referenced in a pipeline stage for automated deployment to the target environment.  DevOps artifacts can be an OCI Container image repository, Kubernetes manifest, an Artifact Registry artifact, or defined inline.""")
+@cli_util.help_option_group
+def deploy_artifact_group():
+    pass
+
+
+@click.command(cli_util.override('devops.trigger_group.command_name', 'trigger'), cls=CommandGroupWithAlias, help="""Description of Trigger.""")
+@cli_util.help_option_group
+def trigger_group():
+    pass
+
+
+@click.command(cli_util.override('devops.deployment_summary_group.command_name', 'deployment-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment.""")
+@cli_util.help_option_group
+def deployment_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.repository_commit_group.command_name', 'repository-commit'), cls=CommandGroupWithAlias, help="""Commit object with commit information""")
+@cli_util.help_option_group
+def repository_commit_group():
+    pass
+
+
+@click.command(cli_util.override('devops.build_pipeline_stage_group.command_name', 'build-pipeline-stage'), cls=CommandGroupWithAlias, help="""A single step in a BuildPipeline. A stage takes a specific designated action. There are many types of stages. For eg. `Build` stage, `Deliver Artifact` Stage.""")
+@cli_util.help_option_group
+def build_pipeline_stage_group():
+    pass
+
+
+@click.command(cli_util.override('devops.repository_object_group.command_name', 'repository-object'), cls=CommandGroupWithAlias, help="""Object containing information about files and directories in a repository""")
+@cli_util.help_option_group
+def repository_object_group():
+    pass
+
+
+@click.command(cli_util.override('devops.deploy_environment_group.command_name', 'deploy-environment'), cls=CommandGroupWithAlias, help="""The target OCI resources, such as Compute instances, Container Engine for Kubernetes(OKE) clusters, or Function, where artifacts will be deployed.""")
+@cli_util.help_option_group
+def deploy_environment_group():
+    pass
+
+
+@click.command(cli_util.override('devops.build_run_group.command_name', 'build-run'), cls=CommandGroupWithAlias, help="""Each time we attempt to run a BuildPipeline we create one BuildRun. A BuildRun may be happening now, or it may be a record of the run that happened in the past. The set of BuildRuns constitutes a BuildPipeline's history.""")
+@cli_util.help_option_group
+def build_run_group():
+    pass
+
+
+@click.command(cli_util.override('devops.deploy_environment_summary_group.command_name', 'deploy-environment-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment environment.""")
+@cli_util.help_option_group
+def deploy_environment_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.trigger_collection_group.command_name', 'trigger-collection'), cls=CommandGroupWithAlias, help="""Results of a trigger search. Contains boh TriggerSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def trigger_collection_group():
+    pass
+
+
+@click.command(cli_util.override('devops.deploy_pipeline_summary_group.command_name', 'deploy-pipeline-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment pipeline.""")
+@cli_util.help_option_group
+def deploy_pipeline_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.build_pipeline_stage_summary_group.command_name', 'build-pipeline-stage-summary'), cls=CommandGroupWithAlias, help="""Summary of the Stage.""")
+@cli_util.help_option_group
+def build_pipeline_stage_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.repository_ref_group.command_name', 'repository-ref'), cls=CommandGroupWithAlias, help="""Ref object with name and commitId""")
+@cli_util.help_option_group
+def repository_ref_group():
+    pass
+
+
+devops_root_group.add_command(build_pipeline_collection_group)
 devops_root_group.add_command(deploy_artifact_summary_group)
 devops_root_group.add_command(project_group)
-devops_root_group.add_command(work_request_log_entry_group)
-devops_root_group.add_command(deploy_artifact_group)
 devops_root_group.add_command(work_request_group)
-devops_root_group.add_command(deployment_summary_group)
-devops_root_group.add_command(deploy_environment_group)
+devops_root_group.add_command(repository_group)
 devops_root_group.add_command(work_request_error_group)
 devops_root_group.add_command(deploy_stage_summary_group)
+devops_root_group.add_command(build_pipeline_group)
+devops_root_group.add_command(connection_group)
 devops_root_group.add_command(project_summary_group)
-devops_root_group.add_command(deploy_environment_summary_group)
+devops_root_group.add_command(repository_path_summary_group)
+devops_root_group.add_command(connection_collection_group)
 devops_root_group.add_command(deploy_stage_group)
-devops_root_group.add_command(deploy_pipeline_summary_group)
 devops_root_group.add_command(deployment_group)
+devops_root_group.add_command(build_run_summary_group)
+devops_root_group.add_command(deploy_pipeline_group)
+devops_root_group.add_command(work_request_log_entry_group)
+devops_root_group.add_command(deploy_artifact_group)
+devops_root_group.add_command(trigger_group)
+devops_root_group.add_command(deployment_summary_group)
+devops_root_group.add_command(repository_commit_group)
+devops_root_group.add_command(build_pipeline_stage_group)
+devops_root_group.add_command(repository_object_group)
+devops_root_group.add_command(deploy_environment_group)
+devops_root_group.add_command(build_run_group)
+devops_root_group.add_command(deploy_environment_summary_group)
+devops_root_group.add_command(trigger_collection_group)
+devops_root_group.add_command(deploy_pipeline_summary_group)
+devops_root_group.add_command(build_pipeline_stage_summary_group)
+devops_root_group.add_command(repository_ref_group)
 
 
 @deployment_group.command(name=cli_util.override('devops.approve_deployment.command_name', 'approve'), help=u"""Submit stage approval. \n[Command Reference](approveDeployment)""")
@@ -177,6 +282,63 @@ def approve_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_deployment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_run_group.command(name=cli_util.override('devops.cancel_build_run.command_name', 'cancel'), help=u"""Cancels the Build Run based on build run id provided in request \n[Command Reference](cancelBuildRun)""")
+@cli_util.option('--reason', required=True, help=u"""The reason for canceling the run.""")
+@cli_util.option('--build-run-id', required=True, help=u"""Unique build run identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildRun'})
+@cli_util.wrap_exceptions
+def cancel_build_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, reason, build_run_id, if_match):
+
+    if isinstance(build_run_id, six.string_types) and len(build_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reason'] = reason
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.cancel_build_run(
+        build_run_id=build_run_id,
+        cancel_build_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_build_run') and callable(getattr(client, 'get_build_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_build_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -277,6 +439,721 @@ def change_project_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
     result = client.change_project_compartment(
         project_id=project_id,
         change_project_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_group.command(name=cli_util.override('devops.create_build_pipeline.command_name', 'create'), help=u"""Creates a new BuildPipeline. \n[Command Reference](createBuildPipeline)""")
+@cli_util.option('--project-id', required=True, help=u"""Project Identifier""")
+@cli_util.option('--description', help=u"""Optional description about the BuildPipeline""")
+@cli_util.option('--display-name', help=u"""BuildPipeline display name""")
+@cli_util.option('--build-pipeline-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-parameters': {'module': 'devops', 'class': 'BuildPipelineParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-parameters': {'module': 'devops', 'class': 'BuildPipelineParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildPipeline'})
+@cli_util.wrap_exceptions
+def create_build_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, description, display_name, build_pipeline_parameters, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if build_pipeline_parameters is not None:
+        _details['buildPipelineParameters'] = cli_util.parse_json_parameter("build_pipeline_parameters", build_pipeline_parameters)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_pipeline(
+        create_build_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.create_build_pipeline_stage.command_name', 'create'), help=u"""Creates a new Stage. \n[Command Reference](createBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-type', required=True, help=u"""List of stage types. It includes 'Wait stage', 'Build Stage', 'Deliver Artifact Stage' and 'Trigger Deployment Stage'.""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""buildPipeline Identifier""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the Stage""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def create_build_pipeline_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_type, build_pipeline_id, build_pipeline_stage_predecessor_collection, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineStageType'] = build_pipeline_stage_type
+    _details['buildPipelineId'] = build_pipeline_id
+    _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_pipeline_stage(
+        create_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.create_build_pipeline_stage_create_deliver_artifact_stage_details.command_name', 'create-build-pipeline-stage-create-deliver-artifact-stage-details'), help=u"""Creates a new Stage. \n[Command Reference](createBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""buildPipeline Identifier""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deliver-artifact-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the Stage""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deliver-artifact-collection': {'module': 'devops', 'class': 'DeliverArtifactCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deliver-artifact-collection': {'module': 'devops', 'class': 'DeliverArtifactCollection'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def create_build_pipeline_stage_create_deliver_artifact_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, deliver_artifact_collection, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineId'] = build_pipeline_id
+    _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+    _details['deliverArtifactCollection'] = cli_util.parse_json_parameter("deliver_artifact_collection", deliver_artifact_collection)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['buildPipelineStageType'] = 'DELIVER_ARTIFACT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_pipeline_stage(
+        create_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.create_build_pipeline_stage_create_trigger_deployment_stage_details.command_name', 'create-build-pipeline-stage-create-trigger-deployment-stage-details'), help=u"""Creates a new Stage. \n[Command Reference](createBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""buildPipeline Identifier""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deploy-pipeline-id', required=True, help=u"""A target Pipeline ocid that will be run in this stage.""")
+@cli_util.option('--is-pass-all-parameters-enabled', required=True, type=click.BOOL, help=u"""A boolean flag specifies whether the parameters should be passed during the deployment trigger.""")
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the Stage""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def create_build_pipeline_stage_create_trigger_deployment_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, deploy_pipeline_id, is_pass_all_parameters_enabled, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineId'] = build_pipeline_id
+    _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+    _details['deployPipelineId'] = deploy_pipeline_id
+    _details['isPassAllParametersEnabled'] = is_pass_all_parameters_enabled
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['buildPipelineStageType'] = 'TRIGGER_DEPLOYMENT_PIPELINE'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_pipeline_stage(
+        create_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.create_build_pipeline_stage_create_wait_stage_details.command_name', 'create-build-pipeline-stage-create-wait-stage-details'), help=u"""Creates a new Stage. \n[Command Reference](createBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""buildPipeline Identifier""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the Stage""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'wait-criteria': {'module': 'devops', 'class': 'CreateWaitCriteriaDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'wait-criteria': {'module': 'devops', 'class': 'CreateWaitCriteriaDetails'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def create_build_pipeline_stage_create_wait_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, wait_criteria, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineId'] = build_pipeline_id
+    _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+    _details['waitCriteria'] = cli_util.parse_json_parameter("wait_criteria", wait_criteria)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['buildPipelineStageType'] = 'WAIT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_pipeline_stage(
+        create_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.create_build_pipeline_stage_create_build_stage_details.command_name', 'create-build-pipeline-stage-create-build-stage-details'), help=u"""Creates a new Stage. \n[Command Reference](createBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""buildPipeline Identifier""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image', required=True, help=u"""Image name for the Build Environment""")
+@cli_util.option('--build-source-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the Stage""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--build-spec-file', help=u"""The path to the build specification file for this Environment. The default location if not specified is build_spec.yaml""")
+@cli_util.option('--stage-execution-timeout-in-seconds', type=click.INT, help=u"""Timeout for the Build Stage Execution. Value in seconds.""")
+@cli_util.option('--primary-build-source', help=u"""Name of the BuildSource in which the build_spec.yml file need to be located. If not specified, the 1st entry in the BuildSource collection will be chosen as Primary.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, image, build_source_collection, display_name, description, freeform_tags, defined_tags, build_spec_file, stage_execution_timeout_in_seconds, primary_build_source):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineId'] = build_pipeline_id
+    _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+    _details['image'] = image
+    _details['buildSourceCollection'] = cli_util.parse_json_parameter("build_source_collection", build_source_collection)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if build_spec_file is not None:
+        _details['buildSpecFile'] = build_spec_file
+
+    if stage_execution_timeout_in_seconds is not None:
+        _details['stageExecutionTimeoutInSeconds'] = stage_execution_timeout_in_seconds
+
+    if primary_build_source is not None:
+        _details['primaryBuildSource'] = primary_build_source
+
+    _details['buildPipelineStageType'] = 'BUILD'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_pipeline_stage(
+        create_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_run_group.command(name=cli_util.override('devops.create_build_run.command_name', 'create'), help=u"""Starts a build pipeline run for a predefined build pipeline \n[Command Reference](createBuildRun)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""Pipeline Identifier""")
+@cli_util.option('--display-name', help=u"""BuildRun identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--commit-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--build-run-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'commit-info': {'module': 'devops', 'class': 'CommitInfo'}, 'build-run-arguments': {'module': 'devops', 'class': 'BuildRunArgumentCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'commit-info': {'module': 'devops', 'class': 'CommitInfo'}, 'build-run-arguments': {'module': 'devops', 'class': 'BuildRunArgumentCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildRun'})
+@cli_util.wrap_exceptions
+def create_build_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, display_name, commit_info, build_run_arguments, freeform_tags, defined_tags, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineId'] = build_pipeline_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if commit_info is not None:
+        _details['commitInfo'] = cli_util.parse_json_parameter("commit_info", commit_info)
+
+    if build_run_arguments is not None:
+        _details['buildRunArguments'] = cli_util.parse_json_parameter("build_run_arguments", build_run_arguments)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_build_run(
+        create_build_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_build_run') and callable(getattr(client, 'get_build_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_build_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.create_connection.command_name', 'create'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--project-id', required=True, help=u"""Project Identifier""")
+@cli_util.option('--connection-type', required=True, help=u"""The type of connection.""")
+@cli_util.option('--description', help=u"""Optional description about the Connection""")
+@cli_util.option('--display-name', help=u"""Optional Connection display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, connection_type, description, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['connectionType'] = connection_type
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.create_connection_create_github_access_token_connection_details.command_name', 'create-connection-create-github-access-token-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--project-id', required=True, help=u"""Project Identifier""")
+@cli_util.option('--access-token', required=True, help=u"""OCID of personal access token saved in secret store""")
+@cli_util.option('--description', help=u"""Optional description about the Connection""")
+@cli_util.option('--display-name', help=u"""Optional Connection display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_github_access_token_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, access_token, description, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['accessToken'] = access_token
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['connectionType'] = 'GITHUB_ACCESS_TOKEN'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.create_connection_create_gitlab_access_token_connection_details.command_name', 'create-connection-create-gitlab-access-token-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--project-id', required=True, help=u"""Project Identifier""")
+@cli_util.option('--access-token', required=True, help=u"""OCID of personal access token saved in secret store""")
+@cli_util.option('--description', help=u"""Optional description about the Connection""")
+@cli_util.option('--display-name', help=u"""Optional Connection display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_gitlab_access_token_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, access_token, description, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['accessToken'] = access_token
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['connectionType'] = 'GITLAB_ACCESS_TOKEN'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1920,6 +2797,517 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.create_repository.command_name', 'create'), help=u"""Creates a new Repository. \n[Command Reference](createRepository)""")
+@cli_util.option('--name', required=True, help=u"""Unique name of a repository.""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the Project containing the repository.""")
+@cli_util.option('--default-branch', help=u"""The default branch of the repository.""")
+@cli_util.option('--repository-type', help=u"""Type of repository""")
+@cli_util.option('--mirror-repository-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of this repository. Avoid entering confidential information""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'mirror-repository-config': {'module': 'devops', 'class': 'MirrorRepositoryConfig'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'mirror-repository-config': {'module': 'devops', 'class': 'MirrorRepositoryConfig'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Repository'})
+@cli_util.wrap_exceptions
+def create_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, project_id, default_branch, repository_type, mirror_repository_config, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['projectId'] = project_id
+
+    if default_branch is not None:
+        _details['defaultBranch'] = default_branch
+
+    if repository_type is not None:
+        _details['repositoryType'] = repository_type
+
+    if mirror_repository_config is not None:
+        _details['mirrorRepositoryConfig'] = cli_util.parse_json_parameter("mirror_repository_config", mirror_repository_config)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_repository(
+        create_repository_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.create_trigger.command_name', 'create'), help=u"""Creates a new Trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""Project to which the Trigger will belong""")
+@cli_util.option('--trigger-source', required=True, help=u"""Source of the Trigger (allowed values are - GITHUB, GITLAB)""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Name of the Trigger""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, trigger_source, actions, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['triggerSource'] = trigger_source
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.create_trigger_create_github_trigger_details.command_name', 'create-trigger-create-github-trigger-details'), help=u"""Creates a new Trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""Project to which the Trigger will belong""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Name of the Trigger""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger_create_github_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'GITHUB'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.create_trigger_create_devops_code_repository_trigger_details.command_name', 'create-trigger-create-devops-code-repository-trigger-details'), help=u"""Creates a new Trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""Project to which the Trigger will belong""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Name of the Trigger""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repository-id', help=u"""The Devops Code Repository Id""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger_create_devops_code_repository_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags, repository_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if repository_id is not None:
+        _details['repositoryId'] = repository_id
+
+    _details['triggerSource'] = 'DEVOPS_CODE_REPOSITORY'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.create_trigger_create_gitlab_trigger_details.command_name', 'create-trigger-create-gitlab-trigger-details'), help=u"""Creates a new Trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""Project to which the Trigger will belong""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Name of the Trigger""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger_create_gitlab_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'GITLAB'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_group.command(name=cli_util.override('devops.delete_build_pipeline.command_name', 'delete'), help=u"""Deletes a BuildPipeline resource by identifier \n[Command Reference](deleteBuildPipeline)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""unique BuildPipeline identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_build_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, if_match):
+
+    if isinstance(build_pipeline_id, six.string_types) and len(build_pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_build_pipeline(
+        build_pipeline_id=build_pipeline_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.delete_build_pipeline_stage.command_name', 'delete'), help=u"""Deletes a Stage based on stage id provided in request \n[Command Reference](deleteBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_build_pipeline_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, if_match):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.delete_connection.command_name', 'delete'), help=u"""Deletes a Connection resource by identifier \n[Command Reference](deleteConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""unique Connection identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_connection(
+        connection_id=connection_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @deploy_artifact_group.command(name=cli_util.override('devops.delete_deploy_artifact.command_name', 'delete'), help=u"""Deletes a deployment artifact resource by identifier. \n[Command Reference](deleteDeployArtifact)""")
 @cli_util.option('--deploy-artifact-id', required=True, help=u"""Unique artifact identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2180,6 +3568,312 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.delete_ref.command_name', 'delete-ref'), help=u"""Deletes a Repository's Ref by its name. Returns an error if the name is ambiguous. Can be disambiguated by using full names like \"heads/<name>\" or \"tags/<name>\". \n[Command Reference](deleteRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+        raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_ref(
+        repository_id=repository_id,
+        ref_name=ref_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.delete_repository.command_name', 'delete'), help=u"""Deletes a Repository resource by identifier \n[Command Reference](deleteRepository)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_repository(
+        repository_id=repository_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.delete_trigger.command_name', 'delete'), help=u"""Deletes a Trigger resource by identifier \n[Command Reference](deleteTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""unique Trigger identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_trigger(
+        trigger_id=trigger_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_group.command(name=cli_util.override('devops.get_build_pipeline.command_name', 'get'), help=u"""Gets a BuildPipeline by identifier \n[Command Reference](getBuildPipeline)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""unique BuildPipeline identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildPipeline'})
+@cli_util.wrap_exceptions
+def get_build_pipeline(ctx, from_json, build_pipeline_id):
+
+    if isinstance(build_pipeline_id, six.string_types) and len(build_pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_build_pipeline(
+        build_pipeline_id=build_pipeline_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.get_build_pipeline_stage.command_name', 'get'), help=u"""Gets a Stage based on the stage id provided in request \n[Command Reference](getBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def get_build_pipeline_stage(ctx, from_json, build_pipeline_stage_id):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@build_run_group.command(name=cli_util.override('devops.get_build_run.command_name', 'get'), help=u"""Returns the details of a build exection for a given build run id. \n[Command Reference](getBuildRun)""")
+@cli_util.option('--build-run-id', required=True, help=u"""Unique build run identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildRun'})
+@cli_util.wrap_exceptions
+def get_build_run(ctx, from_json, build_run_id):
+
+    if isinstance(build_run_id, six.string_types) and len(build_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_build_run(
+        build_run_id=build_run_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_commit.command_name', 'get-commit'), help=u"""Gets a Repository's Commit by commitId \n[Command Reference](getCommit)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--commit-id', required=True, help=u"""A filter to return only resources that match the given commit Id.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryCommit'})
+@cli_util.wrap_exceptions
+def get_commit(ctx, from_json, repository_id, commit_id):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(commit_id, six.string_types) and len(commit_id.strip()) == 0:
+        raise click.UsageError('Parameter --commit-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_commit(
+        repository_id=repository_id,
+        commit_id=commit_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_commit_diff.command_name', 'get-commit-diff'), help=u"""Compares two revisions for their differences. Supports comparison between two refs or commits. \n[Command Reference](getCommitDiff)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--target-version', required=True, help=u"""The commit or ref name where changes are coming from""")
+@cli_util.option('--base-version', help=u"""The commit or ref name to compare changes against. If baseVersion is not provided, the diff will be gone against an empty tree.""")
+@cli_util.option('--is-comparison-from-merge-base', type=click.BOOL, help=u"""boolean for whether to use merge base or most recent revision""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'DiffResponse'})
+@cli_util.wrap_exceptions
+def get_commit_diff(ctx, from_json, repository_id, target_version, base_version, is_comparison_from_merge_base):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if base_version is not None:
+        kwargs['base_version'] = base_version
+    if is_comparison_from_merge_base is not None:
+        kwargs['is_comparison_from_merge_base'] = is_comparison_from_merge_base
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_commit_diff(
+        repository_id=repository_id,
+        target_version=target_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.get_connection.command_name', 'get'), help=u"""Gets a Connection by identifier \n[Command Reference](getConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""unique Connection identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def get_connection(ctx, from_json, connection_id):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_connection(
+        connection_id=connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @deploy_artifact_group.command(name=cli_util.override('devops.get_deploy_artifact.command_name', 'get'), help=u"""Retrieves a deployment artifact by identifier. \n[Command Reference](getDeployArtifact)""")
 @cli_util.option('--deploy-artifact-id', required=True, help=u"""Unique artifact identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2290,6 +3984,148 @@ def get_deployment(ctx, from_json, deployment_id):
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.get_file_diff.command_name', 'get-file-diff'), help=u"""Gets the line-by-line difference between files on different commits. \n[Command Reference](getFileDiff)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--file-path', required=True, help=u"""Path to a file within a repository.""")
+@cli_util.option('--base-version', required=True, help=u"""The branch to compare changes against""")
+@cli_util.option('--target-version', required=True, help=u"""The branch where changes are coming from""")
+@cli_util.option('--is-comparison-from-merge-base', type=click.BOOL, help=u"""boolean for whether to use merge base or most recent revision""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'FileDiffResponse'})
+@cli_util.wrap_exceptions
+def get_file_diff(ctx, from_json, repository_id, file_path, base_version, target_version, is_comparison_from_merge_base):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(file_path, six.string_types) and len(file_path.strip()) == 0:
+        raise click.UsageError('Parameter --file-path cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_comparison_from_merge_base is not None:
+        kwargs['is_comparison_from_merge_base'] = is_comparison_from_merge_base
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_file_diff(
+        repository_id=repository_id,
+        file_path=file_path,
+        base_version=base_version,
+        target_version=target_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_mirror_record.command_name', 'get-mirror-record'), help=u"""Returns either current mirror record or last successful mirror record for a specific mirror repository \n[Command Reference](getMirrorRecord)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--mirror-record-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["current", "lastSuccessful"]), help=u"""The field of mirror record type. Only one mirror record type may be provided. current - The current mirror record. lastSuccessful - The last successful mirror record""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryMirrorRecord'})
+@cli_util.wrap_exceptions
+def get_mirror_record(ctx, from_json, repository_id, mirror_record_type):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(mirror_record_type, six.string_types) and len(mirror_record_type.strip()) == 0:
+        raise click.UsageError('Parameter --mirror-record-type cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_mirror_record(
+        repository_id=repository_id,
+        mirror_record_type=mirror_record_type,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_object_group.command(name=cli_util.override('devops.get_object.command_name', 'get-object'), help=u"""Get blob of specific branch name/commit id and file path \n[Command Reference](getObject)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--file-path', help=u"""A filter to return only commits that affect any of the specified paths.""")
+@cli_util.option('--ref-name', help=u"""A filter to return only resources that match the given Ref name.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryObject'})
+@cli_util.wrap_exceptions
+def get_object(ctx, from_json, repository_id, file_path, ref_name):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if file_path is not None:
+        kwargs['file_path'] = file_path
+    if ref_name is not None:
+        kwargs['ref_name'] = ref_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_object(
+        repository_id=repository_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_object_content.command_name', 'get-object-content'), help=u"""Get contents of a specified Object \n[Command Reference](getObjectContent)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--sha', required=True, help=u"""The SHA of a blob or tree""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--file-path', help=u"""A filter to return only commits that affect any of the specified paths.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_object_content(ctx, from_json, file, repository_id, sha, file_path):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(sha, six.string_types) and len(sha.strip()) == 0:
+        raise click.UsageError('Parameter --sha cannot be whitespace or empty string')
+
+    kwargs = {}
+    if file_path is not None:
+        kwargs['file_path'] = file_path
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_object_content(
+        repository_id=repository_id,
+        sha=sha,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @project_group.command(name=cli_util.override('devops.get_project.command_name', 'get'), help=u"""Retrieves a project by identifier. \n[Command Reference](getProject)""")
 @cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2307,6 +4143,166 @@ def get_project(ctx, from_json, project_id):
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.get_project(
         project_id=project_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_ref.command_name', 'get-ref'), help=u"""Gets a Repository's Ref by its name with preference for branches over tags if the name is ambiguous. Can be disambiguated by using full names like \"heads/<name>\" or \"tags/<name>\". \n[Command Reference](getRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given Ref name.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def get_ref(ctx, from_json, repository_id, ref_name):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+        raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_ref(
+        repository_id=repository_id,
+        ref_name=ref_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_repository.command_name', 'get'), help=u"""Gets a Repository by identifier \n[Command Reference](getRepository)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["branchCount", "commitCount", "sizeInBytes"]), multiple=True, help=u"""Fields param can contain multiple flags useful in deciding the API functionality""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'Repository'})
+@cli_util.wrap_exceptions
+def get_repository(ctx, from_json, repository_id, fields):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_repository(
+        repository_id=repository_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.get_repository_archive_content.command_name', 'get-repository-archive-content'), help=u"""Return the archived repository information \n[Command Reference](getRepositoryArchiveContent)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--ref-name', help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--format', help=u"""The archive format query parm for download repo endpoint.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_repository_archive_content(ctx, from_json, file, repository_id, ref_name, format):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if ref_name is not None:
+        kwargs['ref_name'] = ref_name
+    if format is not None:
+        kwargs['format'] = format
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_repository_archive_content(
+        repository_id=repository_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@repository_group.command(name=cli_util.override('devops.get_repository_file_lines.command_name', 'get-repository-file-lines'), help=u"""Get lines of a specified file. Supports starting line number and limit. \n[Command Reference](getRepositoryFileLines)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--file-path', required=True, help=u"""Path to a file within a repository.""")
+@cli_util.option('--revision', required=True, help=u"""Retrive file lines from specific revision.""")
+@cli_util.option('--start-line-number', type=click.INT, help=u"""Line number from where to start returning file lines. 1 indexed.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryFileLines'})
+@cli_util.wrap_exceptions
+def get_repository_file_lines(ctx, from_json, repository_id, file_path, revision, start_line_number, limit):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(file_path, six.string_types) and len(file_path.strip()) == 0:
+        raise click.UsageError('Parameter --file-path cannot be whitespace or empty string')
+
+    kwargs = {}
+    if start_line_number is not None:
+        kwargs['start_line_number'] = start_line_number
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_repository_file_lines(
+        repository_id=repository_id,
+        file_path=file_path,
+        revision=revision,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.get_trigger.command_name', 'get'), help=u"""Gets a Trigger by identifier \n[Command Reference](getTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""unique Trigger identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def get_trigger(ctx, from_json, trigger_id):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_trigger(
+        trigger_id=trigger_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2331,6 +4327,463 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.list_authors.command_name', 'list-authors'), help=u"""Get a list of all the authors \n[Command Reference](listAuthors)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryAuthorCollection'})
+@cli_util.wrap_exceptions
+def list_authors(ctx, from_json, all_pages, page_size, repository_id, ref_name, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if ref_name is not None:
+        kwargs['ref_name'] = ref_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_authors,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_authors,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_authors(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_summary_group.command(name=cli_util.override('devops.list_build_pipeline_stages.command_name', 'list-build-pipeline-stages'), help=u"""Returns summary of list of all Stages in a compartment or buildPipeline \n[Command Reference](listBuildPipelineStages)""")
+@cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
+@cli_util.option('--build-pipeline-id', help=u"""The ID of the parent build pipeline.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return the stages that match with the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for display name is ascending. If no value is specified, then the default time created value is considered.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildPipelineStageCollection'})
+@cli_util.wrap_exceptions
+def list_build_pipeline_stages(ctx, from_json, all_pages, page_size, id, build_pipeline_id, compartment_id, lifecycle_state, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if build_pipeline_id is not None:
+        kwargs['build_pipeline_id'] = build_pipeline_id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_build_pipeline_stages,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_build_pipeline_stages,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_build_pipeline_stages(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_collection_group.command(name=cli_util.override('devops.list_build_pipelines.command_name', 'list-build-pipelines'), help=u"""Returns a list of BuildPipelines. \n[Command Reference](listBuildPipelines)""")
+@cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
+@cli_util.option('--project-id', help=u"""unique project identifier""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only BuildPipelines that matches the given lifecycleState""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for display name is ascending. If no value is specified, then the default time created value is considered.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildPipelineCollection'})
+@cli_util.wrap_exceptions
+def list_build_pipelines(ctx, from_json, all_pages, page_size, id, project_id, compartment_id, lifecycle_state, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_build_pipelines,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_build_pipelines,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_build_pipelines(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@build_run_summary_group.command(name=cli_util.override('devops.list_build_runs.command_name', 'list-build-runs'), help=u"""Returns a list of build runs summary. \n[Command Reference](listBuildRuns)""")
+@cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
+@cli_util.option('--build-pipeline-id', help=u"""Unique build pipeline identifier.""")
+@cli_util.option('--project-id', help=u"""unique project identifier""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only Build Runs that matches the given lifecycleState.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for display name is ascending. If no value is specified, then the default time created value is considered.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildRunSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_build_runs(ctx, from_json, all_pages, page_size, id, build_pipeline_id, project_id, compartment_id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if build_pipeline_id is not None:
+        kwargs['build_pipeline_id'] = build_pipeline_id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_build_runs,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_build_runs,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_build_runs(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.list_commit_diffs.command_name', 'list-commit-diffs'), help=u"""Compares two revisions and lists the differences. Supports comparison between two refs or commits. \n[Command Reference](listCommitDiffs)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--base-version', required=True, help=u"""The commit or ref name to compare changes against""")
+@cli_util.option('--target-version', required=True, help=u"""The commit or ref name where changes are coming from""")
+@cli_util.option('--is-comparison-from-merge-base', type=click.BOOL, help=u"""boolean for whether to use merge base or most recent revision""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'DiffCollection'})
+@cli_util.wrap_exceptions
+def list_commit_diffs(ctx, from_json, all_pages, page_size, repository_id, base_version, target_version, is_comparison_from_merge_base, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_comparison_from_merge_base is not None:
+        kwargs['is_comparison_from_merge_base'] = is_comparison_from_merge_base
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_commit_diffs,
+            repository_id=repository_id,
+            base_version=base_version,
+            target_version=target_version,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_commit_diffs,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            base_version=base_version,
+            target_version=target_version,
+            **kwargs
+        )
+    else:
+        result = client.list_commit_diffs(
+            repository_id=repository_id,
+            base_version=base_version,
+            target_version=target_version,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_commit_group.command(name=cli_util.override('devops.list_commits.command_name', 'list-commits'), help=u"""Returns a list of Commits. \n[Command Reference](listCommits)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--exclude-ref-name', help=u"""A filter to exclude commits that match the given Ref name.""")
+@cli_util.option('--file-path', help=u"""A filter to return only commits that affect any of the specified paths.""")
+@cli_util.option('--timestamp-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return commits only created after the specified timestamp value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--timestamp-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return commits only created before the specified timestamp value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--commit-message', help=u"""A filter to return any commits that contains the given message.""")
+@cli_util.option('--author-name', help=u"""A filter to return any commits that are pushed by the requested author.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryCommitCollection'})
+@cli_util.wrap_exceptions
+def list_commits(ctx, from_json, all_pages, page_size, repository_id, ref_name, exclude_ref_name, file_path, timestamp_greater_than_or_equal_to, timestamp_less_than_or_equal_to, commit_message, author_name, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if ref_name is not None:
+        kwargs['ref_name'] = ref_name
+    if exclude_ref_name is not None:
+        kwargs['exclude_ref_name'] = exclude_ref_name
+    if file_path is not None:
+        kwargs['file_path'] = file_path
+    if timestamp_greater_than_or_equal_to is not None:
+        kwargs['timestamp_greater_than_or_equal_to'] = timestamp_greater_than_or_equal_to
+    if timestamp_less_than_or_equal_to is not None:
+        kwargs['timestamp_less_than_or_equal_to'] = timestamp_less_than_or_equal_to
+    if commit_message is not None:
+        kwargs['commit_message'] = commit_message
+    if author_name is not None:
+        kwargs['author_name'] = author_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_commits,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_commits,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_commits(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@connection_collection_group.command(name=cli_util.override('devops.list_connections.command_name', 'list-connections'), help=u"""Returns a list of Connections. \n[Command Reference](listConnections)""")
+@cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
+@cli_util.option('--project-id', help=u"""unique project identifier""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""A filter to return only Connections that matches the given lifecycleState""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GITHUB_ACCESS_TOKEN", "GITLAB_ACCESS_TOKEN"]), help=u"""A filter to return only resources that match the connection type given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for display name is ascending. If no value is specified, then the default time created value is considered.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ConnectionCollection'})
+@cli_util.wrap_exceptions
+def list_connections(ctx, from_json, all_pages, page_size, id, project_id, compartment_id, lifecycle_state, display_name, connection_type, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if connection_type is not None:
+        kwargs['connection_type'] = connection_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_connections,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_connections,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_connections(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2668,6 +5121,129 @@ def list_deployments(ctx, from_json, all_pages, page_size, deploy_pipeline_id, i
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.list_mirror_records.command_name', 'list-mirror-records'), help=u"""Returns a list of mirror entry in history within 30 days \n[Command Reference](listMirrorRecords)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryMirrorRecordCollection'})
+@cli_util.wrap_exceptions
+def list_mirror_records(ctx, from_json, all_pages, page_size, repository_id, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_mirror_records,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_mirror_records,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_mirror_records(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_path_summary_group.command(name=cli_util.override('devops.list_paths.command_name', 'list-paths'), help=u"""Fetches a list of files and directories in a repository. \n[Command Reference](listPaths)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref', help=u"""The name of branch/tag or commit hash it points to. If names conflict order of preference is commit > branch > tag. You can disambiguate with \"heads/foobar\" and \"tags/foobar\". Repository's default branch will be used if left blank.""")
+@cli_util.option('--paths-in-subtree', type=click.BOOL, help=u"""Flag to determine if files should be retrived recursively. false by default""")
+@cli_util.option('--folder-path', help=u"""The fully qualified path to the folder whose contents are returned, including the folder name. For example, /examples is a fully-qualified path to a folder named examples that was created off of the root directory (/) of a repository.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["type", "sizeInBytes", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order is ascending. If no value is specified name is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryPathCollection'})
+@cli_util.wrap_exceptions
+def list_paths(ctx, from_json, all_pages, page_size, repository_id, ref, paths_in_subtree, folder_path, limit, page, display_name, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if ref is not None:
+        kwargs['ref'] = ref
+    if paths_in_subtree is not None:
+        kwargs['paths_in_subtree'] = paths_in_subtree
+    if folder_path is not None:
+        kwargs['folder_path'] = folder_path
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_paths,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_paths,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_paths(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @project_summary_group.command(name=cli_util.override('devops.list_projects.command_name', 'list-projects'), help=u"""Returns a list of projects. \n[Command Reference](listProjects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
@@ -2726,6 +5302,202 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, life
     else:
         result = client.list_projects(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_ref_group.command(name=cli_util.override('devops.list_refs.command_name', 'list-refs'), help=u"""Returns a list of Refs. \n[Command Reference](listRefs)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-type', type=custom_types.CliCaseInsensitiveChoice(["BRANCH", "TAG"]), help=u"""Ref type to distinguish between branch and tag. If it is not specified, return all refs.""")
+@cli_util.option('--commit-id', help=u"""Commit id in a repository""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--ref-name', help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["refType", "refName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for refName is ascending. Default order for refType is ascending. If no value is specified refName is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRefCollection'})
+@cli_util.wrap_exceptions
+def list_refs(ctx, from_json, all_pages, page_size, repository_id, ref_type, commit_id, limit, page, ref_name, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if ref_type is not None:
+        kwargs['ref_type'] = ref_type
+    if commit_id is not None:
+        kwargs['commit_id'] = commit_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if ref_name is not None:
+        kwargs['ref_name'] = ref_name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_refs,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_refs,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_refs(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.list_repositories.command_name', 'list'), help=u"""Returns a list of Repositories given a compartmentId or a projectId. \n[Command Reference](listRepositories)""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--project-id', help=u"""unique project identifier""")
+@cli_util.option('--repository-id', help=u"""unique Repository identifier.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for name is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryCollection'})
+@cli_util.wrap_exceptions
+def list_repositories(ctx, from_json, all_pages, page_size, compartment_id, project_id, repository_id, lifecycle_state, name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if repository_id is not None:
+        kwargs['repository_id'] = repository_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if name is not None:
+        kwargs['name'] = name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_repositories,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_repositories,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_repositories(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@trigger_collection_group.command(name=cli_util.override('devops.list_triggers.command_name', 'list-triggers'), help=u"""Returns a list of Triggers. \n[Command Reference](listTriggers)""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--project-id', help=u"""unique project identifier""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""A filter to return only Triggers that matches the given lifecycleState""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""unique Trigger identifier""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for display name is ascending. If no value is specified, then the default time created value is considered.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'TriggerCollection'})
+@cli_util.wrap_exceptions
+def list_triggers(ctx, from_json, all_pages, page_size, compartment_id, project_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_triggers,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_triggers,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_triggers(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2905,6 +5677,1087 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.mirror_repository.command_name', 'mirror'), help=u"""Synchronize a mirrored repository to the latest version from external providers \n[Command Reference](mirrorRepository)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def mirror_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.mirror_repository(
+        repository_id=repository_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.put_repository_ref.command_name', 'put-repository-ref'), help=u"""Creates a new Ref or updates an existing one. \n[Command Reference](putRepositoryRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--ref-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BRANCH", "TAG"]), help=u"""The type of Ref (Branch or Tag)""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def put_repository_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, ref_type, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+        raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['refType'] = ref_type
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.put_repository_ref(
+        repository_id=repository_id,
+        ref_name=ref_name,
+        put_repository_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.put_repository_ref_put_repository_tag_details.command_name', 'put-repository-ref-put-repository-tag-details'), help=u"""Creates a new Ref or updates an existing one. \n[Command Reference](putRepositoryRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--object-id', required=True, help=u"""SHA-1 hash value of the object pointed to by the tag.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def put_repository_ref_put_repository_tag_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, object_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+        raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['objectId'] = object_id
+
+    _details['refType'] = 'TAG'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.put_repository_ref(
+        repository_id=repository_id,
+        ref_name=ref_name,
+        put_repository_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.put_repository_ref_put_repository_branch_details.command_name', 'put-repository-ref-put-repository-branch-details'), help=u"""Creates a new Ref or updates an existing one. \n[Command Reference](putRepositoryRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given Ref name.""")
+@cli_util.option('--commit-id', required=True, help=u"""Commit ID pointed to by the new branch.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def put_repository_ref_put_repository_branch_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, commit_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(ref_name, six.string_types) and len(ref_name.strip()) == 0:
+        raise click.UsageError('Parameter --ref-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['commitId'] = commit_id
+
+    _details['refType'] = 'BRANCH'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.put_repository_ref(
+        repository_id=repository_id,
+        ref_name=ref_name,
+        put_repository_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_group.command(name=cli_util.override('devops.update_build_pipeline.command_name', 'update'), help=u"""Updates the BuildPipeline \n[Command Reference](updateBuildPipeline)""")
+@cli_util.option('--build-pipeline-id', required=True, help=u"""unique BuildPipeline identifier""")
+@cli_util.option('--description', help=u"""Optional description about the BuildPipeline""")
+@cli_util.option('--display-name', help=u"""BuildPipeline display name""")
+@cli_util.option('--build-pipeline-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-parameters': {'module': 'devops', 'class': 'BuildPipelineParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-parameters': {'module': 'devops', 'class': 'BuildPipelineParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildPipeline'})
+@cli_util.wrap_exceptions
+def update_build_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, description, display_name, build_pipeline_parameters, freeform_tags, defined_tags, if_match):
+
+    if isinstance(build_pipeline_id, six.string_types) and len(build_pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-id cannot be whitespace or empty string')
+    if not force:
+        if build_pipeline_parameters or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to build-pipeline-parameters and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if build_pipeline_parameters is not None:
+        _details['buildPipelineParameters'] = cli_util.parse_json_parameter("build_pipeline_parameters", build_pipeline_parameters)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_pipeline(
+        build_pipeline_id=build_pipeline_id,
+        update_build_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.update_build_pipeline_stage.command_name', 'update'), help=u"""Updates the Stage based on the stage id provided in request \n[Command Reference](updateBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--build-pipeline-stage-type', required=True, help=u"""Stage sub types.""")
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the BuildStage""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def update_build_pipeline_stage(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, build_pipeline_stage_type, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, if_match):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+    if not force:
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['buildPipelineStageType'] = build_pipeline_stage_type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if build_pipeline_stage_predecessor_collection is not None:
+        _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        update_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.update_build_pipeline_stage_update_wait_stage_details.command_name', 'update-build-pipeline-stage-update-wait-stage-details'), help=u"""Updates the Stage based on the stage id provided in request \n[Command Reference](updateBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the BuildStage""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-criteria', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'wait-criteria': {'module': 'devops', 'class': 'UpdateWaitCriteriaDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'wait-criteria': {'module': 'devops', 'class': 'UpdateWaitCriteriaDetails'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def update_build_pipeline_stage_update_wait_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, wait_criteria, if_match):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+    if not force:
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or wait_criteria:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and wait-criteria will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if build_pipeline_stage_predecessor_collection is not None:
+        _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if wait_criteria is not None:
+        _details['waitCriteria'] = cli_util.parse_json_parameter("wait_criteria", wait_criteria)
+
+    _details['buildPipelineStageType'] = 'WAIT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        update_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.update_build_pipeline_stage_update_build_stage_details.command_name', 'update-build-pipeline-stage-update-build-stage-details'), help=u"""Updates the Stage based on the stage id provided in request \n[Command Reference](updateBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the BuildStage""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image', help=u"""Image name for the Build Environment""")
+@cli_util.option('--build-spec-file', help=u"""The path to the build specification file for this Environment. The default location if not specified is build_spec.yaml""")
+@cli_util.option('--stage-execution-timeout-in-seconds', type=click.INT, help=u"""Timeout for the Build Stage Execution. Value in seconds.""")
+@cli_util.option('--build-source-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--primary-build-source', help=u"""Name of the BuildSource in which the build_spec.yml file need to be located. If not specified, the 1st entry in the BuildSource collection will be chosen as Primary.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, image, build_spec_file, stage_execution_timeout_in_seconds, build_source_collection, primary_build_source, if_match):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+    if not force:
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or build_source_collection:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and build-source-collection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if build_pipeline_stage_predecessor_collection is not None:
+        _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if image is not None:
+        _details['image'] = image
+
+    if build_spec_file is not None:
+        _details['buildSpecFile'] = build_spec_file
+
+    if stage_execution_timeout_in_seconds is not None:
+        _details['stageExecutionTimeoutInSeconds'] = stage_execution_timeout_in_seconds
+
+    if build_source_collection is not None:
+        _details['buildSourceCollection'] = cli_util.parse_json_parameter("build_source_collection", build_source_collection)
+
+    if primary_build_source is not None:
+        _details['primaryBuildSource'] = primary_build_source
+
+    _details['buildPipelineStageType'] = 'BUILD'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        update_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.update_build_pipeline_stage_update_trigger_deployment_stage_details.command_name', 'update-build-pipeline-stage-update-trigger-deployment-stage-details'), help=u"""Updates the Stage based on the stage id provided in request \n[Command Reference](updateBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the BuildStage""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deploy-pipeline-id', help=u"""A target Pipeline ocid that will be run in this stage.""")
+@cli_util.option('--is-pass-all-parameters-enabled', type=click.BOOL, help=u"""A boolean flag specifies whether the parameters should be passed during the deployment trigger.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def update_build_pipeline_stage_update_trigger_deployment_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, deploy_pipeline_id, is_pass_all_parameters_enabled, if_match):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+    if not force:
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if build_pipeline_stage_predecessor_collection is not None:
+        _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if deploy_pipeline_id is not None:
+        _details['deployPipelineId'] = deploy_pipeline_id
+
+    if is_pass_all_parameters_enabled is not None:
+        _details['isPassAllParametersEnabled'] = is_pass_all_parameters_enabled
+
+    _details['buildPipelineStageType'] = 'TRIGGER_DEPLOYMENT_PIPELINE'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        update_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_pipeline_stage_group.command(name=cli_util.override('devops.update_build_pipeline_stage_update_deliver_artifact_stage_details.command_name', 'update-build-pipeline-stage-update-deliver-artifact-stage-details'), help=u"""Updates the Stage based on the stage id provided in request \n[Command Reference](updateBuildPipelineStage)""")
+@cli_util.option('--build-pipeline-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--display-name', help=u"""Stage identifier which can be renamed and is not necessarily unique""")
+@cli_util.option('--description', help=u"""Optional description about the BuildStage""")
+@cli_util.option('--build-pipeline-stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deliver-artifact-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deliver-artifact-collection': {'module': 'devops', 'class': 'DeliverArtifactCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deliver-artifact-collection': {'module': 'devops', 'class': 'DeliverArtifactCollection'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@cli_util.wrap_exceptions
+def update_build_pipeline_stage_update_deliver_artifact_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, deliver_artifact_collection, if_match):
+
+    if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
+    if not force:
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or deliver_artifact_collection:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and deliver-artifact-collection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if build_pipeline_stage_predecessor_collection is not None:
+        _details['buildPipelineStagePredecessorCollection'] = cli_util.parse_json_parameter("build_pipeline_stage_predecessor_collection", build_pipeline_stage_predecessor_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if deliver_artifact_collection is not None:
+        _details['deliverArtifactCollection'] = cli_util.parse_json_parameter("deliver_artifact_collection", deliver_artifact_collection)
+
+    _details['buildPipelineStageType'] = 'DELIVER_ARTIFACT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_pipeline_stage(
+        build_pipeline_stage_id=build_pipeline_stage_id,
+        update_build_pipeline_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@build_run_group.command(name=cli_util.override('devops.update_build_run.command_name', 'update'), help=u"""Updates the BuildRun \n[Command Reference](updateBuildRun)""")
+@cli_util.option('--build-run-id', required=True, help=u"""Unique build run identifier.""")
+@cli_util.option('--display-name', help=u"""BuildRun display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'BuildRun'})
+@cli_util.wrap_exceptions
+def update_build_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_run_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(build_run_id, six.string_types) and len(build_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --build-run-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_build_run(
+        build_run_id=build_run_id,
+        update_build_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_build_run') and callable(getattr(client, 'get_build_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_build_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.update_connection.command_name', 'update'), help=u"""Updates the Connection \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""unique Connection identifier""")
+@cli_util.option('--connection-type', required=True, help=u"""The type of connection.""")
+@cli_util.option('--description', help=u"""Optional description about the Connection""")
+@cli_util.option('--display-name', help=u"""Optional Connection display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, connection_type, description, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionType'] = connection_type
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.update_connection_update_github_access_token_connection_details.command_name', 'update-connection-update-github-access-token-connection-details'), help=u"""Updates the Connection \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""unique Connection identifier""")
+@cli_util.option('--description', help=u"""Optional description about the Connection""")
+@cli_util.option('--display-name', help=u"""Optional Connection display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token', help=u"""OCID of personal access token saved in secret store""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_github_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if access_token is not None:
+        _details['accessToken'] = access_token
+
+    _details['connectionType'] = 'GITHUB_ACCESS_TOKEN'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.update_connection_update_gitlab_access_token_connection_details.command_name', 'update-connection-update-gitlab-access-token-connection-details'), help=u"""Updates the Connection \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""unique Connection identifier""")
+@cli_util.option('--description', help=u"""Optional description about the Connection""")
+@cli_util.option('--display-name', help=u"""Optional Connection display name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token', help=u"""OCID of personal access token saved in secret store""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_gitlab_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if access_token is not None:
+        _details['accessToken'] = access_token
+
+    _details['connectionType'] = 'GITLAB_ACCESS_TOKEN'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4787,6 +8640,434 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     result = client.update_project(
         project_id=project_id,
         update_project_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.update_repository.command_name', 'update'), help=u"""Updates the Repository \n[Command Reference](updateRepository)""")
+@cli_util.option('--repository-id', required=True, help=u"""unique Repository identifier.""")
+@cli_util.option('--name', help=u"""Repository Identifier""")
+@cli_util.option('--description', help=u"""The description of this repository. Avoid entering confidential information""")
+@cli_util.option('--default-branch', help=u"""The default branch of the repository""")
+@cli_util.option('--repository-type', help=u"""Type of repository""")
+@cli_util.option('--mirror-repository-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'mirror-repository-config': {'module': 'devops', 'class': 'MirrorRepositoryConfig'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'mirror-repository-config': {'module': 'devops', 'class': 'MirrorRepositoryConfig'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Repository'})
+@cli_util.wrap_exceptions
+def update_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, name, description, default_branch, repository_type, mirror_repository_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+    if not force:
+        if mirror_repository_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to mirror-repository-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if default_branch is not None:
+        _details['defaultBranch'] = default_branch
+
+    if repository_type is not None:
+        _details['repositoryType'] = repository_type
+
+    if mirror_repository_config is not None:
+        _details['mirrorRepositoryConfig'] = cli_util.parse_json_parameter("mirror_repository_config", mirror_repository_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_repository(
+        repository_id=repository_id,
+        update_repository_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger.command_name', 'update'), help=u"""Updates the Trigger \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""unique Trigger identifier""")
+@cli_util.option('--trigger-source', required=True, help=u"""Source of the Trigger (allowed values are - GITHUB, GITLAB)""")
+@cli_util.option('--display-name', help=u"""Trigger Identifier""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, trigger_source, display_name, description, actions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['triggerSource'] = trigger_source
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger_update_devops_code_repository_trigger_details.command_name', 'update-trigger-update-devops-code-repository-trigger-details'), help=u"""Updates the Trigger \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""unique Trigger identifier""")
+@cli_util.option('--display-name', help=u"""Trigger Identifier""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repository-id', help=u"""The Devops Code Repository Id""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger_update_devops_code_repository_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, repository_id, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if repository_id is not None:
+        _details['repositoryId'] = repository_id
+
+    _details['triggerSource'] = 'DEVOPS_CODE_REPOSITORY'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger_update_github_trigger_details.command_name', 'update-trigger-update-github-trigger-details'), help=u"""Updates the Trigger \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""unique Trigger identifier""")
+@cli_util.option('--display-name', help=u"""Trigger Identifier""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger_update_github_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'GITHUB'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger_update_gitlab_trigger_details.command_name', 'update-trigger-update-gitlab-trigger-details'), help=u"""Updates the Trigger \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""unique Trigger identifier""")
+@cli_util.option('--display-name', help=u"""Trigger Identifier""")
+@cli_util.option('--description', help=u"""Optional description about the Trigger""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this Trigger
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'GITLAB'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
         **kwargs
     )
     if wait_for_state:
