@@ -22,10 +22,6 @@ cli_util.rename_command(query_cli, query_cli.query_result_response_group, query_
 cli_util.rename_command(query_cli, query_cli.query_root_group, query_cli.quick_pick_summary_group, "quick-picks")
 
 
-# Remove query-old from oci apm-traces query query-result-response
-query_cli.query_result_response_group.commands.pop(query_cli.query_old.name)
-
-
 @cli_util.copy_params_from_generated_command(query_cli.query, params_to_exclude=['time_span_started_greater_than_or_equal_to', 'time_span_started_less_than'])
 @query_cli.query_result_response_group.command(name=query_cli.query.name, help=query_cli.query.help)
 @cli_util.option('--start-time-gte', required=True, type=custom_types.CLI_DATETIME, help=u"""Include spans that have a `spanStartTime` equal to or greater this value.

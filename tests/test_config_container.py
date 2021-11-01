@@ -244,13 +244,15 @@ def vcr_port_matcher(r1, r2):
 # Input: endpoint - endpoint of a service (string) e.g. kms.us-phoenix-1.oraclecloud.com
 # Output: service name string extracted from endpoint e.g. kms
 def get_servicename_from_endpoint(endpoint):
-    subdomain = ['.oci.', '.ocp.', '.ocs.']
-    if any(x in endpoint for x in subdomain):
-        service_name_idx = 1
-    else:
-        service_name_idx = 0
+    # New endpoints follow <service>.<region>.<oci/ocp/ocs>.<oraclecloud/oracleiaas>.com
+    # We can directly compare name of the service by indexing on the first index
+    # subdomain = ['.oci.', '.ocp.', '.ocs.']
+    # if any(x in endpoint for x in subdomain):
+    #     service_name_idx = 1
+    # else:
+    #     service_name_idx = 0
 
-    return endpoint.split('.')[service_name_idx]
+    return endpoint.split('.')[0]
 
 
 def create_vcr_body_matcher(match_request_json_object_values):

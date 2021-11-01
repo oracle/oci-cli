@@ -15,15 +15,9 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('data_integration.data_integration_root_group.command_name', 'data-integration'), cls=CommandGroupWithAlias, help=cli_util.override('data_integration.data_integration_root_group.help', """Use the Data Integration Service APIs to perform common extract, load, and transform (ETL) tasks."""), short_help=cli_util.override('data_integration.data_integration_root_group.short_help', """Data Integration API"""))
+@cli.command(cli_util.override('data_integration.data_integration_root_group.command_name', 'data-integration'), cls=CommandGroupWithAlias, help=cli_util.override('data_integration.data_integration_root_group.help', """Use the Data Integration API to organize your data integration projects, create data flows, pipelines and tasks, and then publish, schedule, and run tasks that extract, transform, and load data. For more information, see [Data Integration]."""), short_help=cli_util.override('data_integration.data_integration_root_group.short_help', """Data Integration API"""))
 @cli_util.help_option_group
 def data_integration_root_group():
-    pass
-
-
-@click.command(cli_util.override('data_integration.task_run_log_group.command_name', 'task-run-log'), cls=CommandGroupWithAlias, help="""A log message from the execution of a task.""")
-@cli_util.help_option_group
-def task_run_log_group():
     pass
 
 
@@ -45,15 +39,15 @@ def task_run_group():
     pass
 
 
-@click.command(cli_util.override('data_integration.task_validation_group.command_name', 'task-validation'), cls=CommandGroupWithAlias, help="""The information about task validation.""")
-@cli_util.help_option_group
-def task_validation_group():
-    pass
-
-
 @click.command(cli_util.override('data_integration.external_publication_validation_group.command_name', 'external-publication-validation'), cls=CommandGroupWithAlias, help="""The information about external published task validation.""")
 @cli_util.help_option_group
 def external_publication_validation_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.user_defined_function_validation_group.command_name', 'user-defined-function-validation'), cls=CommandGroupWithAlias, help="""The information about a UserDefinedFunction validation.""")
+@cli_util.help_option_group
+def user_defined_function_validation_group():
     pass
 
 
@@ -81,6 +75,48 @@ def reference_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.data_entity_group.command_name', 'data-entity'), cls=CommandGroupWithAlias, help="""The data entity object.""")
+@cli_util.help_option_group
+def data_entity_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.data_flow_validation_group.command_name', 'data-flow-validation'), cls=CommandGroupWithAlias, help="""The information about a data flow validation.""")
+@cli_util.help_option_group
+def data_flow_validation_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.data_asset_group.command_name', 'data-asset'), cls=CommandGroupWithAlias, help="""Represents a data source in the Data Integration service.""")
+@cli_util.help_option_group
+def data_asset_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.pipeline_validation_group.command_name', 'pipeline-validation'), cls=CommandGroupWithAlias, help="""The information about a pipeline validation.""")
+@cli_util.help_option_group
+def pipeline_validation_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""The connection for a data asset.""")
+@cli_util.help_option_group
+def connection_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.task_run_log_group.command_name', 'task-run-log'), cls=CommandGroupWithAlias, help="""A log message from the execution of a task.""")
+@cli_util.help_option_group
+def task_run_log_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.task_validation_group.command_name', 'task-validation'), cls=CommandGroupWithAlias, help="""The information about task validation.""")
+@cli_util.help_option_group
+def task_validation_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.pipeline_group.command_name', 'pipeline'), cls=CommandGroupWithAlias, help="""A pipeline is a logical grouping of tasks that together perform a higher level operation. For example, a pipeline could contain a set of tasks that load and clean data, then execute a dataflow to analyze the data. The pipeline allows you to manage the activities as a unit instead of individually. Users can also schedule the pipeline instead of the tasks independently.""")
 @cli_util.help_option_group
 def pipeline_group():
@@ -99,15 +135,9 @@ def data_flow_group():
     pass
 
 
-@click.command(cli_util.override('data_integration.data_entity_group.command_name', 'data-entity'), cls=CommandGroupWithAlias, help="""The data entity object.""")
+@click.command(cli_util.override('data_integration.user_defined_function_group.command_name', 'user-defined-function'), cls=CommandGroupWithAlias, help="""The user defined function type contains the audit summary information and the definition of the user defined function.""")
 @cli_util.help_option_group
-def data_entity_group():
-    pass
-
-
-@click.command(cli_util.override('data_integration.data_flow_validation_group.command_name', 'data-flow-validation'), cls=CommandGroupWithAlias, help="""The information about a data flow validation.""")
-@cli_util.help_option_group
-def data_flow_validation_group():
+def user_defined_function_group():
     pass
 
 
@@ -135,9 +165,9 @@ def application_group():
     pass
 
 
-@click.command(cli_util.override('data_integration.data_asset_group.command_name', 'data-asset'), cls=CommandGroupWithAlias, help="""Represents a data source in the Data Integration service.""")
+@click.command(cli_util.override('data_integration.function_library_group.command_name', 'function-library'), cls=CommandGroupWithAlias, help="""The FunctionLibrary type contains the audit summary information and the definition of the FunctionLibrary.""")
 @cli_util.help_option_group
-def data_asset_group():
+def function_library_group():
     pass
 
 
@@ -147,41 +177,32 @@ def task_schedule_group():
     pass
 
 
-@click.command(cli_util.override('data_integration.pipeline_validation_group.command_name', 'pipeline-validation'), cls=CommandGroupWithAlias, help="""The information about a pipeline validation.""")
-@cli_util.help_option_group
-def pipeline_validation_group():
-    pass
-
-
-@click.command(cli_util.override('data_integration.connection_group.command_name', 'connection'), cls=CommandGroupWithAlias, help="""The connection for a data asset.""")
-@cli_util.help_option_group
-def connection_group():
-    pass
-
-
-data_integration_root_group.add_command(task_run_log_group)
 data_integration_root_group.add_command(schema_group)
 data_integration_root_group.add_command(workspace_group)
 data_integration_root_group.add_command(task_run_group)
-data_integration_root_group.add_command(task_validation_group)
 data_integration_root_group.add_command(external_publication_validation_group)
+data_integration_root_group.add_command(user_defined_function_validation_group)
 data_integration_root_group.add_command(connection_validation_group)
 data_integration_root_group.add_command(project_group)
 data_integration_root_group.add_command(work_request_group)
 data_integration_root_group.add_command(reference_group)
+data_integration_root_group.add_command(data_entity_group)
+data_integration_root_group.add_command(data_flow_validation_group)
+data_integration_root_group.add_command(data_asset_group)
+data_integration_root_group.add_command(pipeline_validation_group)
+data_integration_root_group.add_command(connection_group)
+data_integration_root_group.add_command(task_run_log_group)
+data_integration_root_group.add_command(task_validation_group)
 data_integration_root_group.add_command(pipeline_group)
 data_integration_root_group.add_command(schedule_group)
 data_integration_root_group.add_command(data_flow_group)
-data_integration_root_group.add_command(data_entity_group)
-data_integration_root_group.add_command(data_flow_validation_group)
+data_integration_root_group.add_command(user_defined_function_group)
 data_integration_root_group.add_command(folder_group)
 data_integration_root_group.add_command(task_group)
 data_integration_root_group.add_command(external_publication_group)
 data_integration_root_group.add_command(application_group)
-data_integration_root_group.add_command(data_asset_group)
+data_integration_root_group.add_command(function_library_group)
 data_integration_root_group.add_command(task_schedule_group)
-data_integration_root_group.add_command(pipeline_validation_group)
-data_integration_root_group.add_command(connection_group)
 
 
 @workspace_group.command(name=cli_util.override('data_integration.change_compartment.command_name', 'change-compartment'), help=u"""Moves a workspace to a specified compartment. \n[Command Reference](changeCompartment)""")
@@ -668,15 +689,17 @@ def create_connection_create_connection_from_bicc(ctx, from_json, workspace_id, 
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tns-alias', help=u"""The Autonomous Transaction Processing instance service name.""")
+@cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
+def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -708,6 +731,12 @@ def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, n
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if tns_alias is not None:
+        _details['tnsAlias'] = tns_alias
+
+    if tns_names is not None:
+        _details['tnsNames'] = cli_util.parse_json_parameter("tns_names", tns_names)
 
     if username is not None:
         _details['username'] = username
@@ -742,15 +771,17 @@ def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, n
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tns-alias', help=u"""The Autonomous Data Warehouse instance service name.""")
+@cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_connection_from_adwc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
+def create_connection_create_connection_from_adwc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -782,6 +813,12 @@ def create_connection_create_connection_from_adwc(ctx, from_json, workspace_id, 
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if tns_alias is not None:
+        _details['tnsAlias'] = tns_alias
+
+    if tns_names is not None:
+        _details['tnsNames'] = cli_util.parse_json_parameter("tns_names", tns_names)
 
     if username is not None:
         _details['username'] = username
@@ -1467,7 +1504,7 @@ def create_connection_validation_create_data_asset_from_amazon_s3(ctx, from_json
 @cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
 @cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-service-url', help=u"""The service url of the Bi Server.""")
+@cli_util.option('--data-asset-service-url', help=u"""The generic JDBC host name.""")
 @cli_util.option('--data-asset-default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromBICC'}})
 @cli_util.help_option
@@ -1653,6 +1690,7 @@ def create_connection_validation_create_data_asset_from_atp(ctx, from_json, work
 @cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
 @cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-oci-region', help=u"""The Oracle Object storage Region ie. us-ashburn-1""")
 @cli_util.option('--data-asset-url', help=u"""The Oracle Object storage URL.""")
 @cli_util.option('--data-asset-tenancy-id', help=u"""The OCI tenancy OCID.""")
 @cli_util.option('--data-asset-namespace', help=u"""The namespace for the specified Oracle Object storage resource. You can find the namespace under Object Storage Settings in the Console.""")
@@ -1662,7 +1700,7 @@ def create_connection_validation_create_data_asset_from_atp(ctx, from_json, work
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromObjectStorage'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
 @cli_util.wrap_exceptions
-def create_connection_validation_create_data_asset_from_object_storage(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_url, data_asset_tenancy_id, data_asset_namespace, data_asset_default_connection):
+def create_connection_validation_create_data_asset_from_object_storage(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_oci_region, data_asset_url, data_asset_tenancy_id, data_asset_namespace, data_asset_default_connection):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -1701,6 +1739,9 @@ def create_connection_validation_create_data_asset_from_object_storage(ctx, from
 
     if data_asset_registry_metadata is not None:
         _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_oci_region is not None:
+        _details['dataAsset']['ociRegion'] = data_asset_oci_region
 
     if data_asset_url is not None:
         _details['dataAsset']['url'] = data_asset_url
@@ -2068,15 +2109,17 @@ def create_connection_validation_create_connection_from_bicc(ctx, from_json, wor
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-tns-alias', help=u"""The Autonomous Transaction Processing instance service name.""")
+@cli_util.option('--connection-tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password', help=u"""The password for the connection.""")
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
 @cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_atp(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
+def create_connection_validation_create_connection_from_atp(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_tns_alias, connection_tns_names, connection_username, connection_password, connection_password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -2115,6 +2158,12 @@ def create_connection_validation_create_connection_from_atp(ctx, from_json, work
 
     if connection_registry_metadata is not None:
         _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_tns_alias is not None:
+        _details['connection']['tnsAlias'] = connection_tns_alias
+
+    if connection_tns_names is not None:
+        _details['connection']['tnsNames'] = cli_util.parse_json_parameter("connection_tns_names", connection_tns_names)
 
     if connection_username is not None:
         _details['connection']['username'] = connection_username
@@ -2151,15 +2200,17 @@ def create_connection_validation_create_connection_from_atp(ctx, from_json, work
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-tns-alias', help=u"""The Autonomous Data Warehouse instance service name.""")
+@cli_util.option('--connection-tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-username', help=u"""The user name for the connection.""")
 @cli_util.option('--connection-password', help=u"""The password for the connection.""")
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
 @cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_adwc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
+def create_connection_validation_create_connection_from_adwc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_tns_alias, connection_tns_names, connection_username, connection_password, connection_password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -2198,6 +2249,12 @@ def create_connection_validation_create_connection_from_adwc(ctx, from_json, wor
 
     if connection_registry_metadata is not None:
         _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_tns_alias is not None:
+        _details['connection']['tnsAlias'] = connection_tns_alias
+
+    if connection_tns_names is not None:
+        _details['connection']['tnsNames'] = cli_util.parse_json_parameter("connection_tns_names", connection_tns_names)
 
     if connection_username is not None:
         _details['connection']['username'] = connection_username
@@ -2876,7 +2933,7 @@ def create_data_asset_create_data_asset_from_amazon_s3(ctx, from_json, workspace
 @cli_util.option('--external-key', help=u"""The external key for the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--service-url', help=u"""The service url of the Bi Server.""")
+@cli_util.option('--service-url', help=u"""The generic JDBC host name.""")
 @cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromBICC'}})
 @cli_util.help_option
@@ -3044,6 +3101,7 @@ def create_data_asset_create_data_asset_from_atp(ctx, from_json, workspace_id, n
 @cli_util.option('--external-key', help=u"""The external key for the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oci-region', help=u"""The Oracle Object storage Region ie. us-ashburn-1""")
 @cli_util.option('--url', help=u"""The Oracle Object storage URL.""")
 @cli_util.option('--tenancy-id', help=u"""The OCI tenancy OCID.""")
 @cli_util.option('--namespace', help=u"""The namespace for the specified Oracle Object storage resource. You can find the namespace under Object Storage Settings in the Console.""")
@@ -3053,7 +3111,7 @@ def create_data_asset_create_data_asset_from_atp(ctx, from_json, workspace_id, n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromObjectStorage'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
 @cli_util.wrap_exceptions
-def create_data_asset_create_data_asset_from_object_storage(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, url, tenancy_id, namespace, default_connection):
+def create_data_asset_create_data_asset_from_object_storage(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, oci_region, url, tenancy_id, namespace, default_connection):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -3085,6 +3143,9 @@ def create_data_asset_create_data_asset_from_object_storage(ctx, from_json, work
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if oci_region is not None:
+        _details['ociRegion'] = oci_region
 
     if url is not None:
         _details['url'] = url
@@ -3267,7 +3328,7 @@ def create_data_flow_validation(ctx, from_json, workspace_id, key, model_type, m
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FILE_ENTITY"]), help=u"""The data entity type.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FILE_ENTITY", "SQL_ENTITY"]), help=u"""The data entity type.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3292,6 +3353,123 @@ def create_entity_shape(ctx, from_json, workspace_id, connection_key, schema_res
 
     _details = {}
     _details['modelType'] = model_type
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_entity_shape(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        schema_resource_name=schema_resource_name,
+        create_entity_shape_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_entity_group.command(name=cli_util.override('data_integration.create_entity_shape_create_entity_shape_from_sql.command_name', 'create-entity-shape-create-entity-shape-from-sql'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
+@cli_util.option('--key', help=u"""The object key.""")
+@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape-id', help=u"""The shape ID.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
+@cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
+
+This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--foreign-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of foreign keys.
+
+This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-name', help=u"""The resource name.""")
+@cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--sql-query', help=u"""sqlQuery""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'shape': {'module': 'data_integration', 'class': 'Shape'}, 'unique-keys': {'module': 'data_integration', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_integration', 'class': 'list[ForeignKey]'}, 'data-format': {'module': 'data_integration', 'class': 'DataFormat'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'shape': {'module': 'data_integration', 'class': 'Shape'}, 'unique-keys': {'module': 'data_integration', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_integration', 'class': 'list[ForeignKey]'}, 'data-format': {'module': 'data_integration', 'class': 'DataFormat'}}, output_type={'module': 'data_integration', 'class': 'EntityShape'})
+@cli_util.wrap_exceptions
+def create_entity_shape_create_entity_shape_from_sql(ctx, from_json, workspace_id, connection_key, schema_resource_name, key, model_version, parent_ref, name, description, object_version, external_key, shape, shape_id, entity_type, other_type_label, unique_keys, foreign_keys, resource_name, data_format, object_status, identifier, sql_query, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+
+    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+        raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if shape is not None:
+        _details['shape'] = cli_util.parse_json_parameter("shape", shape)
+
+    if shape_id is not None:
+        _details['shapeId'] = shape_id
+
+    if entity_type is not None:
+        _details['entityType'] = entity_type
+
+    if other_type_label is not None:
+        _details['otherTypeLabel'] = other_type_label
+
+    if unique_keys is not None:
+        _details['uniqueKeys'] = cli_util.parse_json_parameter("unique_keys", unique_keys)
+
+    if foreign_keys is not None:
+        _details['foreignKeys'] = cli_util.parse_json_parameter("foreign_keys", foreign_keys)
+
+    if resource_name is not None:
+        _details['resourceName'] = resource_name
+
+    if data_format is not None:
+        _details['dataFormat'] = cli_util.parse_json_parameter("data_format", data_format)
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if sql_query is not None:
+        _details['sqlQuery'] = sql_query
+
+    _details['modelType'] = 'SQL_ENTITY'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_entity_shape(
@@ -3554,6 +3732,58 @@ def create_folder(ctx, from_json, workspace_id, name, identifier, registry_metad
     result = client.create_folder(
         workspace_id=workspace_id,
         create_folder_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@function_library_group.command(name=cli_util.override('data_integration.create_function_library.command_name', 'create'), help=u"""Creates a function library in a project or in another function library, limited to two levels of function libraries. | FunctionLibraries are used to organize your design-time resources, such as tasks or data flows. \n[Command Reference](createFunctionLibrary)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to  1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--registry-metadata', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on FunctionLibrary creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""A user defined description for the FunctionLibrary.""")
+@cli_util.option('--category-name', help=u"""The category name.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'FunctionLibrary'})
+@cli_util.wrap_exceptions
+def create_function_library(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, description, category_name, object_status):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if category_name is not None:
+        _details['categoryName'] = category_name
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_function_library(
+        workspace_id=workspace_id,
+        create_function_library_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3922,7 +4152,7 @@ def create_schedule(ctx, from_json, workspace_id, application_key, name, identif
 @cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
 @cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--frequency-details-days', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of days of the month to be scheduled. i.e. excute every 2nd,3rd, 10th of the month.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3995,6 +4225,84 @@ def create_schedule_monthly_frequency_details(ctx, from_json, workspace_id, appl
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_integration.create_schedule_custom_frequency_details.command_name', 'create-schedule-custom-frequency-details'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify schedule. On scenarios where reference to the schedule is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""This is a version number that is used by the service to upgrade objects if needed through releases of the service.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""This is used by the service for optimistic locking of the object, to prevent multiple users from simultaneously updating the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
+@cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-custom-expression', help=u"""This holds the complete cron expression for this schedule, for example, 10 0/5 * * * ? that fires every 5 minutes, at 10 seconds after the minute (i.e. 10:00:10 am, 10:05:10 am, etc.)""")
+@json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_custom_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_custom_expression):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['frequencyDetails'] = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if is_daylight_adjustment_enabled is not None:
+        _details['isDaylightAdjustmentEnabled'] = is_daylight_adjustment_enabled
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if frequency_details_frequency is not None:
+        _details['frequencyDetails']['frequency'] = frequency_details_frequency
+
+    if frequency_details_custom_expression is not None:
+        _details['frequencyDetails']['customExpression'] = frequency_details_custom_expression
+
+    _details['frequencyDetails']['modelType'] = 'CUSTOM'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_schedule(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        create_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @schedule_group.command(name=cli_util.override('data_integration.create_schedule_daily_frequency_details.command_name', 'create-schedule-daily-frequency-details'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
@@ -4008,7 +4316,7 @@ def create_schedule_monthly_frequency_details(ctx, from_json, workspace_id, appl
 @cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
 @cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
@@ -4077,6 +4385,178 @@ def create_schedule_daily_frequency_details(ctx, from_json, workspace_id, applic
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_integration.create_schedule_weekly_frequency_details.command_name', 'create-schedule-weekly-frequency-details'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify schedule. On scenarios where reference to the schedule is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""This is a version number that is used by the service to upgrade objects if needed through releases of the service.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""This is used by the service for optimistic locking of the object, to prevent multiple users from simultaneously updating the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
+@cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-days', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), help=u"""A list of days of the week to be scheduled. i.e. execute on Monday and Thursday.""")
+@json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_weekly_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_time, frequency_details_days):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['frequencyDetails'] = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if is_daylight_adjustment_enabled is not None:
+        _details['isDaylightAdjustmentEnabled'] = is_daylight_adjustment_enabled
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if frequency_details_frequency is not None:
+        _details['frequencyDetails']['frequency'] = frequency_details_frequency
+
+    if frequency_details_time is not None:
+        _details['frequencyDetails']['time'] = cli_util.parse_json_parameter("frequency_details_time", frequency_details_time)
+
+    if frequency_details_days is not None:
+        _details['frequencyDetails']['days'] = cli_util.parse_json_parameter("frequency_details_days", frequency_details_days)
+
+    _details['frequencyDetails']['modelType'] = 'WEEKLY'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_schedule(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        create_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_integration.create_schedule_monthly_rule_frequency_details.command_name', 'create-schedule-monthly-rule-frequency-details'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify schedule. On scenarios where reference to the schedule is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""This is a version number that is used by the service to upgrade objects if needed through releases of the service.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""This is used by the service for optimistic locking of the object, to prevent multiple users from simultaneously updating the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
+@cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-week-of-month', type=custom_types.CliCaseInsensitiveChoice(["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "LAST"]), help=u"""This holds the week of the month in which the schedule should be triggered.""")
+@cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
+@cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-day-of-week', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), help=u"""This holds the day of the week on which the schedule should be triggered.""")
+@json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_monthly_rule_frequency_details(ctx, from_json, workspace_id, application_key, name, identifier, key, model_version, description, object_version, object_status, timezone, is_daylight_adjustment_enabled, registry_metadata, frequency_details_frequency, frequency_details_week_of_month, frequency_details_interval, frequency_details_time, frequency_details_day_of_week):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['frequencyDetails'] = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if is_daylight_adjustment_enabled is not None:
+        _details['isDaylightAdjustmentEnabled'] = is_daylight_adjustment_enabled
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if frequency_details_frequency is not None:
+        _details['frequencyDetails']['frequency'] = frequency_details_frequency
+
+    if frequency_details_week_of_month is not None:
+        _details['frequencyDetails']['weekOfMonth'] = frequency_details_week_of_month
+
+    if frequency_details_interval is not None:
+        _details['frequencyDetails']['interval'] = frequency_details_interval
+
+    if frequency_details_time is not None:
+        _details['frequencyDetails']['time'] = cli_util.parse_json_parameter("frequency_details_time", frequency_details_time)
+
+    if frequency_details_day_of_week is not None:
+        _details['frequencyDetails']['dayOfWeek'] = frequency_details_day_of_week
+
+    _details['frequencyDetails']['modelType'] = 'MONTHLY_RULE'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_schedule(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        create_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @schedule_group.command(name=cli_util.override('data_integration.create_schedule_hourly_frequency_details.command_name', 'create-schedule-hourly-frequency-details'), help=u"""Endpoint to create a new schedule \n[Command Reference](createSchedule)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
@@ -4090,7 +4570,7 @@ def create_schedule_daily_frequency_details(ctx, from_json, workspace_id, applic
 @cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
 @cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
@@ -4690,18 +5170,20 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The headers for the REST call.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--json-data', help=u"""JSON data for payload body.""")
-@cli_util.option('--api-call-mode', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNC_OCI_WORKREQUEST"]), help=u"""The invocation type to be used for Generic REST invocation.""")
+@cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use. This property is deprecated, use ExecuteRestCallConfig's methodType property instead.""")
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--json-data', help=u"""JSON data for payload body. This property is deprecated, use ExecuteRestCallConfig's payload config param instead.""")
+@cli_util.option('--api-call-mode', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNC_OCI_WORKREQUEST", "ASYNC_GENERIC"]), help=u"""The REST invocation pattern to use. ASYNC_OCI_WORKREQUEST is being deprecated as well as cancelEndpoint/MethodType.""")
 @cli_util.option('--cancel-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cancel-method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use for canceling the original request.""")
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}})
+@cli_util.option('--execute-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cancel-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, auth_details, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type):
+def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, auth_details, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -4768,6 +5250,12 @@ def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, i
     if cancel_method_type is not None:
         _details['cancelMethodType'] = cancel_method_type
 
+    if execute_rest_call_config is not None:
+        _details['executeRestCallConfig'] = cli_util.parse_json_parameter("execute_rest_call_config", execute_rest_call_config)
+
+    if cancel_rest_call_config is not None:
+        _details['cancelRestCallConfig'] = cli_util.parse_json_parameter("cancel_rest_call_config", cancel_rest_call_config)
+
     _details['modelType'] = 'REST_TASK'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
@@ -4790,13 +5278,16 @@ def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, i
 @cli_util.option('--config-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--task-schedule-key', help=u"""Optional task schedule key reference.""")
+@cli_util.option('--ref-task-run-id', help=u"""Reference Task Run Id to be used for re-run""")
+@cli_util.option('--re-run-type', type=custom_types.CliCaseInsensitiveChoice(["BEGINNING", "FAILED", "STEP"]), help=u"""Supported re-run types""")
+@cli_util.option('--step-id', help=u"""Step Id for running from a certain step.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'config-provider': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-provider': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'TaskRun'})
 @cli_util.wrap_exceptions
-def create_task_run(ctx, from_json, workspace_id, application_key, key, model_type, model_version, name, description, config_provider, identifier, task_schedule_key, registry_metadata):
+def create_task_run(ctx, from_json, workspace_id, application_key, key, model_type, model_version, name, description, config_provider, identifier, task_schedule_key, ref_task_run_id, re_run_type, step_id, registry_metadata):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -4832,6 +5323,15 @@ def create_task_run(ctx, from_json, workspace_id, application_key, key, model_ty
 
     if task_schedule_key is not None:
         _details['taskScheduleKey'] = task_schedule_key
+
+    if ref_task_run_id is not None:
+        _details['refTaskRunId'] = ref_task_run_id
+
+    if re_run_type is not None:
+        _details['reRunType'] = re_run_type
+
+    if step_id is not None:
+        _details['stepId'] = step_id
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
@@ -5335,7 +5835,149 @@ def create_task_validation_create_task_validation_from_integration_task(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@workspace_group.command(name=cli_util.override('data_integration.create_workspace.command_name', 'create'), help=u"""Creates a new Data Integration workspace ready for performing data integration tasks. \n[Command Reference](createWorkspace)""")
+@user_defined_function_group.command(name=cli_util.override('data_integration.create_user_defined_function.command_name', 'create'), help=u"""Creates a new UserDefinedFunction in a function library ready for performing data integrations. \n[Command Reference](createUserDefinedFunction)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--registry-metadata', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify user defined function. On scenarios where reference to the user defined function is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--signatures', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of function signature.
+
+This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--expr', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'signatures': {'module': 'data_integration', 'class': 'list[FunctionSignature]'}, 'expr': {'module': 'data_integration', 'class': 'Expression'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'signatures': {'module': 'data_integration', 'class': 'list[FunctionSignature]'}, 'expr': {'module': 'data_integration', 'class': 'Expression'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunction'})
+@cli_util.wrap_exceptions
+def create_user_defined_function(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, signatures, expr, description, object_status):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if signatures is not None:
+        _details['signatures'] = cli_util.parse_json_parameter("signatures", signatures)
+
+    if expr is not None:
+        _details['expr'] = cli_util.parse_json_parameter("expr", expr)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_user_defined_function(
+        workspace_id=workspace_id,
+        create_user_defined_function_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_validation_group.command(name=cli_util.override('data_integration.create_user_defined_function_validation.command_name', 'create'), help=u"""Accepts the UserDefinedFunction definition in the request payload and creates a UserDefinedFunction validation. \n[Command Reference](createUserDefinedFunctionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify user defined function. On scenarios where reference to the user defined function is needed, a value can be passed in create.""")
+@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["DIS_USER_DEFINED_FUNCTION"]), help=u"""The type of the object.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--signatures', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of function signature.
+
+This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--expr', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A key map. If provided, key is replaced with generated key. This structure provides mapping between user provided key and generated key.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'signatures': {'module': 'data_integration', 'class': 'list[FunctionSignature]'}, 'expr': {'module': 'data_integration', 'class': 'Expression'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'key-map': {'module': 'data_integration', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'signatures': {'module': 'data_integration', 'class': 'list[FunctionSignature]'}, 'expr': {'module': 'data_integration', 'class': 'Expression'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'key-map': {'module': 'data_integration', 'class': 'dict(str, string)'}}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunctionValidation'})
+@cli_util.wrap_exceptions
+def create_user_defined_function_validation(ctx, from_json, workspace_id, key, model_type, model_version, parent_ref, name, identifier, object_version, signatures, expr, description, object_status, metadata, key_map):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_type is not None:
+        _details['modelType'] = model_type
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if signatures is not None:
+        _details['signatures'] = cli_util.parse_json_parameter("signatures", signatures)
+
+    if expr is not None:
+        _details['expr'] = cli_util.parse_json_parameter("expr", expr)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if key_map is not None:
+        _details['keyMap'] = cli_util.parse_json_parameter("key_map", key_map)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_user_defined_function_validation(
+        workspace_id=workspace_id,
+        create_user_defined_function_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@workspace_group.command(name=cli_util.override('data_integration.create_workspace.command_name', 'create'), help=u"""Creates a new Data Integration workspace ready for performing data integration tasks. To retrieve the OCID for the new workspace, use the opc-work-request-id returned by this API and call the [GetWorkRequest] API. \n[Command Reference](createWorkspace)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the workspace. Does not have to be unique, and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the workspace.""")
 @cli_util.option('--vcn-id', help=u"""The OCID of the VCN the subnet is in.""")
@@ -5707,6 +6349,37 @@ def delete_folder(ctx, from_json, workspace_id, folder_key, if_match):
     cli_util.render_response(result, ctx)
 
 
+@function_library_group.command(name=cli_util.override('data_integration.delete_function_library.command_name', 'delete'), help=u"""Removes a Function Library from a project using the specified identifier. \n[Command Reference](deleteFunctionLibrary)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--function-library-key', required=True, help=u"""The functionLibrary key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_function_library(ctx, from_json, workspace_id, function_library_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(function_library_key, six.string_types) and len(function_library_key.strip()) == 0:
+        raise click.UsageError('Parameter --function-library-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_function_library(
+        workspace_id=workspace_id,
+        function_library_key=function_library_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('data_integration.delete_patch.command_name', 'delete-patch'), help=u"""Removes a patch using the specified identifier. \n[Command Reference](deletePatch)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
@@ -6001,6 +6674,68 @@ def delete_task_validation(ctx, from_json, workspace_id, task_validation_key, if
     result = client.delete_task_validation(
         workspace_id=workspace_id,
         task_validation_key=task_validation_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_group.command(name=cli_util.override('data_integration.delete_user_defined_function.command_name', 'delete'), help=u"""Removes a UserDefinedFunction from a function library using the specified identifier. \n[Command Reference](deleteUserDefinedFunction)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--user-defined-function-key', required=True, help=u"""The user defined function key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_user_defined_function(ctx, from_json, workspace_id, user_defined_function_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(user_defined_function_key, six.string_types) and len(user_defined_function_key.strip()) == 0:
+        raise click.UsageError('Parameter --user-defined-function-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_user_defined_function(
+        workspace_id=workspace_id,
+        user_defined_function_key=user_defined_function_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_validation_group.command(name=cli_util.override('data_integration.delete_user_defined_function_validation.command_name', 'delete'), help=u"""Removes a UserDefinedFunction validation using the specified identifier. \n[Command Reference](deleteUserDefinedFunctionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--user-defined-function-validation-key', required=True, help=u"""The key of the userDefinedFunction validation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_user_defined_function_validation(ctx, from_json, workspace_id, user_defined_function_validation_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(user_defined_function_validation_key, six.string_types) and len(user_defined_function_validation_key.strip()) == 0:
+        raise click.UsageError('Parameter --user-defined-function-validation-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_user_defined_function_validation(
+        workspace_id=workspace_id,
+        user_defined_function_validation_key=user_defined_function_validation_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6419,6 +7154,36 @@ def get_folder(ctx, from_json, workspace_id, folder_key, projection):
     cli_util.render_response(result, ctx)
 
 
+@function_library_group.command(name=cli_util.override('data_integration.get_function_library.command_name', 'get'), help=u"""Retrieves a Function Library using the specified identifier. \n[Command Reference](getFunctionLibrary)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--function-library-key', required=True, help=u"""The functionLibrary key.""")
+@cli_util.option('--projection', type=custom_types.CliCaseInsensitiveChoice(["CHILD_COUNT_STATISTICS"]), multiple=True, help=u"""This parameter allows users to specify which view of the object to return. CHILD_COUNT_STATISTICS - This option is used to get statistics on immediate children of the object by their type.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'FunctionLibrary'})
+@cli_util.wrap_exceptions
+def get_function_library(ctx, from_json, workspace_id, function_library_key, projection):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(function_library_key, six.string_types) and len(function_library_key.strip()) == 0:
+        raise click.UsageError('Parameter --function-library-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if projection is not None and len(projection) > 0:
+        kwargs['projection'] = projection
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_function_library(
+        workspace_id=workspace_id,
+        function_library_key=function_library_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('data_integration.get_patch.command_name', 'get-patch'), help=u"""Retrieves a patch in an application using the specified identifier. \n[Command Reference](getPatch)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
@@ -6790,6 +7555,60 @@ def get_task_validation(ctx, from_json, workspace_id, task_validation_key):
     cli_util.render_response(result, ctx)
 
 
+@user_defined_function_group.command(name=cli_util.override('data_integration.get_user_defined_function.command_name', 'get'), help=u"""Retrieves a UserDefinedFunction using the specified identifier. \n[Command Reference](getUserDefinedFunction)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--user-defined-function-key', required=True, help=u"""The user defined function key.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunction'})
+@cli_util.wrap_exceptions
+def get_user_defined_function(ctx, from_json, workspace_id, user_defined_function_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(user_defined_function_key, six.string_types) and len(user_defined_function_key.strip()) == 0:
+        raise click.UsageError('Parameter --user-defined-function-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_user_defined_function(
+        workspace_id=workspace_id,
+        user_defined_function_key=user_defined_function_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_validation_group.command(name=cli_util.override('data_integration.get_user_defined_function_validation.command_name', 'get'), help=u"""Retrieves a UserDefinedFunction validation using the specified identifier. \n[Command Reference](getUserDefinedFunctionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--user-defined-function-validation-key', required=True, help=u"""The key of the userDefinedFunction validation.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunctionValidation'})
+@cli_util.wrap_exceptions
+def get_user_defined_function_validation(ctx, from_json, workspace_id, user_defined_function_validation_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(user_defined_function_validation_key, six.string_types) and len(user_defined_function_validation_key.strip()) == 0:
+        raise click.UsageError('Parameter --user-defined-function-validation-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_user_defined_function_validation(
+        workspace_id=workspace_id,
+        user_defined_function_validation_key=user_defined_function_validation_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_group.command(name=cli_util.override('data_integration.get_work_request.command_name', 'get'), help=u"""Retrieves the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous work request to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6837,6 +7656,7 @@ def get_workspace(ctx, from_json, workspace_id):
 @application_group.command(name=cli_util.override('data_integration.list_applications.command_name', 'list'), help=u"""Retrieves a list of applications and provides options to filter the list. \n[Command Reference](listApplications)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
 @cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the published object.""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
@@ -6850,7 +7670,7 @@ def get_workspace(ctx, from_json, workspace_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'ApplicationSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_applications(ctx, from_json, all_pages, page_size, workspace_id, name, identifier, fields, limit, page, sort_order, sort_by):
+def list_applications(ctx, from_json, all_pages, page_size, workspace_id, name, name_contains, identifier, fields, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6861,6 +7681,8 @@ def list_applications(ctx, from_json, all_pages, page_size, workspace_id, name, 
     kwargs = {}
     if name is not None:
         kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
     if identifier is not None and len(identifier) > 0:
         kwargs['identifier'] = identifier
     if fields is not None and len(fields) > 0:
@@ -7334,6 +8156,7 @@ def list_data_flows(ctx, from_json, all_pages, page_size, workspace_id, folder_i
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
 @cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the published object.""")
 @cli_util.option('--type', multiple=True, help=u"""Used to filter by the object type of the object. It can be suffixed with an optional filter operator InSubtree. For Data Integration APIs, a filter based on type Task is used.""")
 @cli_util.option('--type-in-subtree', help=u"""Used in association with type parameter. If value is true, then type all sub types of the given type parameter is considered. If value is false, then sub types are not considered. Default is false.""")
@@ -7348,7 +8171,7 @@ def list_data_flows(ctx, from_json, all_pages, page_size, workspace_id, folder_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'type': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'DependentObjectSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_dependent_objects(ctx, from_json, all_pages, page_size, workspace_id, application_key, fields, name, identifier, type, type_in_subtree, limit, page, sort_order, sort_by):
+def list_dependent_objects(ctx, from_json, all_pages, page_size, workspace_id, application_key, fields, name, name_contains, identifier, type, type_in_subtree, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7364,6 +8187,8 @@ def list_dependent_objects(ctx, from_json, all_pages, page_size, workspace_id, a
         kwargs['fields'] = fields
     if name is not None:
         kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
     if identifier is not None and len(identifier) > 0:
         kwargs['identifier'] = identifier
     if type is not None and len(type) > 0:
@@ -7556,6 +8381,7 @@ def list_external_publications(ctx, from_json, all_pages, page_size, workspace_i
 @cli_util.option('--aggregator-key', help=u"""Used to filter by the project or the folder object.""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
 @cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the object.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
@@ -7568,7 +8394,7 @@ def list_external_publications(ctx, from_json, all_pages, page_size, workspace_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'FolderSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_folders(ctx, from_json, all_pages, page_size, workspace_id, aggregator_key, fields, name, identifier, page, limit, sort_order, sort_by):
+def list_folders(ctx, from_json, all_pages, page_size, workspace_id, aggregator_key, fields, name, name_contains, identifier, page, limit, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7583,6 +8409,8 @@ def list_folders(ctx, from_json, all_pages, page_size, workspace_id, aggregator_
         kwargs['fields'] = fields
     if name is not None:
         kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
     if identifier is not None and len(identifier) > 0:
         kwargs['identifier'] = identifier
     if page is not None:
@@ -7614,6 +8442,75 @@ def list_folders(ctx, from_json, all_pages, page_size, workspace_id, aggregator_
         )
     else:
         result = client.list_folders(
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@function_library_group.command(name=cli_util.override('data_integration.list_function_libraries.command_name', 'list'), help=u"""Retrieves a list of function libraries in a project and provides options to filter the list. \n[Command Reference](listFunctionLibraries)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--aggregator-key', help=u"""Used to filter by the project or the folder object.""")
+@cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the object.""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'FunctionLibrarySummaryCollection'})
+@cli_util.wrap_exceptions
+def list_function_libraries(ctx, from_json, all_pages, page_size, workspace_id, aggregator_key, fields, name, identifier, page, limit, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if aggregator_key is not None:
+        kwargs['aggregator_key'] = aggregator_key
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if name is not None:
+        kwargs['name'] = name
+    if identifier is not None and len(identifier) > 0:
+        kwargs['identifier'] = identifier
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_function_libraries,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_function_libraries,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_function_libraries(
             workspace_id=workspace_id,
             **kwargs
         )
@@ -7908,6 +8805,7 @@ def list_pipelines(ctx, from_json, all_pages, page_size, workspace_id, aggregato
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
 @cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the object.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
@@ -7920,7 +8818,7 @@ def list_pipelines(ctx, from_json, all_pages, page_size, workspace_id, aggregato
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'ProjectSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_projects(ctx, from_json, all_pages, page_size, workspace_id, fields, name, identifier, page, limit, sort_order, sort_by):
+def list_projects(ctx, from_json, all_pages, page_size, workspace_id, fields, name, name_contains, identifier, page, limit, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7933,6 +8831,8 @@ def list_projects(ctx, from_json, all_pages, page_size, workspace_id, fields, na
         kwargs['fields'] = fields
     if name is not None:
         kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
     if identifier is not None and len(identifier) > 0:
         kwargs['identifier'] = identifier
     if page is not None:
@@ -7975,6 +8875,8 @@ def list_projects(ctx, from_json, all_pages, page_size, workspace_id, fields, na
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--name-starts-with', help=u"""This parameter can be used to filter objects by the names starting with the given value.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
 @cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the published object.""")
 @cli_util.option('--type', multiple=True, help=u"""Used to filter by the object type of the object. It can be suffixed with an optional filter operator InSubtree. For Data Integration APIs, a filter based on type Task is used.""")
 @cli_util.option('--type-in-subtree', help=u"""Used in association with type parameter. If value is true, then type all sub types of the given type parameter is considered. If value is false, then sub types are not considered. Default is false.""")
@@ -7989,7 +8891,7 @@ def list_projects(ctx, from_json, all_pages, page_size, workspace_id, fields, na
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'type': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'PublishedObjectSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_published_objects(ctx, from_json, all_pages, page_size, workspace_id, application_key, fields, name, identifier, type, type_in_subtree, limit, page, sort_order, sort_by):
+def list_published_objects(ctx, from_json, all_pages, page_size, workspace_id, application_key, fields, name, name_starts_with, name_contains, identifier, type, type_in_subtree, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -8005,6 +8907,10 @@ def list_published_objects(ctx, from_json, all_pages, page_size, workspace_id, a
         kwargs['fields'] = fields
     if name is not None:
         kwargs['name'] = name
+    if name_starts_with is not None:
+        kwargs['name_starts_with'] = name_starts_with
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
     if identifier is not None and len(identifier) > 0:
         kwargs['identifier'] = identifier
     if type is not None and len(type) > 0:
@@ -8353,6 +9259,7 @@ def list_task_run_logs(ctx, from_json, all_pages, page_size, workspace_id, appli
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
 @cli_util.option('--filter', multiple=True, help=u"""This filter parameter can be used to filter by model specific queryable fields of the object <br><br><B>Examples:-</B><br> <ul> <li><B>?filter=status eq Failed</B> returns all objects that have a status field with value Failed</li> </ul>""")
+@cli_util.option('--name-starts-with', help=u"""This parameter can be used to filter objects by the names starting with the given value.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'key': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'filter': {'module': 'data_integration', 'class': 'list[string]'}})
@@ -8360,7 +9267,7 @@ def list_task_run_logs(ctx, from_json, all_pages, page_size, workspace_id, appli
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'filter': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'TaskRunSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, application_key, key, aggregator_key, fields, name, identifier, page, limit, sort_order, sort_by, filter):
+def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, application_key, key, aggregator_key, fields, name, identifier, page, limit, sort_order, sort_by, filter, name_starts_with):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -8392,6 +9299,8 @@ def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, applicati
         kwargs['sort_by'] = sort_by
     if filter is not None and len(filter) > 0:
         kwargs['filter'] = filter
+    if name_starts_with is not None:
+        kwargs['name_starts_with'] = name_starts_with
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     if all_pages:
@@ -8639,6 +9548,144 @@ def list_tasks(ctx, from_json, all_pages, page_size, workspace_id, folder_id, fi
         )
     else:
         result = client.list_tasks(
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_validation_group.command(name=cli_util.override('data_integration.list_user_defined_function_validations.command_name', 'list'), help=u"""Retrieves a list of UserDefinedFunctionvalidations within the specified workspace. \n[Command Reference](listUserDefinedFunctionValidations)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--key', help=u"""Used to filter by the key of the object.""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--identifier', help=u"""Used to filter by the identifier of the object.""")
+@cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_integration', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunctionValidationSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_user_defined_function_validations(ctx, from_json, all_pages, page_size, workspace_id, key, name, identifier, fields, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if key is not None:
+        kwargs['key'] = key
+    if name is not None:
+        kwargs['name'] = name
+    if identifier is not None:
+        kwargs['identifier'] = identifier
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_user_defined_function_validations,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_user_defined_function_validations,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_user_defined_function_validations(
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_group.command(name=cli_util.override('data_integration.list_user_defined_functions.command_name', 'list'), help=u"""Retrieves a list of UserDefinedFunctions in a function library. \n[Command Reference](listUserDefinedFunctions)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--function-library-key', help=u"""Unique key of the FunctionLibrary.""")
+@cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the object.""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunctionSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_user_defined_functions(ctx, from_json, all_pages, page_size, workspace_id, function_library_key, fields, name, identifier, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if function_library_key is not None:
+        kwargs['function_library_key'] = function_library_key
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if name is not None:
+        kwargs['name'] = name
+    if identifier is not None and len(identifier) > 0:
+        kwargs['identifier'] = identifier
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_user_defined_functions,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_user_defined_functions,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_user_defined_functions(
             workspace_id=workspace_id,
             **kwargs
         )
@@ -9522,17 +10569,19 @@ def update_connection_update_connection_from_amazon_s3(ctx, from_json, force, wo
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tns-alias', help=u"""The Autonomous Transaction Processing instance service name.""")
+@cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def update_connection_update_connection_from_atp(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
+def update_connection_update_connection_from_atp(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -9540,8 +10589,8 @@ def update_connection_update_connection_from_atp(ctx, from_json, force, workspac
     if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
-        if parent_ref or connection_properties or registry_metadata or password_secret:
-            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+        if parent_ref or connection_properties or registry_metadata or tns_names or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and tns-names and password-secret will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -9576,6 +10625,12 @@ def update_connection_update_connection_from_atp(ctx, from_json, force, workspac
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if tns_alias is not None:
+        _details['tnsAlias'] = tns_alias
+
+    if tns_names is not None:
+        _details['tnsNames'] = cli_util.parse_json_parameter("tns_names", tns_names)
 
     if username is not None:
         _details['username'] = username
@@ -9704,17 +10759,19 @@ def update_connection_update_connection_from_oracle(ctx, from_json, force, works
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tns-alias', help=u"""The Autonomous Data Warehouse instance service name.""")
+@cli_util.option('--tns-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of service names that are available for selection in the tnsAlias property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password', help=u"""The password for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'tns-names': {'module': 'data_integration', 'class': 'list[string]'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def update_connection_update_connection_from_adwc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
+def update_connection_update_connection_from_adwc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, tns_alias, tns_names, username, password, password_secret, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -9722,8 +10779,8 @@ def update_connection_update_connection_from_adwc(ctx, from_json, force, workspa
     if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
-        if parent_ref or connection_properties or registry_metadata or password_secret:
-            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+        if parent_ref or connection_properties or registry_metadata or tns_names or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and tns-names and password-secret will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -9758,6 +10815,12 @@ def update_connection_update_connection_from_adwc(ctx, from_json, force, workspa
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if tns_alias is not None:
+        _details['tnsAlias'] = tns_alias
+
+    if tns_names is not None:
+        _details['tnsNames'] = cli_util.parse_json_parameter("tns_names", tns_names)
 
     if username is not None:
         _details['username'] = username
@@ -10288,6 +11351,7 @@ def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspa
 @cli_util.option('--external-key', help=u"""The external key for the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oci-region', help=u"""The Oracle Object storage Region ie. us-ashburn-1""")
 @cli_util.option('--url', help=u"""The Oracle Object storage URL.""")
 @cli_util.option('--tenancy-id', help=u"""The OCI tenancy OCID.""")
 @cli_util.option('--namespace', help=u"""The namespace for the specified Oracle Object storage resource. You can find the namespace under Object Storage Settings in the Console.""")
@@ -10299,7 +11363,7 @@ def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromObjectStorage'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
 @cli_util.wrap_exceptions
-def update_data_asset_update_data_asset_from_object_storage(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, url, tenancy_id, namespace, default_connection, if_match):
+def update_data_asset_update_data_asset_from_object_storage(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, oci_region, url, tenancy_id, namespace, default_connection, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -10343,6 +11407,9 @@ def update_data_asset_update_data_asset_from_object_storage(ctx, from_json, forc
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if oci_region is not None:
+        _details['ociRegion'] = oci_region
 
     if url is not None:
         _details['url'] = url
@@ -10966,6 +12033,77 @@ def update_folder(ctx, from_json, force, workspace_id, folder_key, key, model_ty
     cli_util.render_response(result, ctx)
 
 
+@function_library_group.command(name=cli_util.override('data_integration.update_function_library.command_name', 'update'), help=u"""Updates a specific Function Library. \n[Command Reference](updateFunctionLibrary)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--function-library-key', required=True, help=u"""The functionLibrary key.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to  1000 characters.""")
+@cli_util.option('--description', help=u"""A user defined description for the FunctionLibrary.""")
+@cli_util.option('--category-name', help=u"""The category name.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'FunctionLibrary'})
+@cli_util.wrap_exceptions
+def update_function_library(ctx, from_json, force, workspace_id, function_library_key, name, description, category_name, object_status, identifier, model_version, object_version, registry_metadata, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(function_library_key, six.string_types) and len(function_library_key.strip()) == 0:
+        raise click.UsageError('Parameter --function-library-key cannot be whitespace or empty string')
+    if not force:
+        if registry_metadata:
+            if not click.confirm("WARNING: Updates to registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if category_name is not None:
+        _details['categoryName'] = category_name
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_function_library(
+        workspace_id=workspace_id,
+        function_library_key=function_library_key,
+        update_function_library_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @pipeline_group.command(name=cli_util.override('data_integration.update_pipeline.command_name', 'update'), help=u"""Updates a specific pipeline. \n[Command Reference](updatePipeline)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--pipeline-key', required=True, help=u"""The pipeline key.""")
@@ -11301,7 +12439,7 @@ def update_schedule(ctx, from_json, force, workspace_id, application_key, schedu
 @cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--frequency-details-days', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of days of the month to be scheduled. i.e. excute every 2nd,3rd, 10th of the month.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -11391,6 +12529,105 @@ def update_schedule_monthly_frequency_details(ctx, from_json, force, workspace_i
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_integration.update_schedule_custom_frequency_details.command_name', 'update-schedule-custom-frequency-details'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--schedule-key', required=True, help=u"""Schedule Key""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify schedule. On scenarios where reference to the schedule is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""This is used by the service for optimistic locking of the object, to prevent multiple users from simultaneously updating the object.""")
+@cli_util.option('--model-version', help=u"""This is a version number that is used by the service to upgrade objects if needed through releases of the service.""")
+@cli_util.option('--model-type', help=u"""The type of the object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
+@cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-custom-expression', help=u"""This holds the complete cron expression for this schedule, for example, 10 0/5 * * * ? that fires every 5 minutes, at 10 seconds after the minute (i.e. 10:00:10 am, 10:05:10 am, etc.)""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_custom_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_custom_expression):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or registry_metadata:
+            if not click.confirm("WARNING: Updates to parent-ref and registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['frequencyDetails'] = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if model_type is not None:
+        _details['modelType'] = model_type
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if is_daylight_adjustment_enabled is not None:
+        _details['isDaylightAdjustmentEnabled'] = is_daylight_adjustment_enabled
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if frequency_details_frequency is not None:
+        _details['frequencyDetails']['frequency'] = frequency_details_frequency
+
+    if frequency_details_custom_expression is not None:
+        _details['frequencyDetails']['customExpression'] = frequency_details_custom_expression
+
+    _details['frequencyDetails']['modelType'] = 'CUSTOM'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_schedule(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        schedule_key=schedule_key,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @schedule_group.command(name=cli_util.override('data_integration.update_schedule_daily_frequency_details.command_name', 'update-schedule-daily-frequency-details'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
@@ -11408,7 +12645,7 @@ def update_schedule_monthly_frequency_details(ctx, from_json, force, workspace_i
 @cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -11494,6 +12731,220 @@ def update_schedule_daily_frequency_details(ctx, from_json, force, workspace_id,
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_integration.update_schedule_weekly_frequency_details.command_name', 'update-schedule-weekly-frequency-details'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--schedule-key', required=True, help=u"""Schedule Key""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify schedule. On scenarios where reference to the schedule is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""This is used by the service for optimistic locking of the object, to prevent multiple users from simultaneously updating the object.""")
+@cli_util.option('--model-version', help=u"""This is a version number that is used by the service to upgrade objects if needed through releases of the service.""")
+@cli_util.option('--model-type', help=u"""The type of the object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
+@cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-days', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), help=u"""A list of days of the week to be scheduled. i.e. execute on Monday and Thursday.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_weekly_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_time, frequency_details_days):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or registry_metadata:
+            if not click.confirm("WARNING: Updates to parent-ref and registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['frequencyDetails'] = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if model_type is not None:
+        _details['modelType'] = model_type
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if is_daylight_adjustment_enabled is not None:
+        _details['isDaylightAdjustmentEnabled'] = is_daylight_adjustment_enabled
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if frequency_details_frequency is not None:
+        _details['frequencyDetails']['frequency'] = frequency_details_frequency
+
+    if frequency_details_time is not None:
+        _details['frequencyDetails']['time'] = cli_util.parse_json_parameter("frequency_details_time", frequency_details_time)
+
+    if frequency_details_days is not None:
+        _details['frequencyDetails']['days'] = cli_util.parse_json_parameter("frequency_details_days", frequency_details_days)
+
+    _details['frequencyDetails']['modelType'] = 'WEEKLY'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_schedule(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        schedule_key=schedule_key,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_integration.update_schedule_monthly_rule_frequency_details.command_name', 'update-schedule-monthly-rule-frequency-details'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--schedule-key', required=True, help=u"""Schedule Key""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify schedule. On scenarios where reference to the schedule is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""This is used by the service for optimistic locking of the object, to prevent multiple users from simultaneously updating the object.""")
+@cli_util.option('--model-version', help=u"""This is a version number that is used by the service to upgrade objects if needed through releases of the service.""")
+@cli_util.option('--model-type', help=u"""The type of the object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--timezone', help=u"""The timezone for the schedule.""")
+@cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-week-of-month', type=custom_types.CliCaseInsensitiveChoice(["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "LAST"]), help=u"""This holds the week of the month in which the schedule should be triggered.""")
+@cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
+@cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--frequency-details-day-of-week', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), help=u"""This holds the day of the week on which the schedule should be triggered.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}}, output_type={'module': 'data_integration', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule_monthly_rule_frequency_details(ctx, from_json, force, workspace_id, application_key, schedule_key, key, object_version, model_version, model_type, parent_ref, name, description, object_status, identifier, timezone, is_daylight_adjustment_enabled, registry_metadata, if_match, frequency_details_frequency, frequency_details_week_of_month, frequency_details_interval, frequency_details_time, frequency_details_day_of_week):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    if isinstance(schedule_key, six.string_types) and len(schedule_key.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or registry_metadata:
+            if not click.confirm("WARNING: Updates to parent-ref and registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['frequencyDetails'] = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if model_type is not None:
+        _details['modelType'] = model_type
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if is_daylight_adjustment_enabled is not None:
+        _details['isDaylightAdjustmentEnabled'] = is_daylight_adjustment_enabled
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if frequency_details_frequency is not None:
+        _details['frequencyDetails']['frequency'] = frequency_details_frequency
+
+    if frequency_details_week_of_month is not None:
+        _details['frequencyDetails']['weekOfMonth'] = frequency_details_week_of_month
+
+    if frequency_details_interval is not None:
+        _details['frequencyDetails']['interval'] = frequency_details_interval
+
+    if frequency_details_time is not None:
+        _details['frequencyDetails']['time'] = cli_util.parse_json_parameter("frequency_details_time", frequency_details_time)
+
+    if frequency_details_day_of_week is not None:
+        _details['frequencyDetails']['dayOfWeek'] = frequency_details_day_of_week
+
+    _details['frequencyDetails']['modelType'] = 'MONTHLY_RULE'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_schedule(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        schedule_key=schedule_key,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @schedule_group.command(name=cli_util.override('data_integration.update_schedule_hourly_frequency_details.command_name', 'update-schedule-hourly-frequency-details'), help=u"""Endpoint used to update the schedule \n[Command Reference](updateSchedule)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--application-key', required=True, help=u"""The application key.""")
@@ -11511,7 +12962,7 @@ def update_schedule_daily_frequency_details(ctx, from_json, force, workspace_id,
 @cli_util.option('--is-daylight-adjustment-enabled', type=click.BOOL, help=u"""A flag to indicate whether daylight adjustment should be considered or not.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY"]), help=u"""the frequency of the schedule.""")
+@cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-interval', type=click.INT, help=u"""This hold the repeatability aspect of a schedule. i.e. in a monhtly frequency, a task can be scheduled for every month, once in two months, once in tree months etc.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -11721,21 +13172,23 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The headers for the REST call.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use. This property is deprecated, use ExecuteRestCallConfig's methodType property instead.""")
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-properties', help=u"""Header value.""")
-@cli_util.option('--json-data', help=u"""JSON data for payload body.""")
-@cli_util.option('--api-call-mode', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNC_OCI_WORKREQUEST"]), help=u"""The invocation type to be used for Generic REST invocation.""")
+@cli_util.option('--json-data', help=u"""JSON data for payload body. This property is deprecated, use ExecuteRestCallConfig's payload config param instead.""")
+@cli_util.option('--api-call-mode', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNC_OCI_WORKREQUEST", "ASYNC_GENERIC"]), help=u"""The REST invocation pattern to use. ASYNC_OCI_WORKREQUEST is being deprecated as well as cancelEndpoint/MethodType.""")
 @cli_util.option('--cancel-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cancel-method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use for canceling the original request.""")
+@cli_util.option('--execute-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cancel-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, auth_details, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, if_match):
+def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, auth_details, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -11743,8 +13196,8 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
     if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
-        if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or auth_details or endpoint_parameterconflict or headers or cancel_endpoint:
-            if not click.confirm("WARNING: Updates to parent-ref and input-ports and output-ports and parameters and op-config-values and config-provider-delegate and registry-metadata and auth-details and endpoint-parameterconflict and headers and cancel-endpoint will replace any existing values. Are you sure you want to continue?"):
+        if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or auth_details or endpoint_parameterconflict or headers or cancel_endpoint or execute_rest_call_config or cancel_rest_call_config:
+            if not click.confirm("WARNING: Updates to parent-ref and input-ports and output-ports and parameters and op-config-values and config-provider-delegate and registry-metadata and auth-details and endpoint-parameterconflict and headers and cancel-endpoint and execute-rest-call-config and cancel-rest-call-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -11818,6 +13271,12 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
 
     if cancel_method_type is not None:
         _details['cancelMethodType'] = cancel_method_type
+
+    if execute_rest_call_config is not None:
+        _details['executeRestCallConfig'] = cli_util.parse_json_parameter("execute_rest_call_config", execute_rest_call_config)
+
+    if cancel_rest_call_config is not None:
+        _details['cancelRestCallConfig'] = cli_util.parse_json_parameter("cancel_rest_call_config", cancel_rest_call_config)
 
     _details['modelType'] = 'REST_TASK'
 
@@ -12561,6 +14020,87 @@ def update_task_schedule(ctx, from_json, force, workspace_id, application_key, t
         application_key=application_key,
         task_schedule_key=task_schedule_key,
         update_task_schedule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_defined_function_group.command(name=cli_util.override('data_integration.update_user_defined_function.command_name', 'update'), help=u"""Updates a specific UserDefinedFunction. \n[Command Reference](updateUserDefinedFunction)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--user-defined-function-key', required=True, help=u"""The user defined function key.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--signatures', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of function signature.
+
+This option is a JSON list with items of type FunctionSignature.  For documentation on FunctionSignature please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/FunctionSignature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--expr', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'signatures': {'module': 'data_integration', 'class': 'list[FunctionSignature]'}, 'expr': {'module': 'data_integration', 'class': 'Expression'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'signatures': {'module': 'data_integration', 'class': 'list[FunctionSignature]'}, 'expr': {'module': 'data_integration', 'class': 'Expression'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'UserDefinedFunction'})
+@cli_util.wrap_exceptions
+def update_user_defined_function(ctx, from_json, force, workspace_id, user_defined_function_key, parent_ref, name, identifier, model_version, object_version, signatures, expr, description, object_status, registry_metadata, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(user_defined_function_key, six.string_types) and len(user_defined_function_key.strip()) == 0:
+        raise click.UsageError('Parameter --user-defined-function-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or signatures or expr or registry_metadata:
+            if not click.confirm("WARNING: Updates to parent-ref and signatures and expr and registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if signatures is not None:
+        _details['signatures'] = cli_util.parse_json_parameter("signatures", signatures)
+
+    if expr is not None:
+        _details['expr'] = cli_util.parse_json_parameter("expr", expr)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_user_defined_function(
+        workspace_id=workspace_id,
+        user_defined_function_key=user_defined_function_key,
+        update_user_defined_function_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

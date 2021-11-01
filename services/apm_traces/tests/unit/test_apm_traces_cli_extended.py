@@ -29,10 +29,6 @@ class TestAPMTraces(unittest.TestCase):
         assert 'span' in result.output
         assert '--help' in result.output
 
-    def test_query_old_is_removed(self):
-        result = util.invoke_command(['apm-traces', 'query', 'query-response', 'query-old'])
-        assert "Error: No such command 'query-old'." in result.output  # Confirming removal of query-old
-
     def test_run_query_options(self):
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query'])
         assert 'Error: Missing option(s) --apm-domain-id, --start-time-gte, --start-time-lt.' in result.output  # Validating renaming of group query-result-response to query-response and query to run-query

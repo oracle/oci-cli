@@ -676,3 +676,7 @@ cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.list
 identity_cli.user_group.commands.pop(identity_cli.update_o_auth_client_credential.name)
 oauth2_credential_group.add_command(identity_cli.update_o_auth_client_credential)
 cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.update_o_auth_client_credential, "update")
+
+
+# oci iam domain list-allowed-domain-license-types -> oci iam domain list-license-types
+cli_util.rename_command(identity_cli, identity_cli.domain_group, identity_cli.list_allowed_domain_license_types, "list-license-types")
