@@ -6,6 +6,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.2.2 - 2021-11-02
+------------------
+Added
+~~~~~
+
+* Support for Domains in the Identity Service 
+
+  * ``oci iam domain`` 
+
+* Support for redeemable user and support rewards in the Usage Service
+ 
+  * ``oci usage monthly-reward-summary list-rewards``
+  * ``oci usage product-summary list-products``
+  * ``oci usage redeemable-user create``
+  * ``oci usage redeemable-user delete``
+  * ``oci usage redeemable-user-summary list-redeemable-users``
+
+* Support for the Database Tools service
+
+  * ``oci dbtools``
+
+* Support for scan listener port TCP and TCP SSL on cloud VM clusters in the Database service
+  
+  * ``oci db cloud-vm-cluster create --scan-listener-port-tcp --scan-listener-port-tcp-ssl`` 
+
+* Support for user-defined functions and libraries, as well as scheduling and orchestration, in the Data Integration service
+
+  * ``oci data-integration user-defined-function``
+  * ``oci data-integration user-defined-function-validation``
+  * ``oci data-integration schedule create-custom-frequency | create-monthly-rule-frequency | create-weekly-frequency``
+  * ``oci data-integration schedule update-custom-frequency | update-monthly-rule-frequency | update-weekly-frequency``
+  * ``oci data-integration function-library``
+  * ``oci data-integration data-entity create-entity-shape-from-sql`` 
+
+* Support for calling Oracle Cloud Infrastructure services in the Singapore (``--region ap-singapore-1``) and Marseille (``--region eu-marseille-1``) regions
+
+Changed
+~~~~~~~
+
+* Endpoint for Identity service changed to include ".oci" subdomain
+
+* Handle merge case when empty contexts/clusters/users is null and not empty string in the Container Engine commands
+
+* Version checks in install.sh and install.py 
+
+
 3.2.1 - 2021-10-26
 ------------------
 Added

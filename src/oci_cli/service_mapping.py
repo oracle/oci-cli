@@ -139,6 +139,10 @@ service_mapping = {
         "database",
         "Database Service"
     ],
+    "dbtools": [
+        "database_tools",
+        "Database Tools"
+    ],
     "devops": [
         "devops",
         "DevOps"
@@ -322,6 +326,10 @@ service_mapping = {
     "support": [
         "cims",
         "Support Management"
+    ],
+    "usage": [
+        "usage",
+        "UsageApi"
     ],
     "usage-api": [
         "usage_api",

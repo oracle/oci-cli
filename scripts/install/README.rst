@@ -74,3 +74,9 @@ Help can be obtained via "help .\install.ps1". Here are the parameters accepted 
 The order of precedence in which this scripts applies input parameters is as follows:
 
     individual params > AcceptAllDefaults > interactive inputs
+
+Checksums
+-----------
+install.sh   f3a7e017b7f6bf0eed40fa2c565c45a27c8807ff6d7f52bdbf611e73578b547c
+install.ps1   4dd3876a0b2cbbd633c7621600992b739de86dc260ec5726ef78deba9abaedfe
+install.py   657935aae43c441bf150872d4b4a65686d6449f5a07c4790feb312e361a2c6e7

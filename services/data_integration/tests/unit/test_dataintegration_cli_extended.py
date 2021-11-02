@@ -430,3 +430,11 @@ class TestDataIntegration(unittest.TestCase):
         result = util.invoke_command(
             ['data-integration', 'data-asset', 'create-data-asset-create-data-asset-from-amazon-s3'])
         assert "Error: No such command 'create-data-asset-create-data-asset-from-amazon-s3'." in result.output
+
+    def test_create_task_create_task_from_rest_task(self):
+        result = util.invoke_command(['data-integration', 'task', 'create_task_create_task_from_rest_task'])
+        assert "Error: No such command 'create_task_create_task_from_rest_task'." in result.output
+
+    def test_update_task_update_task_from_rest_task(self):
+        result = util.invoke_command(['data-integration', 'task', 'update_task_update_task_from_rest_task'])
+        assert "Error: No such command 'update_task_update_task_from_rest_task'." in result.output

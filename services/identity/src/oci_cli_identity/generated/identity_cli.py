@@ -87,6 +87,12 @@ def tag_group():
     pass
 
 
+@click.command(cli_util.override('iam.iam_work_request_log_group.command_name', 'iam-work-request-log'), cls=CommandGroupWithAlias, help="""The log entity for a IAM work request.""")
+@cli_util.help_option_group
+def iam_work_request_log_group():
+    pass
+
+
 @click.command(cli_util.override('iam.bulk_edit_tags_resource_type_collection_group.command_name', 'bulk-edit-tags-resource-type-collection'), cls=CommandGroupWithAlias, help="""The list of resource types that support bulk editing of tags.""")
 @cli_util.help_option_group
 def bulk_edit_tags_resource_type_collection_group():
@@ -223,6 +229,12 @@ def api_key_group():
     pass
 
 
+@click.command(cli_util.override('iam.domain_group.command_name', 'domain'), cls=CommandGroupWithAlias, help="""Properties for a Domain""")
+@cli_util.help_option_group
+def domain_group():
+    pass
+
+
 @click.command(cli_util.override('iam.tagging_work_request_error_group.command_name', 'tagging-work-request-error'), cls=CommandGroupWithAlias, help="""The error entity.""")
 @cli_util.help_option_group
 def tagging_work_request_error_group():
@@ -234,6 +246,12 @@ def tagging_work_request_error_group():
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def region_subscription_group():
+    pass
+
+
+@click.command(cli_util.override('iam.iam_work_request_group.command_name', 'iam-work-request'), cls=CommandGroupWithAlias, help="""A IAM work request object that allows users to track Asynchronous API status.""")
+@cli_util.help_option_group
+def iam_work_request_group():
     pass
 
 
@@ -316,6 +334,7 @@ iam_root_group.add_command(authentication_policy_group)
 iam_root_group.add_command(smtp_credential_group)
 iam_root_group.add_command(scim_client_credentials_group)
 iam_root_group.add_command(tag_group)
+iam_root_group.add_command(iam_work_request_log_group)
 iam_root_group.add_command(bulk_edit_tags_resource_type_collection_group)
 iam_root_group.add_command(group_group)
 iam_root_group.add_command(policy_group)
@@ -332,8 +351,10 @@ iam_root_group.add_command(identity_provider_group)
 iam_root_group.add_command(identity_provider_group_group)
 iam_root_group.add_command(ui_password_group)
 iam_root_group.add_command(api_key_group)
+iam_root_group.add_command(domain_group)
 iam_root_group.add_command(tagging_work_request_error_group)
 iam_root_group.add_command(region_subscription_group)
+iam_root_group.add_command(iam_work_request_group)
 iam_root_group.add_command(tagging_work_request_group)
 iam_root_group.add_command(dynamic_group_group)
 iam_root_group.add_command(region_group)
@@ -341,6 +362,61 @@ iam_root_group.add_command(auth_token_group)
 iam_root_group.add_command(swift_password_group)
 iam_root_group.add_command(tag_default_group)
 iam_root_group.add_command(user_group)
+
+
+@domain_group.command(name=cli_util.override('iam.activate_domain.command_name', 'activate'), help=u"""If the domain's {@code lifecycleState} is INACTIVE, 1. Set the {@code lifecycleDetails} to ACTIVATING and asynchronously starts enabling    the domain and return 202 ACCEPTED.     1.1 Sets the domain status to ENABLED and set specified domain's         {@code lifecycleState} to ACTIVE and set the {@code lifecycleDetails} to null.
+
+To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status. Deactivate a domain can be done using HTTP POST /domains/{domainId}/actions/deactivate.
+
+- If the domain's {@code lifecycleState} is ACTIVE, returns 202 ACCEPTED with no action   taken on service side. - If domain is of {@code type} DEFAULT or DEFAULT_LIGHTWEIGHT or domain's {@code lifecycleState} is not INACTIVE,   returns 400 BAD REQUEST. - If the domain doesn't exists, returns 404 NOT FOUND. - If the authenticated user is part of the domain to be activated, returns 400 BAD REQUEST - If error occurs while activating domain, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](activateDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def activate_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.activate_domain(
+        domain_id=domain_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @mfa_totp_device_group.command(name=cli_util.override('iam.activate_mfa_totp_device.command_name', 'activate'), help=u"""Activates the specified MFA TOTP device for the user. Activation requires manual interaction with the Console. \n[Command Reference](activateMfaTotpDevice)""")
@@ -744,6 +820,128 @@ def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.change_domain_compartment.command_name', 'change-compartment'), help=u"""Change the containing compartment for a domain.
+
+This is an asynchronous call where the Domain's compartment is changed and is updated with the new compartment information. To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+
+The compartment change is complete when accessed via domain URL and also returns new compartment OCID. - If the domain doesn't exists, returns 404 NOT FOUND. - If Domain {@code type} is DEFAULT or DEFAULT_LIGHTWEIGHT, return 400 BAD Request - If Domain is not active or being updated, returns 400 BAD REQUEST. - If error occurs while changing compartment for domain, return 500 INTERNAL SERVER ERROR. \n[Command Reference](changeDomainCompartment)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the destination compartment into which to move the domain.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_domain_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, compartment_id, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.change_domain_compartment(
+        domain_id=domain_id,
+        change_domain_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@domain_group.command(name=cli_util.override('iam.change_domain_license_type.command_name', 'change-domain-license-type'), help=u"""If the domain's {@code lifecycleState} is ACTIVE, validates the requested {@code licenseType} update is allowed and 1. Set the {@code lifecycleDetails} to UPDATING 2. Asynchronously starts updating the domain and return 202 ACCEPTED.     2.1 Successfully updates specified domain's {@code licenseType}. 3. On completion set the {@code lifecycleDetails} to null. To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+
+- If license type update is successful, return 202 ACCEPTED - If requested {@code licenseType} validation fails, returns 400 Bad request. - If Domain is not active or being updated, returns 400 BAD REQUEST. - If Domain {@code type} is DEFAULT or DEFAULT_LIGHTWEIGHT, return 400 BAD Request - If the domain doesn't exists, returns 404 NOT FOUND - If any internal error occurs, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](changeDomainLicenseType)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--license-type', help=u"""The License type of Domain""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_domain_license_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, license_type, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if license_type is not None:
+        _details['licenseType'] = license_type
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.change_domain_license_type(
+        domain_id=domain_id,
+        change_domain_license_type_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @tag_namespace_group.command(name=cli_util.override('iam.change_tag_namespace_compartment.command_name', 'change-compartment'), help=u"""Moves the specified tag namespace to the specified compartment within the same tenancy.
 
 To move the tag namespace, you must have the manage tag-namespaces permission on both compartments. For more information about IAM policies, see [Details for IAM].
@@ -907,6 +1105,105 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.create_domain.command_name', 'create'), help=u"""Creates a new domain in the tenancy with domain home in {@code homeRegion}. This is an asynchronous call - where, at start, {@code lifecycleState} of this domain is set to CREATING and {@code lifecycleDetails} to UPDATING. On domain creation completion this Domain's {@code lifecycleState} will be set to ACTIVE and {@code lifecycleDetails} to null.
+
+To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+
+After creating a `Domain`, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. If the domain's {@code displayName} already exists, returns 400 BAD REQUEST. If any one of admin related fields are provided and one of the following 3 fields - {@code adminEmail}, {@code adminLastName} and {@code adminUserName} - is not provided, returns 400 BAD REQUEST. - If {@code isNotificationBypassed} is NOT provided when admin information is provided, returns 400 BAD REQUEST. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](createDomain)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the Compartment where domain is created""")
+@cli_util.option('--display-name', required=True, help=u"""The mutable display name of the domain.""")
+@cli_util.option('--description', required=True, help=u"""Domain entity description""")
+@cli_util.option('--home-region', required=True, help=u"""The region's name. See [Regions and Availability Domains] for the full list of supported region names.
+
+Example: `us-phoenix-1`""")
+@cli_util.option('--license-type', required=True, help=u"""The License type of Domain""")
+@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether domain is hidden on login screen or not.""")
+@cli_util.option('--admin-first-name', help=u"""The admin first name""")
+@cli_util.option('--admin-last-name', help=u"""The admin last name""")
+@cli_util.option('--admin-user-name', help=u"""The admin user name""")
+@cli_util.option('--admin-email', help=u"""The admin email address""")
+@cli_util.option('--is-notification-bypassed', type=click.BOOL, help=u"""Indicates if admin user created in IDCS stripe would like to receive notification like welcome email or not. Required field only if admin information is provided, otherwise optional.""")
+@cli_util.option('--is-primary-email-required', type=click.BOOL, help=u"""Optional field to indicate whether users in the domain are required to have a primary email address or not Defaults to true""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, home_region, license_type, is_hidden_on_login, admin_first_name, admin_last_name, admin_user_name, admin_email, is_notification_bypassed, is_primary_email_required, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['description'] = description
+    _details['homeRegion'] = home_region
+    _details['licenseType'] = license_type
+
+    if is_hidden_on_login is not None:
+        _details['isHiddenOnLogin'] = is_hidden_on_login
+
+    if admin_first_name is not None:
+        _details['adminFirstName'] = admin_first_name
+
+    if admin_last_name is not None:
+        _details['adminLastName'] = admin_last_name
+
+    if admin_user_name is not None:
+        _details['adminUserName'] = admin_user_name
+
+    if admin_email is not None:
+        _details['adminEmail'] = admin_email
+
+    if is_notification_bypassed is not None:
+        _details['isNotificationBypassed'] = is_notification_bypassed
+
+    if is_primary_email_required is not None:
+        _details['isPrimaryEmailRequired'] = is_primary_email_required
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.create_domain(
+        create_domain_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @dynamic_group_group.command(name=cli_util.override('iam.create_dynamic_group.command_name', 'create'), help=u"""Creates a new dynamic group in your tenancy.
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
@@ -1047,7 +1344,9 @@ def create_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.create_identity_provider.command_name', 'create'), help=u"""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
+@identity_provider_group.command(name=cli_util.override('iam.create_identity_provider.command_name', 'create'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
 
 You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
@@ -1123,7 +1422,9 @@ def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.create_identity_provider_create_saml2_identity_provider_details.command_name', 'create-identity-provider-create-saml2-identity-provider-details'), help=u"""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
+@identity_provider_group.command(name=cli_util.override('iam.create_identity_provider_create_saml2_identity_provider_details.command_name', 'create-identity-provider-create-saml2-identity-provider-details'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
 
 You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
@@ -1205,7 +1506,9 @@ def create_identity_provider_create_saml2_identity_provider_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('iam.create_idp_group_mapping.command_name', 'create'), help=u"""Creates a single mapping between an IdP group and an IAM Service [group]. \n[Command Reference](createIdpGroupMapping)""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.create_idp_group_mapping.command_name', 'create'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Creates a single mapping between an IdP group and an IAM Service [group]. \n[Command Reference](createIdpGroupMapping)""")
 @cli_util.option('--idp-group-name', required=True, help=u"""The name of the IdP group you want to map.""")
 @cli_util.option('--group-id', required=True, help=u"""The OCID of the IAM Service [group] you want to map to the IdP group.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
@@ -2054,6 +2357,61 @@ def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.deactivate_domain.command_name', 'deactivate'), help=u"""If the domain's {@code lifecycleState} is ACTIVE and no active Apps are present in domain, 1. Set the {@code lifecycleDetails} to DEACTIVATING and asynchronously starts disabling    the domain and return 202 ACCEPTED.     1.1 Sets the domain status to DISABLED and set specified domain's         {@code lifecycleState} to INACTIVE and set the {@code lifecycleDetails} to null.
+
+To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status. Activate a domain can be done using HTTP POST /domains/{domainId}/actions/activate.
+
+- If the domain's {@code lifecycleState} is INACTIVE, returns 202 ACCEPTED with no action   taken on service side. - If domain is of {@code type} DEFAULT or DEFAULT_LIGHTWEIGHT or domain's {@code lifecycleState}   is not ACTIVE, returns 400 BAD REQUEST. - If the domain doesn't exists, returns 404 NOT FOUND. - If any active Apps in domain, returns 400 BAD REQUEST. - If the authenticated user is part of the domain to be activated, returns 400 BAD REQUEST - If error occurs while deactivating domain, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](deactivateDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def deactivate_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.deactivate_domain(
+        domain_id=domain_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @api_key_group.command(name=cli_util.override('iam.delete_api_key.command_name', 'delete'), help=u"""Deletes the specified API signing key for the specified user.
 
 Every user has permission to use this operation to delete a key for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to delete a key for any user, including themselves. \n[Command Reference](deleteApiKey)""")
@@ -2197,6 +2555,62 @@ def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.delete_domain.command_name', 'delete'), help=u"""Soft Deletes a domain.
+
+This is an asynchronous API, where, if the domain's {@code lifecycleState} is INACTIVE and no active Apps are present in underlying stripe,   1. Sets the specified domain's {@code lifecycleState} to DELETING.   2. Domains marked as DELETING will be cleaned up by a periodic task unless customer request it to be undo via ticket.   3. Work request is created and returned as opc-work-request-id along with 202 ACCEPTED. To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+
+- If the domain's {@code lifecycleState} is DELETING, returns 202 Accepted as a deletion   is already in progress for this domain. - If the domain doesn't exists, returns 404 NOT FOUND. - If domain is of {@code type} DEFAULT or DEFAULT_LIGHTWEIGHT, returns 400 BAD REQUEST. - If any active Apps in domain, returns 400 BAD REQUEST. - If the authenticated user is part of the domain to be deleted, returns 400 BAD REQUEST. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](deleteDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.delete_domain(
+        domain_id=domain_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @dynamic_group_group.command(name=cli_util.override('iam.delete_dynamic_group.command_name', 'delete'), help=u"""Deletes the specified dynamic group. \n[Command Reference](deleteDynamicGroup)""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2323,7 +2737,9 @@ def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.delete_identity_provider.command_name', 'delete'), help=u"""Deletes the specified identity provider. The identity provider must not have any group mappings (see [IdpGroupMapping]). \n[Command Reference](deleteIdentityProvider)""")
+@identity_provider_group.command(name=cli_util.override('iam.delete_identity_provider.command_name', 'delete'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Deletes the specified identity provider. The identity provider must not have any group mappings (see [IdpGroupMapping]). \n[Command Reference](deleteIdentityProvider)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2386,7 +2802,9 @@ def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('iam.delete_idp_group_mapping.command_name', 'delete'), help=u"""Deletes the specified group mapping. \n[Command Reference](deleteIdpGroupMapping)""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.delete_idp_group_mapping.command_name', 'delete'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Deletes the specified group mapping. \n[Command Reference](deleteIdpGroupMapping)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help=u"""The OCID of the group mapping.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2887,6 +3305,71 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.enable_replication_to_region.command_name', 'enable-replication-to-region'), help=u"""Replicate domain to a new region. This is an asynchronous call - where, at start, {@code state} of this domain in replica region is set to ENABLING_REPLICATION. On domain replication completion the {@code state} will be set to REPLICATION_ENABLED.
+
+To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+
+If the replica region's {@code state} is already ENABLING_REPLICATION or REPLICATION_ENABLED, returns 409 CONFLICT. - If the domain doesn't exists, returns 404 NOT FOUND. - If home region is same as replication region, return 400 BAD REQUEST. - If Domain is not active or being updated, returns 400 BAD REQUEST. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](enableReplicationToRegion)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--replica-region', help=u"""A region for which domain replication is requested for. See [Regions and Availability Domains] for the full list of supported region names.
+
+Example: `us-phoenix-1`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_replication_to_region(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, replica_region, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if replica_region is not None:
+        _details['replicaRegion'] = replica_region
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.enable_replication_to_region(
+        domain_id=domain_id,
+        enable_replication_to_region_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @mfa_totp_device_group.command(name=cli_util.override('iam.generate_totp_seed.command_name', 'generate-totp-seed'), help=u"""Generate seed for the MFA TOTP device. \n[Command Reference](generateTotpSeed)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help=u"""The OCID of the MFA TOTP device.""")
@@ -2986,6 +3469,30 @@ def get_compartment(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.get_domain.command_name', 'get'), help=u"""Get the specified domain's information.
+
+- If the domain doesn't exists, returns 404 NOT FOUND. - If any internal error occurs, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](getDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Domain'})
+@cli_util.wrap_exceptions
+def get_domain(ctx, from_json, domain_id):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.get_domain(
+        domain_id=domain_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @dynamic_group_group.command(name=cli_util.override('iam.get_dynamic_group.command_name', 'get'), help=u"""Gets the specified dynamic group's information. \n[Command Reference](getDynamicGroup)""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3030,7 +3537,33 @@ def get_group(ctx, from_json, group_id):
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.get_identity_provider.command_name', 'get'), help=u"""Gets the specified identity provider's information. \n[Command Reference](getIdentityProvider)""")
+@iam_work_request_group.command(name=cli_util.override('iam.get_iam_work_request.command_name', 'get'), help=u"""Gets details on a specified IAM work request. For asynchronous operations in Identity and Access Management service, opc-work-request-id header values contains iam work request id that can be provided in this API to track the current status of the operation.
+
+- If workrequest exists, returns 202 ACCEPTED - If workrequest does not exist, returns 404 NOT FOUND \n[Command Reference](getIamWorkRequest)""")
+@cli_util.option('--iam-work-request-id', required=True, help=u"""The OCID of the IAM work request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IamWorkRequest'})
+@cli_util.wrap_exceptions
+def get_iam_work_request(ctx, from_json, iam_work_request_id):
+
+    if isinstance(iam_work_request_id, six.string_types) and len(iam_work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --iam-work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.get_iam_work_request(
+        iam_work_request_id=iam_work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@identity_provider_group.command(name=cli_util.override('iam.get_identity_provider.command_name', 'get'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Gets the specified identity provider's information. \n[Command Reference](getIdentityProvider)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3051,7 +3584,9 @@ def get_identity_provider(ctx, from_json, identity_provider_id):
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('iam.get_idp_group_mapping.command_name', 'get'), help=u"""Gets the specified group mapping. \n[Command Reference](getIdpGroupMapping)""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.get_idp_group_mapping.command_name', 'get'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Gets the specified group mapping. \n[Command Reference](getIdpGroupMapping)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help=u"""The OCID of the group mapping.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3213,7 +3748,7 @@ def get_tag_namespace(ctx, from_json, tag_namespace_id):
     cli_util.render_response(result, ctx)
 
 
-@tagging_work_request_group.command(name=cli_util.override('iam.get_tagging_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service. \n[Command Reference](getTaggingWorkRequest)""")
+@tagging_work_request_group.command(name=cli_util.override('iam.get_tagging_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in tagging service. \n[Command Reference](getTaggingWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3318,7 +3853,7 @@ def get_user_ui_password_information(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('iam.get_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('iam.get_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the compartment service. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3334,6 +3869,29 @@ def get_work_request(ctx, from_json, work_request_id):
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@domain_group.command(name=cli_util.override('iam.list_allowed_domain_license_types.command_name', 'list-allowed-domain-license-types'), help=u"""List the allowed domain license types supported by OCI If {@code currentLicenseTypeName} provided, returns allowed license types a domain with the specified license type name can migrate to. If {@code name} is provided, it filters and returns resources that match the given license type name. Otherwise, returns all valid license types that are currently supported.
+
+- If license type details are retrieved sucessfully, return 202 ACCEPTED. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](listAllowedDomainLicenseTypes)""")
+@cli_util.option('--current-license-type-name', help=u"""The domain license type""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[AllowedDomainLicenseTypeSummary]'})
+@cli_util.wrap_exceptions
+def list_allowed_domain_license_types(ctx, from_json, all_pages, current_license_type_name):
+
+    kwargs = {}
+    if current_license_type_name is not None:
+        kwargs['current_license_type_name'] = current_license_type_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.list_allowed_domain_license_types(
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3640,6 +4198,86 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.list_domains.command_name', 'list'), help=u"""List all domains that are homed or have a replica region in current region. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](listDomains)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--display-name', help=u"""The mutable display name of the domain""")
+@cli_util.option('--url', help=u"""The region agnostic domain URL""")
+@cli_util.option('--home-region-url', help=u"""The region specific domain URL""")
+@cli_util.option('--type', help=u"""The domain type""")
+@cli_util.option('--license-type', help=u"""The domain license type""")
+@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicate if the domain is visible at login screen or not""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "INACTIVE"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[DomainSummary]'})
+@cli_util.wrap_exceptions
+def list_domains(ctx, from_json, all_pages, page_size, compartment_id, display_name, url, home_region_url, type, license_type, is_hidden_on_login, page, limit, name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if url is not None:
+        kwargs['url'] = url
+    if home_region_url is not None:
+        kwargs['home_region_url'] = home_region_url
+    if type is not None:
+        kwargs['type'] = type
+    if license_type is not None:
+        kwargs['license_type'] = license_type
+    if is_hidden_on_login is not None:
+        kwargs['is_hidden_on_login'] = is_hidden_on_login
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_domains,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_domains,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_domains(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @dynamic_group_group.command(name=cli_util.override('iam.list_dynamic_groups.command_name', 'list'), help=u"""Lists the dynamic groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. \n[Command Reference](listDynamicGroups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -3783,7 +4421,174 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group_group.command(name=cli_util.override('iam.list_identity_provider_groups.command_name', 'list'), help=u"""Lists the identity provider groups. \n[Command Reference](listIdentityProviderGroups)""")
+@iam_work_request_group.command(name=cli_util.override('iam.list_iam_work_request_errors.command_name', 'list-iam-work-request-errors'), help=u"""Gets error details for a specified IAM work request. For asynchronous operations in Identity and Access Management service, opc-work-request-id header values contains iam work request id that can be provided in this API to track the current status of the operation.
+
+- If workrequest exists, returns 202 ACCEPTED - If workrequest does not exist, returns 404 NOT FOUND \n[Command Reference](listIamWorkRequestErrors)""")
+@cli_util.option('--iam-work-request-id', required=True, help=u"""The OCID of the IAM work request.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IamWorkRequestErrorSummary]'})
+@cli_util.wrap_exceptions
+def list_iam_work_request_errors(ctx, from_json, all_pages, page_size, iam_work_request_id, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(iam_work_request_id, six.string_types) and len(iam_work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --iam-work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_iam_work_request_errors,
+            iam_work_request_id=iam_work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_iam_work_request_errors,
+            limit,
+            page_size,
+            iam_work_request_id=iam_work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_iam_work_request_errors(
+            iam_work_request_id=iam_work_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@iam_work_request_log_group.command(name=cli_util.override('iam.list_iam_work_request_logs.command_name', 'list'), help=u"""Gets logs for a specified IAM work request. For asynchronous operations in Identity and Access Management service, opc-work-request-id header values contains iam work request id that can be provided in this API to track the current status of the operation.
+
+- If workrequest exists, returns 202 ACCEPTED - If workrequest does not exist, returns 404 NOT FOUND \n[Command Reference](listIamWorkRequestLogs)""")
+@cli_util.option('--iam-work-request-id', required=True, help=u"""The OCID of the IAM work request.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IamWorkRequestLogSummary]'})
+@cli_util.wrap_exceptions
+def list_iam_work_request_logs(ctx, from_json, all_pages, page_size, iam_work_request_id, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(iam_work_request_id, six.string_types) and len(iam_work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --iam-work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_iam_work_request_logs,
+            iam_work_request_id=iam_work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_iam_work_request_logs,
+            limit,
+            page_size,
+            iam_work_request_id=iam_work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_iam_work_request_logs(
+            iam_work_request_id=iam_work_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@iam_work_request_group.command(name=cli_util.override('iam.list_iam_work_requests.command_name', 'list'), help=u"""List the IAM work requests in compartment
+
+- If IAM workrequest  details are retrieved sucessfully, return 202 ACCEPTED. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](listIamWorkRequests)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--resource-identifier', help=u"""The identifier of the resource the work request affects.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IamWorkRequestSummary]'})
+@cli_util.wrap_exceptions
+def list_iam_work_requests(ctx, from_json, all_pages, page_size, compartment_id, page, limit, resource_identifier):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if resource_identifier is not None:
+        kwargs['resource_identifier'] = resource_identifier
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_iam_work_requests,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_iam_work_requests,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_iam_work_requests(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@identity_provider_group_group.command(name=cli_util.override('iam.list_identity_provider_groups.command_name', 'list'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Lists the identity provider groups. \n[Command Reference](listIdentityProviderGroups)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3839,7 +4644,9 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.list_identity_providers.command_name', 'list'), help=u"""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. \n[Command Reference](listIdentityProviders)""")
+@identity_provider_group.command(name=cli_util.override('iam.list_identity_providers.command_name', 'list'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. \n[Command Reference](listIdentityProviders)""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for federation. Allowed values are: SAML2""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -3904,7 +4711,9 @@ def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, comp
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('iam.list_idp_group_mappings.command_name', 'list'), help=u"""Lists the group mappings for the specified identity provider. \n[Command Reference](listIdpGroupMappings)""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.list_idp_group_mappings.command_name', 'list'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Lists the group mappings for the specified identity provider. \n[Command Reference](listIdpGroupMappings)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -5103,6 +5912,90 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     cli_util.render_response(result, ctx)
 
 
+@domain_group.command(name=cli_util.override('iam.update_domain.command_name', 'update'), help=u"""Updates domain information and associated stripe. This is an asynchronous call where the associated stripe and domain are updated.
+
+To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+
+- If the {@code displayName} is not unique within the tenancy, returns 400 BAD REQUEST. - If any field other than {@code description} is requested to be updated for DEFAULT domain, returns 400 BAD REQUEST. - If Domain is not active or being updated, returns 400 BAD REQUEST. - If Domain {@code type} is DEFAULT or DEFAULT_LIGHTWEIGHT, return 400 BAD Request - If the domain doesn't exists, returns 404 NOT FOUND. \n[Command Reference](updateDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@cli_util.option('--description', help=u"""The domain description""")
+@cli_util.option('--display-name', help=u"""The mutable display name of the domain""")
+@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether domain is hidden on login screen or not.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, description, display_name, is_hidden_on_login, freeform_tags, defined_tags, if_match):
+
+    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+        raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if is_hidden_on_login is not None:
+        _details['isHiddenOnLogin'] = is_hidden_on_login
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.update_domain(
+        domain_id=domain_id,
+        update_domain_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_iam_work_request') and callable(getattr(client, 'get_iam_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_iam_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @dynamic_group_group.command(name=cli_util.override('iam.update_dynamic_group.command_name', 'update'), help=u"""Updates the specified dynamic group. \n[Command Reference](updateDynamicGroup)""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @cli_util.option('--description', help=u"""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.""")
@@ -5249,7 +6142,9 @@ def update_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.update_identity_provider.command_name', 'update'), help=u"""Updates the specified identity provider. \n[Command Reference](updateIdentityProvider)""")
+@identity_provider_group.command(name=cli_util.override('iam.update_identity_provider.command_name', 'update'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Updates the specified identity provider. \n[Command Reference](updateIdentityProvider)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help=u"""The protocol used for federation.
 
@@ -5324,7 +6219,9 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('iam.update_identity_provider_update_saml2_identity_provider_details.command_name', 'update-identity-provider-update-saml2-identity-provider-details'), help=u"""Updates the specified identity provider. \n[Command Reference](updateIdentityProvider)""")
+@identity_provider_group.command(name=cli_util.override('iam.update_identity_provider_update_saml2_identity_provider_details.command_name', 'update-identity-provider-update-saml2-identity-provider-details'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Updates the specified identity provider. \n[Command Reference](updateIdentityProvider)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--description', help=u"""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5409,7 +6306,9 @@ def update_identity_provider_update_saml2_identity_provider_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('iam.update_idp_group_mapping.command_name', 'update'), help=u"""Updates the specified group mapping. \n[Command Reference](updateIdpGroupMapping)""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.update_idp_group_mapping.command_name', 'update'), help=u"""**Deprecated.** For more information, see [Deprecated IAM Service APIs].
+
+Updates the specified group mapping. \n[Command Reference](updateIdpGroupMapping)""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help=u"""The OCID of the group mapping.""")
 @cli_util.option('--idp-group-name', help=u"""The idp group name.""")
