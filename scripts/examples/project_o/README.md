@@ -125,6 +125,10 @@ where=$(which oci) && wget -q $o_src -O ${where%ci} && chmod a+x ${where%ci}
 ```
 When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
 
+**OCIDs File**
+
+**``o``** uses a local cache of OCID-name mappings called the OCIDs file, located at `.oci/ocids`. If you need to update the OCIDs file after first usage, simply run `o <tenancy_ocid>`.
+
 **Advanced Setup and Usage**
 
 When you run `o oci_commands`, it takes about a minute to create a list of thousands of possible `oci` commands and their options, and save this to *$HOME/.oci/ocids*.  In some cases your `oci` command line environment may be installed without preformatted documentation.  In this case it may take 30 to 60 minutes to gather the command information.
