@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.3.0 - 2021-11-09
+------------------
+Added
+~~~~~
+
+* Support for Drilldown configuration in the Management Dashboard service
+  
+  * ``oci management-dashboard dashboard create | update --drilldown-config``
+  * ``oci management-dashboard saved-search create | update --drilldown-config``
+
+* Support for Autonomous Database Dedicated on Cloud at Customer Infrastructure in the Operator Access Control Service
+
+  * ``oci opctl access-request approve --time-of-user-creation``
+  * ``oci opctl access-request list --resource-type, --time-end, --time-start``
+  * ``oci opctl access-request review``
+  * ``oci opctl operator-action list --resource-type``
+  * ``oci opctl operator-control create --resource-type``
+  * ``oci opctl operator-control list  --resource-type``
+  * ``oci opctl operator-control-assignment create --is-auto-approve-during-maintenance --is-log-forwarded --remote-syslog-server-address --remote-syslog-server-ca-cert --remote-syslog-server-port``
+  * ``oci opctl operator-control-assignment list  --resource-type``
+  * ``oci opctl operator-control-assignment update --resource-type --is-auto-approve-during-maintenance --is-log-forwarded --remote-syslog-server-address --remote-syslog-server-ca-cert --remote-syslog-server-port``
+  * [Breaking] Fields ``--approver-groups-list``, ``--is-fully-pre-approved`` are now required for ``oci opctl operator-control create``
+  * [Breaking] Field ``--is-enforced-always`` is now required for ``oci opctl operator-control-assignment update``
+  * [Breaking] Fields ``--approver-groups-list``, ``--is-fully-pre-approved``, ``--operator-control-name`` are now required for ``oci opctl operator-control update``
+  * [Breaking] Fields ``--is-enforced-always``, ``--resource-type`` are now required for ``oci opctl operator-control-assignment create``
+
+* Support for verifying the checksum for the python installer script from within the shell and powershell installer scripts
+
 3.2.2 - 2021-11-02
 ------------------
 Added

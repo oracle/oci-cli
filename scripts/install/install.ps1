@@ -27,6 +27,9 @@
 .PARAMETER OciCliVersion
     The version of CLI to install, e.g. 2.5.12. The default is the latest from pypi.
 
+.PARAMETER VerifyCheckSum
+        This input parameter verifies the checksum for install.py script. the checksum should be provided as a value of this parameter.
+
 .NOTES
     The order of precedence in which this scripts applies input parameters is as follows:
     individual params > accept_all_defaults > interactive inputs
@@ -50,7 +53,8 @@ Param(
     [Parameter(Mandatory=$false)][string]$ScriptDir,
     [Parameter(Mandatory=$false)][switch]$UpdatePathAndEnableTabCompletion,
     [Parameter(Mandatory=$false)][switch]$UseLocalCLiInstaller,
-    [Parameter(Mandatory=$false)][string]$OciCliVersion
+    [Parameter(Mandatory=$false)][string]$OciCliVersion,
+    [Parameter(Mandatory=$false)][string]$VerifyCheckSum
 )
 
 
@@ -63,8 +67,8 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
 }
 
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
-$FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v3.2.1/scripts/install/install.py"
+$FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.22.0/scripts/install/install.py"
 $PythonVersionToInstall = "3.8.5"    # version of Python to install if none exists
 $MinValidPython3Version = "3.6.0"    # minimum required version of Python 3 on system
 
@@ -255,6 +259,22 @@ function DownloadAndRunPythonMsiInstaller($PythonInstallLocation, $Version) {
     LogOutput "Successfully installed Python!"
 }
 
+function VerifyCheckSumForPythonInstallScript($PythonInstallLocation, $ExpectedCheckSum) {
+    Write-Output  "Verify Check Sum for install.py script..."
+    $FileHash = Get-FileHash -Path $PythonInstallLocation -Algorithm SHA256
+    $Hash=$FileHash.Hash
+    Write-Output  "Expected check sum: $ExpectedCheckSum"
+    Write-Output  "Generated check sum: $Hash"
+    # the hash generated from linux has the characters in lowercase but in windows it is in uppercase, so the comparison should ignore case
+    if ($Hash -eq $ExpectedCheckSum) {
+        Write-Output  "Verify Check Sum for install.py script is successful"
+    }
+     Else {
+        LogOutput 'Verify Check Sum for install.py script failed'
+        LogOutput 'Exiting the installation process...'
+        Exit 1
+     }
+}
 Try {
     # ensure that the script stops executing if any errors are encountered so we don't get in a weird state
     $ErrorActionPreference = "Stop"
@@ -390,6 +410,11 @@ Try {
             LogOutput "Falling back to previous install.py script URL - $PythonInstallScriptUrl"
         }
     }
+    # Testing checksum of the python installation file
+    if ($VerifyCheckSum) {
+        VerifyCheckSumForPythonInstallScript -PythonInstallLocation $PythonInstallScriptPath -ExpectedCheckSum $VerifyCheckSum
+    }
+
     $ArgumentList = "`"$PythonInstallScriptPath`""
     if ($AcceptAllDefaults) {
         $ArgumentList = "$ArgumentList --accept-all-defaults"

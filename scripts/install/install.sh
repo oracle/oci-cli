@@ -61,6 +61,8 @@ The following options are available:
         If this flag is specified, CLI will not be installed with tty
     --oci-cli-version
         The version of CLI to install, e.g. 2.5.12. The default is the latest from pypi.
+    --verify-checksum
+        This input parameter verifies the checksum for install.py script. the checksum should be provided as a value of this parameter.
     --help
         show this help text and exit.
 
@@ -184,6 +186,12 @@ case $key in
     --dry-run)
     install_args="$install_args --dry-run"
     shift # past argument
+    ;;
+    --verify-checksum)
+    verify_checksum=true
+    checksum="$2"
+    shift # past argument
+    shift # past value
     ;;
     # Help text for this script. This option takes precedence over all other options
     --help|-h)
@@ -360,6 +368,24 @@ if [ "$?" = "0" ] && [ "${OFFLINE_INSTALL}" != "true" ];then
 fi
 
 chmod 775 $install_script
+
+if [ "$verify_checksum" = true ]; then
+  echo "Testing checksum of the python installation file:"
+  #shasum -a 256 $install_script
+  output=$(shasum -a 256 $install_script || sha256sum $install_script)
+  # The output of the above command will be something like this 8ec841d987f665d43bef4af82a61aa16971ca91c53e4cd4005e606f9645fa5be /var/folders/kp/3kdz5yrd4cv3_t_qzrj7nw600000gn/T/oci_cli_install_tmp_XXXX.cvhqrtrd so take the first string
+  generated_checksum=(${output// / })
+  echo "Generated checksum: "${generated_checksum}
+  echo "Expected checksum: "${checksum}
+  if [ "$generated_checksum" = "$checksum" ];then
+    echo "Check sum verification succeeded"
+  else
+    echo "Check sum verification failed."
+    echo "Exiting the installation process..."
+    exit
+  fi
+fi
+
 echo "Running install script."
 echo "$python_exe $install_script $install_args"
 if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ] || [ "${NO_TTY_REQUIRED}" == "true" ] || [ "${OFFLINE_INSTALL}" == "true" ];then

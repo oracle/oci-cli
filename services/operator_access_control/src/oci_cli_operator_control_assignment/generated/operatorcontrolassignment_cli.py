@@ -71,21 +71,29 @@ def change_operator_control_assignment_compartment(ctx, from_json, operator_cont
 @cli_util.option('--operator-control-id', required=True, help=u"""The OCID of the operator control that is being assigned to a target resource.""")
 @cli_util.option('--resource-id', required=True, help=u"""The OCID of the target resource being brought under the governance of the operator control.""")
 @cli_util.option('--resource-name', required=True, help=u"""Name of the target resource.""")
+@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER"]), help=u"""Type of the target resource.""")
 @cli_util.option('--resource-compartment-id', required=True, help=u"""The OCID of the compartment that contains the target resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the operator control assignment.""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["EXACC"]), help=u"""Type of the target resource.""")
+@cli_util.option('--is-enforced-always', required=True, type=click.BOOL, help=u"""If set, then the target resource is always governed by the operator control.""")
 @cli_util.option('--time-assignment-from', type=custom_types.CLI_DATETIME, help=u"""The time at which the target resource will be brought under the governance of the operator control in [RFC 3339] timestamp format. Example: '2020-05-22T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-assignment-to', type=custom_types.CLI_DATETIME, help=u"""The time at which the target resource will leave the governance of the operator control in [RFC 3339]timestamp format.Example: '2020-05-22T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--is-enforced-always', type=click.BOOL, help=u"""If set, then the target resource is always governed by the operator control.""")
 @cli_util.option('--comment', help=u"""Comment about the assignment of the operator control to this target resource.""")
+@cli_util.option('--is-log-forwarded', type=click.BOOL, help=u"""If set, then the audit logs will be forwarded to the relevant remote logging server""")
+@cli_util.option('--remote-syslog-server-address', help=u"""The address of the remote syslog server where the audit logs will be forwarded to. Address in host or IP format.""")
+@cli_util.option('--remote-syslog-server-port', type=click.INT, help=u"""The listening port of the remote syslog server. The port range is 0 - 65535. Only TCP supported.""")
+@cli_util.option('--remote-syslog-server-ca-cert', help=u"""The CA certificate of the remote syslog server. Identity of the remote syslog server will be asserted based on this certificate.""")
+@cli_util.option('--is-auto-approve-during-maintenance', type=click.BOOL, help=u"""The boolean if true would autoApprove during maintenance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "UPDATING", "DELETING", "DELETED", "DELETIONFAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'operator_access_control', 'class': 'OperatorControlAssignment'})
 @cli_util.wrap_exceptions
-def create_operator_control_assignment(ctx, from_json, operator_control_id, resource_id, resource_name, resource_compartment_id, compartment_id, resource_type, time_assignment_from, time_assignment_to, is_enforced_always, comment, freeform_tags, defined_tags):
+def create_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, resource_id, resource_name, resource_type, resource_compartment_id, compartment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_auto_approve_during_maintenance, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -94,11 +102,10 @@ def create_operator_control_assignment(ctx, from_json, operator_control_id, reso
     _details['operatorControlId'] = operator_control_id
     _details['resourceId'] = resource_id
     _details['resourceName'] = resource_name
+    _details['resourceType'] = resource_type
     _details['resourceCompartmentId'] = resource_compartment_id
     _details['compartmentId'] = compartment_id
-
-    if resource_type is not None:
-        _details['resourceType'] = resource_type
+    _details['isEnforcedAlways'] = is_enforced_always
 
     if time_assignment_from is not None:
         _details['timeAssignmentFrom'] = time_assignment_from
@@ -106,11 +113,23 @@ def create_operator_control_assignment(ctx, from_json, operator_control_id, reso
     if time_assignment_to is not None:
         _details['timeAssignmentTo'] = time_assignment_to
 
-    if is_enforced_always is not None:
-        _details['isEnforcedAlways'] = is_enforced_always
-
     if comment is not None:
         _details['comment'] = comment
+
+    if is_log_forwarded is not None:
+        _details['isLogForwarded'] = is_log_forwarded
+
+    if remote_syslog_server_address is not None:
+        _details['remoteSyslogServerAddress'] = remote_syslog_server_address
+
+    if remote_syslog_server_port is not None:
+        _details['remoteSyslogServerPort'] = remote_syslog_server_port
+
+    if remote_syslog_server_ca_cert is not None:
+        _details['remoteSyslogServerCACert'] = remote_syslog_server_ca_cert
+
+    if is_auto_approve_during_maintenance is not None:
+        _details['isAutoApproveDuringMaintenance'] = is_auto_approve_during_maintenance
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -123,6 +142,29 @@ def create_operator_control_assignment(ctx, from_json, operator_control_id, reso
         create_operator_control_assignment_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_operator_control_assignment') and callable(getattr(client, 'get_operator_control_assignment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_operator_control_assignment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -131,7 +173,7 @@ def create_operator_control_assignment(ctx, from_json, operator_control_id, reso
 @cli_util.option('--description', help=u"""reason for detachment of OperatorAssignment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "UPDATING", "DELETING", "DELETED", "DELETIONFAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -219,7 +261,8 @@ def get_operator_control_assignment(ctx, from_json, operator_control_assignment_
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--operator-control-name', help=u"""A filter to return OperatorControl that match the given operatorControlName.""")
 @cli_util.option('--resource-name', help=u"""A filter to return only resources that match the given ResourceName.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperatorControlAssignment lifecycleState.""")
+@cli_util.option('--resource-type', help=u"""A filter to return only lists of resources that match the entire given service type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "UPDATING", "DELETING", "DELETED", "DELETIONFAILED"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperatorControlAssignment lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -231,7 +274,7 @@ def get_operator_control_assignment(ctx, from_json, operator_control_assignment_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'operator_access_control', 'class': 'OperatorControlAssignmentCollection'})
 @cli_util.wrap_exceptions
-def list_operator_control_assignments(ctx, from_json, all_pages, page_size, compartment_id, operator_control_name, resource_name, lifecycle_state, limit, page, sort_order, sort_by):
+def list_operator_control_assignments(ctx, from_json, all_pages, page_size, compartment_id, operator_control_name, resource_name, resource_type, lifecycle_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -241,6 +284,8 @@ def list_operator_control_assignments(ctx, from_json, all_pages, page_size, comp
         kwargs['operator_control_name'] = operator_control_name
     if resource_name is not None:
         kwargs['resource_name'] = resource_name
+    if resource_type is not None:
+        kwargs['resource_type'] = resource_type
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if limit is not None:
@@ -280,15 +325,20 @@ def list_operator_control_assignments(ctx, from_json, all_pages, page_size, comp
 
 @operator_control_assignment_group.command(name=cli_util.override('operator_control_assignment.update_operator_control_assignment.command_name', 'update'), help=u"""Modifies the existing Operator Control assignment of the specified Operator Control assignment ID. Modifying the assignment does not change the Operator Control assignment ID. \n[Command Reference](updateOperatorControlAssignment)""")
 @cli_util.option('--operator-control-assignment-id', required=True, help=u"""unique OperatorControl identifier""")
+@cli_util.option('--is-enforced-always', required=True, type=click.BOOL, help=u"""If true, then the target resource is always governed by the operator control. Otherwise governance is time-based as specified by timeAssignmentTo and timeAssignmentFrom.""")
 @cli_util.option('--time-assignment-from', type=custom_types.CLI_DATETIME, help=u"""The time at which the target resource will be brought under the governance of the operator control in [RFC 3339] timestamp format. Example: '2020-05-22T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-assignment-to', type=custom_types.CLI_DATETIME, help=u"""The time at which the target resource will leave the governance of the operator control in [RFC 3339]timestamp format.Example: '2020-05-22T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--is-enforced-always', type=click.BOOL, help=u"""If true, then the target resource is always governed by the operator control. Otherwise governance is time-based as specified by timeAssignmentTo and timeAssignmentFrom.""")
 @cli_util.option('--comment', help=u"""Comment about the modification of the operator control assignment.""")
+@cli_util.option('--is-log-forwarded', type=click.BOOL, help=u"""If set, then the audit logs will be forwarded to the relevant remote logging server""")
+@cli_util.option('--remote-syslog-server-address', help=u"""The address of the remote syslog server where the audit logs will be forwarded to. Address in host or IP format.""")
+@cli_util.option('--remote-syslog-server-port', type=click.INT, help=u"""The listening port of the remote syslog server. The port range is 0 - 65535. Only TCP supported.""")
+@cli_util.option('--remote-syslog-server-ca-cert', help=u"""The CA certificate of the remote syslog server. Identity of the remote syslog server will be asserted based on this certificate.""")
+@cli_util.option('--is-auto-approve-during-maintenance', type=click.BOOL, help=u"""The boolean if true would autoApprove during maintenance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "APPLIED", "APPLYFAILED", "UPDATING", "DELETING", "DELETED", "DELETIONFAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}})
@@ -296,7 +346,7 @@ def list_operator_control_assignments(ctx, from_json, all_pages, page_size, comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'operator_access_control', 'class': 'OperatorControlAssignment'})
 @cli_util.wrap_exceptions
-def update_operator_control_assignment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_assignment_id, time_assignment_from, time_assignment_to, is_enforced_always, comment, freeform_tags, defined_tags, if_match):
+def update_operator_control_assignment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_assignment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_auto_approve_during_maintenance, freeform_tags, defined_tags, if_match):
 
     if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
@@ -311,6 +361,7 @@ def update_operator_control_assignment(ctx, from_json, force, wait_for_state, ma
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['isEnforcedAlways'] = is_enforced_always
 
     if time_assignment_from is not None:
         _details['timeAssignmentFrom'] = time_assignment_from
@@ -318,11 +369,23 @@ def update_operator_control_assignment(ctx, from_json, force, wait_for_state, ma
     if time_assignment_to is not None:
         _details['timeAssignmentTo'] = time_assignment_to
 
-    if is_enforced_always is not None:
-        _details['isEnforcedAlways'] = is_enforced_always
-
     if comment is not None:
         _details['comment'] = comment
+
+    if is_log_forwarded is not None:
+        _details['isLogForwarded'] = is_log_forwarded
+
+    if remote_syslog_server_address is not None:
+        _details['remoteSyslogServerAddress'] = remote_syslog_server_address
+
+    if remote_syslog_server_port is not None:
+        _details['remoteSyslogServerPort'] = remote_syslog_server_port
+
+    if remote_syslog_server_ca_cert is not None:
+        _details['remoteSyslogServerCACert'] = remote_syslog_server_ca_cert
+
+    if is_auto_approve_during_maintenance is not None:
+        _details['isAutoApproveDuringMaintenance'] = is_auto_approve_during_maintenance
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

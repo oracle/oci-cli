@@ -1976,8 +1976,7 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
     # Start bulk delete of objects
     _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, None, force, delimiter, prefix,
                                     file_filter_collection, None, output, parallel_operations_count,
-                                    retrying_list_objects, lambda r: r.data.next_start_with,
-                                    lambda res: res.data.objects)
+                                    lambda r: r.data.next_start_with, lambda res: res.data.objects)
 
     render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
@@ -2129,8 +2128,8 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
     # Start bulk delete of object versions
     _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, prefix,
                                     file_filter_collection, None, output, parallel_operations_count,
-                                    retrying_list_object_versions, lambda r: r.headers.get('opc-next-page'),
-                                    lambda res: res.data.items, is_versioned=True)
+                                    lambda r: r.headers.get('opc-next-page'), lambda res: res.data.items,
+                                    is_versioned=True)
 
     render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
@@ -2141,42 +2140,44 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
 # Common helper method to paginate through objects/versions list and delete them using a pool
 def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_name, force, delimiter, prefix,
                                     file_filter_collection, excluded_object_set, output, parallel_operations_count,
-                                    _list_fn, _next_page_fn, _get_obj_fn, is_versioned=False):
+                                    _next_page_fn, _get_obj_fn, is_versioned=False):
     reusable_progress_bar = ProgressBar(100, 'Delete Object')
-
+    curr_page = None
+    first_page = True
     while True:
         transfer_manager = TransferManager(client,
                                            TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
-        list_objects_responses = _list_fn(
-            client=client,
+
+        list_objects_responses = retrying_list_call_single_page(
+            func_ref=client.list_object_versions if is_versioned else client.list_objects,
             request_id=ctx.obj['request_id'],
             namespace=namespace,
             bucket_name=bucket_name,
             prefix=prefix,
-            start=object_name,
+            start=object_name if is_versioned else curr_page,
             end=None,
             limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
             delimiter=delimiter,
-            fields='name',
-            retrieve_all=False
+            page=curr_page if is_versioned else None,
+            fields='name'
         )
 
+        next_page = _next_page_fn(list_objects_responses)
         objects_to_delete = []
-        for response in list_objects_responses:
-            for obj in _get_obj_fn(response):
-                if object_name and object_name != obj.name:
+        for obj in _get_obj_fn(list_objects_responses):
+            if object_name and object_name != obj.name:
+                continue
+
+            if file_filter_collection:
+                pseudo_path = os.path.join(bucket_name, obj.name)
+                if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
                     continue
 
-                if file_filter_collection:
-                    pseudo_path = os.path.join(bucket_name, obj.name)
-                    if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
-                        continue
+            # check in the excluded object set and if present exclude the object
+            if excluded_object_set and obj.name in excluded_object_set:
+                continue
 
-                # check in the excluded object set and if present exclude the object
-                if excluded_object_set and obj.name in excluded_object_set:
-                    continue
-
-                objects_to_delete.append(obj)
+            objects_to_delete.append(obj)
 
         # Based on the rules for --force:
         #
@@ -2193,22 +2194,18 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
             if file_filter_collection:
                 # If we specify this, the approximate or exact objects to delete is not determinable without paging through the entire list (e.g. in the
                 # case that the only matching items are on the last few pages). So in this case just use a generic message
-                confirm_prompt = 'WARNING: This command will delete all matching {} in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'.format(o_type)
+                confirm_prompt = 'WARNING: This command will delete all matching {} in the bucket. Please use ' \
+                                 '--dry-run to list the objects which would be deleted. Are you sure you wish to ' \
+                                 'continue?'.format(o_type)
             else:
-                if _next_page_fn(list_objects_responses[-1]):
-                    # There are more pages of data
-                    confirm_prompt = 'WARNING: This command will delete at least {} {}. Are you sure you wish to continue?'.format(
-                        len(objects_to_delete), o_type)
-                else:
-                    if len(objects_to_delete) == 0:
-                        # There are no objects anyway, so just terminate here
+                if len(objects_to_delete) == 0:
+                    if first_page:
                         click.echo('There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
                         sys.exit(0)
-                    else:
-                        confirm_prompt = 'WARNING: This command will delete {} {}. Are you sure you wish to continue?'.format(
-                            len(objects_to_delete), o_type)
-
-            if not click.confirm(confirm_prompt):
+                    break
+                confirm_prompt = 'WARNING: This command will delete at least {} {}. Are you sure you wish to continue?'\
+                    .format(len(objects_to_delete), o_type)
+            if first_page and (not click.confirm(confirm_prompt)):
                 ctx.abort()
 
         for obj in objects_to_delete:
@@ -2231,9 +2228,16 @@ def _bulk_delete_objects_using_pool(ctx, client, namespace, bucket_name, object_
                                 DeleteObjectTask, delete_kwargs)
 
         transfer_manager.wait_for_completion()
+        if len(objects_to_delete) == 0:
+            if file_filter_collection:      # Even if object not in current page check all the pages
+                curr_page = next_page
+            else:                       # Object not in current page, end the loop
+                break
 
-        if _next_page_fn(list_objects_responses[-1]) is None:
+        if next_page is None:           # This is the last page, end the loop
             break
+
+        first_page = False
 
         # Because we may not be deleting objects for a while when there are filters,
         # show a dummy message so the caller still knows that there is progress
@@ -2783,15 +2787,14 @@ def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run,
         if not versioned:
             _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
                                             file_filter_collection, excluded_object_set, output_object,
-                                            parallel_operations_count, retrying_list_objects,
-                                            lambda r: r.data.next_start_with, lambda res: res.data.objects)
+                                            parallel_operations_count, lambda r: r.data.next_start_with,
+                                            lambda res: res.data.objects)
         else:
             # bulk-delete object versions
             _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
                                             file_filter_collection, excluded_object_set, output_object,
-                                            parallel_operations_count, retrying_list_object_versions,
-                                            lambda r: r.headers.get('opc-next-page'), lambda res: res.data.items,
-                                            is_versioned=True)
+                                            parallel_operations_count, lambda r: r.headers.get('opc-next-page'),
+                                            lambda res: res.data.items, is_versioned=True)
         stacked_output.append(output_object)
 
     list_params = {

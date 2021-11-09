@@ -63,6 +63,7 @@ def get_operator_action(ctx, from_json, operator_action_id):
 @operator_action_group.command(name=cli_util.override('operator_actions.list_operator_actions.command_name', 'list'), help=u"""Lists all the OperatorActions available in the system. \n[Command Reference](listOperatorActions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--resource-type', help=u"""A filter to return only lists of resources that match the entire given service type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperatorAction lifecycleState.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -75,7 +76,7 @@ def get_operator_action(ctx, from_json, operator_action_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'operator_access_control', 'class': 'OperatorActionCollection'})
 @cli_util.wrap_exceptions
-def list_operator_actions(ctx, from_json, all_pages, page_size, compartment_id, name, lifecycle_state, limit, page, sort_order, sort_by):
+def list_operator_actions(ctx, from_json, all_pages, page_size, compartment_id, name, resource_type, lifecycle_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -83,6 +84,8 @@ def list_operator_actions(ctx, from_json, all_pages, page_size, compartment_id, 
     kwargs = {}
     if name is not None:
         kwargs['name'] = name
+    if resource_type is not None:
+        kwargs['resource_type'] = resource_type
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if limit is not None:
