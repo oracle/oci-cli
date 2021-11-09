@@ -364,6 +364,55 @@ def test_sync_src_with_delete(object_storage_client, debug):
     assert set(parsed_result['deleted-objects']) == new_local_file_set
 
 
+def test_sync_src_with_delete_paging(object_storage_client, debug):
+    """
+    1. Perform a --dry-run against a blank remote by specifying --delete option.
+    2. Verify that all objects gets transferred and nothing gets deleted because
+        there are no extra objects in remote.
+    3. Upload all the objects from local to remote
+    4. Create new files in remote which are not present in source
+    5. Perform a --dry-run against the updated remote with the same parameter as before.
+    6. This time all the source objects should be present in remote as we uploaded them earlier so
+        we expect them to get skipped
+    7. Validate that all the new objects created in remote from previous step would be in deleted list
+        as they are not present in the source
+    8. Perform an actual sync now and validate the above 2 points
+    """
+
+    # run the sync command with --delete option
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--delete',
+                                    '--dry-run'], debug=debug)
+
+    deleted_set, uploaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
+    assert len(deleted_set) == 0
+    assert len(uploaded_set) == len(sync_local_object_content.keys())
+    assert len(skipped_set) == 0
+
+    upload_and_validate_all_objects(object_storage_client, debug)
+    new_local_file_set = create_new_objects_remote(object_storage_client, sync_upload_bucket_name, 1100)
+
+    # run the sync command with --delete option
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--delete',
+                                    '--dry-run'], debug=debug)
+
+    deleted_set, uploaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
+    assert len(uploaded_set) == 0
+    assert len(skipped_set) == len(sync_local_object_content.keys())
+    assert deleted_set == new_local_file_set
+
+    # run the sync command with --delete option
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--delete'],
+                                   debug=debug)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert parsed_result['uploaded-objects'] == {}
+    assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys())
+    assert set(parsed_result['deleted-objects']) == new_local_file_set
+
+
 def test_sync_src_with_delete_and_include(object_storage_client):
     """
     1. Create new set of objects in local with .pdf and .doc extensions.

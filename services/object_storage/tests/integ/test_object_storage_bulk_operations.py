@@ -985,11 +985,10 @@ def test_delete(object_storage_client):
     assert get_number_of_objects_in_bucket(object_storage_client, create_bucket_request.name) > 0
 
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name])
-    if num_objects_to_delete >= 1000:
-        confirm_prompt = 'WARNING: This command will delete at least {} objects. Are you sure you wish to continue?'.format(num_objects_to_delete)
-    else:
-        confirm_prompt = 'WARNING: This command will delete {} objects. Are you sure you wish to continue?'.format(num_objects_to_delete)
-    assert confirm_prompt in result.output
+
+    assert "at least" in result.output
+    assert str(min(1000, num_objects_to_delete)) in result.output
+    assert "objects" in result.output
 
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--force'])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
@@ -1157,11 +1156,10 @@ def test_bulk_delete_versions(object_storage_client, debug, test_id):
 
     # --- Delete rest of the versions
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name])
-    if num_versions_to_delete >= 1000:
-        confirm_prompt = 'WARNING: This command will delete at least {} object versions. Are you sure you wish to continue?'.format(num_versions_to_delete)
-    else:
-        confirm_prompt = 'WARNING: This command will delete {} object versions. Are you sure you wish to continue?'.format(num_versions_to_delete)
-    assert confirm_prompt in result.output
+
+    assert "at least" in result.output
+    assert str(min(1000, num_versions_to_delete)) in result.output
+    assert "object versions" in result.output
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
@@ -1209,37 +1207,335 @@ def test_basic_bulk_delete_versions_object_name(object_storage_client, debug, te
     object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
 
 
-# Test bulk-delete-versions with ~ 1100 single object name (test for pagination)
+# [CASPER-13879] Test bulk-delete-versions (test for pagination)
+# Try to delete with random object-name not present in bucket such that it hits pagination and loop terminates successfully
+# Delete objects placed in different pages, object versions ranging over multiple pages
 @util.skip_while_rerecording
-def test_bulk_delete_versions_paging(object_storage_client, debug, test_id):
-    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersionsPagination_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
     # bucket create with versioning enabled
     result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
                      bucket_name, '--versioning', 'Enabled'], debug=debug)
     validate_response(result, includes_debug_data=debug)
+    num_versions = 1500    # Atleast 3 pages should be created
+    object_name_present_1 = 'Object.txt'
+    object_name_present_2 = 'TestObject.pdf'
 
-    num_versions = 1100
-    object_name = 'Object_103'
-    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
     for i in range(num_versions):
-        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name, object_content)
+        object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name_present_1, object_content)
+        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name_present_2, object_content)
 
-    num_versions_objname = get_number_of_versions_in_bucket(object_storage_client, bucket_name, object_name)
-    assert num_versions_objname == num_versions
+    # Adding 3 random objects(one each of txt/pdf extension) at 3 different places in the list
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "arandom.txt", object_content)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "arandom.pdf", object_content)
+
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "random.txt", object_content)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "random.pdf", object_content)
+
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "zrandom.txt", object_content)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "zrandom.pdf", object_content)
+
+    # Deleting an object not present in bucket
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--object-name', "absentobject.pdf"])
+    confirm_prompt = 'There are no objects to delete in {}'.format(bucket_name)
+    assert confirm_prompt in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "absentobject.txt", '--force'])
+    assert '' in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', 'absent'])
+    confirm_prompt = 'There are no objects to delete in {}'.format(bucket_name)
+    assert confirm_prompt in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', 'absent', '--force'])
+    assert '' in result.output
+
+    # Deleting the single object versions present in different pages using object names and prefixes
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "arandom.txt"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "arandom.txt", '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == 1
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "random.txt"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "random.txt", '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == 1
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "zrandom.txt"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--object-name', "zrandom.txt", '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == 1
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "arandom"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "arandom", '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == 1
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "random"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "random", '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == 1
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "zrandom"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "zrandom", '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == 1
+
+    # Deleting objects such that versions exist in more than one page using object name
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--object-name', object_name_present_1])
+
+    assert "delete at least" in result.output
+    assert "" in result.output
+    assert "object versions" in result.output
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
-                     '--object-name', object_name, '--force'])
+                     '--object-name', object_name_present_1, '--force'])
+
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    # delete-failure might contain a 404 due to retry. So not asserting it
-    # assert parsed_result['delete-failures'] == {}
-    assert len(parsed_result['deleted-objects']) == num_versions_objname
+    assert len(parsed_result['deleted-objects']) == num_versions
 
-    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+    # Deleting objects such that versions exist in more than one page using prefix
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--prefix', 'Test'])
+
+    assert "delete at least" in result.output
+    assert "" in result.output
+    assert "object versions" in result.output
+
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--prefix', 'Test', '--force'])
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == num_versions
+
+    assert get_number_of_versions_in_bucket(object_storage_client, bucket_name, None) == 0
+
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
 
-# delete bucket tests with empty and dry-run options
+# [CASPER-13879] Test bulk-delete-versions (test for pagination)
+# Delete objects placed in different pages with include/exclude options, Also object versions ranging over multiple pages
+@util.skip_while_rerecording
+def test_bulk_delete_versions_pagination_include_exclude(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersionsPaginationIncludeExclude{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    # bucket create with versioning enabled
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+    num_versions = 100
+    extensions = ['pdf', 'txt', 'html', 'csv']
+    pdf_array = []
+    for i in range(26):
+        object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+        ext = random.choice(extensions)
+        obj_name = chr(ord('a') + i) + '_object.' + ext
+        if ext == 'pdf':
+            pdf_array.append(obj_name)
+        for j in range(num_versions):
+            object_storage_client.put_object(util.NAMESPACE, bucket_name, obj_name, object_content)
+
+    # Delete objects with inclusions - dry-run
+    result = invoke([
+        'os', 'object', 'bulk-delete-versions',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bucket_name,
+        '--include', '*.pdf',
+        '--dry-run'
+    ])
+    parsed_dry_run_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_dry_run_result['deleted-objects']) == len(pdf_array) * num_versions
+    parsed_result_with_object_names = [i.split(',')[0] for i in parsed_dry_run_result['deleted-objects']]
+    assert set(parsed_result_with_object_names) == set(pdf_array)
+
+    # Delete objects with exclusions - dry-run
+    result = invoke([
+        'os', 'object', 'bulk-delete-versions',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bucket_name,
+        '--exclude', '*.txt',
+        '--exclude', '*.html',
+        '--exclude', '*.csv',
+        '--dry-run'
+    ])
+    parsed_dry_run_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_dry_run_result['deleted-objects']) == len(pdf_array) * num_versions
+    parsed_result_with_object_names = [i.split(',')[0] for i in parsed_dry_run_result['deleted-objects']]
+    assert set(parsed_result_with_object_names) == set(pdf_array)
+
+    result = invoke([
+        'os', 'object', 'bulk-delete-versions',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bucket_name,
+        '--include', '*.pdf',
+        '--force'
+    ])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    parsed_result_with_object_names = [i.split(',')[0] for i in parsed_result['deleted-objects']]
+    assert set(parsed_result_with_object_names) == set(pdf_array)
+
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+
+# [CASPER-13879] Test bulk-delete with prefi/include/exclude option ~ multiple object names(test for pagination)
+# Creating multiple objects with different extensions and names such that objects to be deleted exist in multiple pages
+@util.skip_while_rerecording
+def test_bulk_delete_pagination(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeletePagination_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, "random.txt", object_content)     # For checking delete with prefix
+
+    num_obj_with_alpha = 100
+    extensions = ['pdf', 'txt', 'html', 'csv']
+    pdf_array = []
+    for i in range(26):
+        for j in range(num_obj_with_alpha):
+            object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+            ext = random.choice(extensions)
+            obj_name = chr(ord('a') + i) + '_object' + str(j) + '.' + ext
+            if ext == 'pdf':
+                pdf_array.append(obj_name)
+            object_storage_client.put_object(util.NAMESPACE, bucket_name, obj_name, object_content)
+
+    # Delete object which does not exist in bucket using prefix
+    result = invoke(
+        ['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "zyxwvu"])
+    confirm_prompt = 'There are no objects to delete in {}'.format(bucket_name)
+    assert confirm_prompt in result.output
+
+    result = invoke(
+        ['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "uvxyz", '--force'])
+    assert '' in result.output
+
+    # Delete object such that it heats pagination
+    result = invoke(
+        ['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+         '--prefix', "random"])
+
+    assert "delete at least" in result.output
+    assert "1" in result.output
+    assert "objects" in result.output
+
+    # Delete objects on multiple pages with inclusions
+    result = invoke([
+        'os', 'object', 'bulk-delete',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bucket_name,
+        '--include', '*.pdf',
+        '--dry-run'
+    ])
+    parsed_dry_run_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_dry_run_result['deleted-objects']) == len(pdf_array)
+    assert set(parsed_dry_run_result['deleted-objects']) == set(pdf_array)
+
+    # Delete objects with exclusions - dry-run
+    result = invoke([
+        'os', 'object', 'bulk-delete',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bucket_name,
+        '--exclude', '*.txt',
+        '--exclude', '*.html',
+        '--exclude', '*.csv',
+        '--dry-run'
+    ])
+    parsed_dry_run_result = util.parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_dry_run_result['deleted-objects']) == len(pdf_array)
+    assert set(parsed_dry_run_result['deleted-objects']) == set(pdf_array)
+
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--include', '*.pdf', '--force'])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    parsed_result_with_object_names = [i.split(',')[0] for i in parsed_result['deleted-objects']]
+    assert set(parsed_result_with_object_names) == set(pdf_array)
+
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+
 @util.skip_while_rerecording
 def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id)

@@ -178,17 +178,18 @@ def change_management_saved_searches_compartment(ctx, from_json, wait_for_state,
 @cli_util.option('--is-favorite', required=True, type=click.BOOL, help=u"""Determines whether the dashboard is set as favorite.""")
 @cli_util.option('--dashboard-id', help=u"""ID of the dashboard, which must only be provided for Out-of-the-Box (OOB) dashboards.""")
 @cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the dashboard.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--drilldown-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Drill-down configuration to define the destination of a drill-down action.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
 @cli_util.wrap_exceptions
-def create_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, dashboard_id, parameters_config, freeform_tags, defined_tags):
+def create_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, dashboard_id, parameters_config, drilldown_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -217,6 +218,9 @@ def create_management_dashboard(ctx, from_json, wait_for_state, max_wait_seconds
 
     if parameters_config is not None:
         _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
+    if drilldown_config is not None:
+        _details['drilldownConfig'] = cli_util.parse_json_parameter("drilldown_config", drilldown_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -275,17 +279,18 @@ oci management-dashboard saved-search get --management-saved-search-id ocid1.man
 @cli_util.option('--widget-vm', required=True, help=u"""Reference to the view model of the widget.""")
 @cli_util.option('--id', help=u"""ID of the saved search, which must only be provided for Out-of-the-Box (OOB) saved search.""")
 @cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the saved search.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--drilldown-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Drill-down configuration to define the destination of a drill-down action.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
 @cli_util.wrap_exceptions
-def create_management_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, id, parameters_config, freeform_tags, defined_tags):
+def create_management_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, id, parameters_config, drilldown_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -312,6 +317,9 @@ def create_management_saved_search(ctx, from_json, wait_for_state, max_wait_seco
 
     if parameters_config is not None:
         _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
+    if drilldown_config is not None:
+        _details['drilldownConfig'] = cli_util.parse_json_parameter("drilldown_config", drilldown_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -716,6 +724,7 @@ This option is a JSON list with items of type ManagementDashboardTileDetails.  F
 @cli_util.option('--type', help=u"""Type of dashboard. NORMAL denotes a single dashboard and SET denotes a dashboard set.""")
 @cli_util.option('--is-favorite', type=click.BOOL, help=u"""Determines whether the dashboard is set as favorite.""")
 @cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the dashboard.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--drilldown-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Drill-down configuration to define the destination of a drill-down action.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -723,18 +732,18 @@ This option is a JSON list with items of type ManagementDashboardTileDetails.  F
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tiles': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardTileDetails]'}, 'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
 @cli_util.wrap_exceptions
-def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, parameters_config, freeform_tags, defined_tags, if_match):
+def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_dashboard_id, provider_id, provider_name, provider_version, tiles, display_name, description, compartment_id, is_oob_dashboard, is_show_in_home, metadata_version, is_show_description, screen_image, nls, ui_config, data_config, type, is_favorite, parameters_config, drilldown_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
     if not force:
-        if tiles or nls or ui_config or data_config or parameters_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to tiles and nls and ui-config and data-config and parameters-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if tiles or nls or ui_config or data_config or parameters_config or drilldown_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to tiles and nls and ui-config and data-config and parameters-config and drilldown-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -798,6 +807,9 @@ def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_
     if parameters_config is not None:
         _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
 
+    if drilldown_config is not None:
+        _details['drilldownConfig'] = cli_util.parse_json_parameter("drilldown_config", drilldown_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -854,6 +866,7 @@ def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.option('--widget-template', help=u"""Reference to the HTML file of the widget.""")
 @cli_util.option('--widget-vm', help=u"""Reference to the view model of the widget.""")
 @cli_util.option('--parameters-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defines parameters for the saved search.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--drilldown-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Drill-down configuration to define the destination of a drill-down action.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -861,18 +874,18 @@ def update_management_dashboard(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nls': {'module': 'management_dashboard', 'class': 'object'}, 'ui-config': {'module': 'management_dashboard', 'class': 'object'}, 'data-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'parameters-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'drilldown-config': {'module': 'management_dashboard', 'class': 'list[object]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
 @cli_util.wrap_exceptions
-def update_management_saved_search(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, parameters_config, freeform_tags, defined_tags, if_match):
+def update_management_saved_search(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_saved_search_id, display_name, provider_id, provider_version, provider_name, compartment_id, is_oob_saved_search, description, nls, type, ui_config, data_config, screen_image, metadata_version, widget_template, widget_vm, parameters_config, drilldown_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
     if not force:
-        if nls or ui_config or data_config or parameters_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nls and ui-config and data-config and parameters-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nls or ui_config or data_config or parameters_config or drilldown_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nls and ui-config and data-config and parameters-config and drilldown-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -929,6 +942,9 @@ def update_management_saved_search(ctx, from_json, force, wait_for_state, max_wa
 
     if parameters_config is not None:
         _details['parametersConfig'] = cli_util.parse_json_parameter("parameters_config", parameters_config)
+
+    if drilldown_config is not None:
+        _details['drilldownConfig'] = cli_util.parse_json_parameter("drilldown_config", drilldown_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
