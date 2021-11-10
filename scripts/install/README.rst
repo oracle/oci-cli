@@ -77,6 +77,6 @@ The order of precedence in which this scripts applies input parameters is as fol
 
 Checksums
 -----------
-install.sh   bb5eda7c1e02cbad4e3c579ea84165e51e04a37418e249919cac91e13ecfe549
-install.ps1   9ca1cd79b3309bdb4513a0a068228a67ac85c1438cbee6b4cb034af0f138a09b
-install.py   adf81319b2400caae72320f6cdedaef380c6529912102961f1688a722258f3d8
+install.sh   bb5eda7c1e02cbad4e3c579ea84165e51e04a37418e249919cac91e13ecfe549\n
+install.ps1   9ca1cd79b3309bdb4513a0a068228a67ac85c1438cbee6b4cb034af0f138a09b\n
+install.py   adf81319b2400caae72320f6cdedaef380c6529912102961f1688a722258f3d8\n
