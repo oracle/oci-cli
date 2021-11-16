@@ -110,7 +110,7 @@ If you're listing all the private IPs associated with a given subnet or VNIC, th
 cli_util.get_param(virtualnetwork_cli.update_vnic, 'skip_source_dest_check').type = click.BOOL
 
 
-@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_private_ip, params_to_exclude=[''])
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_private_ip, params_to_exclude=['max_wait_seconds', 'wait_for_state', 'wait_interval_seconds'])
 @virtualnetwork_cli.vnic_group.command(name='assign-private-ip', help="""Assigns a secondary private IP address to the specified VNIC. The secondary private IP must be in the same subnet as the VNIC.
 This command can also be used to move an existing secondary private IP to the specified VNIC.
 
@@ -615,7 +615,7 @@ def update_network_security_group_security_rules_extended(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes):
+def create_virtual_circuit_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, ip_mtu):
     kwargs = {}
 
     _details = {}
@@ -664,6 +664,9 @@ def create_virtual_circuit_extended(ctx, from_json, wait_for_state, max_wait_sec
     if public_prefixes is not None:
         _details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
 
+    if ip_mtu is not None:
+        _details['ipMtu'] = ip_mtu
+
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_virtual_circuit(
         create_virtual_circuit_details=_details,
@@ -700,7 +703,7 @@ def create_virtual_circuit_extended(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, if_match):
+def update_virtual_circuit_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
@@ -750,6 +753,9 @@ def update_virtual_circuit_extended(ctx, from_json, force, wait_for_state, max_w
 
     if reference_comment is not None:
         _details['referenceComment'] = reference_comment
+
+    if ip_mtu is not None:
+        _details['ipMtu'] = ip_mtu
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_virtual_circuit(

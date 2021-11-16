@@ -5937,11 +5937,12 @@ def create_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database.command_name', 'create'), help=u"""Creates and starts a pluggable database in the specified container database. Use the [StartPluggableDatabase](#/en/database/latest/PluggableDatabase/StartPluggableDatabase] and [StopPluggableDatabase](#/en/database/latest/PluggableDatabase/StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database.command_name', 'create'), help=u"""Creates and starts a pluggable database in the specified container database. Use the [StartPluggableDatabase] and [StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
 @cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
 @cli_util.option('--container-database-id', required=True, help=u"""The [OCID] of the CDB""")
-@cli_util.option('--pdb-admin-password', required=True, help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
-@cli_util.option('--tde-wallet-password', required=True, help=u"""The existing TDE wallet password of the CDB.""")
+@cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the CDB.""")
+@cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5954,7 +5955,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
-def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_admin_password, tde_wallet_password, freeform_tags, defined_tags):
+def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5962,8 +5963,15 @@ def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     _details = {}
     _details['pdbName'] = pdb_name
     _details['containerDatabaseId'] = container_database_id
-    _details['pdbAdminPassword'] = pdb_admin_password
-    _details['tdeWalletPassword'] = tde_wallet_password
+
+    if pdb_admin_password is not None:
+        _details['pdbAdminPassword'] = pdb_admin_password
+
+    if tde_wallet_password is not None:
+        _details['tdeWalletPassword'] = tde_wallet_password
+
+    if should_pdb_admin_account_be_locked is not None:
+        _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -9096,7 +9104,7 @@ def get_database_software_image(ctx, from_json, database_software_image_id):
 
 @database_upgrade_history_entry_group.command(name=cli_util.override('db.get_database_upgrade_history_entry.command_name', 'get'), help=u"""gets the upgrade history for a specified database. \n[Command Reference](getDatabaseUpgradeHistoryEntry)""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
-@cli_util.option('--upgrade-history-entry-id', required=True, help=u"""The database upgrade History [OCID].""")
+@cli_util.option('--upgrade-history-entry-id', required=True, help=u"""The database/db system upgrade History [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -13655,9 +13663,10 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
 
 @pluggable_database_group.command(name=cli_util.override('db.local_clone_pluggable_database.command_name', 'local-clone'), help=u"""Clones and starts a pluggable database (PDB) in the same database (CDB) as the source PDB. The source PDB must be in the `READ_WRITE` openMode to perform the clone operation. \n[Command Reference](localClonePluggableDatabase)""")
 @cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
-@cli_util.option('--pdb-admin-password', required=True, help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
-@cli_util.option('--target-tde-wallet-password', required=True, help=u"""The existing TDE wallet password of the target CDB.""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--target-tde-wallet-password', help=u"""The existing TDE wallet password of the target CDB.""")
+@cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -13667,7 +13676,7 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
-def local_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloned_pdb_name, pdb_admin_password, target_tde_wallet_password, pluggable_database_id, if_match):
+def local_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloned_pdb_name, pluggable_database_id, pdb_admin_password, target_tde_wallet_password, should_pdb_admin_account_be_locked, if_match):
 
     if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
@@ -13679,8 +13688,15 @@ def local_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seco
 
     _details = {}
     _details['clonedPdbName'] = cloned_pdb_name
-    _details['pdbAdminPassword'] = pdb_admin_password
-    _details['targetTdeWalletPassword'] = target_tde_wallet_password
+
+    if pdb_admin_password is not None:
+        _details['pdbAdminPassword'] = pdb_admin_password
+
+    if target_tde_wallet_password is not None:
+        _details['targetTdeWalletPassword'] = target_tde_wallet_password
+
+    if should_pdb_admin_account_be_locked is not None:
+        _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.local_clone_pluggable_database(
@@ -14053,9 +14069,10 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--target-container-database-id', required=True, help=u"""The [OCID] of the target CDB""")
 @cli_util.option('--source-container-db-admin-password', required=True, help=u"""The DB system administrator password of the source CDB.""")
 @cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
-@cli_util.option('--pdb-admin-password', required=True, help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
-@cli_util.option('--target-tde-wallet-password', required=True, help=u"""The existing TDE wallet password of the target CDB.""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--target-tde-wallet-password', help=u"""The existing TDE wallet password of the target CDB.""")
+@cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -14065,7 +14082,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
-def remote_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_container_database_id, source_container_db_admin_password, cloned_pdb_name, pdb_admin_password, target_tde_wallet_password, pluggable_database_id, if_match):
+def remote_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_container_database_id, source_container_db_admin_password, cloned_pdb_name, pluggable_database_id, pdb_admin_password, target_tde_wallet_password, should_pdb_admin_account_be_locked, if_match):
 
     if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
@@ -14079,8 +14096,15 @@ def remote_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_sec
     _details['targetContainerDatabaseId'] = target_container_database_id
     _details['sourceContainerDbAdminPassword'] = source_container_db_admin_password
     _details['clonedPdbName'] = cloned_pdb_name
-    _details['pdbAdminPassword'] = pdb_admin_password
-    _details['targetTdeWalletPassword'] = target_tde_wallet_password
+
+    if pdb_admin_password is not None:
+        _details['pdbAdminPassword'] = pdb_admin_password
+
+    if target_tde_wallet_password is not None:
+        _details['targetTdeWalletPassword'] = target_tde_wallet_password
+
+    if should_pdb_admin_account_be_locked is not None:
+        _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.remote_clone_pluggable_database(

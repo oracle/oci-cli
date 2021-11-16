@@ -15,11 +15,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('compute_management.compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management.compute_management_root_group.help', """API covering the [Networking],
+@click.command(cli_util.override('compute_management.compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management.compute_management_root_group.help', """Use the Core Services API to manage resources such as virtual cloud networks (VCNs),
+compute instances, and block storage volumes. For more information, see the console
+documentation for the [Networking],
 [Compute], and
-[Block Volume] services. Use this API
-to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
+[Block Volume] services."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_management_root_group():
     pass
@@ -299,7 +299,7 @@ Each cluster network can have one instance pool.""" + custom_types.cli_complex_t
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the cluster network. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -365,7 +365,7 @@ def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -420,7 +420,7 @@ def create_instance_configuration(ctx, from_json, compartment_id, defined_tags, 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -462,7 +462,7 @@ def create_instance_configuration_create_instance_configuration_details(ctx, fro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -508,7 +508,7 @@ To use the instance pool with a regional subnet, provide a placement configurati
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance pool. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1643,9 +1643,7 @@ def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My instance configuration`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1696,7 +1694,7 @@ The OCID of the instance pool remains the same. \n[Command Reference](updateInst
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance pool. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

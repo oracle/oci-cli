@@ -15,9 +15,17 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('optimizer.optimizer_root_group.command_name', 'optimizer'), cls=CommandGroupWithAlias, help=cli_util.override('optimizer.optimizer_root_group.help', """APIs for managing Cloud Advisor. Cloud Advisor provides recommendations that help you maximize cost savings and improve the security posture of your tenancy."""), short_help=cli_util.override('optimizer.optimizer_root_group.short_help', """Cloud Advisor API"""))
+@cli.command(cli_util.override('optimizer.optimizer_root_group.command_name', 'optimizer'), cls=CommandGroupWithAlias, help=cli_util.override('optimizer.optimizer_root_group.help', """Use the Cloud Advisor API to find potential inefficiencies in your tenancy and address them.
+Cloud Advisor can help you save money, improve performance, strengthen system resilience, and improve security.
+For more information, see [Cloud Advisor]."""), short_help=cli_util.override('optimizer.optimizer_root_group.short_help', """Cloud Advisor API"""))
 @cli_util.help_option_group
 def optimizer_root_group():
+    pass
+
+
+@click.command(cli_util.override('optimizer.queryable_field_summary_group.command_name', 'queryable-field-summary'), cls=CommandGroupWithAlias, help="""An individual field that can be used as part of a query filter.""")
+@cli_util.help_option_group
+def queryable_field_summary_group():
     pass
 
 
@@ -60,6 +68,12 @@ def recommendation_summary_group():
 @click.command(cli_util.override('optimizer.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
 @cli_util.help_option_group
 def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('optimizer.profile_level_summary_group.command_name', 'profile-level-summary'), cls=CommandGroupWithAlias, help="""The metadata associated with the profile level summary.""")
+@cli_util.help_option_group
+def profile_level_summary_group():
     pass
 
 
@@ -111,6 +125,7 @@ def resource_action_summary_group():
     pass
 
 
+optimizer_root_group.add_command(queryable_field_summary_group)
 optimizer_root_group.add_command(category_summary_group)
 optimizer_root_group.add_command(profile_group)
 optimizer_root_group.add_command(profile_summary_group)
@@ -118,6 +133,7 @@ optimizer_root_group.add_command(recommendation_group)
 optimizer_root_group.add_command(work_request_log_entry_group)
 optimizer_root_group.add_command(recommendation_summary_group)
 optimizer_root_group.add_command(work_request_group)
+optimizer_root_group.add_command(profile_level_summary_group)
 optimizer_root_group.add_command(work_request_error_group)
 optimizer_root_group.add_command(enrollment_status_summary_group)
 optimizer_root_group.add_command(resource_action_group)
@@ -205,6 +221,7 @@ def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--name', required=True, help=u"""The name assigned to the profile. Avoid entering confidential information.""")
 @cli_util.option('--description', required=True, help=u"""Text describing the profile. Avoid entering confidential information.""")
 @cli_util.option('--levels-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aggregation-interval-in-days', type=click.INT, help=u"""The time period over which to collect data for the recommendations, measured in number of days.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -221,7 +238,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, levels_configuration, defined_tags, freeform_tags, target_compartments, target_tags):
+def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, levels_configuration, aggregation_interval_in_days, defined_tags, freeform_tags, target_compartments, target_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -231,6 +248,9 @@ def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     _details['name'] = name
     _details['description'] = description
     _details['levelsConfiguration'] = cli_util.parse_json_parameter("levels_configuration", levels_configuration)
+
+    if aggregation_interval_in_days is not None:
+        _details['aggregationIntervalInDays'] = aggregation_interval_in_days
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -336,6 +356,45 @@ def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@resource_action_summary_group.command(name=cli_util.override('optimizer.filter_resource_actions.command_name', 'filter-resource-actions'), help=u"""Queries the Cloud Advisor resource actions that are supported by the specified recommendation. \n[Command Reference](filterResourceActions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
+
+Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
+@cli_util.option('--recommendation-id', required=True, help=u"""The unique OCID associated with the recommendation.""")
+@cli_util.option('--query-parameterconflict', help=u"""The query describing which resources to search for. For more information, see [Query Language Syntax].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
+@cli_util.wrap_exceptions
+def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_subtree, recommendation_id, query_parameterconflict, limit, page):
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if query_parameterconflict is not None:
+        _details['query'] = query_parameterconflict
+
+    client = cli_util.build_client('optimizer', 'optimizer', ctx)
+    result = client.filter_resource_actions(
+        compartment_id=compartment_id,
+        compartment_id_in_subtree=compartment_id_in_subtree,
+        recommendation_id=recommendation_id,
+        query_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -675,6 +734,72 @@ def list_histories(ctx, from_json, all_pages, page_size, compartment_id, compart
     cli_util.render_response(result, ctx)
 
 
+@profile_level_summary_group.command(name=cli_util.override('optimizer.list_profile_levels.command_name', 'list-profile-levels'), help=u"""Lists the existing profile levels. \n[Command Reference](listProfileLevels)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
+
+Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
+@cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
+@cli_util.option('--recommendation-name', help=u"""Optional. A filter that returns results that match the recommendation name specified.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'ProfileLevelCollection'})
+@cli_util.wrap_exceptions
+def list_profile_levels(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, name, recommendation_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if recommendation_name is not None:
+        kwargs['recommendation_name'] = recommendation_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('optimizer', 'optimizer', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_profile_levels,
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_profile_levels,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    else:
+        result = client.list_profile_levels(
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @profile_summary_group.command(name=cli_util.override('optimizer.list_profiles.command_name', 'list-profiles'), help=u"""Lists the existing profiles. \n[Command Reference](listProfiles)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
@@ -869,6 +994,60 @@ def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, c
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
             category_id=category_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@queryable_field_summary_group.command(name=cli_util.override('optimizer.list_resource_action_queryable_fields.command_name', 'list-resource-action-queryable-fields'), help=u"""Lists the fields that are indexed for querying and their associated value types. \n[Command Reference](listResourceActionQueryableFields)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
+
+Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'QueryableFieldCollection'})
+@cli_util.wrap_exceptions
+def list_resource_action_queryable_fields(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('optimizer', 'optimizer', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resource_action_queryable_fields,
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resource_action_queryable_fields,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
+            **kwargs
+        )
+    else:
+        result = client.list_resource_action_queryable_fields(
+            compartment_id=compartment_id,
+            compartment_id_in_subtree=compartment_id_in_subtree,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1160,6 +1339,7 @@ def update_enrollment_status(ctx, from_json, wait_for_state, max_wait_seconds, w
 @profile_group.command(name=cli_util.override('optimizer.update_profile.command_name', 'update'), help=u"""Updates the specified profile. Uses the profile's OCID to determine which profile to update. \n[Command Reference](updateProfile)""")
 @cli_util.option('--profile-id', required=True, help=u"""The unique OCID of the profile.""")
 @cli_util.option('--description', help=u"""Text describing the profile. Avoid entering confidential information.""")
+@cli_util.option('--aggregation-interval-in-days', type=click.INT, help=u"""The time period over which to collect data for the recommendations, measured in number of days.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1180,7 +1360,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, defined_tags, freeform_tags, levels_configuration, target_compartments, target_tags, name, if_match):
+def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, aggregation_interval_in_days, defined_tags, freeform_tags, levels_configuration, target_compartments, target_tags, name, if_match):
 
     if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
@@ -1198,6 +1378,9 @@ def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if description is not None:
         _details['description'] = description
+
+    if aggregation_interval_in_days is not None:
+        _details['aggregationIntervalInDays'] = aggregation_interval_in_days
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)

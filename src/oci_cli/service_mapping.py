@@ -319,9 +319,13 @@ service_mapping = {
         "service_catalog",
         "Service Catalog"
     ],
+    "service-manager-proxy": [
+        "service_manager_proxy",
+        "Service Manager Proxy"
+    ],
     "streaming": [
         "streaming",
-        "Streaming Service"
+        "Streaming"
     ],
     "support": [
         "cims",

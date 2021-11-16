@@ -229,9 +229,8 @@ class TestDBCliExtended(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--admin-password' in result.output
         assert '--backup-id' in result.output
-        assert '--backup-tde-password' in result.output
 
-        result = util.invoke_command(['db', 'database', 'create-from-backup', '--admin-password', 'password', '--backup-id', 'backupId', '--backup-tde-password', 'tdePass'])
+        result = util.invoke_command(['db', 'database', 'create-from-backup', '--admin-password', 'password', '--backup-id', 'backupId'])
         assert 'Missing a required parameter' in result.output
         assert '--db-system-id' in result.output
         assert '--vm-cluster-id' in result.output

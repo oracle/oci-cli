@@ -15,11 +15,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('blockstorage.blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage.blockstorage_root_group.help', """API covering the [Networking],
+@click.command(cli_util.override('blockstorage.blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage.blockstorage_root_group.help', """Use the Core Services API to manage resources such as virtual cloud networks (VCNs),
+compute instances, and block storage volumes. For more information, see the console
+documentation for the [Networking],
 [Compute], and
-[Block Volume] services. Use this API
-to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes."""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
+[Block Volume] services."""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def blockstorage_root_group():
     pass
@@ -313,7 +313,7 @@ def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
 
 Example: `us-ashburn-1`""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the boot volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied boot volume backup. If you do not specify this attribute the boot volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
  For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
@@ -379,7 +379,7 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
 
 Example: `us-ashburn-1`""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied volume backup. If you do not specify this attribute the volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
  For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
@@ -445,7 +445,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
 
 Example: `us-ashburn-1`""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied volume group backup. If you do not specify this attribute the volume group backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
  For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
@@ -938,7 +938,7 @@ When the request is received, the backup object is in a REQUEST_RECEIVED state. 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the boot volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1491,7 +1491,7 @@ When the request is received, the backup object is in a REQUEST_RECEIVED state. 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1558,7 +1558,7 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 For more information about Oracle defined backup policies and user defined backup policies, see [Policy-Based Backups]. \n[Command Reference](createVolumeBackupPolicy)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--destination-region', help=u"""The paired destination region for copying scheduled backups to. Example: `us-ashburn-1`. See [Region Pairs] for details about paired regions.""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
@@ -1639,7 +1639,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1713,7 +1713,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1790,7 +1790,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1867,7 +1867,7 @@ For more information, see [Volume Groups]. \n[Command Reference](createVolumeGro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1940,7 +1940,7 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3469,7 +3469,7 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A friendly user-specified name for the boot volume backup. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3677,7 +3677,7 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3751,7 +3751,7 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
 
  Avoid entering confidential information. \n[Command Reference](updateVolumeBackupPolicy)""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--destination-region', help=u"""The paired destination region for copying scheduled backups to. Example: `us-ashburn-1`. Specify `none` to reset the `destinationRegion` parameter. See [Region Pairs] for details about paired regions.""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
@@ -3816,7 +3816,7 @@ For more information, see [Volume Groups]. \n[Command Reference](updateVolumeGro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3895,7 +3895,7 @@ def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the volume group backup. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

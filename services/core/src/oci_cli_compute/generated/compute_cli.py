@@ -15,11 +15,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('compute.compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute.compute_root_group.help', """API covering the [Networking],
+@click.command(cli_util.override('compute.compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute.compute_root_group.help', """Use the Core Services API to manage resources such as virtual cloud networks (VCNs),
+compute instances, and block storage volumes. For more information, see the console
+documentation for the [Networking],
 [Compute], and
-[Block Volume] services. Use this API
-to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes."""), short_help=cli_util.override('compute.compute_root_group.short_help', """Core Services API"""))
+[Block Volume] services."""), short_help=cli_util.override('compute.compute_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_root_group():
     pass
@@ -157,7 +157,7 @@ def boot_volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('compute.measured_boot_report_group.command_name', 'measured-boot-report'), cls=CommandGroupWithAlias, help="""The Measured Boot report for a shielded instance.""")
+@click.command(cli_util.override('compute.measured_boot_report_group.command_name', 'measured-boot-report'), cls=CommandGroupWithAlias, help="""The measured boot report for a shielded instance.""")
 @cli_util.help_option_group
 def measured_boot_report_group():
     pass
@@ -241,7 +241,7 @@ compute_root_group.add_command(device_group)
 compute_root_group.add_command(console_history_group)
 
 
-@measured_boot_report_group.command(name=cli_util.override('compute.accept_shielded_integrity_policy.command_name', 'accept-shielded-integrity-policy'), help=u"""Accept the changes to the PCR values in the Measured Boot Report. \n[Command Reference](acceptShieldedIntegrityPolicy)""")
+@measured_boot_report_group.command(name=cli_util.override('compute.accept_shielded_integrity_policy.command_name', 'accept-shielded-integrity-policy'), help=u"""Accept the changes to the PCR values in the measured boot report. \n[Command Reference](acceptShieldedIntegrityPolicy)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -312,7 +312,7 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
 @boot_volume_attachment_group.command(name=cli_util.override('compute.attach_boot_volume.command_name', 'attach'), help=u"""Attaches the specified boot volume to the specified instance. \n[Command Reference](attachBootVolume)""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the  boot volume.""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--encryption-in-transit-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "BM_ENCRYPTION_IN_TRANSIT"]), help=u"""Refer the top-level definition of encryptionInTransitType. The default value is NONE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -370,7 +370,7 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @vnic_attachment_group.command(name=cli_util.override('compute.attach_vnic.command_name', 'attach'), help=u"""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)]. \n[Command Reference](attachVnic)""")
 @cli_util.option('--create-vnic-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--nic-index', type=click.INT, help=u"""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use. For more information, see [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -429,8 +429,8 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--type', required=True, help=u"""The type of volume. The only supported values are \"iscsi\" and \"paravirtualized\".""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--device', help=u"""The device name.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -496,8 +496,8 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_service_determined_volume_details.command_name', 'attach-volume-attach-service-determined-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--device', help=u"""The device name.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -564,8 +564,8 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_emulated_volume_details.command_name', 'attach-volume-attach-emulated-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--device', help=u"""The device name.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -632,8 +632,8 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--device', help=u"""The device name.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--use-chap', type=click.BOOL, help=u"""Whether to use CHAP authentication for the volume attachment. Defaults to false.""")
@@ -708,8 +708,8 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_paravirtualized_volume_details.command_name', 'attach-volume-attach-paravirtualized-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--device', help=u"""The device name.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--device', help=u"""The device name. To retrieve a list of devices for a given instance, see [ListInstanceDevices].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.""")
@@ -1148,12 +1148,12 @@ Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the compute capacity reservation. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-default-reservation', type=click.BOOL, help=u"""Whether this capacity reservation is the default. For more information, see [Capacity Reservations].""")
-@cli_util.option('--instance-reservation-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The reservation configurations for the capacity reservation.
+@cli_util.option('--instance-reservation-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity configurations for the capacity reservation.
 
 To use the reservation for the desired shape, specify the shape, count, and optionally the fault domain where you want this configuration.
 
@@ -1229,7 +1229,7 @@ def create_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the compute image capability schema""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1274,9 +1274,7 @@ Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My dedicated VM host`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--fault-domain', help=u"""The fault domain for the dedicated virtual machine host's assigned instances. For more information, see [Fault Domains]. If you do not specify the fault domain, the system selects one for you. To change the fault domain for a dedicated virtual machine host, delete it and create a new dedicated virtual machine host in the preferred fault domain.
 
 To get a list of fault domains, use the `ListFaultDomains` operation in the [Identity and Access Management Service API].
@@ -2819,7 +2817,7 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
     cli_util.render_response(result, ctx)
 
 
-@measured_boot_report_group.command(name=cli_util.override('compute.get_measured_boot_report.command_name', 'get'), help=u"""Gets the measured boot report for this Shielded Instance. \n[Command Reference](getMeasuredBootReport)""")
+@measured_boot_report_group.command(name=cli_util.override('compute.get_measured_boot_report.command_name', 'get'), help=u"""Gets the measured boot report for this shielded instance. \n[Command Reference](getMeasuredBootReport)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2918,6 +2916,8 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 - **SENDDIAGNOSTICINTERRUPT** - For advanced users. **Warning: Sending a diagnostic interrupt to a live system can cause data corruption or system failure.** Sends a diagnostic interrupt that causes the instance's OS to crash and then reboot. Before you send a diagnostic interrupt, you must configure the instance to generate a crash dump file when it crashes. The crash dump captures information about the state of the OS at the time of the crash. After the OS restarts, you can analyze the crash dump to diagnose the issue. For more information, see [Sending a Diagnostic Interrupt].
 
+
+
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT""")
@@ -2998,9 +2998,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -3022,9 +3020,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -3209,9 +3209,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -3233,9 +3231,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -3424,9 +3424,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -3448,9 +3446,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -3634,9 +3634,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -3658,9 +3656,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -3855,9 +3855,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -3879,9 +3877,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -4076,9 +4076,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -4100,9 +4098,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -4297,9 +4297,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -4321,9 +4319,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -4518,9 +4518,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
 They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
@@ -4542,9 +4540,11 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
-If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
 
-The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
@@ -5737,9 +5737,11 @@ def list_image_shape_compatibility_entries(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('compute.list_images.command_name', 'list'), help=u"""Lists the available images in the specified compartment, including [platform images] and [custom images] that have been created.
+@image_group.command(name=cli_util.override('compute.list_images.command_name', 'list'), help=u"""Lists a subset of images available in the specified compartment, including [platform images] and [custom images]. The list of platform images includes the three most recently published versions of each major distribution.
 
-The list of images that's returned is ordered to first show all platform images, then all custom images. The order of images might change when new images are released. \n[Command Reference](listImages)""")
+The list of images returned is ordered to first show the recent platform images, then all of the custom images.
+
+**Caution:** Platform images are refreshed regularly. When new images are released, older versions are replaced. The image OCIDs remain available, but when the platform image is replaced, the image OCIDs are no longer returned as part of the platform image list. \n[Command Reference](listImages)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--operating-system', help=u"""The image's operating system.
@@ -6285,19 +6287,17 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@compute_capacity_reservation_group.command(name=cli_util.override('compute.update_compute_capacity_reservation.command_name', 'update'), help=u"""Updates the display name, defined tag, and freeform tag fields for the specified compute capacity reservation. Fields that are not provided in the request will not be updated. Avoid entering confidential information.
-
-The update also modifies the reservation configurations of the specified compute capacity reservation. \n[Command Reference](updateComputeCapacityReservation)""")
+@compute_capacity_reservation_group.command(name=cli_util.override('compute.update_compute_capacity_reservation.command_name', 'update'), help=u"""Updates the specified capacity reservation and its associated capacity configurations. Fields that are not provided in the request will not be updated. Capacity configurations that are not included will be deleted. Avoid entering confidential information. \n[Command Reference](updateComputeCapacityReservation)""")
 @cli_util.option('--capacity-reservation-id', required=True, help=u"""The OCID of the compute capacity reservation.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the compute capacity reservation. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-default-reservation', type=click.BOOL, help=u"""Whether this capacity reservation is the default. For more information, see [Capacity Reservations].""")
-@cli_util.option('--instance-reservation-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The reservation configurations for the capacity reservation.
+@cli_util.option('--instance-reservation-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity configurations for the capacity reservation.
 
 To use the reservation for the desired shape, specify the shape, count, and optionally the fault domain where you want this configuration.
 
@@ -6385,7 +6385,7 @@ def update_compute_capacity_reservation(ctx, from_json, force, wait_for_state, m
 
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.update_compute_image_capability_schema.command_name', 'update'), help=u"""Updates the specified Compute Image Capability Schema \n[Command Reference](updateComputeImageCapabilitySchema)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the compute image capability schema""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6518,9 +6518,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My dedicated VM host`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6596,9 +6594,7 @@ def update_dedicated_vm_host(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My custom Oracle Linux image`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6690,9 +6686,7 @@ The OCID of the instance remains the same. \n[Command Reference](updateInstance)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My bare metal instance`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
