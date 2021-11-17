@@ -7,11 +7,11 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('virtual_network.core_service_group.command_name', 'core'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network.core_service_group.help', """API covering the [Networking],
+@cli.command(cli_util.override('virtual_network.core_service_group.command_name', 'core'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network.core_service_group.help', """Use the Core Services API to manage resources such as virtual cloud networks (VCNs),
+compute instances, and block storage volumes. For more information, see the console
+documentation for the [Networking],
 [Compute], and
-[Block Volume] services. Use this API
-to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes."""), short_help=cli_util.override('virtual_network.core_service_group.short_help', """Core Services API"""))
+[Block Volume] services."""), short_help=cli_util.override('virtual_network.core_service_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def core_service_group():
     pass

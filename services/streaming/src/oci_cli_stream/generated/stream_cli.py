@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.streaming.src.oci_cli_streaming.generated import streaming_service_cli
 
 
-@click.command(cli_util.override('stream.stream_root_group.command_name', 'stream'), cls=CommandGroupWithAlias, help=cli_util.override('stream.stream_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream.stream_root_group.short_help', """Streaming Service API"""))
+@click.command(cli_util.override('stream.stream_root_group.command_name', 'stream'), cls=CommandGroupWithAlias, help=cli_util.override('stream.stream_root_group.help', """Use the Streaming API to produce and consume messages, create streams and stream pools, and manage related items. For more information, see [Streaming]."""), short_help=cli_util.override('stream.stream_root_group.short_help', """Streaming API"""))
 @cli_util.help_option_group
 def stream_root_group():
     pass

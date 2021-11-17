@@ -162,6 +162,51 @@ def get_database_upgrade_history_entry_extended(ctx, **kwargs):
     ctx.invoke(database_cli.get_database_upgrade_history_entry, **kwargs)
 
 
+# Renaming the parameter should-pdb-admin-account-be-locked to is-pdb-admin-acc-locked
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['should_pdb_admin_account_be_locked'])
+@cli_util.option('--is-pdb-admin-acc-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@database_cli.pluggable_database_group.command(name='create', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_extended(ctx, **kwargs):
+    if 'is_pdb_admin_acc_locked' in kwargs and kwargs['is_pdb_admin_acc_locked']:
+        kwargs['should_pdb_admin_account_be_locked'] = kwargs['is_pdb_admin_acc_locked']
+
+    del kwargs['is_pdb_admin_acc_locked']
+    ctx.invoke(database_cli.create_pluggable_database, **kwargs)
+
+
+# Renaming the parameter should-pdb-admin-account-be-locked to is-pdb-admin-acc-locked
+@cli_util.copy_params_from_generated_command(database_cli.local_clone_pluggable_database, params_to_exclude=['should_pdb_admin_account_be_locked'])
+@cli_util.option('--is-pdb-admin-acc-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@database_cli.pluggable_database_group.command(name='local-clone', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def local_clone_pluggable_database_extended(ctx, **kwargs):
+    if 'is_pdb_admin_acc_locked' in kwargs and kwargs['is_pdb_admin_acc_locked']:
+        kwargs['should_pdb_admin_account_be_locked'] = kwargs['is_pdb_admin_acc_locked']
+
+    del kwargs['is_pdb_admin_acc_locked']
+    ctx.invoke(database_cli.local_clone_pluggable_database, **kwargs)
+
+
+# Renaming the parameter should-pdb-admin-account-be-locked to is-pdb-admin-acc-locked
+@cli_util.copy_params_from_generated_command(database_cli.remote_clone_pluggable_database, params_to_exclude=['should_pdb_admin_account_be_locked'])
+@cli_util.option('--is-pdb-admin-acc-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@database_cli.pluggable_database_group.command(name='remote-clone', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def remote_clone_pluggable_database_extended(ctx, **kwargs):
+    if 'is_pdb_admin_acc_locked' in kwargs and kwargs['is_pdb_admin_acc_locked']:
+        kwargs['should_pdb_admin_account_be_locked'] = kwargs['is_pdb_admin_acc_locked']
+
+    del kwargs['is_pdb_admin_acc_locked']
+    ctx.invoke(database_cli.remote_clone_pluggable_database, **kwargs)
+
+
 # OCPUs
 database_cli.exadata_infrastructure_group.add_command(database_cli.get_exadata_infrastructure_ocpus)
 database_cli.ocp_us_group.commands.pop(database_cli.get_exadata_infrastructure_ocpus.name)
@@ -355,7 +400,7 @@ def launch_db_system_extended(ctx, **kwargs):
 @database_cli.db_system_group.command(name='launch-from-backup', help=database_cli.launch_db_system_launch_db_system_from_backup_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
-@cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
+@cli_util.option('--backup-tde-password', required=False, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
@@ -570,7 +615,7 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 @cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
-@cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
+@cli_util.option('--backup-tde-password', required=False, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--sid-prefix', required=False, help="""Specifies a prefix for the `Oracle SID` of the database to be created.""")
@@ -705,7 +750,7 @@ def update_database_extended(ctx, **kwargs):
 @cli_util.option('--db-system-id', required=False, help="""The Db System Id to clone this database under.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--database-id', required=True, help="""The OCID of the from-database.""")
-@cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
+@cli_util.option('--backup-tde-password', required=False, help="""The password to open the TDE wallet.""")
 @cli_util.option('--point-in-time-recovery-timestamp', required=False, help="""The point in time of the original database from which the new database is created. If not specifed, the latest backup is used to create the database.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @click.pass_context

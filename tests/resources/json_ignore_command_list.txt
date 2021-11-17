@@ -20,3 +20,5 @@ rover, node, set-secrets
 waas, protection-settings, update
 db, external-non-cdb, enable-operations-insights
 db, external-pdb, enable-operations-insights
+network, virtual-circuit, create
+network, virtual-circuit, update

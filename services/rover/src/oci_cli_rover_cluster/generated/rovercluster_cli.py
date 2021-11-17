@@ -72,7 +72,7 @@ def change_rover_cluster_compartment(ctx, from_json, rover_cluster_id, compartme
 @rover_cluster_group.command(name=cli_util.override('rover_cluster.create_rover_cluster.command_name', 'create'), help=u"""Creates a new RoverCluster. \n[Command Reference](createRoverCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the RoverCluster.""")
-@cli_util.option('--cluster-size', required=True, type=click.INT, help=u"""Number of nodes desired in the cluster, between 5 and 15.""")
+@cli_util.option('--cluster-size', required=True, type=click.INT, help=u"""Number of nodes desired in the cluster, in standalone clusters, between 5 and 15 inclusive. In station clusters, between 15 and 30 inclusive.""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-workloads', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of existing workloads that should be provisioned on the nodes.
 
@@ -88,6 +88,10 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--oracle-shipping-tracking-url', help=u"""Tracking Url for the shipped Rover Cluster.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the RoverCluster.""")
 @cli_util.option('--lifecycle-state-details', help=u"""A property that can contain details on the lifecycle.""")
+@cli_util.option('--is-import-requested', type=click.BOOL, help=u"""The flag indicating that customer requests data to be imported to OCI upon Rover cluster return.""")
+@cli_util.option('--import-compartment-id', help=u"""An OCID of a compartment where data will be imported to upon Rover cluster return.""")
+@cli_util.option('--import-file-bucket', help=u"""Name of a bucket where files from NFS share will be imported to upon Rover cluster return.""")
+@cli_util.option('--data-validation-code', help=u"""Validation code returned by data validation tool. Required for return shipping label generation if data import was requested.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The system tags associated with this resource, if any. The system tags are set by Oracle cloud infrastructure services. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{orcl-cloud: {free-tier-retain: true}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -99,7 +103,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'cluster-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, cluster_size, customer_shipping_address, cluster_workloads, super_user_password, enclosure_type, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, oracle_shipping_tracking_url, lifecycle_state, lifecycle_state_details, freeform_tags, defined_tags, system_tags):
+def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, cluster_size, customer_shipping_address, cluster_workloads, super_user_password, enclosure_type, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, oracle_shipping_tracking_url, lifecycle_state, lifecycle_state_details, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -147,6 +151,18 @@ def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if lifecycle_state_details is not None:
         _details['lifecycleStateDetails'] = lifecycle_state_details
+
+    if is_import_requested is not None:
+        _details['isImportRequested'] = is_import_requested
+
+    if import_compartment_id is not None:
+        _details['importCompartmentId'] = import_compartment_id
+
+    if import_file_bucket is not None:
+        _details['importFileBucket'] = import_file_bucket
+
+    if data_validation_code is not None:
+        _details['dataValidationCode'] = data_validation_code
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -359,7 +375,7 @@ def list_rover_clusters(ctx, from_json, all_pages, page_size, compartment_id, di
 @rover_cluster_group.command(name=cli_util.override('rover_cluster.update_rover_cluster.command_name', 'update'), help=u"""Updates the RoverCluster \n[Command Reference](updateRoverCluster)""")
 @cli_util.option('--rover-cluster-id', required=True, help=u"""Unique RoverCluster identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--cluster-size', type=click.INT, help=u"""Number of nodes desired in the cluster, between 5 and 15.""")
+@cli_util.option('--cluster-size', type=click.INT, help=u"""Number of nodes desired in the cluster, in standalone clusters, between 5 and 15 inclusive. In station clusters, between 15 and 30 inclusive.""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-workloads', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of existing workloads that should be provisioned on the nodes.
 
@@ -375,6 +391,10 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--oracle-shipping-tracking-url', help=u"""Tracking Url for the shipped Rover Cluster.""")
 @cli_util.option('--shipping-vendor', help=u"""Shipping vendor of choice for orace to customer shipping.""")
 @cli_util.option('--time-pickup-expected', type=custom_types.CLI_DATETIME, help=u"""Expected date when customer wants to pickup the device if they chose customer pickup.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-import-requested', type=click.BOOL, help=u"""The flag indicating that customer requests data to be imported to OCI upon Rover cluster return.""")
+@cli_util.option('--import-compartment-id', help=u"""An OCID of a compartment where data will be imported to upon Rover cluster return.""")
+@cli_util.option('--import-file-bucket', help=u"""Name of a bucket where files from NFS share will be imported to upon Rover cluster return.""")
+@cli_util.option('--data-validation-code', help=u"""Validation code returned by data validation tool. Required for return shipping label generation if data import was requested.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The system tags associated with this resource, if any. The system tags are set by Oracle cloud infrastructure services. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{orcl-cloud: {free-tier-retain: true}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -388,7 +408,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'cluster-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def update_rover_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_cluster_id, display_name, cluster_size, customer_shipping_address, cluster_workloads, super_user_password, lifecycle_state, lifecycle_state_details, unlock_passphrase, enclosure_type, point_of_contact, point_of_contact_phone_number, shipping_preference, oracle_shipping_tracking_url, shipping_vendor, time_pickup_expected, freeform_tags, defined_tags, system_tags, if_match):
+def update_rover_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_cluster_id, display_name, cluster_size, customer_shipping_address, cluster_workloads, super_user_password, lifecycle_state, lifecycle_state_details, unlock_passphrase, enclosure_type, point_of_contact, point_of_contact_phone_number, shipping_preference, oracle_shipping_tracking_url, shipping_vendor, time_pickup_expected, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, freeform_tags, defined_tags, system_tags, if_match):
 
     if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
@@ -448,6 +468,18 @@ def update_rover_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if time_pickup_expected is not None:
         _details['timePickupExpected'] = time_pickup_expected
+
+    if is_import_requested is not None:
+        _details['isImportRequested'] = is_import_requested
+
+    if import_compartment_id is not None:
+        _details['importCompartmentId'] = import_compartment_id
+
+    if import_file_bucket is not None:
+        _details['importFileBucket'] = import_file_bucket
+
+    if data_validation_code is not None:
+        _details['dataValidationCode'] = data_validation_code
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

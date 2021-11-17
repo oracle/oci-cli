@@ -6,6 +6,67 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.3.1 - 2021-11-17
+------------------
+Added
+~~~~~
+
+* Support for Object Storage integration with the Big Data service
+
+  * ``oci bds bds-api-key``
+
+* Support for the GetSubnetTopology API in the Networking Topology Service
+
+  * ``oci network subnet-topology get``
+
+* Support for Cloud Advisor V2 features as a part of the Cloud Advisor Service
+
+  * ``oci optimizer profile-level-summary list-profile-levels``
+  * ``oci optimizer queryable-field-summary list-resource-action-queryable-fields``
+  * ``oci optimizer resource-action-summary filter-resource-actions``
+
+* FastConnect Service
+
+  * Support for MACSEC in the below commands
+
+    * ``oci network cross-connect create --macsec-properties``
+    * ``oci network cross-connect update --macsec-properties``
+    * ``oci network cross-connect-group create --macsec-properties``
+    * ``oci network cross-connect-group update --macsec-properties``
+
+  * Support for MTU in the below commands
+
+    * ``oci network virtual-circuit create --ip-mtu``
+    * ``oci network virtual-circuit update --ip-mtu``
+
+* Support for Service Manager Proxy aimed at having SaaS environments that implement Service Manager API contract.
+
+  * ``oci service-manager-proxy service-environment``
+
+Changed
+~~~~~~~
+
+* Database service
+
+  * The required parameter --backup-tde-password is now optional in the below commands
+
+    * ``oci db database create-from-backup``
+    * ``oci db database create-from-database``
+
+
+  * The parameter --backup-tde-password is now optional in the below commands
+
+    * ``oci db system launch-from-backup ``
+    * ``oci db database launch-from-database``
+
+
+  * The parameters --pdb-admin-password, --tde-wallet-password and --target-tde-wallet-password are now optional and a new parameter --is-pdb-admin-acc-locked is introduced in the below commands
+
+    * ``oci db pluggable-database create``
+    * ``oci db pluggable-database local-clone``
+    * ``oci db pluggable-database remote-clone ``
+
+
 3.3.0 - 2021-11-09
 ------------------
 Added
