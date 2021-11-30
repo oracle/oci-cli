@@ -179,6 +179,12 @@ def drg_route_table_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.tunnel_security_association_group.command_name', 'tunnel-security-association'), cls=CommandGroupWithAlias, help="""Detailed Tunnel SA""")
+@cli_util.help_option_group
+def tunnel_security_association_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario that uses an internet gateway, see [Typical Networking Service Scenarios].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -222,6 +228,12 @@ For more information about network security groups, see [Network Security Groups
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def network_security_group_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.tunnel_route_group.command_name', 'tunnel-route'), cls=CommandGroupWithAlias, help="""The routes advertised to the Customer and the routes received from the Customer""")
+@cli_util.help_option_group
+def tunnel_route_group():
     pass
 
 
@@ -274,6 +286,12 @@ def networking_topology_group():
 @click.command(cli_util.override('virtual_network.ip_sec_connection_tunnel_group.command_name', 'ip-sec-connection-tunnel'), cls=CommandGroupWithAlias, help="""Information about a single tunnel in an IPSec connection. This object does not include the tunnel's shared secret (pre-shared key). That is in the [IPSecConnectionTunnelSharedSecret] object.""")
 @cli_util.help_option_group
 def ip_sec_connection_tunnel_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.allowed_ike_ip_sec_parameters_group.command_name', 'allowed-ike-ip-sec-parameters'), cls=CommandGroupWithAlias, help="""Allowed IKE IPSec Parameters""")
+@cli_util.help_option_group
+def allowed_ike_ip_sec_parameters_group():
     pass
 
 
@@ -330,6 +348,12 @@ def local_peering_gateway_group():
 @click.command(cli_util.override('virtual_network.cross_connect_mapping_details_collection_group.command_name', 'cross-connect-mapping-details-collection'), cls=CommandGroupWithAlias, help="""An array of CrossConnectMappingDetails""")
 @cli_util.help_option_group
 def cross_connect_mapping_details_collection_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.ip_sec_connection_tunnel_error_details_group.command_name', 'ip-sec-connection-tunnel-error-details'), cls=CommandGroupWithAlias, help="""Ipsec tunnels error details""")
+@cli_util.help_option_group
+def ip_sec_connection_tunnel_error_details_group():
     pass
 
 
@@ -510,9 +534,11 @@ virtual_network_root_group.add_command(cpe_device_shape_detail_group)
 virtual_network_root_group.add_command(fast_connect_provider_service_key_group)
 virtual_network_root_group.add_command(drg_route_distribution_statement_group)
 virtual_network_root_group.add_command(drg_route_table_group)
+virtual_network_root_group.add_command(tunnel_security_association_group)
 virtual_network_root_group.add_command(internet_gateway_group)
 virtual_network_root_group.add_command(ip_sec_connection_group)
 virtual_network_root_group.add_command(network_security_group_group)
+virtual_network_root_group.add_command(tunnel_route_group)
 virtual_network_root_group.add_command(security_list_group)
 virtual_network_root_group.add_command(byoip_allocated_range_summary_group)
 virtual_network_root_group.add_command(remote_peering_connection_group)
@@ -520,12 +546,14 @@ virtual_network_root_group.add_command(nat_gateway_group)
 virtual_network_root_group.add_command(drg_attachment_group)
 virtual_network_root_group.add_command(networking_topology_group)
 virtual_network_root_group.add_command(ip_sec_connection_tunnel_group)
+virtual_network_root_group.add_command(allowed_ike_ip_sec_parameters_group)
 virtual_network_root_group.add_command(vcn_dns_resolver_association_group)
 virtual_network_root_group.add_command(cross_connect_location_group)
 virtual_network_root_group.add_command(private_ip_group)
 virtual_network_root_group.add_command(virtual_circuit_group)
 virtual_network_root_group.add_command(local_peering_gateway_group)
 virtual_network_root_group.add_command(cross_connect_mapping_details_collection_group)
+virtual_network_root_group.add_command(ip_sec_connection_tunnel_error_details_group)
 virtual_network_root_group.add_command(tunnel_cpe_device_config_group)
 virtual_network_root_group.add_command(vlan_group)
 virtual_network_root_group.add_command(ipv6_group)
@@ -5650,6 +5678,23 @@ def get_all_drg_attachments(ctx, from_json, drg_id, limit, page, attachment_type
     cli_util.render_response(result, ctx)
 
 
+@allowed_ike_ip_sec_parameters_group.command(name=cli_util.override('virtual_network.get_allowed_ike_ip_sec_parameters.command_name', 'get'), help=u"""The allowed parameters for IKE IPSec \n[Command Reference](getAllowedIkeIPSecParameters)""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AllowedIkeIPSecParameters'})
+@cli_util.wrap_exceptions
+def get_allowed_ike_ip_sec_parameters(ctx, from_json, ):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_allowed_ike_ip_sec_parameters(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @byoip_range_group.command(name=cli_util.override('virtual_network.get_byoip_range.command_name', 'get'), help=u"""Gets the `ByoipRange` resource. You must specify the [OCID]. \n[Command Reference](getByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The [OCID] of the `ByoipRange` resource containing the BYOIP CIDR block.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6131,6 +6176,32 @@ def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
     kwargs = {}
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ip_sec_connection_tunnel(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_tunnel_error_details_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel_error.command_name', 'get-ip-sec-connection-tunnel-error'), help=u"""Get the identified error for the specified IPSec Tunnel ID. \n[Command Reference](getIPSecConnectionTunnelError)""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnelErrorDetails'})
+@cli_util.wrap_exceptions
+def get_ip_sec_connection_tunnel_error(ctx, from_json, ipsc_id, tunnel_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_ip_sec_connection_tunnel_error(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
         **kwargs
@@ -7957,6 +8028,127 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
     else:
         result = client.list_internet_gateways(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@tunnel_route_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnel_routes.command_name', 'list-ip-sec-connection'), help=u"""The routes advertised to the Customer and the routes received from the Customer. \n[Command Reference](listIPSecConnectionTunnelRoutes)""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--advertiser', type=custom_types.CliCaseInsensitiveChoice(["CUSTOMER", "ORACLE"]), help=u"""Specifies the advertiser of the routes. If set to ORACLE, then returns only the routes advertised by ORACLE, else if set to CUSTOMER, then returns only the routes advertised by the CUSTOMER.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[TunnelRouteSummary]'})
+@cli_util.wrap_exceptions
+def list_ip_sec_connection_tunnel_routes(ctx, from_json, all_pages, page_size, ipsc_id, tunnel_id, limit, page, advertiser):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if advertiser is not None:
+        kwargs['advertiser'] = advertiser
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_ip_sec_connection_tunnel_routes,
+            ipsc_id=ipsc_id,
+            tunnel_id=tunnel_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_ip_sec_connection_tunnel_routes,
+            limit,
+            page_size,
+            ipsc_id=ipsc_id,
+            tunnel_id=tunnel_id,
+            **kwargs
+        )
+    else:
+        result = client.list_ip_sec_connection_tunnel_routes(
+            ipsc_id=ipsc_id,
+            tunnel_id=tunnel_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@tunnel_security_association_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnel_security_associations.command_name', 'list-ip-sec-connection'), help=u"""Lists the tunnel Security Associations information for the specified IPSec Tunnel ID. \n[Command Reference](listIPSecConnectionTunnelSecurityAssociations)""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[TunnelSecurityAssociationSummary]'})
+@cli_util.wrap_exceptions
+def list_ip_sec_connection_tunnel_security_associations(ctx, from_json, all_pages, page_size, ipsc_id, tunnel_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_ip_sec_connection_tunnel_security_associations,
+            ipsc_id=ipsc_id,
+            tunnel_id=tunnel_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_ip_sec_connection_tunnel_security_associations,
+            limit,
+            page_size,
+            ipsc_id=ipsc_id,
+            tunnel_id=tunnel_id,
+            **kwargs
+        )
+    else:
+        result = client.list_ip_sec_connection_tunnel_security_associations(
+            ipsc_id=ipsc_id,
+            tunnel_id=tunnel_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -10727,18 +10919,23 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--routing', type=custom_types.CliCaseInsensitiveChoice(["BGP", "STATIC", "POLICY"]), help=u"""The type of routing to use for this tunnel (either BGP dynamic routing or static routing).""")
 @cli_util.option('--ike-version', type=custom_types.CliCaseInsensitiveChoice(["V1", "V2"]), help=u"""Internet Key Exchange protocol version.""")
 @cli_util.option('--bgp-session-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oracle-initiation', type=custom_types.CliCaseInsensitiveChoice(["INITIATOR_OR_RESPONDER", "RESPONDER_ONLY"]), help=u"""Whether Oracle side is the initiator for negotiation.""")
+@cli_util.option('--nat-translation-enabled', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "AUTO"]), help=u"""Whether NAT-T Enabled on the tunnel""")
+@cli_util.option('--phase-one-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--phase-two-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dpd-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--encryption-domain-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}, 'encryption-domain-config': {'module': 'core', 'class': 'UpdateIPSecTunnelEncryptionDomainDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}, 'phase-one-config': {'module': 'core', 'class': 'PhaseOneConfigDetails'}, 'phase-two-config': {'module': 'core', 'class': 'PhaseTwoConfigDetails'}, 'dpd-config': {'module': 'core', 'class': 'DpdConfig'}, 'encryption-domain-config': {'module': 'core', 'class': 'UpdateIPSecTunnelEncryptionDomainDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}, 'encryption-domain-config': {'module': 'core', 'class': 'UpdateIPSecTunnelEncryptionDomainDetails'}}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnel'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}, 'phase-one-config': {'module': 'core', 'class': 'PhaseOneConfigDetails'}, 'phase-two-config': {'module': 'core', 'class': 'PhaseTwoConfigDetails'}, 'dpd-config': {'module': 'core', 'class': 'DpdConfig'}, 'encryption-domain-config': {'module': 'core', 'class': 'UpdateIPSecTunnelEncryptionDomainDetails'}}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnel'})
 @cli_util.wrap_exceptions
-def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, tunnel_id, display_name, routing, ike_version, bgp_session_config, encryption_domain_config, if_match):
+def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, tunnel_id, display_name, routing, ike_version, bgp_session_config, oracle_initiation, nat_translation_enabled, phase_one_config, phase_two_config, dpd_config, encryption_domain_config, if_match):
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
@@ -10746,8 +10943,8 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
     if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
     if not force:
-        if bgp_session_config or encryption_domain_config:
-            if not click.confirm("WARNING: Updates to bgp-session-config and encryption-domain-config will replace any existing values. Are you sure you want to continue?"):
+        if bgp_session_config or phase_one_config or phase_two_config or dpd_config or encryption_domain_config:
+            if not click.confirm("WARNING: Updates to bgp-session-config and phase-one-config and phase-two-config and dpd-config and encryption-domain-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -10768,6 +10965,21 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
 
     if bgp_session_config is not None:
         _details['bgpSessionConfig'] = cli_util.parse_json_parameter("bgp_session_config", bgp_session_config)
+
+    if oracle_initiation is not None:
+        _details['oracleInitiation'] = oracle_initiation
+
+    if nat_translation_enabled is not None:
+        _details['natTranslationEnabled'] = nat_translation_enabled
+
+    if phase_one_config is not None:
+        _details['phaseOneConfig'] = cli_util.parse_json_parameter("phase_one_config", phase_one_config)
+
+    if phase_two_config is not None:
+        _details['phaseTwoConfig'] = cli_util.parse_json_parameter("phase_two_config", phase_two_config)
+
+    if dpd_config is not None:
+        _details['dpdConfig'] = cli_util.parse_json_parameter("dpd_config", dpd_config)
 
     if encryption_domain_config is not None:
         _details['encryptionDomainConfig'] = cli_util.parse_json_parameter("encryption_domain_config", encryption_domain_config)
