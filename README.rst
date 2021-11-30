@@ -37,6 +37,12 @@ Windows
 
     powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1'))"
 
+Cross-platform (Python 3.6+)
+----------------------------
+::
+
+    pip install oci-cli
+
 See the `installation guide`__ for detailed installation instructions, options and troubleshooting.
 
 __ https://docs.cloud.oracle.com/Content/API/SDKDocs/cliinstall.htm
