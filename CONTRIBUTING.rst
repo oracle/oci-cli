@@ -5,7 +5,7 @@ Contributing to the Oracle Cloud Infrastructure CLI
 *This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.*
 
 Pull requests can be made under
-`The Oracle Contributor Agreement <https://www.oracle.com/technetwork/community/oca-486395.html>`_ (OCA).
+`The Oracle Contributor Agreement <https://oca.opensource.oracle.com>`_ (OCA).
 
 For pull requests to be accepted, the bottom of
 your commit message must have the following line using your name and
