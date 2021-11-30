@@ -293,11 +293,11 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
 
     match_wheel = "oci_cli*.whl"
     cli_package_name = 'oci_cli'
+    if (optional_features):
+        cli_package_name += '[' + optional_features + ']'
     if version:
         cli_package_name += '==' + version
         match_wheel = "oci_cli*" + version + "*.whl"
-    if (optional_features):
-        cli_package_name += '[' + optional_features + ']'
 
     # Check if we should install a local full-install bundle.
     oci_cli_whl_files = glob.glob(match_wheel)

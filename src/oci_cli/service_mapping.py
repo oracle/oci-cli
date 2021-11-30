@@ -29,7 +29,7 @@ service_mapping = {
     ],
     "apm-control-plane": [
         "apm_control_plane",
-        "Application Performance Monitoring (APM) Control Plane"
+        "Application Performance Monitoring Control Plane"
     ],
     "apm-synthetics": [
         "apm_synthetics",

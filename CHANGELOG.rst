@@ -6,6 +6,81 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.3.2 - 2021-11-30
+------------------
+Added
+~~~~~
+
+* Support for custom IPSecConnection Tunnel Internet Key Exchange phase 1 and phase 2 encryption algorithms in the Network service
+
+  * ``oci network allowed-ike-ip-sec-parameters get``
+  * ``oci network ip-sec-connection-tunnel-error-details get-ip-sec-connection-tunnel-error``
+  * ``oci network tunnel-route list-ip-sec-connection``
+  * ``oci network tunnel-security-association list-ip-sec-connection``
+
+* Database Management service
+
+  * Support for listing and retrieving user details
+
+    * ``oci database-management managed-database list-users``
+    * ``oci database-management managed-database get-user``
+    * ``oci database-management managed-database list-roles``
+    * ``oci database-management managed-database list-system-privileges``
+    * ``oci database-management managed-database list-object-privileges``
+    * ``oci database-management managed-database list-consumer-group-privileges``
+    * ``oci database-management managed-database list-proxy-users``
+    * ``oci database-management managed-database list-proxied-for-users``
+    * ``oci database-management managed-database list-data-access-containers``
+
+  * Support for SQL Tuning Advisors
+
+    * ``oci database-management sql-tuning-task``
+
+* Support for enabling and disabling Database Management features in the Autonomous Database service
+
+  * ``oci db autonomous-database enable-autonomous-database-management``
+  * ``oci db autonomous-database disable-autonomous-database-management``
+
+* Support for listing and retrieving deployment backups in the GoldenGate service
+
+  * ``oci goldengate deployment-backup list``
+  * ``oci goldengate deployment-backup get``
+
+* Support for standard tags in the Identity service
+
+  * ``oci iam tag import-standard-tags``
+  * ``oci iam tag get-standard-tag-template``
+  * ``oci iam tag list-standard-tag-namespaces``
+
+* Support for Solaris platform in the Management Agent service
+
+  * ``oci management-agent agent list --platform-type SOLARIS``
+  * ``oci management-agent plugin list --platform-type SOLARIS``
+
+* Support for cross-compartment support in the Operations Insights service
+
+  * ``oci opsi <group> <command> --compartment-id-in-subtree``
+
+* Support for pagination when listing work requests and new lifecycle state `DELETED` in the APM service
+
+  * ``oci apm-control-plane work-request list-apm-domain --limit, --page``
+  * ``oci apm-control-plane apm-domain list --lifecycle-state DELETED``
+
+* Support for fetching problems for `DELETED` targets in the Cloud Guard service
+
+  * ``oci cloud-guard problem update-bulk-problem-status --status DELETED``
+  * ``oci cloud-guard problem update-problem-status --status DELETED``
+  * ``oci cloud-guard problem list --status DELETED``
+
+* Support for upgrading a platform instance and choosing version when creating a platform instance in the Blockchain service
+
+  * ``oci blockchain blockchain-platform upgrade``
+  * ``oci blockchain blockchain-platform create --platform-version``
+
+Fixed
+~~~~~
+* Bug when using the install script with both --optional-features and --oci-cli-version parameters. Please see `github issue #370 <https://github.com/oracle/oci-cli/issues/370>`_ for more details.
+
 3.3.1 - 2021-11-17
 ------------------
 Added
@@ -56,7 +131,7 @@ Changed
 
   * The parameter --backup-tde-password is now optional in the below commands
 
-    * ``oci db system launch-from-backup ``
+    * ``oci db system launch-from-backup``
     * ``oci db database launch-from-database``
 
 
@@ -64,7 +139,7 @@ Changed
 
     * ``oci db pluggable-database create``
     * ``oci db pluggable-database local-clone``
-    * ``oci db pluggable-database remote-clone ``
+    * ``oci db pluggable-database remote-clone``
 
 
 3.3.0 - 2021-11-09
@@ -489,7 +564,7 @@ Added
 * Support for enable, disable, modify in Database Management service
 
   * ``oci db database enable-database-management``
-  * ``oci db database disable-database-management ``
+  * ``oci db database disable-database-management``
   * ``oci db database modify-database-management``
 
 * Support for getting the detailed log content of a job in the Resource Manager service
@@ -1828,7 +1903,7 @@ Added
 
 * Support for private access channel in Analytics Service
 
-  * ``oci analytics analytics-instance create-private-access-channel ``
+  * ``oci analytics analytics-instance create-private-access-channel``
   * ``oci analytics analytics-instance get-private-access-channel``
   * ``oci analytics analytics-instance update-private-access-channel``
   * ``oci analytics analytics-instance delete-private-access-channel``
@@ -2356,7 +2431,7 @@ Added
   * ``oci db cloud-vm-cluster update [options]``
 
 Changed
-~~~~~
+~~~~~~~
 
 * Help messages for Logging Ingestion Service
 

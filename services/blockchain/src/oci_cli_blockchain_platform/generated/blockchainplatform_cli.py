@@ -130,6 +130,7 @@ def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--idcs-access-token', required=True, help=u"""IDCS access token with Identity Domain Administrator role""")
 @cli_util.option('--description', help=u"""Platform Instance Description""")
 @cli_util.option('--is-byol', type=click.BOOL, help=u"""Bring your own license""")
+@cli_util.option('--platform-version', help=u"""Platform version""")
 @cli_util.option('--federated-user-id', help=u"""Identifier for a federated user""")
 @cli_util.option('--ca-cert-archive-text', help=u"""Base64 encoded text in ASCII character set of a Thirdparty CA Certificates archive file. The Archive file is a zip file containing third part CA Certificates, the ca key and certificate files used when issuing enrollment certificates (ECerts) and transaction certificates (TCerts). The chainfile (if it exists) contains the certificate chain which should be trusted for this CA, where the 1st in the chain is always the root CA certificate. File list in zip file [ca-cert.pem,ca-key.pem,ca-chain.pem(optional)].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -142,7 +143,7 @@ def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'blockchain', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'blockchain', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, platform_role, compute_shape, idcs_access_token, description, is_byol, federated_user_id, ca_cert_archive_text, freeform_tags, defined_tags):
+def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, platform_role, compute_shape, idcs_access_token, description, is_byol, platform_version, federated_user_id, ca_cert_archive_text, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -159,6 +160,9 @@ def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if is_byol is not None:
         _details['isByol'] = is_byol
+
+    if platform_version is not None:
+        _details['platformVersion'] = platform_version
 
     if federated_user_id is not None:
         _details['federatedUserId'] = federated_user_id
@@ -639,6 +643,57 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@blockchain_platform_group.command(name=cli_util.override('blockchain.list_blockchain_platform_patches.command_name', 'list-blockchain-platform-patches'), help=u"""List Blockchain Platform Patches \n[Command Reference](listBlockchainPlatformPatches)""")
+@cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
+@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'blockchain', 'class': 'BlockchainPlatformPatchCollection'})
+@cli_util.wrap_exceptions
+def list_blockchain_platform_patches(ctx, from_json, all_pages, page_size, blockchain_platform_id, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+        raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('blockchain', 'blockchain_platform', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_blockchain_platform_patches,
+            blockchain_platform_id=blockchain_platform_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_blockchain_platform_patches,
+            limit,
+            page_size,
+            blockchain_platform_id=blockchain_platform_id,
+            **kwargs
+        )
+    else:
+        result = client.list_blockchain_platform_patches(
+            blockchain_platform_id=blockchain_platform_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1435,6 +1490,63 @@ def update_peer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         blockchain_platform_id=blockchain_platform_id,
         peer_id=peer_id,
         update_peer_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@blockchain_platform_group.command(name=cli_util.override('blockchain.upgrade_blockchain_platform.command_name', 'upgrade'), help=u"""Upgrade a Blockchain Platform version \n[Command Reference](upgradeBlockchainPlatform)""")
+@cli_util.option('--patch-id', required=True, help=u"""The patch ID corresponding to the version to which platform will be upgraded.""")
+@cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def upgrade_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, blockchain_platform_id, if_match):
+
+    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+        raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchId'] = patch_id
+
+    client = cli_util.build_client('blockchain', 'blockchain_platform', ctx)
+    result = client.upgrade_blockchain_platform(
+        blockchain_platform_id=blockchain_platform_id,
+        upgrade_blockchain_platform_details=_details,
         **kwargs
     )
     if wait_for_state:
