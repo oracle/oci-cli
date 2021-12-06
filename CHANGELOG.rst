@@ -6,6 +6,62 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.3.3 - 2021-12-07
+------------------
+Added
+~~~~~
+
+* Support for Resource Discovery and Monitoring service
+
+   * ``oci appmgmt-control``
+
+* Support for finding and listing locations of all default OCI CLI installs.
+
+  * ``oci setup find-installations``
+
+* Support for the following in the Log Analytics service
+
+  * Log analytics categories
+
+    * ``oci log-analytics category``
+
+  * List entity topology
+
+    * ``oci log-analytics entity-topology list``
+
+  * Verify Scheduled Task
+
+    * ``oci log-analytics scheduled-task verify``
+
+* Support for the following in the Java Management service
+
+  * Retrieve the inventory of JMS resources in the specified compartment.
+
+    * ``oci jms fleet summarize-resource-inventory --compartment-id``
+
+  * List Java Runtime usage in a specified host filtered by query parameters.
+
+    * ``oci jms jre-usage list --compartment-id --host-id``
+
+* Support for RAC Databases in GoldenGate Service
+
+   * ``oci goldengate database-registration create --session-mode``
+   * ``oci goldengate database-registration update --session-mode``
+
+Changed
+~~~~~~~~~
+
+* New parameter for listing Java Runtime usage in a fleet.
+
+  * ``oci jms jre-usage summarize --jre-security-status``
+
+Fixed
+~~~~~~~
+
+* Bug while upgrading OCI CLI autocomplete
+
+  * ``oci setup autocomplete``
+
 3.3.2 - 2021-11-30
 ------------------
 Added

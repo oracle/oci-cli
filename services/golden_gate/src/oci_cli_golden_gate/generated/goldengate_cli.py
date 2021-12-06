@@ -345,6 +345,7 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet being referenced.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the database being referenced.""")
 @cli_util.option('--connection-string', help=u"""Connect descriptor or Easy Connect Naming method that Oracle GoldenGate uses to connect to a database.""")
+@cli_util.option('--session-mode', type=custom_types.CliCaseInsensitiveChoice(["DIRECT", "REDIRECT"]), help=u"""The mode of the database connection session to be established by the data client. REDIRECT - for a RAC database, DIRECT - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database.  This attribute is expected to be base64 encoded.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the customer vault being referenced. If provided, this will reference a vault which the customer will be required to ensure the policies are established to permit the GoldenGate Service to manage secrets contained within this vault.""")
 @cli_util.option('--key-id', help=u"""The [OCID] of the customer \"Master\" key being referenced. If provided, this will reference a key which the customer will be required to ensure the policies are established to permit the GoldenGate Service to utilize this key to manage secrets.""")
@@ -357,7 +358,7 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'golden_gate', 'class': 'DatabaseRegistration'})
 @cli_util.wrap_exceptions
-def create_database_registration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, fqdn, username, password, alias_name, description, freeform_tags, defined_tags, ip_address, subnet_id, database_id, connection_string, wallet, vault_id, key_id, secret_compartment_id):
+def create_database_registration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, fqdn, username, password, alias_name, description, freeform_tags, defined_tags, ip_address, subnet_id, database_id, connection_string, session_mode, wallet, vault_id, key_id, secret_compartment_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -390,6 +391,9 @@ def create_database_registration(ctx, from_json, wait_for_state, max_wait_second
 
     if connection_string is not None:
         _details['connectionString'] = connection_string
+
+    if session_mode is not None:
+        _details['sessionMode'] = session_mode
 
     if wallet is not None:
         _details['wallet'] = wallet
@@ -1617,6 +1621,7 @@ def stop_deployment_default_stop_deployment_details(ctx, from_json, wait_for_sta
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated RDBMS.  This username must already exist and be available for use by the database.  It must conform to the security requirements implemented by the database including length, case sensitivity, and so on.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated RDBMS.  It must conform to the specific security requirements implemented by the database including length, case sensitivity, and so on.""")
 @cli_util.option('--connection-string', help=u"""Connect descriptor or Easy Connect Naming method that Oracle GoldenGate uses to connect to a database.""")
+@cli_util.option('--session-mode', type=custom_types.CliCaseInsensitiveChoice(["DIRECT", "REDIRECT"]), help=u"""The mode of the database connection session to be established by the data client. REDIRECT - for a RAC database, DIRECT - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database.  This attribute is expected to be base64 encoded.""")
 @cli_util.option('--alias-name', help=u"""Credential store alias.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1629,7 +1634,7 @@ def stop_deployment_default_stop_deployment_details(ctx, from_json, wait_for_sta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_database_registration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_registration_id, display_name, description, freeform_tags, defined_tags, fqdn, username, password, connection_string, wallet, alias_name, if_match):
+def update_database_registration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_registration_id, display_name, description, freeform_tags, defined_tags, fqdn, username, password, connection_string, session_mode, wallet, alias_name, if_match):
 
     if isinstance(database_registration_id, six.string_types) and len(database_registration_id.strip()) == 0:
         raise click.UsageError('Parameter --database-registration-id cannot be whitespace or empty string')
@@ -1668,6 +1673,9 @@ def update_database_registration(ctx, from_json, force, wait_for_state, max_wait
 
     if connection_string is not None:
         _details['connectionString'] = connection_string
+
+    if session_mode is not None:
+        _details['sessionMode'] = session_mode
 
     if wallet is not None:
         _details['wallet'] = wallet

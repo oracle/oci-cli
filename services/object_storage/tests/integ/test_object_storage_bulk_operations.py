@@ -1219,7 +1219,7 @@ def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
     result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
                      bucket_name, '--versioning', 'Enabled'], debug=debug)
     validate_response(result, includes_debug_data=debug)
-    num_versions = 1500    # Atleast 3 pages should be created
+    num_versions = 1501    # Atleast 3 pages should be created
     object_name_present_1 = 'Object.txt'
     object_name_present_2 = 'TestObject.pdf'
 
@@ -1359,7 +1359,7 @@ def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
                      '--object-name', object_name_present_1])
 
     assert "delete at least" in result.output
-    assert "" in result.output
+    assert "1000" in result.output
     assert "object versions" in result.output
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
@@ -1373,7 +1373,7 @@ def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
                      '--prefix', 'Test'])
 
     assert "delete at least" in result.output
-    assert "" in result.output
+    assert "1000" in result.output
     assert "object versions" in result.output
 
     result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,

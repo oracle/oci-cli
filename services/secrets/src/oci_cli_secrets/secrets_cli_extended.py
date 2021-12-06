@@ -7,3 +7,4 @@ from oci_cli import cli_util
 
 cli_util.rename_command(secrets_cli, secrets_cli.secret_bundle_version_summary_group, secrets_cli.list_secret_bundle_versions, "list-versions")
 cli_util.rename_command(secrets_cli, secrets_cli.secrets_root_group, secrets_cli.secret_bundle_version_summary_group, "secret-bundle-version")
+secrets_cli.secrets_root_group.help += " To manage secrets, see `Secret Management (vault) <https://docs.cloud.oracle.com/iaas/tools/oci-cli/latest/oci_cli_docs/cmdref/vault.html>"

@@ -21,6 +21,7 @@ import sys
 import errno
 import json
 import re
+import glob
 
 from oci.regions import is_region
 from oci.regions import REGIONS
@@ -205,6 +206,8 @@ DEFAULT_TOKEN_DIRECTORY = os.path.join(DEFAULT_DIRECTORY, 'sessions')
 DEFAULT_CONFIG_LOCATION = os.path.join(DEFAULT_DIRECTORY, 'config')
 USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
 USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
+DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
+OCI_EXECUTABLE_NAME = 'oci.exe' if sys.platform == 'win32' else 'oci'
 
 
 @cli.group('setup', help="""Setup commands for CLI""")
@@ -591,18 +594,9 @@ def setup_autocomplete_non_windows():
     confirm_prompt = 'We need to add a few lines to your {rc_file_path} file. Please confirm this is ok.'.format(rc_file_path=rc_file_path)
 
     if click.confirm(confirm_prompt, default=True):
-        with open(rc_file_path, mode='a+') as f:
-            f.seek(0)
-            content = f.read()
 
-            # this check is not foolproof but we want to avoid adding a bunch of lines to .bash_profile/.bashrc if the user re-runs the command
-            if "lib/oci_autocomplete.sh" in content:
-                click.echo("It looks like tab completion for oci is already configured in {rc_file_path}. If you want to re-run the setup command please remove the line containing 'oci_autocomplete.sh' from {rc_file_path}.".format(rc_file_path=rc_file_path))
-                return
-
-            f.write('\n{}\n'.format(bash_profile_line))
         if os.path.exists(soft_link):
-            os.chmod(soft_link, stat.S_IWRITE)
+            os.chmod(soft_link, 0o0644)
             os.remove(soft_link)
         try:
             src = completion_script_file
@@ -611,15 +605,23 @@ def setup_autocomplete_non_windows():
             if not os.path.isdir(os.path.dirname(dst)):
                 os.makedirs(os.path.dirname(dst))
             os.symlink(src, dst)
-            # os.symlink(completion_script_file, soft_link)
         except Exception:
-            click.echo("Unable to create simlink to ~/lib/oci_autocomplete.sh. Please add following to your rc file.")
             click.echo(
-                "Unable to simlink ~/lib/oci_autocomplete.sh to {}. \nAdd '{}' to your rc file and restart your terminal for the changes to take effect.".format(
+                "Unable to symlink ~/lib/oci_autocomplete.sh to {}. \nAdd '{}' to your rc file and restart your terminal for the changes to take effect.".format(
                     bash_profile_line, bash_profile_line))
             return
 
-        click.echo("Success!\nRun '{}' or restart your terminal for the changes to take effect.".format(bash_profile_line))
+        with open(rc_file_path, mode='a+') as f:
+            f.seek(0)
+            content = f.read()
+
+            # this check is not foolproof but we want to avoid adding a bunch of lines to .bash_profile/.bashrc if the user re-runs the command
+            if "lib/oci_autocomplete.sh" not in content:
+                f.write('\n{}\n'.format(bash_profile_line))
+            else:
+                click.echo("It looks like tab completion for oci is already configured in {rc_file_path}. If you want to re-run the setup command please remove the line containing 'oci_autocomplete.sh' from {rc_file_path} and run oci setup authenticate again.\n".format(rc_file_path=rc_file_path))
+
+        click.echo("Success! \n Restart your terminal or Run '{}' for the changes to take effect.".format(bash_profile_line))
     else:
         click.echo('Exiting script. Tab completion not set up.')
         return
@@ -971,3 +973,103 @@ def get_passphrase(ctx):
         private_key = signer.load_private_key_from_file(client_config['key_file'], passphrase)
         return passphrase
     return None
+
+
+@setup_group.command('find-installations', help="""Finds and lists locations of all default OCI CLI installs.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def find_cli_installations(ctx):
+
+    package_locations = []
+    executable_locations = []
+
+    # check for installer script installation
+    click.echo('Checking for CLI installer script default installation...')
+    if os.path.exists(DEFAULT_INSTALL_DIR):
+        # if the above condition is satisfied, that means the CLI package was installed at the default location from the installer script
+        installation_loc = DEFAULT_INSTALL_DIR
+        package_locations.append(('CLI Installer Script', installation_loc))
+
+    # check for homebrew installation
+    click.echo('Checking for Homebrew installation...')
+    result = subprocess.run(['brew list'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            universal_newlines=True)
+    if (result.returncode == 0) and ('oci-cli' in result.stdout):
+        # if the above condition is satisfied, that means oci-cli is an installed homebrew package
+        # get the oci-cli installation location
+        installation_loc = []
+        result = subprocess.run(['brew --cellar oci-cli'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                universal_newlines=True)
+        installation_loc.append(result.stdout.strip())
+        result = subprocess.run(['brew --prefix oci-cli'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                universal_newlines=True)
+        installation_loc.append(result.stdout.strip())
+        package_locations.append(('Homebrew', ', '.join(installation_loc)))
+
+    # check for yum installation
+    click.echo('Checking for yum installation...')
+    result = subprocess.run(['yum list installed'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            universal_newlines=True)
+    if (result.returncode == 0) and ('oci-cli' in result.stdout):
+        # if the above condition is satisfied, that means the CLI is an installed yum package
+        # CLI yum package name has the form pythonXX-oci-cli; the python version determines where the package is installed
+        package_name = re.findall('python[0-9]+-oci-cli', result.stdout)
+        python_version_num = re.findall('[0-9]+', package_name[0])
+        python_version = '.'.join(list(python_version_num[0]))
+        installation_loc = '/usr/lib/python{version}/site-packages/oci_cli'.format(version=python_version)
+        package_locations.append(('yum', installation_loc))
+
+    # check for pip installation
+    click.echo('Checking for pip installation...')
+    result = subprocess.run(['pip3 show oci-cli'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            universal_newlines=True)
+    if result.returncode == 0:
+        # if the above condition is satisfied, that means oci-cli is an installed pip package
+        # parse result string to get the oci-cli installation location
+        location_line = re.findall('Location: .*\n', result.stdout)
+        installation_loc = os.path.join(location_line[0].split()[1], 'oci_cli')
+        package_locations.append(('pip3', installation_loc))
+
+    # check for oci executables on the user's PATH
+    click.echo('Searching for CLI executables on your $PATH...')
+    try:
+        if 'PATH' in os.environ:
+            path_env = os.environ['PATH']
+            click.echo('Your current $PATH is {}'.format(path_env))
+            for path in path_env.split(os.pathsep):
+                search_path = os.path.join(path, '**', OCI_EXECUTABLE_NAME)
+                executable_locations.extend(glob.glob(search_path, recursive=True))
+        else:
+            click.echo('No PATH variable found in your environment')
+    except Exception as ex:
+        pass
+    click.echo()
+
+    # print the installations that were found
+    if len(package_locations) == 0:
+        click.echo('No OCI CLI package installations were found')
+    else:
+        click.echo('The following OCI CLI package installations were found:\n')
+        for i in range(len(package_locations)):
+            click.echo('\t[{index}] {method}: {location}'.format(index=i + 1, method=package_locations[i][0],
+                                                                 location=package_locations[i][1]))
+    click.echo()
+
+    # print the installations that were found
+    if len(executable_locations) == 0:
+        click.echo('No OCI CLI executables were found on your $PATH')
+    else:
+        click.echo('The following OCI CLI executables were found on your $PATH:\n')
+        for i in range(len(executable_locations)):
+            click.echo('\t[{index}] {location}'.format(index=i + 1, location=executable_locations[i]))
+
+    click.echo()
+
+    click.echo(click.wrap_text(
+        text="Visit https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliuninstall.htm to uninstall OCI-CLI",
+        preserve_paragraphs=True))
+    find_install_note = 'PLEASE NOTE: This command lists CLI installations in default locations and CLI executables on your $PATH. There may be additional (unlisted) CLI installations at other non-default locations or CLI executables that are not on your current $PATH.'
+    click.echo(click.wrap_text(text=find_install_note, preserve_paragraphs=True))
+
+    ctx.exit()
