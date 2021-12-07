@@ -105,7 +105,8 @@ IGNORED_COMMANDS = [
     ['os-management', 'work-request-summary'],
     ['resource-manager', 'job', 'create-plan-job'],
     ['resource-manager', 'job', 'create-apply-job'],
-    ['resource-manager', 'job', 'create-destroy-job']
+    ['resource-manager', 'job', 'create-destroy-job'],
+    ['setup', 'find-installations'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

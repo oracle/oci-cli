@@ -55,6 +55,15 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'query', 'export', '--timezone'])
         assert 'Error: --timezone option requires an argument' in result.output
 
+    # query namespace aliases
+    def test_query_namespace_aliases(self):
+        result = util.invoke_command(['log-analytics', 'query', 'compare-content', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'query', 'compare-content', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'query', 'compare-content', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
     # query-work-request renamed command
     def test_query_work_request_renamed_command(self):
         result = util.invoke_command(['log-analytics', 'query-work-request',
@@ -79,6 +88,15 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         # create-acceleration-task
         result = util.invoke_command(['log-analytics', 'scheduled-task', 'create-acceleration-task'])
         assert """Usage: oci log-analytics scheduled-task create-acceleration-task """ in result.output
+
+    # ScheduledTask namespace aliases
+    def test_scheduled_task_namespace_aliases(self):
+        result = util.invoke_command(['log-analytics', 'scheduled-task', 'verify', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'scheduled-task', 'verify', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'scheduled-task', 'verify', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
 
     # object-collection-rule renamed commands
     def test_object_collection_rule_renamed_commands(self):
@@ -468,6 +486,27 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '-ns'])
         assert 'Error: -ns option requires an argument' in result.output
 
+    # log analytics entity-topology renamed commands
+    def test_entity_topology_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-entity-summary', 'list-log-analytics-entity-topology'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'entity-topology', 'list'])
+        assert """Usage: oci log-analytics entity-topology list""" in result.output
+
+    def test_entity_topology_flattened_params(self):
+        result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '--log-analytics-entity-id'])
+        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+
+    # log analytics entity-topology namespace aliases
+    def test_entity_topology_namespace_aliases(self):
+        result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '--namespace-name'])
+        assert 'Error: --namespace-name option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '--namespace'])
+        assert 'Error: --namespace option requires an argument' in result.output
+        result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '-ns'])
+        assert 'Error: -ns option requires an argument' in result.output
+
     def test_validate_source_efds_changed_command(self):
         result = util.invoke_command(['log-analytics', 'log-analytics-source', 'validate-source-extended-field-details'])
         assert 'No such command' in result.output
@@ -705,6 +744,41 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
         result = util.invoke_command(['log-analytics', 'preference', 'update'])
         assert """Usage: oci log-analytics preference update""" in result.output
+
+    def test_list_categories_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-category', 'list-categories'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'category', 'list'])
+        assert """Usage: oci log-analytics category list""" in result.output
+
+    def test_get_category_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-category', 'get-category'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'category', 'get'])
+        assert """Usage: oci log-analytics category get""" in result.output
+
+    def test_list_resource_categories_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-category', 'list-resource-categories'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'category', 'list-resource-category'])
+        assert """Usage: oci log-analytics category list-resource-category""" in result.output
+
+    def test_remove_resource_categories_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-category', 'remove'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'category', 'remove-resource-category'])
+        assert """Usage: oci log-analytics category remove-resource-category""" in result.output
+
+    def test_update_resource_categories_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-category', 'update-resource-categories'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'category', 'update-resource-category'])
+        assert """Usage: oci log-analytics category update-resource-category""" in result.output
 
     def test_get_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'get', '--log-analytics-log-group-id'])

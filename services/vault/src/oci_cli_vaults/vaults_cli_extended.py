@@ -10,3 +10,4 @@ cli_util.rename_command(vaults_cli, vaults_cli.secret_group, vaults_cli.update_s
 vaults_cli.secret_group.commands.pop(vaults_cli.create_secret.name)
 cli_util.rename_command(vaults_cli, vaults_cli.secret_version_group, vaults_cli.schedule_secret_version_deletion, "schedule-deletion")
 cli_util.rename_command(vaults_cli, vaults_cli.secret_version_group, vaults_cli.cancel_secret_version_deletion, "cancel-deletion")
+vaults_cli.vault_root_group.help += " To retrieve secrets from vaults, see `Vault Service Secret Retrieval (secrets) <https://docs.cloud.oracle.com/iaas/tools/oci-cli/latest/oci_cli_docs/cmdref/secrets.html>"

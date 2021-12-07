@@ -117,6 +117,12 @@ def query_work_request_group():
     pass
 
 
+@click.command(cli_util.override('log_analytics.log_analytics_category_group.command_name', 'log-analytics-category'), cls=CommandGroupWithAlias, help="""A category into which resources can be placed.""")
+@cli_util.help_option_group
+def log_analytics_category_group():
+    pass
+
+
 @click.command(cli_util.override('log_analytics.log_analytics_entity_type_group.command_name', 'log-analytics-entity-type'), cls=CommandGroupWithAlias, help="""Description of log analytics entity type.""")
 @cli_util.help_option_group
 def log_analytics_entity_type_group():
@@ -132,6 +138,12 @@ def log_analytics_object_collection_rule_group():
 @click.command(cli_util.override('log_analytics.log_analytics_entity_group.command_name', 'log-analytics-entity'), cls=CommandGroupWithAlias, help="""Description of a log analytics entity.""")
 @cli_util.help_option_group
 def log_analytics_entity_group():
+    pass
+
+
+@click.command(cli_util.override('log_analytics.log_analytics_entity_summary_group.command_name', 'log-analytics-entity-summary'), cls=CommandGroupWithAlias, help="""Summary of a log analytics entity.""")
+@cli_util.help_option_group
+def log_analytics_entity_summary_group():
     pass
 
 
@@ -153,7 +165,7 @@ def log_analytics_log_group_group():
     pass
 
 
-@click.command(cli_util.override('log_analytics.log_analytics_parser_group.command_name', 'log-analytics-parser'), cls=CommandGroupWithAlias, help="""LoganParserDetails""")
+@click.command(cli_util.override('log_analytics.log_analytics_parser_group.command_name', 'log-analytics-parser'), cls=CommandGroupWithAlias, help="""LogAnalyticsParser""")
 @cli_util.help_option_group
 def log_analytics_parser_group():
     pass
@@ -199,9 +211,11 @@ log_analytics_root_group.add_command(char_encoding_collection_group)
 log_analytics_root_group.add_command(work_request_error_group)
 log_analytics_root_group.add_command(log_analytics_source_group)
 log_analytics_root_group.add_command(query_work_request_group)
+log_analytics_root_group.add_command(log_analytics_category_group)
 log_analytics_root_group.add_command(log_analytics_entity_type_group)
 log_analytics_root_group.add_command(log_analytics_object_collection_rule_group)
 log_analytics_root_group.add_command(log_analytics_entity_group)
+log_analytics_root_group.add_command(log_analytics_entity_summary_group)
 log_analytics_root_group.add_command(namespace_group)
 log_analytics_root_group.add_command(timezone_collection_group)
 log_analytics_root_group.add_command(log_analytics_log_group_group)
@@ -639,6 +653,40 @@ def clean(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_en
     result = client.clean(
         namespace_name=namespace_name,
         scheduled_task_id=scheduled_task_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@query_details_group.command(name=cli_util.override('log_analytics.compare_content.command_name', 'compare-content'), help=u"""Returns the difference between the two input payloads, including intraline differences. \n[Command Reference](compareContent)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--content1', help=u"""The first of two strings to compare.""")
+@cli_util.option('--content2', help=u"""The second of two strings to compare.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'CompareContentResult'})
+@cli_util.wrap_exceptions
+def compare_content(ctx, from_json, namespace_name, content1, content2):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if content1 is not None:
+        _details['content1'] = content1
+
+    if content2 is not None:
+        _details['content2'] = content2
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.compare_content(
+        namespace_name=namespace_name,
+        compare_content_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2290,13 +2338,16 @@ This option is a JSON list with items of type LogAnalyticsSource.  For documenta
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type. Default value is REGEX.""")
 @cli_util.option('--is-user-deleted', type=click.BOOL, help=u"""A flag indicating whether or not the parser has been deleted.""")
 @cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories assigned to this parser. The isSystem flag denotes if each category assignment is user-created or Oracle-defined.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "DELIMITED"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
-@json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}})
+@json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogFieldResults'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogFieldResults'})
 @cli_util.wrap_exceptions
-def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, parser_type):
+def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, categories, parser_type):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2403,6 +2454,9 @@ def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, 
 
     if is_namespace_aware is not None:
         _details['isNamespaceAware'] = is_namespace_aware
+
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.extract_structured_log_field_paths(
@@ -2455,13 +2509,16 @@ This option is a JSON list with items of type LogAnalyticsSource.  For documenta
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type. Default value is REGEX.""")
 @cli_util.option('--is-user-deleted', type=click.BOOL, help=u"""A flag indicating whether or not the parser has been deleted.""")
 @cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories assigned to this parser. The isSystem flag denotes if each category assignment is user-created or Oracle-defined.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "DELIMITED"]), help=u"""The parser type - possible values are XML, JSON or DELIMITED.""")
-@json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}})
+@json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogHeaderResults'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogHeaderResults'})
 @cli_util.wrap_exceptions
-def extract_structured_log_header_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, parser_type):
+def extract_structured_log_header_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, categories, parser_type):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2568,6 +2625,9 @@ def extract_structured_log_header_paths(ctx, from_json, namespace_name, content,
 
     if is_namespace_aware is not None:
         _details['isNamespaceAware'] = is_namespace_aware
+
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.extract_structured_log_header_paths(
@@ -2633,6 +2693,33 @@ def get_association_summary(ctx, from_json, namespace_name, compartment_id):
     result = client.get_association_summary(
         namespace_name=namespace_name,
         compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_category_group.command(name=cli_util.override('log_analytics.get_category.command_name', 'get-category'), help=u"""Gets detailed information about the category with the specified name. \n[Command Reference](getCategory)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--category-name', required=True, help=u"""The category name.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsCategory'})
+@cli_util.wrap_exceptions
+def get_category(ctx, from_json, namespace_name, category_name):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(category_name, six.string_types) and len(category_name.strip()) == 0:
+        raise click.UsageError('Parameter --category-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.get_category(
+        namespace_name=namespace_name,
+        category_name=category_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3706,6 +3793,72 @@ def list_auto_associations(ctx, from_json, all_pages, page_size, namespace_name,
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_category_group.command(name=cli_util.override('log_analytics.list_categories.command_name', 'list-categories'), help=u"""Returns a list of categories, containing detailed information about them. You may limit the number of results, provide sorting order, and filter by information such as category name or description. \n[Command Reference](listCategories)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--category-type', help=u"""A comma-separated list of category types used for filtering. Only categories of the specified types will be returned.""")
+@cli_util.option('--category-display-text', help=u"""The category display text used for filtering. Only categories matching the specified display name or description will be returned.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "type"]), help=u"""The attribute used to sort the returned categories""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--name', help=u"""A filter to return only log analytics entities whose name matches the entire name given. The match is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsCategoryCollection'})
+@cli_util.wrap_exceptions
+def list_categories(ctx, from_json, all_pages, page_size, namespace_name, category_type, category_display_text, sort_order, sort_by, limit, page, name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if category_type is not None:
+        kwargs['category_type'] = category_type
+    if category_display_text is not None:
+        kwargs['category_display_text'] = category_display_text
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if name is not None:
+        kwargs['name'] = name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_categories,
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_categories,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    else:
+        result = client.list_categories(
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_config_work_request_group.command(name=cli_util.override('log_analytics.list_config_work_requests.command_name', 'list-config-work-requests'), help=u"""Returns the list of configuration work requests such as association or lookup operations, containing detailed information about them. You may paginate or limit the number of results. \n[Command Reference](listConfigWorkRequests)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
@@ -4346,6 +4499,73 @@ def list_log_analytics_entities(ctx, from_json, all_pages, page_size, namespace_
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_entity_summary_group.command(name=cli_util.override('log_analytics.list_log_analytics_entity_topology.command_name', 'list-log-analytics-entity-topology'), help=u"""Return a log analytics entity topology collection that contains a set of log analytics entities and a set of relationships between those, for the input source entity. \n[Command Reference](listLogAnalyticsEntityTopology)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only those log analytics entities with the specified lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "name"]), help=u"""The field to sort entities by. Only one sort order may be provided. Default order for timeCreated and timeUpdated is descending. Default order for entity name is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEntityTopologyCollection'})
+@cli_util.wrap_exceptions
+def list_log_analytics_entity_topology(ctx, from_json, all_pages, page_size, namespace_name, log_analytics_entity_id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+        raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_log_analytics_entity_topology,
+            namespace_name=namespace_name,
+            log_analytics_entity_id=log_analytics_entity_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_log_analytics_entity_topology,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            log_analytics_entity_id=log_analytics_entity_id,
+            **kwargs
+        )
+    else:
+        result = client.list_log_analytics_entity_topology(
+            namespace_name=namespace_name,
+            log_analytics_entity_id=log_analytics_entity_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.list_log_analytics_entity_types.command_name', 'list'), help=u"""Return a list of log analytics entity types. \n[Command Reference](listLogAnalyticsEntityTypes)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--name', help=u"""A filter to return only log analytics entity types whose name matches the entire name given. The match is case-insensitive.""")
@@ -4610,6 +4830,7 @@ def list_log_sets(ctx, from_json, all_pages, page_size, namespace_name, limit, p
 @cli_util.option('--is-system', type=custom_types.CliCaseInsensitiveChoice(["ALL", "CUSTOM", "BUILT_IN"]), help=u"""The system value used for filtering.  Only items with the specified system value will be returned.  Valid values are built in, custom (for user defined items), or all (for all items, regardless of system value).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "status", "type", "updatedTime", "creationType"]), help=u"""sort by field""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ALL", "SUCCESSFUL", "FAILED", "INPROGRESS"]), help=u"""The lookup status used for filtering when fetching a list of lookups.""")
+@cli_util.option('--categories', help=u"""A comma-separated list of categories used for filtering""")
 @cli_util.option('--is-hide-special', type=click.BOOL, help=u"""A flag indicating whether or not to return OMC annotated or hidden lookups.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4621,7 +4842,7 @@ def list_log_sets(ctx, from_json, all_pages, page_size, namespace_name, limit, p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookupCollection'})
 @cli_util.wrap_exceptions
-def list_lookups(ctx, from_json, all_pages, page_size, namespace_name, type, lookup_display_text, is_system, sort_by, status, is_hide_special, limit, page, sort_order):
+def list_lookups(ctx, from_json, all_pages, page_size, namespace_name, type, lookup_display_text, is_system, sort_by, status, categories, is_hide_special, limit, page, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4638,6 +4859,8 @@ def list_lookups(ctx, from_json, all_pages, page_size, namespace_name, type, loo
         kwargs['sort_by'] = sort_by
     if status is not None:
         kwargs['status'] = status
+    if categories is not None:
+        kwargs['categories'] = categories
     if is_hide_special is not None:
         kwargs['is_hide_special'] = is_hide_special
     if limit is not None:
@@ -4877,6 +5100,7 @@ def list_parser_meta_plugins(ctx, from_json, all_pages, page_size, namespace_nam
 @cli_util.option('--parser-name', help=u"""The parser name used for filtering.""")
 @cli_util.option('--parser-display-text', help=u"""The parser display text used for filtering.  Only parsers with the specified name or description will be returned.""")
 @cli_util.option('--parser-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "REGEX", "XML", "JSON", "ODL", "DELIMITED"]), help=u"""The parser type used for filtering.  Only items with, or associated with, parsers of the specified type will be returned.""")
+@cli_util.option('--categories', help=u"""A comma-separated list of categories used for filtering""")
 @cli_util.option('--is-system', type=custom_types.CliCaseInsensitiveChoice(["ALL", "CUSTOM", "BUILT_IN"]), help=u"""The system value used for filtering.  Only items with the specified system value will be returned.  Valid values are built in, custom (for user defined items), or all (for all items, regardless of system value).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4889,7 +5113,7 @@ def list_parser_meta_plugins(ctx, from_json, all_pages, page_size, namespace_nam
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsParserCollection'})
 @cli_util.wrap_exceptions
-def list_parsers(ctx, from_json, all_pages, page_size, namespace_name, is_match_all, source_type, parser_name, parser_display_text, parser_type, is_system, limit, page, sort_order, sort_by):
+def list_parsers(ctx, from_json, all_pages, page_size, namespace_name, is_match_all, source_type, parser_name, parser_display_text, parser_type, categories, is_system, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4908,6 +5132,8 @@ def list_parsers(ctx, from_json, all_pages, page_size, namespace_name, is_match_
         kwargs['parser_display_text'] = parser_display_text
     if parser_type is not None:
         kwargs['parser_type'] = parser_type
+    if categories is not None:
+        kwargs['categories'] = categories
     if is_system is not None:
         kwargs['is_system'] = is_system
     if limit is not None:
@@ -5066,6 +5292,72 @@ def list_recalled_data(ctx, from_json, all_pages, page_size, namespace_name, lim
         )
     else:
         result = client.list_recalled_data(
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_category_group.command(name=cli_util.override('log_analytics.list_resource_categories.command_name', 'list-resource-categories'), help=u"""Returns a list of resources and their category assignments. You may limit the number of results, provide sorting order, and filter by information such as resource type. \n[Command Reference](listResourceCategories)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--categories', help=u"""A comma-separated list of categories used for filtering""")
+@cli_util.option('--resource-types', help=u"""A comma-separated list of resource types used for filtering. Only resources of the types specified will be returned. Examples include SOURCE, PARSER, LOOKUP, etc.""")
+@cli_util.option('--resource-ids', help=u"""A comma-separated list of resource unique identifiers used for filtering. Only resources with matching unique identifiers will be returned.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["resourceType", "categoryName", "resourceId"]), help=u"""The attribute used to sort the returned category resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsResourceCategoryCollection'})
+@cli_util.wrap_exceptions
+def list_resource_categories(ctx, from_json, all_pages, page_size, namespace_name, categories, resource_types, resource_ids, sort_order, sort_by, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if categories is not None:
+        kwargs['categories'] = categories
+    if resource_types is not None:
+        kwargs['resource_types'] = resource_types
+    if resource_ids is not None:
+        kwargs['resource_ids'] = resource_ids
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resource_categories,
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resource_categories,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            **kwargs
+        )
+    else:
+        result = client.list_resource_categories(
             namespace_name=namespace_name,
             **kwargs
         )
@@ -5550,6 +5842,7 @@ def list_source_patterns(ctx, from_json, all_pages, page_size, namespace_name, s
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--name', help=u"""A filter to return only log analytics entities whose name matches the entire name given. The match is case-insensitive.""")
+@cli_util.option('--categories', help=u"""A comma-separated list of categories used for filtering""")
 @cli_util.option('--is-simplified', type=click.BOOL, help=u"""A flag specifying whether or not to return all source information, or a subset of the information about each source.  A value of true will return only the source unique identifier and the source name.  A value of false will return all source information (such as author, updated date, system flag, etc.)""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5558,7 +5851,7 @@ def list_source_patterns(ctx, from_json, all_pages, page_size, namespace_name, s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsSourceCollection'})
 @cli_util.wrap_exceptions
-def list_sources(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, entity_type, source_display_text, is_system, is_auto_associated, sort_order, sort_by, limit, page, name, is_simplified):
+def list_sources(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, entity_type, source_display_text, is_system, is_auto_associated, sort_order, sort_by, limit, page, name, categories, is_simplified):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5585,6 +5878,8 @@ def list_sources(ctx, from_json, all_pages, page_size, namespace_name, compartme
         kwargs['page'] = page
     if name is not None:
         kwargs['name'] = name
+    if categories is not None:
+        kwargs['categories'] = categories
     if is_simplified is not None:
         kwargs['is_simplified'] = is_simplified
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6962,6 +7257,38 @@ def remove_preferences(ctx, from_json, namespace_name, items):
     cli_util.render_response(result, ctx)
 
 
+@log_analytics_category_group.command(name=cli_util.override('log_analytics.remove_resource_categories.command_name', 'remove'), help=u"""Removes the category assignments of DASHBOARD and SAVEDSEARCH resources. \n[Command Reference](removeResourceCategories)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of resources and their corresponding category assignments to update.
+
+This option is a JSON list with items of type LogAnalyticsResourceCategory.  For documentation on LogAnalyticsResourceCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsResourceCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsResourceCategory]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsResourceCategory]'}})
+@cli_util.wrap_exceptions
+def remove_resource_categories(ctx, from_json, namespace_name, items):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.remove_resource_categories(
+        namespace_name=namespace_name,
+        remove_resource_categories_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_source_group.command(name=cli_util.override('log_analytics.remove_source_event_types.command_name', 'remove'), help=u"""Remove one or more event types from a source. \n[Command Reference](removeSourceEventTypes)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""The source name.""")
@@ -7755,14 +8082,17 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
 
 This option is a JSON list with items of type LogAnalyticsLookupFields.  For documentation on LogAnalyticsLookupFields please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsLookupFields.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--max-matches', type=click.INT, help=u"""The maximum number of matches.""")
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories to assign to the lookup. Specifying the name attribute for each category would suffice. Oracle-defined category assignments cannot be removed.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLookupFields]'}})
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLookupFields]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLookupFields]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLookupFields]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsLookup'})
 @cli_util.wrap_exceptions
-def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_match_value, description, fields, max_matches, if_match):
+def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_match_value, description, fields, max_matches, categories, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7770,8 +8100,8 @@ def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_ma
     if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
     if not force:
-        if fields:
-            if not click.confirm("WARNING: Updates to fields will replace any existing values. Are you sure you want to continue?"):
+        if fields or categories:
+            if not click.confirm("WARNING: Updates to fields and categories will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7792,6 +8122,9 @@ def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_ma
 
     if max_matches is not None:
         _details['maxMatches'] = max_matches
+
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.update_lookup(
@@ -7901,6 +8234,38 @@ def update_preferences(ctx, from_json, namespace_name, items):
     result = client.update_preferences(
         namespace_name=namespace_name,
         update_preferences_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_category_group.command(name=cli_util.override('log_analytics.update_resource_categories.command_name', 'update-resource-categories'), help=u"""Updates the category assignments of DASHBOARD and SAVEDSEARCH resources. \n[Command Reference](updateResourceCategories)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of resources and their corresponding category assignments to update.
+
+This option is a JSON list with items of type LogAnalyticsResourceCategory.  For documentation on LogAnalyticsResourceCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsResourceCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsResourceCategory]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'log_analytics', 'class': 'list[LogAnalyticsResourceCategory]'}})
+@cli_util.wrap_exceptions
+def update_resource_categories(ctx, from_json, namespace_name, items):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_resource_categories(
+        namespace_name=namespace_name,
+        update_resource_categories_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8446,13 +8811,16 @@ This option is a JSON list with items of type LogAnalyticsParserFunction.  For d
 @cli_util.option('--field-qualifier', help=u"""The parser field qualifier.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["XML", "JSON", "REGEX", "ODL", "DELIMITED"]), help=u"""The parser type.  Default value is REGEX.""")
 @cli_util.option('--is-namespace-aware', type=click.BOOL, help=u"""A flag indicating whether the XML parser should consider the namespace(s) while processing the log data.""")
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories to assign to the parser. Specifying the name attribute for each category would suffice. Oracle-defined category assignments cannot be removed.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}})
+@json_skeleton_utils.get_cli_json_input_option({'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsParser'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsParser'})
 @cli_util.wrap_exceptions
-def upsert_parser(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, log_type_test_request_version, parser_ignoreline_characters, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_namespace_aware, if_match):
+def upsert_parser(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, log_type_test_request_version, parser_ignoreline_characters, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_namespace_aware, categories, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -8539,6 +8907,9 @@ def upsert_parser(ctx, from_json, namespace_name, content, description, display_
     if is_namespace_aware is not None:
         _details['isNamespaceAware'] = is_namespace_aware
 
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
+
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.upsert_parser(
         namespace_name=namespace_name,
@@ -8608,16 +8979,19 @@ This option is a JSON list with items of type LogAnalyticsSourceEntityType.  For
 @cli_util.option('--user-parsers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of custom parsers.
 
 This option is a JSON list with items of type LogAnalyticsParser.  For documentation on LogAnalyticsParser please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsParser.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories to assign to the source. Specifying the name attribute for each category would suffice. Oracle-defined category assignments cannot be removed.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--create-like-source-id', type=click.INT, help=u"""The unique identifier of the source to use as the reference for a create like operation.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""A flag indicating whether or not the update of a source is incremental or not.  If incremental, the name of the source must be specified.""")
 @cli_util.option('--is-ignore-warning', type=click.BOOL, help=u"""is ignore warning""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}})
+@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsSource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsSource'})
 @cli_util.wrap_exceptions
-def upsert_source(ctx, from_json, namespace_name, label_conditions, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, rule_id, type_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, create_like_source_id, is_incremental, is_ignore_warning, if_match):
+def upsert_source(ctx, from_json, namespace_name, label_conditions, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, rule_id, type_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, categories, create_like_source_id, is_incremental, is_ignore_warning, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -8718,6 +9092,9 @@ def upsert_source(ctx, from_json, namespace_name, label_conditions, data_filter_
 
     if user_parsers is not None:
         _details['userParsers'] = cli_util.parse_json_parameter("user_parsers", user_parsers)
+
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.upsert_source(
@@ -8862,15 +9239,18 @@ This option is a JSON list with items of type LogAnalyticsSourceEntityType.  For
 @cli_util.option('--user-parsers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of custom parsers.
 
 This option is a JSON list with items of type LogAnalyticsParser.  For documentation on LogAnalyticsParser please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsParser.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories to assign to the source. Specifying the name attribute for each category would suffice. Oracle-defined category assignments cannot be removed.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--create-like-source-id', type=click.INT, help=u"""The unique identifier of the source to use as the reference for a create like operation.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""A flag indicating whether or not the update of a source is incremental or not.  If incremental, the name of the source must be specified.""")
 @cli_util.option('--is-ignore-warning', type=click.BOOL, help=u"""is ignore warning""")
-@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}})
+@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}}, output_type={'module': 'log_analytics', 'class': 'SourceValidateResults'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'SourceValidateResults'})
 @cli_util.wrap_exceptions
-def validate_source(ctx, from_json, namespace_name, label_conditions, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, rule_id, type_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, create_like_source_id, is_incremental, is_ignore_warning):
+def validate_source(ctx, from_json, namespace_name, label_conditions, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, rule_id, type_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, categories, create_like_source_id, is_incremental, is_ignore_warning):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -8970,6 +9350,9 @@ def validate_source(ctx, from_json, namespace_name, label_conditions, data_filte
     if user_parsers is not None:
         _details['userParsers'] = cli_util.parse_json_parameter("user_parsers", user_parsers)
 
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
+
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.validate_source(
         namespace_name=namespace_name,
@@ -9051,12 +9434,15 @@ This option is a JSON list with items of type LogAnalyticsParser.  For documenta
 @cli_util.option('--event-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of event types.
 
 This option is a JSON list with items of type EventType.  For documentation on EventType please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/EventType.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}})
+@cli_util.option('--categories', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of categories assigned to this source. The isSystem flag denotes if each category assignment is user-created or Oracle-defined.
+
+This option is a JSON list with items of type LogAnalyticsCategory.  For documentation on LogAnalyticsCategory please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/LogAnalyticsCategory.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'association-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extended-field-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
 @cli_util.wrap_exceptions
-def validate_source_extended_field_details(ctx, from_json, namespace_name, label_conditions, association_count, association_entity, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, pattern_count, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, is_auto_association_enabled, is_auto_association_override, rule_id, type_name, type_display_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, time_updated, event_types):
+def validate_source_extended_field_details(ctx, from_json, namespace_name, label_conditions, association_count, association_entity, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, pattern_count, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, is_auto_association_enabled, is_auto_association_override, rule_id, type_name, type_display_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, time_updated, event_types, categories):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -9174,6 +9560,9 @@ def validate_source_extended_field_details(ctx, from_json, namespace_name, label
     if event_types is not None:
         _details['eventTypes'] = cli_util.parse_json_parameter("event_types", event_types)
 
+    if categories is not None:
+        _details['categories'] = cli_util.parse_json_parameter("categories", categories)
+
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.validate_source_extended_field_details(
         namespace_name=namespace_name,
@@ -9206,6 +9595,36 @@ def validate_source_mapping(ctx, from_json, namespace_name, object_location, fil
         object_location=object_location,
         filename=filename,
         log_source_name=log_source_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_task_group.command(name=cli_util.override('log_analytics.verify.command_name', 'verify'), help=u"""Verify the accelerated saved search task specified by {scheduledTaskId}. For internal use only. Optionally specify whether to return accelerated search results; the default is false. The ScheduledTask taskType must be ACCELERATION. \n[Command Reference](verify)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
+@cli_util.option('--should-include-results', type=click.BOOL, help=u"""Optional parameter to specify whether to include acceleration results. Default value is false;""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'VerifyOutput'})
+@cli_util.wrap_exceptions
+def verify(ctx, from_json, namespace_name, scheduled_task_id, should_include_results):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if should_include_results is not None:
+        kwargs['should_include_results'] = should_include_results
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.verify(
+        namespace_name=namespace_name,
+        scheduled_task_id=scheduled_task_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)

@@ -18,6 +18,7 @@ get_param(loganalytics_cli.filter, 'namespace_name').opts.extend(['--namespace',
 get_param(loganalytics_cli.parse_query, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.suggest, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.get_query_result, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.compare_content, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_details_group, loganalytics_cli.query, "search")
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_details_group, loganalytics_cli.parse_query, "parse")
@@ -114,6 +115,7 @@ get_param(loganalytics_cli.delete_scheduled_task, 'namespace_name').opts.extend(
 get_param(loganalytics_cli.list_scheduled_tasks, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.change_scheduled_task_compartment, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.get_scheduled_task, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(loganalytics_cli.verify, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
 
 # logan-uploads-api overrides
@@ -528,6 +530,27 @@ get_param(loganalytics_cli.get_log_analytics_em_bridge_summary, 'namespace_name'
 get_param(loganalytics_cli.list_log_analytics_em_bridges, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.update_log_analytics_em_bridge, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
+# Rename entity topology commands
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_entity_summary_group, "entity-topology")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_entity_summary_group, loganalytics_cli.list_log_analytics_entity_topology, "list")
+
+
+# Rename log_analytics_entity_id to entity_id in entity topology
+@cli_util.copy_params_from_generated_command(loganalytics_cli.list_log_analytics_entity_topology, params_to_exclude=['log_analytics_entity_id'])
+@loganalytics_cli.log_analytics_entity_summary_group.command(name='list', help=loganalytics_cli.list_log_analytics_entity_topology.help)
+@cli_util.option('--entity-id', required=True, help="""The log analytics entity OCID""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEntityTopologyCollection'})
+@cli_util.wrap_exceptions
+def list_log_analytics_entity_topology_extended(ctx, **kwargs):
+    if 'entity_id' in kwargs:
+        kwargs['log_analytics_entity_id'] = kwargs['entity_id']
+        kwargs.pop('entity_id')
+    ctx.invoke(loganalytics_cli.list_log_analytics_entity_topology, **kwargs)
+
+
+# Extend namespace in entity topology
+get_param(loganalytics_cli.list_log_analytics_entity_topology, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
 # Config CLI overrides
 
@@ -575,6 +598,9 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_gr
 
 # preference commands
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_preference_group, "preference")
+
+# category commands
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_category_group, "category")
 
 # #########################
 # Top Level Commands - End
@@ -642,6 +668,17 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_preference_group, loganalytics_cli.get_preferences, "get")
 # update-preferences -> update
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_preference_group, loganalytics_cli.update_preferences, "update")
+
+# list-categories -> list
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_category_group, loganalytics_cli.list_categories, "list")
+# get-category -> get
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_category_group, loganalytics_cli.get_category, "get")
+# list-resource-categories -> list-resource-category
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_category_group, loganalytics_cli.list_resource_categories, "list-resource-category")
+# remove -> remove-resource-category
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_category_group, loganalytics_cli.remove_resource_categories, "remove-resource-category")
+# update-resource-categories -> update-resource-category
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_category_group, loganalytics_cli.update_resource_categories, "update-resource-category")
 
 # #########################
 # Sub Level Commands - End
@@ -808,7 +845,7 @@ def update_lookup_data_extended(ctx, **kwargs):
 @cli_util.option("--parser-ignoreline-chars", help='''Ignore line characters''')
 @cli_util.option("--tokenize-original-text", help='''Tokenize original text: true/false''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogFieldResults'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogFieldResults'})
 @cli_util.wrap_exceptions
 def extract_structured_log_field_paths_extended(ctx, **kwargs):
     if 'parser_ignoreline_chars' in kwargs:
@@ -828,7 +865,7 @@ def extract_structured_log_field_paths_extended(ctx, **kwargs):
 @cli_util.option("--parser-ignoreline-chars", help='''Ignore line characters''')
 @cli_util.option("--tokenize-original-text", help='''Tokenize original text: true/false''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogHeaderResults'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'mapped-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parser-filter': {'module': 'log_analytics', 'class': 'LogAnalyticsParserFilter'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'sources': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSource]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'ExtractLogHeaderResults'})
 @cli_util.wrap_exceptions
 def extract_structured_log_header_paths_extended(ctx, **kwargs):
     if 'parser_ignoreline_chars' in kwargs:
@@ -868,7 +905,7 @@ def test_parser_extended(ctx, **kwargs):
 @cli_util.option("--parser-ignoreline-chars", help='''Ignore line characters''')
 @cli_util.option("--tokenize-original-text", help='''Tokenize original text: true/false''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsParser'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'field-maps': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserField]'}, 'parser-functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParserFunction]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsParser'})
 @cli_util.wrap_exceptions
 def upsert_parser_extended(ctx, **kwargs):
     if 'parser_ignoreline_chars' in kwargs:
@@ -895,7 +932,7 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_
 @loganalytics_cli.log_analytics_source_group.command(name='upsert-source', help=loganalytics_cli.upsert_source.help)
 @cli_util.option("--extfield-defs", help='''Extended field definitions''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsSource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsSource'})
 @cli_util.wrap_exceptions
 def upsert_source_extended(ctx, **kwargs):
     if 'extfield_defs' in kwargs:
@@ -909,7 +946,7 @@ def upsert_source_extended(ctx, **kwargs):
 @loganalytics_cli.log_analytics_source_group.command(name='validate-source', help=loganalytics_cli.validate_source.help)
 @cli_util.option("--extfield-defs", help='''Extended field definitions''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}}, output_type={'module': 'log_analytics', 'class': 'SourceValidateResults'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'SourceValidateResults'})
 @cli_util.wrap_exceptions
 def validate_source_extended(ctx, **kwargs):
     if 'extfield_defs' in kwargs:
@@ -927,7 +964,7 @@ def validate_source_extended(ctx, **kwargs):
 @cli_util.option("--is-auto-assoc-enabled", help='''Auto associaton enabled flag''')
 @cli_util.option("--is-auto-assoc-override", help='''Auto associaton override flag''')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'assoc-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'label-conditions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceLabelCondition]'}, 'assoc-entity': {'module': 'log_analytics', 'class': 'list[LogAnalyticsAssociation]'}, 'data-filter-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceDataFilter]'}, 'extfield_defs': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceExtendedFieldDefinition]'}, 'labels': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelView]'}, 'metric-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsMetric]'}, 'metrics': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetric]'}, 'oob-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'parameters': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParameter]'}, 'patterns': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourcePattern]'}, 'functions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceFunction]'}, 'parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'metadata-fields': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceMetadataField]'}, 'label-definitions': {'module': 'log_analytics', 'class': 'list[LogAnalyticsLabelDefinition]'}, 'entity-types': {'module': 'log_analytics', 'class': 'list[LogAnalyticsSourceEntityType]'}, 'user-parsers': {'module': 'log_analytics', 'class': 'list[LogAnalyticsParser]'}, 'event-types': {'module': 'log_analytics', 'class': 'list[EventType]'}, 'categories': {'module': 'log_analytics', 'class': 'list[LogAnalyticsCategory]'}}, output_type={'module': 'log_analytics', 'class': 'ExtendedFieldsValidationResult'})
 @cli_util.wrap_exceptions
 def validate_source_extended_field_details_extended(ctx, **kwargs):
     if 'assoc_count' in kwargs:

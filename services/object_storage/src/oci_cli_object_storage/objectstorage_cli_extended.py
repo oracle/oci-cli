@@ -1606,7 +1606,7 @@ def update_local_file_mtime(files_to_process):
 @cli_util.option('--no-follow-symlinks', is_flag=True, help=no_follow_symlinks_option_help_text)
 @cli_util.option('--no-multipart', is_flag=True, help=no_multipart_option_help_text)
 @cli_util.option('--parallel-operations-count', type=click.IntRange(1, MAXIMUM_PARALLEL_DOWNLOAD_COUNT), default=DEFAULT_PARALLEL_DOWNLOAD_COUNT, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the download process will consume more system resources and network bandwidth.')
+                 help=parallel_operations_count_option_help_text)
 @cli_util.option('--part-size', type=click.IntRange(128, None), default=128, help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
 @cli_util.option('--prefix', help='When specified with --src-dir, the files are uploaded as objects with the specified prefix. When specified with --dest-dir, only objects with the specified prefix are downloaded but the prefix is not added to the file names.')
 @cli_util.option('--storage-tier',
@@ -2329,6 +2329,10 @@ def restore_objects(ctx, **kwargs):
 
     if kwargs['hours'] is not None:
         details['hours'] = kwargs['hours']
+
+    if kwargs['version_id'] is not None:
+        details['versionId'] = kwargs['version_id']
+        kwargs.pop("version_id")
 
     client = build_client('object_storage', 'object_storage', ctx)
     kwargs = {'opc_client_request_id': ctx.obj['request_id']}

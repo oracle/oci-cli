@@ -43,6 +43,10 @@ service_mapping = {
         "application_migration",
         "Application Migration"
     ],
+    "appmgmt-control": [
+        "appmgmt_control",
+        "AppMgmt Control"
+    ],
     "artifacts": [
         "artifacts",
         "Container Images"
