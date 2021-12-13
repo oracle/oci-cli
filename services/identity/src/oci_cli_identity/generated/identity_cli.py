@@ -1112,6 +1112,36 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
     cli_util.render_response(result, ctx)
 
 
+@user_group.command(name=cli_util.override('iam.create_db_credential.command_name', 'create-db-credential'), help=u"""Creates a new DB credential for the specified user. \n[Command Reference](createDbCredential)""")
+@cli_util.option('--password', required=True, help=u"""The password for the DB credentials during creation.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the DB credentials during creation.""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DbCredential'})
+@cli_util.wrap_exceptions
+def create_db_credential(ctx, from_json, password, description, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['password'] = password
+    _details['description'] = description
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.create_db_credential(
+        user_id=user_id,
+        create_db_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @domain_group.command(name=cli_util.override('iam.create_domain.command_name', 'create'), help=u"""Creates a new domain in the tenancy with domain home in {@code homeRegion}. This is an asynchronous call - where, at start, {@code lifecycleState} of this domain is set to CREATING and {@code lifecycleDetails} to UPDATING. On domain creation completion this Domain's {@code lifecycleState} will be set to ACTIVE and {@code lifecycleDetails} to null.
 
 To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
@@ -2557,6 +2587,37 @@ def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     result = client.delete_customer_secret_key(
         user_id=user_id,
         customer_secret_key_id=customer_secret_key_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('iam.delete_db_credential.command_name', 'delete-db-credential'), help=u"""Deletes the specified DB credential for the specified user. \n[Command Reference](deleteDbCredential)""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@cli_util.option('--db-credential-id', required=True, help=u"""The OCID of the DB credential.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_db_credential(ctx, from_json, user_id, db_credential_id, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(db_credential_id, six.string_types) and len(db_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.delete_db_credential(
+        user_id=user_id,
+        db_credential_id=db_credential_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4276,6 +4337,71 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
         user_id=user_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('iam.list_db_credentials.command_name', 'list-db-credentials'), help=u"""Lists the DB credentials for the specified user. The returned object contains the credential's OCID \n[Command Reference](listDbCredentials)""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[DbCredentialSummary]'})
+@cli_util.wrap_exceptions
+def list_db_credentials(ctx, from_json, all_pages, page_size, user_id, page, limit, name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', 'identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_db_credentials,
+            user_id=user_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_db_credentials,
+            limit,
+            page_size,
+            user_id=user_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_credentials(
+            user_id=user_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -7202,6 +7328,7 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--description', help=u"""The description you assign to the user. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--email', help=u"""The email address you assign to the user. Has to be unique across the tenancy.""")
+@cli_util.option('--db-user-name', help=u"""DB username of the DB credential. Has to be unique across the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7214,7 +7341,7 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, description, email, freeform_tags, defined_tags, if_match):
+def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, description, email, db_user_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
@@ -7234,6 +7361,9 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if email is not None:
         _details['email'] = email
+
+    if db_user_name is not None:
+        _details['dbUserName'] = db_user_name
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -7279,6 +7409,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--can-use-api-keys', type=click.BOOL, help=u"""Indicates if the user can use API keys.""")
 @cli_util.option('--can-use-auth-tokens', type=click.BOOL, help=u"""Indicates if the user can use SWIFT passwords / auth tokens.""")
 @cli_util.option('--can-use-smtp-credentials', type=click.BOOL, help=u"""Indicates if the user can use SMTP passwords.""")
+@cli_util.option('--can-use-db-credentials', type=click.BOOL, help=u"""Indicates if the user can use DB passwords.""")
 @cli_util.option('--can-use-customer-secret-keys', type=click.BOOL, help=u"""Indicates if the user can use SigV4 symmetric keys.""")
 @cli_util.option('--can-use-o-auth2-client-credentials', type=click.BOOL, help=u"""Indicates if the user can use OAuth2 credentials and tokens.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7290,7 +7421,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, can_use_console_password, can_use_api_keys, can_use_auth_tokens, can_use_smtp_credentials, can_use_customer_secret_keys, can_use_o_auth2_client_credentials, if_match):
+def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, can_use_console_password, can_use_api_keys, can_use_auth_tokens, can_use_smtp_credentials, can_use_db_credentials, can_use_customer_secret_keys, can_use_o_auth2_client_credentials, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
@@ -7312,6 +7443,9 @@ def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if can_use_smtp_credentials is not None:
         _details['canUseSmtpCredentials'] = can_use_smtp_credentials
+
+    if can_use_db_credentials is not None:
+        _details['canUseDBCredentials'] = can_use_db_credentials
 
     if can_use_customer_secret_keys is not None:
         _details['canUseCustomerSecretKeys'] = can_use_customer_secret_keys

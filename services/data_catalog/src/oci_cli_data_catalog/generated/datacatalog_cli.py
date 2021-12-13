@@ -46,7 +46,7 @@ def folder_tag_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_catalog.pattern_group.command_name', 'pattern'), cls=CommandGroupWithAlias, help="""Pattern representation. A Pattern is defined using an expression and can be used as data selectors or filters to provide a singular view of an entity across multiple physical data artifacts.""")
+@click.command(cli_util.override('data_catalog.pattern_group.command_name', 'pattern'), cls=CommandGroupWithAlias, help="""A pattern is a data selector or filter which can provide a singular, logical entity view aggregating multiple physical data artifacts for ease of use.""")
 @cli_util.help_option_group
 def pattern_group():
     pass
@@ -1346,6 +1346,7 @@ def create_data_asset_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--time-external', required=True, type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of the object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--business-name', help=u"""Optional user friendly business name of the data entity. If set, this supplements the harvested display name of the object.""")
+@cli_util.option('--type-key', help=u"""The type of data entity object. Type key's can be found via the '/types' endpoint.""")
 @cli_util.option('--description', help=u"""Detailed description of a data entity.""")
 @cli_util.option('--is-logical', type=click.BOOL, help=u"""Property to indicate if the object is a physical materialized object or virtual. For example, View.""")
 @cli_util.option('--is-partition', type=click.BOOL, help=u"""Property to indicate if the object is a sub object of a parent physical object.""")
@@ -1366,7 +1367,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
 @cli_util.wrap_exceptions
-def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, description, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties):
+def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, type_key, description, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1383,6 +1384,9 @@ def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if business_name is not None:
         _details['businessName'] = business_name
+
+    if type_key is not None:
+        _details['typeKey'] = type_key
 
     if description is not None:
         _details['description'] = description
@@ -2154,9 +2158,10 @@ def create_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the Pattern.""")
-@cli_util.option('--expression', help=u"""The expression used in the pattern that may include qualifiers. Refer to the user documentation for details of the format and examples.""")
-@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the expression can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with. If isEnableCheckFailureLimit is set to true, this will be run as a validation during the request, such that if the check fails the request fails. If isEnableCheckFailureLimit instead is set to (the default) false, a pattern will still be created or updated even if the check fails, with a lifecycleState of FAILED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enable-check-failure-limit', type=click.BOOL, help=u"""Indicates whether the expression check, against the checkFilePathList, will fail the request if the count of UNMATCHED files is above the checkFailureLimit.""")
+@cli_util.option('--expression', help=u"""Input string which drives the selection process, allowing for fine-grained control using qualifiers. Refer to the user documentation for details of the format and examples. A pattern cannot include both a prefix and an expression.""")
+@cli_util.option('--file-path-prefix', help=u"""Input string which drives the selection process. Refer to the user documentation for details of the format and examples. A pattern cannot include both a prefix and an expression.""")
+@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the pattern can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with. If isEnableCheckFailureLimit is set to true, this will be run as a validation during the request, such that if the check fails the request fails. If isEnableCheckFailureLimit instead is set to (the default) false, a pattern will still be created or updated even if the check fails, with a lifecycleState of FAILED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enable-check-failure-limit', type=click.BOOL, help=u"""Indicates whether the pattern check, against the checkFilePathList, will fail the request if the count of UNMATCHED files is above the checkFailureLimit.""")
 @cli_util.option('--check-failure-limit', type=click.INT, help=u"""The maximum number of UNMATCHED files, in checkFilePathList, above which the check fails. Optional, if checkFilePathList is provided - but if isEnableCheckFailureLimit is set to true it is required.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the pattern type. Each pattern type definition defines it's set of required and optional properties. Example: `{\"properties\": { \"default\": { \"tbd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2167,7 +2172,7 @@ def create_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Pattern'})
 @cli_util.wrap_exceptions
-def create_pattern(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, expression, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties):
+def create_pattern(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, expression, file_path_prefix, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -2183,6 +2188,9 @@ def create_pattern(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if expression is not None:
         _details['expression'] = expression
+
+    if file_path_prefix is not None:
+        _details['filePathPrefix'] = file_path_prefix
 
     if check_file_path_list is not None:
         _details['checkFilePathList'] = cli_util.parse_json_parameter("check_file_path_list", check_file_path_list)
@@ -2234,7 +2242,7 @@ def create_pattern(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Is changeable. The combination of 'displayName' and 'parentTermKey' must be unique. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the term.""")
 @cli_util.option('--is-allowed-to-have-child-terms', type=click.BOOL, help=u"""Indicates whether a term may contain child terms.""")
-@cli_util.option('--parent-term-key', help=u"""The terms parent term key. Will be null if the term has no parent term.""")
+@cli_util.option('--parent-term-key', help=u"""The parent key of the term. In the case of a root-level category only, the term would have no parent and this should be left unset.""")
 @cli_util.option('--owner', help=u"""OCID of the user who is the owner of this business terminology.""")
 @cli_util.option('--workflow-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "APPROVED", "UNDER_REVIEW", "ESCALATED"]), help=u"""Status of the approval process workflow for this business term in the glossary.""")
 @cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
@@ -3339,7 +3347,7 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--attribute-key', required=True, help=u"""Unique attribute key.""")
 @cli_util.option('--is-include-object-relationships', type=click.BOOL, help=u"""Indicates whether the list of objects and their relationships to this object will be provided in the response.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "externalDataType", "externalKey", "isIncrementalData", "isNullable", "length", "position", "precision", "scale", "timeExternal", "uri", "properties", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "externalDataType", "externalKey", "isIncrementalData", "isNullable", "length", "position", "precision", "scale", "timeExternal", "uri", "properties", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey", "typeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4291,11 +4299,12 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "lifecycleState", "externalKey", "timeExternal", "timeStatusUpdated", "isLogical", "isPartition", "folderKey", "folderName", "typeKey", "path", "harvestStatus", "lastJobKey", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity response.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--is-include-properties', type=click.BOOL, help=u"""Indicates whether the properties map will be provided in the response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4303,7 +4312,7 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_aggregated_physical_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, fields, display_name_contains, sort_by, sort_order, limit, page):
+def list_aggregated_physical_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, fields, display_name_contains, sort_by, sort_order, limit, page, is_include_properties):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4330,6 +4339,8 @@ def list_aggregated_physical_entities(ctx, from_json, all_pages, page_size, cata
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if is_include_properties is not None:
+        kwargs['is_include_properties'] = is_include_properties
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
@@ -4468,8 +4479,8 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--business-name', help=u"""A filter to return only resources that match the entire business name given. The match is not case sensitive.""")
-@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\".""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4484,7 +4495,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--position', type=click.INT, help=u"""Position of the attribute in the record definition.""")
 @cli_util.option('--precision', type=click.INT, help=u"""Precision of the attribute value usually applies to float data type.""")
 @cli_util.option('--scale', type=click.INT, help=u"""Scale of the attribute value usually applies to float data type.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "precision", "scale", "isNullable", "uri", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey", "position"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "precision", "scale", "isNullable", "uri", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey", "position", "typeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "POSITION"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. Default order for POSITION is ascending. If no value is specified POSITION is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4714,7 +4725,7 @@ def list_catalogs(ctx, from_json, all_pages, page_size, compartment_id, display_
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4811,7 +4822,7 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--data-types', type=custom_types.CliCaseInsensitiveChoice(["TEXT", "RICH_TEXT", "BOOLEAN", "NUMBER", "DATE"]), multiple=True, help=u"""Return the custom properties which has specified data types""")
 @cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "ORACLE_ANALYTICS_SUBJECT_AREA_COLUMN", "ORACLE_ANALYTICS_LOGICAL_COLUMN", "ORACLE_ANALYTICS_PHYSICAL_COLUMN", "ORACLE_ANALYTICS_ANALYSIS_COLUMN", "ORACLE_ANALYTICS_SERVER", "ORACLE_ANALYTICS_CLOUD", "ORACLE_ANALYTICS_SUBJECT_AREA", "ORACLE_ANALYTICS_DASHBOARD", "ORACLE_ANALYTICS_BUSINESS_MODEL", "ORACLE_ANALYTICS_PHYSICAL_DATABASE", "ORACLE_ANALYTICS_PHYSICAL_SCHEMA", "ORACLE_ANALYTICS_PRESENTATION_TABLE", "ORACLE_ANALYTICS_LOGICAL_TABLE", "ORACLE_ANALYTICS_PHYSICAL_TABLE", "ORACLE_ANALYTICS_ANALYSIS", "DATABASE_SCHEMA", "TOPIC", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET", "MESSAGE", "UNRECOGNIZED_FILE"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
@@ -4989,7 +5000,7 @@ def list_data_asset_tags(ctx, from_json, all_pages, page_size, catalog_id, data_
 @data_asset_collection_group.command(name=cli_util.override('data_catalog.list_data_assets.command_name', 'list-data-assets'), help=u"""Returns a list of data assets within a data catalog. \n[Command Reference](listDataAssets)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5076,7 +5087,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @pattern_group.command(name=cli_util.override('data_catalog.list_derived_logical_entities.command_name', 'list-derived-logical-entities'), help=u"""List logical entities derived from this pattern. \n[Command Reference](listDerivedLogicalEntities)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -5148,9 +5159,9 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--business-name', help=u"""A filter to return only resources that match the entire business name given. The match is not case sensitive.""")
-@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\".""")
+@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--type-key', help=u"""The key of the object type.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5459,8 +5470,8 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--business-name', help=u"""A filter to return only resources that match the entire business name given. The match is not case sensitive.""")
-@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\".""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-or-business-name-contains', help=u"""A filter to return only resources that match display name or business name pattern given. The match is not case sensitive. For Example : /folders?displayOrBusinessNameContains=Cu.* The above would match all folders with display name or business name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--parent-folder-key', help=u"""Unique folder key.""")
 @cli_util.option('--path', help=u"""Full path of the resource for resources that support paths.""")
@@ -5566,7 +5577,7 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
 @glossary_group.command(name=cli_util.override('data_catalog.list_glossaries.command_name', 'list'), help=u"""Returns a list of all glossaries within a data catalog. \n[Command Reference](listGlossaries)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5647,7 +5658,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @job_definition_collection_group.command(name=cli_util.override('data_catalog.list_job_definitions.command_name', 'list-job-definitions'), help=u"""Returns a list of job definitions within a data catalog. \n[Command Reference](listJobDefinitions)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--job-execution-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "INACTIVE", "FAILED", "SUCCEEDED", "CANCELED", "SUCCEEDED_WITH_WARNINGS"]), help=u"""Job execution state.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
@@ -5955,7 +5966,7 @@ def list_job_logs(ctx, from_json, all_pages, page_size, catalog_id, job_key, job
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--category', help=u"""Category of this metric.""")
 @cli_util.option('--sub-category', help=u"""Sub category of this metric under the category. Used for aggregating values. May be null.""")
 @cli_util.option('--unit', help=u"""Unit of this metric.""")
@@ -6063,7 +6074,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @job_collection_group.command(name=cli_util.override('data_catalog.list_jobs.command_name', 'list-jobs'), help=u"""Returns a list of jobs within a data catalog. \n[Command Reference](listJobs)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "EXPIRED"]), help=u"""Job lifecycle state.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6234,7 +6245,7 @@ def list_metastores(ctx, from_json, all_pages, page_size, compartment_id, displa
 @namespace_group.command(name=cli_util.override('data_catalog.list_namespaces.command_name', 'list'), help=u"""Returns a list of namespaces within a data catalog. \n[Command Reference](listNamespaces)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6315,7 +6326,7 @@ def list_namespaces(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @pattern_group.command(name=cli_util.override('data_catalog.list_patterns.command_name', 'list'), help=u"""Returns a list of patterns within a data catalog. \n[Command Reference](listPatterns)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6398,7 +6409,7 @@ def list_patterns(ctx, from_json, all_pages, page_size, catalog_id, display_name
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--rule-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARYKEY", "FOREIGNKEY", "UNIQUEKEY"]), help=u"""Rule type used to filter the response to a list rules call.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--origin-type', type=custom_types.CliCaseInsensitiveChoice(["SOURCE", "USER", "PROFILING"]), help=u"""Rule origin type used to filter the response to a list rules call.""")
@@ -6500,7 +6511,7 @@ def list_rules(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key,
 @term_group.command(name=cli_util.override('data_catalog.list_tags.command_name', 'list-tags'), help=u"""Returns a list of all user created tags in the system. \n[Command Reference](listTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "glossaryKey", "parentTermKey", "isAllowedToHaveChildTerms", "path", "lifecycleState", "timeCreated", "workflowStatus", "associatedObjectCount", "uri"]), multiple=True, help=u"""Specifies the fields to return in a term summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
@@ -6571,7 +6582,7 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "relatedTermKey", "relatedTermDisplayName", "parentTermKey", "parentTermDisplayName", "lifecycleState", "timeCreated", "uri"]), multiple=True, help=u"""Specifies the fields to return in a term relationship summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
@@ -6653,7 +6664,7 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
-@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--parent-term-key', help=u"""Unique key of the parent term.""")
 @cli_util.option('--is-allowed-to-have-child-terms', type=click.BOOL, help=u"""Indicates whether a term may contain child terms.""")
@@ -8629,9 +8640,10 @@ def update_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the Pattern.""")
-@cli_util.option('--expression', help=u"""The expression used in the pattern that may include qualifiers. Refer to the user documentation for details of the format and examples.""")
-@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the expression can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with. If isEnableCheckFailureLimit is set to true, this will be run as a validation during the request, such that if the check fails the request fails. If isEnableCheckFailureLimit instead is set to (the default) false, a pattern will still be created or updated even if the check fails, with a lifecycleState of FAILED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enable-check-failure-limit', type=click.BOOL, help=u"""Indicates whether the expression check, against the checkFilePathList, will fail the request if the count of UNMATCHED files is above the checkFailureLimit.""")
+@cli_util.option('--expression', help=u"""Input string which drives the selection process, allowing for fine-grained control using qualifiers. Refer to the user documentation for details of the format and examples. A pattern cannot include both a prefix and an expression.""")
+@cli_util.option('--file-path-prefix', help=u"""Input string which drives the selection process. Refer to the user documentation for details of the format and examples. A pattern cannot include both a prefix and an expression.""")
+@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the pattern can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with. If isEnableCheckFailureLimit is set to true, this will be run as a validation during the request, such that if the check fails the request fails. If isEnableCheckFailureLimit instead is set to (the default) false, a pattern will still be created or updated even if the check fails, with a lifecycleState of FAILED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enable-check-failure-limit', type=click.BOOL, help=u"""Indicates whether the pattern check, against the checkFilePathList, will fail the request if the count of UNMATCHED files is above the checkFailureLimit.""")
 @cli_util.option('--check-failure-limit', type=click.INT, help=u"""The maximum number of UNMATCHED files, in checkFilePathList, above which the check fails. Optional, if checkFilePathList is provided - but if isEnableCheckFailureLimit is set to true it is required.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the pattern type. Each pattern type definition defines it's set of required and optional properties. Example: `{\"properties\": { \"default\": { \"tbd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -8644,7 +8656,7 @@ def update_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Pattern'})
 @cli_util.wrap_exceptions
-def update_pattern(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, pattern_key, display_name, description, expression, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties, if_match):
+def update_pattern(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, pattern_key, display_name, description, expression, file_path_prefix, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -8671,6 +8683,9 @@ def update_pattern(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if expression is not None:
         _details['expression'] = expression
+
+    if file_path_prefix is not None:
+        _details['filePathPrefix'] = file_path_prefix
 
     if check_file_path_list is not None:
         _details['checkFilePathList'] = cli_util.parse_json_parameter("check_file_path_list", check_file_path_list)
@@ -8723,7 +8738,7 @@ def update_pattern(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the term.""")
-@cli_util.option('--parent-term-key', help=u"""This terms parent term key. Will be null if the term has no parent term.""")
+@cli_util.option('--parent-term-key', help=u"""The parent key of the term. In the case of a root-level category only, the term would have no parent and this should be left unset.""")
 @cli_util.option('--owner', help=u"""OCID of the user who is the owner of this business terminology.""")
 @cli_util.option('--workflow-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "APPROVED", "UNDER_REVIEW", "ESCALATED"]), help=u"""Status of the approval process workflow for this business term in the glossary""")
 @cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
@@ -9038,8 +9053,9 @@ def validate_connection(ctx, from_json, catalog_id, data_asset_key, connection_d
 @pattern_group.command(name=cli_util.override('data_catalog.validate_pattern.command_name', 'validate'), help=u"""Validate pattern by deriving file groups representing logical entities using the expression \n[Command Reference](validatePattern)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
-@cli_util.option('--expression', help=u"""The expression used in the pattern that may include qualifiers. Refer to the user documentation for details of the format and examples.""")
-@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the expression can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with.
+@cli_util.option('--expression', help=u"""Input string which drives the selection process, allowing for fine-grained control using qualifiers. Refer to the user documentation for details of the format and examples. A pattern cannot include both a prefix and an expression.""")
+@cli_util.option('--file-path-prefix', help=u"""Input string which drives the selection process. Refer to the user documentation for details of the format and examples. A pattern cannot include both a prefix and an expression.""")
+@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the pattern can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with.
 
 If provided with the request,this overrides the list which already exists as part of the pattern, if any.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--check-failure-limit', type=click.INT, help=u"""The maximum number of UNMATCHED files, in checkFilePathList, above which the check fails. Optional, if checkFilePathList is provided.
@@ -9050,7 +9066,7 @@ If provided with the request, this overrides the value which already exists as p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'ValidatePatternResult'})
 @cli_util.wrap_exceptions
-def validate_pattern(ctx, from_json, catalog_id, pattern_key, expression, check_file_path_list, check_failure_limit):
+def validate_pattern(ctx, from_json, catalog_id, pattern_key, expression, file_path_prefix, check_file_path_list, check_failure_limit):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -9065,6 +9081,9 @@ def validate_pattern(ctx, from_json, catalog_id, pattern_key, expression, check_
 
     if expression is not None:
         _details['expression'] = expression
+
+    if file_path_prefix is not None:
+        _details['filePathPrefix'] = file_path_prefix
 
     if check_file_path_list is not None:
         _details['checkFilePathList'] = cli_util.parse_json_parameter("check_file_path_list", check_file_path_list)

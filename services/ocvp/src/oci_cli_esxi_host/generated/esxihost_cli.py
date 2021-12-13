@@ -15,7 +15,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ocvp.src.oci_cli_ocvp.generated import ocvs_service_cli
 
 
-@click.command(cli_util.override('esxi_host.esxi_host_root_group.command_name', 'esxi-host'), cls=CommandGroupWithAlias, help=cli_util.override('esxi_host.esxi_host_root_group.help', """Use this API to manage your [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('esxi_host.esxi_host_root_group.short_help', """Oracle Cloud VMware Solution API"""))
+@click.command(cli_util.override('esxi_host.esxi_host_root_group.command_name', 'esxi-host'), cls=CommandGroupWithAlias, help=cli_util.override('esxi_host.esxi_host_root_group.help', """Use the Oracle Cloud VMware API to create SDDCs and manage ESXi hosts and software.
+For more information, see [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('esxi_host.esxi_host_root_group.short_help', """Oracle Cloud VMware Solution API"""))
 @cli_util.help_option_group
 def esxi_host_root_group():
     pass
@@ -54,6 +55,7 @@ Avoid entering confidential information.""")
 @cli_util.option('--current-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""The billing option currently used by the ESXi host. [ListSupportedSkus].""")
 @cli_util.option('--next-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""The billing option to switch to after the existing billing cycle ends. If `nextSku` is null or empty, `currentSku` continues to the next billing cycle. [ListSupportedSkus].""")
 @cli_util.option('--compute-availability-domain', help=u"""The availability domain to create the ESXi host in. If keep empty, for AD-specific SDDC, new ESXi host will be created in the same availability domain; for multi-AD SDDC, new ESXi host will be auto assigned to the next availability domain following evenly distribution strategy.""")
+@cli_util.option('--failed-esxi-host-id', help=u"""The [OCID] of the esxi host that is failed. It is an optional param, when user supplies this param, new Esxi Host will be created to replace the failed one, and failedEsxiHostId field will be udpated in the newly created EsxiHost.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -68,7 +70,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, current_sku, next_sku, compute_availability_domain, freeform_tags, defined_tags):
+def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, current_sku, next_sku, compute_availability_domain, failed_esxi_host_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -87,6 +89,9 @@ def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if compute_availability_domain is not None:
         _details['computeAvailabilityDomain'] = compute_availability_domain
+
+    if failed_esxi_host_id is not None:
+        _details['failedEsxiHostId'] = failed_esxi_host_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

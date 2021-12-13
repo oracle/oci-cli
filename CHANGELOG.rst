@@ -6,6 +6,73 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.4.0 - 2021-12-14
+------------------
+
+* Support for node replacement in the VMWare Solution service
+  
+  * ``oci ocvs esxi-host create --failed-esxi-host-id`` 
+
+* Support for ingestion of SQL stats metrics in the Operations Insights service
+  
+  * ``oci opsi database-insights ingest-sql-stats --database-id``
+    
+* Support for AWR hub integration in the Operations Insights service
+  
+  * ``oci opsi awr-hubs``
+  * ``oci opsi operations-insights-warehouse-users``
+  * ``oci opsi operations-insights-warehouses``
+
+* Support for automatically generating logical entities from filename patterns and relationships between business terms across glossaries in the Data Catalog service
+
+  * ``oci data-catalog pattern create --file-path-prefix``
+  * ``oci data-catalog pattern update --file-path-prefix``
+  * ``oci data-catalog pattern validate --file-path-prefix``
+  * ``oci data-catalog entity list-aggregated-physical --is-include-properties``
+  * ``oci data-catalog entity create --type-key``
+  
+* Support for automatic start/stop at scheduled times in the Database service
+  
+  * Option ``--scheduled-operations`` for the following operations under ``oci db autonomous-database``:  ``create, create-adb-cross-region-data-guard-details, create-from-backup-id, create-from-backup-timestamp, create-from-clone, create-refreshable-clone, update``
+
+* Support for cloud VM cluster resources on autonomous dedicated databases in the Database service
+  
+  * ``oci db autonomous-container-database create  --cloud-autonomous-vm-cluster-id --peer-cloud-autonomous-vm-cluster-id``
+  * ``oci db autonomous-container-database list --cloud-autonomous-vm-cluster-id``
+  * ``oci db cloud-autonomous-vm-cluster``
+  * ``oci db cloud-vm-cluster create | update --ocpu-count``
+  * ``oci db vm-cluster create | udpate --data-storage-size-in-gbs --ocpu-count``
+
+* Support for external Hive metastores in the Big Data service
+  
+  * ``oci bds bds-metastore-configuration``
+
+* [Breaking] Support for batch detection/inference in the AI Language service
+  
+  * ``oci ai language batch*``
+
+* Support for invoice operations in the Account Management service
+  
+  * ``oci osp-gateway``
+
+* Support for custom CA trust stores in the API Gateway service
+  
+  * ``oci api-gateway gateway create --ca-bundles``
+  * ``oci api-gateway gateway update --ca-bundles`` 
+    
+* Support for generating scoped database token to be used to authorize Identity Service users to OCI database services
+  
+  * ``oci iam db-token get`` 
+
+* Support for database passwords for users, for logging into database accounts, in the Identity service
+  
+  * ``oci iam user create-db-credential``
+  * ``oci iam user delete-db-credential``
+  * ``oci iam user list-db-credentials``
+  * ``oci iam user update --db-user-name``
+  * ``oci iam user update-user-capabilities --can-use-db-credentials``
+
+
 3.3.3 - 2021-12-07
 ------------------
 Added
@@ -13,7 +80,7 @@ Added
 
 * Support for Resource Discovery and Monitoring service
 
-   * ``oci appmgmt-control``
+  * ``oci appmgmt-control``
 
 * Support for finding and listing locations of all default OCI CLI installs.
 
@@ -45,8 +112,8 @@ Added
 
 * Support for RAC Databases in GoldenGate Service
 
-   * ``oci goldengate database-registration create --session-mode``
-   * ``oci goldengate database-registration update --session-mode``
+  * ``oci goldengate database-registration create --session-mode``
+  * ``oci goldengate database-registration update --session-mode``
 
 Changed
 ~~~~~~~~~

@@ -346,6 +346,14 @@ def list_importable_enterprise_manager_entities_extended(ctx, **kwargs):
     ctx.invoke(operationsinsights_cli.list_importable_enterprise_manager_entities, **kwargs)
 
 
+# oci opsi operations-insights-warehouses download -> oci opsi operations-insights-warehouses download-warehouse-wallet
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.operations_insights_warehouses_group, operationsinsights_cli.download_operations_insights_warehouse_wallet, "download-warehouse-wallet")
+
+
+# oci opsi operations-insights-warehouses rotate -> oci opsi operations-insights-warehouses rotate-warehouse-wallet
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.operations_insights_warehouses_group, operationsinsights_cli.rotate_operations_insights_warehouse_wallet, "rotate-warehouse-wallet")
+
+
 @cli_util.copy_params_from_generated_command(operationsinsights_cli.list_host_configurations, params_to_exclude=['enterprise_manager_bridge_id'])
 @operationsinsights_cli.host_insights_group.command(name=operationsinsights_cli.list_host_configurations.name, help=operationsinsights_cli.list_host_configurations.help)
 @cli_util.option('--em-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")

@@ -35,15 +35,33 @@ def exadata_insights_group():
     pass
 
 
+@click.command(cli_util.override('opsi.operations_insights_warehouses_group.command_name', 'operations-insights-warehouses'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse operations.""")
+@cli_util.help_option_group
+def operations_insights_warehouses_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.database_insights_group.command_name', 'database-insights'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights database-targeted operations.""")
 @cli_util.help_option_group
 def database_insights_group():
     pass
 
 
+@click.command(cli_util.override('opsi.awr_hubs_group.command_name', 'awr-hubs'), cls=CommandGroupWithAlias, help="""Logical grouping used for Awr Hub operations.""")
+@cli_util.help_option_group
+def awr_hubs_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.host_insights_group.command_name', 'host-insights'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights host related operations.""")
 @cli_util.help_option_group
 def host_insights_group():
+    pass
+
+
+@click.command(cli_util.override('opsi.operations_insights_warehouse_users_group.command_name', 'operations-insights-warehouse-users'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse User operations.""")
+@cli_util.help_option_group
+def operations_insights_warehouse_users_group():
     pass
 
 
@@ -55,8 +73,11 @@ def work_requests_group():
 
 opsi_root_group.add_command(enterprise_manager_bridges_group)
 opsi_root_group.add_command(exadata_insights_group)
+opsi_root_group.add_command(operations_insights_warehouses_group)
 opsi_root_group.add_command(database_insights_group)
+opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(host_insights_group)
+opsi_root_group.add_command(operations_insights_warehouse_users_group)
 opsi_root_group.add_command(work_requests_group)
 
 
@@ -380,6 +401,69 @@ def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_sec
     result = client.change_host_insight_compartment(
         host_insight_id=host_insight_id,
         change_host_insight_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.create_awr_hub.command_name', 'create'), help=u"""Create a AWR hub resource for the tenant in Operations Insights. This resource will be created in root compartment. \n[Command Reference](createAwrHub)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""OPSI Warehouse OCID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""User-friedly name of AWR Hub that does not have to be unique.""")
+@cli_util.option('--object-storage-bucket-name', required=True, help=u"""Object Storage Bucket Name""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'AwrHub'})
+@cli_util.wrap_exceptions
+def create_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, compartment_id, display_name, object_storage_bucket_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['operationsInsightsWarehouseId'] = operations_insights_warehouse_id
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['objectStorageBucketName'] = object_storage_bucket_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_awr_hub(
+        create_awr_hub_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -924,6 +1008,196 @@ def create_host_insight_create_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Operations Insights Warehouse resource for the tenant in Operations Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](createOperationsInsightsWarehouse)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""User-friedly name of Operations Insights Warehouse that does not have to be unique.""")
+@cli_util.option('--cpu-allocated', required=True, help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--storage-allocated-in-gbs', help=u"""Storage allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouse'})
+@cli_util.wrap_exceptions
+def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cpu_allocated, storage_allocated_in_gbs, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['cpuAllocated'] = cpu_allocated
+
+    if storage_allocated_in_gbs is not None:
+        _details['storageAllocatedInGBs'] = storage_allocated_in_gbs
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_operations_insights_warehouse(
+        create_operations_insights_warehouse_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse_user.command_name', 'create'), help=u"""Create a Operations Insights Warehouse user resource for the tenant in Operations Insights. This resource will be created in root compartment. \n[Command Reference](createOperationsInsightsWarehouseUser)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""OPSI Warehouse OCID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--name', required=True, help=u"""Username for schema which would have access to AWR Data,  Enterprise Manager Data and Operations Insights OPSI Hub.""")
+@cli_util.option('--connection-password', required=True, help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Operations Insights OPSI Hub.""")
+@cli_util.option('--is-awr-data-access', required=True, type=click.BOOL, help=u"""Indicate whether user has access to AWR data.""")
+@cli_util.option('--is-em-data-access', type=click.BOOL, help=u"""Indicate whether user has access to EM data.""")
+@cli_util.option('--is-opsi-data-access', type=click.BOOL, help=u"""Indicate whether user has access to OPSI data.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouseUser'})
+@cli_util.wrap_exceptions
+def create_operations_insights_warehouse_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, compartment_id, name, connection_password, is_awr_data_access, is_em_data_access, is_opsi_data_access, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['operationsInsightsWarehouseId'] = operations_insights_warehouse_id
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['connectionPassword'] = connection_password
+    _details['isAwrDataAccess'] = is_awr_data_access
+
+    if is_em_data_access is not None:
+        _details['isEmDataAccess'] = is_em_data_access
+
+    if is_opsi_data_access is not None:
+        _details['isOpsiDataAccess'] = is_opsi_data_access
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_operations_insights_warehouse_user(
+        create_operations_insights_warehouse_user_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.delete_awr_hub.command_name', 'delete'), help=u"""Deletes an AWR hub. \n[Command Reference](deleteAwrHub)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_id, if_match):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_awr_hub(
+        awr_hub_id=awr_hub_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.delete_database_insight.command_name', 'delete'), help=u"""Deletes a database insight. The database insight will be deleted and cannot be enabled again. \n[Command Reference](deleteDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1132,6 +1406,110 @@ def delete_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.delete_operations_insights_warehouse.command_name', 'delete'), help=u"""Deletes an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. User must delete AWR Hub resource for this warehouse before calling this operation. User must delete the warehouse users before calling this operation. \n[Command Reference](deleteOperationsInsightsWarehouse)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, if_match):
+
+    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_operations_insights_warehouse(
+        operations_insights_warehouse_id=operations_insights_warehouse_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.delete_operations_insights_warehouse_user.command_name', 'delete'), help=u"""Deletes an Operations Insights Warehouse User. \n[Command Reference](deleteOperationsInsightsWarehouseUser)""")
+@cli_util.option('--operations-insights-warehouse-user-id', required=True, help=u"""Unique Operations Insights Warehouse User identifier""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_operations_insights_warehouse_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_user_id, if_match):
+
+    if isinstance(operations_insights_warehouse_user_id, six.string_types) and len(operations_insights_warehouse_user_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_operations_insights_warehouse_user(
+        operations_insights_warehouse_user_id=operations_insights_warehouse_user_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.disable_database_insight.command_name', 'disable'), help=u"""Disables a database in Operations Insights. Database metric collection and analysis will be stopped. \n[Command Reference](disableDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1283,6 +1661,57 @@ def disable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.download_operations_insights_warehouse_wallet.command_name', 'download'), help=u"""Download the ADW wallet for Operations Insights Warehouse using which the Hub data is exposed. \n[Command Reference](downloadOperationsInsightsWarehouseWallet)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--operations-insights-warehouse-wallet-password', required=True, help=u"""User provided ADW wallet password for the Operations Insights Warehouse.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_operations_insights_warehouse_wallet(ctx, from_json, file, operations_insights_warehouse_id, operations_insights_warehouse_wallet_password):
+
+    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['operationsInsightsWarehouseWalletPassword'] = operations_insights_warehouse_wallet_password
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.download_operations_insights_warehouse_wallet(
+        operations_insights_warehouse_id=operations_insights_warehouse_id,
+        download_operations_insights_warehouse_wallet_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @database_insights_group.command(name=cli_util.override('opsi.enable_database_insight.command_name', 'enable'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
@@ -1684,6 +2113,70 @@ def enable_host_insight_enable_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@awr_hubs_group.command(name=cli_util.override('opsi.get_awr_hub.command_name', 'get'), help=u"""Gets details of an AWR hub. \n[Command Reference](getAwrHub)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrHub'})
+@cli_util.wrap_exceptions
+def get_awr_hub(ctx, from_json, awr_hub_id):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_awr_hub(
+        awr_hub_id=awr_hub_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.get_awr_report.command_name', 'get-awr-report'), help=u"""Gets the AWR report for the specified source database in the AWR hub. The difference between the timeGreaterThanOrEqualTo and timeLessThanOrEqualTo should not be greater than 7 days. Either beginSnapshotIdentifierGreaterThanOrEqualTo & endSnapshotIdentifierLessThanOrEqualTo params Or timeGreaterThanOrEqualTo & timeLessThanOrEqualTo params are required. \n[Command Reference](getAwrReport)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""AWR source database identifier.""")
+@cli_util.option('--report-format', type=custom_types.CliCaseInsensitiveChoice(["HTML", "TEXT"]), help=u"""The format of the AWR report. Default report format is HTML.""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrReport'})
+@cli_util.wrap_exceptions
+def get_awr_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, report_format, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if report_format is not None:
+        kwargs['report_format'] = report_format
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_awr_report(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.get_database_insight.command_name', 'get'), help=u"""Gets details of a database insight. \n[Command Reference](getDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1767,6 +2260,50 @@ def get_host_insight(ctx, from_json, host_insight_id):
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.get_host_insight(
         host_insight_id=host_insight_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.get_operations_insights_warehouse.command_name', 'get'), help=u"""Gets details of an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](getOperationsInsightsWarehouse)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouse'})
+@cli_util.wrap_exceptions
+def get_operations_insights_warehouse(ctx, from_json, operations_insights_warehouse_id):
+
+    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_operations_insights_warehouse(
+        operations_insights_warehouse_id=operations_insights_warehouse_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.get_operations_insights_warehouse_user.command_name', 'get'), help=u"""Gets details of an Operations Insights Warehouse User. \n[Command Reference](getOperationsInsightsWarehouseUser)""")
+@cli_util.option('--operations-insights-warehouse-user-id', required=True, help=u"""Unique Operations Insights Warehouse User identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouseUser'})
+@cli_util.wrap_exceptions
+def get_operations_insights_warehouse_user(ctx, from_json, operations_insights_warehouse_user_id):
+
+    if isinstance(operations_insights_warehouse_user_id, six.string_types) and len(operations_insights_warehouse_user_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_operations_insights_warehouse_user(
+        operations_insights_warehouse_user_id=operations_insights_warehouse_user_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1960,6 +2497,42 @@ def ingest_sql_plan_lines(ctx, from_json, items, compartment_id, database_id, id
     cli_util.render_response(result, ctx)
 
 
+@database_insights_group.command(name=cli_util.override('opsi.ingest_sql_stats.command_name', 'ingest-sql-stats'), help=u"""The SQL Stats endpoint takes in a JSON payload, persists it in Operations Insights ingest pipeline. Either databaseId or id must be specified. \n[Command Reference](ingestSqlStats)""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Stats Metric Entries.
+
+This option is a JSON list with items of type SqlStats.  For documentation on SqlStats please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlStats.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'opsi', 'class': 'list[SqlStats]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'opsi', 'class': 'list[SqlStats]'}}, output_type={'module': 'opsi', 'class': 'IngestSqlStatsResponseDetails'})
+@cli_util.wrap_exceptions
+def ingest_sql_stats(ctx, from_json, items, database_id, id, if_match):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.ingest_sql_stats(
+        ingest_sql_stats_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.ingest_sql_text.command_name', 'ingest-sql-text'), help=u"""The SqlText endpoint takes in a JSON payload, persists it in Operation Insights ingest pipeline. Either databaseId or id must be specified. Disclaimer: SQL text being uploaded explicitly via APIs is not masked. Any sensitive literals contained in the sqlFullText column should be masked prior to ingestion. \n[Command Reference](ingestSqlText)""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Text Entries.
 
@@ -1996,6 +2569,139 @@ def ingest_sql_text(ctx, from_json, items, compartment_id, database_id, id, if_m
         ingest_sql_text_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.list_awr_hubs.command_name', 'list'), help=u"""Gets a list of AWR hubs. Either compartmentId or id must be specified. All these resources are expected to be in root compartment. \n[Command Reference](listAwrHubs)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
+@cli_util.option('--id', help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrHubSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_awr_hubs(ctx, from_json, all_pages, page_size, operations_insights_warehouse_id, compartment_id, display_name, id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_awr_hubs,
+            operations_insights_warehouse_id=operations_insights_warehouse_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_awr_hubs,
+            limit,
+            page_size,
+            operations_insights_warehouse_id=operations_insights_warehouse_id,
+            **kwargs
+        )
+    else:
+        result = client.list_awr_hubs(
+            operations_insights_warehouse_id=operations_insights_warehouse_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.list_awr_snapshots.command_name', 'list-awr-snapshots'), help=u"""Lists AWR snapshots for the specified source database in the AWR hub. The difference between the timeGreaterThanOrEqualTo and timeLessThanOrEqualTo should not exceed an elapsed range of 1 day. The timeGreaterThanOrEqualTo & timeLessThanOrEqualTo params are optional. If these params are not provided, by default last 1 day snapshots will be returned. \n[Command Reference](listAwrSnapshots)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""AWR source database identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeBegin", "snapshotId"]), help=u"""The option to sort the AWR snapshot summary data. Default sort is by timeBegin.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrSnapshotCollection'})
+@cli_util.wrap_exceptions
+def list_awr_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_source_database_identifier, time_greater_than_or_equal_to, time_less_than_or_equal_to, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_awr_snapshots,
+            awr_hub_id=awr_hub_id,
+            awr_source_database_identifier=awr_source_database_identifier,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_awr_snapshots,
+            limit,
+            page_size,
+            awr_hub_id=awr_hub_id,
+            awr_source_database_identifier=awr_source_database_identifier,
+            **kwargs
+        )
+    else:
+        result = client.list_awr_snapshots(
+            awr_hub_id=awr_hub_id,
+            awr_source_database_identifier=awr_source_database_identifier,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2719,6 +3425,134 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.list_operations_insights_warehouse_users.command_name', 'list'), help=u"""Gets a list of Operations Insights Warehouse users. Either compartmentId or id must be specified. All these resources are expected to be in root compartment. \n[Command Reference](listOperationsInsightsWarehouseUsers)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
+@cli_util.option('--id', help=u"""Unique Operations Insights Warehouse User identifier""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouseUserSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_operations_insights_warehouse_users(ctx, from_json, all_pages, page_size, operations_insights_warehouse_id, compartment_id, display_name, id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_operations_insights_warehouse_users,
+            operations_insights_warehouse_id=operations_insights_warehouse_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_operations_insights_warehouse_users,
+            limit,
+            page_size,
+            operations_insights_warehouse_id=operations_insights_warehouse_id,
+            **kwargs
+        )
+    else:
+        result = client.list_operations_insights_warehouse_users(
+            operations_insights_warehouse_id=operations_insights_warehouse_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.list_operations_insights_warehouses.command_name', 'list'), help=u"""Gets a list of Operations Insights warehouses. Either compartmentId or id must be specified. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](listOperationsInsightsWarehouses)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
+@cli_util.option('--id', help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouseSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_operations_insights_warehouses(ctx, from_json, all_pages, page_size, compartment_id, display_name, id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_operations_insights_warehouses,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_operations_insights_warehouses,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_operations_insights_warehouses(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.list_sql_plans.command_name', 'list-sql-plans'), help=u"""Query SQL Warehouse to list the plan xml for a given SQL execution plan. This returns a SqlPlanCollection object, but is currently limited to a single plan. Either databaseId or id must be specified. \n[Command Reference](listSqlPlans)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--sql-identifier', required=True, help=u"""Unique SQL_ID for a SQL Statement. Example: `6rgjh9bjmy2s7`""")
@@ -3048,6 +3882,97 @@ def list_work_requests(ctx, from_json, all_pages, page_size, page, limit, compar
         result = client.list_work_requests(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.rotate_operations_insights_warehouse_wallet.command_name', 'rotate'), help=u"""Rotate the ADW wallet for Operations Insights Warehouse using which the Hub data is exposed. \n[Command Reference](rotateOperationsInsightsWarehouseWallet)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def rotate_operations_insights_warehouse_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, if_match):
+
+    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.rotate_operations_insights_warehouse_wallet(
+        operations_insights_warehouse_id=operations_insights_warehouse_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_sources_summaries.command_name', 'summarize-awr-sources-summaries'), help=u"""Gets a list of summary of AWR Sources. \n[Command Reference](summarizeAwrSourcesSummaries)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--name', help=u"""Name for an Awr source database""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["snapshotsUploaded", "name"]), help=u"""The order in which Awr sources summary records are listed""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeAwrSourcesSummariesCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_sources_summaries(ctx, from_json, awr_hub_id, compartment_id, name, limit, page, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if name is not None:
+        kwargs['name'] = name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_sources_summaries(
+        awr_hub_id=awr_hub_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -4526,6 +5451,28 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.summarize_operations_insights_warehouse_resource_usage.command_name', 'summarize-operations-insights-warehouse-resource-usage'), help=u"""Gets the details of resources used by an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](summarizeOperationsInsightsWarehouseResourceUsage)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeOperationsInsightsWarehouseResourceUsageAggregation'})
+@cli_util.wrap_exceptions
+def summarize_operations_insights_warehouse_resource_usage(ctx, from_json, operations_insights_warehouse_id):
+
+    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_operations_insights_warehouse_resource_usage(
+        operations_insights_warehouse_id=operations_insights_warehouse_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_insights.command_name', 'summarize-sql-insights'), help=u"""Query SQL Warehouse to get the performance insights for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlInsights)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
@@ -4852,6 +5799,78 @@ def summarize_sql_statistics_time_series_by_plan(ctx, from_json, compartment_id,
         sql_identifier=sql_identifier,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.update_awr_hub.command_name', 'update'), help=u"""Updates the configuration of a hub . \n[Command Reference](updateAwrHub)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--display-name', help=u"""User-friedly name of AWR Hub that does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_awr_hub(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_awr_hub(
+        awr_hub_id=awr_hub_id,
+        update_awr_hub_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -5537,6 +6556,170 @@ def update_host_insight_update_macs_managed_external_host_insight_details(ctx, f
     result = client.update_host_insight(
         host_insight_id=host_insight_id,
         update_host_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.update_operations_insights_warehouse.command_name', 'update'), help=u"""Updates the configuration of an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](updateOperationsInsightsWarehouse)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--display-name', help=u"""User-friedly name of Operations Insights Warehouse that does not have to be unique.""")
+@cli_util.option('--cpu-allocated', help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--storage-allocated-in-gbs', help=u"""Storage allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, display_name, cpu_allocated, storage_allocated_in_gbs, freeform_tags, defined_tags, if_match):
+
+    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if cpu_allocated is not None:
+        _details['cpuAllocated'] = cpu_allocated
+
+    if storage_allocated_in_gbs is not None:
+        _details['storageAllocatedInGBs'] = storage_allocated_in_gbs
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_operations_insights_warehouse(
+        operations_insights_warehouse_id=operations_insights_warehouse_id,
+        update_operations_insights_warehouse_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.update_operations_insights_warehouse_user.command_name', 'update'), help=u"""Updates the configuration of an Operations Insights Warehouse User. \n[Command Reference](updateOperationsInsightsWarehouseUser)""")
+@cli_util.option('--operations-insights-warehouse-user-id', required=True, help=u"""Unique Operations Insights Warehouse User identifier""")
+@cli_util.option('--connection-password', help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Operations Insights OPSI Hub.""")
+@cli_util.option('--is-awr-data-access', type=click.BOOL, help=u"""Indicate whether user has access to AWR data.""")
+@cli_util.option('--is-em-data-access', type=click.BOOL, help=u"""Indicate whether user has access to EM data.""")
+@cli_util.option('--is-opsi-data-access', type=click.BOOL, help=u"""Indicate whether user has access to OPSI data.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_operations_insights_warehouse_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_user_id, connection_password, is_awr_data_access, is_em_data_access, is_opsi_data_access, freeform_tags, defined_tags, if_match):
+
+    if isinstance(operations_insights_warehouse_user_id, six.string_types) and len(operations_insights_warehouse_user_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-warehouse-user-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if connection_password is not None:
+        _details['connectionPassword'] = connection_password
+
+    if is_awr_data_access is not None:
+        _details['isAwrDataAccess'] = is_awr_data_access
+
+    if is_em_data_access is not None:
+        _details['isEmDataAccess'] = is_em_data_access
+
+    if is_opsi_data_access is not None:
+        _details['isOpsiDataAccess'] = is_opsi_data_access
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_operations_insights_warehouse_user(
+        operations_insights_warehouse_user_id=operations_insights_warehouse_user_id,
+        update_operations_insights_warehouse_user_details=_details,
         **kwargs
     )
     if wait_for_state:

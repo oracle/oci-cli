@@ -293,6 +293,12 @@ def key_store_group():
     pass
 
 
+@click.command(cli_util.override('db.cloud_autonomous_vm_cluster_group.command_name', 'cloud-autonomous-vm-cluster'), cls=CommandGroupWithAlias, help="""Details of the cloud Autonomous VM cluster.""")
+@cli_util.help_option_group
+def cloud_autonomous_vm_cluster_group():
+    pass
+
+
 @click.command(cli_util.override('db.cloud_vm_cluster_group.command_name', 'cloud-vm-cluster'), cls=CommandGroupWithAlias, help="""Details of the cloud VM cluster. Applies to Exadata Cloud Service instances only.""")
 @cli_util.help_option_group
 def cloud_vm_cluster_group():
@@ -382,6 +388,7 @@ db_root_group.add_command(autonomous_container_database_dataguard_association_gr
 db_root_group.add_command(db_system_group)
 db_root_group.add_command(autonomous_vm_cluster_group)
 db_root_group.add_command(key_store_group)
+db_root_group.add_command(cloud_autonomous_vm_cluster_group)
 db_root_group.add_command(cloud_vm_cluster_group)
 db_root_group.add_command(autonomous_db_version_group)
 db_root_group.add_command(db_version_group)
@@ -901,6 +908,71 @@ def change_backup_destination_compartment(ctx, from_json, wait_for_state, max_wa
     result = client.change_backup_destination_compartment(
         backup_destination_id=backup_destination_id,
         change_compartment_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.change_cloud_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""To move a cloud Autonomous VM cluster and its dependent resources to another compartment, use the [ChangeCloudAutonomousVmClusterCompartment] operation. \n[Command Reference](changeCloudAutonomousVmClusterCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_cloud_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cloud_autonomous_vm_cluster_id, if_match):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.change_cloud_autonomous_vm_cluster_compartment(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        change_cloud_autonomous_vm_cluster_compartment_details=_details,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -1923,11 +1995,13 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.option('--peer-autonomous-exadata-infrastructure-id', help=u"""The OCID of the peer Autonomous Exadata Infrastructure for Autonomous Data Guard.""")
 @cli_util.option('--peer-autonomous-container-database-display-name', help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
+@cli_util.option('--peer-cloud-autonomous-vm-cluster-id', help=u"""The OCID of the peer cloud Autonomous VM Cluster.""")
 @cli_util.option('--peer-autonomous-vm-cluster-id', help=u"""The [OCID] of the peer Autonomous VM cluster for Autonomous Data Guard. Required to enable Data Guard.""")
 @cli_util.option('--peer-autonomous-container-database-compartment-id', help=u"""The [OCID] of the compartment where the standby Autonomous Container Database will be created.""")
 @cli_util.option('--peer-autonomous-container-database-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--peer-db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The OCID of the Autonomous VM Cluster.""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The OCID of the cloud Autonomous VM Cluster.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
@@ -1948,7 +2022,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
 
     kwargs = {}
 
@@ -1974,6 +2048,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
     if protection_mode is not None:
         _details['protectionMode'] = protection_mode
 
+    if peer_cloud_autonomous_vm_cluster_id is not None:
+        _details['peerCloudAutonomousVmClusterId'] = peer_cloud_autonomous_vm_cluster_id
+
     if peer_autonomous_vm_cluster_id is not None:
         _details['peerAutonomousVmClusterId'] = peer_autonomous_vm_cluster_id
 
@@ -1988,6 +2065,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if autonomous_vm_cluster_id is not None:
         _details['autonomousVmClusterId'] = autonomous_vm_cluster_id
+
+    if cloud_autonomous_vm_cluster_id is not None:
+        _details['cloudAutonomousVmClusterId'] = cloud_autonomous_vm_cluster_id
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
@@ -2117,15 +2197,18 @@ For Autonomous Databases on [shared Exadata infrastructure], the following cloni
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, source, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type):
+def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, source, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2224,6 +2307,9 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
 
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
+
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
         create_autonomous_database_details=_details,
@@ -2321,15 +2407,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type):
+def create_autonomous_database_create_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2426,6 +2515,9 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
 
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     _details['source'] = 'DATABASE'
 
@@ -2525,16 +2617,19 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--refreshable-mode', type=custom_types.CliCaseInsensitiveChoice(["AUTOMATIC", "MANUAL"]), help=u"""The refresh mode of the clone. AUTOMATIC indicates that the clone is automatically being refreshed with data from the source Autonomous Database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, refreshable_mode):
+def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, refreshable_mode):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2630,6 +2725,9 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     if refreshable_mode is not None:
         _details['refreshableMode'] = refreshable_mode
@@ -2733,15 +2831,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_backup_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type):
+def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_backup_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2838,6 +2939,9 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     _details['source'] = 'BACKUP_FROM_ID'
 
@@ -2939,15 +3043,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_id, timestamp, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type):
+def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_id, timestamp, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3045,6 +3152,9 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
 
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     _details['source'] = 'BACKUP_FROM_TIMESTAMP'
 
@@ -3144,15 +3254,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type):
+def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3248,6 +3361,9 @@ def create_autonomous_database_create_cross_region_autonomous_database_data_guar
 
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     _details['source'] = 'CROSS_REGION_DATAGUARD'
 
@@ -3346,15 +3462,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type):
+def create_autonomous_database_create_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3449,6 +3568,9 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
 
     if autonomous_maintenance_schedule_type is not None:
         _details['autonomousMaintenanceScheduleType'] = autonomous_maintenance_schedule_type
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     _details['source'] = 'NONE'
 
@@ -3862,6 +3984,83 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
     cli_util.render_response(result, ctx)
 
 
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.create_cloud_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates a cloud Autonomous VM cluster. \n[Command Reference](createCloudAutonomousVmCluster)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the cloud Autonomous VM Cluster is associated with.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that this resource belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - Autonomous Databases with private access require at least 1 Network Security Group (NSG). The nsgIds array cannot be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
+@cli_util.wrap_exceptions
+def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, cloud_exadata_infrastructure_id, description, license_model, nsg_ids, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['subnetId'] = subnet_id
+    _details['displayName'] = display_name
+    _details['cloudExadataInfrastructureId'] = cloud_exadata_infrastructure_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_cloud_autonomous_vm_cluster(
+        create_cloud_autonomous_vm_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_autonomous_vm_cluster') and callable(getattr(client, 'get_cloud_autonomous_vm_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_autonomous_vm_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.create_cloud_exadata_infrastructure.command_name', 'create'), help=u"""Creates a cloud Exadata infrastructure resource. This resource is used to create an [Exadata Cloud Service] instance. \n[Command Reference](createCloudExadataInfrastructure)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the cloud Exadata infrastructure is located.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
@@ -3961,6 +4160,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 **Note:** The hostname must be unique within the subnet. If it is not unique, the cloud VM Cluster will fail to provision.""")
 @cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--gi-version', required=True, help=u"""A valid Oracle Grid Infrastructure (GI) software version.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for a cloud VM cluster. Only 1 decimal place is allowed for the fractional part.""")
 @cli_util.option('--cluster-name', help=u"""The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--data-storage-percentage', type=click.INT, help=u"""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration] in the Exadata documentation for details on the impact of the configuration settings on storage.""")
 @cli_util.option('--domain', help=u"""A domain name used for the cloud VM cluster. If the Oracle-provided internet and VCN resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted. Applies to Exadata Cloud Service instances only.""")
@@ -3984,7 +4184,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, ocpu_count, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3999,6 +4199,9 @@ def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
     _details['hostname'] = hostname
     _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
     _details['giVersion'] = gi_version
+
+    if ocpu_count is not None:
+        _details['ocpuCount'] = ocpu_count
 
     if cluster_name is not None:
         _details['clusterName'] = cluster_name
@@ -6018,9 +6221,11 @@ def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The [OCID] of the VM cluster network.""")
 @cli_util.option('--gi-version', required=True, help=u"""The Oracle Grid Infrastructure software version for the VM cluster.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for the VM cluster. Only 1 decimal place is allowed for the fractional part.""")
 @cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The memory to be allocated in GBs.""")
 @cli_util.option('--db-node-storage-size-in-gbs', type=click.INT, help=u"""The local node storage to be allocated in GBs.""")
 @cli_util.option('--data-storage-size-in-tbs', help=u"""The data disk group size to be allocated in TBs.""")
+@cli_util.option('--data-storage-size-in-gbs', help=u"""The data disk group size to be allocated in GBs.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--is-sparse-diskgroup-enabled', type=click.BOOL, help=u"""If true, the sparse disk group is configured for the VM cluster. If false, the sparse disk group is not created.""")
 @cli_util.option('--is-local-backup-enabled', type=click.BOOL, help=u"""If true, database backup on local Exadata storage is configured for the VM cluster. If false, database backup on local Exadata storage is not available in the VM cluster.""")
@@ -6038,7 +6243,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags):
+def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6052,6 +6257,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     _details['vmClusterNetworkId'] = vm_cluster_network_id
     _details['giVersion'] = gi_version
 
+    if ocpu_count is not None:
+        _details['ocpuCount'] = ocpu_count
+
     if memory_size_in_gbs is not None:
         _details['memorySizeInGBs'] = memory_size_in_gbs
 
@@ -6060,6 +6268,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if data_storage_size_in_tbs is not None:
         _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+
+    if data_storage_size_in_gbs is not None:
+        _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -6464,6 +6675,59 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.delete_cloud_autonomous_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified cloud Autonomous VM cluster. \n[Command Reference](deleteCloudAutonomousVmCluster)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_cloud_autonomous_vm_cluster(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -9000,6 +9264,28 @@ def get_backup_destination(ctx, from_json, backup_destination_id):
     cli_util.render_response(result, ctx)
 
 
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.get_cloud_autonomous_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified cloud Autonomous VM cluster. \n[Command Reference](getCloudAutonomousVmCluster)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
+@cli_util.wrap_exceptions
+def get_cloud_autonomous_vm_cluster(ctx, from_json, cloud_autonomous_vm_cluster_id):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_cloud_autonomous_vm_cluster(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances only. \n[Command Reference](getCloudExadataInfrastructure)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10908,6 +11194,7 @@ def list_autonomous_container_database_dataguard_associations(ctx, from_json, al
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--service-level-agreement-type', help=u"""A filter to return only resources that match the given service-level agreement type exactly.""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The cloud Autonomous VM Cluster [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10915,7 +11202,7 @@ def list_autonomous_container_database_dataguard_associations(ctx, from_json, al
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousContainerDatabaseSummary]'})
 @cli_util.wrap_exceptions
-def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, compartment_id, autonomous_exadata_infrastructure_id, autonomous_vm_cluster_id, infrastructure_type, limit, page, sort_by, sort_order, lifecycle_state, availability_domain, display_name, service_level_agreement_type):
+def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, compartment_id, autonomous_exadata_infrastructure_id, autonomous_vm_cluster_id, infrastructure_type, limit, page, sort_by, sort_order, lifecycle_state, availability_domain, display_name, service_level_agreement_type, cloud_autonomous_vm_cluster_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10945,6 +11232,8 @@ def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, co
         kwargs['display_name'] = display_name
     if service_level_agreement_type is not None:
         kwargs['service_level_agreement_type'] = service_level_agreement_type
+    if cloud_autonomous_vm_cluster_id is not None:
+        kwargs['cloud_autonomous_vm_cluster_id'] = cloud_autonomous_vm_cluster_id
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
@@ -11626,6 +11915,74 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
         )
     else:
         result = client.list_backups(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.list_cloud_autonomous_vm_clusters.command_name', 'list'), help=u"""Gets a list of the Autonomous cloud VM clusters in the specified compartment. \n[Command Reference](listCloudAutonomousVmClusters)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--cloud-exadata-infrastructure-id', help=u"""If provided, filters the results for the specified cloud Exadata infrastructure.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[CloudAutonomousVmClusterSummary]'})
+@cli_util.wrap_exceptions
+def list_cloud_autonomous_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, cloud_exadata_infrastructure_id, limit, page, sort_by, sort_order, lifecycle_state, availability_domain, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if cloud_exadata_infrastructure_id is not None:
+        kwargs['cloud_exadata_infrastructure_id'] = cloud_exadata_infrastructure_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_autonomous_vm_clusters,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_autonomous_vm_clusters,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_autonomous_vm_clusters(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -14640,6 +14997,124 @@ def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ords_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ords-certs'), help=u"""Rotates Oracle REST Data Services (ORDS) certs for a cloud Autonomous VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterOrdsCerts)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.rotate_cloud_autonomous_vm_cluster_ords_certs(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates SSL certs for a cloud Autonomous VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterSslCerts)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.rotate_cloud_autonomous_vm_cluster_ssl_certs(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.rotate_ords_certs.command_name', 'rotate-ords-certs'), help=u"""Rotates Oracle REST Data Services (ORDS) certs for an Autonomous Exadata Infrastructure resource. \n[Command Reference](rotateOrdsCerts)""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -15554,23 +16029,26 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-mtls-connection-required', type=click.BOOL, help=u"""Indicates whether the Autonomous Database requires mTLS connections.""")
+@cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of scheduled operations
+
+This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, db_workload, license_model, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, nsg_ids, customer_contacts, is_mtls_connection_required, if_match):
+def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, db_workload, license_model, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, nsg_ids, customer_contacts, is_mtls_connection_required, scheduled_operations, if_match):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or whitelisted_ips or standby_whitelisted_ips or nsg_ids or customer_contacts:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and whitelisted-ips and standby-whitelisted-ips and nsg-ids and customer-contacts will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or whitelisted_ips or standby_whitelisted_ips or nsg_ids or customer_contacts or scheduled_operations:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and whitelisted-ips and standby-whitelisted-ips and nsg-ids and customer-contacts and scheduled-operations will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -15666,6 +16144,9 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
     if is_mtls_connection_required is not None:
         _details['isMtlsConnectionRequired'] = is_mtls_connection_required
+
+    if scheduled_operations is not None:
+        _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database(
@@ -16071,6 +16552,92 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.update_cloud_autonomous_vm_cluster.command_name', 'update'), help=u"""Updates the specified cloud VM cluster. \n[Command Reference](updateCloudAutonomousVmCluster)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that this resource belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - Autonomous Databases with private access require at least 1 Network Security Group (NSG). The nsgIds array cannot be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
+@cli_util.wrap_exceptions
+def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, license_model, nsg_ids, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+    if not force:
+        if nsg_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_cloud_autonomous_vm_cluster(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        update_cloud_autonomous_vm_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_autonomous_vm_cluster') and callable(getattr(client, 'get_cloud_autonomous_vm_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_autonomous_vm_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @cloud_exadata_infrastructure_group.command(name=cli_util.override('db.update_cloud_exadata_infrastructure.command_name', 'update'), help=u"""Updates the Cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances only. \n[Command Reference](updateCloudExadataInfrastructure)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud Exadata infrastructure. The name does not need to be unique.""")
@@ -16167,6 +16734,7 @@ def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, m
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud VM cluster. The name does not need to be unique.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to enable for the cloud VM cluster.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for a cloud VM cluster. Only 1 decimal place is allowed for the fractional part.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the cloud VM cluster. The default is BRING_YOUR_OWN_LICENSE. Applies to Exadata Cloud Service instances only.""")
 @cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16188,7 +16756,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'update-details': {'module': 'database', 'class': 'UpdateDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'compute-nodes': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def update_cloud_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, display_name, cpu_core_count, license_model, ssh_public_keys, update_details, nsg_ids, backup_network_nsg_ids, compute_nodes, storage_size_in_gbs, freeform_tags, defined_tags, if_match):
+def update_cloud_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, display_name, cpu_core_count, ocpu_count, license_model, ssh_public_keys, update_details, nsg_ids, backup_network_nsg_ids, compute_nodes, storage_size_in_gbs, freeform_tags, defined_tags, if_match):
 
     if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
@@ -16209,6 +16777,9 @@ def update_cloud_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if cpu_core_count is not None:
         _details['cpuCoreCount'] = cpu_core_count
+
+    if ocpu_count is not None:
+        _details['ocpuCount'] = ocpu_count
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -17630,9 +18201,11 @@ def update_pluggable_database(ctx, from_json, force, wait_for_state, max_wait_se
 @vm_cluster_group.command(name=cli_util.override('db.update_vm_cluster.command_name', 'update'), help=u"""Updates the specified VM cluster. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](updateVmCluster)""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to enable for the VM cluster.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for the VM cluster. Only 1 decimal place is allowed for the fractional part.""")
 @cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The memory to be allocated in GBs.""")
 @cli_util.option('--db-node-storage-size-in-gbs', type=click.INT, help=u"""The local node storage to be allocated in GBs.""")
 @cli_util.option('--data-storage-size-in-tbs', help=u"""The data disk group size to be allocated in TBs.""")
+@cli_util.option('--data-storage-size-in-gbs', help=u"""The data disk group size to be allocated in GBs.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--version-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -17651,7 +18224,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, license_model, ssh_public_keys, version_parameterconflict, update_details, freeform_tags, defined_tags, if_match):
+def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, ssh_public_keys, version_parameterconflict, update_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
@@ -17670,6 +18243,9 @@ def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     if cpu_core_count is not None:
         _details['cpuCoreCount'] = cpu_core_count
 
+    if ocpu_count is not None:
+        _details['ocpuCount'] = ocpu_count
+
     if memory_size_in_gbs is not None:
         _details['memorySizeInGBs'] = memory_size_in_gbs
 
@@ -17678,6 +18254,9 @@ def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if data_storage_size_in_tbs is not None:
         _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+
+    if data_storage_size_in_gbs is not None:
+        _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
 
     if license_model is not None:
         _details['licenseModel'] = license_model

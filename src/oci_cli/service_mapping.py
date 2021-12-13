@@ -5,7 +5,7 @@
 service_mapping = {
     "ai": [
         "ai_language",
-        "Oracle Cloud Infrastructure Artificial Intelligence Services"
+        "Language"
     ],
     "analytics": [
         "analytics",
@@ -298,6 +298,10 @@ service_mapping = {
     "os-management": [
         "os_management",
         "OS Management"
+    ],
+    "osp-gateway": [
+        "osp_gateway",
+        "Billing Center Gateway"
     ],
     "resource-manager": [
         "resource_manager",
