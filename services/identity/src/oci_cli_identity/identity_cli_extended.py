@@ -17,6 +17,11 @@ import oci_cli.final_command_processor as final_command_processor
 from oci_cli.aliasing import CommandGroupWithAlias
 import oci
 import time
+import os
+from pathlib import Path
+from oci_cli import cli_setup
+import datetime
+DEFAULT_DIRECTORY = os.path.join(os.path.expanduser('~'), '.oci')
 
 
 def get_iam_commands_that_use_tenancy_defaults():
@@ -680,3 +685,76 @@ cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.upda
 
 # oci iam domain list-allowed-domain-license-types -> oci iam domain list-license-types
 cli_util.rename_command(identity_cli, identity_cli.domain_group, identity_cli.list_allowed_domain_license_types, "list-license-types")
+
+
+@click.command('db-token', cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def db_token_group():
+    pass
+
+
+identity_cli.iam_root_group.add_command(db_token_group)
+
+
+@db_token_group.command(name=cli_util.override('identity_data_plane.get_db_token.command_name', 'get'), help=u"""
+
+This token is used to access Oracle cloud databases from database clients.  The database client or application requests the db-token using one of a number of principal tokens. Claims can be made as part of the db-token request and will be part of the db-token.
+
+When running this command inside the Cloud Shell, it will by default use the delegation token for the IAM user to request the db-token. Outside of the cloud shell, this command will default to use the API-key in the default profile in the default OCI configuration.
+
+In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM""")
+@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.  Example: --scope "urn:oracle:db:all", --scope "urn:oracle:db:......" """)
+@cli_util.option('--db-token-location', default=os.path.join(DEFAULT_DIRECTORY, 'db-token'), help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/token""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_dataplane', 'class': 'SecurityToken'})
+@cli_util.wrap_exceptions
+def get_db_token(ctx, from_json, scope, db_token_location):
+
+    if scope and "urn:oracle:db:" not in scope:
+        click.echo("scope must be a db scope i.e --scope 'urn:oracle:db::id::*'")
+        ctx.exit(1)
+
+    kwargs = {}
+    private_key = cli_util.generate_key()
+    public_key = private_key.public_key()
+    db_token_path = os.path.normpath(os.path.expanduser(db_token_location))
+    Path(db_token_path).mkdir(parents=True, exist_ok=True)
+    private_key_file_path = os.path.join(db_token_path, "oci_db_key.pem")
+    public_key_file_path = os.path.join(db_token_path, "oci_db_key_public.pem")
+    if not cli_setup.write_public_key_to_file(public_key_file_path, public_key, True, True):
+        click.echo("Error: Unable to write public key at {}".format(public_key_file_path))
+        ctx.exit(1)
+    if not cli_setup.write_private_key_to_file(private_key_file_path, private_key, '', True, True):
+        click.echo("Error: Unable to write private key at: {}".format(private_key_file_path))
+        ctx.exit(1)
+    else:
+        click.echo("Private key written at {}".format(private_key_file_path))
+    with open(public_key_file_path, mode='r') as public_file:
+        public_key_from_file = public_file.read()
+    _details = {
+        'scope': scope,
+        'publicKey': public_key_from_file}
+
+    client = cli_util.build_client('identity_data_plane', 'dataplane', ctx)
+    result = client.generate_scoped_access_token(
+        generate_scoped_access_token_details=_details,
+        **kwargs
+    )
+    response = cli_util.to_dict(result.data)
+
+    # persist result db_token
+    db_token_path = os.path.join(db_token_path, "token")
+    with open(db_token_path, "w") as f:
+        f.write(response['token'])
+        click.echo('db-token written at: {}'.format(db_token_path))
+    cli_setup.apply_user_only_access_permissions(db_token_path)
+    with open(db_token_path, 'r') as db_token_file:
+        token = db_token_file.read()
+
+    db_token_container = oci.auth.security_token_container.SecurityTokenContainer(None, token)
+
+    db_token_file = db_token_container.get_jwt()
+    expiry_time = datetime.datetime.fromtimestamp(db_token_file['exp']).strftime("%Y-%m-%d %H:%M:%S")
+    click.echo("db-token is valid until " + expiry_time, file=sys.stderr)

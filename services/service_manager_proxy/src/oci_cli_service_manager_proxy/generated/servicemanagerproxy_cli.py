@@ -15,13 +15,16 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('service_manager_proxy.service_manager_proxy_root_group.command_name', 'service-manager-proxy'), cls=CommandGroupWithAlias, help=cli_util.override('service_manager_proxy.service_manager_proxy_root_group.help', """API to manage Service manager proxy."""), short_help=cli_util.override('service_manager_proxy.service_manager_proxy_root_group.short_help', """Service Manager Proxy API"""))
+@cli.command(cli_util.override('service_manager_proxy.service_manager_proxy_root_group.command_name', 'service-manager-proxy'), cls=CommandGroupWithAlias, help=cli_util.override('service_manager_proxy.service_manager_proxy_root_group.help', """Use the Service Manager Proxy API to obtain information about SaaS environments provisioned by Service Manager.
+You can get information such as service types and service environment URLs."""), short_help=cli_util.override('service_manager_proxy.service_manager_proxy_root_group.short_help', """Service Manager Proxy API"""))
 @cli_util.help_option_group
 def service_manager_proxy_root_group():
     pass
 
 
-@click.command(cli_util.override('service_manager_proxy.service_environment_group.command_name', 'service-environment'), cls=CommandGroupWithAlias, help="""Model describing service environment properties.""")
+@click.command(cli_util.override('service_manager_proxy.service_environment_group.command_name', 'service-environment'), cls=CommandGroupWithAlias, help="""Detailed information about a service environment.
+
+**Note:** Service URL formats may vary from the provided example.""")
 @cli_util.help_option_group
 def service_environment_group():
     pass
@@ -30,9 +33,11 @@ def service_environment_group():
 service_manager_proxy_root_group.add_command(service_environment_group)
 
 
-@service_environment_group.command(name=cli_util.override('service_manager_proxy.get_service_environment.command_name', 'get'), help=u"""Gets details of the service environment specified by the serviceEnvironmentId. \n[Command Reference](getServiceEnvironment)""")
-@cli_util.option('--service-environment-id', required=True, help=u"""The Id associated with the service environment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@service_environment_group.command(name=cli_util.override('service_manager_proxy.get_service_environment.command_name', 'get'), help=u"""Get the detailed information for a specific service environment. \n[Command Reference](getServiceEnvironment)""")
+@cli_util.option('--service-environment-id', required=True, help=u"""The unique identifier associated with the service environment.
+
+**Note:** Not an [OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -54,10 +59,12 @@ def get_service_environment(ctx, from_json, service_environment_id, compartment_
     cli_util.render_response(result, ctx)
 
 
-@service_environment_group.command(name=cli_util.override('service_manager_proxy.list_service_environments.command_name', 'list'), help=u"""List details of environments which the service is authorized to view. This includes the service instance endpoints and service definition details. \n[Command Reference](listServiceEnvironments)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
-@cli_util.option('--service-environment-id', help=u"""The Id associated with the service environment.""")
-@cli_util.option('--service-environment-type', help=u"""The service definition type of the environment.""")
+@service_environment_group.command(name=cli_util.override('service_manager_proxy.list_service_environments.command_name', 'list'), help=u"""List the details of Software as a Service (SaaS) environments provisioned by Service Manager. Information includes the service instance endpoints and service definition details. \n[Command Reference](listServiceEnvironments)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment.""")
+@cli_util.option('--service-environment-id', help=u"""The unique identifier associated with the service environment.
+
+**Note:** Not an [OCID].""")
+@cli_util.option('--service-environment-type', help=u"""The environment's service definition type. For example, \"RGBUOROMS\" is the service definition type for \"Oracle Retail Order Management Cloud Service\".""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID"]), help=u"""The field to sort by. Only one sort order may be provided. ID is default ordered as ascending.""")

@@ -1182,7 +1182,7 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
             encryption_algorithm = serialization.NoEncryption()
         return private_key.private_bytes(
             encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=encryption_algorithm)
     else:
         return public_key.public_bytes(

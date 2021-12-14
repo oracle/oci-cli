@@ -107,6 +107,7 @@ IGNORED_COMMANDS = [
     ['resource-manager', 'job', 'create-apply-job'],
     ['resource-manager', 'job', 'create-destroy-job'],
     ['setup', 'find-installations'],
+    ['iam', 'db-token', 'get'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

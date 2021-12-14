@@ -167,7 +167,7 @@ def change_service_connector_compartment(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector.command_name', 'create'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector.command_name', 'create'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -244,7 +244,7 @@ def create_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_logging_source_details.command_name', 'create-service-connector-logging-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_logging_source_details.command_name', 'create-service-connector-logging-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -252,7 +252,7 @@ After you send your request, the new service connector's state is temporarily CR
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The resources affected by this work request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The logs for this Logging source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of tasks.
 
@@ -324,7 +324,7 @@ def create_service_connector_logging_source_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_streaming_source_details.command_name', 'create-service-connector-streaming-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_streaming_source_details.command_name', 'create-service-connector-streaming-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -408,7 +408,7 @@ def create_service_connector_streaming_source_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_notifications_target_details.command_name', 'create-service-connector-notifications-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_notifications_target_details.command_name', 'create-service-connector-notifications-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -494,7 +494,7 @@ def create_service_connector_notifications_target_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_object_storage_target_details.command_name', 'create-service-connector-object-storage-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_object_storage_target_details.command_name', 'create-service-connector-object-storage-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -590,7 +590,7 @@ def create_service_connector_object_storage_target_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_monitoring_target_details.command_name', 'create-service-connector-monitoring-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_monitoring_target_details.command_name', 'create-service-connector-monitoring-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -611,15 +611,18 @@ Example: `CpuUtilization`""")
 This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of dimension names and values.
+
+This option is a JSON list with items of type DimensionDetails.  For documentation on DimensionDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/DimensionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'target-dimensions': {'module': 'sch', 'class': 'list[DimensionDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'target-dimensions': {'module': 'sch', 'class': 'list[DimensionDetails]'}})
 @cli_util.wrap_exceptions
-def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, source, target_compartment_id, target_metric_namespace, target_metric, description, tasks, freeform_tags, defined_tags):
+def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, source, target_compartment_id, target_metric_namespace, target_metric, description, tasks, freeform_tags, defined_tags, target_dimensions):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -644,6 +647,9 @@ def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_dimensions is not None:
+        _details['target']['dimensions'] = cli_util.parse_json_parameter("target_dimensions", target_dimensions)
 
     _details['target']['kind'] = 'monitoring'
 
@@ -678,7 +684,7 @@ def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_functions_target_details.command_name', 'create-service-connector-functions-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_functions_target_details.command_name', 'create-service-connector-functions-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -758,7 +764,7 @@ def create_service_connector_functions_target_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_logging_analytics_target_details.command_name', 'create-service-connector-logging-analytics-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_logging_analytics_target_details.command_name', 'create-service-connector-logging-analytics-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -838,7 +844,7 @@ def create_service_connector_logging_analytics_target_details(ctx, from_json, wa
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_streaming_target_details.command_name', 'create-service-connector-streaming-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('sch.create_service_connector_streaming_target_details.command_name', 'create-service-connector-streaming-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -1379,7 +1385,7 @@ def update_service_connector(ctx, from_json, force, wait_for_state, max_wait_sec
 
 After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
-@cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The resources affected by this work request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The logs for this Logging source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the tasks.
@@ -1793,16 +1799,19 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--target-dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of dimension names and values.
+
+This option is a JSON list with items of type DimensionDetails.  For documentation on DimensionDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/DimensionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'target-dimensions': {'module': 'sch', 'class': 'list[DimensionDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'target-dimensions': {'module': 'sch', 'class': 'list[DimensionDetails]'}})
 @cli_util.wrap_exceptions
-def update_service_connector_monitoring_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_compartment_id, target_metric_namespace, target_metric, display_name, description, source, tasks, freeform_tags, defined_tags, if_match):
+def update_service_connector_monitoring_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_compartment_id, target_metric_namespace, target_metric, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_dimensions):
 
     if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
@@ -1839,6 +1848,9 @@ def update_service_connector_monitoring_target_details(ctx, from_json, force, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if target_dimensions is not None:
+        _details['target']['dimensions'] = cli_util.parse_json_parameter("target_dimensions", target_dimensions)
 
     _details['target']['kind'] = 'monitoring'
 

@@ -15,7 +15,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ocvp.src.oci_cli_ocvp.generated import ocvs_service_cli
 
 
-@click.command(cli_util.override('sddc.sddc_root_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help=cli_util.override('sddc.sddc_root_group.help', """Use this API to manage your [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('sddc.sddc_root_group.short_help', """Oracle Cloud VMware Solution API"""))
+@click.command(cli_util.override('sddc.sddc_root_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help=cli_util.override('sddc.sddc_root_group.help', """Use the Oracle Cloud VMware API to create SDDCs and manage ESXi hosts and software.
+For more information, see [Oracle Cloud VMware Solution]."""), short_help=cli_util.override('sddc.sddc_root_group.short_help', """Oracle Cloud VMware Solution API"""))
 @cli_util.help_option_group
 def sddc_root_group():
     pass
@@ -146,7 +147,7 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the SDDC.""")
 @cli_util.option('--esxi-hosts-count', required=True, type=click.INT, help=u"""The number of ESXi hosts to create in the SDDC. You can add more hosts later (see [CreateEsxiHost]).
 
-**Note:** If you later delete EXSi hosts from the SDDC to total less than 3, you are still billed for the 3 minimum recommended EXSi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.""")
+**Note:** If you later delete EXSi hosts from the SDDC to total less than 3, you are still billed for the 3 minimum recommended ESXi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.""")
 @cli_util.option('--ssh-authorized-keys', required=True, help=u"""One or more public SSH keys to be included in the `~/.ssh/authorized_keys` file for the default user on each ESXi host. Use a newline character to separate multiple keys. The SSH keys must be in the format required for the `authorized_keys` file""")
 @cli_util.option('--provisioning-subnet-id', required=True, help=u"""The [OCID] of the management subnet to use for provisioning the SDDC.""")
 @cli_util.option('--vsphere-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the vSphere component of the VMware environment.""")
