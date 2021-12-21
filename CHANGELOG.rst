@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.4.1 - 2021-12-21
+------------------
+Fixed
+~~~~~
+* Bug when using ``oci os object put`` from STDIN. Please see `github issue #490 <https://github.com/oracle/oci-cli/issues/490>`_ for more details.
+
+
 3.4.0 - 2021-12-14
 ------------------
 
