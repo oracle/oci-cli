@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2022, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('nlb.nlb_root_group.command_name', 'nlb'), cls=CommandGroupWithAlias, help=cli_util.override('nlb.nlb_root_group.help', """A description of the network load balancer API"""), short_help=cli_util.override('nlb.nlb_root_group.short_help', """NetworkLoadBalancer API"""))
+@cli.command(cli_util.override('nlb.nlb_root_group.command_name', 'nlb'), cls=CommandGroupWithAlias, help=cli_util.override('nlb.nlb_root_group.help', """This describes the network load balancer API."""), short_help=cli_util.override('nlb.nlb_root_group.short_help', """NetworkLoadBalancer API"""))
 @cli_util.help_option_group
 def nlb_root_group():
     pass
@@ -318,6 +318,7 @@ Example: `example_backend_set`""")
 Example: `FIVE_TUPLE``""")
 @cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
+@cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends to be associated with the backend set.
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/networkloadbalancer/20200501/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -330,7 +331,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'network_load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'network_load_balancer', 'class': 'HealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, backends, if_match):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, ip_version, backends, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -347,6 +348,9 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if is_preserve_source is not None:
         _details['isPreserveSource'] = is_preserve_source
+
+    if ip_version is not None:
+        _details['ipVersion'] = ip_version
 
     if backends is not None:
         _details['backends'] = cli_util.parse_json_parameter("backends", backends)
@@ -394,9 +398,10 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). To get a list of valid protocols, use the [ListNetworkLoadBalancersProtocols] operation.
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP", "TCP_AND_UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). To get a list of valid protocols, use the [ListNetworkLoadBalancersProtocols] operation.
 
 Example: `TCP`""")
+@cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the listener.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -406,7 +411,7 @@ Example: `TCP`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, default_backend_set_name, port, protocol, if_match):
+def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, default_backend_set_name, port, protocol, ip_version, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -421,6 +426,9 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     _details['defaultBackendSetName'] = default_backend_set_name
     _details['port'] = port
     _details['protocol'] = protocol
+
+    if ip_version is not None:
+        _details['ipVersion'] = ip_version
 
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     result = client.create_listener(
@@ -482,6 +490,7 @@ The benefits of associating the network load balancer with network security grou
 *  The network security rules of other resources can reference the network security groups associated with the network load balancer    to ensure access.
 
 Example: [\"ocid1.nsg.oc1.phx.unique_ID\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6"]), help=u"""IP version associated with the NLB.""")
 @cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Listeners associated with the network load balancer.
 
 This option is a JSON dictionary of type dict(str, ListenerDetails).  For documentation on ListenerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/networkloadbalancer/20200501/datatypes/ListenerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -498,7 +507,7 @@ This option is a JSON dictionary of type dict(str, BackendSetDetails).  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reserved-ips': {'module': 'network_load_balancer', 'class': 'list[ReservedIP]'}, 'network-security-group-ids': {'module': 'network_load_balancer', 'class': 'list[string]'}, 'listeners': {'module': 'network_load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'backend-sets': {'module': 'network_load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_load_balancer', 'class': 'NetworkLoadBalancer'})
 @cli_util.wrap_exceptions
-def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_id, is_preserve_source_destination, reserved_ips, is_private, network_security_group_ids, listeners, backend_sets, freeform_tags, defined_tags):
+def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_id, is_preserve_source_destination, reserved_ips, is_private, network_security_group_ids, nlb_ip_version, listeners, backend_sets, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -519,6 +528,9 @@ def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_second
 
     if network_security_group_ids is not None:
         _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+
+    if nlb_ip_version is not None:
+        _details['nlbIpVersion'] = nlb_ip_version
 
     if listeners is not None:
         _details['listeners'] = cli_util.parse_json_parameter("listeners", listeners)
@@ -568,7 +580,7 @@ def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to remove. This is specified as <ip>:<port>, or as <ip> <OCID>:<port>.
+@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to remove. If the backend was created with an explicitly specified name, that name should be used here. If the backend was created without explicitly specifying the name, but was created using ipAddress, this is specified as <ipAddress>:<port>. If the backend was created without explicitly specifying the name, but was created using targetId, this is specified as <targetId>:<port>.
 
 Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8080`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
@@ -806,7 +818,7 @@ def delete_network_load_balancer(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set that includes the backend server.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to retrieve. This is specified as <ip>:<port>, or as <ip> <OCID>:<port>.
+@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to retrieve. If the backend was created with an explicitly specified name, that name should be used here. If the backend was created without explicitly specifying the name, but was created using ipAddress, this is specified as <ipAddress>:<port>. If the backend was created without explicitly specifying the name, but was created using targetId, this is specified as <targetId>:<port>.
 
 Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8080`""")
 @cli_util.option('--if-none-match', help=u"""The system returns the requested resource, with a 200 status, only if the resource has no etag matching the one specified. If the condition fails for the GET and HEAD methods, then the system returns the HTTP status code `304 (Not Modified)`.
@@ -847,7 +859,7 @@ def get_backend(ctx, from_json, network_load_balancer_id, backend_set_name, back
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server for which to retrieve the health status.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server for which to retrieve the health status, specified as <ip>:<port> or as <ip> <OCID>:<port>.
+@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to retrieve health status for. If the backend was created with an explicitly specified name, that name should be used here. If the backend was created without explicitly specifying the name, but was created using ipAddress, this is specified as <ipAddress>:<port>. If the backend was created without explicitly specifying the name, but was created using targetId, this is specified as <targetId>:<port>.
 
 Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8080`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1088,6 +1100,7 @@ Example: `example-etag`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' (ascending) or 'desc' (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. The default order for timeCreated is descending. The default order for displayName is ascending. If no value is specified, then timeCreated is the default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1095,7 +1108,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_load_balancer', 'class': 'BackendSetCollection'})
 @cli_util.wrap_exceptions
-def list_backend_sets(ctx, from_json, all_pages, page_size, network_load_balancer_id, if_none_match, limit, page, sort_order):
+def list_backend_sets(ctx, from_json, all_pages, page_size, network_load_balancer_id, if_none_match, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1112,6 +1125,8 @@ def list_backend_sets(ctx, from_json, all_pages, page_size, network_load_balance
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     if all_pages:
@@ -1150,6 +1165,7 @@ Example: `example-etag`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' (ascending) or 'desc' (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. The default order for timeCreated is descending. The default order for displayName is ascending. If no value is specified, then timeCreated is the default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1157,7 +1173,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_load_balancer', 'class': 'BackendCollection'})
 @cli_util.wrap_exceptions
-def list_backends(ctx, from_json, all_pages, page_size, network_load_balancer_id, backend_set_name, if_none_match, limit, page, sort_order):
+def list_backends(ctx, from_json, all_pages, page_size, network_load_balancer_id, backend_set_name, if_none_match, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1177,6 +1193,8 @@ def list_backends(ctx, from_json, all_pages, page_size, network_load_balancer_id
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     if all_pages:
@@ -1215,6 +1233,7 @@ Example: `example-etag`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' (ascending) or 'desc' (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. The default order for timeCreated is descending. The default order for displayName is ascending. If no value is specified, then timeCreated is the default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1222,7 +1241,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_load_balancer', 'class': 'ListenerCollection'})
 @cli_util.wrap_exceptions
-def list_listeners(ctx, from_json, all_pages, page_size, network_load_balancer_id, if_none_match, limit, page, sort_order):
+def list_listeners(ctx, from_json, all_pages, page_size, network_load_balancer_id, if_none_match, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1239,6 +1258,8 @@ def list_listeners(ctx, from_json, all_pages, page_size, network_load_balancer_i
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     if all_pages:
@@ -1384,6 +1405,7 @@ def list_network_load_balancers(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' (ascending) or 'desc' (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. The default order for timeCreated is descending. The default order for displayName is ascending. If no value is specified, then timeCreated is the default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1391,7 +1413,7 @@ def list_network_load_balancers(ctx, from_json, all_pages, page_size, compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_load_balancer', 'class': 'NetworkLoadBalancersPolicyCollection'})
 @cli_util.wrap_exceptions
-def list_network_load_balancers_policies(ctx, from_json, all_pages, page_size, limit, page, sort_order):
+def list_network_load_balancers_policies(ctx, from_json, all_pages, page_size, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1403,6 +1425,8 @@ def list_network_load_balancers_policies(ctx, from_json, all_pages, page_size, l
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     if all_pages:
@@ -1427,10 +1451,11 @@ def list_network_load_balancers_policies(ctx, from_json, all_pages, page_size, l
     cli_util.render_response(result, ctx)
 
 
-@listener_protocols_group.command(name=cli_util.override('nlb.list_network_load_balancers_protocols.command_name', 'list-network-load-balancers-protocols'), help=u"""Lists all supported traffic protocols. \n[Command Reference](listNetworkLoadBalancersProtocols)""")
+@listener_protocols_group.command(name=cli_util.override('nlb.list_network_load_balancers_protocols.command_name', 'list-network-load-balancers-protocols'), help=u"""This API has been deprecated so it won't return the updated list of supported protocls. Lists all supported traffic protocols. \n[Command Reference](listNetworkLoadBalancersProtocols)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page or items to return, in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The page token representing the page from which to start retrieving results. For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' (ascending) or 'desc' (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. The default order for timeCreated is descending. The default order for displayName is ascending. If no value is specified, then timeCreated is the default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1438,7 +1463,7 @@ def list_network_load_balancers_policies(ctx, from_json, all_pages, page_size, l
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_load_balancer', 'class': 'NetworkLoadBalancersProtocolCollection'})
 @cli_util.wrap_exceptions
-def list_network_load_balancers_protocols(ctx, from_json, all_pages, page_size, limit, page, sort_order):
+def list_network_load_balancers_protocols(ctx, from_json, all_pages, page_size, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1450,6 +1475,8 @@ def list_network_load_balancers_protocols(ctx, from_json, all_pages, page_size, 
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     if all_pages:
@@ -1637,7 +1664,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to update. This is specified as <ip>:<port>, or as <ip> <OCID>:<port>.
+@cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to update. If the backend was created with an explicitly specified name, that name should be used here. If the backend was created without explicitly specifying the name, but was created using ipAddress, this is specified as <ipAddress>:<port>. If the backend was created without explicitly specifying the name, but was created using targetId, this is specified as <targetId>:<port>.
 
 Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8080`""")
 @cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives three times the number of new connections as a server weighted '1'. For more information about load balancing policies, see [How Load Balancing Policies Work].
@@ -1734,6 +1761,7 @@ Example: `example_backend_set`""")
 
 Example: `FIVE_TUPLE`""")
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
+@cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""The IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends associated with the backend set.
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/networkloadbalancer/20200501/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1748,7 +1776,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'network_load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'network_load_balancer', 'class': 'HealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, backends, health_checker, if_match):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, ip_version, backends, health_checker, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -1772,6 +1800,9 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if is_preserve_source is not None:
         _details['isPreserveSource'] = is_preserve_source
+
+    if ip_version is not None:
+        _details['ipVersion'] = ip_version
 
     if backends is not None:
         _details['backends'] = cli_util.parse_json_parameter("backends", backends)
@@ -1941,9 +1972,10 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). To get a list of valid protocols, use the [ListNetworkLoadBalancersProtocols] operation.
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP", "TCP_AND_UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). To get a list of valid protocols, use the [ListNetworkLoadBalancersProtocols] operation.
 
 Example: `TCP`""")
+@cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the listener.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1953,7 +1985,7 @@ Example: `TCP`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, listener_name, default_backend_set_name, port, protocol, if_match):
+def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, listener_name, default_backend_set_name, port, protocol, ip_version, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -1976,6 +2008,9 @@ def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if protocol is not None:
         _details['protocol'] = protocol
+
+    if ip_version is not None:
+        _details['ipVersion'] = ip_version
 
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     result = client.update_listener(
@@ -2010,12 +2045,13 @@ def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@network_load_balancer_group.command(name=cli_util.override('nlb.update_network_load_balancer.command_name', 'update'), help=u"""Updates the network load balancer. \n[Command Reference](updateNetworkLoadBalancer)""")
+@network_load_balancer_group.command(name=cli_util.override('nlb.update_network_load_balancer.command_name', 'update'), help=u"""Updates the network load balancer \n[Command Reference](updateNetworkLoadBalancer)""")
 @cli_util.option('--network-load-balancer-id', required=True, help=u"""The [OCID] of the network load balancer to update.""")
 @cli_util.option('--display-name', help=u"""The user-friendly display name for the network load balancer, which does not have to be unique and can be changed. Avoid entering confidential information.
 
 Example: `example_network_load_balancer`""")
 @cli_util.option('--is-preserve-source-destination', type=click.BOOL, help=u"""This parameter can be enabled only if backends are compute OCIDs. When enabled, the skipSourceDestinationCheck parameter is automatically enabled on the load balancer VNIC, and packets are sent to the backend with the entire IP header intact.""")
+@cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6"]), help=u"""IP version associated with the NLB.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2032,7 +2068,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, freeform_tags, defined_tags, if_match):
+def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, nlb_ip_version, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -2053,6 +2089,9 @@ def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait
 
     if is_preserve_source_destination is not None:
         _details['isPreserveSourceDestination'] = is_preserve_source_destination
+
+    if nlb_ip_version is not None:
+        _details['nlbIpVersion'] = nlb_ip_version
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

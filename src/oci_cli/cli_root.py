@@ -415,6 +415,16 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
     except Exception:
         pass
 
+    if ctx.obj['debug']:
+        import platform
+        click.echo(platform.platform())
+        click.echo("System name: {}".format(platform.system()))
+        click.echo("System release : {}".format(platform.release()))
+        click.echo("System version: {}\n".format(platform.version()))
+        for env in os.environ:
+            if env in ['http_proxy', 'HTTP_PROXY', 'https_proxy', 'HTTPS_PROXY', 'no_proxy', 'NO_PROXY', 'REQUESTS_CA_BUNDLE'] or 'OCI_' in env:
+                print("env {} is set".format(env))
+
 
 def is_top_level_help(ctx):
     if len(sys.argv) != 3:

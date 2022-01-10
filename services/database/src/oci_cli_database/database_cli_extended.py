@@ -1160,10 +1160,11 @@ def create_data_guard_association_group():
 All Oracle Cloud Infrastructue resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
 @cli_util.option('--peer-db-system-id', required=True, help="""The OCID of the DB System to create the standby database on.""")
 @cli_util.option('--peer-db-home-id', required=False, help="""The OCID of the DB Home to create the standby database on.""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_system_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
+def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_system_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
     kwargs = {}
 
     details = {}
@@ -1181,6 +1182,8 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
         details['peerDbUniqueName'] = peer_db_unique_name
     if peer_sid_prefix is not None:
         details['peerSidPrefix'] = peer_sid_prefix
+    if is_active_data_guard_enabled is not None:
+        details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
@@ -1203,10 +1206,11 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB Systems, do not use a subnet that overlaps with 192.168.16.16/28
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled):
     kwargs = {}
 
     details = {}
@@ -1227,6 +1231,8 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         details['subnetId'] = subnet_id
     if shape is not None:
         details['shape'] = shape
+    if is_active_data_guard_enabled is not None:
+        details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     details['creationType'] = 'NewDbSystem'
 
@@ -1245,10 +1251,11 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--peer-vm-cluster-id', required=True, help=u"""The [OCID] of the VM Cluster in which to create the standby database. You must supply this value if creationType is `ExistingVmCluster`.""")
 @cli_util.option('--peer-db-home-id', required=False, help="""The OCID of the DB Home to create the standby database on.""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
 
     kwargs = {}
 
@@ -1267,6 +1274,8 @@ def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, datab
         details['peerDbUniqueName'] = peer_db_unique_name
     if peer_sid_prefix is not None:
         details['peerSidPrefix'] = peer_sid_prefix
+    if is_active_data_guard_enabled is not None:
+        details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(

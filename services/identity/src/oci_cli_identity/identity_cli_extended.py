@@ -704,7 +704,7 @@ When running this command inside the Cloud Shell, it will by default use the del
 
 In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM""")
 @cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.  Example: --scope "urn:oracle:db:all", --scope "urn:oracle:db:......" """)
-@cli_util.option('--db-token-location', default=os.path.join(DEFAULT_DIRECTORY, 'db-token'), help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/token""")
+@cli_util.option('--db-token-location', default=os.path.join(DEFAULT_DIRECTORY, 'db-token'), help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/db-token""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -726,11 +726,7 @@ def get_db_token(ctx, from_json, scope, db_token_location):
     if not cli_setup.write_public_key_to_file(public_key_file_path, public_key, True, True):
         click.echo("Error: Unable to write public key at {}".format(public_key_file_path))
         ctx.exit(1)
-    if not cli_setup.write_private_key_to_file(private_key_file_path, private_key, '', True, True):
-        click.echo("Error: Unable to write private key at: {}".format(private_key_file_path))
-        ctx.exit(1)
-    else:
-        click.echo("Private key written at {}".format(private_key_file_path))
+
     with open(public_key_file_path, mode='r') as public_file:
         public_key_from_file = public_file.read()
     _details = {
@@ -744,7 +740,12 @@ def get_db_token(ctx, from_json, scope, db_token_location):
     )
     response = cli_util.to_dict(result.data)
 
-    # persist result db_token
+    # persist private key and result db_token
+    if not cli_setup.write_private_key_to_file(private_key_file_path, private_key, '', True, True):
+        click.echo("Error: Unable to write private key at: {}".format(private_key_file_path))
+        ctx.exit(1)
+    else:
+        click.echo("Private key written at {}".format(private_key_file_path))
     db_token_path = os.path.join(db_token_path, "token")
     with open(db_token_path, "w") as f:
         f.write(response['token'])
