@@ -845,6 +845,7 @@ def wrap_exceptions(func):
             if ctx.obj["debug"]:
                 raise
             tpl = "{exc}:\n{details}"
+            exception.args[0]['message'] += ". Please visit https://docs.oracle.com/en-us/iaas/Content/API/References/apierrors.htm to learn more about this error code"
             details = json.dumps(exception.args[0], indent=4, sort_keys=True)
             sys.exit(tpl.format(exc=exception.__class__.__name__, details=details))
         except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError as exception:

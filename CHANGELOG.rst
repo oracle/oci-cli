@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.4.2 - 2022-01-11
+------------------
+Added
+~~~~~
+* Network Load Balancer service
+
+  * Support for Multiple Protocols on the Same Listener of the Network Load Balancer.
+
+    * ``oci nlb listener create --protocol``
+    * ``oci nlb listener create --protocol``
+
+  * Support for IPv6 in the below commands
+
+    * ``oci nlb backend-set create --ip-version``
+    * ``oci nlb backend-set update --ip-version``
+    * ``oci nlb listener create --ip-version``
+    * ``oci nlb listener update --ip-version``
+    * ``oci nlb network-load-balancer create --nlb-ip-version``
+    * ``oci nlb network-load-balancer update --nlb-ip-version``
+
+* Support for creating Enterprise Manager-based Solaris/SunOS Host targets in the Operations Insights service
+
+  * ``oci opsi host-insights``
+
+* More information related to the user system in the --debug option
+
+* Improvement to the OCI CLI service error exception message
+
+Fixed
+~~~~~~~
+
+* Removed python install by source in install.sh script for Oracle Linux 7
+
+* While creating iam db-token, persist private key only when request is successful
+
+    * ``oci iam db-token get``
+
 3.4.1 - 2021-12-21
 ------------------
 Fixed

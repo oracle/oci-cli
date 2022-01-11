@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2022, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -4355,6 +4355,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--creation-type', required=True, help=u"""Specifies whether to create the peer database in an existing DB system or in a new DB system.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4365,7 +4366,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, creation_type, database_software_image_id, peer_db_unique_name, peer_sid_prefix):
+def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, creation_type, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -4380,6 +4381,9 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     if peer_db_unique_name is not None:
         _details['peerDbUniqueName'] = peer_db_unique_name
@@ -4447,6 +4451,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name of the DB system that will contain the the standby database. The display name does not have to be unique.""")
@@ -4468,7 +4473,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, subnet_id, nsg_ids, backup_network_nsg_ids, hostname):
+def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, subnet_id, nsg_ids, backup_network_nsg_ids, hostname):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -4482,6 +4487,9 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     if peer_db_unique_name is not None:
         _details['peerDbUniqueName'] = peer_db_unique_name
@@ -4572,6 +4580,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @cli_util.option('--peer-vm-cluster-id', help=u"""The [OCID] of the VM Cluster in which to create the standby database. You must supply this value if creationType is `ExistingVmCluster`.""")
@@ -4584,7 +4593,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_unique_name, peer_sid_prefix, peer_vm_cluster_id, peer_db_home_id):
+def create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_vm_cluster_id, peer_db_home_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -4598,6 +4607,9 @@ def create_data_guard_association_create_data_guard_association_to_existing_vm_c
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     if peer_db_unique_name is not None:
         _details['peerDbUniqueName'] = peer_db_unique_name
@@ -4673,6 +4685,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
 @cli_util.option('--peer-db-system-id', help=u"""The [OCID] of the DB system in which to create the standby database. You must supply this value if creationType is `ExistingDbSystem`.""")
@@ -4685,7 +4698,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_unique_name, peer_sid_prefix, peer_db_system_id, peer_db_home_id):
+def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_db_system_id, peer_db_home_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -4699,6 +4712,9 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     if peer_db_unique_name is not None:
         _details['peerDbUniqueName'] = peer_db_unique_name
@@ -16904,6 +16920,7 @@ The password must contain no fewer than nine characters and include:
 @cli_util.option('--transport-type', type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help=u"""The redo transport type to use for this Data Guard association.  Valid values depend on the specified 'protectionMode': * MAXIMUM_AVAILABILITY - Use SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - Use ASYNC * MAXIMUM_PROTECTION - Use SYNC
 
 For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled. Update this parameter to change the Data Guard setting.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -16913,7 +16930,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, protection_mode, transport_type, if_match):
+def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -16936,6 +16953,9 @@ def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
     if transport_type is not None:
         _details['transportType'] = transport_type
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_data_guard_association(
