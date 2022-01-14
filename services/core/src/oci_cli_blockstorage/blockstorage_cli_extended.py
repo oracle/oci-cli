@@ -307,3 +307,7 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+# Remove create-volume-group-volume-group-source-from-volume-group-replica-details from oci bv volume-group
+blockstorage_cli.volume_group_group.commands.pop(blockstorage_cli.create_volume_group_volume_group_source_from_volume_group_replica_details.name)

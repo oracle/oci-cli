@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.4.3 - 2022-01-18
+------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the me-dcc-muscat-1 region
+
+* Support for the Visual Builder service
+
+    * ``oci visual-builder``
+
+* Support for cross-region replication of volume groups in the Block Storage service
+
+    * ``oci bv volume-group create --volume-group-replicas``
+    * ``oci bv volume-group update  --volume-group-replicas``
+
+* Support for boot volume encryption in the Container Engine for Kubernetes service
+
+    * ``oci ce node-pool create --is-pv-encryption-in-transit-enabled, --kms-key-id``
+    * ``oci ce node-pool update  --is-pv-encryption-in-transit-enabled, --kms-key-id``
+
+* Support for adding metadata to records when creating and updating records in the Data Labeling service
+
+    * ``oci data-labeling-service-dataplane record``
+
+* Support for global export formats in snapshot datasets in the Data Labeling service
+
+    * ``oci data-labeling-service dataset snapshot --export-format``
+    * ``oci data-labeling-service dataset update --labeling-instructions``
+
+* Support for adding labeling instructions to datasets in the Data Labeling service
+
+    * ``oci data-labeling-service dataset create --labeling-instructions``
+    * ``oci data-labeling-service dataset update --labeling-instructions``
+
+* Support for updating autonomous dataguard associations for autonomous container databases in the Database service
+
+    * ``oci db autonomous-container-database-dataguard update``
+
+* Support for setting up automatic failover when creating autonomous container databases in the Database service
+
+    * ``oci db autonomous-container-database create --is-automatic-failover-enabled``
+
+* Support for setting the RECO storage size when updating a database system in the Database service
+
+    * ``oci db system update --reco-storage-size-in-gbs``
+
+* Support for reconnecting refreshable clones to source for autonomous databases on shared infrastructure in the Database service
+
+    * ``oci db autonomous-database update --is-refreshable-clone true``
+
+* Support for checking if an autonomous database on shared infrastructure can be reconnected to source, in the Database service
+
+    * ``oci db autonomous-database get --autonomous-database-id <ocid>``
+
 3.4.2 - 2022-01-11
 ------------------
 Added

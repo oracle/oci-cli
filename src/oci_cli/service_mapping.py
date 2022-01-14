@@ -117,11 +117,11 @@ service_mapping = {
     ],
     "data-labeling-service": [
         "data_labeling_service",
-        "DataLabelingService"
+        "Data Labeling Management"
     ],
     "data-labeling-service-dataplane": [
         "data_labeling_service_dataplane",
-        "DlsDataPlane"
+        "Data Labeling"
     ],
     "data-safe": [
         "data_safe",
@@ -350,6 +350,10 @@ service_mapping = {
     "vault": [
         "vault",
         "Secrets Management"
+    ],
+    "visual-builder": [
+        "visual_builder",
+        "Visual Builder"
     ],
     "vulnerability-scanning": [
         "vulnerability_scanning",
