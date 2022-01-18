@@ -31,31 +31,11 @@ def boot_volume_kms_key_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def volume_group():
-    pass
-
-
 @click.command(cli_util.override('blockstorage.boot_volume_backup_group.command_name', 'boot-volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Boot Volume Backups] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def boot_volume_backup_group():
-    pass
-
-
-@click.command(cli_util.override('blockstorage.boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def boot_volume_group():
     pass
 
 
@@ -79,6 +59,52 @@ def volume_group_backup_group():
     pass
 
 
+@click.command(cli_util.override('blockstorage.volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies the volume that the volume backup policy is assigned to.
+
+For more information about Oracle defined backup policies and custom backup policies, see [Policy-Based Backups].""")
+@cli_util.help_option_group
+def volume_backup_policy_assignment_group():
+    pass
+
+
+@click.command(cli_util.override('blockstorage.volume_backup_policy_group.command_name', 'volume-backup-policy'), cls=CommandGroupWithAlias, help="""A policy for automatically creating volume backups according to a recurring schedule. Has a set of one or more schedules that control when and how backups are created.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def volume_backup_policy_group():
+    pass
+
+
+@click.command(cli_util.override('blockstorage.volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def volume_group():
+    pass
+
+
+@click.command(cli_util.override('blockstorage.boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def boot_volume_group():
+    pass
+
+
+@click.command(cli_util.override('blockstorage.volume_group_replica_group.command_name', 'volume-group-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a volume group that can then be used to create a new volume group or recover a volume group. For more information, see [Volume Group Replication].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def volume_group_replica_group():
+    pass
+
+
 @click.command(cli_util.override('blockstorage.block_volume_replica_group.command_name', 'block-volume-replica'), cls=CommandGroupWithAlias, help="""An asynchronous replica of a block volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Cross-Region Volume Replication] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -95,27 +121,11 @@ def boot_volume_replica_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies the volume that the volume backup policy is assigned to.
-
-For more information about Oracle defined backup policies and custom backup policies, see [Policy-Based Backups].""")
-@cli_util.help_option_group
-def volume_backup_policy_assignment_group():
-    pass
-
-
 @click.command(cli_util.override('blockstorage.volume_group_group.command_name', 'volume-group'), cls=CommandGroupWithAlias, help="""Specifies a volume group which is a collection of volumes. For more information, see [Volume Groups].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def volume_group_group():
-    pass
-
-
-@click.command(cli_util.override('blockstorage.volume_backup_policy_group.command_name', 'volume-backup-policy'), cls=CommandGroupWithAlias, help="""A policy for automatically creating volume backups according to a recurring schedule. Has a set of one or more schedules that control when and how backups are created.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def volume_backup_policy_group():
     pass
 
 
@@ -127,16 +137,17 @@ def volume_kms_key_group():
 
 core_service_cli.core_service_group.add_command(blockstorage_root_group)
 blockstorage_root_group.add_command(boot_volume_kms_key_group)
-blockstorage_root_group.add_command(volume_group)
 blockstorage_root_group.add_command(boot_volume_backup_group)
-blockstorage_root_group.add_command(boot_volume_group)
 blockstorage_root_group.add_command(volume_backup_group)
 blockstorage_root_group.add_command(volume_group_backup_group)
+blockstorage_root_group.add_command(volume_backup_policy_assignment_group)
+blockstorage_root_group.add_command(volume_backup_policy_group)
+blockstorage_root_group.add_command(volume_group)
+blockstorage_root_group.add_command(boot_volume_group)
+blockstorage_root_group.add_command(volume_group_replica_group)
 blockstorage_root_group.add_command(block_volume_replica_group)
 blockstorage_root_group.add_command(boot_volume_replica_group)
-blockstorage_root_group.add_command(volume_backup_policy_assignment_group)
 blockstorage_root_group.add_command(volume_group_group)
-blockstorage_root_group.add_command(volume_backup_policy_group)
 blockstorage_root_group.add_command(volume_kms_key_group)
 
 
@@ -1643,15 +1654,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
+
+This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags):
+def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas):
 
     kwargs = {}
 
@@ -1671,6 +1685,92 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if volume_group_replicas is not None:
+        _details['volumeGroupReplicas'] = cli_util.parse_json_parameter("volume_group_replicas", volume_group_replicas)
+
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.create_volume_group(
+        create_volume_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_replica_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-replica-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+
+For more information, see [Volume Groups]. \n[Command Reference](createVolumeGroup)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume group.""")
+@cli_util.option('--source-details-volume-group-replica-id', required=True, help=u"""The OCID of the volume group replica.""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume group. If omitted, no policy will be assigned.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
+
+This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
+@cli_util.wrap_exceptions
+def create_volume_group_volume_group_source_from_volume_group_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_replica_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas):
+
+    kwargs = {}
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['volumeGroupReplicaId'] = source_details_volume_group_replica_id
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if volume_group_replicas is not None:
+        _details['volumeGroupReplicas'] = cli_util.parse_json_parameter("volume_group_replicas", volume_group_replicas)
+
+    _details['sourceDetails']['type'] = 'volumeGroupReplicaId'
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group(
@@ -1717,15 +1817,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
+
+This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_id, backup_policy_id, defined_tags, display_name, freeform_tags):
+def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas):
 
     kwargs = {}
 
@@ -1746,6 +1849,9 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if volume_group_replicas is not None:
+        _details['volumeGroupReplicas'] = cli_util.parse_json_parameter("volume_group_replicas", volume_group_replicas)
 
     _details['sourceDetails']['type'] = 'volumeGroupId'
 
@@ -1794,15 +1900,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
+
+This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_ids, backup_policy_id, defined_tags, display_name, freeform_tags):
+def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_ids, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas):
 
     kwargs = {}
 
@@ -1823,6 +1932,9 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if volume_group_replicas is not None:
+        _details['volumeGroupReplicas'] = cli_util.parse_json_parameter("volume_group_replicas", volume_group_replicas)
 
     _details['sourceDetails']['type'] = 'volumeIds'
 
@@ -1871,15 +1983,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
+
+This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_backup_id, backup_policy_id, defined_tags, display_name, freeform_tags):
+def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_backup_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas):
 
     kwargs = {}
 
@@ -1900,6 +2015,9 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if volume_group_replicas is not None:
+        _details['volumeGroupReplicas'] = cli_util.parse_json_parameter("volume_group_replicas", volume_group_replicas)
 
     _details['sourceDetails']['type'] = 'volumeGroupBackupId'
 
@@ -2747,6 +2865,27 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
     cli_util.render_response(result, ctx)
 
 
+@volume_group_replica_group.command(name=cli_util.override('blockstorage.get_volume_group_replica.command_name', 'get'), help=u"""Gets information for the specified volume group replica. \n[Command Reference](getVolumeGroupReplica)""")
+@cli_util.option('--volume-group-replica-id', required=True, help=u"""The OCID of the volume replica group.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeGroupReplica'})
+@cli_util.wrap_exceptions
+def get_volume_group_replica(ctx, from_json, volume_group_replica_id):
+
+    if isinstance(volume_group_replica_id, six.string_types) and len(volume_group_replica_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-group-replica-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.get_volume_group_replica(
+        volume_group_replica_id=volume_group_replica_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the Key Management encryption key assigned to the specified volume. \n[Command Reference](getVolumeKmsKey)""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3216,6 +3355,77 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
         )
     else:
         result = client.list_volume_group_backups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@volume_group_replica_group.command(name=cli_util.override('blockstorage.list_volume_group_replicas.command_name', 'list'), help=u"""Lists the volume group replicas in the specified compartment. You can filter the results by volume group. For more information, see [Volume Group Replication]. \n[Command Reference](listVolumeGroupReplicas)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ACTIVATING", "TERMINATING", "TERMINATED", "FAULTY"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeGroupReplica]'})
+@cli_util.wrap_exceptions
+def list_volume_group_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_volume_group_replicas,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_volume_group_replicas,
+            limit,
+            page_size,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_volume_group_replicas(
+            availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
@@ -3821,28 +4031,34 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--volume-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs for the volumes in this volume group.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be updated to have in the specified destination availability domains.
+
+This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--preserve-volume-replica', type=click.BOOL, help=u"""Specifies whether to disable or preserve the individual volume replication when removing a volume from the replication enabled volume group. When set to `true`, the individual volume replica is preserved. The default value is `true`.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-ids': {'module': 'core', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-ids': {'module': 'core', 'class': 'list[string]'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-ids': {'module': 'core', 'class': 'list[string]'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_id, defined_tags, display_name, freeform_tags, volume_ids, if_match):
+def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_id, defined_tags, display_name, freeform_tags, volume_ids, volume_group_replicas, if_match, preserve_volume_replica):
 
     if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or volume_ids:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and volume-ids will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or volume_ids or volume_group_replicas:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and volume-ids and volume-group-replicas will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if preserve_volume_replica is not None:
+        kwargs['preserve_volume_replica'] = preserve_volume_replica
 
     _details = {}
 
@@ -3857,6 +4073,9 @@ def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if volume_ids is not None:
         _details['volumeIds'] = cli_util.parse_json_parameter("volume_ids", volume_ids)
+
+    if volume_group_replicas is not None:
+        _details['volumeGroupReplicas'] = cli_util.parse_json_parameter("volume_group_replicas", volume_group_replicas)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_group(

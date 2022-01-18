@@ -182,6 +182,8 @@ def create_cluster(ctx, **kwargs):
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate nodes for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @json_skeleton_utils.get_cli_json_input_option(
     {'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
@@ -219,6 +221,14 @@ def create_node_pool(ctx, **kwargs):
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
 
+    if kwargs.get('kms_key_id'):
+        kwargs['node_config_details']['kmsKeyId'] = kwargs.get('kms_key_id')
+    kwargs.pop('kms_key_id', None)
+
+    if kwargs.get('is_pv_encryption_in_transit_enabled'):
+        kwargs['node_config_details']['isPvEncryptionInTransitEnabled'] = kwargs.get('is_pv_encryption_in_transit_enabled')
+    kwargs.pop('is_pv_encryption_in_transit_enabled', None)
+
     if kwargs.get('node_source_details') and (kwargs.get('node_image_id') or kwargs.get('node_boot_volume_size_in_gbs')):
         raise click.UsageError(
             'Cannot specify --node-source-details with any of: --node-image-id or --node-boot-volume-size-in-gbs'
@@ -250,6 +260,8 @@ def create_node_pool(ctx, **kwargs):
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate nodes for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @json_skeleton_utils.get_cli_json_input_option(
     {'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
      'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
@@ -285,6 +297,14 @@ def update_node_pool(ctx, **kwargs):
         kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
+
+    if kwargs.get('kms_key_id') is not None:
+        kwargs['node_config_details']['kmsKeyId'] = kwargs.get('kms_key_id')
+    kwargs.pop('kms_key_id', None)
+
+    if kwargs.get('is_pv_encryption_in_transit_enabled') is not None:
+        kwargs['node_config_details']['isPvEncryptionInTransitEnabled'] = kwargs.get('is_pv_encryption_in_transit_enabled')
+    kwargs.pop('is_pv_encryption_in_transit_enabled', None)
 
     ctx.invoke(containerengine_cli.update_node_pool, **kwargs)
 
