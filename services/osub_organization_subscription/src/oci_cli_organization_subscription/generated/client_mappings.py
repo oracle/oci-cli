@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.visual_builder import VbInstanceClient
+from oci.osub_organization_subscription import OrganizationSubscriptionClient
 
-MODULE_TO_TYPE_MAPPINGS["visual_builder"] = oci.visual_builder.models.visual_builder_type_mapping
-if CLIENT_MAP.get("visual_builder") is None:
-    CLIENT_MAP["visual_builder"] = {}
-CLIENT_MAP["visual_builder"]["vb_instance"] = VbInstanceClient
+MODULE_TO_TYPE_MAPPINGS["osub_organization_subscription"] = oci.osub_organization_subscription.models.osub_organization_subscription_type_mapping
+if CLIENT_MAP.get("osub_organization_subscription") is None:
+    CLIENT_MAP["osub_organization_subscription"] = {}
+CLIENT_MAP["osub_organization_subscription"]["organization_subscription"] = OrganizationSubscriptionClient

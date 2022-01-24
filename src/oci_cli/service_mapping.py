@@ -303,6 +303,22 @@ service_mapping = {
         "osp_gateway",
         "Billing Center Gateway"
     ],
+    "osub-billing-schedule": [
+        "osub_billing_schedule",
+        "OneSubscription  Billing Schedule"
+    ],
+    "osub-organization-subscription": [
+        "osub_organization_subscription",
+        "OneSubscription Gateway  Organization's Subscription"
+    ],
+    "osub-subscription": [
+        "osub_subscription",
+        "OneSubscription  Subscription, Commitment and and Rate Card Details"
+    ],
+    "osub-usage": [
+        "osub_usage",
+        "OneSubscription  Usage Computation"
+    ],
     "resource-manager": [
         "resource_manager",
         "Resource Manager"
