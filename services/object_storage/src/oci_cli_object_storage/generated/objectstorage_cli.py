@@ -216,7 +216,9 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.copy_object.command_name', 'copy'), help=u"""Creates a request to copy an object within a region or to another region. \n[Command Reference](copyObject)""")
+@object_group.command(name=cli_util.override('os.copy_object.command_name', 'copy'), help=u"""Creates a request to copy an object within a region or to another region.
+
+See [Object Names] for object naming requirements. \n[Command Reference](copyObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--source-object-name', required=True, help=u"""The name of the object to be copied.""")
@@ -394,7 +396,9 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
     cli_util.render_response(result, ctx)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.create_multipart_upload.command_name', 'create'), help=u"""Starts a new multipart upload to a specific object in the given bucket in the given namespace. \n[Command Reference](createMultipartUpload)""")
+@multipart_upload_group.command(name=cli_util.override('os.create_multipart_upload.command_name', 'create'), help=u"""Starts a new multipart upload to a specific object in the given bucket in the given namespace.
+
+See [Object Names] for object naming requirements. \n[Command Reference](createMultipartUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object', required=True, help=u"""The name of the object to which this multi-part upload is targeted. Avoid entering confidential information. Example: test/object1.log""")
@@ -1931,7 +1935,7 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
-@cli_util.option('--expect', help=u"""100-continue""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
@@ -2477,7 +2481,7 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
-@cli_util.option('--expect', help=u"""100-continue""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")

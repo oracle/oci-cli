@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.visual_builder import VbInstanceClient
+from oci.osub_usage import ComputedUsageClient
 
-MODULE_TO_TYPE_MAPPINGS["visual_builder"] = oci.visual_builder.models.visual_builder_type_mapping
-if CLIENT_MAP.get("visual_builder") is None:
-    CLIENT_MAP["visual_builder"] = {}
-CLIENT_MAP["visual_builder"]["vb_instance"] = VbInstanceClient
+MODULE_TO_TYPE_MAPPINGS["osub_usage"] = oci.osub_usage.models.osub_usage_type_mapping
+if CLIENT_MAP.get("osub_usage") is None:
+    CLIENT_MAP["osub_usage"] = {}
+CLIENT_MAP["osub_usage"]["computed_usage"] = ComputedUsageClient

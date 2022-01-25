@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.4.4 - 2022-01-25
+------------------
+Added
+~~~~~
+
+* Below services were added to support the Account Management finance data
+
+  * One Subscription Billing Schedule service
+
+    * ``oci osub-billing-schedule billing-schedule-summary``
+
+  * One Subscription Subscription service
+
+    * ``oci osub-subscription commitment``
+    * ``oci osub-subscription ratecard``
+    * ``oci osub-subscription subscription``
+
+  * One Subscription Usage service
+
+    * ``oci osub-usage computed-usage``
+    * ``oci osub-usage computed-usage-aggregated-summary``
+
+  * One Subscription Organization subscription service
+
+    * ``oci osub-organization-subscription subscription``
+
+* Support for new field 'type' to specify if a run or application is streaming or batch in the Data Flow service
+
+  * ``oci data-flow application create --type``
+  * ``oci data-flow run create --type``
+  * ``oci data-flow run submit --type``
+
 3.4.3 - 2022-01-18
 ------------------
 Added

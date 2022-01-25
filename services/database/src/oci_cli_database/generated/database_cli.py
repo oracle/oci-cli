@@ -749,7 +749,7 @@ def change_autonomous_database_compartment(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.change_autonomous_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves the Autonomous Exadata Infrastructure resource and its dependent resources to the specified compartment. For more information, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeAutonomousExadataInfrastructureCompartment)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.change_autonomous_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""**Deprecated.** Use the [ChangeCloudExadataInfrastructureCompartment] operation to move an Exadata infrastructure resource to a different compartment and  [ChangeCloudAutonomousVmClusterCompartment] operation to move an Autonomous Exadata VM cluster to a different compartment. For more information, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeAutonomousExadataInfrastructureCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -814,7 +814,7 @@ def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@autonomous_vm_cluster_group.command(name=cli_util.override('db.change_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""To move an Autonomous VM cluster and its dependent resources to another compartment, use the [ChangeAutonomousVmClusterCompartment] operation. \n[Command Reference](changeAutonomousVmClusterCompartment)""")
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.change_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves an Autonomous VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud@Customer  only. For systems in the Oracle cloud, see [ChangeAutonomousVmClusterCompartment]. \n[Command Reference](changeAutonomousVmClusterCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Autonomous VM cluster to.""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -944,7 +944,7 @@ def change_backup_destination_compartment(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.change_cloud_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""To move a cloud Autonomous VM cluster and its dependent resources to another compartment, use the [ChangeCloudAutonomousVmClusterCompartment] operation. \n[Command Reference](changeCloudAutonomousVmClusterCompartment)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.change_cloud_autonomous_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves an Autonomous Exadata VM cluster in the Oracle cloud and its dependent resources to another compartment. For Exadata Cloud@Customer systems, see [ChangeAutonomousVmClusterCompartment]. \n[Command Reference](changeCloudAutonomousVmClusterCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1009,7 +1009,7 @@ def change_cloud_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_stat
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.change_cloud_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves a cloud Exadata infrastructure resource and its dependent resources to another compartment. Applies to Exadata Cloud Service instances only. For more information about moving resources to a different compartment, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeCloudExadataInfrastructureCompartment)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.change_cloud_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Moves a cloud Exadata infrastructure resource and its dependent resources to another compartment. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only.For more information about moving resources to a different compartment, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeCloudExadataInfrastructureCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1074,7 +1074,7 @@ def change_cloud_exadata_infrastructure_compartment(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@cloud_vm_cluster_group.command(name=cli_util.override('db.change_cloud_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a cloud VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud Service instances only. \n[Command Reference](changeCloudVmClusterCompartment)""")
+@cloud_vm_cluster_group.command(name=cli_util.override('db.change_cloud_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a cloud VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](changeCloudVmClusterCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1996,13 +1996,13 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.option('--peer-autonomous-container-database-display-name', help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
-@cli_util.option('--peer-cloud-autonomous-vm-cluster-id', help=u"""The OCID of the peer cloud Autonomous VM Cluster.""")
+@cli_util.option('--peer-cloud-autonomous-vm-cluster-id', help=u"""The [OCID] of the peer cloud Autonomous Exadata VM Cluster.""")
 @cli_util.option('--peer-autonomous-vm-cluster-id', help=u"""The [OCID] of the peer Autonomous VM cluster for Autonomous Data Guard. Required to enable Data Guard.""")
 @cli_util.option('--peer-autonomous-container-database-compartment-id', help=u"""The [OCID] of the compartment where the standby Autonomous Container Database will be created.""")
 @cli_util.option('--peer-autonomous-container-database-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--peer-db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The OCID of the Autonomous VM Cluster.""")
-@cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The OCID of the cloud Autonomous VM Cluster.""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', help=u"""The [OCID] of the cloud Autonomous Exadata VM Cluster.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
@@ -2180,7 +2180,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -2193,9 +2193,9 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DATABASE", "BACKUP_FROM_ID", "BACKUP_FROM_TIMESTAMP", "CLONE_TO_REFRESHABLE", "CROSS_REGION_DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new Autonomous Database. Use `DATABASE` for creating a new Autonomous Database by cloning an existing Autonomous Database.
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DATABASE", "BACKUP_FROM_ID", "BACKUP_FROM_TIMESTAMP", "CLONE_TO_REFRESHABLE", "CROSS_REGION_DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new Autonomous Database. Use `DATABASE` for creating a new Autonomous Database by cloning an existing Autonomous Database. Use `CROSS_REGION_DATAGUARD` to create a standby Data Guard database in another region.
 
-For Autonomous Databases on [shared Exadata infrastructure], the following cloning options are available: Use `BACKUP_FROM_ID` for creating a new Autonomous Database from a specified backup. Use `BACKUP_FROM_TIMESTAMP` for creating a point-in-time Autonomous Database clone using backups. For more information, see [Cloning an Autonomous Database].""")
+For Autonomous Databases on [shared Exadata infrastructure], the following cloning options are available: Use `BACKUP_FROM_ID` for creating a new Autonomous Database from a specified backup. Use `BACKUP_FROM_TIMESTAMP` for creating a point-in-time Autonomous Database clone using backups. For more information, see [Cloning and Moving an Autonomous Database].""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2393,7 +2393,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -2603,7 +2603,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -2817,7 +2817,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -3029,7 +3029,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -3240,7 +3240,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -3448,7 +3448,7 @@ For an update operation, if you want to delete all the IPs in the ACL, use an ar
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has Data Guard enabled.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has local (in-region) Data Guard enabled. Not applicable to cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet the resource is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC systems, do not use a subnet that overlaps with 192.168.128.0/20. - For Autonomous Database, setting this will disable public secure access to the database.
@@ -3660,7 +3660,7 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@autonomous_vm_cluster_group.command(name=cli_util.override('db.create_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates an Autonomous VM cluster for Exadata Cloud@Customer. \n[Command Reference](createAutonomousVmCluster)""")
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.create_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates an Autonomous VM cluster for Exadata Cloud@Customer. To create an Autonomous VM Cluster in the Oracle cloud, see [CreateCloudAutonomousVmCluster]. \n[Command Reference](createAutonomousVmCluster)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Autonomous VM cluster. The name does not need to be unique.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
@@ -3988,7 +3988,7 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.create_cloud_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates a cloud Autonomous VM cluster. \n[Command Reference](createCloudAutonomousVmCluster)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.create_cloud_autonomous_vm_cluster.command_name', 'create'), help=u"""Creates an Autonomous Exadata VM cluster in the Oracle cloud. For Exadata Cloud@Customer systems, see [CreateAutonomousVmCluster]. \n[Command Reference](createCloudAutonomousVmCluster)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the cloud Autonomous VM Cluster is associated with.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
@@ -4065,7 +4065,7 @@ def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.create_cloud_exadata_infrastructure.command_name', 'create'), help=u"""Creates a cloud Exadata infrastructure resource. This resource is used to create an [Exadata Cloud Service] instance. \n[Command Reference](createCloudExadataInfrastructure)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.create_cloud_exadata_infrastructure.command_name', 'create'), help=u"""Creates a cloud Exadata infrastructure resource. This resource is used to create either an [Exadata Cloud Service] instance or an Autonomous Database on dedicated Exadata infrastructure. \n[Command Reference](createCloudExadataInfrastructure)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the cloud Exadata infrastructure is located.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud Exadata infrastructure resource. The name does not need to be unique.""")
@@ -6241,7 +6241,7 @@ def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The [OCID] of the VM cluster network.""")
 @cli_util.option('--gi-version', required=True, help=u"""The Oracle Grid Infrastructure software version for the VM cluster.""")
-@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for the VM cluster. Only 1 decimal place is allowed for the fractional part.""")
+@cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to enable for the VM cluster. Only one decimal place is allowed for the fractional part.""")
 @cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The memory to be allocated in GBs.""")
 @cli_util.option('--db-node-storage-size-in-gbs', type=click.INT, help=u"""The local node storage to be allocated in GBs.""")
 @cli_util.option('--data-storage-size-in-tbs', help=u"""The data disk group size to be allocated in TBs.""")
@@ -6529,7 +6529,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@autonomous_vm_cluster_group.command(name=cli_util.override('db.delete_autonomous_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified Autonomous VM cluster in an Exadata Cloud@Customer system. \n[Command Reference](deleteAutonomousVmCluster)""")
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.delete_autonomous_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified Autonomous VM cluster in an Exadata Cloud@Customer system. To delete an Autonomous VM Cluster in the Oracle cloud, see [DeleteCloudAutonomousVmCluster]. \n[Command Reference](deleteAutonomousVmCluster)""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -6698,7 +6698,7 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.delete_cloud_autonomous_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified cloud Autonomous VM cluster. \n[Command Reference](deleteCloudAutonomousVmCluster)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.delete_cloud_autonomous_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified Autonomous Exadata VM cluster in the Oracle cloud. For Exadata Cloud@Customer systems, see [DeleteAutonomousVmCluster]. \n[Command Reference](deleteCloudAutonomousVmCluster)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -6751,7 +6751,7 @@ def delete_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.delete_cloud_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances only. \n[Command Reference](deleteCloudExadataInfrastructure)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.delete_cloud_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](deleteCloudExadataInfrastructure)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-delete-vm-clusters', type=click.BOOL, help=u"""If `true`, forces the deletion the specified cloud Exadata infrastructure resource as well as all associated VM clusters. If `false`, the cloud Exadata infrastructure resource can be deleted only if it has no associated VM clusters. Default value is `false`.""")
@@ -6807,7 +6807,7 @@ def delete_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@cloud_vm_cluster_group.command(name=cli_util.override('db.delete_cloud_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified cloud VM cluster. Applies to Exadata Cloud Service instances only. \n[Command Reference](deleteCloudVmCluster)""")
+@cloud_vm_cluster_group.command(name=cli_util.override('db.delete_cloud_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified cloud VM cluster. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](deleteCloudVmCluster)""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -9177,7 +9177,7 @@ def get_autonomous_database_wallet(ctx, from_json, autonomous_database_id):
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.get_autonomous_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Autonomous Exadata Infrastructure resource. \n[Command Reference](getAutonomousExadataInfrastructure)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.get_autonomous_exadata_infrastructure.command_name', 'get'), help=u"""**Deprecated.** Use the [GetCloudExadataInfrastructure] operation to get details of an Exadata Infrastructure resource and the [GetCloudAutonomousVmCluster] operation to get details of an Autonomous Exadata VM cluster. \n[Command Reference](getAutonomousExadataInfrastructure)""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -9219,7 +9219,7 @@ def get_autonomous_patch(ctx, from_json, autonomous_patch_id):
     cli_util.render_response(result, ctx)
 
 
-@autonomous_vm_cluster_group.command(name=cli_util.override('db.get_autonomous_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified Autonomous VM cluster for an Exadata Cloud@Customer system. \n[Command Reference](getAutonomousVmCluster)""")
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.get_autonomous_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified Autonomous VM cluster for an Exadata Cloud@Customer system. To get information about an Autonomous VM Cluster in the Oracle cloud, see [GetCloudAutonomousVmCluster]. \n[Command Reference](getAutonomousVmCluster)""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -9284,7 +9284,7 @@ def get_backup_destination(ctx, from_json, backup_destination_id):
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.get_cloud_autonomous_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified cloud Autonomous VM cluster. \n[Command Reference](getCloudAutonomousVmCluster)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.get_cloud_autonomous_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified Autonomous Exadata VM cluster in the Oracle cloud. For Exadata Cloud@Custustomer systems, see [GetAutonomousVmCluster ]. \n[Command Reference](getCloudAutonomousVmCluster)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -9306,7 +9306,7 @@ def get_cloud_autonomous_vm_cluster(ctx, from_json, cloud_autonomous_vm_cluster_
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances only. \n[Command Reference](getCloudExadataInfrastructure)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](getCloudExadataInfrastructure)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -9328,7 +9328,7 @@ def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructur
     cli_util.render_response(result, ctx)
 
 
-@cloud_vm_cluster_group.command(name=cli_util.override('db.get_cloud_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified cloud VM cluster. Applies to Exadata Cloud Service instances only. \n[Command Reference](getCloudVmCluster)""")
+@cloud_vm_cluster_group.command(name=cli_util.override('db.get_cloud_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified cloud VM cluster. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](getCloudVmCluster)""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10171,7 +10171,7 @@ def get_vm_cluster_update_history_entry(ctx, from_json, vm_cluster_id, update_hi
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.launch_autonomous_exadata_infrastructure.command_name', 'launch'), help=u"""Creates a new Autonomous Exadata Infrastructure in the specified compartment and availability domain. \n[Command Reference](launchAutonomousExadataInfrastructure)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.launch_autonomous_exadata_infrastructure.command_name', 'launch'), help=u"""**Deprecated** To create a new Autonomous Database system on dedicated Exadata Infrastructure, use the [CreateCloudExadataInfrastructure] and [CreateCloudAutonomousVmCluster] operations instead. Note that to create an Autonomous VM cluster, you must have an existing Exadata Infrastructure resource to contain the VM cluster. \n[Command Reference](launchAutonomousExadataInfrastructure)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the Autonomous Exadata Infrastructure belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the Autonomous Exadata Infrastructure is located.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the Autonomous Exadata Infrastructure is associated with.
@@ -11659,7 +11659,7 @@ def list_autonomous_db_versions(ctx, from_json, all_pages, page_size, compartmen
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_shape_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructure_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new Autonomous Exadata Infrastructure resource. The shape determines resources to allocate (CPU cores, memory and storage). \n[Command Reference](listAutonomousExadataInfrastructureShapes)""")
+@autonomous_exadata_infrastructure_shape_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructure_shapes.command_name', 'list'), help=u"""**Deprecated.** \n[Command Reference](listAutonomousExadataInfrastructureShapes)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the Availability Domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -11711,7 +11711,7 @@ def list_autonomous_exadata_infrastructure_shapes(ctx, from_json, all_pages, pag
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the Autonomous Exadata Infrastructures in the specified compartment. \n[Command Reference](listAutonomousExadataInfrastructures)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructures.command_name', 'list'), help=u"""**Deprecated.** Use the [ListCloudExadataInfrastructures] operation to list Exadata Infrastructures in the Oracle cloud and the  [ListCloudAutonomousVmClusters] operation to list Autonomous Exadata VM clusters. \n[Command Reference](listAutonomousExadataInfrastructures)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -11777,7 +11777,7 @@ def list_autonomous_exadata_infrastructures(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@autonomous_vm_cluster_group.command(name=cli_util.override('db.list_autonomous_vm_clusters.command_name', 'list'), help=u"""Gets a list of Exadata Cloud@Customer Autonomous VM clusters in the specified compartment. \n[Command Reference](listAutonomousVmClusters)""")
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.list_autonomous_vm_clusters.command_name', 'list'), help=u"""Gets a list of Exadata Cloud@Customer Autonomous VM clusters in the specified compartment. To list Autonomous VM Clusters in the Oracle Cloud, see [ListCloudAutonomousVmClusters]. \n[Command Reference](listAutonomousVmClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -11940,7 +11940,7 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.list_cloud_autonomous_vm_clusters.command_name', 'list'), help=u"""Gets a list of the Autonomous cloud VM clusters in the specified compartment. \n[Command Reference](listCloudAutonomousVmClusters)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.list_cloud_autonomous_vm_clusters.command_name', 'list'), help=u"""Lists Autonomous Exadata VM clusters in the Oracle cloud. For Exadata Cloud@Customer systems, see [ListAutonomousVmClusters]. \n[Command Reference](listCloudAutonomousVmClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--cloud-exadata-infrastructure-id', help=u"""If provided, filters the results for the specified cloud Exadata infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -12008,7 +12008,7 @@ def list_cloud_autonomous_vm_clusters(ctx, from_json, all_pages, page_size, comp
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.list_cloud_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the cloud Exadata infrastructure resources in the specified compartment. Applies to Exadata Cloud Service instances only. \n[Command Reference](listCloudExadataInfrastructures)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.list_cloud_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the cloud Exadata infrastructure resources in the specified compartment. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](listCloudExadataInfrastructures)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -12176,7 +12176,7 @@ def list_cloud_vm_cluster_updates(ctx, from_json, all_pages, page_size, cloud_vm
     cli_util.render_response(result, ctx)
 
 
-@cloud_vm_cluster_group.command(name=cli_util.override('db.list_cloud_vm_clusters.command_name', 'list'), help=u"""Gets a list of the cloud VM clusters in the specified compartment. Applies to Exadata Cloud Service instances only. \n[Command Reference](listCloudVmClusters)""")
+@cloud_vm_cluster_group.command(name=cli_util.override('db.list_cloud_vm_clusters.command_name', 'list'), help=u"""Gets a list of the cloud VM clusters in the specified compartment. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](listCloudVmClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--cloud-exadata-infrastructure-id', help=u"""If provided, filters the results for the specified cloud Exadata infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -15017,7 +15017,7 @@ def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ords_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ords-certs'), help=u"""Rotates Oracle REST Data Services (ORDS) certs for a cloud Autonomous VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterOrdsCerts)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ords_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ords-certs'), help=u"""Rotates the Oracle REST Data Services (ORDS) certificates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterOrdsCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -15076,7 +15076,7 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates SSL certs for a cloud Autonomous VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterSslCerts)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates the SSL certficates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterSslCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -15135,7 +15135,7 @@ def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state,
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.rotate_ords_certs.command_name', 'rotate-ords-certs'), help=u"""Rotates Oracle REST Data Services (ORDS) certs for an Autonomous Exadata Infrastructure resource. \n[Command Reference](rotateOrdsCerts)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.rotate_ords_certs.command_name', 'rotate-ords-certs'), help=u"""**Deprecated.** Use the [RotateCloudAutonomousVmClusterOrdsCerts] to rotate Oracle REST Data Services (ORDS) certs for an Autonomous Exadata VM cluster instead. \n[Command Reference](rotateOrdsCerts)""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -15194,7 +15194,7 @@ def rotate_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.rotate_ssl_certs.command_name', 'rotate-ssl-certs'), help=u"""Rotates SSL certs for an Autonomous Exadata Infrastructure resource. \n[Command Reference](rotateSslCerts)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.rotate_ssl_certs.command_name', 'rotate-ssl-certs'), help=u"""**Deprecated.** Use the [RotateCloudAutonomousVmClusterSslCerts] to rotate SSL certs for an Autonomous Exadata VM cluster instead. \n[Command Reference](rotateSslCerts)""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -15791,7 +15791,7 @@ def terminate_autonomous_container_database(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.terminate_autonomous_exadata_infrastructure.command_name', 'terminate'), help=u"""Terminates an Autonomous Exadata Infrastructure, which permanently deletes the infrastructure resource and any container databases and databases contained in the resource. The database data is local to the Autonomous Exadata Infrastructure and will be lost when the system is terminated. Oracle recommends that you back up any data in the Autonomous Exadata Infrastructure prior to terminating it. \n[Command Reference](terminateAutonomousExadataInfrastructure)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.terminate_autonomous_exadata_infrastructure.command_name', 'terminate'), help=u"""**Deprecated.** To terminate an Exadata Infrastructure resource in the Oracle cloud, use the [DeleteCloudExadataInfrastructure] operation. To delete an Autonomous Exadata VM cluster in the Oracle cloud, use the [DeleteCloudAutonomousVmCluster] operation. \n[Command Reference](terminateAutonomousExadataInfrastructure)""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -16088,17 +16088,25 @@ This property is applicable only to Autonomous Databases on the Exadata Cloud@Cu
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--are-primary-whitelisted-ips-used', type=click.BOOL, help=u"""This field will be null if the Autonomous Database is not Data Guard enabled or Access Control is disabled. It's value would be `TRUE` if Autonomous Database is Data Guard enabled and Access Control is enabled and if the Autonomous Database uses primary IP access control list (ACL) for standby. It's value would be `FALSE` if Autonomous Database is Data Guard enabled and Access Control is enabled and if the Autonomous Database uses different IP access control list (ACL) for standby compared to primary.""")
+@cli_util.option('--are-primary-whitelisted-ips-used', type=click.BOOL, help=u"""This field will be null if the Autonomous Database is not Data Guard enabled or Access Control is disabled. `TRUE` if the Autonomous Database has Data Guard and Access Control enabled, and the Autonomous Database uses the primary's IP access control list (ACL) for standby. `FALSE` if the Autonomous Database has Data Guard and Access Control enabled, and the Autonomous Database uses a different IP access control list (ACL) for standby compared to primary.""")
 @cli_util.option('--standby-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The client IP access control list (ACL). This feature is available for autonomous databases on [shared Exadata infrastructure] and on Exadata Cloud@Customer. Only clients connecting from an IP address included in the ACL may access the Autonomous Database instance.
 
 For shared Exadata infrastructure, this is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet or VCN OCID. Use a semicolon (;) as a deliminator between the VCN-specific subnets or IPs. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"ocid1.vcn.oc1.sea.<unique_id>\",\"ocid1.vcn.oc1.sea.<unique_id1>;1.1.1.1\",\"ocid1.vcn.oc1.sea.<unique_id2>;1.1.0.0/16\"]` For Exadata Cloud@Customer, this is an array of IP addresses or CIDR (Classless Inter-Domain Routing) notations. Example: `[\"1.1.1.1\",\"1.1.1.0/24\",\"1.1.2.25\"]`
 
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates whether to enable or disable auto scaling for the Autonomous Database OCPU core count. Setting to `true` enables auto scaling. Setting to `false` disables auto scaling. The default value is true. Auto scaling is available for databases on [shared Exadata infrastructure] only.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates whether auto scaling is enabled for the Autonomous Database OCPU core count. Setting to `TRUE` enables auto scaling. Setting to `FALSE` disables auto scaling. The default value is true. Auto scaling is available for databases on [shared Exadata infrastructure] only.""")
 @cli_util.option('--is-refreshable-clone', type=click.BOOL, help=u"""Indicates whether the Autonomous Database is a refreshable clone.""")
 @cli_util.option('--refreshable-mode', type=custom_types.CliCaseInsensitiveChoice(["AUTOMATIC", "MANUAL"]), help=u"""The refresh mode of the clone. AUTOMATIC indicates that the clone is automatically being refreshed with data from the source Autonomous Database.""")
-@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""If set to `FALSE` and `peerDbId` is specified, the specified remote region peer database is terminated. If set to `FALSE` and `peerDbId` is not specified, the peer database in the region of the source primary database terminated.""")
-@cli_util.option('--peer-db-id', help=u"""The [OCID] of the Autonomous Data Guard standby database located in a different (remote) region from the source primary Autonomous Database.""")
+@cli_util.option('--is-data-guard-enabled', type=click.BOOL, help=u"""Indicates whether the Autonomous Database has a local (in-region) standby database. Not applicable when creating a cross-region Autonomous Data Guard associations, or to Autonomous Databases using dedicated Exadata infrastructure or Exadata Cloud@Customer infrastructure.
+
+To create a local standby, set to `TRUE`. To delete a local standby, set to `FALSE`. For more information on using Autonomous Data Guard on shared Exadata infrastructure (local and cross-region) , see [About Standby Databases]
+
+To enable cross-region Autonomous Data Guard on shared Exadata infrastructure, see [CreateCrossRegionAutonomousDatabaseDataGuardDetails].
+
+To delete a cross-region standby database, provide the `peerDbId` for the standby database in a remote region, and set `isDataGuardEnabled` to `FALSE`.""")
+@cli_util.option('--peer-db-id', help=u"""The [OCID] of the Autonomous Data Guard standby database located in a different (remote) region from the source primary Autonomous Database.
+
+To create or delete a local (in-region) standby, see the `isDataGuardEnabled` parameter.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--open-mode', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "READ_WRITE"]), help=u"""The `DATABASE OPEN` mode. You can open the database in `READ_ONLY` or `READ_WRITE` mode.""")
 @cli_util.option('--permission-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "UNRESTRICTED"]), help=u"""The Autonomous Database permission level. Restricted mode allows access only to admin users.""")
@@ -16387,7 +16395,7 @@ def update_autonomous_database_wallet(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.update_autonomous_exadata_infrastructure.command_name', 'update'), help=u"""Updates the properties of an Autonomous Exadata Infrastructure, such as the CPU core count. \n[Command Reference](updateAutonomousExadataInfrastructure)""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.update_autonomous_exadata_infrastructure.command_name', 'update'), help=u"""**Deprecated.** Use the [UpdateCloudExadataInfrastructure] operation to update an Exadata Infrastructure resource and  [UpdateCloudAutonomousVmCluster] operation to update an Autonomous Exadata VM cluster. \n[Command Reference](updateAutonomousExadataInfrastructure)""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--display-name', help=u"""The display name is a user-friendly name for the Autonomous Exadata Infrastructure. The display name does not have to be unique.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16468,7 +16476,7 @@ def update_autonomous_exadata_infrastructure(ctx, from_json, force, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@autonomous_vm_cluster_group.command(name=cli_util.override('db.update_autonomous_vm_cluster.command_name', 'update'), help=u"""Updates the specified Autonomous VM cluster for the Exadata Cloud@Customer system. \n[Command Reference](updateAutonomousVmCluster)""")
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.update_autonomous_vm_cluster.command_name', 'update'), help=u"""Updates the specified Autonomous VM cluster for the Exadata Cloud@Customer system.To update an Autonomous VM Cluster in the Oracle cloud, see [UpdateCloudAutonomousVmCluster]. \n[Command Reference](updateAutonomousVmCluster)""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Autonomous VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -16636,7 +16644,7 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.update_cloud_autonomous_vm_cluster.command_name', 'update'), help=u"""Updates the specified cloud VM cluster. \n[Command Reference](updateCloudAutonomousVmCluster)""")
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.update_cloud_autonomous_vm_cluster.command_name', 'update'), help=u"""Updates the specified Autonomous Exadata VM cluster in the Oracle cloud. For Exadata Cloud@Customer systems, see [UpdateAutonomousVmCluster]. \n[Command Reference](updateCloudAutonomousVmCluster)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
@@ -16722,7 +16730,7 @@ def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.update_cloud_exadata_infrastructure.command_name', 'update'), help=u"""Updates the Cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances only. \n[Command Reference](updateCloudExadataInfrastructure)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.update_cloud_exadata_infrastructure.command_name', 'update'), help=u"""Updates the Cloud Exadata infrastructure resource. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](updateCloudExadataInfrastructure)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud Exadata infrastructure. The name does not need to be unique.""")
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16814,7 +16822,7 @@ def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@cloud_vm_cluster_group.command(name=cli_util.override('db.update_cloud_vm_cluster.command_name', 'update'), help=u"""Updates the specified cloud VM cluster. Applies to Exadata Cloud Service instances only. \n[Command Reference](updateCloudVmCluster)""")
+@cloud_vm_cluster_group.command(name=cli_util.override('db.update_cloud_vm_cluster.command_name', 'update'), help=u"""Updates the specified cloud VM cluster. Applies to Exadata Cloud Service instances and Autonomous Database on dedicated Exadata infrastructure only. \n[Command Reference](updateCloudVmCluster)""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud VM cluster. The name does not need to be unique.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to enable for the cloud VM cluster.""")
