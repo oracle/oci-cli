@@ -11,7 +11,7 @@ class TestClusterCreate(unittest.TestCase):
         pass
 
     def test_cluster_create_error_with_public_ip_enabled_and_missing_subnet_id(self):
-        result = util.invoke_command(['ce', 'cluster', 'create', '--compartment-id', 'compartment', '--name', 'name', '--kubernetes-version', 'version', '--vcn-id', 'id', '--endpoint-public-ip-enabled', 'false'])
+        result = util.invoke_command(['ce', 'cluster', 'create', '--compartment-id', 'compartment', '--name', 'name', '--defined-tags', 'definedTags', '--freeform-tags', 'freeformTags', '--kubernetes-version', 'version', '--vcn-id', 'id', '--endpoint-public-ip-enabled', 'false'])
         assert 'UsageError' in result.output
         assert 'Cannot specify --endpoint-public-ip-enabled without --endpoint-subnet-id' in result.output
 

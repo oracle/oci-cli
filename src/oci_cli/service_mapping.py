@@ -103,6 +103,10 @@ service_mapping = {
         "core",
         "Compute Management Service"
     ],
+    "dashboard-service": [
+        "dashboard_service",
+        "Dashboards"
+    ],
     "data-catalog": [
         "data_catalog",
         "Data Catalog"

@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.marketplace.src.oci_cli_marketplace.generated import marketplace_service_cli
 
 
-@click.command(cli_util.override('account.account_root_group.command_name', 'account'), cls=CommandGroupWithAlias, help=cli_util.override('account.account_root_group.help', """Manage applications in Oracle Cloud Infrastructure Marketplace."""), short_help=cli_util.override('account.account_root_group.short_help', """Marketplace Service API"""))
+@click.command(cli_util.override('account.account_root_group.command_name', 'account'), cls=CommandGroupWithAlias, help=cli_util.override('account.account_root_group.help', """Use the Marketplace API to manage applications in Oracle Cloud Infrastructure Marketplace. For more information, see [Overview of Marketplace]"""), short_help=cli_util.override('account.account_root_group.short_help', """Marketplace Service API"""))
 @cli_util.help_option_group
 def account_root_group():
     pass

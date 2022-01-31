@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.4.5 - 2022-02-01
+------------------
+Added
+~~~~~
+* Support for the Console Dashboard service
+
+  * ``oci dashboard-service dashboard-group``
+  * ``oci dashboard-service dashboard``
+
+* Support for fetching listings by image OCID in the Marketplace service
+
+  * ``oci marketplace listing list --image-id``
+
+* Container Engine for Kubernetes (OKE) Service
+
+    * Support for capacity reservation
+
+      * ``oci ce node-pool create --placement-configs``
+      * ``oci ce node-pool update --placement-configs``
+
+    * Support for Tagging features
+
+      * ``oci ce cluster create --defined-tags, --freeform-tags  --persistent-volume-defined-tags, --persistent-volume-freeform-tags, --service-lb-defined-tags, --service-lb-freeform-tags``
+      * ``oci ce cluster update --defined-tags, --freeform-tags``
+      * ``oci ce node-pool create --defined-tags, --freeform-tags, --node-defined-tags, --node-freeform-tags``
+      * ``oci ce node-pool update --defined-tags, --freeform-tags, --node-defined-tags, --node-freeform-tags``
+
 3.4.4 - 2022-01-25
 ------------------
 Added

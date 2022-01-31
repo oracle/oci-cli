@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.marketplace.src.oci_cli_marketplace.generated import marketplace_service_cli
 
 
-@click.command(cli_util.override('marketplace.marketplace_root_group.command_name', 'marketplace'), cls=CommandGroupWithAlias, help=cli_util.override('marketplace.marketplace_root_group.help', """Manage applications in Oracle Cloud Infrastructure Marketplace."""), short_help=cli_util.override('marketplace.marketplace_root_group.short_help', """Marketplace Service API"""))
+@click.command(cli_util.override('marketplace.marketplace_root_group.command_name', 'marketplace'), cls=CommandGroupWithAlias, help=cli_util.override('marketplace.marketplace_root_group.help', """Use the Marketplace API to manage applications in Oracle Cloud Infrastructure Marketplace. For more information, see [Overview of Marketplace]"""), short_help=cli_util.override('marketplace.marketplace_root_group.short_help', """Marketplace Service API"""))
 @cli_util.help_option_group
 def marketplace_root_group():
     pass
@@ -820,6 +820,7 @@ Subscribing to the listing requires you to first get a signature from the terms 
 To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](listListings)""")
 @cli_util.option('--name', multiple=True, help=u"""The name of the listing.""")
 @cli_util.option('--listing-id', help=u"""The unique identifier for the listing.""")
+@cli_util.option('--image-id', help=u"""Image ID of the listing""")
 @cli_util.option('--publisher-id', help=u"""Limit results to just this publisher.""")
 @cli_util.option('--package-type', help=u"""A filter to return only packages that match the given package type exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
@@ -839,7 +840,7 @@ To get the image ID to launch an instance, issue a [GetAppCatalogListingResource
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'marketplace', 'class': 'list[string]'}, 'category': {'module': 'marketplace', 'class': 'list[string]'}, 'operating-systems': {'module': 'marketplace', 'class': 'list[string]'}}, output_type={'module': 'marketplace', 'class': 'list[ListingSummary]'})
 @cli_util.wrap_exceptions
-def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, publisher_id, package_type, limit, page, sort_by, sort_order, category, pricing, is_featured, listing_types, operating_systems, compartment_id):
+def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, image_id, publisher_id, package_type, limit, page, sort_by, sort_order, category, pricing, is_featured, listing_types, operating_systems, compartment_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -849,6 +850,8 @@ def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, publis
         kwargs['name'] = name
     if listing_id is not None:
         kwargs['listing_id'] = listing_id
+    if image_id is not None:
+        kwargs['image_id'] = image_id
     if publisher_id is not None:
         kwargs['publisher_id'] = publisher_id
     if package_type is not None:
@@ -1181,7 +1184,7 @@ def list_report_types(ctx, from_json, all_pages, compartment_id, page):
 
 @report_collection_group.command(name=cli_util.override('marketplace.list_reports.command_name', 'list-reports'), help=u"""Lists reports in the compartment that match the specified report type and date. \n[Command Reference](listReports)""")
 @cli_util.option('--report-type', required=True, help=u"""The type of the report.""")
-@cli_util.option('--date', required=True, type=custom_types.CLI_DATETIME, help=u"""Date, expressed in `YYYYMMDD` format, where `Y` represents the year, `M` represents the month, and `D` represents the day.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--date', required=True, type=custom_types.CLI_DATETIME, help=u"""Date, expressed in [RFC 3339] timestamp format. The service only interprets the year, month, and day parts in the input value, and ignores the hour, minute, and second parts.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -1241,9 +1244,9 @@ def list_taxes(ctx, from_json, all_pages, listing_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@listing_summary_group.command(name=cli_util.override('marketplace.search_listings.command_name', 'search-listings'), help=u"""Find listings that match the specified criteria. The search query could be free text or structured. \n[Command Reference](searchListings)""")
+@listing_summary_group.command(name=cli_util.override('marketplace.search_listings.command_name', 'search-listings'), help=u"""Queries all Marketplace Applications to find listings that match the specified criteria. To search for a listing, you can use a free text or structured search. \n[Command Reference](searchListings)""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FreeText", "Structured"]), help=u"""The type of SearchDetails, whether FreeText or Structured.""")
-@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response.""")
+@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify HIGHLIGHTS, then the service will highlight fragments in its response. The default value is NONE.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1274,9 +1277,9 @@ def search_listings(ctx, from_json, type, matching_context_type, page, limit):
     cli_util.render_response(result, ctx)
 
 
-@listing_summary_group.command(name=cli_util.override('marketplace.search_listings_structured_search_details.command_name', 'search-listings-structured-search-details'), help=u"""Find listings that match the specified criteria. The search query could be free text or structured. \n[Command Reference](searchListings)""")
+@listing_summary_group.command(name=cli_util.override('marketplace.search_listings_structured_search_details.command_name', 'search-listings-structured-search-details'), help=u"""Queries all Marketplace Applications to find listings that match the specified criteria. To search for a listing, you can use a free text or structured search. \n[Command Reference](searchListings)""")
 @cli_util.option('--query-parameterconflict', required=True, help=u"""The structured query describing which resources to search for.""")
-@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response.""")
+@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify HIGHLIGHTS, then the service will highlight fragments in its response. The default value is NONE.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1309,9 +1312,9 @@ def search_listings_structured_search_details(ctx, from_json, query_parametercon
     cli_util.render_response(result, ctx)
 
 
-@listing_summary_group.command(name=cli_util.override('marketplace.search_listings_free_text_search_details.command_name', 'search-listings-free-text-search-details'), help=u"""Find listings that match the specified criteria. The search query could be free text or structured. \n[Command Reference](searchListings)""")
+@listing_summary_group.command(name=cli_util.override('marketplace.search_listings_free_text_search_details.command_name', 'search-listings-free-text-search-details'), help=u"""Queries all Marketplace Applications to find listings that match the specified criteria. To search for a listing, you can use a free text or structured search. \n[Command Reference](searchListings)""")
 @cli_util.option('--text', required=True, help=u"""The text to search for.""")
-@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response.""")
+@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify HIGHLIGHTS, then the service will highlight fragments in its response. The default value is NONE.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @json_skeleton_utils.get_cli_json_input_option({})
