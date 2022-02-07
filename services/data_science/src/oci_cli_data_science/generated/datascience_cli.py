@@ -51,6 +51,12 @@ def project_group():
     pass
 
 
+@click.command(cli_util.override('data_science.fast_launch_job_config_group.command_name', 'fast-launch-job-config'), cls=CommandGroupWithAlias, help="""The shape config to launch a fast launch capable job instance""")
+@cli_util.help_option_group
+def fast_launch_job_config_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.model_group.command_name', 'model'), cls=CommandGroupWithAlias, help="""Models are mathematical representations of the relationships between data. Models are represented by their associated metadata and artifacts.""")
 @cli_util.help_option_group
 def model_group():
@@ -86,6 +92,7 @@ data_science_root_group.add_command(job_shape_group)
 data_science_root_group.add_command(model_deployment_group)
 data_science_root_group.add_command(job_run_group)
 data_science_root_group.add_command(project_group)
+data_science_root_group.add_command(fast_launch_job_config_group)
 data_science_root_group.add_command(model_group)
 data_science_root_group.add_command(work_request_group)
 data_science_root_group.add_command(job_group)
@@ -2177,6 +2184,58 @@ def head_model_artifact(ctx, from_json, model_id):
     cli_util.render_response(result, ctx)
 
 
+@fast_launch_job_config_group.command(name=cli_util.override('data_science.list_fast_launch_job_configs.command_name', 'list'), help=u"""List fast launch capable job configs in the specified compartment. \n[Command Reference](listFastLaunchJobConfigs)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[FastLaunchJobConfigSummary]'})
+@cli_util.wrap_exceptions
+def list_fast_launch_job_configs(ctx, from_json, all_pages, page_size, compartment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_fast_launch_job_configs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_fast_launch_job_configs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_fast_launch_job_configs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @job_run_group.command(name=cli_util.override('data_science.list_job_runs.command_name', 'list'), help=u"""List out job runs. \n[Command Reference](listJobRuns)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
@@ -3206,7 +3265,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment.command_name', 'update'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment\u2019s lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
+@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment.command_name', 'update'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
 @cli_util.option('--description', help=u"""A short description of the model deployment.""")
@@ -3290,7 +3349,7 @@ def update_model_deployment(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_single_model_deployment_configuration_details.command_name', 'update-model-deployment-update-single-model-deployment-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment\u2019s lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
+@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_single_model_deployment_configuration_details.command_name', 'update-model-deployment-update-single-model-deployment-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
 @cli_util.option('--description', help=u"""A short description of the model deployment.""")

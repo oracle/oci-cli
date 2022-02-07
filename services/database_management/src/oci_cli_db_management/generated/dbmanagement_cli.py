@@ -119,12 +119,6 @@ def job_group():
     pass
 
 
-@click.command(cli_util.override('db_management.user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""The summary of a specific User.""")
-@cli_util.help_option_group
-def user_group():
-    pass
-
-
 database_management_service_cli.database_management_service_group.add_command(db_management_root_group)
 db_management_root_group.add_command(cluster_cache_metric_group)
 db_management_root_group.add_command(work_request_log_entry_group)
@@ -142,7 +136,73 @@ db_management_root_group.add_command(job_run_group)
 db_management_root_group.add_command(job_execution_group)
 db_management_root_group.add_command(associated_database_summary_group)
 db_management_root_group.add_command(job_group)
-db_management_root_group.add_command(user_group)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.add_data_files.command_name', 'add'), help=u"""Adds data files or temp files to the tablespace. \n[Command Reference](addDataFiles)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-files', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of data files or temp files added to the tablespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--file-count', type=click.INT, help=u"""The number of data files or temp files to be added for the tablespace. This is for Oracle Managed Files only.""")
+@cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of each data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-reusable', type=click.BOOL, help=u"""Specifies whether Oracle can reuse the data file or temp file. Reuse is only allowed when the file name is provided.""")
+@cli_util.option('--is-auto-extensible', type=click.BOOL, help=u"""Specifies whether the data file or temp file can be extended automatically.""")
+@cli_util.option('--auto-extend-next-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the next increment of disk space to be allocated automatically when more extents are required.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auto-extend-max-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The maximum disk space allowed for automatic extension of the data files or temp files.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def add_data_files(ctx, from_json, managed_database_id, tablespace_name, credential_details, file_type, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['fileType'] = file_type
+
+    if data_files is not None:
+        _details['dataFiles'] = cli_util.parse_json_parameter("data_files", data_files)
+
+    if file_count is not None:
+        _details['fileCount'] = file_count
+
+    if file_size is not None:
+        _details['fileSize'] = cli_util.parse_json_parameter("file_size", file_size)
+
+    if is_reusable is not None:
+        _details['isReusable'] = is_reusable
+
+    if is_auto_extensible is not None:
+        _details['isAutoExtensible'] = is_auto_extensible
+
+    if auto_extend_next_size is not None:
+        _details['autoExtendNextSize'] = cli_util.parse_json_parameter("auto_extend_next_size", auto_extend_next_size)
+
+    if auto_extend_max_size is not None:
+        _details['autoExtendMaxSize'] = cli_util.parse_json_parameter("auto_extend_max_size", auto_extend_max_size)
+
+    if is_max_size_unlimited is not None:
+        _details['isMaxSizeUnlimited'] = is_max_size_unlimited
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.add_data_files(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        add_data_files_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @managed_database_group_group.command(name=cli_util.override('db_management.add_managed_database_to_managed_database_group.command_name', 'add'), help=u"""Adds a Managed Database to a specific Managed Database Group. After the database is added, it will be included in the management activities performed on the Managed Database Group. \n[Command Reference](addManagedDatabaseToManagedDatabaseGroup)""")
@@ -706,6 +766,112 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@tablespace_group.command(name=cli_util.override('db_management.create_tablespace.command_name', 'create'), help=u"""Creates a tablespace within the Managed Database specified by managedDatabaseId. \n[Command Reference](createTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""The name of the tablespace. It must be unique within a database.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PERMANENT", "TEMPORARY"]), help=u"""The type of tablespace.""")
+@cli_util.option('--is-bigfile', type=click.BOOL, help=u"""Specifies whether the tablespace is a bigfile or smallfile tablespace. A bigfile tablespace contains only one data file or temp file, which can contain up to approximately 4 billion (232) blocks. A smallfile tablespace is a traditional Oracle tablespace, which can contain 1022 data files or temp files, each of which can contain up to approximately 4 million (222) blocks.""")
+@cli_util.option('--data-files', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of data files or temp files created for the tablespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--file-count', type=click.INT, help=u"""The number of data files or temp files created for the tablespace. This is for Oracle Managed Files only.""")
+@cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of each data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-reusable', type=click.BOOL, help=u"""Specifies whether Oracle can reuse the data file or temp file. Reuse is only allowed when the file name is provided.""")
+@cli_util.option('--is-auto-extensible', type=click.BOOL, help=u"""Specifies whether the data file or temp file can be extended automatically.""")
+@cli_util.option('--auto-extend-next-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the next increment of disk space to be allocated automatically when more extents are required.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auto-extend-max-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The maximum disk space allowed for automatic extension of the data files or temp files.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
+@cli_util.option('--block-size-in-kilobytes', type=click.INT, help=u"""Block size for the tablespace.""")
+@cli_util.option('--is-encrypted', type=click.BOOL, help=u"""Indicates whether the tablespace is encrypted.""")
+@cli_util.option('--encryption-algorithm', help=u"""The name of the encryption algorithm to be used for tablespace encryption.""")
+@cli_util.option('--default-compress', type=custom_types.CliCaseInsensitiveChoice(["NO_COMPRESS", "BASIC_COMPRESS"]), help=u"""The default compression of data for all tables created in the tablespace.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "READ_WRITE"]), help=u"""The status of the tablespace.""")
+@cli_util.option('--extent-management', type=custom_types.CliCaseInsensitiveChoice(["AUTOALLOCATE", "UNIFORM"]), help=u"""Specifies how the extents of the tablespace should be managed.""")
+@cli_util.option('--extent-uniform-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the extent when the tablespace is managed with uniform extents of a specific size.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--segment-management', type=custom_types.CliCaseInsensitiveChoice(["AUTO", "MANUAL"]), help=u"""Specifies whether tablespace segment management should be automatic or manual.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""Specifies whether the tablespace is the default tablespace.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'extent-uniform-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'extent-uniform-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'Tablespace'})
+@cli_util.wrap_exceptions
+def create_tablespace(ctx, from_json, managed_database_id, credential_details, name, type, is_bigfile, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, block_size_in_kilobytes, is_encrypted, encryption_algorithm, default_compress, status, extent_management, extent_uniform_size, segment_management, is_default):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['name'] = name
+
+    if type is not None:
+        _details['type'] = type
+
+    if is_bigfile is not None:
+        _details['isBigfile'] = is_bigfile
+
+    if data_files is not None:
+        _details['dataFiles'] = cli_util.parse_json_parameter("data_files", data_files)
+
+    if file_count is not None:
+        _details['fileCount'] = file_count
+
+    if file_size is not None:
+        _details['fileSize'] = cli_util.parse_json_parameter("file_size", file_size)
+
+    if is_reusable is not None:
+        _details['isReusable'] = is_reusable
+
+    if is_auto_extensible is not None:
+        _details['isAutoExtensible'] = is_auto_extensible
+
+    if auto_extend_next_size is not None:
+        _details['autoExtendNextSize'] = cli_util.parse_json_parameter("auto_extend_next_size", auto_extend_next_size)
+
+    if auto_extend_max_size is not None:
+        _details['autoExtendMaxSize'] = cli_util.parse_json_parameter("auto_extend_max_size", auto_extend_max_size)
+
+    if is_max_size_unlimited is not None:
+        _details['isMaxSizeUnlimited'] = is_max_size_unlimited
+
+    if block_size_in_kilobytes is not None:
+        _details['blockSizeInKilobytes'] = block_size_in_kilobytes
+
+    if is_encrypted is not None:
+        _details['isEncrypted'] = is_encrypted
+
+    if encryption_algorithm is not None:
+        _details['encryptionAlgorithm'] = encryption_algorithm
+
+    if default_compress is not None:
+        _details['defaultCompress'] = default_compress
+
+    if status is not None:
+        _details['status'] = status
+
+    if extent_management is not None:
+        _details['extentManagement'] = extent_management
+
+    if extent_uniform_size is not None:
+        _details['extentUniformSize'] = cli_util.parse_json_parameter("extent_uniform_size", extent_uniform_size)
+
+    if segment_management is not None:
+        _details['segmentManagement'] = segment_management
+
+    if is_default is not None:
+        _details['isDefault'] = is_default
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_tablespace(
+        managed_database_id=managed_database_id,
+        create_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.delete_db_management_private_endpoint.command_name', 'delete'), help=u"""Deletes a specific Database Management private endpoint. \n[Command Reference](deleteDbManagementPrivateEndpoint)""")
 @cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -883,6 +1049,155 @@ def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.drop_tablespace.command_name', 'drop'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if is_including_contents is not None:
+        _details['isIncludingContents'] = is_including_contents
+
+    if is_dropping_data_files is not None:
+        _details['isDroppingDataFiles'] = is_dropping_data_files
+
+    if is_cascade_constraints is not None:
+        _details['isCascadeConstraints'] = is_cascade_constraints
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        drop_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.drop_tablespace_tablespace_admin_password_credential_details.command_name', 'drop-tablespace-tablespace-admin-password-credential-details'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
+@cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['credentialDetails']['username'] = credential_details_username
+    _details['credentialDetails']['role'] = credential_details_role
+    _details['credentialDetails']['password'] = credential_details_password
+
+    if is_including_contents is not None:
+        _details['isIncludingContents'] = is_including_contents
+
+    if is_dropping_data_files is not None:
+        _details['isDroppingDataFiles'] = is_dropping_data_files
+
+    if is_cascade_constraints is not None:
+        _details['isCascadeConstraints'] = is_cascade_constraints
+
+    _details['credentialDetails']['tablespaceAdminCredentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        drop_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.drop_tablespace_tablespace_admin_secret_credential_details.command_name', 'drop-tablespace-tablespace-admin-secret-credential-details'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
+@cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password_secret_id, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['credentialDetails']['username'] = credential_details_username
+    _details['credentialDetails']['role'] = credential_details_role
+    _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if is_including_contents is not None:
+        _details['isIncludingContents'] = is_including_contents
+
+    if is_dropping_data_files is not None:
+        _details['isDroppingDataFiles'] = is_dropping_data_files
+
+    if is_cascade_constraints is not None:
+        _details['isCascadeConstraints'] = is_cascade_constraints
+
+    _details['credentialDetails']['tablespaceAdminCredentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        drop_tablespace_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1248,7 +1563,34 @@ def get_pdb_metrics(ctx, from_json, managed_database_id, start_time, end_time, c
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('db_management.get_user.command_name', 'get'), help=u"""Gets the details of a specific user for the specified managedDatabaseId and userName. \n[Command Reference](getUser)""")
+@tablespace_group.command(name=cli_util.override('db_management.get_tablespace.command_name', 'get'), help=u"""Gets the details of the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](getTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'Tablespace'})
+@cli_util.wrap_exceptions
+def get_tablespace(ctx, from_json, managed_database_id, tablespace_name):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.get_user.command_name', 'get-user'), help=u"""Gets the details of the user specified by managedDatabaseId and userName. \n[Command Reference](getUser)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1294,6 +1636,66 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.list_asm_properties.command_name', 'list-asm-properties'), help=u"""Gets the list of ASM properties for the specified managedDatabaseId. \n[Command Reference](listAsmProperties)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AsmPropertyCollection'})
+@cli_util.wrap_exceptions
+def list_asm_properties(ctx, from_json, all_pages, page_size, managed_database_id, name, sort_by, sort_order, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_asm_properties,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_asm_properties,
+            limit,
+            page_size,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_asm_properties(
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1506,7 +1908,7 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_consumer_group_privileges.command_name', 'list-consumer-group-privileges'), help=u"""Gets the list of Consumer Group Privileges granted for the specified user. \n[Command Reference](listConsumerGroupPrivileges)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_consumer_group_privileges.command_name', 'list-consumer-group-privileges'), help=u"""Gets the list of consumer group privileges granted to a specific user. \n[Command Reference](listConsumerGroupPrivileges)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -1573,7 +1975,7 @@ def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_data_access_containers.command_name', 'list-data-access-containers'), help=u"""Gets the list of Containers if it does not apply to all containers for the specified user. \n[Command Reference](listDataAccessContainers)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_data_access_containers.command_name', 'list-data-access-containers'), help=u"""Gets the list of containers for a specific user. This is only applicable if ALL_CONTAINERS !='Y'. \n[Command Reference](listDataAccessContainers)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -2089,7 +2491,7 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_object_privileges.command_name', 'list-object-privileges'), help=u"""Gets the list of Object Privileges granted for the specified user. \n[Command Reference](listObjectPrivileges)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_object_privileges.command_name', 'list-object-privileges'), help=u"""Gets the list of object privileges granted to a specific user. \n[Command Reference](listObjectPrivileges)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -2156,7 +2558,7 @@ def list_object_privileges(ctx, from_json, all_pages, page_size, managed_databas
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_proxied_for_users.command_name', 'list-proxied-for-users'), help=u"""Gets the list of Users for which the current user acts as proxy. \n[Command Reference](listProxiedForUsers)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_proxied_for_users.command_name', 'list-proxied-for-users'), help=u"""Gets the list of users on whose behalf the current user acts as proxy. \n[Command Reference](listProxiedForUsers)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -2223,7 +2625,7 @@ def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_databas
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_proxy_users.command_name', 'list-proxy-users'), help=u"""Gets the list of proxy users for the current User. \n[Command Reference](listProxyUsers)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_proxy_users.command_name', 'list-proxy-users'), help=u"""Gets the list of proxy users for the current user. \n[Command Reference](listProxyUsers)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -2290,7 +2692,7 @@ def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, 
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_roles.command_name', 'list-roles'), help=u"""Gets the list of roles granted for the specified user. \n[Command Reference](listRoles)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_roles.command_name', 'list-roles'), help=u"""Gets the list of roles granted to a specific user. \n[Command Reference](listRoles)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -2357,7 +2759,7 @@ def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_n
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.list_system_privileges.command_name', 'list-system-privileges'), help=u"""Gets the list of System Privileges granted for the specified user. \n[Command Reference](listSystemPrivileges)""")
+@managed_database_group.command(name=cli_util.override('db_management.list_system_privileges.command_name', 'list-system-privileges'), help=u"""Gets the list of system privileges granted to a specific user. \n[Command Reference](listSystemPrivileges)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
@@ -2721,6 +3123,131 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
+@tablespace_group.command(name=cli_util.override('db_management.remove_data_file.command_name', 'remove'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, credential_details, file_type, data_file):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.remove_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        remove_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.remove_data_file_tablespace_admin_password_credential_details.command_name', 'remove-data-file-tablespace-admin-password-credential-details'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
+@cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
+@cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+    _details['credentialDetails']['username'] = credential_details_username
+    _details['credentialDetails']['role'] = credential_details_role
+    _details['credentialDetails']['password'] = credential_details_password
+
+    _details['credentialDetails']['tablespaceAdminCredentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.remove_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        remove_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.remove_data_file_tablespace_admin_secret_credential_details.command_name', 'remove-data-file-tablespace-admin-secret-credential-details'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
+@cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
+@cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password_secret_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+    _details['credentialDetails']['username'] = credential_details_username
+    _details['credentialDetails']['role'] = credential_details_role
+    _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    _details['credentialDetails']['tablespaceAdminCredentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.remove_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        remove_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group_group.command(name=cli_util.override('db_management.remove_managed_database_from_managed_database_group.command_name', 'remove'), help=u"""Removes a Managed Database from a Managed Database Group. Any management activities that are currently running on this database will continue to run to completion. However, any activities scheduled to run in the future will not be performed on this database. \n[Command Reference](removeManagedDatabaseFromManagedDatabaseGroup)""")
 @cli_util.option('--managed-database-group-id', required=True, help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
@@ -2778,6 +3305,63 @@ def reset_database_parameters(ctx, from_json, managed_database_id, credentials, 
     result = client.reset_database_parameters(
         managed_database_id=managed_database_id,
         reset_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.resize_data_file.command_name', 'resize-data-file'), help=u"""Resizes a data file or temp file within the tablespace. \n[Command Reference](resizeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be resized.""")
+@cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The new size of the data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-auto-extensible', type=click.BOOL, help=u"""Specifies whether the data file or temp file can be extended automatically.""")
+@cli_util.option('--auto-extend-next-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the next increment of disk space to be allocated automatically when more extents are required.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auto-extend-max-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The maximum disk space allowed for automatic extension of the data files or temp files.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, credential_details, file_type, data_file, file_size, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+
+    if file_size is not None:
+        _details['fileSize'] = cli_util.parse_json_parameter("file_size", file_size)
+
+    if is_auto_extensible is not None:
+        _details['isAutoExtensible'] = is_auto_extensible
+
+    if auto_extend_next_size is not None:
+        _details['autoExtendNextSize'] = cli_util.parse_json_parameter("auto_extend_next_size", auto_extend_next_size)
+
+    if auto_extend_max_size is not None:
+        _details['autoExtendMaxSize'] = cli_util.parse_json_parameter("auto_extend_max_size", auto_extend_max_size)
+
+    if is_max_size_unlimited is not None:
+        _details['isMaxSizeUnlimited'] = is_max_size_unlimited
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.resize_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        resize_data_file_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3761,4 +4345,78 @@ def update_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.update_tablespace.command_name', 'update'), help=u"""Updates the attributes of the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](updateTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""The name of the tablespace. It must be unique within a database.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PERMANENT", "TEMPORARY"]), help=u"""The type of tablespace.""")
+@cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of each data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "READ_WRITE"]), help=u"""The status of the tablespace.""")
+@cli_util.option('--is-auto-extensible', type=click.BOOL, help=u"""Specifies whether the data file or temp file can be extended automatically.""")
+@cli_util.option('--auto-extend-next-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the next increment of disk space to be allocated automatically when more extents are required.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auto-extend-max-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The maximum disk space allowed for automatic extension of the data files or temp files.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""Specifies whether the tablespace is the default tablespace.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'Tablespace'})
+@cli_util.wrap_exceptions
+def update_tablespace(ctx, from_json, force, managed_database_id, tablespace_name, credential_details, name, type, file_size, status, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, is_default):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+    if not force:
+        if credential_details or file_size or auto_extend_next_size or auto_extend_max_size:
+            if not click.confirm("WARNING: Updates to credential-details and file-size and auto-extend-next-size and auto-extend-max-size will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if name is not None:
+        _details['name'] = name
+
+    if type is not None:
+        _details['type'] = type
+
+    if file_size is not None:
+        _details['fileSize'] = cli_util.parse_json_parameter("file_size", file_size)
+
+    if status is not None:
+        _details['status'] = status
+
+    if is_auto_extensible is not None:
+        _details['isAutoExtensible'] = is_auto_extensible
+
+    if auto_extend_next_size is not None:
+        _details['autoExtendNextSize'] = cli_util.parse_json_parameter("auto_extend_next_size", auto_extend_next_size)
+
+    if auto_extend_max_size is not None:
+        _details['autoExtendMaxSize'] = cli_util.parse_json_parameter("auto_extend_max_size", auto_extend_max_size)
+
+    if is_max_size_unlimited is not None:
+        _details['isMaxSizeUnlimited'] = is_max_size_unlimited
+
+    if is_default is not None:
+        _details['isDefault'] = is_default
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        update_tablespace_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)

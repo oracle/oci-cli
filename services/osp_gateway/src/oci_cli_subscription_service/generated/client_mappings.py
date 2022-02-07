@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.dashboard_service import DashboardClient
+from oci.osp_gateway import SubscriptionServiceClient
 
-MODULE_TO_TYPE_MAPPINGS["dashboard_service"] = oci.dashboard_service.models.dashboard_service_type_mapping
-if CLIENT_MAP.get("dashboard_service") is None:
-    CLIENT_MAP["dashboard_service"] = {}
-CLIENT_MAP["dashboard_service"]["dashboard"] = DashboardClient
+MODULE_TO_TYPE_MAPPINGS["osp_gateway"] = oci.osp_gateway.models.osp_gateway_type_mapping
+if CLIENT_MAP.get("osp_gateway") is None:
+    CLIENT_MAP["osp_gateway"] = {}
+CLIENT_MAP["osp_gateway"]["subscription_service"] = SubscriptionServiceClient

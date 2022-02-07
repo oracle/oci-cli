@@ -7,30 +7,31 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.osp_gateway.src.oci_cli_osp_gateway.generated import osp_gateway_service_cli
 
 
-@cli.command(cli_util.override('osp_gateway.osp_gateway_root_group.command_name', 'osp-gateway'), cls=CommandGroupWithAlias, help=cli_util.override('osp_gateway.osp_gateway_root_group.help', """This site describes all the Rest endpoints of Billing Center Gateway."""), short_help=cli_util.override('osp_gateway.osp_gateway_root_group.short_help', """Billing Center Gateway API"""))
+@click.command(cli_util.override('invoice_service.invoice_service_root_group.command_name', 'invoice-service'), cls=CommandGroupWithAlias, help=cli_util.override('invoice_service.invoice_service_root_group.help', """This site describes all the Rest endpoints of OSP Gateway."""), short_help=cli_util.override('invoice_service.invoice_service_root_group.short_help', """OSP Gateway API"""))
 @cli_util.help_option_group
-def osp_gateway_root_group():
+def invoice_service_root_group():
     pass
 
 
-@click.command(cli_util.override('osp_gateway.invoice_group.command_name', 'invoice'), cls=CommandGroupWithAlias, help="""Invoice details""")
+@click.command(cli_util.override('invoice_service.invoice_group.command_name', 'invoice'), cls=CommandGroupWithAlias, help="""Invoice details""")
 @cli_util.help_option_group
 def invoice_group():
     pass
 
 
-osp_gateway_root_group.add_command(invoice_group)
+osp_gateway_service_cli.osp_gateway_service_group.add_command(invoice_service_root_group)
+invoice_service_root_group.add_command(invoice_group)
 
 
-@invoice_group.command(name=cli_util.override('osp_gateway.download_pdf_content.command_name', 'download-pdf-content'), help=u"""Returns an invoice in pdf format \n[Command Reference](downloadPdfContent)""")
+@invoice_group.command(name=cli_util.override('invoice_service.download_pdf_content.command_name', 'download-pdf-content'), help=u"""Returns an invoice in pdf format \n[Command Reference](downloadPdfContent)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
@@ -79,7 +80,7 @@ def download_pdf_content(ctx, from_json, file, osp_home_region, compartment_id, 
         file.close()
 
 
-@invoice_group.command(name=cli_util.override('osp_gateway.get_invoice.command_name', 'get'), help=u"""Returns an invoice by invoice id \n[Command Reference](getInvoice)""")
+@invoice_group.command(name=cli_util.override('invoice_service.get_invoice.command_name', 'get'), help=u"""Returns an invoice by invoice id \n[Command Reference](getInvoice)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
@@ -105,7 +106,7 @@ def get_invoice(ctx, from_json, osp_home_region, compartment_id, internal_invoic
     cli_util.render_response(result, ctx)
 
 
-@invoice_group.command(name=cli_util.override('osp_gateway.list_invoice_lines.command_name', 'list-invoice-lines'), help=u"""Returns the invoice product list by invoice id \n[Command Reference](listInvoiceLines)""")
+@invoice_group.command(name=cli_util.override('invoice_service.list_invoice_lines.command_name', 'list-invoice-lines'), help=u"""Returns the invoice product list by invoice id \n[Command Reference](listInvoiceLines)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
@@ -164,7 +165,7 @@ def list_invoice_lines(ctx, from_json, all_pages, page_size, osp_home_region, co
     cli_util.render_response(result, ctx)
 
 
-@invoice_group.command(name=cli_util.override('osp_gateway.list_invoices.command_name', 'list'), help=u"""Returns a list of invoices \n[Command Reference](listInvoices)""")
+@invoice_group.command(name=cli_util.override('invoice_service.list_invoices.command_name', 'list'), help=u"""Returns a list of invoices \n[Command Reference](listInvoices)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--invoice-id', help=u"""The invoice query param (not unique).""")
@@ -246,7 +247,7 @@ def list_invoices(ctx, from_json, all_pages, page_size, osp_home_region, compart
     cli_util.render_response(result, ctx)
 
 
-@invoice_group.command(name=cli_util.override('osp_gateway.pay_invoice.command_name', 'pay'), help=u"""Pay an invoice \n[Command Reference](payInvoice)""")
+@invoice_group.command(name=cli_util.override('invoice_service.pay_invoice.command_name', 'pay'), help=u"""Pay an invoice \n[Command Reference](payInvoice)""")
 @cli_util.option('--osp-home-region', required=True, help=u"""The home region's public name of the logged in user.""")
 @cli_util.option('--internal-invoice-id', required=True, help=u"""The identifier of the invoice.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")

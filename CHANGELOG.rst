@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.5.0 - 2022-02-08
+------------------
+Added
+~~~~~
+
+* Support for listing fast launch job configs in the Data Science service
+
+  * ``oci data-science fast-launch-job-config list``
+
+* Support for Subscription endpoints to Upgrade and Manage Payment feature in the OSP Gateway service
+
+  * ``oci osp-gateway subscription-service subscription``
+
+* Support for --is-highly-available for clone and update db-system in the MySQL Database service
+
+  * ``oci mysql db-system clone --is-highly-available``
+  * ``oci mysql db-system update --is-highly-available``
+
+* Support for Storage Management in the Database Management service
+
+  * ``oci database-management tablespace``
+  * ``oci database-management managed-database list-asm-properties``
+
+Changed
+~~~~~
+
+* [BREAKING] the command ``oci osp-gateway invoice`` has been changed to ``oci osp-gateway invoice-service invoice`` in the OSP Gateway service
+
 3.4.5 - 2022-02-01
 ------------------
 Added
