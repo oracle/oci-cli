@@ -71,32 +71,6 @@ def list_db_systems_extended(ctx, **kwargs):
     ctx.invoke(dbsystem_cli.list_db_systems, **kwargs)
 
 
-# remove --is-highly-available from clone
-@cli_util.copy_params_from_generated_command(dbsystem_cli.create_db_system_create_db_system_source_from_backup_details,
-                                             params_to_exclude=['is_highly_available'])
-@dbsystem_cli.db_system_root_group.command(
-    name=dbsystem_cli.create_db_system_create_db_system_source_from_backup_details.name,
-    help=dbsystem_cli.create_db_system_create_db_system_source_from_backup_details.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.wrap_exceptions
-def modify_clone_input_args(ctx, **kwargs):
-    ctx.invoke(dbsystem_cli.create_db_system_create_db_system_source_from_backup_details, **kwargs)
-
-
-# remove --is-highly-available from update
-@cli_util.copy_params_from_generated_command(dbsystem_cli.update_db_system,
-                                             params_to_exclude=['is_highly_available'])
-@dbsystem_cli.db_system_root_group.command(
-    name=dbsystem_cli.update_db_system.name,
-    help=dbsystem_cli.update_db_system.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.wrap_exceptions
-def modify_update_import_args(ctx, **kwargs):
-    ctx.invoke(dbsystem_cli.update_db_system, **kwargs)
-
-
 @cli_util.copy_params_from_generated_command(dbsystem_cli.start_db_system, params_to_exclude=['wait_for_state'])
 @dbsystem_cli.db_system_root_group.command(name=dbsystem_cli.start_db_system.name, help=dbsystem_cli.start_db_system.help)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

@@ -197,10 +197,10 @@ def list_associated_databases_extended(ctx, **kwargs):
 
 
 # oci database-management user get -> oci database-management user get-user
-cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.user_group, dbmanagement_cli.get_user, "get-user")
+# cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.user_group, dbmanagement_cli.get_user, "get-user")
 
 # oci database-management user get-user -> oci database-management managed-database get-user
-dbmanagement_cli.db_management_root_group.commands.pop(dbmanagement_cli.user_group.name)
+# dbmanagement_cli.db_management_root_group.commands.pop(dbmanagement_cli.user_group.name)
 dbmanagement_cli.managed_database_group.add_command(dbmanagement_cli.get_user)
 
 
@@ -222,4 +222,116 @@ database_management_service_cli.database_management_service_group.add_command(db
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.job_execution_group)
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.associated_database_summary_group)
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.job_group)
-database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.user_group)
+# database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.user_group)
+
+
+# oci database-management tablespace drop-tablespace-tablespace-admin-password-credential-details -> oci database-management tablespace drop-with-pwd
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.tablespace_group, dbmanagement_cli.drop_tablespace_tablespace_admin_password_credential_details, "drop-with-pwd")
+
+
+# oci database-management tablespace drop-tablespace-tablespace-admin-secret-credential-details -> oci database-management tablespace drop-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.tablespace_group, dbmanagement_cli.drop_tablespace_tablespace_admin_secret_credential_details, "drop-with-secret")
+
+
+# oci database-management tablespace remove-data-file-tablespace-admin-password-credential-details -> oci database-management tablespace remove-datafile-with-pwd
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.tablespace_group, dbmanagement_cli.remove_data_file_tablespace_admin_password_credential_details, "remove-datafile-with-pwd")
+
+
+# oci database-management tablespace remove-data-file-tablespace-admin-secret-credential-details -> oci database-management tablespace remove-datafile-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.tablespace_group, dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details, "remove-datafile-with-secret")
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.drop_tablespace_tablespace_admin_password_credential_details, params_to_exclude=['credential_details_password', 'credential_details_role', 'credential_details_username'])
+@dbmanagement_cli.tablespace_group.command(name=dbmanagement_cli.drop_tablespace_tablespace_admin_password_credential_details.name, help=dbmanagement_cli.drop_tablespace_tablespace_admin_password_credential_details.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_tablespace_admin_password_credential_details_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credential_details_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credential_details_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.drop_tablespace_tablespace_admin_password_credential_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.drop_tablespace_tablespace_admin_secret_credential_details, params_to_exclude=['credential_details_password_secret_id', 'credential_details_role', 'credential_details_username'])
+@dbmanagement_cli.tablespace_group.command(name=dbmanagement_cli.drop_tablespace_tablespace_admin_secret_credential_details.name, help=dbmanagement_cli.drop_tablespace_tablespace_admin_secret_credential_details.help)
+@cli_util.option('--secret', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_tablespace_admin_secret_credential_details_extended(ctx, **kwargs):
+    if 'secret' in kwargs:
+        kwargs['credential_details_password_secret_id'] = kwargs['secret']
+        kwargs.pop('secret')
+
+    if 'role' in kwargs:
+        kwargs['credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credential_details_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.drop_tablespace_tablespace_admin_secret_credential_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.remove_data_file_tablespace_admin_password_credential_details, params_to_exclude=['credential_details_password', 'credential_details_role', 'credential_details_username'])
+@dbmanagement_cli.tablespace_group.command(name=dbmanagement_cli.remove_data_file_tablespace_admin_password_credential_details.name, help=dbmanagement_cli.remove_data_file_tablespace_admin_password_credential_details.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_tablespace_admin_password_credential_details_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credential_details_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credential_details_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.remove_data_file_tablespace_admin_password_credential_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details, params_to_exclude=['credential_details_password_secret_id', 'credential_details_role', 'credential_details_username'])
+@dbmanagement_cli.tablespace_group.command(name=dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details.name, help=dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details.help)
+@cli_util.option('--secret', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_tablespace_admin_secret_credential_details_extended(ctx, **kwargs):
+    if 'secret' in kwargs:
+        kwargs['credential_details_password_secret_id'] = kwargs['secret']
+        kwargs.pop('secret')
+
+    if 'role' in kwargs:
+        kwargs['credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credential_details_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details, **kwargs)

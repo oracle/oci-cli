@@ -25,7 +25,7 @@ service_mapping = {
     ],
     "apm-config": [
         "apm_config",
-        "Apm Configuration"
+        "Application Performance Monitoring Configuration"
     ],
     "apm-control-plane": [
         "apm_control_plane",
@@ -305,7 +305,7 @@ service_mapping = {
     ],
     "osp-gateway": [
         "osp_gateway",
-        "Billing Center Gateway"
+        "OSP Gateway"
     ],
     "osub-billing-schedule": [
         "osub_billing_schedule",
