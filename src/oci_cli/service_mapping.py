@@ -7,6 +7,10 @@ service_mapping = {
         "ai_language",
         "Language"
     ],
+    "ai-vision": [
+        "ai_vision",
+        "VisionService"
+    ],
     "analytics": [
         "analytics",
         "Analytics"
@@ -37,7 +41,7 @@ service_mapping = {
     ],
     "apm-traces": [
         "apm_traces",
-        "Apm Traces"
+        "Application Performance Monitoring Trace Explorer"
     ],
     "application-migration": [
         "application_migration",
@@ -358,6 +362,10 @@ service_mapping = {
     "support": [
         "cims",
         "Support Management"
+    ],
+    "threat-intelligence": [
+        "threat_intelligence",
+        "Threat Intelligence"
     ],
     "usage": [
         "usage",

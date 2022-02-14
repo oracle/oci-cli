@@ -31,7 +31,9 @@ announce_service_cli.announce_service_group.add_command(announcements_preference
 announcements_preferences_root_group.add_command(announcements_preferences_group)
 
 
-@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.create_announcements_preference.command_name', 'create'), help=u"""Creates a request that specifies preferences for the tenancy regarding receiving announcements by email. \n[Command Reference](createAnnouncementsPreference)""")
+@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.create_announcements_preference.command_name', 'create'), help=u"""Creates a request that specifies preferences for the tenancy regarding receiving announcements by email.
+
+This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](createAnnouncementsPreference)""")
 @cli_util.option('--type', required=True, help=u"""The entity type, which specifies a model that either creates new announcement email preferences or updates existing preferences.""")
 @cli_util.option('--preference-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPT_IN_TENANT_ANNOUNCEMENTS", "OPT_IN_TENANT_AND_INFORMATIONAL_ANNOUNCEMENTS", "OPT_OUT_ALL_ANNOUNCEMENTS"]), help=u"""The string representing the user's preference, whether to opt in to only required announcements, to opt in to all announcements, including informational announcements, or to opt out of all announcements.""")
 @cli_util.option('--is-unsubscribed', type=click.BOOL, help=u"""A Boolean value to indicate whether the specified compartment chooses to not to receive informational announcements by email. (Manage preferences for receiving announcements by email by specifying the `preferenceType` attribute instead.)""")
@@ -66,7 +68,9 @@ def create_announcements_preference(ctx, from_json, type, preference_type, is_un
     cli_util.render_response(result, ctx)
 
 
-@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.get_announcements_preference.command_name', 'get'), help=u"""Gets the current preferences of the tenancy regarding receiving announcements by email. \n[Command Reference](getAnnouncementsPreference)""")
+@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.get_announcements_preference.command_name', 'get'), help=u"""Gets the current preferences of the tenancy regarding receiving announcements by email.
+
+This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](getAnnouncementsPreference)""")
 @cli_util.option('--preference-id', required=True, help=u"""The ID of the preference.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -88,8 +92,10 @@ def get_announcements_preference(ctx, from_json, preference_id):
     cli_util.render_response(result, ctx)
 
 
-@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.list_announcements_preferences.command_name', 'list'), help=u"""Gets the current preferences of the tenancy regarding receiving announcements by email. \n[Command Reference](listAnnouncementsPreferences)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment. Because announcements are specific to a tenancy, this is the OCID of the root compartment.""")
+@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.list_announcements_preferences.command_name', 'list'), help=u"""Gets the current preferences of the tenancy regarding receiving announcements by email.
+
+This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](listAnnouncementsPreferences)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -136,7 +142,9 @@ def list_announcements_preferences(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.update_announcements_preference.command_name', 'update'), help=u"""Updates the preferences of the tenancy regarding receiving announcements by email. \n[Command Reference](updateAnnouncementsPreference)""")
+@announcements_preferences_group.command(name=cli_util.override('announcements_preferences.update_announcements_preference.command_name', 'update'), help=u"""Updates the preferences of the tenancy regarding receiving announcements by email.
+
+This call is subject to an Announcements limit that applies to the total number of requests across all read or write operations. Announcements might throttle this call to reject an otherwise valid request when the total rate of operations exceeds 20 requests per second for a given user. The service might also throttle this call to reject an otherwise valid request when the total rate of operations exceeds 100 requests per second for a given tenancy. \n[Command Reference](updateAnnouncementsPreference)""")
 @cli_util.option('--preference-id', required=True, help=u"""The ID of the preference.""")
 @cli_util.option('--type', required=True, help=u"""The entity type, which specifies a model that either creates new announcement email preferences or updates existing preferences.""")
 @cli_util.option('--preference-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPT_IN_TENANT_ANNOUNCEMENTS", "OPT_IN_TENANT_AND_INFORMATIONAL_ANNOUNCEMENTS", "OPT_OUT_ALL_ANNOUNCEMENTS"]), help=u"""The string representing the user's preference, whether to opt in to only required announcements, to opt in to all announcements, including informational announcements, or to opt out of all announcements.""")
