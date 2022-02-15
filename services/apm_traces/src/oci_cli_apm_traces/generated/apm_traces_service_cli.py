@@ -7,7 +7,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('trace.apm_traces_service_group.command_name', 'apm-traces'), cls=CommandGroupWithAlias, help=cli_util.override('trace.apm_traces_service_group.help', """API for APM Trace service. Use this API to query the Traces and associated Spans."""), short_help=cli_util.override('trace.apm_traces_service_group.short_help', """Apm Traces API"""))
+@cli.command(cli_util.override('trace.apm_traces_service_group.command_name', 'apm-traces'), cls=CommandGroupWithAlias, help=cli_util.override('trace.apm_traces_service_group.help', """Use the Application Performance Monitoring Trace Explorer API to query traces and associated spans in Trace Explorer. For more information, see [Application Performance Monitoring]."""), short_help=cli_util.override('trace.apm_traces_service_group.short_help', """Application Performance Monitoring Trace Explorer API"""))
 @cli_util.help_option_group
 def apm_traces_service_group():
     pass

@@ -6,6 +6,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.5.1 - 2022-02-15
+------------------
+Added
+~~~~~
+* Support for the AI Vision service
+
+  * ``oci ai-vision``
+
+* Support for the Threat Intelligence service
+
+  * ``oci threat-intelligence``
+
+* Support for creation of NoSQL database tables with on-demand throughput capacity in the NoSQL Database Cloud service
+
+  * New optional property ``capacityMode`` in ``oci nosql table create --table-limits`` parameter
+
+* Support for trace snapshots in the Application Performance Monitoring service
+
+  * ``oci apm-traces trace aggregated-snapshot get``
+
+* Support for auditing and alerts in the Data Safe service
+
+  * ``oci data-safe alert update``
+
+* Support for data discovery and data masking in the Data Safe service
+
+  * ``oci data-safe alert-policy-rule-collection list-alert-policy-rules``
+  * ``oci data-safe audit-profile discover-audit-trails``
+  * ``oci data-safe audit-profile-collection list-audit-profiles --audit-collected-volume-greater-than-or-equal-to``
+  * ``oci data-safe report-definition generate-report``
+
+* Support for documentation for pagination support in Logging Search service
+
+  * ``oci logging-search search-logs``
+
+* Support for Announcements Subscriptions feature
+
+  * ``oci announce announcement-subscription change-compartment``
+  * ``oci announce announcement-subscription create``
+  * ``oci announce announcement-subscription create-filter-group``
+  * ``oci announce announcement-subscription delete``
+  * ``oci announce announcement-subscription delete-filter-group``
+  * ``oci announce announcement-subscription get``
+  * ``oci announce announcement-subscription list``
+  * ``oci announce announcement-subscription update-filter-group``
+
 3.5.0 - 2022-02-08
 ------------------
 Added

@@ -102,6 +102,7 @@ def setup_function():
         os.remove(CONTENT_OUTPUT_FILE)
 
 
+@pytest.mark.skip('DEX-14141')
 def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a'
 
@@ -149,6 +150,7 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
+@pytest.mark.skip('DEX-14141')
 def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a-ia'
 
@@ -196,6 +198,7 @@ def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucke
     validate_response(result, json_response_expected=False)
 
 
+@pytest.mark.skip('DEX-14146')
 def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client):
     object_name = 'a'
 
@@ -253,6 +256,7 @@ def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket
     assert result.output == ''
 
 
+@pytest.mark.skip('DEX-14146')
 def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a_metadata'
 
