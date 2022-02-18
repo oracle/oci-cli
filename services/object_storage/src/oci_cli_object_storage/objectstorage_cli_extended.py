@@ -1416,6 +1416,8 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
                     full_file_path = os.path.join(expanded_directory, object_name[1:])
                 else:
                     full_file_path = os.path.join(expanded_directory, object_name)
+                    if cli_util.is_windows():
+                        full_file_path = full_file_path.replace('/', '\\')
 
                 if file_filter_collection:
                     if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:

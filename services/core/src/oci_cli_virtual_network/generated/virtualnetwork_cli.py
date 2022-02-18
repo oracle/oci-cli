@@ -51,7 +51,7 @@ def ip_sec_connection_device_config_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.byoip_range_group.command_name', 'byoip-range'), cls=CommandGroupWithAlias, help="""Oracle offers the ability to Bring Your Own IP (BYOIP), importing public IP addresses that you currently own to Oracle Cloud Infrastructure. A `ByoipRange` resource is a record of the imported address block (a BYOIP CIDR block) and also some associated metadata. The process used to [Bring Your Own IP] is explained in the documentation.""")
+@click.command(cli_util.override('virtual_network.byoip_range_group.command_name', 'byoip-range'), cls=CommandGroupWithAlias, help="""Oracle offers the ability to Bring Your Own IP (BYOIP), importing public IP addresses  that you currently own to Oracle Cloud Infrastructure. A `ByoipRange` resource is a record of the imported address block (a BYOIP CIDR block) and also some associated metadata. The process used to [Bring Your Own IP] is explained in the documentation.""")
 @cli_util.help_option_group
 def byoip_range_group():
     pass
@@ -179,7 +179,7 @@ def drg_route_table_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.tunnel_security_association_group.command_name', 'tunnel-security-association'), cls=CommandGroupWithAlias, help="""Detailed Tunnel SA""")
+@click.command(cli_util.override('virtual_network.tunnel_security_association_group.command_name', 'tunnel-security-association'), cls=CommandGroupWithAlias, help="""A summary of the IPSec tunnel security association details.""")
 @cli_util.help_option_group
 def tunnel_security_association_group():
     pass
@@ -231,7 +231,7 @@ def network_security_group_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.tunnel_route_group.command_name', 'tunnel-route'), cls=CommandGroupWithAlias, help="""The routes advertised to the Customer and the routes received from the Customer""")
+@click.command(cli_util.override('virtual_network.tunnel_route_group.command_name', 'tunnel-route'), cls=CommandGroupWithAlias, help="""A summary of the routes advertised to and received from the on-premises network.""")
 @cli_util.help_option_group
 def tunnel_route_group():
     pass
@@ -283,13 +283,13 @@ def networking_topology_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.ip_sec_connection_tunnel_group.command_name', 'ip-sec-connection-tunnel'), cls=CommandGroupWithAlias, help="""Information about a single tunnel in an IPSec connection. This object does not include the tunnel's shared secret (pre-shared key). That is in the [IPSecConnectionTunnelSharedSecret] object.""")
+@click.command(cli_util.override('virtual_network.ip_sec_connection_tunnel_group.command_name', 'ip-sec-connection-tunnel'), cls=CommandGroupWithAlias, help="""Information about a single IPSec tunnel in an IPSec connection. This object does not include the tunnel's shared secret (pre-shared key), which is found in the [IPSecConnectionTunnelSharedSecret] object.""")
 @cli_util.help_option_group
 def ip_sec_connection_tunnel_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.allowed_ike_ip_sec_parameters_group.command_name', 'allowed-ike-ip-sec-parameters'), cls=CommandGroupWithAlias, help="""Allowed IKE IPSec Parameters""")
+@click.command(cli_util.override('virtual_network.allowed_ike_ip_sec_parameters_group.command_name', 'allowed-ike-ip-sec-parameters'), cls=CommandGroupWithAlias, help="""Lists the current allowed and default IPSec tunnel parameters.""")
 @cli_util.help_option_group
 def allowed_ike_ip_sec_parameters_group():
     pass
@@ -351,7 +351,7 @@ def cross_connect_mapping_details_collection_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.ip_sec_connection_tunnel_error_details_group.command_name', 'ip-sec-connection-tunnel-error-details'), cls=CommandGroupWithAlias, help="""Ipsec tunnels error details""")
+@click.command(cli_util.override('virtual_network.ip_sec_connection_tunnel_error_details_group.command_name', 'ip-sec-connection-tunnel-error-details'), cls=CommandGroupWithAlias, help="""Details for an error on an IPSec tunnel.""")
 @cli_util.help_option_group
 def ip_sec_connection_tunnel_error_details_group():
     pass
@@ -465,9 +465,9 @@ A route distribution is a list of statements. Each statement consists of a set o
 
 You can assign a route distribution as a route table's import distribution. The statements in an import route distribution specify how how incoming route advertisements through a referenced attachment or all attachments of a certain type are inserted into the route table.
 
-You can assign a route distribution as a DRG attachment's export distribution. Export route distribution statements specify how routes in a DRG attachment's assigned table are advertised out through the attachment. When a DRG attachment is created, a route distribution is created with a single ACCEPT statement with an empty match criteria (empty match criteria implies match ALL). Exporting routes through VCN attachments is unsupported, so no VCN attachments are assigned an export distribution.
+You can assign a route distribution as a DRG attachment's export distribution. Export route distribution statements specify how routes in a DRG attachment's assigned table are advertised out through the attachment. When a DRG attachment is created, a route distribution is created with a single ACCEPT statement with match criteria MATCH_ALL. Exporting routes through VCN attachments is unsupported, so no VCN attachments are assigned an export distribution.
 
-The two auto-generated DRG route tables (one as the default for VCN attachments, and the other for all other types of attachments) are each assigned an auto generated import route distribution. The default VCN table's import distribution has a single statement with empty match criteria statement to import routes from each DRG attachment type. The other table's import distribution has a statement to import routes from attachments with the VCN type.
+The two auto-generated DRG route tables (one as the default for VCN attachments, and the other for all other types of attachments) are each assigned an auto generated import route distribution. The default VCN table's import distribution has a single statement with match criteria MATCH_ALL to import routes from each DRG attachment type. The other table's import distribution has a statement to import routes from attachments with the VCN type.
 
 The route distribution is always in the same compartment as the DRG.""")
 @cli_util.help_option_group
@@ -2553,7 +2553,7 @@ For traffic to flow between a subnet and an internet gateway, you must create a 
 You must specify whether the internet gateway is enabled when you create it. If it's disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic. You can later use [UpdateInternetGateway] to easily disable/enable the gateway without changing the route rule. \n[Command Reference](createInternetGateway)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the internet gateway.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the gateway is enabled upon creation.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN the internet gateway is attached to.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN the Internet Gateway is attached to.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3700,7 +3700,7 @@ Example: `vcn1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. You may skip having Oracle allocate the VCN a IPv6 /56 CIDR block by setting isOracleGuaAllocationEnabled to `false`. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5678,7 +5678,7 @@ def get_all_drg_attachments(ctx, from_json, drg_id, limit, page, attachment_type
     cli_util.render_response(result, ctx)
 
 
-@allowed_ike_ip_sec_parameters_group.command(name=cli_util.override('virtual_network.get_allowed_ike_ip_sec_parameters.command_name', 'get'), help=u"""The allowed parameters for IKE IPSec \n[Command Reference](getAllowedIkeIPSecParameters)""")
+@allowed_ike_ip_sec_parameters_group.command(name=cli_util.override('virtual_network.get_allowed_ike_ip_sec_parameters.command_name', 'get'), help=u"""The parameters allowed for IKE IPSec tunnels. \n[Command Reference](getAllowedIkeIPSecParameters)""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -6183,7 +6183,7 @@ def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_tunnel_error_details_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel_error.command_name', 'get-ip-sec-connection-tunnel-error'), help=u"""Get the identified error for the specified IPSec Tunnel ID. \n[Command Reference](getIPSecConnectionTunnelError)""")
+@ip_sec_connection_tunnel_error_details_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel_error.command_name', 'get-ip-sec-connection-tunnel-error'), help=u"""Gets the identified error for the specified IPSec tunnel ID. \n[Command Reference](getIPSecConnectionTunnelError)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8033,14 +8033,14 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@tunnel_route_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnel_routes.command_name', 'list-ip-sec-connection'), help=u"""The routes advertised to the Customer and the routes received from the Customer. \n[Command Reference](listIPSecConnectionTunnelRoutes)""")
+@tunnel_route_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnel_routes.command_name', 'list-ip-sec-connection'), help=u"""The routes advertised to the on-premises network and the routes received from the on-premises network. \n[Command Reference](listIPSecConnectionTunnelRoutes)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--advertiser', type=custom_types.CliCaseInsensitiveChoice(["CUSTOMER", "ORACLE"]), help=u"""Specifies the advertiser of the routes. If set to ORACLE, then returns only the routes advertised by ORACLE, else if set to CUSTOMER, then returns only the routes advertised by the CUSTOMER.""")
+@cli_util.option('--advertiser', type=custom_types.CliCaseInsensitiveChoice(["CUSTOMER", "ORACLE"]), help=u"""Specifies the advertiser of the routes. If set to `ORACLE`, this returns only the routes advertised by Oracle. When set to `CUSTOMER`, this returns only the routes advertised by the CPE.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8095,7 +8095,7 @@ def list_ip_sec_connection_tunnel_routes(ctx, from_json, all_pages, page_size, i
     cli_util.render_response(result, ctx)
 
 
-@tunnel_security_association_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnel_security_associations.command_name', 'list-ip-sec-connection'), help=u"""Lists the tunnel Security Associations information for the specified IPSec Tunnel ID. \n[Command Reference](listIPSecConnectionTunnelSecurityAssociations)""")
+@tunnel_security_association_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnel_security_associations.command_name', 'list-ip-sec-connection'), help=u"""Lists the tunnel security associations information for the specified IPSec tunnel ID. \n[Command Reference](listIPSecConnectionTunnelSecurityAssociations)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -10916,11 +10916,15 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--ipsc-id', required=True, help=u"""The [OCID] of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--routing', type=custom_types.CliCaseInsensitiveChoice(["BGP", "STATIC", "POLICY"]), help=u"""The type of routing to use for this tunnel (either BGP dynamic routing or static routing).""")
+@cli_util.option('--routing', type=custom_types.CliCaseInsensitiveChoice(["BGP", "STATIC", "POLICY"]), help=u"""The type of routing to use for this tunnel (BGP dynamic routing, static routing, or policy-based routing).""")
 @cli_util.option('--ike-version', type=custom_types.CliCaseInsensitiveChoice(["V1", "V2"]), help=u"""Internet Key Exchange protocol version.""")
 @cli_util.option('--bgp-session-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--oracle-initiation', type=custom_types.CliCaseInsensitiveChoice(["INITIATOR_OR_RESPONDER", "RESPONDER_ONLY"]), help=u"""Whether Oracle side is the initiator for negotiation.""")
-@cli_util.option('--nat-translation-enabled', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "AUTO"]), help=u"""Whether NAT-T Enabled on the tunnel""")
+@cli_util.option('--oracle-initiation', type=custom_types.CliCaseInsensitiveChoice(["INITIATOR_OR_RESPONDER", "RESPONDER_ONLY"]), help=u"""Indicates whether the Oracle end of the IPSec connection is able to initiate starting up the IPSec tunnel.""")
+@cli_util.option('--nat-translation-enabled', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "AUTO"]), help=u"""By default (the `AUTO` setting), IKE sends packets with a source and destination port set to 500, and when it detects that the port used to forward packets has changed (most likely because a NAT device is between the CPE device and the Oracle VPN headend) it will try to negotiate the use of NAT-T.
+
+The `ENABLED` option sets the IKE protocol to use port 4500 instead of 500 and forces encapsulating traffic with the ESP protocol inside UDP packets.
+
+The `DISABLED` option directs IKE to completely refuse to negotiate NAT-T even if it senses there may be a NAT device in use.""")
 @cli_util.option('--phase-one-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--phase-two-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dpd-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

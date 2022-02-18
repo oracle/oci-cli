@@ -108,6 +108,10 @@ IGNORED_COMMANDS = [
     ['resource-manager', 'job', 'create-destroy-job'],
     ['setup', 'find-installations'],
     ['iam', 'db-token', 'get'],
+    ['data-connectivity', 'data-entity', 'create-entity-shape'],
+    ['data-connectivity', 'endpoint', 'list'],
+    ['data-connectivity', 'full-push-down-task-response', 'create-full-push-down-task'],
+    ['data-connectivity', 'registry', 'list']
 ]
 
 IGNORED_COMMANDS_DOCS = [
