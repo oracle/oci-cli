@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.threat_intelligence import ThreatintelClient
+from oci.data_connectivity import NetworkValidationClient
 
-MODULE_TO_TYPE_MAPPINGS["threat_intelligence"] = oci.threat_intelligence.models.threat_intelligence_type_mapping
-if CLIENT_MAP.get("threat_intelligence") is None:
-    CLIENT_MAP["threat_intelligence"] = {}
-CLIENT_MAP["threat_intelligence"]["threatintel"] = ThreatintelClient
+MODULE_TO_TYPE_MAPPINGS["data_connectivity"] = oci.data_connectivity.models.data_connectivity_type_mapping
+if CLIENT_MAP.get("data_connectivity") is None:
+    CLIENT_MAP["data_connectivity"] = {}
+CLIENT_MAP["data_connectivity"]["network_validation"] = NetworkValidationClient

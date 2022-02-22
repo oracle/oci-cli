@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.threat_intelligence import ThreatintelClient
+from oci.ai_speech import AIServiceSpeechClient
 
-MODULE_TO_TYPE_MAPPINGS["threat_intelligence"] = oci.threat_intelligence.models.threat_intelligence_type_mapping
-if CLIENT_MAP.get("threat_intelligence") is None:
-    CLIENT_MAP["threat_intelligence"] = {}
-CLIENT_MAP["threat_intelligence"]["threatintel"] = ThreatintelClient
+MODULE_TO_TYPE_MAPPINGS["ai_speech"] = oci.ai_speech.models.ai_speech_type_mapping
+if CLIENT_MAP.get("ai_speech") is None:
+    CLIENT_MAP["ai_speech"] = {}
+CLIENT_MAP["ai_speech"]["ai_service_speech"] = AIServiceSpeechClient

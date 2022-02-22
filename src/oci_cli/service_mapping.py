@@ -115,6 +115,10 @@ service_mapping = {
         "data_catalog",
         "Data Catalog"
     ],
+    "data-connectivity": [
+        "data_connectivity",
+        "Data Connectivity Management"
+    ],
     "data-flow": [
         "data_flow",
         "Data Flow"
@@ -354,6 +358,10 @@ service_mapping = {
     "service-manager-proxy": [
         "service_manager_proxy",
         "Service Manager Proxy"
+    ],
+    "speech": [
+        "ai_speech",
+        "Speech"
     ],
     "streaming": [
         "streaming",

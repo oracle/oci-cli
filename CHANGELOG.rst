@@ -6,6 +6,56 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.5.2 - 2022-02-22
+------------------
+Added
+~~~~~
+
+* Support for Speech Service
+
+  * ``oci speech``
+
+* Support for Data Connectivity Management Service
+
+  * ``oci data-connectivity``
+
+* Support for Resource Profile, Sightings, Tactics, and Technique features as a part of the Cloud Guard Service
+
+  * ``oci cloud-guard problem-endpoint-summary list-problem-endpoints``
+  * ``oci cloud-guard resource-risk-score-aggregation request-summarized-trend-resource-risk-scores``
+  * ``oci cloud-guard resource-profile get``
+  * ``oci cloud-guard resource-profile-endpoint-summary list-resource-profile-endpoints``
+  * ``oci cloud-guard resource-profile-impacted-resource-summary list-resource-profile-impacted-resources``
+  * ``oci cloud-guard resource-profile-risk-score-aggregation-summary request-summarized-top-trend-resource-profile-risk-scores``
+  * ``oci cloud-guard resource-profile-summary list-resource-profiles``
+  * ``oci cloud-guard resource-type-summary list-resource-types``
+  * ``oci cloud-guard sighting get``
+  * ``oci cloud-guard sighting-endpoint-summary list-sighting-endpoints``
+  * ``oci cloud-guard sighting-impacted-resource-summary list-sighting-impacted-resources``
+  * ``oci cloud-guard sighting-summary list-sightings``
+  * ``oci cloud-guard tactic-summary list-tactics``
+  * ``oci cloud-guard technique-summary list-techniques``
+
+* Support for disabling crash recovery to improve the performance of large imports in the MySql Database service.
+
+  * ``oci mysql db-system clone --crash-recovery``
+  * ``oci mysql db-system create --crash-recovery``
+  * ``oci mysql db-system import --crash-recovery``
+  * ``oci mysql db-system update --crash-recovery``
+
+* Support for customer managed encryption keys for secrets stored in Analytics service
+
+  * ``oci analytics analytics-instance set-kms-key``
+
+* Support for option --kms-key-id to specify customer managed vault key ocid when creating an instance in the Analytics service
+
+  * ``oci analytics analytics-instance create --kms-key-id``
+
+Fixed
+~~~~~~~
+
+* Bug in the object storage sync in windows which deletes unexpected local subfolders `github issue #502 <https://github.com/oracle/oci-cli/issues/502>`_
+
 3.5.1 - 2022-02-15
 ------------------
 Added
