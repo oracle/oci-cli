@@ -19,7 +19,9 @@ class TestDatascienceCLI(unittest.TestCase):
 
     def test_create_notebook_session(self):
         result = util.invoke_command(['data-science', 'notebook-session', 'create'])
-        assert '--configuration-details' in result.output
+        assert 'Error: Missing option(s)' in result.output
+        assert '--project-id' in result.output
+        assert '--compartment-id' in result.output
 
     def test_get_model_artifact_content(self):
         result = util.invoke_command(['data-science', 'model'])
