@@ -2333,6 +2333,7 @@ If you don't specify a route table here, the DRG attachment is created without a
 For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing]. For information about why you would associate a route table with a DRG attachment, see:
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
+@cli_util.option('--network-details-vcn-route-type', help=u"""Indicates whether the VCN CIDR(s) or the individual Subnet CIDR(s) are imported from the attachment. Routes from the VCN Ingress Route Table are always imported.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2341,7 +2342,7 @@ For information about why you would associate a route table with a DRG attachmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, network_details_id, display_name, drg_route_table_id, defined_tags, freeform_tags, route_table_id, vcn_id, network_details_route_table_id):
+def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, network_details_id, display_name, drg_route_table_id, defined_tags, freeform_tags, route_table_id, vcn_id, network_details_route_table_id, network_details_vcn_route_type):
 
     kwargs = {}
 
@@ -2370,6 +2371,9 @@ def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_js
 
     if network_details_route_table_id is not None:
         _details['networkDetails']['routeTableId'] = network_details_route_table_id
+
+    if network_details_vcn_route_type is not None:
+        _details['networkDetails']['vcnRouteType'] = network_details_vcn_route_type
 
     _details['networkDetails']['type'] = 'VCN'
 
@@ -10430,6 +10434,7 @@ For information about why you would associate a route table with a DRG attachmen
 For information about why you would associate a route table with a DRG attachment, see:
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
+@cli_util.option('--network-details-vcn-route-type', help=u"""Indicates whether the VCN CIDR(s) or the individual Subnet CIDR(s) are imported from the attachment. Routes from the VCN Ingress Route Table are always imported.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -10439,7 +10444,7 @@ For information about why you would associate a route table with a DRG attachmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_route_table_id, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match, network_details_route_table_id):
+def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_route_table_id, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match, network_details_route_table_id, network_details_vcn_route_type):
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
@@ -10475,6 +10480,9 @@ def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_js
 
     if network_details_route_table_id is not None:
         _details['networkDetails']['routeTableId'] = network_details_route_table_id
+
+    if network_details_vcn_route_type is not None:
+        _details['networkDetails']['vcnRouteType'] = network_details_vcn_route_type
 
     _details['networkDetails']['type'] = 'VCN'
 

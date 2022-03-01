@@ -702,8 +702,30 @@ This token is used to access Oracle cloud databases from database clients.  The 
 
 When running this command inside the Cloud Shell, it will by default use the delegation token for the IAM user to request the db-token. Outside of the cloud shell, this command will default to use the API-key in the default profile in the default OCI configuration.
 
-In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM""")
-@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.  Example: --scope "urn:oracle:db:all", --scope "urn:oracle:db:......" """)
+In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM. For more detail, please visit https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdk_authentication_methods.htm""")
+@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.
+
+Example:
+
+    --scope "urn:oracle:db:all"
+
+    --scope "urn:oracle:db:......"
+
+    --scope "urn:oracle:db::id::*"
+
+    --scope "urn:oracle:db::id::ocid1.tenancy.oc1..xxx"
+
+    --scope "urn:oracle:db::id::ocid1.compartment.oc1..xxxx"
+
+    --scope "urn:oracle:db::id::ocid1.compartment.oc1..axx::ocid1.autonomousdatabase.oc1.phx.xx"
+
+    --scope "urn:oracle:db::path::oraclefreedb"
+
+    --scope "urn:oracle:db::path::oraclefreedb:dbtst"
+
+    --scope "urn:oracle:db::path::oraclefreedb:dbtst::ocid1.autonomousdatabase.oc1.phx.xxx"
+
+""")
 @cli_util.option('--db-token-location', default=os.path.join(DEFAULT_DIRECTORY, 'db-token'), help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/db-token""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

@@ -35,16 +35,22 @@ def update_notebook_session_extended(ctx, **kwargs):
 
 # Rename oci data-science notebook-session create --notebook-session-configuration-details to
 # oci data-science notebook-session create --configuration-details
-@cli_util.copy_params_from_generated_command(datascience_cli.create_notebook_session, params_to_exclude=['notebook_session_configuration_details'])
+# Rename oci data-science notebook-session create --notebook-session-config-details to
+# oci data-science notebook-session create --config-details
+@cli_util.copy_params_from_generated_command(datascience_cli.create_notebook_session, params_to_exclude=['notebook_session_configuration_details', 'notebook_session_config_details'])
 @datascience_cli.notebook_session_group.command(name=cli_util.override('create_notebook_session.command_name', 'create'), help=datascience_cli.create_notebook_session.help)
-@cli_util.option('--configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-details', required=False, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use --config-details. If you specify values for both, then the values must match.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-details', required=False, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Used to configure the infrastructure details of a Data Science notebook. To use the default network configuration, omit the subnet value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
 def create_notebook_session_extended(ctx, **kwargs):
     if 'configuration_details' in kwargs:
         kwargs['notebook_session_configuration_details'] = kwargs['configuration_details']
         del kwargs['configuration_details']
+    if 'config_details' in kwargs:
+        kwargs['notebook_session_config_details'] = kwargs['config_details']
+        del kwargs['config_details']
 
     ctx.invoke(datascience_cli.create_notebook_session, **kwargs)
 
@@ -216,6 +222,14 @@ datascience_cli.job_group.commands.pop(datascience_cli.create_job_standalone_job
 
 # Remove update-job-standalone-job-infrastructure-configuration-details from oci data-science job
 datascience_cli.job_group.commands.pop(datascience_cli.update_job_standalone_job_infrastructure_configuration_details.name)
+
+
+# Remove create-job-managed-egress-standalone-job-infrastructure-configuration-details from oci data-science job
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_managed_egress_standalone_job_infrastructure_configuration_details.name)
+
+
+# Remove update-job-managed-egress-standalone-job-infrastructure-configuration-details from oci data-science job
+datascience_cli.job_group.commands.pop(datascience_cli.update_job_managed_egress_standalone_job_infrastructure_configuration_details.name)
 
 
 # Remove create-job-default-job-configuration-details from oci data-science job

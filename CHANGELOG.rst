@@ -6,6 +6,61 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.5.3 - 2022-03-01
+------------------
+Added
+~~~~~
+* Support for managed egress via a default networking option on jobs and notebooks in the Data Science service
+
+  * ``oci data-science``
+
+* Networking service
+
+  * Support for DRG route distribution statements to be specified with a new match type 'MATCH_ALL' for matching criteria
+
+    * ``oci network drg-route-distribution-statement add --statements '[{"matchCriteria":[{"matchType": "MATCH_ALL"}],"action": "ACCEPT","priority": 1}]' --route-distribution-id "id-example"``
+
+  * Support for VCN route types on DRG attachments for deciding whether to import VCN CIDRs or subnet CIDRs into route rules
+
+    * ``oci network drg-attachment create --drg-id "example-drg-id" --network-details '{"type":"VCN","id":"example-vcn-id","vcnRouteType":"VCN_CIDRS"}'``
+
+
+* Database service
+
+  * Support for CPS offline reports in the Database service
+
+    * ``oci db exadata-infrastructure create --is-cps-offline-report-enabled``
+    * ``oci db exadata-infrastructure update --is-cps-offline-report-enabled``
+
+  * Support for infrastructure patching v2 features
+
+    * ``oci db maintenance-run update --current-custom-action-timeout-in-mins, --custom-action-timeout-in-mins, --is-custom-action-timeout-enabled, --is-resume-patching``
+
+  * Support for Autonomous Database Create with Auto Scaling Storage via a new parameter (is-auto-scaling-for-storage-enabled)
+
+    * ``oci db autonomous-database create --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-from-backup-id --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-from-backup-timestamp --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-from-clone --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-refreshable-clone --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-virtual-clone --is-auto-scaling-for-storage-enabled``
+
+  * Support for Autonomous Database Update for Auto Scaling Storage via a new parameter (is-auto-scaling-for-storage-enabled)
+
+    * ``oci db autonomous-database update --is-auto-scaling-for-storage-enabled``
+
+  * Support for shrinking an Autonomous Database
+
+    * ``oci db autonomous-database shrink --autonomous-database-id``
+
+Changed
+~~~~~~~
+
+* Upgraded third party module cx_Oracle version to 8.3 to provide support for python 3.8
+
+* Updated docs for ``oci iam db-token get``
+
 3.5.2 - 2022-02-22
 ------------------
 Added
