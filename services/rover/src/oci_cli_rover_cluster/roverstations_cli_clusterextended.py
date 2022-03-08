@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 import click
+from oci_cli.aliasing import CommandGroupWithAlias
 import six  # noqa: F401
 import json
 from oci_cli import cli_util
@@ -11,15 +12,20 @@ from oci.util import formatted_flat_dict
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
-from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE, ROVER_CLUSTER_STANDALONE_TYPE
+from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE, ROVER_CLUSTER_STATION_TYPE
 from services.rover.src.oci_cli_rover_cluster.generated import rovercluster_cli
 from services.rover.src.oci_cli_rover.rover_utils import get_compute_image_helper, export_compute_image_helper, \
     prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name
 
-cli_util.rename_command(rover_service_cli, rover_service_cli.rover_service_group, rovercluster_cli.rover_cluster_group, 'standalone-cluster')
-cli_util.rename_command(rover_service_cli, rovercluster_cli.rover_cluster_group, rovercluster_cli.get_rover_cluster, 'show')
-cli_util.rename_command(rover_service_cli, rovercluster_cli.rover_cluster_group, rovercluster_cli.list_rover_clusters, 'list')
-cli_util.rename_command(rover_service_cli, rovercluster_cli.rover_cluster_group, rovercluster_cli.get_rover_cluster_certificate, 'get-certificate')
+
+@click.command('station-cluster', cls=CommandGroupWithAlias,
+               help="""Description of RoverStation.""")
+@cli_util.help_option_group
+def rover_station_group():
+    pass
+
+
+rover_service_cli.rover_service_group.add_command(rover_station_group)
 
 
 def complex_shipping_address_param(**kwargs):
@@ -52,7 +58,7 @@ def complex_shipping_address_param(**kwargs):
     return kwargs
 
 
-def get_rover_cluster_helper(ctx, cluster_id):
+def get_rover_station_helper(ctx, cluster_id):
     kwargs_request = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
@@ -65,9 +71,10 @@ def get_rover_cluster_helper(ctx, cluster_id):
     )
 
 
-@cli_util.copy_params_from_generated_command(rovercluster_cli.create_rover_cluster, params_to_exclude=['customer_shipping_address', 'cluster_workloads', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected', 'subscription-id', 'cluster_size'])
-@rovercluster_cli.rover_cluster_group.command(name=rovercluster_cli.create_rover_cluster.name, help=rovercluster_cli.create_rover_cluster.help)
-@cli_util.option('--cluster-size', required=True, type=click.IntRange(5, 15), help=u"""Number of nodes desired in the RoverStandalone cluster, between 5 and 15.""")
+@cli_util.copy_params_from_generated_command(rovercluster_cli.create_rover_cluster, params_to_exclude=['customer_shipping_address', 'cluster_workloads', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected', 'cluster_size'])
+@rover_station_group.command(name=cli_util.override('rover_cluster.create_rover_cluster.command_name', 'create'), help=u"""Creates a new RoverStation Cluster. \n[Command Reference](createRoverStation)""")
+@cli_util.option('--subscription-id', required=True, help=u"""Subscription ID of RoverStation Cluster""")
+@cli_util.option('--cluster-size', required=True, type=click.IntRange(15, 30), help=u"""Number of nodes desired in the RoverStation Cluster, between 15 and 30.""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
 @cli_util.option('--address1', help=u"""Address line 1.""")
@@ -83,34 +90,35 @@ def get_rover_cluster_helper(ctx, cluster_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'cluster-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def create_rover_cluster_extended(ctx, **kwargs):
-    if kwargs['cluster_size'] < 5 and kwargs['cluster_size'] > 15:
-        raise click.UsageError("Please enter cluster-size in valid range from 5 to 15")
+def create_rover_station_extended(ctx, **kwargs):
+    if kwargs['cluster_size'] < 15 and kwargs['cluster_size'] > 30:
+        raise click.UsageError("Please enter cluster-size in valid range from 15 to 30")
 
     kwargs = complex_shipping_address_param(**kwargs)
-    kwargs['cluster_type'] = ROVER_CLUSTER_STANDALONE_TYPE
+    kwargs['cluster_type'] = ROVER_CLUSTER_STATION_TYPE
     kwargs['cluster_workloads'] = []
     ctx.invoke(rovercluster_cli.create_rover_cluster, **kwargs)
 
 
-@rovercluster_cli.rover_cluster_group.command(name=rovercluster_cli.get_rover_cluster.name, help=rovercluster_cli.get_rover_cluster.help)
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
+@rover_station_group.command(name=cli_util.override('rover_cluster.get_rover_cluster.command_name', 'show'), help=u"""Get a RoverStation.""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
 @cli_util.help_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def show_rover_cluster_extended(ctx, **kwargs):
+def show_rover_station_extended(ctx, **kwargs):
     if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    result = get_rover_cluster_helper(ctx, kwargs['cluster_id'])
+    result = get_rover_station_helper(ctx, kwargs['cluster_id'])
     cli_util.render_response(result, ctx)
 
 
 @cli_util.copy_params_from_generated_command(rovercluster_cli.update_rover_cluster, params_to_exclude=['customer_shipping_address', 'rover_cluster_id', 'cluster_workloads', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
-@rovercluster_cli.rover_cluster_group.command(name=rovercluster_cli.update_rover_cluster.name, help=rovercluster_cli.update_rover_cluster.help)
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
+@rover_station_group.command(name=cli_util.override('rover_cluster.update_rover_cluster.command_name', 'update'), help=u"""Update a RoverStation.""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
+@cli_util.option('--subscription-id', help=u"""Subscription ID of cluster""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
 @cli_util.option('--address1', help=u"""Address line 1.""")
@@ -126,7 +134,7 @@ def show_rover_cluster_extended(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'cluster-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def update_rover_cluster_extended(ctx, **kwargs):
+def update_rover_station_extended(ctx, **kwargs):
 
     # Get the RoverCluster and check if the policy language has been added by Oracle
     client = cli_util.build_client('rover', 'rover_cluster', ctx)
@@ -141,54 +149,15 @@ def update_rover_cluster_extended(ctx, **kwargs):
     ctx.invoke(rovercluster_cli.update_rover_cluster, **kwargs)
 
 
-@rovercluster_cli.rover_cluster_group.command(name="request-approval", help=u"""Submit request for Rover Cluster""")
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@rover_station_group.command(name="set-secrets", help=u"""Assign super-user-password and unlock-password for Rover Station.""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
+@cli_util.option('--super-user-password', required=False, is_flag=True, help=u"""Assign super-user-password for RoverStation Identifier""")
+@cli_util.option('--unlock-passphrase', required=False, is_flag=True, help=u"""Assign unlock-passphrase for RoverStation Identifier""")
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def request_rover_cluster(ctx, **kwargs):
-
-    kwargs_request = {'rover_cluster_id': kwargs['cluster_id'],
-                      'lifecycle_state': "ACTIVE",
-                      'lifecycle_state_details': "PENDING_APPROVAL"}
-
-    click.echo("Changing the state of the RoverStandalone Cluster to PENDING_APPROVAL")
-    ctx.invoke(rovercluster_cli.update_rover_cluster, **kwargs_request)
-
-
-@cli_util.copy_params_from_generated_command(rovercluster_cli.delete_rover_cluster, params_to_exclude=['rover_cluster_id'])
-@rovercluster_cli.rover_cluster_group.command(name=rovercluster_cli.delete_rover_cluster.name, help=rovercluster_cli.delete_rover_cluster.help)
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
-@cli_util.confirm_delete_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def delete_rover_cluster_extended(ctx, **kwargs):
-
-    if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
-        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
-
-    kwargs_request = {}
-    kwargs_request['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('rover', 'rover_cluster', ctx)
-    result = client.delete_rover_cluster(
-        rover_cluster_id=kwargs['cluster_id'],
-        **kwargs_request
-    )
-    cli_util.render_response(result, ctx)
-
-
-@rovercluster_cli.rover_cluster_group.command(name="set-secrets", help=u"""Assign super-user-password and unlock-password for Rover Cluster""")
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
-@cli_util.option('--super-user-password', required=False, is_flag=True, help=u"""Assign super-user-password for RoverCluster Identifier""")
-@cli_util.option('--unlock-passphrase', required=False, is_flag=True, help=u"""Assign unlock-passphrase for RoverCluster Identifier""")
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
-@cli_util.wrap_exceptions
-def set_secrets_rover_cluster(ctx, **kwargs):
+def set_secrets_rover_station(ctx, **kwargs):
 
     kwargs_request = {'rover_cluster_id': kwargs['cluster_id']}
     if kwargs['super_user_password'] or (not kwargs['super_user_password'] and not kwargs['unlock_passphrase']):
@@ -207,13 +176,13 @@ def set_secrets_rover_cluster(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(rovercluster_cli.change_rover_cluster_compartment, params_to_exclude=['rover_cluster_id'])
-@rovercluster_cli.rover_cluster_group.command(name=rovercluster_cli.change_rover_cluster_compartment.name, help=rovercluster_cli.change_rover_cluster_compartment.help)
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
+@rover_station_group.command(name=rovercluster_cli.change_rover_cluster_compartment.name, help=rovercluster_cli.change_rover_cluster_compartment.help)
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_rover_cluster_compartment(ctx, **kwargs):
+def change_rover_station_compartment(ctx, **kwargs):
 
     if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
@@ -222,8 +191,8 @@ def change_rover_cluster_compartment(ctx, **kwargs):
     ctx.invoke(rovercluster_cli.change_rover_cluster_compartment, **kwargs)
 
 
-@rovercluster_cli.rover_cluster_group.command(name="add-workload", help=u"""Add workload information to Rover Cluster""")
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
+@rover_station_group.command(name="add-workload", help=u"""Add workload information to Rover Station""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Id of Bucket""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BUCKET", "IMAGE"]), help=u"""Type of workload""")
 @cli_util.option('--image-id', help=u"""Object Store Image OCID for the workload""")
@@ -241,7 +210,7 @@ def change_rover_cluster_compartment(ctx, **kwargs):
 def add_workload(ctx, **kwargs):
 
     workload_data = image_id = workload_id = compute_obj = destination_uri = None
-    result = get_rover_cluster_helper(ctx, kwargs['cluster_id'])
+    result = get_rover_station_helper(ctx, kwargs['cluster_id'])
 
     if kwargs['type'].lower() == "bucket":
         if not ('bucket_id' in kwargs and kwargs['bucket_id']) or not ('bucket_name' in kwargs and kwargs['bucket_name']):
@@ -271,7 +240,7 @@ def add_workload(ctx, **kwargs):
 
     if not kwargs['force']:
         if not click.confirm(click.style(confirm_prompt, fg="yellow")):
-            click.echo("Aborting workload selection for Rover Cluster")
+            click.echo("Aborting workload selection for Rover Station")
             ctx.abort()
 
     if kwargs['type'].lower() == "image":
@@ -284,48 +253,15 @@ def add_workload(ctx, **kwargs):
     ctx.invoke(rovercluster_cli.update_rover_cluster, **kwargs_request)
 
 
-@rovercluster_cli.rover_cluster_group.command(name="delete-workload", help=u"""Delete workload information from Rover Cluster""")
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
-@cli_util.wrap_exceptions
-def delete_workload(ctx, **kwargs):
-
-    result = get_rover_cluster_helper(ctx, kwargs['cluster_id'])
-    workload_index = 0
-    workload_data = result.data.cluster_workloads
-    if workload_data:
-        if len(workload_data) > 1:
-            for idx, each_workload in enumerate(workload_data, 1):
-                click.echo("{}. {}".format(idx, formatted_flat_dict(each_workload)))
-            workload_index = prompt_for_workload_delete()
-            if workload_index > len(workload_data) or workload_index < 1:
-                raise click.UsageError("Please try again with valid selection")
-        if not kwargs['force']:
-            confirm_prompt = "Are you sure you want to delete following workload ? " + formatted_flat_dict(
-                workload_data[workload_index - 1])
-            if not click.confirm(click.style(confirm_prompt, fg="yellow")):
-                raise click.UsageError("Aborting workload deletion from Rover Cluster")
-        workload_data.pop(workload_index - 1)
-    else:
-        raise click.UsageError("Cluster has no associated workloads.")
-    kwargs_request = {'rover_cluster_id': kwargs['cluster_id'],
-                      'cluster_workloads': workload_data, 'force': kwargs['force']}
-    ctx.invoke(rovercluster_cli.update_rover_cluster, **kwargs_request)
-
-
-@rovercluster_cli.rover_cluster_group.command(name="list-workloads", help=u"""List workload information of Rover Cluster""")
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
+@rover_station_group.command(name="list-workloads", help=u"""List workload information of Rover Cluster""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
 def list_workloads(ctx, **kwargs):
-    result = get_rover_cluster_helper(ctx, kwargs['cluster_id'])
+    result = get_rover_station_helper(ctx, kwargs['cluster_id'])
     workload_data = result.data.cluster_workloads
     if workload_data:
         for idx, each_workload in enumerate(workload_data, 1):
@@ -343,14 +279,47 @@ def list_workloads(ctx, **kwargs):
         raise click.UsageError("Cluster has no associated workloads.")
 
 
+@rover_station_group.command(name="delete-workload", help=u"""Delete workload information from Rover Station""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
+@cli_util.wrap_exceptions
+def delete_workload(ctx, **kwargs):
+
+    result = get_rover_station_helper(ctx, kwargs['cluster_id'])
+    workload_index = 0
+    workload_data = result.data.cluster_workloads
+    if workload_data:
+        if len(workload_data) > 1:
+            for idx, each_workload in enumerate(workload_data, 1):
+                click.echo("{}. {}".format(idx, formatted_flat_dict(each_workload)))
+            workload_index = prompt_for_workload_delete()
+            if workload_index > len(workload_data) or workload_index < 1:
+                raise click.UsageError("Please try again with valid selection")
+        if not kwargs['force']:
+            confirm_prompt = "Are you sure you want to delete following workload ? " + formatted_flat_dict(
+                workload_data[workload_index - 1])
+            if not click.confirm(click.style(confirm_prompt, fg="yellow")):
+                raise click.UsageError("Aborting workload deletion from Rover Station")
+        workload_data.pop(workload_index - 1)
+    else:
+        raise click.UsageError("Station has no associated workloads.")
+    kwargs_request = {'rover_cluster_id': kwargs['cluster_id'],
+                      'cluster_workloads': workload_data, 'force': kwargs['force']}
+    ctx.invoke(rovercluster_cli.update_rover_cluster, **kwargs_request)
+
+
 @cli_util.copy_params_from_generated_command(rovercluster_cli.get_rover_cluster_certificate, params_to_exclude=['rover_cluster_id'])
-@rovercluster_cli.rover_cluster_group.command(name=rovercluster_cli.get_rover_cluster_certificate.name, help=rovercluster_cli.get_rover_cluster_certificate.help)
-@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStandalone Cluster identifier""")
+@rover_station_group.command(name=rovercluster_cli.get_rover_cluster_certificate.name, help=rovercluster_cli.get_rover_cluster_certificate.help)
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverCluster identifier""")
 @cli_util.option('--output-file-path', required=True, help=u"""Save the CA certificate in specified location""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverClusterCertificate'})
 @cli_util.wrap_exceptions
-def get_rover_cluster_certificate_extended(ctx, **kwargs):
+def get_rover_station_certificate_extended(ctx, **kwargs):
     rover_cluster_id = kwargs['cluster_id']
     output_file_path = kwargs['output_file_path']
 
@@ -372,3 +341,54 @@ def get_rover_cluster_certificate_extended(ctx, **kwargs):
     with open(output_file_path, "w") as f:
         for key, val in crt_data.items():
             f.write(str(key) + str(val))
+
+
+@rover_station_group.command(name="request-approval", help=u"""Submit request for Rover Station""")
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
+@cli_util.option('--subscription-id', help=u"""Subscription ID of RoverStation Cluster""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverCluster'})
+@cli_util.wrap_exceptions
+def request_rover_station(ctx, **kwargs):
+    result = get_rover_station_helper(ctx, kwargs['cluster_id'])
+    kwargs_request = {'rover_cluster_id': kwargs['cluster_id'],
+                      'lifecycle_state': "ACTIVE",
+                      'lifecycle_state_details': "PENDING_APPROVAL"}
+    if result.data.lifecycle_state_details == "SUBSCRIPTION_ID_INCORRECT":
+        if 'subscription_id' in kwargs:
+            kwargs_request.update({'subscription_id': kwargs['subscription-id']})
+        else:
+            click.echo("Please update Subscription ID in order to request for approval")
+            ctx.abort()
+    else:
+        if kwargs['subscription_id']:
+            click.echo("Subscription ID update is not allowed")
+            ctx.abort()
+
+    click.echo("Changing the state of the rover station to PENDING_APPROVAL")
+    ctx.invoke(rovercluster_cli.update_rover_cluster, **kwargs_request)
+
+
+@cli_util.copy_params_from_generated_command(rovercluster_cli.delete_rover_cluster, params_to_exclude=['rover_cluster_id'])
+@rover_station_group.command(name=rovercluster_cli.delete_rover_cluster.name,
+                             help=rovercluster_cli.delete_rover_cluster.help)
+@cli_util.option('--cluster-id', required=True, help=u"""Unique RoverStation Cluster identifier""")
+@cli_util.confirm_delete_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_rover_station_extended(ctx, **kwargs):
+
+    if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs_request = {}
+    kwargs_request['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('rover', 'rover_cluster', ctx)
+    result = client.delete_rover_cluster(
+        rover_cluster_id=kwargs['cluster_id'],
+        **kwargs_request
+    )
+    cli_util.render_response(result, ctx)

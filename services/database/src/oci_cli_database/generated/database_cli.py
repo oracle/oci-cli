@@ -14280,6 +14280,9 @@ def migrate_exadata_db_system_resource_model(ctx, from_json, db_system_id, if_ma
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--kms-key-id', required=True, help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation.""")
+@cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
+@cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the database.""")
+@cli_util.option('--admin-password', help=u"""The existing admin password of the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -14289,7 +14292,7 @@ def migrate_exadata_db_system_resource_model(ctx, from_json, db_system_id, if_ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, kms_key_id, kms_key_version_id, if_match):
+def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, kms_key_id, kms_key_version_id, vault_id, tde_wallet_password, admin_password, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14304,6 +14307,15 @@ def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if kms_key_version_id is not None:
         _details['kmsKeyVersionId'] = kms_key_version_id
+
+    if vault_id is not None:
+        _details['vaultId'] = vault_id
+
+    if tde_wallet_password is not None:
+        _details['tdeWalletPassword'] = tde_wallet_password
+
+    if admin_password is not None:
+        _details['adminPassword'] = admin_password
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.migrate_vault_key(

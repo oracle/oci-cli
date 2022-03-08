@@ -15,10 +15,14 @@ os, object, resume-put
 resource-manager, job, create-import-tf-state-job
 resource-manager, stack, create
 resource-manager, stack, update
-rover, cluster, set-secrets
+rover, station-cluster, create
+rover, standalone-cluster, create
+rover, station-cluster, set-secrets
+rover, standalone-cluster, set-secrets
 rover, node, set-secrets
 waas, protection-settings, update
 db, external-non-cdb, enable-operations-insights
 db, external-pdb, enable-operations-insights
 network, virtual-circuit, create
 network, virtual-circuit, update
+db, database, create
