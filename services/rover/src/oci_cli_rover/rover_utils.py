@@ -15,6 +15,8 @@ def get_compute_image_helper(ctx, image_id):
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
     ctx_endpoint = ctx.obj['endpoint']
     ctx.obj['endpoint'] = None
+    if ctx.obj['config']['region'].split(".")[0] == "r1":
+        ctx.obj['endpoint'] = "https://iaas.r1.oracleiaas.com"
     kwargs_request = {
         # 'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
@@ -38,6 +40,8 @@ def export_compute_image_helper(ctx, image_id, destinationUri):
     }
     ctx_endpoint = ctx.obj['endpoint']
     ctx.obj['endpoint'] = None
+    if ctx.obj['config']['region'].split(".")[0] == "r1":
+        ctx.obj['endpoint'] = "https://iaas.r1.oracleiaas.com"
     client = cli_util.build_client('core', 'compute', ctx)
     ctx.obj['endpoint'] = ctx_endpoint
     return client.export_image(

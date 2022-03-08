@@ -132,8 +132,9 @@ def update_agent_extended(ctx, **kwargs):
 
 
 # oci database-migration connection create --tls-keystore-file --tls-wallet-file  --ssh-details.sshkeyFile
-@cli_util.copy_params_from_generated_command(databasemigration_cli.create_connection, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(databasemigration_cli.create_connection, params_to_exclude=['manual_database_sub_type'])
 @databasemigration_cli.connection_group.command(name='create', help=databasemigration_cli.create_connection.help)
+@cli_util.option('--db-subtype', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "RDS_ORACLE"]), help="""Database manual connection subtype. This value can only be specified for manual connections.""")
 @cli_util.option('--tls-wallet-file', type=click.File('r'), help=u"""cwallet.sso fle path containing containing the TCPS/SSL certificate; base64 encoded String. Not required for source container database connections.""")
 @cli_util.option('--tls-keystore-file', type=click.File('r'), help=u"""keystore.jks file path; base64 encoded String content. Requires a TLS wallet to be specified. Not required for source container database connections.""")
 @cli_util.option('--sshkey-file', type=click.File('r'), help=u""" Private ssh key file.""")
@@ -141,6 +142,11 @@ def update_agent_extended(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connect-descriptor': {'module': 'database_migration', 'class': 'CreateConnectDescriptor'}, 'ssh-details': {'module': 'database_migration', 'class': 'CreateSshDetails'}, 'admin-credentials': {'module': 'database_migration', 'class': 'CreateAdminCredentials'}, 'private-endpoint': {'module': 'database_migration', 'class': 'CreatePrivateEndpoint'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
 def create_connection(ctx, **kwargs):
+
+    if 'db_subtype' in kwargs:
+        kwargs['manual_database_sub_type'] = kwargs['db_subtype']
+        kwargs.pop('db_subtype')
+
     # read --sshkey-file into ssh_details['sshkey']
     if 'sshkey_file' in kwargs and kwargs['sshkey_file'] is not None:
         ssh_details = {}
@@ -225,3 +231,14 @@ def update_connection(ctx, **kwargs):
 
 # oci database-migration migration-object-type-summary list-migration-object-types -> oci database-migration migration-object-type-summary list
 cli_util.rename_command(databasemigration_cli, databasemigration_cli.migration_object_type_summary_group, databasemigration_cli.list_migration_object_types, "list")
+
+# oci database-migration excluded-object-summary list-excluded-objects -> oci database-migration excluded-object-summary list
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.excluded_object_summary_group, databasemigration_cli.list_excluded_objects, "list")
+
+
+# oci database-migration migration-object-collection list-migration-objects -> oci database-migration migration-object-collection list
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.migration_object_collection_group, databasemigration_cli.list_migration_objects, "list")
+
+
+# oci database-migration migration-object-collection -> oci database-migration migration-objects
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.database_migration_root_group, databasemigration_cli.migration_object_collection_group, "migration-objects")

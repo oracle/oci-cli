@@ -226,7 +226,7 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--token-version', help=u"""The version of the kubeconfig token. Supported value 2.0.0""")
 @cli_util.option('--expiration', type=click.INT, help=u"""Deprecated. This field is no longer used.""")
-@cli_util.option('--endpoint-parameterconflict', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time.""")
+@cli_util.option('--endpoint-parameterconflict', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT", "VCN_HOSTNAME"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

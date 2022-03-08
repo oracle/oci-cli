@@ -318,6 +318,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
+@cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -356,6 +357,15 @@ def launch_db_system_extended(ctx, **kwargs):
     if 'pdb_name' in kwargs and kwargs['pdb_name']:
         create_database_details['pdbName'] = kwargs['pdb_name']
 
+    if 'vault_id' in kwargs and kwargs['vault_id']:
+        create_database_details['vaultId'] = kwargs['vault_id']
+
+    if 'kms_key_id' in kwargs and kwargs['kms_key_id']:
+        create_database_details['kmsKeyId'] = kwargs['kms_key_id']
+
+    if 'kms_key_version_id' in kwargs and kwargs['kms_key_version_id']:
+        create_database_details['kmsKeyVersionId'] = kwargs['kms_key_version_id']
+
     if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
         db_backup_config = {}
         if kwargs['auto_backup_enabled'] is not None:
@@ -392,6 +402,9 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['recovery_window_in_days']
     del kwargs['storage_management']
     del kwargs['database_software_image_id']
+    del kwargs['vault_id']
+    del kwargs['kms_key_id']
+    del kwargs['kms_key_version_id']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
@@ -479,6 +492,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
+@cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -537,6 +551,15 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
     if 'pdb_name' in kwargs and kwargs['pdb_name']:
         create_database_details.pdb_name = kwargs['pdb_name']
 
+    if 'vault_id' in kwargs and kwargs['vault_id']:
+        create_database_details['vaultId'] = kwargs['vault_id']
+
+    if 'kms_key_id' in kwargs and kwargs['kms_key_id']:
+        create_database_details['kmsKeyId'] = kwargs['kms_key_id']
+
+    if 'kms_key_version_id' in kwargs and kwargs['kms_key_version_id']:
+        create_database_details['kmsKeyVersionId'] = kwargs['kms_key_version_id']
+
     if 'auto-backup-window' in kwargs and kwargs['auto-backup-window'] and kwargs['auto_backup_enabled'] is not None:
         db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
         db_backup_config.auto_backup_window = kwargs['auto-backup-window']
@@ -551,6 +574,9 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
     del kwargs['backup_destination']
+    del kwargs['vault_id']
+    del kwargs['kms_key_id']
+    del kwargs['kms_key_version_id']
 
     create_db_home_details.database = create_database_details
     if 'db_version' in kwargs and kwargs['db_version']:

@@ -6,6 +6,56 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.6.0 - 2022-03-08
+------------------
+Added
+~~~~~
+* Support for the Sales Accelerator license option in the Content Management service
+
+  * ``oci oce oce-instance create --add-on-features``
+  * ``oci oce oce-instance update --add-on-features``
+
+* Support for new VCN hostname cluster endpoint as part of Container Engine service
+
+  * ``oci ce cluster create-kubeconfig --kube-endpoint VCN_HOSTNAME``
+
+* Database Migration service
+
+  * Support for reporting all excluded objects based on static exclusion rules and dynamic exclusion settings configured by the Database Migration Service (DMS) user
+
+    * ``oci database-migration excluded-object-summary list``
+
+  * Support to remove, list, and add database objects reported by the Cloud Premigration Advisor Tool (CPAT)
+
+    * ``oci database-migration migration add``
+    * ``oci database-migration migration remove``
+    * ``oci database-migration migration-objects list``
+
+  * Support for migrating Oracle Database from Amazon Web Services (AWS) RDS to Oracle Autonomous Database (ADB) using Amazon Simple Storage Service (Amazon S3) and DBLINK for data transfer
+
+    * ``oci database-migration connection create --db-subtype``
+
+* Enhancement in launch dbsystem as well as create database using customer managed keys for VMBM in the Database service
+
+  * ``oci db system launch --vault-id``
+  * ``oci db database create --vault-id``
+  * ``oci db database migrate-vault-key --vault-id --admin-password --tde-wallet-password``
+
+Changed
+~~~~~~~
+
+* The parameters --admin-username and --admin-password are now optional in the below commands in the MySQL database service
+
+  * ``oci mysql db-system clone``
+  * ``oci mysql db-system create``
+  * ``oci mysql db-system import``
+
+* [BREAKING] The command ``oci rover cluster`` is being deleted and its logic has been divided in to the newly created commands below in the Roving Edge Infrastructure Service
+
+  * ``oci rover station-cluster``
+
+  * ``oci rover standalone-cluster``
+
 3.5.3 - 2022-03-01
 ------------------
 Added

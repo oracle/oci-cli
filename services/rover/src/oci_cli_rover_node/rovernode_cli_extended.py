@@ -129,7 +129,7 @@ def setup_identity_helper(ctx, **kwargs):
     return create_policies_result
 
 
-@cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
+@cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.create_rover_node.name, help=rovernode_cli.create_rover_node.help)
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
@@ -258,7 +258,7 @@ def show_rover_node_extended(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(rovernode_cli.update_rover_node, params_to_exclude=['customer_shipping_address', 'rover_node_id', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
+@cli_util.copy_params_from_generated_command(rovernode_cli.update_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'rover_node_id', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.update_rover_node.name, help=rovernode_cli.update_rover_node.help)
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")

@@ -33,9 +33,21 @@ def work_request_summary_group():
     pass
 
 
+@click.command(cli_util.override('database_migration.migration_object_collection_group.command_name', 'migration-object-collection'), cls=CommandGroupWithAlias, help="""Database objects to migrate.""")
+@cli_util.help_option_group
+def migration_object_collection_group():
+    pass
+
+
 @click.command(cli_util.override('database_migration.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.excluded_object_summary_group.command_name', 'excluded-object-summary'), cls=CommandGroupWithAlias, help="""Excluded object summary line.""")
+@cli_util.help_option_group
+def excluded_object_summary_group():
     pass
 
 
@@ -113,7 +125,9 @@ def job_output_summary_group():
 
 database_migration_root_group.add_command(agent_group)
 database_migration_root_group.add_command(work_request_summary_group)
+database_migration_root_group.add_command(migration_object_collection_group)
 database_migration_root_group.add_command(work_request_log_entry_group)
+database_migration_root_group.add_command(excluded_object_summary_group)
 database_migration_root_group.add_command(work_request_group)
 database_migration_root_group.add_command(agent_summary_group)
 database_migration_root_group.add_command(migration_summary_group)
@@ -176,6 +190,37 @@ def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.add_migration_objects.command_name', 'add'), help=u"""Add excluded/included object to the list. \n[Command Reference](addMigrationObjects)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude/include from migration""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
+@cli_util.wrap_exceptions
+def add_migration_objects(ctx, from_json, migration_id, items, if_match):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.add_migration_objects(
+        migration_id=migration_id,
+        add_migration_objects_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -377,6 +422,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--admin-credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vault-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Database Connection display name identifier.""")
+@cli_util.option('--manual-database-sub-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "RDS_ORACLE"]), help=u"""Database manual connection subtype. This value can only be specified for manual connections.""")
 @cli_util.option('--database-id', help=u"""The OCID of the cloud database. Required if the database connection type is Autonomous.""")
 @cli_util.option('--connect-descriptor', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificate-tdn', help=u"""This name is the distinguished name used while creating the certificate on target database. Requires a TLS wallet to be specified. Not required for source container database connections.""")
@@ -394,7 +440,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connect-descriptor': {'module': 'database_migration', 'class': 'CreateConnectDescriptor'}, 'ssh-details': {'module': 'database_migration', 'class': 'CreateSshDetails'}, 'admin-credentials': {'module': 'database_migration', 'class': 'CreateAdminCredentials'}, 'private-endpoint': {'module': 'database_migration', 'class': 'CreatePrivateEndpoint'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_type, admin_credentials, vault_details, display_name, database_id, connect_descriptor, certificate_tdn, tls_wallet, tls_keystore, ssh_details, private_endpoint, freeform_tags, defined_tags):
+def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_type, admin_credentials, vault_details, display_name, manual_database_sub_type, database_id, connect_descriptor, certificate_tdn, tls_wallet, tls_keystore, ssh_details, private_endpoint, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -407,6 +453,9 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if manual_database_sub_type is not None:
+        _details['manualDatabaseSubType'] = manual_database_sub_type
 
     if database_id is not None:
         _details['databaseId'] = database_id
@@ -1195,6 +1244,84 @@ def list_connections(ctx, from_json, all_pages, page_size, compartment_id, displ
     cli_util.render_response(result, ctx)
 
 
+@excluded_object_summary_group.command(name=cli_util.override('database_migration.list_excluded_objects.command_name', 'list-excluded-objects'), help=u"""List the excluded database objects. \n[Command Reference](listExcludedObjects)""")
+@cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["type", "reasonCategory"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for reasonCategory is ascending. If no value is specified reasonCategory is default.""")
+@cli_util.option('--type', help=u"""Excluded object type.""")
+@cli_util.option('--owner', help=u"""Excluded object owner""")
+@cli_util.option('--object', help=u"""Excluded object name""")
+@cli_util.option('--owner-contains', help=u"""Excluded object owner which contains provided value.""")
+@cli_util.option('--object-contains', help=u"""Excluded object name which contains provided value.""")
+@cli_util.option('--reason-category', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_MAINTAINED", "GG_UNSUPPORTED", "USER_EXCLUDED", "MANDATORY_EXCLUDED", "USER_EXCLUDED_TYPE"]), help=u"""Reason category for the excluded object""")
+@cli_util.option('--source-rule', help=u"""Exclude object rule that matches the excluded object, if applicable.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'ExcludedObjectSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_excluded_objects(ctx, from_json, all_pages, page_size, job_id, limit, page, sort_order, sort_by, type, owner, object, owner_contains, object_contains, reason_category, source_rule):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if type is not None:
+        kwargs['type'] = type
+    if owner is not None:
+        kwargs['owner'] = owner
+    if object is not None:
+        kwargs['object'] = object
+    if owner_contains is not None:
+        kwargs['owner_contains'] = owner_contains
+    if object_contains is not None:
+        kwargs['object_contains'] = object_contains
+    if reason_category is not None:
+        kwargs['reason_category'] = reason_category
+    if source_rule is not None:
+        kwargs['source_rule'] = source_rule
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_excluded_objects,
+            job_id=job_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_excluded_objects,
+            limit,
+            page_size,
+            job_id=job_id,
+            **kwargs
+        )
+    else:
+        result = client.list_excluded_objects(
+            job_id=job_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @job_output_summary_group.command(name=cli_util.override('database_migration.list_job_outputs.command_name', 'list-job-outputs'), help=u"""List the Job Outputs \n[Command Reference](listJobOutputs)""")
 @cli_util.option('--job-id', required=True, help=u"""The OCID of the job""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1351,6 +1478,60 @@ def list_migration_object_types(ctx, from_json, all_pages, page_size, sort_by, s
         )
     else:
         result = client.list_migration_object_types(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@migration_object_collection_group.command(name=cli_util.override('database_migration.list_migration_objects.command_name', 'list-migration-objects'), help=u"""Display excluded/included objects. \n[Command Reference](listMigrationObjects)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'MigrationObjectCollection'})
+@cli_util.wrap_exceptions
+def list_migration_objects(ctx, from_json, all_pages, page_size, migration_id, if_match, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_migration_objects,
+            migration_id=migration_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_migration_objects,
+            limit,
+            page_size,
+            migration_id=migration_id,
+            **kwargs
+        )
+    else:
+        result = client.list_migration_objects(
+            migration_id=migration_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1590,6 +1771,37 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.remove_migration_objects.command_name', 'remove'), help=u"""Remove excluded/included objects. \n[Command Reference](removeMigrationObjects)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude/include from migration""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
+@cli_util.wrap_exceptions
+def remove_migration_objects(ctx, from_json, migration_id, items, if_match):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.remove_migration_objects(
+        migration_id=migration_id,
+        remove_migration_objects_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

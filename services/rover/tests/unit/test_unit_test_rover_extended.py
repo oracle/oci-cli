@@ -20,6 +20,7 @@ import json
 import click
 import pytest
 import unittest
+import random
 
 from tests import test_config_container
 from tests import util
@@ -65,11 +66,11 @@ class UnitTestRover(unittest.TestCase):
     def setUp(self):
         self.test_specific_set = {}  # When empty, all tests are run.
 
-        self.specific_arg_values = {"profile": "DEFAULT", "if-match": "True", "all": None, 'cluster-workloads': None,
-                                    'cluster-size': '5', 'node-workloads': None, "wait": None, "lifecycle-state": "CREATING",
+        self.specific_arg_values = {"profile": "DEFAULT", "if-match": "True", "all": None, 'cluster-workloads': None, 'cluster-type': ["STANDALONE", "STATION"],
+                                    'cluster-size': str(random.randint(5, 30)), 'node-workloads': None, "wait": None, "lifecycle-state": "CREATING",
                                     'shipping-preference': 'ORACLE_SHIPPED', 'type': ["BUCKET", "IMAGE"],
                                     "test_defined_tag": '{"string1": "string", "string2": "string"}', "force": None,
-                                    "debug": None, "super-user-password": None, "unlock-passphrase": None}
+                                    "debug": None, "super-user-password": None, "unlock-passphrase": None, "subscription-id": "test subscription-id"}
         self.complex_data_defs = {
             "customer-shipping-address": {
                 "required_params": ["addressee", "care-of", "address1", "city-or-locality", "state-or-region",
@@ -88,10 +89,10 @@ class UnitTestRover(unittest.TestCase):
 
         self.cluster_subcommands = [
             {"sub_command": "create",
-             "required_params": ["compartment-id", "display-name", "cluster-size"],
+             "required_params": ["compartment-id", "display-name", "cluster-size", "cluster-type"],
              "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact", "addressee", "care-of", "address1",
                                  "city-or-locality", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4"],
+                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4", "subscription-id"],
              },
             {"sub_command": "change-compartment",
              "required_params": ["compartment-id", "cluster-id"],
@@ -109,7 +110,7 @@ class UnitTestRover(unittest.TestCase):
                                  "phone-number", "email"]},
             {"sub_command": "request-approval",
              "required_params": ["cluster-id"],
-             "optional_params": []},
+             "optional_params": ["subscription-id"]},
             {"sub_command": "add-workload",
              "required_params": ["cluster-id", "compartment-id", "type"],
              "test_necessary_params": ["bucket-id", "bucket-name", "force"],
@@ -284,13 +285,17 @@ class UnitTestRover(unittest.TestCase):
         return c_list
 
     def _add_args(self, arg_list, test_type):
-
         new_arg_list = []
         for item in arg_list:
             s = ""
             new_arg_list.append("--" + item)
             if item in self.specific_arg_values:
-                if item == "type":
+                if item == "cluster-type":
+                    if int(self.specific_arg_values['cluster-size']) >= 15:
+                        s = "STATION"
+                    else:
+                        s = "STANDALONE"
+                elif item == "type":
                     if "image-id" in arg_list:
                         s = "IMAGE"
                     else:

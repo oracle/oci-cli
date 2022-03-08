@@ -185,8 +185,6 @@ def add_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--admin-username', required=True, help=u"""The username for the administrative user.""")
-@cli_util.option('--admin-password', required=True, help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
@@ -204,6 +202,8 @@ In a failover scenario, the Read/Write endpoint is redirected to one of the othe
 For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
+@cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
+@cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
@@ -227,7 +227,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags, crash_recovery):
+def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags, crash_recovery):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -236,8 +236,6 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     _details['compartmentId'] = compartment_id
     _details['shapeName'] = shape_name
     _details['subnetId'] = subnet_id
-    _details['adminUsername'] = admin_username
-    _details['adminPassword'] = admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -259,6 +257,12 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if mysql_version is not None:
         _details['mysqlVersion'] = mysql_version
+
+    if admin_username is not None:
+        _details['adminUsername'] = admin_username
+
+    if admin_password is not None:
+        _details['adminPassword'] = admin_password
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
@@ -330,8 +334,6 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--admin-username', required=True, help=u"""The username for the administrative user.""")
-@cli_util.option('--admin-password', required=True, help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--source-backup-id', required=True, help=u"""The OCID of the backup to be used as the source for the new DB System.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
@@ -350,6 +352,8 @@ In a failover scenario, the Read/Write endpoint is redirected to one of the othe
 For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
+@cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
+@cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
@@ -372,7 +376,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, crash_recovery):
+def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, crash_recovery):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -382,8 +386,6 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
     _details['compartmentId'] = compartment_id
     _details['shapeName'] = shape_name
     _details['subnetId'] = subnet_id
-    _details['adminUsername'] = admin_username
-    _details['adminPassword'] = admin_password
     _details['source']['backupId'] = source_backup_id
 
     if display_name is not None:
@@ -406,6 +408,12 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
 
     if mysql_version is not None:
         _details['mysqlVersion'] = mysql_version
+
+    if admin_username is not None:
+        _details['adminUsername'] = admin_username
+
+    if admin_password is not None:
+        _details['adminPassword'] = admin_password
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
@@ -476,8 +484,6 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--admin-username', required=True, help=u"""The username for the administrative user.""")
-@cli_util.option('--admin-password', required=True, help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
@@ -495,6 +501,8 @@ In a failover scenario, the Read/Write endpoint is redirected to one of the othe
 For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
+@cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
+@cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
@@ -517,7 +525,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, crash_recovery):
+def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, crash_recovery):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -527,8 +535,6 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
     _details['compartmentId'] = compartment_id
     _details['shapeName'] = shape_name
     _details['subnetId'] = subnet_id
-    _details['adminUsername'] = admin_username
-    _details['adminPassword'] = admin_password
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -550,6 +556,12 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 
     if mysql_version is not None:
         _details['mysqlVersion'] = mysql_version
+
+    if admin_username is not None:
+        _details['adminUsername'] = admin_username
+
+    if admin_password is not None:
+        _details['adminPassword'] = admin_password
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
@@ -620,8 +632,6 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--admin-username', required=True, help=u"""The username for the administrative user.""")
-@cli_util.option('--admin-password', required=True, help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--source-source-url', required=True, help=u"""The Pre-Authenticated Request (PAR) URL of the file you want to import from Object Storage.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
@@ -640,6 +650,8 @@ In a failover scenario, the Read/Write endpoint is redirected to one of the othe
 For a standalone DB System, this defines the fault domain in which the DB System is placed.""")
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for this DB System.""")
 @cli_util.option('--mysql-version', help=u"""The specific MySQL version identifier.""")
+@cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
+@cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
@@ -662,7 +674,7 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, admin_username, admin_password, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, crash_recovery):
+def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, crash_recovery):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -672,8 +684,6 @@ def create_db_system_create_db_system_source_import_from_url_details(ctx, from_j
     _details['compartmentId'] = compartment_id
     _details['shapeName'] = shape_name
     _details['subnetId'] = subnet_id
-    _details['adminUsername'] = admin_username
-    _details['adminPassword'] = admin_password
     _details['source']['sourceUrl'] = source_source_url
 
     if display_name is not None:
@@ -696,6 +706,12 @@ def create_db_system_create_db_system_source_import_from_url_details(ctx, from_j
 
     if mysql_version is not None:
         _details['mysqlVersion'] = mysql_version
+
+    if admin_username is not None:
+        _details['adminUsername'] = admin_username
+
+    if admin_password is not None:
+        _details['adminPassword'] = admin_password
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
