@@ -12,8 +12,8 @@ import pytest
 
 import services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended as os_cli
 from oci_cli import cli_util
-from services.object_storage.tests.integ import test_object_storage_bulk_operations as bulk_operation
-from services.object_storage.tests.integ.test_object_storage_sync_download import parse_dry_run_result, \
+import test_object_storage_bulk_operations as bulk_operation
+from test_object_storage_sync_download import parse_dry_run_result, \
     generate_random_string, create_new_objects_remote, create_new_files_local, cleanup_files_from_local
 from tests import util
 

@@ -396,6 +396,7 @@ def get_rover_node_get_rpt(ctx, from_json, rover_node_id, jwt):
 @rover_node_group.command(name=cli_util.override('rover_node.list_rover_nodes.command_name', 'list'), help=u"""Returns a list of RoverNodes. \n[Command Reference](listRoverNodes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--node-type', type=custom_types.CliCaseInsensitiveChoice(["STANDALONE", "CLUSTERED", "STATION"]), help=u"""A filter to return only Nodes of type matched with the given node type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
@@ -408,7 +409,7 @@ def get_rover_node_get_rpt(ctx, from_json, rover_node_id, jwt):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverNodeCollection'})
 @cli_util.wrap_exceptions
-def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, lifecycle_state, sort_order, sort_by):
+def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, display_name, node_type, limit, page, lifecycle_state, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -416,6 +417,8 @@ def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, displ
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if node_type is not None:
+        kwargs['node_type'] = node_type
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:

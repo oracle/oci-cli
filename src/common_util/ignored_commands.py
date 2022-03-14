@@ -91,6 +91,7 @@ IGNORED_COMMANDS = [
     ['data-integration', 'task-validation', 'create-from-pipeline-task'],
     ['data-integration', 'task', 'update-pipeline-task'],
     ['data-integration', 'task', 'create-pipeline-task'],
+    ['data-integration', 'task', 'create-task-from-rest-task'],
     ['dns', 'resolver', 'update'],
     # this command expects either src-dir or dest-dir as param, so this can't be tested here
     ['os', 'object', 'sync'],
