@@ -403,7 +403,7 @@ def update_node_pool(ctx, **kwargs):
 @cli_util.option('--file', type=click.Path(), default=DEFAULT_KUBECONFIG_LOCATION, show_default=True,
                  help="The name of the file that will be updated with response data, or '-' to write to STDOUT.")
 @cli_util.option('--token-version', default="2.0.0", help=u"""The version of the kubeconfig token. Supported value is 2.0.0""", type=custom_types.CliCaseInsensitiveChoice(['2.0.0']))
-@cli_util.option('--kube-endpoint', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time. Supported values LEGACY_KUBERNETES, PUBLIC_ENDPOINT, PRIVATE_ENDPOINT""")
+@cli_util.option('--kube-endpoint', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT", "VCN_HOSTNAME"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time. Supported values LEGACY_KUBERNETES, PUBLIC_ENDPOINT, PRIVATE_ENDPOINT, VCN_HOSTNAME""")
 @cli_util.option('--overwrite', is_flag=True, help="""Overwrites the contents of kubeconfig file specified using --file\
  option or kubeconfig file at default location if --file is not used.""")
 @click.pass_context

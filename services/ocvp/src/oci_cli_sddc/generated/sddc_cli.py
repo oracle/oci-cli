@@ -22,6 +22,12 @@ def sddc_root_group():
     pass
 
 
+@click.command(cli_util.override('sddc.supported_host_shape_summary_group.command_name', 'supported-host-shape-summary'), cls=CommandGroupWithAlias, help="""A specific compute shape supported by the Oracle Cloud VMware Solution.""")
+@cli_util.help_option_group
+def supported_host_shape_summary_group():
+    pass
+
+
 @click.command(cli_util.override('sddc.sddc_group.command_name', 'sddc'), cls=CommandGroupWithAlias, help="""An [Oracle Cloud VMware Solution] software-defined data center (SDDC) contains the resources required for a functional VMware environment. Instances in an SDDC (see [EsxiHost]) run in a virtual cloud network (VCN) and are preconfigured with VMware and storage. Use the vCenter utility to manage and deploy VMware virtual machines (VMs) in the SDDC.
 
 The SDDC uses a single management subnet for provisioning the SDDC. It also uses a set of VLANs for various components of the VMware environment (vSphere, vMotion, vSAN, and so on). See the Core Services API for information about VCN subnets and VLANs.""")
@@ -49,6 +55,7 @@ def supported_sku_summary_group():
 
 
 ocvs_service_cli.ocvs_service_group.add_command(sddc_root_group)
+sddc_root_group.add_command(supported_host_shape_summary_group)
 sddc_root_group.add_command(sddc_group)
 sddc_root_group.add_command(supported_vmware_software_version_summary_group)
 sddc_root_group.add_command(sddc_summary_group)
@@ -170,6 +177,7 @@ For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `myS
 @cli_util.option('--workload-network-cidr', help=u"""The CIDR block for the IP addresses that VMware VMs in the SDDC use to run application workloads.""")
 @cli_util.option('--replication-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the vSphere Replication component of the VMware environment.""")
 @cli_util.option('--provisioning-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the Provisioning component of the VMware environment.""")
+@cli_util.option('--is-shielded-instance-enabled', type=click.BOOL, help=u"""Indicates whether shielded instance is enabled for this SDDC.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -184,7 +192,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, is_shielded_instance_enabled, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -230,6 +238,9 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if provisioning_vlan_id is not None:
         _details['provisioningVlanId'] = provisioning_vlan_id
+
+    if is_shielded_instance_enabled is not None:
+        _details['isShieldedInstanceEnabled'] = is_shielded_instance_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -462,6 +473,60 @@ def list_sddcs(ctx, from_json, all_pages, page_size, compartment_id, compute_ava
         )
     else:
         result = client.list_sddcs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@supported_host_shape_summary_group.command(name=cli_util.override('sddc.list_supported_host_shapes.command_name', 'list-supported-host-shapes'), help=u"""Lists supported compute shapes for ESXi hosts. \n[Command Reference](listSupportedHostShapes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
+@cli_util.option('--sddc-type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCTION", "NON_PRODUCTION"]), help=u"""A filter to return only resources that match the given SDDC type exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'SupportedHostShapeCollection'})
+@cli_util.wrap_exceptions
+def list_supported_host_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, page, name, sddc_type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if name is not None:
+        kwargs['name'] = name
+    if sddc_type is not None:
+        kwargs['sddc_type'] = sddc_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_supported_host_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_supported_host_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_supported_host_shapes(
             compartment_id=compartment_id,
             **kwargs
         )

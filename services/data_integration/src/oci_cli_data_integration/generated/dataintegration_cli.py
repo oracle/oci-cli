@@ -51,6 +51,12 @@ def user_defined_function_validation_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.dis_application_group.command_name', 'dis-application'), cls=CommandGroupWithAlias, help="""DIS Application is container for runtime objects.""")
+@cli_util.help_option_group
+def dis_application_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.connection_validation_group.command_name', 'connection-validation'), cls=CommandGroupWithAlias, help="""The information about connection validation.""")
 @cli_util.help_option_group
 def connection_validation_group():
@@ -182,6 +188,7 @@ data_integration_root_group.add_command(workspace_group)
 data_integration_root_group.add_command(task_run_group)
 data_integration_root_group.add_command(external_publication_validation_group)
 data_integration_root_group.add_command(user_defined_function_validation_group)
+data_integration_root_group.add_command(dis_application_group)
 data_integration_root_group.add_command(connection_validation_group)
 data_integration_root_group.add_command(project_group)
 data_integration_root_group.add_command(work_request_group)
@@ -262,6 +269,68 @@ def change_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@dis_application_group.command(name=cli_util.override('data_integration.change_dis_application_compartment.command_name', 'change-compartment'), help=u"""Moves a DIS Application to a specified compartment. \n[Command Reference](changeDisApplicationCompartment)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--dis-application-id', required=True, help=u"""The OCID of the DIS Application.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to move the the DIS Application to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_dis_application_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, dis_application_id, compartment_id, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+        raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.change_dis_application_compartment(
+        workspace_id=workspace_id,
+        dis_application_id=dis_application_id,
+        change_dis_application_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('data_integration.create_application.command_name', 'create'), help=u"""Creates an application. \n[Command Reference](createApplication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
@@ -271,14 +340,21 @@ def change_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["INTEGRATION_APPLICATION"]), help=u"""The type of the application.""")
 @cli_util.option('--description', help=u"""Detailed description for the object.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--display-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
 @cli_util.option('--source-application-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Application'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, workspace_id, name, identifier, key, model_version, model_type, description, object_status, source_application_info, registry_metadata):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, name, identifier, key, model_version, model_type, description, object_status, display_name, freeform_tags, defined_tags, lifecycle_state, source_application_info, registry_metadata):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -305,6 +381,18 @@ def create_application(ctx, from_json, workspace_id, name, identifier, key, mode
     if object_status is not None:
         _details['objectStatus'] = object_status
 
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
     if source_application_info is not None:
         _details['sourceApplicationInfo'] = cli_util.parse_json_parameter("source_application_info", source_application_info)
 
@@ -317,6 +405,29 @@ def create_application(ctx, from_json, workspace_id, name, identifier, key, mode
         create_application_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_application(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -3324,6 +3435,106 @@ def create_data_flow_validation(ctx, from_json, workspace_id, key, model_type, m
     cli_util.render_response(result, ctx)
 
 
+@dis_application_group.command(name=cli_util.override('data_integration.create_dis_application.command_name', 'create'), help=u"""Creates a DIS Application. \n[Command Reference](createDisApplication)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Currently not used on application creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["INTEGRATION_APPLICATION"]), help=u"""The type of the application.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--display-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
+@cli_util.option('--source-application-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'source-application-info': {'module': 'data_integration', 'class': 'CreateSourceApplicationInfo'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'DisApplication'})
+@cli_util.wrap_exceptions
+def create_dis_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, name, identifier, key, model_version, model_type, description, object_status, display_name, freeform_tags, defined_tags, lifecycle_state, source_application_info, registry_metadata):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if model_type is not None:
+        _details['modelType'] = model_type
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if source_application_info is not None:
+        _details['sourceApplicationInfo'] = cli_util.parse_json_parameter("source_application_info", source_application_info)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_dis_application(
+        workspace_id=workspace_id,
+        create_dis_application_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_dis_application') and callable(getattr(client, 'get_dis_application')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_dis_application(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_entity_group.command(name=cli_util.override('data_integration.create_entity_shape.command_name', 'create-entity-shape'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
@@ -5169,6 +5380,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use. This property is deprecated, use ExecuteRestCallConfig's methodType property instead.""")
 @cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5178,12 +5390,16 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--cancel-method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use for canceling the original request.""")
 @cli_util.option('--execute-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cancel-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}})
+@cli_util.option('--poll-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--typed-expressions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of typed expressions.
+
+This option is a JSON list with items of type TypedExpression.  For documentation on TypedExpression please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/TypedExpression.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, auth_details, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config):
+def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -5229,6 +5445,9 @@ def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, i
     if auth_details is not None:
         _details['authDetails'] = cli_util.parse_json_parameter("auth_details", auth_details)
 
+    if auth_config is not None:
+        _details['authConfig'] = cli_util.parse_json_parameter("auth_config", auth_config)
+
     if endpoint_parameterconflict is not None:
         _details['endpoint'] = cli_util.parse_json_parameter("endpoint_parameterconflict", endpoint_parameterconflict)
 
@@ -5255,6 +5474,12 @@ def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, i
 
     if cancel_rest_call_config is not None:
         _details['cancelRestCallConfig'] = cli_util.parse_json_parameter("cancel_rest_call_config", cancel_rest_call_config)
+
+    if poll_rest_call_config is not None:
+        _details['pollRestCallConfig'] = cli_util.parse_json_parameter("poll_rest_call_config", poll_rest_call_config)
+
+    if typed_expressions is not None:
+        _details['typedExpressions'] = cli_util.parse_json_parameter("typed_expressions", typed_expressions)
 
     _details['modelType'] = 'REST_TASK'
 
@@ -6246,6 +6471,37 @@ def delete_data_flow_validation(ctx, from_json, workspace_id, data_flow_validati
     cli_util.render_response(result, ctx)
 
 
+@dis_application_group.command(name=cli_util.override('data_integration.delete_dis_application.command_name', 'delete'), help=u"""Removes a DIS application using the specified identifier. \n[Command Reference](deleteDisApplication)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--dis-application-id', required=True, help=u"""The OCID of the DIS Application.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_dis_application(ctx, from_json, workspace_id, dis_application_id, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+        raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_dis_application(
+        workspace_id=workspace_id,
+        dis_application_id=dis_application_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_group.command(name=cli_util.override('data_integration.delete_external_publication.command_name', 'delete'), help=u"""Removes a published object using the specified identifier. \n[Command Reference](deleteExternalPublication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -7055,6 +7311,33 @@ def get_dependent_object(ctx, from_json, workspace_id, application_key, dependen
         workspace_id=workspace_id,
         application_key=application_key,
         dependent_object_key=dependent_object_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@dis_application_group.command(name=cli_util.override('data_integration.get_dis_application.command_name', 'get'), help=u"""Retrieves an application using the specified OCID. \n[Command Reference](getDisApplication)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--dis-application-id', required=True, help=u"""The OCID of the DIS Application.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DisApplication'})
+@cli_util.wrap_exceptions
+def get_dis_application(ctx, from_json, workspace_id, dis_application_id):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+        raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_dis_application(
+        workspace_id=workspace_id,
+        dis_application_id=dis_application_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8228,6 +8511,79 @@ def list_dependent_objects(ctx, from_json, all_pages, page_size, workspace_id, a
         result = client.list_dependent_objects(
             workspace_id=workspace_id,
             application_key=application_key,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@dis_application_group.command(name=cli_util.override('data_integration.list_dis_applications.command_name', 'list'), help=u"""Retrieves a list of DIS Applications in a compartment and provides options to filter the list. \n[Command Reference](listDisApplications)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment for which the list of DIS Applications is to be retrieved.""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
+@cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the published object.""")
+@cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'DisApplicationSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_dis_applications(ctx, from_json, all_pages, page_size, workspace_id, compartment_id, name, name_contains, identifier, fields, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
+    if identifier is not None and len(identifier) > 0:
+        kwargs['identifier'] = identifier
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dis_applications,
+            workspace_id=workspace_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dis_applications,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dis_applications(
+            workspace_id=workspace_id,
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -10048,14 +10404,21 @@ def stop_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}})
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}}, output_type={'module': 'data_integration', 'class': 'Application'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_integration', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, workspace_id, application_key, key, model_type, object_version, model_version, name, description, application_version, object_status, identifier, parent_ref, metadata, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, application_key, key, model_type, object_version, model_version, name, description, application_version, object_status, identifier, parent_ref, metadata, display_name, freeform_tags, defined_tags, lifecycle_state, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -10063,8 +10426,8 @@ def update_application(ctx, from_json, force, workspace_id, application_key, key
     if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
         raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
     if not force:
-        if parent_ref or metadata:
-            if not click.confirm("WARNING: Updates to parent-ref and metadata will replace any existing values. Are you sure you want to continue?"):
+        if parent_ref or metadata or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to parent-ref and metadata and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -10101,6 +10464,18 @@ def update_application(ctx, from_json, force, workspace_id, application_key, key
     if metadata is not None:
         _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_application(
         workspace_id=workspace_id,
@@ -10108,6 +10483,29 @@ def update_application(ctx, from_json, force, workspace_id, application_key, key
         update_application_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_application(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -11892,6 +12290,125 @@ def update_data_flow(ctx, from_json, force, workspace_id, data_flow_key, key, mo
     cli_util.render_response(result, ctx)
 
 
+@dis_application_group.command(name=cli_util.override('data_integration.update_dis_application.command_name', 'update'), help=u"""Updates a DIS Application. \n[Command Reference](updateDisApplication)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--dis-application-id', required=True, help=u"""The OCID of the DIS Application.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify application.""")
+@cli_util.option('--model-type', required=True, help=u"""The object type.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--application-version', type=click.INT, help=u"""version""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the workspace.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'metadata': {'module': 'data_integration', 'class': 'ObjectMetadata'}, 'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_integration', 'class': 'DisApplication'})
+@cli_util.wrap_exceptions
+def update_dis_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, dis_application_id, key, model_type, object_version, model_version, name, description, application_version, object_status, identifier, parent_ref, metadata, display_name, freeform_tags, defined_tags, lifecycle_state, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(dis_application_id, six.string_types) and len(dis_application_id.strip()) == 0:
+        raise click.UsageError('Parameter --dis-application-id cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or metadata or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to parent-ref and metadata and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['modelType'] = model_type
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if application_version is not None:
+        _details['applicationVersion'] = application_version
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_dis_application(
+        workspace_id=workspace_id,
+        dis_application_id=dis_application_id,
+        update_dis_application_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_dis_application') and callable(getattr(client, 'get_dis_application')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_dis_application(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_group.command(name=cli_util.override('data_integration.update_external_publication.command_name', 'update'), help=u"""Updates the external publication object. \n[Command Reference](updateExternalPublication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -13171,6 +13688,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use. This property is deprecated, use ExecuteRestCallConfig's methodType property instead.""")
 @cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13181,14 +13699,18 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--cancel-method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use for canceling the original request.""")
 @cli_util.option('--execute-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cancel-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--poll-rest-call-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--typed-expressions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of typed expressions.
+
+This option is a JSON list with items of type TypedExpression.  For documentation on TypedExpression please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/TypedExpression.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, auth_details, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, if_match):
+def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -13196,8 +13718,8 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
     if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
-        if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or auth_details or endpoint_parameterconflict or headers or cancel_endpoint or execute_rest_call_config or cancel_rest_call_config:
-            if not click.confirm("WARNING: Updates to parent-ref and input-ports and output-ports and parameters and op-config-values and config-provider-delegate and registry-metadata and auth-details and endpoint-parameterconflict and headers and cancel-endpoint and execute-rest-call-config and cancel-rest-call-config will replace any existing values. Are you sure you want to continue?"):
+        if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or auth_details or auth_config or endpoint_parameterconflict or headers or cancel_endpoint or execute_rest_call_config or cancel_rest_call_config or poll_rest_call_config or typed_expressions:
+            if not click.confirm("WARNING: Updates to parent-ref and input-ports and output-ports and parameters and op-config-values and config-provider-delegate and registry-metadata and auth-details and auth-config and endpoint-parameterconflict and headers and cancel-endpoint and execute-rest-call-config and cancel-rest-call-config and poll-rest-call-config and typed-expressions will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -13248,6 +13770,9 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
     if auth_details is not None:
         _details['authDetails'] = cli_util.parse_json_parameter("auth_details", auth_details)
 
+    if auth_config is not None:
+        _details['authConfig'] = cli_util.parse_json_parameter("auth_config", auth_config)
+
     if endpoint_parameterconflict is not None:
         _details['endpoint'] = cli_util.parse_json_parameter("endpoint_parameterconflict", endpoint_parameterconflict)
 
@@ -13277,6 +13802,12 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
 
     if cancel_rest_call_config is not None:
         _details['cancelRestCallConfig'] = cli_util.parse_json_parameter("cancel_rest_call_config", cancel_rest_call_config)
+
+    if poll_rest_call_config is not None:
+        _details['pollRestCallConfig'] = cli_util.parse_json_parameter("poll_rest_call_config", poll_rest_call_config)
+
+    if typed_expressions is not None:
+        _details['typedExpressions'] = cli_util.parse_json_parameter("typed_expressions", typed_expressions)
 
     _details['modelType'] = 'REST_TASK'
 

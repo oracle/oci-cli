@@ -6,6 +6,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.6.1 - 2022-03-15
+------------------
+Added
+~~~~~
+
+* Support for DI application resource in the Data Integration service
+
+  * ``oci data-integration dis-application``
+
+* Support for enabling shielded instances feature in create SDDC in the Oracle Cloud VMware Solution service
+
+  * ``oci ocvs sddc create --is-shielded-instance-enabled``
+
+* Vulnerability Scanning Service
+
+  * Support for Optional param ``--image-count`` in container scan recipe create and update
+
+    * ``oci vulnerability-scanning container scan recipe create --image-count``
+    * ``oci vulnerability-scanning container scan recipe update --image-count``
+
+  * Support for vulnerabilities list and get
+
+    * ``oci vulnerability-scanning vulnerability get``
+    * ``oci vulnerability-scanning vulnerability list``
+    * ``oci vulnerability-scanning vulnerability list-vulnerability-impacted-containers``
+    * ``oci vulnerability-scanning vulnerability list-vulnerability-impacted-hosts``
+
+* Support for Custom Maintenance Schedule for AVM clusters on ExaCC Infrastructure in the Database service
+
+    * ``oci db autonomous-vm-cluster create --autonomous-data-storage-size-in-tbs, --cpu-core-count-per-node, --maintenance-window-details, --memory-per-oracle-compute-unit-in-gbs, --total-container-databases``
+    * ``oci db autonomous-vm-cluster update --maintenance-window-details``
+
+* Support for the following parameters -defined-tags, --display-name, --freeform-tags for the below commands in the Data Integration service
+
+  * ``oci data-integration application create --defined-tags, --display-name, --freeform-tags``
+  * ``oci data-integration application update --defined-tags, --display-name, --freeform-tags``
+
+Changed
+~~~~~~~
+
+* Complex param --input-ports,--output-port have been updated for below commands in the Data Integration service
+
+  * ``oci data-integration task create-task-from-rest-task --auth-config, --poll-rest-call-config, --typed-expressions``
+  * ``oci data-integration task update-task-from-rest-task --auth-config, --poll-rest-call-config, --typed-expressions``
+
+* Updated the help text for creating an Autonomous Database Data Guard standby to be more descriptive and have better examples
+
+  * ``create-adb-cross-region-data-guard-details``
+
 3.6.0 - 2022-03-08
 ------------------
 Added

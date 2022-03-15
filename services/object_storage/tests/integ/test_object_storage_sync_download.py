@@ -9,7 +9,7 @@ import random
 
 import pytest
 
-from services.object_storage.tests.integ import test_object_storage_bulk_operations as bulk_operation
+import test_object_storage_bulk_operations as bulk_operation
 from tests import test_config_container
 from tests import util
 
