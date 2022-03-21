@@ -112,7 +112,8 @@ IGNORED_COMMANDS = [
     ['data-connectivity', 'data-entity', 'create-entity-shape'],
     ['data-connectivity', 'endpoint', 'list'],
     ['data-connectivity', 'full-push-down-task-response', 'create-full-push-down-task'],
-    ['data-connectivity', 'registry', 'list']
+    ['data-connectivity', 'registry', 'list'],
+    ['mysql', 'db-system', 'import']
 ]
 
 IGNORED_COMMANDS_DOCS = [

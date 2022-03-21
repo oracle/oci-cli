@@ -366,3 +366,95 @@ def list_host_configurations_extended(ctx, **kwargs):
         kwargs.pop('em_bridge_id')
 
     ctx.invoke(operationsinsights_cli.list_host_configurations, **kwargs)
+
+
+# oci opsi operations-insights-private-endpoint -> oci opsi opsi-private-endpoint
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_root_group, operationsinsights_cli.operations_insights_private_endpoint_group, "opsi-private-endpoint")
+
+
+# oci opsi operations-insights-private-endpoint-collection -> oci opsi opsi-private-endpoint
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_root_group, operationsinsights_cli.operations_insights_private_endpoint_collection_group, "opsi-private-endpoint")
+
+
+# oci opsi operations-insights-private-endpoint-collection list-operations-insights-private-endpoints -> oci opsi operations-insights-private-endpoint-collection list
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.operations_insights_private_endpoint_collection_group, operationsinsights_cli.list_operations_insights_private_endpoints, "list")
+
+
+# oci opsi database-insights create-database-insight-create-pe-comanaged-database-insight-details -> oci opsi database-insights create-pe-comanged-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_pe_comanaged_database_insight_details, "create-pe-comanged-database")
+
+
+# oci opsi database-insights enable-database-insight-enable-pe-comanaged-database-insight-details -> oci opsi database-insights enable-pe-comanaged-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.enable_database_insight_enable_pe_comanaged_database_insight_details, "enable-pe-comanaged-database")
+
+
+# oci opsi database-insights update-database-insight-update-pe-comanaged-database-insight-details -> oci opsi database-insights update-pe-comanaged-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_pe_comanaged_database_insight_details, "update-pe-comanaged-database")
+
+
+# oci opsi database-insights change-pe-comanaged-database-insight-credential-by-vault -> oci opsi database-insights change-pe-comanaged-database-detail
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.change_pe_comanaged_database_insight_credential_by_vault, "change-pe-comanaged-database-detail")
+
+
+# Remove change-pe-comanaged from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_pe_comanaged_database_insight.name)
+
+
+# Remove change-pe-comanaged-database-insight-credentials-by-source from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_pe_comanaged_database_insight_credentials_by_source.name)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.change_operations_insights_private_endpoint_compartment, params_to_exclude=['operations_insights_private_endpoint_id'])
+@operationsinsights_cli.operations_insights_private_endpoint_group.command(name=operationsinsights_cli.change_operations_insights_private_endpoint_compartment.name, help=operationsinsights_cli.change_operations_insights_private_endpoint_compartment.help)
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_operations_insights_private_endpoint_compartment_extended(ctx, **kwargs):
+    if 'opsi_private_endpoint_id' in kwargs:
+        kwargs['operations_insights_private_endpoint_id'] = kwargs['opsi_private_endpoint_id']
+        kwargs.pop('opsi_private_endpoint_id')
+
+    ctx.invoke(operationsinsights_cli.change_operations_insights_private_endpoint_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.delete_operations_insights_private_endpoint, params_to_exclude=['operations_insights_private_endpoint_id'])
+@operationsinsights_cli.operations_insights_private_endpoint_group.command(name=operationsinsights_cli.delete_operations_insights_private_endpoint.name, help=operationsinsights_cli.delete_operations_insights_private_endpoint.help)
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_operations_insights_private_endpoint_extended(ctx, **kwargs):
+    if 'opsi_private_endpoint_id' in kwargs:
+        kwargs['operations_insights_private_endpoint_id'] = kwargs['opsi_private_endpoint_id']
+        kwargs.pop('opsi_private_endpoint_id')
+
+    ctx.invoke(operationsinsights_cli.delete_operations_insights_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.get_operations_insights_private_endpoint, params_to_exclude=['operations_insights_private_endpoint_id'])
+@operationsinsights_cli.operations_insights_private_endpoint_group.command(name=operationsinsights_cli.get_operations_insights_private_endpoint.name, help=operationsinsights_cli.get_operations_insights_private_endpoint.help)
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'operationsinsights', 'class': 'OperationsInsightsPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_operations_insights_private_endpoint_extended(ctx, **kwargs):
+    if 'opsi_private_endpoint_id' in kwargs:
+        kwargs['operations_insights_private_endpoint_id'] = kwargs['opsi_private_endpoint_id']
+        kwargs.pop('opsi_private_endpoint_id')
+
+    ctx.invoke(operationsinsights_cli.get_operations_insights_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.update_operations_insights_private_endpoint, params_to_exclude=['operations_insights_private_endpoint_id'])
+@operationsinsights_cli.operations_insights_private_endpoint_group.command(name=operationsinsights_cli.update_operations_insights_private_endpoint.name, help=operationsinsights_cli.update_operations_insights_private_endpoint.help)
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'operationsinsights', 'class': 'list[string]'}, 'freeform-tags': {'module': 'operationsinsights', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operationsinsights', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_operations_insights_private_endpoint_extended(ctx, **kwargs):
+    if 'opsi_private_endpoint_id' in kwargs:
+        kwargs['operations_insights_private_endpoint_id'] = kwargs['opsi_private_endpoint_id']
+        kwargs.pop('opsi_private_endpoint_id')
+
+    ctx.invoke(operationsinsights_cli.update_operations_insights_private_endpoint, **kwargs)

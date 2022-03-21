@@ -29,6 +29,12 @@ def enterprise_manager_bridges_group():
     pass
 
 
+@click.command(cli_util.override('opsi.operations_insights_private_endpoint_collection_group.command_name', 'operations-insights-private-endpoint-collection'), cls=CommandGroupWithAlias, help="""A collection of Operation Insights private endpoint objects.""")
+@cli_util.help_option_group
+def operations_insights_private_endpoint_collection_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.exadata_insights_group.command_name', 'exadata-insights'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Exadata related operations.""")
 @cli_util.help_option_group
 def exadata_insights_group():
@@ -59,6 +65,12 @@ def host_insights_group():
     pass
 
 
+@click.command(cli_util.override('opsi.operations_insights_private_endpoint_group.command_name', 'operations-insights-private-endpoint'), cls=CommandGroupWithAlias, help="""A private endpoint that allows Operation Insights services to connect to databases in a customer's virtual cloud network (VCN).""")
+@cli_util.help_option_group
+def operations_insights_private_endpoint_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.operations_insights_warehouse_users_group.command_name', 'operations-insights-warehouse-users'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse User operations.""")
 @cli_util.help_option_group
 def operations_insights_warehouse_users_group():
@@ -72,11 +84,13 @@ def work_requests_group():
 
 
 opsi_root_group.add_command(enterprise_manager_bridges_group)
+opsi_root_group.add_command(operations_insights_private_endpoint_collection_group)
 opsi_root_group.add_command(exadata_insights_group)
 opsi_root_group.add_command(operations_insights_warehouses_group)
 opsi_root_group.add_command(database_insights_group)
 opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(host_insights_group)
+opsi_root_group.add_command(operations_insights_private_endpoint_group)
 opsi_root_group.add_command(operations_insights_warehouse_users_group)
 opsi_root_group.add_command(work_requests_group)
 
@@ -429,6 +443,266 @@ def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.change_operations_insights_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOperationsInsightsPrivateEndpointCompartment)""")
+@cli_util.option('--operations-insights-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint.""")
+@cli_util.option('--compartment-id', help=u"""The new compartment [OCID] of the Private service accessed database.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_private_endpoint_id, compartment_id, if_match):
+
+    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_operations_insights_private_endpoint_compartment(
+        operations_insights_private_endpoint_id=operations_insights_private_endpoint_id,
+        change_operations_insights_private_endpoint_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_pe_comanaged_database_insight.command_name', 'change-pe-comanaged'), help=u"""Change the connection details of a co-managed  database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePeComanagedDatabaseInsight)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@cli_util.wrap_exceptions
+def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, credential_details, opsi_private_endpoint_id, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['serviceName'] = service_name
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_pe_comanaged_database_insight(
+        database_insight_id=database_insight_id,
+        change_pe_comanaged_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_pe_comanaged_database_insight_credentials_by_source.command_name', 'change-pe-comanaged-database-insight-credentials-by-source'), help=u"""Change the connection details of a co-managed  database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePeComanagedDatabaseInsight)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['serviceName'] = service_name
+    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
+
+    _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_pe_comanaged_database_insight(
+        database_insight_id=database_insight_id,
+        change_pe_comanaged_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_pe_comanaged_database_insight_credential_by_vault.command_name', 'change-pe-comanaged-database-insight-credential-by-vault'), help=u"""Change the connection details of a co-managed  database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePeComanagedDatabaseInsight)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-user-name', help=u"""database user name.""")
+@cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--credential-details-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_role):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['serviceName'] = service_name
+    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
+
+    if credential_details_user_name is not None:
+        _details['credentialDetails']['userName'] = credential_details_user_name
+
+    if credential_details_password_secret_id is not None:
+        _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if credential_details_role is not None:
+        _details['credentialDetails']['role'] = credential_details_role
+
+    _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_VAULT'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_pe_comanaged_database_insight(
+        database_insight_id=database_insight_id,
+        change_pe_comanaged_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @awr_hubs_group.command(name=cli_util.override('opsi.create_awr_hub.command_name', 'create'), help=u"""Create a AWR hub resource for the tenant in Operations Insights. This resource will be created in root compartment. \n[Command Reference](createAwrHub)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""OPSI Warehouse OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
@@ -493,7 +767,7 @@ def create_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight.command_name', 'create'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE"]), help=u"""Source of the database entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE"]), help=u"""Source of the database entity.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -588,6 +862,81 @@ def create_database_insight_create_em_managed_external_database_insight_details(
         _details['exadataInsightId'] = exadata_insight_id
 
     _details['entitySource'] = 'EM_MANAGED_EXTERNAL_DATABASE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_database_insight(
+        create_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_pe_comanaged_database_insight_details.command_name', 'create-database-insight-create-pe-comanaged-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--database-resource-type', required=True, help=u"""OCI database resource type""")
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIRTUAL_MACHINE", "BARE_METAL", "EXACS"]), help=u"""Database Deployment Type""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'DatabaseInsight'})
+@cli_util.wrap_exceptions
+def create_database_insight_create_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_id, database_resource_type, opsi_private_endpoint_id, service_name, credential_details, deployment_type, freeform_tags, defined_tags, system_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['databaseId'] = database_id
+    _details['databaseResourceType'] = database_resource_type
+    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+    _details['serviceName'] = service_name
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['deploymentType'] = deployment_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    _details['entitySource'] = 'PE_COMANAGED_DATABASE'
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.create_database_insight(
@@ -1008,7 +1357,80 @@ def create_host_insight_create_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Operations Insights Warehouse resource for the tenant in Operations Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](createOperationsInsightsWarehouse)""")
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.create_operations_insights_private_endpoint.command_name', 'create'), help=u"""Create a private endpoint resource for the tenant in Operations Insights. This resource will be created in customer compartment. \n[Command Reference](createOperationsInsightsPrivateEndpoint)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name for the private endpoint. It is changeable.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Private service accessed database.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The VCN [OCID] of the Private service accessed database.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The Subnet [OCID] of the Private service accessed database.""")
+@cli_util.option('--is-used-for-rac-dbs', required=True, type=click.BOOL, help=u"""The flag to identify if private endpoint is used for rac database or not""")
+@cli_util.option('--description', help=u"""The description of the private endpoint.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'OperationsInsightsPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def create_operations_insights_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vcn_id, subnet_id, is_used_for_rac_dbs, description, nsg_ids, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
+    _details['subnetId'] = subnet_id
+    _details['isUsedForRacDbs'] = is_used_for_rac_dbs
+
+    if description is not None:
+        _details['description'] = description
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_operations_insights_private_endpoint(
+        create_operations_insights_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Operations Insights Warehouse resource for the tenant in Operations Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. If the 'opsi-warehouse-type' header is passed to the API, a warehouse resource without ADW or Schema provisioning is created. \n[Command Reference](createOperationsInsightsWarehouse)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""User-friedly name of Operations Insights Warehouse that does not have to be unique.""")
 @cli_util.option('--cpu-allocated', required=True, help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
@@ -1406,6 +1828,58 @@ def delete_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.delete_operations_insights_private_endpoint.command_name', 'delete'), help=u"""Deletes a private endpoint. \n[Command Reference](deleteOperationsInsightsPrivateEndpoint)""")
+@cli_util.option('--operations-insights-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_operations_insights_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_private_endpoint_id, if_match):
+
+    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_operations_insights_private_endpoint(
+        operations_insights_private_endpoint_id=operations_insights_private_endpoint_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.delete_operations_insights_warehouse.command_name', 'delete'), help=u"""Deletes an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. User must delete AWR Hub resource for this warehouse before calling this operation. User must delete the warehouse users before calling this operation. \n[Command Reference](deleteOperationsInsightsWarehouse)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1715,7 +2189,7 @@ def download_operations_insights_warehouse_wallet(ctx, from_json, file, operatio
 
 
 @database_insights_group.command(name=cli_util.override('opsi.enable_database_insight.command_name', 'enable'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE"]), help=u"""Source of the database entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE"]), help=u"""Source of the database entity.""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1795,6 +2269,83 @@ def enable_database_insight_enable_em_managed_external_database_insight_details(
     _details = {}
 
     _details['entitySource'] = 'EM_MANAGED_EXTERNAL_DATABASE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.enable_database_insight(
+        database_insight_id=database_insight_id,
+        enable_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.enable_database_insight_enable_pe_comanaged_database_insight_details.command_name', 'enable-database-insight-enable-pe-comanaged-database-insight-details'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Private service accessed database.""")
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
+@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, opsi_private_endpoint_id, service_name, credential_details, database_insight_id, freeform_tags, defined_tags, system_tags, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+    _details['serviceName'] = service_name
+    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    _details['entitySource'] = 'PE_COMANAGED_DATABASE'
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.enable_database_insight(
@@ -2265,6 +2816,28 @@ def get_host_insight(ctx, from_json, host_insight_id):
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.get_operations_insights_private_endpoint.command_name', 'get'), help=u"""Gets the details of the specified private endpoint. \n[Command Reference](getOperationsInsightsPrivateEndpoint)""")
+@cli_util.option('--operations-insights-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OperationsInsightsPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_operations_insights_private_endpoint(ctx, from_json, operations_insights_private_endpoint_id):
+
+    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_operations_insights_private_endpoint(
+        operations_insights_private_endpoint_id=operations_insights_private_endpoint_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.get_operations_insights_warehouse.command_name', 'get'), help=u"""Gets details of an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](getOperationsInsightsWarehouse)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2712,7 +3285,7 @@ def list_awr_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_sou
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -2800,7 +3373,7 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["compartmentId", "databaseName", "databaseDisplayName", "databaseType", "databaseVersion", "databaseHostNames", "freeformTags", "definedTags"]), multiple=True, help=u"""Specifies the fields to return in a database summary response. By default all fields are returned if omitted.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -2809,6 +3382,7 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["databaseName", "databaseDisplayName", "databaseType"]), help=u"""Database insight list sort options. If `fields` parameter is selected, the `sortBy` parameter must be one of the fields specified.""")
 @cli_util.option('--exadata-insight-id', help=u"""[OCID] of exadata insight resource.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""A flag to search all resources within a given compartment and all sub-compartments.""")
+@cli_util.option('--opsi-private-endpoint-id', help=u"""Unique Operations Insights PrivateEndpoint identifier""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}})
@@ -2816,7 +3390,7 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'DatabaseInsightsCollection'})
 @cli_util.wrap_exceptions
-def list_database_insights(ctx, from_json, all_pages, page_size, compartment_id, enterprise_manager_bridge_id, id, status, lifecycle_state, database_type, database_id, fields, limit, page, sort_order, sort_by, exadata_insight_id, compartment_id_in_subtree):
+def list_database_insights(ctx, from_json, all_pages, page_size, compartment_id, enterprise_manager_bridge_id, id, status, lifecycle_state, database_type, database_id, fields, limit, page, sort_order, sort_by, exadata_insight_id, compartment_id_in_subtree, opsi_private_endpoint_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2850,6 +3424,8 @@ def list_database_insights(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['exadata_insight_id'] = exadata_insight_id
     if compartment_id_in_subtree is not None:
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if opsi_private_endpoint_id is not None:
+        kwargs['opsi_private_endpoint_id'] = opsi_private_endpoint_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -3425,6 +4001,77 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
+@operations_insights_private_endpoint_collection_group.command(name=cli_util.override('opsi.list_operations_insights_private_endpoints.command_name', 'list-operations-insights-private-endpoints'), help=u"""Gets a list of Operation Insights private endpoints. \n[Command Reference](listOperationsInsightsPrivateEndpoints)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
+@cli_util.option('--opsi-private-endpoint-id', help=u"""Unique Operations Insights PrivateEndpoint identifier""")
+@cli_util.option('--is-used-for-rac-dbs', type=click.BOOL, help=u"""The option to filter OPSI private endpoints that can used for RAC. Should be used along with vcnId query parameter.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "id", "displayName"]), help=u"""The field to sort private endpoints.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""A flag to search all resources within a given compartment and all sub-compartments.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OperationsInsightsPrivateEndpointCollection'})
+@cli_util.wrap_exceptions
+def list_operations_insights_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id, display_name, opsi_private_endpoint_id, is_used_for_rac_dbs, vcn_id, lifecycle_state, limit, page, sort_order, sort_by, compartment_id_in_subtree):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if opsi_private_endpoint_id is not None:
+        kwargs['opsi_private_endpoint_id'] = opsi_private_endpoint_id
+    if is_used_for_rac_dbs is not None:
+        kwargs['is_used_for_rac_dbs'] = is_used_for_rac_dbs
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_operations_insights_private_endpoints,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_operations_insights_private_endpoints,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_operations_insights_private_endpoints(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.list_operations_insights_warehouse_users.command_name', 'list'), help=u"""Gets a list of Operations Insights Warehouse users. Either compartmentId or id must be specified. All these resources are expected to be in root compartment. \n[Command Reference](listOperationsInsightsWarehouseUsers)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
@@ -3982,7 +4629,7 @@ def summarize_awr_sources_summaries(ctx, from_json, awr_hub_id, compartment_id, 
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -4063,7 +4710,7 @@ def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartme
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -4150,7 +4797,7 @@ def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartme
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -4237,7 +4884,7 @@ def summarize_database_insight_resource_statistics(ctx, from_json, compartment_i
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -4306,7 +4953,7 @@ def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, re
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -4378,7 +5025,7 @@ def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -5475,7 +6122,7 @@ def summarize_operations_insights_warehouse_resource_usage(ctx, from_json, opera
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_insights.command_name', 'summarize-sql-insights'), help=u"""Query SQL Warehouse to get the performance insights for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlInsights)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -5620,7 +6267,7 @@ def summarize_sql_response_time_distributions(ctx, from_json, compartment_id, sq
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics.command_name', 'summarize-sql-statistics'), help=u"""Query SQL Warehouse to get the performance statistics for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatistics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -5876,7 +6523,7 @@ def update_awr_hub(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
 @database_insights_group.command(name=cli_util.override('opsi.update_database_insight.command_name', 'update'), help=u"""Updates configuration of a database insight. \n[Command Reference](updateDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE"]), help=u"""Source of the database entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE"]), help=u"""Source of the database entity.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6051,6 +6698,76 @@ def update_database_insight_update_em_managed_external_database_insight_details(
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['entitySource'] = 'EM_MANAGED_EXTERNAL_DATABASE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_database_insight(
+        database_insight_id=database_insight_id,
+        update_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.update_database_insight_update_pe_comanaged_database_insight_details.command_name', 'update-database-insight-update-pe-comanaged-database-insight-details'), help=u"""Updates configuration of a database insight. \n[Command Reference](updateDatabaseInsight)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_database_insight_update_pe_comanaged_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['entitySource'] = 'PE_COMANAGED_DATABASE'
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.update_database_insight(
@@ -6556,6 +7273,86 @@ def update_host_insight_update_macs_managed_external_host_insight_details(ctx, f
     result = client.update_host_insight(
         host_insight_id=host_insight_id,
         update_host_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.update_operations_insights_private_endpoint.command_name', 'update'), help=u"""Updates one or more attributes of the specified private endpoint. \n[Command Reference](updateOperationsInsightsPrivateEndpoint)""")
+@cli_util.option('--operations-insights-private-endpoint-id', required=True, help=u"""The [OCID] of the Operation Insights private endpoint.""")
+@cli_util.option('--display-name', help=u"""The display name of the private endpoint.""")
+@cli_util.option('--description', help=u"""The description of the private endpoint.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] of the network security groups that the Private service accessed the database.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, if_match):
+
+    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
+    if not force:
+        if nsg_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_operations_insights_private_endpoint(
+        operations_insights_private_endpoint_id=operations_insights_private_endpoint_id,
+        update_operations_insights_private_endpoint_details=_details,
         **kwargs
     )
     if wait_for_state:
