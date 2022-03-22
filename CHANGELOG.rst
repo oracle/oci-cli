@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.6.2 - 2022-03-22
+------------------
+Added
+~~~~~
+
+* Support for virtual machines, bare metal machines, and Exadata databases with private endpoints in the Operations Insights service
+
+  * ``oci opsi opsi-private-endpoint``
+  * ``oci opsi database-insights change-pe-comanaged-database-detail``
+
+* Support for setting deletion policies on database systems in the MySQL Database service
+
+  * ``oci mysql db-system clone--deletion-policy``
+  * ``oci mysql db-system create --deletion-policy``
+  * ``oci mysql db-system import --deletion-policy``
+  * ``oci mysql db-system update --deletion-policy``
+
+Changed
+~~~~~~~~
+
+* Changed existing database insight operations updated in the Operations Insights service
+
+  * ``oci opsi database-insights create-pe-comanged-database``
+  * ``oci opsi database-insights enable-pe-comanaged-database``
+  * ``oci opsi database-insights update-pe-comanaged-database``
+
+
 3.6.1 - 2022-03-15
 ------------------
 Added

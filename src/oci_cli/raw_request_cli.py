@@ -24,7 +24,7 @@ This operation will output a JSON structure that looks like:
     }
 """, short_help="""Makes a raw request against an OCI service""")
 @cli_util.option('--target-uri', required=True, help="""The URI to make the request against""")
-@cli_util.option('--http-method', type=custom_types.CliCaseInsensitiveChoice(["DELETE", "GET", "HEAD", "POST", "PUT"]), required=True, help="""The HTTP method to use""")
+@cli_util.option('--http-method', type=custom_types.CliCaseInsensitiveChoice(["DELETE", "GET", "HEAD", "POST", "PUT", "PATCH"]), required=True, help="""The HTTP method to use""")
 @cli_util.option('--request-body', type=custom_types.CLI_COMPLEX_TYPE, help="""Data to send in the body of the request. """ + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--request-headers', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional headers to send as part of the request. """ + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.help_option
