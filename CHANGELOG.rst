@@ -6,6 +6,84 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.7.0 - 2022-03-29
+------------------
+Added
+~~~~~
+
+* Support for --type-key on entities, attributes, and folders in the Data Catalog service
+
+  * ``oci data-catalog attribute create --type-key``
+  * ``oci data-catalog folder create --type-key``
+
+* DevOps service
+
+  * Support for the below commands
+
+    * ``oci devops repository get-repo-file-diff``
+    * ``oci devops repository get-repo-file-lines``
+
+  * Support for blue green and canary stages and single stage redeployment
+
+    * oci devops deploy-stage create-deploy-compute-instance-group-blue-green-stage
+    * oci devops deploy-stage create-compute-instance-group-blue-green-traffic-shift-stage
+    * oci devops deploy-stage create-deploy-compute-instance-group-canary-stage
+    * oci devops deploy-stage create-compute-instance-group-canary-traffic-shift-stage
+    * oci devops deploy-stage create-compute-instance-group-canary-approval-stage
+    * oci devops deployment create-single-stage-redeployment
+    * oci devops deploy-stage update-deploy-compute-instance-group-blue-green-stage
+    * oci devops deploy-stage update-compute-instance-group-blue-green-traffic-shift-stage
+    * oci devops deploy-stage update-deploy-compute-instance-group-canary-stage
+    * oci devops deploy-stage update-compute-instance-group-canary-traffic-shift-stage
+    * oci devops deploy-stage update-compute-instance-group-canary-approval-stage
+    * oci devops deployment update-single-stage-redeployment
+
+  * Support for optional parameter --network-channel to support private oke cluster
+
+    * ``oci devops deploy-environment create-oke-cluster-environment --network-channel``
+    * ``oci devops deploy-environment update-oke-cluster-environment --network-channel``
+
+* Support for new parameters``--bgp-admin-state`` and ``--is-bfd-enabled`` in the Networking service.
+
+  * ``oci network virtual-circuit create --bgp-admin-state --is-bfd-enabled``
+  * ``oci network virtual-circuit update --bgp-admin-state --is-bfd-enabled``
+
+* Java Management service
+
+  * Support for listing and removing of Java Runtime installations
+
+    * ``oci jms installation-site-summary list-installation-sites``
+    * ``oci jms installation-site-summary remove``
+
+  * Support for work request detail status of LCM operation.
+
+    * ``oci jms work-item-summary list-work-items --work-request-id``
+    * ``oci jms work-request cancel --work-request-id``
+
+  * Support for JMS blocklist
+
+    * ``oci jms blocklist create``
+    * ``oci jms blocklist delete``
+    * ``oci jms blocklist list``
+
+  * Support for listing work requests in a fleet.
+
+    * ``oci jms work-request list --fleet-id``
+
+  * Support for Fleets to use custom logs for inventory and operation
+
+    * ``oci jms fleet create --inventory-log --operation-log``
+    * ``oci jms fleet update --inventory-log --operation-log``
+
+Changed
+~~~~~~~~~
+
+* DevOps service
+
+  * [BREAKING] Optional parameter --repository-type has been made required
+
+    * oci devops repository create --repository-type
+
 3.6.2 - 2022-03-22
 ------------------
 Added

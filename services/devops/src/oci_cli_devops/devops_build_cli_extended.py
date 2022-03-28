@@ -378,3 +378,737 @@ def update_connection_update_github_access_token_connection_details_extended(ctx
         kwargs['access_token'] = kwargs['personal_access_token']
         kwargs.pop('personal_access_token')
     ctx.invoke(devops_cli.update_connection_update_github_access_token_connection_details, **kwargs)
+
+
+# oci devops deploy-stage create-deploy-stage-create-compute-instance-group-blue-green-deploy-stage-details -> oci devops deploy-stage create-deploy-compute-instance-group-blue-green-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_deploy_stage_details, "create-deploy-compute-instance-group-blue-green-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-compute-instance-group-blue-green-traffic-shift-deploy-stage-details -> oci devops deploy-stage create-compute-instance-group-blue-green-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_traffic_shift_deploy_stage_details, "create-compute-instance-group-blue-green-traffic-shift-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-compute-instance-group-canary-approval-deploy-stage-details -> oci devops deploy-stage create-compute-instance-group-canary-approval-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_compute_instance_group_canary_approval_deploy_stage_details, "create-compute-instance-group-canary-approval-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-compute-instance-group-canary-deploy-stage-details -> oci devops deploy-stage create-deploy-compute-instance-group-canary-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_compute_instance_group_canary_deploy_stage_details, "create-deploy-compute-instance-group-canary-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-compute-instance-group-canary-traffic-shift-deploy-stage-details -> oci devops deploy-stage create-compute-instance-group-canary-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_compute_instance_group_canary_traffic_shift_deploy_stage_details, "create-compute-instance-group-canary-traffic-shift-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-blue-green-deploy-stage-details -> oci devops deploy-stage create-deploy-oke-blue-green-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_blue_green_deploy_stage_details, "create-deploy-oke-blue-green-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-blue-green-traffic-shift-deploy-stage-details -> oci devops deploy-stage create-oke-blue-green-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_blue_green_traffic_shift_deploy_stage_details, "create-oke-blue-green-traffic-shift-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-canary-approval-deploy-stage-details -> oci devops deploy-stage create-oke-canary-approval-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_canary_approval_deploy_stage_details, "create-oke-canary-approval-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-canary-deploy-stage-details -> oci devops deploy-stage create-deploy-oke-canary-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_canary_deploy_stage_details, "create-deploy-oke-canary-stage")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-canary-traffic-shift-deploy-stage-details -> oci devops deploy-stage create-oke-canary-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_canary_traffic_shift_deploy_stage_details, "create-oke-canary-traffic-shift-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-compute-instance-group-blue-green-deploy-stage-details -> oci devops deploy-stage update-deploy-compute-instance-group-blue-green-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details, "update-deploy-compute-instance-group-blue-green-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-compute-instance-group-blue-green-traffic-shift-deploy-stage-details -> oci devops deploy-stage update-compute-instance-group-blue-green-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details, "update-compute-instance-group-blue-green-traffic-shift-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-compute-instance-group-canary-approval-deploy-stage-details -> oci devops deploy-stage update-compute-instance-group-canary-approval-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details, "update-compute-instance-group-canary-approval-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-compute-instance-group-canary-deploy-stage-details -> oci devops deploy-stage update-deploy-compute-instance-group-canary-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details, "update-deploy-compute-instance-group-canary-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-compute-instance-group-canary-traffic-shift-deploy-stage-details -> oci devops deploy-stage update-compute-instance-group-canary-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details, "update-compute-instance-group-canary-traffic-shift-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-blue-green-deploy-stage-details -> oci devops deploy-stage update-deploy-oke-blue-green-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_blue_green_deploy_stage_details, "update-deploy-oke-blue-green-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-blue-green-traffic-shift-deploy-stage-details -> oci devops deploy-stage update-oke-blue-green-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details, "update-oke-blue-green-traffic-shift-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-canary-approval-deploy-stage-details -> oci devops deploy-stage update-oke-canary-approval-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_canary_approval_deploy_stage_details, "update-oke-canary-approval-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-canary-deploy-stage-details -> oci devops deploy-stage update-deploy-oke-canary-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_canary_deploy_stage_details, "update-deploy-oke-canary-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-canary-traffic-shift-deploy-stage-details -> oci devops deploy-stage update-oke-canary-traffic-shift-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details, "update-oke-canary-traffic-shift-stage")
+
+
+# oci devops deployment create-deployment-create-single-deploy-stage-redeployment-details -> oci devops deployment create-single-stage-redeployment
+cli_util.rename_command(devops_cli, devops_cli.deployment_group, devops_cli.create_deployment_create_single_deploy_stage_redeployment_details, "create-single-stage-redeployment")
+
+
+# oci devops deployment update-deployment-update-single-deploy-stage-redeployment-details -> oci devops deployment update-single-stage-redeployment
+cli_util.rename_command(devops_cli, devops_cli.deployment_group, devops_cli.update_deployment_update_single_deploy_stage_redeployment_details, "update-single-stage-redeployment")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_deploy_stage_details, params_to_exclude=['deploy_environment_id_a', 'deploy_environment_id_b', 'deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'deployment_spec_deploy_artifact_id', 'deploy_artifact_ids'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_deploy_stage_details.help)
+@cli_util.option('--environment-id-a', required=True, help=u"""First compute instance group environment OCID for deployment. [required]""")
+@cli_util.option('--environment-id-b', required=True, help=u"""Second compute instance group environment OCID for deployment. [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--deployment-spec-artifact-id', required=True, help=u"""The OCID of the artifact that contains the deployment specification. [required]""")
+@cli_util.option('--artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of file artifact OCIDs to deploy.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollout-policy': {'module': 'devops', 'class': 'ComputeInstanceGroupRolloutPolicy'}, 'failure-policy': {'module': 'devops', 'class': 'ComputeInstanceGroupFailurePolicy'}, 'test-load-balancer-config': {'module': 'devops', 'class': 'LoadBalancerConfig'}, 'production-load-balancer-config': {'module': 'devops', 'class': 'LoadBalancerConfig'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_compute_instance_group_blue_green_deploy_stage_details_extended(ctx, **kwargs):
+    if 'environment_id_a' in kwargs:
+        kwargs['deploy_environment_id_a'] = kwargs['environment_id_a']
+        kwargs.pop('environment_id_a')
+
+    if 'environment_id_b' in kwargs:
+        kwargs['deploy_environment_id_b'] = kwargs['environment_id_b']
+        kwargs.pop('environment_id_b')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'deployment_spec_artifact_id' in kwargs:
+        kwargs['deployment_spec_deploy_artifact_id'] = kwargs['deployment_spec_artifact_id']
+        kwargs.pop('deployment_spec_artifact_id')
+
+    if 'artifact_ids' in kwargs:
+        kwargs['deploy_artifact_ids'] = kwargs['artifact_ids']
+        kwargs.pop('artifact_ids')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_traffic_shift_deploy_stage_details, params_to_exclude=['compute_instance_group_blue_green_deployment_deploy_stage_id', 'deploy_pipeline_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_traffic_shift_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--compute-instance-group-blue-green-stage-id', required=True, help=u"""The OCID of the upstream compute instance group blue-green deployment stage in this pipeline. [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_compute_instance_group_blue_green_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'compute_instance_group_blue_green_stage_id' in kwargs:
+        kwargs['compute_instance_group_blue_green_deployment_deploy_stage_id'] = kwargs['compute_instance_group_blue_green_stage_id']
+        kwargs.pop('compute_instance_group_blue_green_stage_id')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_compute_instance_group_blue_green_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_compute_instance_group_canary_approval_deploy_stage_details, params_to_exclude=['compute_instance_group_canary_traffic_shift_deploy_stage_id', 'deploy_pipeline_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_compute_instance_group_canary_approval_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_compute_instance_group_canary_approval_deploy_stage_details.help)
+@cli_util.option('--compute-instance-group-canary-traffic-shift-stage-id', required=True, help=u"""A compute instance group canary traffic shift stage OCID for load balancer. [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'approval-policy': {'module': 'devops', 'class': 'ApprovalPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_compute_instance_group_canary_approval_deploy_stage_details_extended(ctx, **kwargs):
+    if 'compute_instance_group_canary_traffic_shift_stage_id' in kwargs:
+        kwargs['compute_instance_group_canary_traffic_shift_deploy_stage_id'] = kwargs['compute_instance_group_canary_traffic_shift_stage_id']
+        kwargs.pop('compute_instance_group_canary_traffic_shift_stage_id')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_compute_instance_group_canary_approval_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_compute_instance_group_canary_deploy_stage_details, params_to_exclude=['compute_instance_group_deploy_environment_id', 'deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'deployment_spec_deploy_artifact_id', 'deploy_artifact_ids'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_compute_instance_group_canary_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_compute_instance_group_canary_deploy_stage_details.help)
+@cli_util.option('--compute-instance-group-environment-id', required=True, help=u"""A compute instance group environment OCID for canary deployment. [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--deployment-spec-artifact-id', required=True, help=u"""The OCID of the artifact that contains the deployment specification. [required]""")
+@cli_util.option('--artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of file artifact OCIDs to deploy.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollout-policy': {'module': 'devops', 'class': 'ComputeInstanceGroupRolloutPolicy'}, 'test-load-balancer-config': {'module': 'devops', 'class': 'LoadBalancerConfig'}, 'production-load-balancer-config': {'module': 'devops', 'class': 'LoadBalancerConfig'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_compute_instance_group_canary_deploy_stage_details_extended(ctx, **kwargs):
+    if 'compute_instance_group_environment_id' in kwargs:
+        kwargs['compute_instance_group_deploy_environment_id'] = kwargs['compute_instance_group_environment_id']
+        kwargs.pop('compute_instance_group_environment_id')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'deployment_spec_artifact_id' in kwargs:
+        kwargs['deployment_spec_deploy_artifact_id'] = kwargs['deployment_spec_artifact_id']
+        kwargs.pop('deployment_spec_artifact_id')
+
+    if 'artifact_ids' in kwargs:
+        kwargs['deploy_artifact_ids'] = kwargs['artifact_ids']
+        kwargs.pop('artifact_ids')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_compute_instance_group_canary_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_compute_instance_group_canary_traffic_shift_deploy_stage_details, params_to_exclude=['compute_instance_group_canary_deploy_stage_id', 'deploy_pipeline_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_compute_instance_group_canary_traffic_shift_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_compute_instance_group_canary_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--compute-instance-group-canary-stage-id', required=True, help=u"""A compute instance group canary stage OCID for load balancer. [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'rollout-policy': {'module': 'devops', 'class': 'LoadBalancerTrafficShiftRolloutPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_compute_instance_group_canary_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'compute_instance_group_canary_stage_id' in kwargs:
+        kwargs['compute_instance_group_canary_deploy_stage_id'] = kwargs['compute_instance_group_canary_stage_id']
+        kwargs.pop('compute_instance_group_canary_stage_id')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_compute_instance_group_canary_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_blue_green_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'kubernetes_manifest_deploy_artifact_ids', 'oke_cluster_deploy_environment_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_blue_green_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_blue_green_deploy_stage_details.help)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--kubernetes-manifest-artifact-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Kubernetes manifest artifact OCIDs.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--oke-cluster-environment-id', required=True, help=u"""Kubernetes cluster environment OCID for deployment. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'kubernetes-manifest-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'blue-green-strategy': {'module': 'devops', 'class': 'OkeBlueGreenStrategy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_blue_green_deploy_stage_details_extended(ctx, **kwargs):
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'kubernetes_manifest_artifact_ids' in kwargs:
+        kwargs['kubernetes_manifest_deploy_artifact_ids'] = kwargs['kubernetes_manifest_artifact_ids']
+        kwargs.pop('kubernetes_manifest_artifact_ids')
+
+    if 'oke_cluster_environment_id' in kwargs:
+        kwargs['oke_cluster_deploy_environment_id'] = kwargs['oke_cluster_environment_id']
+        kwargs.pop('oke_cluster_environment_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_blue_green_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_blue_green_traffic_shift_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'oke_blue_green_deploy_stage_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_blue_green_traffic_shift_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_blue_green_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--oke-blue-green-stage-id', required=True, help=u"""The OCID of the upstream OKE blue-green deployment stage in this pipeline. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_blue_green_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'oke_blue_green_stage_id' in kwargs:
+        kwargs['oke_blue_green_deploy_stage_id'] = kwargs['oke_blue_green_stage_id']
+        kwargs.pop('oke_blue_green_stage_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_blue_green_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_canary_approval_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'oke_canary_traffic_shift_deploy_stage_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_canary_approval_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_canary_approval_deploy_stage_details.help)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--oke-canary-traffic-shift-stage-id', required=True, help=u"""The OCID of an upstream OKE canary deployment traffic shift stage in this pipeline. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'approval-policy': {'module': 'devops', 'class': 'ApprovalPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_canary_approval_deploy_stage_details_extended(ctx, **kwargs):
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'oke_canary_traffic_shift_stage_id' in kwargs:
+        kwargs['oke_canary_traffic_shift_deploy_stage_id'] = kwargs['oke_canary_traffic_shift_stage_id']
+        kwargs.pop('oke_canary_traffic_shift_stage_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_canary_approval_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_canary_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'kubernetes_manifest_deploy_artifact_ids', 'oke_cluster_deploy_environment_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_canary_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_canary_deploy_stage_details.help)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--kubernetes-manifest-artifact-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Kubernetes manifest artifact OCIDs.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--oke-cluster-environment-id', required=True, help=u"""Kubernetes cluster environment OCID for deployment. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'kubernetes-manifest-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'canary-strategy': {'module': 'devops', 'class': 'OkeCanaryStrategy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_canary_deploy_stage_details_extended(ctx, **kwargs):
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'kubernetes_manifest_artifact_ids' in kwargs:
+        kwargs['kubernetes_manifest_deploy_artifact_ids'] = kwargs['kubernetes_manifest_artifact_ids']
+        kwargs.pop('kubernetes_manifest_artifact_ids')
+
+    if 'oke_cluster_environment_id' in kwargs:
+        kwargs['oke_cluster_deploy_environment_id'] = kwargs['oke_cluster_environment_id']
+        kwargs.pop('oke_cluster_environment_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_canary_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_canary_traffic_shift_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'oke_canary_deploy_stage_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_canary_traffic_shift_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_canary_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--oke-canary-stage-id', required=True, help=u"""The OCID of an upstream OKE canary deployment stage in this pipeline. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'rollout-policy': {'module': 'devops', 'class': 'LoadBalancerTrafficShiftRolloutPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_canary_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'oke_canary_stage_id' in kwargs:
+        kwargs['oke_canary_deploy_stage_id'] = kwargs['oke_canary_stage_id']
+        kwargs.pop('oke_canary_stage_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_canary_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_artifact_ids', 'deploy_stage_predecessor_collection', 'deployment_spec_deploy_artifact_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of file artifact OCIDs to deploy.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--deployment-spec-artifact-id', help=u"""The OCID of the artifact that contains the deployment specification.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollout-policy': {'module': 'devops', 'class': 'ComputeInstanceGroupRolloutPolicy'}, 'failure-policy': {'module': 'devops', 'class': 'ComputeInstanceGroupFailurePolicy'}, 'test-load-balancer-config': {'module': 'devops', 'class': 'LoadBalancerConfig'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'artifact_ids' in kwargs:
+        kwargs['deploy_artifact_ids'] = kwargs['artifact_ids']
+        kwargs.pop('artifact_ids')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'deployment_spec_artifact_id' in kwargs:
+        kwargs['deployment_spec_deploy_artifact_id'] = kwargs['deployment_spec_artifact_id']
+        kwargs.pop('deployment_spec_artifact_id')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_compute_instance_group_blue_green_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'compute_instance_group_canary_traffic_shift_deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details.help)
+@cli_util.option('--stage-id', help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'approval-policy': {'module': 'devops', 'class': 'ApprovalPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_compute_instance_group_canary_approval_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_artifact_ids', 'deploy_stage_predecessor_collection', 'deployment_spec_deploy_artifact_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of file artifact OCIDs to deploy.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--deployment-spec-artifact-id', help=u"""The OCID of the artifact that contains the deployment specification.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollout-policy': {'module': 'devops', 'class': 'ComputeInstanceGroupRolloutPolicy'}, 'test-load-balancer-config': {'module': 'devops', 'class': 'LoadBalancerConfig'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'artifact_ids' in kwargs:
+        kwargs['deploy_artifact_ids'] = kwargs['artifact_ids']
+        kwargs.pop('artifact_ids')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'deployment_spec_artifact_id' in kwargs:
+        kwargs['deployment_spec_deploy_artifact_id'] = kwargs['deployment_spec_artifact_id']
+        kwargs.pop('deployment_spec_artifact_id')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_compute_instance_group_canary_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'rollout-policy': {'module': 'devops', 'class': 'LoadBalancerTrafficShiftRolloutPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_blue_green_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection', 'kubernetes_manifest_deploy_artifact_ids'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_blue_green_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_blue_green_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--kubernetes-manifest-artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Kubernetes manifest artifact OCIDs, the manifests should not include any job resource.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'kubernetes-manifest-artifact-ids': {'module': 'devops', 'class': 'list[string]'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_blue_green_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'kubernetes_manifest_artifact_ids' in kwargs:
+        kwargs['kubernetes_manifest_deploy_artifact_ids'] = kwargs['kubernetes_manifest_artifact_ids']
+        kwargs.pop('kubernetes_manifest_artifact_ids')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_blue_green_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_blue_green_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_canary_approval_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_canary_approval_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_canary_approval_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'approval-policy': {'module': 'devops', 'class': 'ApprovalPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_canary_approval_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_canary_approval_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_canary_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection', 'kubernetes_manifest_deploy_artifact_ids'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_canary_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_canary_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--kubernetes-manifest-artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Kubernetes manifest artifact OCIDs.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'kubernetes-manifest-artifact-ids': {'module': 'devops', 'class': 'list[string]'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_canary_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'kubernetes_manifest_artifact_ids' in kwargs:
+        kwargs['kubernetes_manifest_deploy_artifact_ids'] = kwargs['kubernetes_manifest_artifact_ids']
+        kwargs.pop('kubernetes_manifest_artifact_ids')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_canary_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details.help)
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'rollout-policy': {'module': 'devops', 'class': 'LoadBalancerTrafficShiftRolloutPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details_extended(ctx, **kwargs):
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_canary_traffic_shift_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deployment_create_single_deploy_stage_redeployment_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_id'])
+@devops_cli.deployment_group.command(name=devops_cli.create_deployment_create_single_deploy_stage_redeployment_details.name, help=devops_cli.create_deployment_create_single_deploy_stage_redeployment_details.help)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--stage-id', required=True, help=u"""Specifies the OCID of the stage to be redeployed.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Deployment'})
+@cli_util.wrap_exceptions
+def create_deployment_create_single_deploy_stage_redeployment_details_extended(ctx, **kwargs):
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    ctx.invoke(devops_cli.create_deployment_create_single_deploy_stage_redeployment_details, **kwargs)

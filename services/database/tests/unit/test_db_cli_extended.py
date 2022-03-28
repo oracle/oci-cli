@@ -239,3 +239,13 @@ class TestDBCliExtended(unittest.TestCase):
         result = util.invoke_command(['db', 'flex-component', 'list'])
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
+
+    def test_list_backups(self):
+        result = util.invoke_command(['db', 'backup', 'list'])
+        assert 'UsageError' in result.output
+        assert '--compartment-id or --database-id must be provided' in result.output
+
+        result = util.invoke_command(['db', 'backup', 'list', '--database-id', 'databaseId', '--compartment-id', 'compartmentId'])
+        assert 'UsageError' in result.output
+        assert 'You can only specify one of either' in result.output
+        assert '--compartment-id or --database-id option' in result.output

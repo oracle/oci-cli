@@ -113,7 +113,9 @@ IGNORED_COMMANDS = [
     ['data-connectivity', 'endpoint', 'list'],
     ['data-connectivity', 'full-push-down-task-response', 'create-full-push-down-task'],
     ['data-connectivity', 'registry', 'list'],
-    ['mysql', 'db-system', 'import']
+    ['mysql', 'db-system', 'import'],
+    ['devops', 'deploy-environment', 'update-oke-cluster-environment'],
+    ['db', 'backup', 'list'],
 ]
 
 IGNORED_COMMANDS_DOCS = [
