@@ -533,15 +533,17 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
@@ -639,15 +641,17 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
@@ -748,15 +752,17 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
@@ -857,15 +863,17 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
@@ -1038,7 +1046,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
@@ -1048,7 +1056,9 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1161,7 +1171,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
@@ -1171,7 +1181,9 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1284,7 +1296,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
@@ -1294,7 +1306,9 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1407,7 +1421,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
@@ -1417,7 +1431,9 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -3601,13 +3617,15 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.
+
+  * `30`-`120`: Represents the Ultra High Performance option.
 
 For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
@@ -3808,7 +3826,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
 
@@ -3818,7 +3836,9 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
 @cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas that this volume will be updated to have in the specified destination availability domains.

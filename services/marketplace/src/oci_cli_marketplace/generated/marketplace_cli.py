@@ -820,7 +820,7 @@ Subscribing to the listing requires you to first get a signature from the terms 
 To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](listListings)""")
 @cli_util.option('--name', multiple=True, help=u"""The name of the listing.""")
 @cli_util.option('--listing-id', help=u"""The unique identifier for the listing.""")
-@cli_util.option('--image-id', help=u"""Image ID of the listing""")
+@cli_util.option('--image-id', help=u"""The image identifier of the listing.""")
 @cli_util.option('--publisher-id', help=u"""Limit results to just this publisher.""")
 @cli_util.option('--package-type', help=u"""A filter to return only packages that match the given package type exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")

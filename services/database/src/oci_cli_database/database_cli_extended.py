@@ -1466,6 +1466,22 @@ def change_cloud_exadata_infrastructure_compartment(ctx, **kwargs):
     ctx.invoke(database_cli.change_cloud_exadata_infrastructure_compartment, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(database_cli.list_backups, params_to_exclude=[])
+@database_cli.backup_group.command('list', help=database_cli.list_backups.help)
+@click.pass_context
+@cli_util.wrap_exceptions
+def list_backups_extended(ctx, **kwargs):
+    compartment_id = kwargs.get('compartment_id')
+    database_id = kwargs.get('database_id')
+    if not compartment_id and not database_id:
+        raise click.UsageError('--compartment-id or --database-id must be provided')
+    if compartment_id and database_id:
+        raise click.UsageError(
+            'You can only specify one of either --compartment-id or --database-id option'
+        )
+    ctx.invoke(database_cli.list_backups, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(database_cli.list_cloud_vm_clusters, params_to_exclude=['cloud_exadata_infrastructure_id'])
 @database_cli.cloud_vm_cluster_group.command('list', help=database_cli.list_cloud_vm_clusters.help)
 @cli_util.option('--cloud-exa-infra-id', help=u"""If provided, filters the results for the given Cloud Exadata Infrastructure.""")

@@ -3790,6 +3790,8 @@ Example: `10 Gbps`""")
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
+@cli_util.option('--bgp-admin-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Set to ENABLED to activate the bgp session of virtual circuit, DISABLED to deactivate.""")
+@cli_util.option('--is-bfd-enabled', type=click.BOOL, help=u"""Set to true to enable BFD for ipv4 Bgp Peering, false to disable. If not set, default is false""")
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Deprecated. Instead use `customerAsn`. If you specify values for both, the request will be rejected.""")
 @cli_util.option('--customer-asn', type=click.INT, help=u"""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null. Can be a 2-byte or 4-byte ASN. Uses \"asplain\" format.
 
@@ -3819,7 +3821,7 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict, ip_mtu):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict, ip_mtu):
 
     kwargs = {}
 
@@ -3835,6 +3837,12 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if routing_policy is not None:
         _details['routingPolicy'] = cli_util.parse_json_parameter("routing_policy", routing_policy)
+
+    if bgp_admin_state is not None:
+        _details['bgpAdminState'] = bgp_admin_state
+
+    if is_bfd_enabled is not None:
+        _details['isBfdEnabled'] = is_bfd_enabled
 
     if customer_bgp_asn is not None:
         _details['customerBgpAsn'] = customer_bgp_asn
@@ -4918,7 +4926,7 @@ def delete_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
 This operation cannot be used with primary private IPs, which are automatically unassigned and deleted when the VNIC is terminated.
 
 **Important:** If a secondary private IP is the [target of a route rule], unassigning it from the VNIC causes that route rule to blackhole and the traffic will be dropped. \n[Command Reference](deletePrivateIp)""")
-@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP.""")
+@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP or IPv6.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6413,7 +6421,7 @@ def get_networking_topology(ctx, from_json, compartment_id, access_level, query_
 
 
 @private_ip_group.command(name=cli_util.override('virtual_network.get_private_ip.command_name', 'get'), help=u"""Gets the specified private IP. You must specify the object's [OCID]. Alternatively, you can get the object by using [ListPrivateIps] with the private IP address (for example, 10.0.3.3) and subnet [OCID]. \n[Command Reference](getPrivateIp)""")
-@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP.""")
+@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP or IPv6.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -11431,7 +11439,7 @@ def update_network_security_group_security_rules(ctx, from_json, network_securit
   - Move a secondary private IP to a different VNIC in the same subnet.   - Change the display name for a secondary private IP.   - Change the hostname for a secondary private IP.
 
 This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic]. \n[Command Reference](updatePrivateIp)""")
-@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP.""")
+@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP or IPv6.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12240,6 +12248,8 @@ The customer and provider can update different properties in the mapping dependi
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
+@cli_util.option('--bgp-admin-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Set to ENABLED to activate the bgp session of virtual circuit, DISABLED to deactivate.""")
+@cli_util.option('--is-bfd-enabled', type=click.BOOL, help=u"""Set to true to enable BFD for ipv4 Bgp Peering, false to disable. If not set, default is false""")
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Deprecated. Instead use `customerAsn`. If you specify values for both, the request will be rejected.""")
 @cli_util.option('--customer-asn', type=click.INT, help=u"""The BGP ASN of the network at the other end of the BGP session from Oracle.
 
@@ -12276,7 +12286,7 @@ To be updated only by the provider.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
+def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
@@ -12299,6 +12309,12 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if routing_policy is not None:
         _details['routingPolicy'] = cli_util.parse_json_parameter("routing_policy", routing_policy)
+
+    if bgp_admin_state is not None:
+        _details['bgpAdminState'] = bgp_admin_state
+
+    if is_bfd_enabled is not None:
+        _details['isBfdEnabled'] = is_bfd_enabled
 
     if customer_bgp_asn is not None:
         _details['customerBgpAsn'] = customer_bgp_asn

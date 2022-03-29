@@ -712,6 +712,7 @@ def change_metastore_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
 
 This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--type-key', help=u"""Type key of the object. Type keys can be found via the '/types' endpoint.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the attribute type. Each attribute type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most attributes have required properties within the \"default\" category. To determine the set of required and optional properties for an attribute type, a query can be done on '/types?type=attribute' that returns a collection of all attribute types. The appropriate attribute type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -721,7 +722,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, business_name, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties):
+def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, business_name, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, type_key, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -778,6 +779,9 @@ def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if custom_property_members is not None:
         _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
+
+    if type_key is not None:
+        _details['typeKey'] = type_key
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -1535,6 +1539,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.option('--parent-folder-key', help=u"""The key of the containing folder or null if there isn't a parent folder.""")
 @cli_util.option('--last-job-key', help=u"""The job key of the harvest process that updated the folder definition from the source system.""")
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Folder harvesting status.""")
+@cli_util.option('--type-key', help=u"""Type key of the object. Type keys can be found via the '/types' endpoint.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1543,7 +1548,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
 @cli_util.wrap_exceptions
-def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, description, custom_property_members, properties, parent_folder_key, last_job_key, harvest_status):
+def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, description, custom_property_members, properties, parent_folder_key, last_job_key, harvest_status, type_key):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1578,6 +1583,9 @@ def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if harvest_status is not None:
         _details['harvestStatus'] = harvest_status
+
+    if type_key is not None:
+        _details['typeKey'] = type_key
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_folder(
@@ -1759,7 +1767,7 @@ def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""The unique key of the job definition that defined the scope of this job.""")
 @cli_util.option('--description', help=u"""Detailed description of the job.""")
-@cli_util.option('--schedule-cron-expression', help=u"""Schedule specified in the cron expression format that has seven fields for second, minute, hour, day-of-month, month, day-of-week, year. It can also include special characters like * for all and ? for any. There are also pre-defined schedules that can be specified using special strings. For example, @hourly will run the job every hour.""")
+@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--connection-key', help=u"""The key of the connection used by the job. This connection will override the default connection specified in the associated job definition. All executions will use this connection.""")
@@ -6083,7 +6091,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--job-definition-key', help=u"""Unique job definition key.""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
-@cli_util.option('--schedule-cron-expression', help=u"""Schedule specified in the cron expression format that has seven fields for second, minute, hour, day-of-month, month, day-of-week, year. It can also include special characters like * for all and ? for any. There are also pre-defined schedules that can be specified using special strings. For example, @hourly will run the job every hour.""")
+@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-type', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IMMEDIATE"]), help=u"""Type of the job schedule.""")
@@ -8315,7 +8323,7 @@ def update_glossary(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the job.""")
-@cli_util.option('--schedule-cron-expression', help=u"""Schedule specified in the cron expression format that has seven fields for second, minute, hour, day-of-month, month, day-of-week, year. It can also include special characters like * for all and ? for any. There are also pre-defined schedules that can be specified using special strings. For example, @hourly will run the job every hour.""")
+@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--connection-key', help=u"""The key of the connection resource that is used for the harvest by this job.""")
