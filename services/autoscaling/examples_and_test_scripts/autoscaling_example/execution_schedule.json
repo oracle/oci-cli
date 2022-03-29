@@ -1,5 +1,0 @@
-{
-  "type": "cron",
-  "timezone": "UTC",
-  "expression": "* * * * *"
-}

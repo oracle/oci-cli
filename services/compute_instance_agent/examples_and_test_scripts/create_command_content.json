@@ -1,9 +1,0 @@
-{
-  "source": {
-    "sourceType": "TEXT",
-    "text": "echo 'Printing uptime'; uptime; echo 'Done'"
-  },
-  "output": {
-    "outputType": "TEXT"
-  }
-}
