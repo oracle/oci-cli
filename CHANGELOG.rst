@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.7.1 - 2022-04-05
+------------------
+
+Added
+~~~~~
+
+* Support viewing top process analytics in the Operations Insights service
+
+  * ``oci opsi host-insights summarize-top-processes-usage-trend``
+
+* Support for creating Enterprise Manager-based zLinux host targets for ``--platform-type`` in the Operations Insights service
+
+  * ``oci opsi host-insights list --platform-type``
+
+
 3.7.0 - 2022-03-29
 ------------------
 Added
