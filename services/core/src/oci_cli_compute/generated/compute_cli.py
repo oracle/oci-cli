@@ -2918,9 +2918,11 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 
 
+- **DIAGNOSTICREBOOT** - **This feature currently only supports virtual machines** Powers off the VM instance then rebuilds and powers it back on.
+
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
-@cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT""")
+@cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT, DIAGNOSTICREBOOT""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

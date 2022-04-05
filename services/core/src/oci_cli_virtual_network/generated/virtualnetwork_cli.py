@@ -393,7 +393,7 @@ def cross_connect_port_speed_shape_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.public_ip_pool_group.command_name', 'public-ip-pool'), cls=CommandGroupWithAlias, help="""A public IP pool is a set of public IP addresses represented as one or more IPv4 CIDR blocks. Resources like load balancers and compute instances can be allocated public IP addresses from a public IP pool.""")
+@click.command(cli_util.override('virtual_network.public_ip_pool_group.command_name', 'public-ip-pool'), cls=CommandGroupWithAlias, help="""A public IP pool is a set of public IP addresses represented as one or more IPv4 CIDR blocks.      Resources like load balancers and compute instances can be allocated public IP addresses from a public IP pool.""")
 @cli_util.help_option_group
 def public_ip_pool_group():
     pass
@@ -2333,7 +2333,7 @@ If you don't specify a route table here, the DRG attachment is created without a
 For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing]. For information about why you would associate a route table with a DRG attachment, see:
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
-@cli_util.option('--network-details-vcn-route-type', help=u"""Indicates whether the VCN CIDR(s) or the individual Subnet CIDR(s) are imported from the attachment. Routes from the VCN Ingress Route Table are always imported.""")
+@cli_util.option('--network-details-vcn-route-type', help=u"""Indicates whether the VCN CIDRs or the individual subnet CIDRs are imported from the attachment. Routes from the VCN ingress route table are always imported.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3704,7 +3704,7 @@ Example: `vcn1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. You may skip having Oracle allocate the VCN a IPv6 /56 CIDR block by setting isOracleGuaAllocationEnabled to `false`. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -10442,7 +10442,7 @@ For information about why you would associate a route table with a DRG attachmen
 For information about why you would associate a route table with a DRG attachment, see:
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
-@cli_util.option('--network-details-vcn-route-type', help=u"""Indicates whether the VCN CIDR(s) or the individual Subnet CIDR(s) are imported from the attachment. Routes from the VCN Ingress Route Table are always imported.""")
+@cli_util.option('--network-details-vcn-route-type', help=u"""Indicates whether the VCN CIDRs or the individual subnet CIDRs are imported from the attachment. Routes from the VCN ingress route table are always imported.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

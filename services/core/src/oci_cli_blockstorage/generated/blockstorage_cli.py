@@ -537,14 +537,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents the Balanced option.
+  * `10`: Represents Balanced option.
 
-  * `20`: Represents the Higher Performance option.
+  * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -645,14 +643,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents the Balanced option.
+  * `10`: Represents Balanced option.
 
-  * `20`: Represents the Higher Performance option.
+  * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -756,14 +752,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents the Balanced option.
+  * `10`: Represents Balanced option.
 
-  * `20`: Represents the Higher Performance option.
+  * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -867,14 +861,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents the Balanced option.
+  * `10`: Represents Balanced option.
 
-  * `20`: Represents the Higher Performance option.
+  * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1050,20 +1042,16 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `0`: Represents Lower Cost option.
-
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1175,19 +1163,15 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `0`: Represents Lower Cost option.
-
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1300,19 +1284,15 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `0`: Represents Lower Cost option.
-
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1425,19 +1405,15 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `0`: Represents Lower Cost option.
-
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3625,10 +3601,8 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For performance autotune enabled volumes, It would be the Default(Minimum) VPUs/GB.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas that this boot volume will be updated to have in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3830,17 +3804,13 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `0`: Represents Lower Cost option.
-
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.
-
-For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
+  * `30`-`120`: Represents the Ultra High Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas that this volume will be updated to have in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

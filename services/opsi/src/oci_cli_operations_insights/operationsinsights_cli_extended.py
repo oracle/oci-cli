@@ -458,3 +458,7 @@ def update_operations_insights_private_endpoint_extended(ctx, **kwargs):
         kwargs.pop('opsi_private_endpoint_id')
 
     ctx.invoke(operationsinsights_cli.update_operations_insights_private_endpoint, **kwargs)
+
+
+# oci opsi host-insights summarize-host-insight-top-processes-usage-trend -> oci opsi host-insights summarize-top-processes-usage-trend
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_top_processes_usage_trend, "summarize-top-processes-usage-trend")
