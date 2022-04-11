@@ -9,7 +9,7 @@ service_mapping = {
     ],
     "ai-vision": [
         "ai_vision",
-        "VisionService"
+        "Vision"
     ],
     "analytics": [
         "analytics",

@@ -15,13 +15,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ai_vision.ai_vision_root_group.command_name', 'ai-vision'), cls=CommandGroupWithAlias, help=cli_util.override('ai_vision.ai_vision_root_group.help', """A description of the VisionService API."""), short_help=cli_util.override('ai_vision.ai_vision_root_group.short_help', """VisionService API"""))
+@cli.command(cli_util.override('ai_vision.ai_vision_root_group.command_name', 'ai-vision'), cls=CommandGroupWithAlias, help=cli_util.override('ai_vision.ai_vision_root_group.help', """Using Vision, you can upload images to detect and classify objects in them. If you have lots of images, you can process them in batch using asynchronous API endpoints. Vision's features are thematically split between Document AI for document-centric images, and Image Analysis for object and scene-based images. Pretrained models and custom models are supported."""), short_help=cli_util.override('ai_vision.ai_vision_root_group.short_help', """Vision API"""))
 @cli_util.help_option_group
 def ai_vision_root_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.image_job_group.command_name', 'image-job'), cls=CommandGroupWithAlias, help="""Job details for a batch image analysis.""")
+@click.command(cli_util.override('ai_vision.image_job_group.command_name', 'image-job'), cls=CommandGroupWithAlias, help="""The job details for a batch image analysis.""")
 @cli_util.help_option_group
 def image_job_group():
     pass
@@ -33,13 +33,13 @@ def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.project_group.command_name', 'project'), cls=CommandGroupWithAlias, help="""A Vision Project which contains models.""")
+@click.command(cli_util.override('ai_vision.project_group.command_name', 'project'), cls=CommandGroupWithAlias, help="""A Vision Project containing models.""")
 @cli_util.help_option_group
 def project_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.analyze_document_result_group.command_name', 'analyze-document-result'), cls=CommandGroupWithAlias, help="""Document analysis results.""")
+@click.command(cli_util.override('ai_vision.analyze_document_result_group.command_name', 'analyze-document-result'), cls=CommandGroupWithAlias, help="""The document analysis results.""")
 @cli_util.help_option_group
 def analyze_document_result_group():
     pass
@@ -57,31 +57,31 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.project_collection_group.command_name', 'project-collection'), cls=CommandGroupWithAlias, help="""Results of a project search.""")
+@click.command(cli_util.override('ai_vision.project_collection_group.command_name', 'project-collection'), cls=CommandGroupWithAlias, help="""The results of a project search.""")
 @cli_util.help_option_group
 def project_collection_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status.""")
+@click.command(cli_util.override('ai_vision.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The workrequest status details.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.analyze_image_result_group.command_name', 'analyze-image-result'), cls=CommandGroupWithAlias, help="""Image analysis results.""")
+@click.command(cli_util.override('ai_vision.analyze_image_result_group.command_name', 'analyze-image-result'), cls=CommandGroupWithAlias, help="""The image analysis results.""")
 @cli_util.help_option_group
 def analyze_image_result_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.document_job_group.command_name', 'document-job'), cls=CommandGroupWithAlias, help="""Job details for a batch document analysis.""")
+@click.command(cli_util.override('ai_vision.document_job_group.command_name', 'document-job'), cls=CommandGroupWithAlias, help="""The job details for a batch document analysis.""")
 @cli_util.help_option_group
 def document_job_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.model_collection_group.command_name', 'model-collection'), cls=CommandGroupWithAlias, help="""Results of a model search.""")
+@click.command(cli_util.override('ai_vision.model_collection_group.command_name', 'model-collection'), cls=CommandGroupWithAlias, help="""The results of a model search.""")
 @cli_util.help_option_group
 def model_collection_group():
     pass
@@ -101,12 +101,12 @@ ai_vision_root_group.add_command(model_collection_group)
 
 
 @analyze_document_result_group.command(name=cli_util.override('ai_vision.analyze_document.command_name', 'analyze-document'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeDocument)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""Language of the document, abbreviated according to ISO 639-2.""")
-@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of document.""")
+@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The document language, abbreviated according to ISO 639-2.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[DocumentFeature]'}, 'document': {'module': 'ai_vision', 'class': 'DocumentDetails'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}})
 @cli_util.help_option
 @click.pass_context
@@ -142,14 +142,14 @@ def analyze_document(ctx, from_json, features, document, compartment_id, output_
 
 
 @analyze_document_result_group.command(name=cli_util.override('ai_vision.analyze_document_object_storage_document_details.command_name', 'analyze-document-object-storage-document-details'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeDocument)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--document-namespace-name', required=True, help=u"""Object Storage namespace.""")
-@cli_util.option('--document-bucket-name', required=True, help=u"""Object Storage bucket name.""")
-@cli_util.option('--document-object-name', required=True, help=u"""Object Storage object name.""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--document-namespace-name', required=True, help=u"""The Object Storage namespace.""")
+@cli_util.option('--document-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
+@cli_util.option('--document-object-name', required=True, help=u"""The Object Storage object name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""Language of the document, abbreviated according to ISO 639-2.""")
-@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of document.""")
+@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The document language, abbreviated according to ISO 639-2.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}})
 @cli_util.help_option
 @click.pass_context
@@ -190,12 +190,12 @@ def analyze_document_object_storage_document_details(ctx, from_json, features, d
 
 
 @analyze_document_result_group.command(name=cli_util.override('ai_vision.analyze_document_inline_document_details.command_name', 'analyze-document-inline-document-details'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeDocument)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--document-data', required=True, help=u"""Document raw data.""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--document-data', required=True, help=u"""Raw document data.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""Language of the document, abbreviated according to ISO 639-2.""")
-@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of document.""")
+@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The document language, abbreviated according to ISO 639-2.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}})
 @cli_util.help_option
 @click.pass_context
@@ -234,9 +234,9 @@ def analyze_document_inline_document_details(ctx, from_json, features, document_
 
 
 @analyze_image_result_group.command(name=cli_util.override('ai_vision.analyze_image.command_name', 'analyze-image'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeImage)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The ocid of the compartment that calls the API.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[ImageFeature]'}, 'image': {'module': 'ai_vision', 'class': 'ImageDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -263,11 +263,11 @@ def analyze_image(ctx, from_json, features, image, compartment_id):
 
 
 @analyze_image_result_group.command(name=cli_util.override('ai_vision.analyze_image_object_storage_image_details.command_name', 'analyze-image-object-storage-image-details'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeImage)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--image-namespace-name', required=True, help=u"""Object Storage namespace.""")
-@cli_util.option('--image-bucket-name', required=True, help=u"""Object Storage bucket name.""")
-@cli_util.option('--image-object-name', required=True, help=u"""Object Storage object name.""")
-@cli_util.option('--compartment-id', help=u"""The ocid of the compartment that calls the API.""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image-namespace-name', required=True, help=u"""The Object Storage namespace.""")
+@cli_util.option('--image-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
+@cli_util.option('--image-object-name', required=True, help=u"""The Object Storage object name.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[ImageFeature]'}})
 @cli_util.help_option
 @click.pass_context
@@ -299,9 +299,9 @@ def analyze_image_object_storage_image_details(ctx, from_json, features, image_n
 
 
 @analyze_image_result_group.command(name=cli_util.override('ai_vision.analyze_image_inline_image_details.command_name', 'analyze-image-inline-image-details'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeImage)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--image-data', required=True, help=u"""Image raw data.""")
-@cli_util.option('--compartment-id', help=u"""The ocid of the compartment that calls the API.""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of image analysis.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--image-data', required=True, help=u"""Raw image data.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that calls the API.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[ImageFeature]'}})
 @cli_util.help_option
 @click.pass_context
@@ -330,7 +330,7 @@ def analyze_image_inline_image_details(ctx, from_json, features, image_data, com
     cli_util.render_response(result, ctx)
 
 
-@document_job_group.command(name=cli_util.override('ai_vision.cancel_document_job.command_name', 'cancel'), help=u"""Cancel a batch document job. \n[Command Reference](cancelDocumentJob)""")
+@document_job_group.command(name=cli_util.override('ai_vision.cancel_document_job.command_name', 'cancel'), help=u"""Cancel a document batch job. \n[Command Reference](cancelDocumentJob)""")
 @cli_util.option('--document-job-id', required=True, help=u"""Document job id.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -355,7 +355,7 @@ def cancel_document_job(ctx, from_json, document_job_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@image_job_group.command(name=cli_util.override('ai_vision.cancel_image_job.command_name', 'cancel'), help=u"""Cancel a batch image job. \n[Command Reference](cancelImageJob)""")
+@image_job_group.command(name=cli_util.override('ai_vision.cancel_image_job.command_name', 'cancel'), help=u"""Cancel an image batch job. \n[Command Reference](cancelImageJob)""")
 @cli_util.option('--image-job-id', required=True, help=u"""Image job id.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -380,7 +380,7 @@ def cancel_image_job(ctx, from_json, image_job_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('ai_vision.cancel_work_request.command_name', 'cancel'), help=u"""Cancel work request with the given ID. \n[Command Reference](cancelWorkRequest)""")
+@work_request_group.command(name=cli_util.override('ai_vision.cancel_work_request.command_name', 'cancel'), help=u"""Cancel the work request with the given ID. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -406,8 +406,8 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai_vision.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeModelCompartment)""")
-@cli_util.option('--model-id', required=True, help=u"""unique model identifier.""")
+@model_group.command(name=cli_util.override('ai_vision.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeModelCompartment)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the model should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -437,8 +437,8 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('ai_vision.change_project_compartment.command_name', 'change-compartment'), help=u"""Moves a project from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProjectCompartment)""")
-@cli_util.option('--project-id', required=True, help=u"""unique project identifier.""")
+@project_group.command(name=cli_util.override('ai_vision.change_project_compartment.command_name', 'change-compartment'), help=u"""Move a project from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeProjectCompartment)""")
+@cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the project should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -468,15 +468,15 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
     cli_util.render_response(result, ctx)
 
 
-@document_job_group.command(name=cli_util.override('ai_vision.create_document_job.command_name', 'create'), help=u"""Create a batch document analysis job \n[Command Reference](createDocumentJob)""")
+@document_job_group.command(name=cli_util.override('ai_vision.create_document_job.command_name', 'create'), help=u"""Create a document analysis batch job. \n[Command Reference](createDocumentJob)""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of document analysis types requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested document analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
-@cli_util.option('--display-name', help=u"""Document job display name.""")
-@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""Language of the document, abbreviated according to ISO 639-2.""")
+@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--display-name', help=u"""The document job display name.""")
+@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The language of the document, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of documents.""")
-@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether to generate a Zip file containing the results.""")
+@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -541,15 +541,15 @@ def create_document_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@document_job_group.command(name=cli_util.override('ai_vision.create_document_job_object_list_inline_input_location.command_name', 'create-document-job-object-list-inline-input-location'), help=u"""Create a batch document analysis job \n[Command Reference](createDocumentJob)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of document analysis types requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@document_job_group.command(name=cli_util.override('ai_vision.create_document_job_object_list_inline_input_location.command_name', 'create-document-job-object-list-inline-input-location'), help=u"""Create a document analysis batch job. \n[Command Reference](createDocumentJob)""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested document analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
-@cli_util.option('--display-name', help=u"""Document job display name.""")
-@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""Language of the document, abbreviated according to ISO 639-2.""")
+@cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--display-name', help=u"""The document job display name.""")
+@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["ENG", "CES", "DAN", "NLD", "FIN", "FRA", "DEU", "ELL", "HUN", "ITA", "NOR", "POL", "POR", "RON", "RUS", "SLK", "SPA", "SWE", "TUR", "ARA", "CHI_SIM", "HIN", "JPN", "KOR", "OTHERS"]), help=u"""The language of the document, abbreviated according to ISO 639-2.""")
 @cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The type of documents.""")
-@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether to generate a Zip file containing the results.""")
+@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -617,13 +617,13 @@ def create_document_job_object_list_inline_input_location(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@image_job_group.command(name=cli_util.override('ai_vision.create_image_job.command_name', 'create'), help=u"""Create a batch image analysis job. \n[Command Reference](createImageJob)""")
+@image_job_group.command(name=cli_util.override('ai_vision.create_image_job.command_name', 'create'), help=u"""Create an image analysis batch job. \n[Command Reference](createImageJob)""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of image analysis types requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested image analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
-@cli_util.option('--display-name', help=u"""Image job display name.""")
-@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether to generate a Zip file containing the results.""")
+@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--display-name', help=u"""The image job display name.""")
+@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -682,13 +682,13 @@ def create_image_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@image_job_group.command(name=cli_util.override('ai_vision.create_image_job_object_list_inline_input_location.command_name', 'create-image-job-object-list-inline-input-location'), help=u"""Create a batch image analysis job. \n[Command Reference](createImageJob)""")
-@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of image analysis types requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@image_job_group.command(name=cli_util.override('ai_vision.create_image_job_object_list_inline_input_location.command_name', 'create-image-job-object-list-inline-input-location'), help=u"""Create an image analysis batch job. \n[Command Reference](createImageJob)""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of requested image analysis types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
-@cli_util.option('--display-name', help=u"""Image job display name.""")
-@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether to generate a Zip file containing the results.""")
+@cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""The compartment identifier from the requester.""")
+@cli_util.option('--display-name', help=u"""The image job display name.""")
+@cli_util.option('--is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -750,20 +750,20 @@ def create_image_job_object_list_inline_input_location(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai_vision.create_model.command_name', 'create'), help=u"""Creates a new model. \n[Command Reference](createModel)""")
-@cli_util.option('--model-type', required=True, help=u"""What type of Vision model this is.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
+@model_group.command(name=cli_util.override('ai_vision.create_model.command_name', 'create'), help=u"""Create a new model. \n[Command Reference](createModel)""")
+@cli_util.option('--model-type', required=True, help=u"""Which type of Vision model this is.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
 @cli_util.option('--training-dataset', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project which contains the model.""")
-@cli_util.option('--display-name', help=u"""Human-friendly name for the model, which can be changed.""")
-@cli_util.option('--description', help=u"""Optional description of the model.""")
-@cli_util.option('--model-version', help=u"""Model version""")
-@cli_util.option('--is-quick-mode', type=click.BOOL, help=u"""Set to true when experimenting with a new model type or dataset so model training is quick, with a predefined low number of passes through the training data.""")
-@cli_util.option('--max-training-duration-in-hours', help=u"""Maximum model training duration in hours, expressed as a decimal fraction.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project that contains the model.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the model, which can be changed.""")
+@cli_util.option('--description', help=u"""An optional description of the model.""")
+@cli_util.option('--model-version', help=u"""The model version""")
+@cli_util.option('--is-quick-mode', type=click.BOOL, help=u"""Set to true when experimenting with a new model type or dataset, so the model training is quick, with a predefined low number of passes through the training data.""")
+@cli_util.option('--max-training-duration-in-hours', help=u"""The maximum model training duration in hours, expressed as a decimal fraction.""")
 @cli_util.option('--testing-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--validation-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -841,12 +841,12 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('ai_vision.create_project.command_name', 'create'), help=u"""Creates a new project. \n[Command Reference](createProject)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
-@cli_util.option('--display-name', help=u"""Human-friendly name for the project, which can be changed.""")
-@cli_util.option('--description', help=u"""Optional description of the project.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@project_group.command(name=cli_util.override('ai_vision.create_project.command_name', 'create'), help=u"""Create a new project. \n[Command Reference](createProject)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the project, that can be changed.""")
+@cli_util.option('--description', help=u"""An optional description of the project.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -906,8 +906,8 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai_vision.delete_model.command_name', 'delete'), help=u"""Deletes a model by identifier. \n[Command Reference](deleteModel)""")
-@cli_util.option('--model-id', required=True, help=u"""unique model identifier.""")
+@model_group.command(name=cli_util.override('ai_vision.delete_model.command_name', 'delete'), help=u"""Delete a model by identifier. \n[Command Reference](deleteModel)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -958,8 +958,8 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('ai_vision.delete_project.command_name', 'delete'), help=u"""Deletes a project by identifier. \n[Command Reference](deleteProject)""")
-@cli_util.option('--project-id', required=True, help=u"""unique project identifier.""")
+@project_group.command(name=cli_util.override('ai_vision.delete_project.command_name', 'delete'), help=u"""Delete a project by identifier. \n[Command Reference](deleteProject)""")
+@cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1010,7 +1010,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@document_job_group.command(name=cli_util.override('ai_vision.get_document_job.command_name', 'get'), help=u"""Get details of a batch document job. \n[Command Reference](getDocumentJob)""")
+@document_job_group.command(name=cli_util.override('ai_vision.get_document_job.command_name', 'get'), help=u"""Get details of a document batch job. \n[Command Reference](getDocumentJob)""")
 @cli_util.option('--document-job-id', required=True, help=u"""Document job id.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1032,7 +1032,7 @@ def get_document_job(ctx, from_json, document_job_id):
     cli_util.render_response(result, ctx)
 
 
-@image_job_group.command(name=cli_util.override('ai_vision.get_image_job.command_name', 'get'), help=u"""Get details of a batch image job. \n[Command Reference](getImageJob)""")
+@image_job_group.command(name=cli_util.override('ai_vision.get_image_job.command_name', 'get'), help=u"""Get details of an image batch job. \n[Command Reference](getImageJob)""")
 @cli_util.option('--image-job-id', required=True, help=u"""Image job id.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1054,8 +1054,8 @@ def get_image_job(ctx, from_json, image_job_id):
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai_vision.get_model.command_name', 'get'), help=u"""Gets a model by identifier. \n[Command Reference](getModel)""")
-@cli_util.option('--model-id', required=True, help=u"""unique model identifier.""")
+@model_group.command(name=cli_util.override('ai_vision.get_model.command_name', 'get'), help=u"""Get a model by identifier. \n[Command Reference](getModel)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1076,8 +1076,8 @@ def get_model(ctx, from_json, model_id):
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('ai_vision.get_project.command_name', 'get'), help=u"""Gets a project by identifier. \n[Command Reference](getProject)""")
-@cli_util.option('--project-id', required=True, help=u"""unique project identifier.""")
+@project_group.command(name=cli_util.override('ai_vision.get_project.command_name', 'get'), help=u"""Get a project by identifier. \n[Command Reference](getProject)""")
+@cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1123,13 +1123,13 @@ def get_work_request(ctx, from_json, work_request_id):
 @model_collection_group.command(name=cli_util.override('ai_vision.list_models.command_name', 'list-models'), help=u"""Returns a list of models in a compartment. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""The ID of the project for which to list the objects.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to match models with the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match models with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""Filter to find the model with the given identifier.""")
+@cli_util.option('--id', help=u"""The filter to find the model with the given identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeCreated is descending. The default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1187,13 +1187,13 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, project_id
 
 @project_collection_group.command(name=cli_util.override('ai_vision.list_projects.command_name', 'list-projects'), help=u"""Returns a list of projects. \n[Command Reference](listProjects)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to match projects with the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""Filter to find the project with the given identifier.""")
+@cli_util.option('--id', help=u"""The filter to find the project with the given identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeCreated is descending. The default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1247,11 +1247,11 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('ai_vision.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('ai_vision.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeAccepted is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1308,7 +1308,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeAccepted is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1364,12 +1364,12 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('ai_vision.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
 @cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeAccepted is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1423,12 +1423,12 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai_vision.update_model.command_name', 'update'), help=u"""Updates model metadata. \n[Command Reference](updateModel)""")
-@cli_util.option('--model-id', required=True, help=u"""unique model identifier.""")
-@cli_util.option('--display-name', help=u"""Human-friendly name of the model, which can be changed.""")
-@cli_util.option('--description', help=u"""Optional description of the model.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@model_group.command(name=cli_util.override('ai_vision.update_model.command_name', 'update'), help=u"""Updates the model metadata. \n[Command Reference](updateModel)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name of the model, which can be changed.""")
+@cli_util.option('--description', help=u"""An optional description of the model.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1499,12 +1499,12 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('ai_vision.update_project.command_name', 'update'), help=u"""Updates project metadata. \n[Command Reference](updateProject)""")
-@cli_util.option('--project-id', required=True, help=u"""unique project identifier.""")
-@cli_util.option('--display-name', help=u"""Human-friendly name for the project, which can be changed.""")
-@cli_util.option('--description', help=u"""Optional description of the project.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@project_group.command(name=cli_util.override('ai_vision.update_project.command_name', 'update'), help=u"""Update the project metadata. \n[Command Reference](updateProject)""")
+@cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the project, that can be changed.""")
+@cli_util.option('--description', help=u"""An optional description of the project.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

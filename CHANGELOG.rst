@@ -6,6 +6,53 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.7.2 - 2022-04-12
+------------------
+Added
+~~~~~
+
+* Database service
+
+  * Support for enabling and disabling data collection options during create and update operations on VM clusters on Exadata Cloud
+
+    * ``oci db vm-cluster create --data-collection-options ``
+    * ``oci db vm-cluster update --data-collection-options ``
+
+  * Support for new fields --database-edition and --max-cpu-core-count to create and update an autonomous database
+
+    * ``oci db autonomous-database create --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-from-backup-id --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-from-backup-timestamp --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-from-clone --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-refreshable-clone --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-virtual-clone --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database update --database-edition, --max-cpu-core-count``
+
+* Network service
+
+  * Support for using Ipv6 cidr block in the below commands
+
+    * ``oci network byoip-range create --ipv6-cidr-block``
+    * ``oci network subnet create --ipv6-cidr-blocks``
+    * ``oci network subnet update --ipv6-cidr-blocks``
+    * ``oci network subnet add-ipv6-subnet-cidr``
+    * ``oci network subnet remove-ipv6-subnet-cidr``
+    * ``oci network vcn add-ipv6-vcn-cidr``
+    * ``oci network vcn remove-ipv6-vcn-cidr``
+    * ``oci network vnic assign-ipv6 --ipv6-subnet-cidr``
+
+  * Support for the parameters --ipv6-private-cidr-block, --is-oracle-gua-allocation-enabled, --byoipv6-cidr-detail in the below command
+
+    * ``oci network vcn create --byoipv6-cidr-details, --is-oracle-gua-allocation-enabled, --ipv6-private-cidr-blocks``
+
+Changed
+~~~~~
+
+* Parameter --cidr-block has been made optional in the Network service
+
+  * ``oci network byoip-range create --cidr-block``
+
 3.7.1 - 2022-04-05
 ------------------
 

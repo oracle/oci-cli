@@ -644,7 +644,7 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the shape. The shape determines the resources allocated - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--source-source-url', required=True, help=u"""The Pre-Authenticated Request (PAR) URL of the file you want to import from Object Storage.""")
+@cli_util.option('--source-source-url', required=True, help=u"""The Pre-Authenticated Request (PAR) of a bucket/prefix or PAR of a @.manifest.json object from the Object Storage. Check [Using Pre-Authenticated Requests] for information related to PAR creation. Please create PAR with \"Permit object reads\" access type and \"Enable Object Listing\" permission when using a bucket/prefix PAR. Please create PAR with \"Permit object reads\" access type when using a @.manifest.json object PAR.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
@@ -1831,11 +1831,11 @@ Changes in Shape will result in a downtime as the MySQL DB System is migrated to
 @cli_util.option('--configuration-id', help=u"""The OCID of the Configuration to be used for Instances in this DB System.""")
 @cli_util.option('--admin-username', help=u"""The username for the administrative user for the MySQL Instance.""")
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""New size of the data volume in GBs that will be created and attached.
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Expands the DB System's storage to the specified value. Only supports values larger than the current DB System's storage size.
 
-Increases in data storage size will happen asynchronously and will require DB System downtime.
+DB Systems with initial storage of 400 GB or less can be expanded up to 32 TB. DB Systems with initial storage larger than 400 GB can be expanded up to 64 TB.
 
-Decreases in data storage size are not supported.""")
+It is not possible to decrease data storage size.""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\"). Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 1123.""")
 @cli_util.option('--ip-address', help=u"""The IP address the DB System should be configured to listen on the provided subnet. It must be a free private IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet. This should be a \"dotted-quad\" style IPv4 address.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port for primary endpoint of the DB System to listen on.""")
