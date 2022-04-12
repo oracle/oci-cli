@@ -1991,8 +1991,8 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.option('--patch-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
-@cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""The OCID of the Autonomous Exadata Infrastructure.""")
-@cli_util.option('--peer-autonomous-exadata-infrastructure-id', help=u"""The OCID of the peer Autonomous Exadata Infrastructure for Autonomous Data Guard.""")
+@cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""**No longer used.** This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `cloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
+@cli_util.option('--peer-autonomous-exadata-infrastructure-id', help=u"""*No longer used.* This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `peerCloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
 @cli_util.option('--peer-autonomous-container-database-display-name', help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
@@ -2159,7 +2159,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -2205,6 +2205,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2213,7 +2215,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, source, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled):
+def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, source, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2318,6 +2320,12 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
 
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
+
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
         create_autonomous_database_details=_details,
@@ -2376,7 +2384,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -2419,6 +2427,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2427,7 +2437,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled):
+def create_autonomous_database_create_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2531,6 +2541,12 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
 
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
+
     _details['source'] = 'DATABASE'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -2590,7 +2606,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -2633,6 +2649,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--refreshable-mode', type=custom_types.CliCaseInsensitiveChoice(["AUTOMATIC", "MANUAL"]), help=u"""The refresh mode of the clone. AUTOMATIC indicates that the clone is automatically being refreshed with data from the source Autonomous Database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2642,7 +2660,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, refreshable_mode):
+def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, refreshable_mode):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2745,6 +2763,12 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
 
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
+
     if refreshable_mode is not None:
         _details['refreshableMode'] = refreshable_mode
 
@@ -2808,7 +2832,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -2851,6 +2875,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2859,7 +2885,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_backup_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled):
+def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_backup_id, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2963,6 +2989,12 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
 
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
+
     _details['source'] = 'BACKUP_FROM_ID'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -3024,7 +3056,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -3067,6 +3099,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3075,7 +3109,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_id, timestamp, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled):
+def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, autonomous_database_id, timestamp, clone_type, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3180,6 +3214,12 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
 
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
+
     _details['source'] = 'BACKUP_FROM_TIMESTAMP'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -3239,7 +3279,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -3282,6 +3322,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3290,7 +3332,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled):
+def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, source_id, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3393,6 +3435,12 @@ def create_autonomous_database_create_cross_region_autonomous_database_data_guar
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
 
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
+
     _details['source'] = 'CROSS_REGION_DATAGUARD'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -3451,7 +3499,7 @@ For Autonomous Databases on dedicated Exadata infrastructure, the maximum number
 @cli_util.option('--is-free-tier', type=click.BOOL, help=u"""Indicates if this is an Always Free resource. The default value is false. Note that Always Free Autonomous Databases have 1 CPU and 20GB of memory. For Always Free databases, memory and CPU cannot be scaled.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
-@cli_util.option('--admin-password', help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
+@cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for databases on [shared Exadata infrastructure].""")
@@ -3494,6 +3542,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3502,7 +3552,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled):
+def create_autonomous_database_create_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3603,6 +3653,12 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
 
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
+
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
 
     _details['source'] = 'NONE'
 
@@ -6307,15 +6363,16 @@ def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags):
+def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags, data_collection_options):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6364,6 +6421,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_collection_options is not None:
+        _details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_vm_cluster(
@@ -10336,11 +10396,11 @@ To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 The maximum length of the combined hostname and domain is 63 characters.
 
 **Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368. - VM.Standard.E4.Flex - Specify any thing from 1 to 64.
 
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
 If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
@@ -10506,11 +10566,11 @@ To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 The maximum length of the combined hostname and domain is 63 characters.
 
 **Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368. - VM.Standard.E4.Flex - Specify any thing from 1 to 64.
 
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
@@ -10690,11 +10750,11 @@ To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 The maximum length of the combined hostname and domain is 63 characters.
 
 **Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368. - VM.Standard.E4.Flex - Specify any thing from 1 to 64.
 
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--source-db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
@@ -10866,11 +10926,11 @@ To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 The maximum length of the combined hostname and domain is 63 characters.
 
 **Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368. - VM.Standard.E4.Flex - Specify any thing from 1 to 64.
 
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
@@ -11046,11 +11106,11 @@ To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 The maximum length of the combined hostname and domain is 63 characters.
 
 **Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368. - VM.Standard.E4.Flex - Specify any thing from 1 to 64.
 
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
@@ -13142,7 +13202,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--db-system-shape', help=u"""If provided, filters the results to the set of database versions which are supported for the given shape.""")
 @cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
-@cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are: * ASM - Automatic storage management * LVM - Logical volume management""")
+@cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are `ASM` and `LVM`. * ASM specifies Oracle Automatic Storage Management * LVM specifies logical volume manager, sometimes called logical disk manager.""")
 @cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
 @cli_util.option('--is-database-software-image-supported', type=click.BOOL, help=u"""If true, filters the results to the set of Oracle Database versions that are supported for OCI database software images.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -15368,7 +15428,7 @@ def rotate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@external_container_database_group.command(name=cli_util.override('db.scan_external_container_database_pluggable_databases.command_name', 'scan-external-container-database-pluggable-databases'), help=u"""Scans for pluggable databases in the specified external container database. This operation will return un-registered pluggable databases in the `GetWorkRequest` operation. \n[Command Reference](scanExternalContainerDatabasePluggableDatabases)""")
+@external_container_database_group.command(name=cli_util.override('db.scan_external_container_database_pluggable_databases.command_name', 'scan-external-container-database-pluggable-databases'), help=u"""Scans for pluggable databases in the specified external container database. This operation will return un-registered pluggable databases in the [GetWorkRequest] operation. \n[Command Reference](scanExternalContainerDatabasePluggableDatabases)""")
 @cli_util.option('--external-container-database-id', required=True, help=u"""The ExternalContainerDatabase [OCID].""")
 @cli_util.option('--external-database-connector-id', required=True, help=u"""The [OCID] of the external database connector resource (`ExternalDatabaseConnectorId`).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -16239,6 +16299,8 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
+@cli_util.option('--max-cpu-core-count', type=click.INT, help=u"""The number of Max OCPU cores to be made available to the autonomous database with auto scaling of cpu enabled.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -16249,7 +16311,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, db_workload, license_model, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, nsg_ids, customer_contacts, is_mtls_connection_required, scheduled_operations, is_auto_scaling_for_storage_enabled, if_match):
+def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, db_workload, license_model, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, nsg_ids, customer_contacts, is_mtls_connection_required, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, if_match):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -16357,6 +16419,12 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
     if is_auto_scaling_for_storage_enabled is not None:
         _details['isAutoScalingForStorageEnabled'] = is_auto_scaling_for_storage_enabled
+
+    if max_cpu_core_count is not None:
+        _details['maxCpuCoreCount'] = max_cpu_core_count
+
+    if database_edition is not None:
+        _details['databaseEdition'] = database_edition
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database(
@@ -17433,7 +17501,7 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
 For Exadata Cloud Service instances, support for this API will end on May 15th, 2021. See [Switching an Exadata DB System to the New Resource Model and APIs] for details on converting existing Exadata DB systems to the new resource model. \n[Command Reference](updateDbSystem)""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The new number of CPU cores to set for the DB system. Not applicable for virtual machine DB systems.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The new number of CPU cores to set for the DB system. Not applicable for INTEL based virtual machine DB systems.""")
 @cli_util.option('--version-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 40,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The size, in gigabytes, to scale the attached storage up to for this virtual machine DB system. This value must be greater than current storage size. Note that the resulting total storage size attached will be greater than the amount requested to allow for REDO/RECO space and software volume. Applies only to virtual machine DB systems.""")
@@ -18456,23 +18524,24 @@ def update_pluggable_database(ctx, from_json, force, wait_for_state, max_wait_se
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, ssh_public_keys, version_parameterconflict, update_details, freeform_tags, defined_tags, if_match):
+def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, ssh_public_keys, version_parameterconflict, update_details, freeform_tags, defined_tags, data_collection_options, if_match):
 
     if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
     if not force:
-        if ssh_public_keys or version_parameterconflict or update_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to ssh-public-keys and version-parameterconflict and update-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if ssh_public_keys or version_parameterconflict or update_details or freeform_tags or defined_tags or data_collection_options:
+            if not click.confirm("WARNING: Updates to ssh-public-keys and version-parameterconflict and update-details and freeform-tags and defined-tags and data-collection-options will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -18517,6 +18586,9 @@ def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_collection_options is not None:
+        _details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_vm_cluster(

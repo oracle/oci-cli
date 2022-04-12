@@ -2918,7 +2918,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 
 
-- **DIAGNOSTICREBOOT** - **This feature currently only supports virtual machines** Powers off the VM instance then rebuilds and powers it back on.
+- **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it on the physical host, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")

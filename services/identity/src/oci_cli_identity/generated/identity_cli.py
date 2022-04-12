@@ -1015,8 +1015,6 @@ def create_auth_token(ctx, from_json, description, user_id):
 
 @compartment_group.command(name=cli_util.override('iam.create_compartment.command_name', 'create'), help=u"""Creates a new compartment in the specified compartment.
 
-**Important:** Compartments cannot be deleted.
-
 Specify the parent compartment's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
 You must also specify a *name* for the compartment, which must be unique across all compartments in your tenancy. You can use this name or the OCID when writing policies that apply to the compartment. For more information about policies, see [How Policies Work].
@@ -2350,7 +2348,9 @@ A new user has no permissions until you place the user in one or more groups (se
 @cli_util.option('--description', required=True, help=u"""The description you assign to the user during creation. Does not have to be unique, and it's changeable.
 
 (For tenancies that support identity domains) You can have an empty description.""")
-@cli_util.option('--email', help=u"""The email you assign to the user. Has to be unique across the tenancy.""")
+@cli_util.option('--email', help=u"""The email you assign to the user during creation. The email must be unique across all users in the tenancy.
+
+(For tenancies that support identity domains) You must provide an email for each user.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7343,7 +7343,9 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.option('--description', help=u"""The description you assign to the user. Does not have to be unique, and it's changeable.
 
 (For tenancies that support identity domains) You can have an empty description.""")
-@cli_util.option('--email', help=u"""The email address you assign to the user. Has to be unique across the tenancy.""")
+@cli_util.option('--email', help=u"""The email you assign to the user during creation. The email must be unique across all users in the tenancy.
+
+(For tenancies that support identity domains) You must provide an email for each user.""")
 @cli_util.option('--db-user-name', help=u"""DB username of the DB credential. Has to be unique across the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

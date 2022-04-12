@@ -57,6 +57,9 @@ cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.security_rule_gro
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.add_vcn_cidr, "add-vcn-cidr")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.remove_vcn_cidr, "remove-vcn-cidr")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.add_ipv6_vcn_cidr, "add-ipv6-vcn-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.remove_ipv6_vcn_cidr, "remove-ipv6-vcn-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.subnet_group, virtualnetwork_cli.add_ipv6_subnet_cidr, "add-ipv6-subnet-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.subnet_group, virtualnetwork_cli.remove_ipv6_subnet_cidr, "remove-ipv6-subnet-cidr")
 
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
@@ -282,7 +285,7 @@ def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned):
+def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListIpv6s call
@@ -332,6 +335,9 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
         assign_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
     if freeform_tags is not None:
         assign_ip_request_body['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if ipv6_subnet_cidr is not None:
+        assign_ip_request_body['ipv6SubnetCidr'] = ipv6_subnet_cidr
 
     # If we are here then either the IP address does not exist or it is a candidate to be moved
     if not is_ip_reassignment:
