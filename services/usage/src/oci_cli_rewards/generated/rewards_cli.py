@@ -15,31 +15,31 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('usage.usage_root_group.command_name', 'usage'), cls=CommandGroupWithAlias, help=cli_util.override('usage.usage_root_group.help', """A description of the UsageApi API."""), short_help=cli_util.override('usage.usage_root_group.short_help', """UsageApi API"""))
+@cli.command(cli_util.override('usage.usage_root_group.command_name', 'usage'), cls=CommandGroupWithAlias, help=cli_util.override('usage.usage_root_group.help', """Use the Usage Proxy API to list Oracle Support Rewards, view related detailed usage information, and manage users who redeem rewards. For more information, see [Oracle Support Rewards Overview]."""), short_help=cli_util.override('usage.usage_root_group.short_help', """Usage Proxy API"""))
 @cli_util.help_option_group
 def usage_root_group():
     pass
 
 
-@click.command(cli_util.override('usage.redeemable_user_group.command_name', 'redeemable-user'), cls=CommandGroupWithAlias, help="""The Email object for redeemable user.""")
+@click.command(cli_util.override('usage.redeemable_user_group.command_name', 'redeemable-user'), cls=CommandGroupWithAlias, help="""The email object for a user that can redeem rewards.""")
 @cli_util.help_option_group
 def redeemable_user_group():
     pass
 
 
-@click.command(cli_util.override('usage.redeemable_user_summary_group.command_name', 'redeemable-user-summary'), cls=CommandGroupWithAlias, help="""It provides email Id information.""")
+@click.command(cli_util.override('usage.redeemable_user_summary_group.command_name', 'redeemable-user-summary'), cls=CommandGroupWithAlias, help="""Email ID information.""")
 @cli_util.help_option_group
 def redeemable_user_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage.monthly_reward_summary_group.command_name', 'monthly-reward-summary'), cls=CommandGroupWithAlias, help="""Object describing the rewards summary for a month for the requested subscriptionId.""")
+@click.command(cli_util.override('usage.monthly_reward_summary_group.command_name', 'monthly-reward-summary'), cls=CommandGroupWithAlias, help="""Object describing the monthly rewards summary for the requested subscription ID.""")
 @cli_util.help_option_group
 def monthly_reward_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage.product_summary_group.command_name', 'product-summary'), cls=CommandGroupWithAlias, help="""It provides details about a product rewards and usage amount.""")
+@click.command(cli_util.override('usage.product_summary_group.command_name', 'product-summary'), cls=CommandGroupWithAlias, help="""Provides details about product rewards and the usage amount.""")
 @cli_util.help_option_group
 def product_summary_group():
     pass
@@ -51,13 +51,13 @@ usage_root_group.add_command(monthly_reward_summary_group)
 usage_root_group.add_command(product_summary_group)
 
 
-@redeemable_user_group.command(name=cli_util.override('usage.create_redeemable_user.command_name', 'create'), help=u"""Add list of redeemable user email ids for a subscription Id \n[Command Reference](createRedeemableUser)""")
+@redeemable_user_group.command(name=cli_util.override('usage.create_redeemable_user.command_name', 'create'), help=u"""Adds the list of redeemable user email IDs for a subscription ID. \n[Command Reference](createRedeemableUser)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The subscriptionId for which rewards information is requested for.""")
-@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of email ids to be added to the redeemable users list.
+@cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of email IDs to be added to the list of users that can redeem rewards.
 
 This option is a JSON list with items of type RedeemableUser.  For documentation on RedeemableUser please see our API reference: https://docs.cloud.oracle.com/api/#/en/rewards/20190111/datatypes/RedeemableUser.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--user-id', help=u"""The user Id of the person whose email we cc""")
+@cli_util.option('--user-id', help=u"""The user ID of the person to send a copy of an email.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'usage', 'class': 'list[RedeemableUser]'}})
 @cli_util.help_option
@@ -91,10 +91,10 @@ def create_redeemable_user(ctx, from_json, tenancy_id, subscription_id, items, u
     cli_util.render_response(result, ctx)
 
 
-@redeemable_user_group.command(name=cli_util.override('usage.delete_redeemable_user.command_name', 'delete'), help=u"""Delete list of redeemable user email ids for a subscription Id \n[Command Reference](deleteRedeemableUser)""")
-@cli_util.option('--email-id', required=True, help=u"""The EmailId that needs to be deleted""")
+@redeemable_user_group.command(name=cli_util.override('usage.delete_redeemable_user.command_name', 'delete'), help=u"""Deletes the list of redeemable user email IDs for a subscription ID. \n[Command Reference](deleteRedeemableUser)""")
+@cli_util.option('--email-id', required=True, help=u"""The email ID that needs to be deleted.""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The subscriptionId for which rewards information is requested for.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -121,14 +121,14 @@ def delete_redeemable_user(ctx, from_json, email_id, tenancy_id, subscription_id
     cli_util.render_response(result, ctx)
 
 
-@product_summary_group.command(name=cli_util.override('usage.list_products.command_name', 'list-products'), help=u"""This API provides usage period specific product and its usage details. \n[Command Reference](listProducts)""")
+@product_summary_group.command(name=cli_util.override('usage.list_products.command_name', 'list-products'), help=u"""Provides product information that is specific to a reward usage period and its usage details. \n[Command Reference](listProducts)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The subscriptionId for which rewards information is requested for.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--usage-period-key', required=True, help=u"""The SPM Identifier for the usage period.""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in the paginated response.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, can be ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "TIMESTART"]), help=u"""The field to sort by, supports one sort Order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, which can be ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "TIMESTART"]), help=u"""The field to sort by. Supports one sort order.""")
 @cli_util.option('--producttype', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ELIGIBLE", "INELIGIBLE"]), help=u"""The field to specify the type of product.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -189,13 +189,13 @@ def list_products(ctx, from_json, all_pages, page_size, tenancy_id, subscription
     cli_util.render_response(result, ctx)
 
 
-@redeemable_user_summary_group.command(name=cli_util.override('usage.list_redeemable_users.command_name', 'list-redeemable-users'), help=u"""Provides emailids of redeemable users for the given subscriptionId \n[Command Reference](listRedeemableUsers)""")
+@redeemable_user_summary_group.command(name=cli_util.override('usage.list_redeemable_users.command_name', 'list-redeemable-users'), help=u"""Provides the email IDs of users that can redeem rewards for the given subscription ID. \n[Command Reference](listRedeemableUsers)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The subscriptionId for which rewards information is requested for.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in the paginated response.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, can be ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "TIMESTART"]), help=u"""The field to sort by, supports one sort Order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, which can be ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "TIMESTART"]), help=u"""The field to sort by. Supports one sort order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -250,9 +250,9 @@ def list_redeemable_users(ctx, from_json, all_pages, page_size, tenancy_id, subs
     cli_util.render_response(result, ctx)
 
 
-@monthly_reward_summary_group.command(name=cli_util.override('usage.list_rewards.command_name', 'list-rewards'), help=u"""This API returns list of rewards for a subscription Id \n[Command Reference](listRewards)""")
+@monthly_reward_summary_group.command(name=cli_util.override('usage.list_rewards.command_name', 'list-rewards'), help=u"""Returns the list of rewards for a subscription ID. \n[Command Reference](listRewards)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The subscriptionId for which rewards information is requested for.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

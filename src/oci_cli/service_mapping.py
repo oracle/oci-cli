@@ -363,6 +363,10 @@ service_mapping = {
         "ai_speech",
         "Speech"
     ],
+    "stack-monitoring": [
+        "stack_monitoring",
+        "Stack Monitoring"
+    ],
     "streaming": [
         "streaming",
         "Streaming"
@@ -377,7 +381,7 @@ service_mapping = {
     ],
     "usage": [
         "usage",
-        "UsageApi"
+        "Usage Proxy"
     ],
     "usage-api": [
         "usage_api",

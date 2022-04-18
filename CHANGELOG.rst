@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.7.3 - 2022-04-19
+------------------
+Added
+~~~~~
+
+* Support for choosing compute shapes when creating SDDCs and ESXi hosts in the VMWare Solution service
+
+  * ``oci ocvs esxi-host create --host-ocpu-count, --host-shape-name``
+  * ``oci ocvs sddc create --initial-host-ocpu-count, --initial-host-shape-name``
+
+* Database service
+
+    * Support for stack monitoring on external databases
+
+      * ``oci db external-cdb disable-external-container-database-stack-monitoring``
+      * ``oci db external-cdb enable-external-container-database-stack-monitoring``
+      * ``oci db external-non-cdb disable-external-non-container-database-stack-monitoring``
+      * ``oci db external-non-cdb enable-external-non-container-database-stack-monitoring``
+      * ``oci db external-pdb disable-external-pluggable-database-stack-monitoring``
+      * ``oci db external-pdb enable-external-pluggable-database-stack-monitoring``
+
+    * Support for upgrading VM database systems in place
+
+      * ``oci db system upgrade``
+      * ``oci db db-system-upgrade-history get``
+      * ``oci db db-system-upgrade-history list``
+
+* Support for the Stack Monitoring service
+
+  * ``oci stack-monitoring``
+
 3.7.2 - 2022-04-12
 ------------------
 Added
