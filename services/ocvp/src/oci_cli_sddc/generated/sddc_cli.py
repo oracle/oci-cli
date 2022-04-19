@@ -177,6 +177,8 @@ For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `myS
 @cli_util.option('--workload-network-cidr', help=u"""The CIDR block for the IP addresses that VMware VMs in the SDDC use to run application workloads.""")
 @cli_util.option('--replication-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the vSphere Replication component of the VMware environment.""")
 @cli_util.option('--provisioning-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the Provisioning component of the VMware environment.""")
+@cli_util.option('--initial-host-shape-name', help=u"""The initial compute shape of the SDDC's ESXi hosts. [ListSupportedHostShapes].""")
+@cli_util.option('--initial-host-ocpu-count', type=click.FLOAT, help=u"""The initial OCPU count of the SDDC's ESXi hosts.""")
 @cli_util.option('--is-shielded-instance-enabled', type=click.BOOL, help=u"""Indicates whether shielded instance is enabled for this SDDC.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -192,7 +194,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, is_shielded_instance_enabled, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -238,6 +240,12 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if provisioning_vlan_id is not None:
         _details['provisioningVlanId'] = provisioning_vlan_id
+
+    if initial_host_shape_name is not None:
+        _details['initialHostShapeName'] = initial_host_shape_name
+
+    if initial_host_ocpu_count is not None:
+        _details['initialHostOcpuCount'] = initial_host_ocpu_count
 
     if is_shielded_instance_enabled is not None:
         _details['isShieldedInstanceEnabled'] = is_shielded_instance_enabled

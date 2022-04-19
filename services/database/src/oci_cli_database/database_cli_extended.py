@@ -62,6 +62,46 @@ database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_
 # Clone from Db System Rename for VM/BM
 cli_util.rename_command(database_cli, database_cli.db_system_group, database_cli.launch_db_system_launch_db_system_from_db_system_details, "launch-from-db-system")
 
+
+# Renaming db-system-upgrade-history-entry sub command
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_upgrade_history_entry_group, "db-system-upgrade-history")
+
+
+# Renaming the db system upgrade history parameter upgrade-history-entry-id to upgrade-history-id
+@cli_util.copy_params_from_generated_command(database_cli.get_db_system_upgrade_history_entry, params_to_exclude=['upgrade_history_entry_id'])
+@cli_util.option('--upgrade-history-id', required=True, help=u"""The database/db system upgrade History [OCID].""")
+@database_cli.db_system_upgrade_history_entry_group.command(name='get', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystemUpgradeHistoryEntry'})
+@cli_util.wrap_exceptions
+def get_db_system_upgrade_history_entry_extended(ctx, **kwargs):
+    if 'upgrade_history_id' in kwargs and kwargs['upgrade_history_id']:
+        kwargs['upgrade_history_entry_id'] = kwargs['upgrade_history_id']
+
+    del kwargs['upgrade_history_id']
+    ctx.invoke(database_cli.get_db_system_upgrade_history_entry, **kwargs)
+
+
+# Renaming the db system upgrade parameters snapshot-retention-period-in-days to snapshot-retention-period and is-snapshot-retention-days-force-updated to force
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_db_system, params_to_exclude=['snapshot_retention_period_in_days', 'is_snapshot_retention_days_force_updated'])
+@cli_util.option('--snapshot-retention-period', type=click.INT, help=u"""The retention period, in days, for the snapshot that allows you to perform a rollback of the upgrade operation. After this number of days passes, you cannot roll back the upgrade.""")
+@cli_util.option('--force', type=click.BOOL, help=u"""If true, rollback time is updated even if operating system upgrade history contains errors.""")
+@database_cli.db_system_group.command(name='upgrade', help=database_cli.upgrade_db_system.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def upgrade_db_system_extended(ctx, **kwargs):
+    if 'snapshot_retention_period' in kwargs and kwargs['snapshot_retention_period']:
+        kwargs['snapshot_retention_period_in_days'] = kwargs['snapshot_retention_period']
+
+    if 'force' in kwargs and kwargs['force']:
+        kwargs['is_snapshot_retention_days_force_updated'] = kwargs['force']
+
+    del kwargs['snapshot_retention_period']
+    del kwargs['force']
+    ctx.invoke(database_cli.upgrade_db_system, **kwargs)
+
+
 # Renaming Db Upgrade sub command and group
 cli_util.rename_command(database_cli, database_cli.database_group, database_cli.list_database_upgrade_history_entries, "list-upgrade-history")
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.database_upgrade_history_entry_group, "upgrade-history")
