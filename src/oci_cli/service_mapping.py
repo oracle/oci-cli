@@ -97,7 +97,7 @@ service_mapping = {
     ],
     "cloud-guard": [
         "cloud_guard",
-        "Cloud Guard"
+        "Cloud Guard and Security Zones"
     ],
     "compute": [
         "core",
@@ -358,6 +358,10 @@ service_mapping = {
     "service-manager-proxy": [
         "service_manager_proxy",
         "Service Manager Proxy"
+    ],
+    "service-mesh": [
+        "service_mesh",
+        "Service Mesh"
     ],
     "speech": [
         "ai_speech",

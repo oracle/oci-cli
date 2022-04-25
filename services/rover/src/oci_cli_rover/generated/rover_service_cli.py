@@ -7,7 +7,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('rover_node.rover_service_group.command_name', 'rover'), cls=CommandGroupWithAlias, help=cli_util.override('rover_node.rover_service_group.help', """A description of the RoverCloudService API."""), short_help=cli_util.override('rover_node.rover_service_group.short_help', """RoverCloudService API"""))
+@cli.command(cli_util.override('shape.rover_service_group.command_name', 'rover'), cls=CommandGroupWithAlias, help=cli_util.override('shape.rover_service_group.help', """A description of the RoverCloudService API."""), short_help=cli_util.override('shape.rover_service_group.short_help', """RoverCloudService API"""))
 @cli_util.help_option_group
 def rover_service_group():
     pass

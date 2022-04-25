@@ -94,6 +94,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--import-compartment-id', help=u"""An OCID of a compartment where data will be imported to upon Rover cluster return.""")
 @cli_util.option('--import-file-bucket', help=u"""Name of a bucket where files from NFS share will be imported to upon Rover cluster return.""")
 @cli_util.option('--data-validation-code', help=u"""Validation code returned by data validation tool. Required for return shipping label generation if data import was requested.""")
+@cli_util.option('--master-key-id', help=u"""Customer provided master key ID to encrypt secret information. If not provided, Rover's master key will be used for encryption.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The system tags associated with this resource, if any. The system tags are set by Oracle cloud infrastructure services. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{orcl-cloud: {free-tier-retain: true}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -105,7 +106,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'cluster-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
-def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, cluster_size, customer_shipping_address, cluster_workloads, cluster_type, super_user_password, enclosure_type, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, oracle_shipping_tracking_url, subscription_id, lifecycle_state, lifecycle_state_details, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, freeform_tags, defined_tags, system_tags):
+def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, cluster_size, customer_shipping_address, cluster_workloads, cluster_type, super_user_password, enclosure_type, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, oracle_shipping_tracking_url, subscription_id, lifecycle_state, lifecycle_state_details, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, master_key_id, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -171,6 +172,9 @@ def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if data_validation_code is not None:
         _details['dataValidationCode'] = data_validation_code
+
+    if master_key_id is not None:
+        _details['masterKeyId'] = master_key_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

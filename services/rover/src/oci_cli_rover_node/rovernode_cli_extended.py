@@ -131,6 +131,7 @@ def setup_identity_helper(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.create_rover_node.name, help=rovernode_cli.create_rover_node.help)
+@cli_util.option('--shape', required=True, help=u"""Shape of the node on Rover device""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
 @cli_util.option('--address1', help=u"""Address line 1.""")
@@ -153,6 +154,7 @@ def create_rover_node_extended(ctx, **kwargs):
     _details = {}
     _details['displayName'] = kwargs['display_name']
     _details['compartmentId'] = kwargs['compartment_id']
+    _details['shape'] = kwargs['shape']
 
     if kwargs['customer_shipping_address'] is not None:
         _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", kwargs['customer_shipping_address'])
@@ -278,10 +280,13 @@ def show_rover_node_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def update_rover_node_extended(ctx, **kwargs):
 
-    client = cli_util.build_client('rover', 'rover_node', ctx)
+    cli_util.build_client('rover', 'rover_node', ctx)
 
     kwargs = complex_shipping_address_param(**kwargs)
-    kwargs['lifecycle_state_details'] = "PENDING_SUBMISSION"
+    if kwargs['lifecycle_state_details']:
+        pending_lifecycle_state = "PENDING_SUBMISSION"
+        click.echo("WARNING:Rover node will be update with lifecycle state details " + pending_lifecycle_state)
+        kwargs['lifecycle_state_details'] = pending_lifecycle_state
     kwargs.update({
         'rover_node_id': kwargs['node_id']
     })

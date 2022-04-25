@@ -8,6 +8,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 import click
 from oci_cli.aliasing import CommandGroupWithAlias
+from oci_cli import json_skeleton_utils
 
 
 # oci bds work-request-log-entry list-work-request-logs -> oci bds work-request-log-entry list
@@ -74,3 +75,49 @@ cli_util.rename_command(bds_cli, bds_auto_scaling_group, bds_cli.update_auto_sca
 bds_cli.bds_instance_group.commands.pop(bds_cli.list_auto_scaling_configurations.name)
 bds_auto_scaling_group.add_command(bds_cli.list_auto_scaling_configurations)
 cli_util.rename_command(bds_cli, bds_auto_scaling_group, bds_cli.list_auto_scaling_configurations, "list")
+
+
+@cli_util.copy_params_from_generated_command(bds_cli.install_patch, params_to_exclude=['version_parameterconflict'])
+@bds_cli.bds_instance_group.command(name=bds_cli.install_patch.name, help=bds_cli.install_patch.help)
+@cli_util.option('--patch-version', required=True, help=u"""The version of the patch to be installed. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_extended(ctx, **kwargs):
+    if 'patch_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['patch_version']
+        kwargs.pop('patch_version')
+
+    ctx.invoke(bds_cli.install_patch, **kwargs)
+
+
+# Remove add-auto-scaling-configuration-add-metric-based-horizontal-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_details.name)
+
+
+# Remove add-auto-scaling-configuration-add-metric-based-vertical-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_details.name)
+
+
+# Remove add-auto-scaling-configuration-add-schedule-based-horizontal-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_details.name)
+
+
+# Remove add-auto-scaling-configuration-add-schedule-based-vertical-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_details.name)
+
+
+# Remove update-auto-scaling-configuration-update-metric-based-horizontal-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.update_auto_scaling_configuration_update_metric_based_horizontal_scaling_policy_details.name)
+
+
+# Remove update-auto-scaling-configuration-update-metric-based-vertical-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.update_auto_scaling_configuration_update_metric_based_vertical_scaling_policy_details.name)
+
+
+# Remove update-auto-scaling-configuration-update-schedule-based-horizontal-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_policy_details.name)
+
+
+# Remove update-auto-scaling-configuration-update-schedule-based-vertical-scaling-policy-details from oci bds instance
+bds_cli.bds_instance_group.commands.pop(bds_cli.update_auto_scaling_configuration_update_schedule_based_vertical_scaling_policy_details.name)

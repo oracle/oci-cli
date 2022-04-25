@@ -106,11 +106,11 @@ class UnitTestRover(unittest.TestCase):
             {"sub_command": "update",
              "required_params": ["cluster-id"],
              "optional_params": ["addressee", "care-of", "address1",
-                                 "city-or-locality", "state-province-region", "country", "zip-postal-code",
+                                 "city-or-locality", "lifecycle-state-details", "state-province-region", "country", "zip-postal-code",
                                  "phone-number", "email"]},
             {"sub_command": "request-approval",
              "required_params": ["cluster-id"],
-             "optional_params": ["subscription-id"]},
+             "optional_params": []},
             {"sub_command": "add-workload",
              "required_params": ["cluster-id", "compartment-id", "type"],
              "test_necessary_params": ["bucket-id", "bucket-name", "force"],
@@ -133,7 +133,7 @@ class UnitTestRover(unittest.TestCase):
 
         self.node_subcommands = [
             {"sub_command": "create",
-             "required_params": ["compartment-id", "display-name"],
+             "required_params": ["compartment-id", "display-name", "shape"],
              "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact", "addressee", "care-of", "address1",
                                  "city-or-locality", "state-province-region", "country", "zip-postal-code",
                                  "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4"]},
@@ -149,7 +149,7 @@ class UnitTestRover(unittest.TestCase):
             {"sub_command": "update",
              "required_params": ["node-id"],
              "optional_params": ["addressee", "care-of", "address1",
-                                 "city-or-locality", "state-province-region", "country", "zip-postal-code",
+                                 "city-or-locality", "lifecycle-state-details", "state-province-region", "country", "zip-postal-code",
                                  "phone-number", "email"]},
             {"sub_command": "request-approval",
              "required_params": ["node-id"],
@@ -174,9 +174,16 @@ class UnitTestRover(unittest.TestCase):
                  "mock_prompt_for_secrets": "'rover123'"}},
         ]
 
+        self.shape_subcommands = [
+            {"sub_command": "list",
+             "required_params": ["compartment-id"],
+             "optional_params": []},
+        ]
+
         self.command_defs = [
             {"command": "cluster", "sub_commands": self.cluster_subcommands},
             {"command": "node", "sub_commands": self.node_subcommands},
+            {"command": "shape", "sub_commands": self.shape_subcommands},
         ]
         self.success_count = 0
         self.failed_count = 0
@@ -191,7 +198,8 @@ class UnitTestRover(unittest.TestCase):
     @mock.patch('services.rover.src.oci_cli_rover.rover_utils.prompt_for_secrets')
     @mock.patch('click.prompt', return_value=True)
     @mock.patch('oci_cli.cli_util.build_client')
-    def test_rover(self, mock_client, mock_prompt, mock_prompt_for_secrets):
+    @mock.patch('oci_cli.cli_util.render_response')
+    def test_rover(self, mock_client_render_response, mock_client, mock_prompt, mock_prompt_for_secrets):
         for command_def in self.command_defs:
             command = command_def["command"]
             specific_sub_command_set = self._sub_command_list_in_specific_test_set(command)

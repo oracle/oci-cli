@@ -124,11 +124,12 @@ def change_transcription_job_compartment(ctx, from_json, transcription_job_id, c
 
 
 @transcription_job_group.command(name=cli_util.override('speech.create_transcription_job.command_name', 'create'), help=u"""Creates a new Transcription Job. \n[Command Reference](createTranscriptionJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the transcriptionJob.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""Transcription job name.""")
-@cli_util.option('--description', help=u"""Transcription job description.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--additional-transcription-formats', type=custom_types.CliCaseInsensitiveChoice(["SRT"]), help=u"""Transcription Format. By default JSON format will be considered.""")
 @cli_util.option('--model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--normalization', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -141,7 +142,7 @@ def change_transcription_job_compartment(ctx, from_json, transcription_job_id, c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'TranscriptionModelDetails'}, 'normalization': {'module': 'ai_speech', 'class': 'TranscriptionNormalization'}, 'input-location': {'module': 'ai_speech', 'class': 'InputLocation'}, 'output-location': {'module': 'ai_speech', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_speech', 'class': 'TranscriptionJob'})
 @cli_util.wrap_exceptions
-def create_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, input_location, output_location, display_name, description, model_details, normalization, freeform_tags, defined_tags):
+def create_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, input_location, output_location, display_name, description, additional_transcription_formats, model_details, normalization, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -156,6 +157,9 @@ def create_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if description is not None:
         _details['description'] = description
+
+    if additional_transcription_formats is not None:
+        _details['additionalTranscriptionFormats'] = cli_util.parse_json_parameter("additional_transcription_formats", additional_transcription_formats)
 
     if model_details is not None:
         _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
@@ -201,11 +205,12 @@ def create_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @transcription_job_group.command(name=cli_util.override('speech.create_transcription_job_object_list_file_input_location.command_name', 'create-transcription-job-object-list-file-input-location'), help=u"""Creates a new Transcription Job. \n[Command Reference](createTranscriptionJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the transcriptionJob.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""Transcription job name.""")
-@cli_util.option('--description', help=u"""Transcription job description.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--additional-transcription-formats', type=custom_types.CliCaseInsensitiveChoice(["SRT"]), help=u"""Transcription Format. By default JSON format will be considered.""")
 @cli_util.option('--model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--normalization', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -218,7 +223,7 @@ def create_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'TranscriptionModelDetails'}, 'normalization': {'module': 'ai_speech', 'class': 'TranscriptionNormalization'}, 'output-location': {'module': 'ai_speech', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'input-location-object-location': {'module': 'ai_speech', 'class': 'ObjectLocation'}}, output_type={'module': 'ai_speech', 'class': 'TranscriptionJob'})
 @cli_util.wrap_exceptions
-def create_transcription_job_object_list_file_input_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, output_location, input_location_object_location, display_name, description, model_details, normalization, freeform_tags, defined_tags):
+def create_transcription_job_object_list_file_input_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, output_location, input_location_object_location, display_name, description, additional_transcription_formats, model_details, normalization, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -234,6 +239,9 @@ def create_transcription_job_object_list_file_input_location(ctx, from_json, wai
 
     if description is not None:
         _details['description'] = description
+
+    if additional_transcription_formats is not None:
+        _details['additionalTranscriptionFormats'] = cli_util.parse_json_parameter("additional_transcription_formats", additional_transcription_formats)
 
     if model_details is not None:
         _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
@@ -281,11 +289,12 @@ def create_transcription_job_object_list_file_input_location(ctx, from_json, wai
 
 
 @transcription_job_group.command(name=cli_util.override('speech.create_transcription_job_object_list_inline_input_location.command_name', 'create-transcription-job-object-list-inline-input-location'), help=u"""Creates a new Transcription Job. \n[Command Reference](createTranscriptionJob)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the transcriptionJob.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""Transcription job name.""")
-@cli_util.option('--description', help=u"""Transcription job description.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--additional-transcription-formats', type=custom_types.CliCaseInsensitiveChoice(["SRT"]), help=u"""Transcription Format. By default JSON format will be considered.""")
 @cli_util.option('--model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--normalization', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -298,7 +307,7 @@ def create_transcription_job_object_list_file_input_location(ctx, from_json, wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'TranscriptionModelDetails'}, 'normalization': {'module': 'ai_speech', 'class': 'TranscriptionNormalization'}, 'output-location': {'module': 'ai_speech', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'input-location-object-locations': {'module': 'ai_speech', 'class': 'list[ObjectLocation]'}}, output_type={'module': 'ai_speech', 'class': 'TranscriptionJob'})
 @cli_util.wrap_exceptions
-def create_transcription_job_object_list_inline_input_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, output_location, input_location_object_locations, display_name, description, model_details, normalization, freeform_tags, defined_tags):
+def create_transcription_job_object_list_inline_input_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, output_location, input_location_object_locations, display_name, description, additional_transcription_formats, model_details, normalization, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -314,6 +323,9 @@ def create_transcription_job_object_list_inline_input_location(ctx, from_json, w
 
     if description is not None:
         _details['description'] = description
+
+    if additional_transcription_formats is not None:
+        _details['additionalTranscriptionFormats'] = cli_util.parse_json_parameter("additional_transcription_formats", additional_transcription_formats)
 
     if model_details is not None:
         _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
@@ -539,8 +551,8 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
 
 @transcription_job_group.command(name=cli_util.override('speech.update_transcription_job.command_name', 'update'), help=u"""Updates the Transcription Job \n[Command Reference](updateTranscriptionJob)""")
 @cli_util.option('--transcription-job-id', required=True, help=u"""Unique Transcription Job identifier.""")
-@cli_util.option('--display-name', help=u"""Transcription job name.""")
-@cli_util.option('--description', help=u"""Transcription job description.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

@@ -132,7 +132,10 @@ def update_rover_cluster_extended(ctx, **kwargs):
     client = cli_util.build_client('rover', 'rover_cluster', ctx)
 
     kwargs = complex_shipping_address_param(**kwargs)
-    kwargs['lifecycle_state_details'] = "PENDING_SUBMISSION"
+    if kwargs['lifecycle_state_details']:
+        pending_lifecycle_state = "PENDING_SUBMISSION"
+        click.echo("WARNING:Rover cluster will be update with lifecycle state details " + pending_lifecycle_state)
+        kwargs['lifecycle_state_details'] = pending_lifecycle_state
     kwargs.update({
         'rover_cluster_id': kwargs['cluster_id']
     })

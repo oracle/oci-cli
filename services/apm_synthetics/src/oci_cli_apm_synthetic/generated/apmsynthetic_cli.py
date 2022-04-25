@@ -15,9 +15,15 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('apm_synthetics.apm_synthetics_root_group.command_name', 'apm-synthetics'), cls=CommandGroupWithAlias, help=cli_util.override('apm_synthetics.apm_synthetics_root_group.help', """Use the Application Performance Monitoring Synthetic Monitoring API to query synthetic scripts and monitors."""), short_help=cli_util.override('apm_synthetics.apm_synthetics_root_group.short_help', """Application Performance Monitoring Synthetic Monitoring API"""))
+@cli.command(cli_util.override('apm_synthetics.apm_synthetics_root_group.command_name', 'apm-synthetics'), cls=CommandGroupWithAlias, help=cli_util.override('apm_synthetics.apm_synthetics_root_group.help', """Use the Application Performance Monitoring Synthetic Monitoring API to query synthetic scripts and monitors. For more information, see [Application Performance Monitoring]."""), short_help=cli_util.override('apm_synthetics.apm_synthetics_root_group.short_help', """Application Performance Monitoring Synthetic Monitoring API"""))
 @cli_util.help_option_group
 def apm_synthetics_root_group():
+    pass
+
+
+@click.command(cli_util.override('apm_synthetics.dedicated_vantage_point_group.command_name', 'dedicated-vantage-point'), cls=CommandGroupWithAlias, help="""The information about a dedicated vantage point.""")
+@cli_util.help_option_group
+def dedicated_vantage_point_group():
     pass
 
 
@@ -45,6 +51,12 @@ def monitor_collection_group():
     pass
 
 
+@click.command(cli_util.override('apm_synthetics.dedicated_vantage_point_collection_group.command_name', 'dedicated-vantage-point-collection'), cls=CommandGroupWithAlias, help="""The results of a dedicated vantage point search, which contains DedicatedVantagePointSummary items and other data in an APM domain.""")
+@cli_util.help_option_group
+def dedicated_vantage_point_collection_group():
+    pass
+
+
 @click.command(cli_util.override('apm_synthetics.public_vantage_point_collection_group.command_name', 'public-vantage-point-collection'), cls=CommandGroupWithAlias, help="""The results of a public vantage point search, which contains PublicVantagePointSummary items and other data in an APM domain.""")
 @cli_util.help_option_group
 def public_vantage_point_collection_group():
@@ -57,24 +69,115 @@ def script_group():
     pass
 
 
+apm_synthetics_root_group.add_command(dedicated_vantage_point_group)
 apm_synthetics_root_group.add_command(script_collection_group)
 apm_synthetics_root_group.add_command(monitor_group)
 apm_synthetics_root_group.add_command(monitor_result_group)
 apm_synthetics_root_group.add_command(monitor_collection_group)
+apm_synthetics_root_group.add_command(dedicated_vantage_point_collection_group)
 apm_synthetics_root_group.add_command(public_vantage_point_collection_group)
 apm_synthetics_root_group.add_command(script_group)
+
+
+@dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.create_dedicated_vantage_point.command_name', 'create'), help=u"""Registers a new dedicated vantage point. \n[Command Reference](createDedicatedVantagePoint)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--display-name', required=True, help=u"""Unique dedicated vantage point name that cannot be edited. The name should not contain any confidential information.""")
+@cli_util.option('--dvp-stack-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--region-parameterconflict', required=True, help=u"""Name of the region.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'dvp-stack-details': {'module': 'apm_synthetics', 'class': 'DvpStackDetails'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dvp-stack-details': {'module': 'apm_synthetics', 'class': 'DvpStackDetails'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def create_dedicated_vantage_point(ctx, from_json, apm_domain_id, display_name, dvp_stack_details, region_parameterconflict, status, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['dvpStackDetails'] = cli_util.parse_json_parameter("dvp_stack_details", dvp_stack_details)
+    _details['region'] = region_parameterconflict
+
+    if status is not None:
+        _details['status'] = status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.create_dedicated_vantage_point(
+        apm_domain_id=apm_domain_id,
+        create_dedicated_vantage_point_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.create_dedicated_vantage_point_oracle_rm_stack.command_name', 'create-dedicated-vantage-point-oracle-rm-stack'), help=u"""Registers a new dedicated vantage point. \n[Command Reference](createDedicatedVantagePoint)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--display-name', required=True, help=u"""Unique dedicated vantage point name that cannot be edited. The name should not contain any confidential information.""")
+@cli_util.option('--region-parameterconflict', required=True, help=u"""Name of the region.""")
+@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP.""")
+@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def create_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, apm_domain_id, display_name, region_parameterconflict, dvp_version, dvp_stack_id, dvp_stream_id, status, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dvpStackDetails'] = {}
+    _details['displayName'] = display_name
+    _details['region'] = region_parameterconflict
+    _details['dvpStackDetails']['dvpVersion'] = dvp_version
+    _details['dvpStackDetails']['dvpStackId'] = dvp_stack_id
+    _details['dvpStackDetails']['dvpStreamId'] = dvp_stream_id
+
+    if status is not None:
+        _details['status'] = status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['dvpStackDetails']['dvpStackType'] = 'ORACLE_RM_STACK'
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.create_dedicated_vantage_point(
+        apm_domain_id=apm_domain_id,
+        create_dedicated_vantage_point_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor.command_name', 'create'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
 @cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
-@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -138,12 +241,12 @@ def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, va
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
 @cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
-@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -214,12 +317,12 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
 @cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
-@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -294,12 +397,12 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
 @cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
-@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -414,12 +517,12 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
 @cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
-@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -428,7 +531,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verify all the search strings present in response. If any search string is not present in the response, then it will be considered as a failure.
+@cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verifies all the search strings present in the response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -543,6 +646,34 @@ def create_script(ctx, from_json, apm_domain_id, display_name, content_type, con
     cli_util.render_response(result, ctx)
 
 
+@dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.delete_dedicated_vantage_point.command_name', 'delete'), help=u"""Deregisters the specified dedicated vantage point. \n[Command Reference](deleteDedicatedVantagePoint)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--dedicated-vantage-point-id', required=True, help=u"""The OCID of the dedicated vantage point.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_dedicated_vantage_point(ctx, from_json, apm_domain_id, dedicated_vantage_point_id, if_match):
+
+    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.delete_dedicated_vantage_point(
+        apm_domain_id=apm_domain_id,
+        dedicated_vantage_point_id=dedicated_vantage_point_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @monitor_group.command(name=cli_util.override('apm_synthetics.delete_monitor.command_name', 'delete'), help=u"""Deletes the specified monitor. \n[Command Reference](deleteMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
@@ -599,6 +730,30 @@ def delete_script(ctx, from_json, apm_domain_id, script_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.get_dedicated_vantage_point.command_name', 'get'), help=u"""Gets the details of the dedicated vantage point identified by the OCID. \n[Command Reference](getDedicatedVantagePoint)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--dedicated-vantage-point-id', required=True, help=u"""The OCID of the dedicated vantage point.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def get_dedicated_vantage_point(ctx, from_json, apm_domain_id, dedicated_vantage_point_id):
+
+    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.get_dedicated_vantage_point(
+        apm_domain_id=apm_domain_id,
+        dedicated_vantage_point_id=dedicated_vantage_point_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @monitor_group.command(name=cli_util.override('apm_synthetics.get_monitor.command_name', 'get'), help=u"""Gets the configuration of the monitor identified by the OCID. \n[Command Reference](getMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
@@ -627,8 +782,8 @@ def get_monitor(ctx, from_json, apm_domain_id, monitor_id):
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--vantage-point', required=True, help=u"""The vantagePoint name.""")
-@cli_util.option('--result-type', required=True, help=u"""The result type har, screenshot, log or network.""")
-@cli_util.option('--result-content-type', required=True, help=u"""The result content type zip or raw.""")
+@cli_util.option('--result-type', required=True, help=u"""The result type: har, screenshot, log, or network.""")
+@cli_util.option('--result-content-type', required=True, help=u"""The result content type: zip or raw.""")
 @cli_util.option('--execution-time', required=True, help=u"""The time the object was posted.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -682,10 +837,76 @@ def get_script(ctx, from_json, apm_domain_id, script_id):
     cli_util.render_response(result, ctx)
 
 
+@dedicated_vantage_point_collection_group.command(name=cli_util.override('apm_synthetics.list_dedicated_vantage_points.command_name', 'list-dedicated-vantage-points'), help=u"""Returns a list of dedicated vantage points. \n[Command Reference](listDedicatedVantagePoints)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). Default sort order is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "name", "timeCreated", "timeUpdated", "status"]), help=u"""The field to sort by. Only one sort order may be provided. Default order of displayName is ascending. Default order of timeCreated and timeUpdated is descending. The displayName sort by is case sensitive.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name.""")
+@cli_util.option('--name', help=u"""A filter to return only the resources that match the entire name.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""A filter to return only the dedicated vantage points that match a given status.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePointCollection'})
+@cli_util.wrap_exceptions
+def list_dedicated_vantage_points(ctx, from_json, all_pages, page_size, apm_domain_id, limit, page, sort_order, sort_by, display_name, name, status):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if name is not None:
+        kwargs['name'] = name
+    if status is not None:
+        kwargs['status'] = status
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dedicated_vantage_points,
+            apm_domain_id=apm_domain_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dedicated_vantage_points,
+            limit,
+            page_size,
+            apm_domain_id=apm_domain_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dedicated_vantage_points(
+            apm_domain_id=apm_domain_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @monitor_collection_group.command(name=cli_util.override('apm_synthetics.list_monitors.command_name', 'list-monitors'), help=u"""Returns a list of monitors. \n[Command Reference](listMonitors)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name.""")
 @cli_util.option('--script-id', help=u"""A filter to return only monitors using scriptId.""")
+@cli_util.option('--vantage-point', help=u"""The name of the public or dedicated vantage point.""")
 @cli_util.option('--monitor-type', help=u"""A filter to return only monitors that match the given monitor type. Supported values are SCRIPTED_BROWSER, BROWSER, SCRIPTED_REST and REST.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""A filter to return only monitors that match the status given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -701,7 +922,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_synthetics', 'class': 'MonitorCollection'})
 @cli_util.wrap_exceptions
-def list_monitors(ctx, from_json, all_pages, page_size, apm_domain_id, display_name, script_id, monitor_type, status, limit, page, sort_order, sort_by):
+def list_monitors(ctx, from_json, all_pages, page_size, apm_domain_id, display_name, script_id, vantage_point, monitor_type, status, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -711,6 +932,8 @@ def list_monitors(ctx, from_json, all_pages, page_size, apm_domain_id, display_n
         kwargs['display_name'] = display_name
     if script_id is not None:
         kwargs['script_id'] = script_id
+    if vantage_point is not None:
+        kwargs['vantage_point'] = vantage_point
     if monitor_type is not None:
         kwargs['monitor_type'] = monitor_type
     if status is not None:
@@ -758,8 +981,8 @@ def list_monitors(ctx, from_json, all_pages, page_size, apm_domain_id, display_n
 Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). Default sort order is ascending.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "displayName"]), help=u"""The field to sort by. You can provide one sort by (`sortBy`). Default order for displayName or name is ascending. The displayName or name sort by is case insensitive.""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name.""")
+@cli_util.option('--name', help=u"""A filter to return only the resources that match the entire name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -814,7 +1037,7 @@ def list_public_vantage_points(ctx, from_json, all_pages, page_size, apm_domain_
 
 @script_collection_group.command(name=cli_util.override('apm_synthetics.list_scripts.command_name', 'list-scripts'), help=u"""Returns a list of scripts. \n[Command Reference](listScripts)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name.""")
 @cli_util.option('--content-type', help=u"""A filter to return only resources that match the content type given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -874,16 +1097,133 @@ def list_scripts(ctx, from_json, all_pages, page_size, apm_domain_id, display_na
     cli_util.render_response(result, ctx)
 
 
+@dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.update_dedicated_vantage_point.command_name', 'update'), help=u"""Updates the dedicated vantage point. \n[Command Reference](updateDedicatedVantagePoint)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--dedicated-vantage-point-id', required=True, help=u"""The OCID of the dedicated vantage point.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
+@cli_util.option('--dvp-stack-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--region-parameterconflict', help=u"""Name of the region.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'dvp-stack-details': {'module': 'apm_synthetics', 'class': 'DvpStackDetails'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dvp-stack-details': {'module': 'apm_synthetics', 'class': 'DvpStackDetails'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def update_dedicated_vantage_point(ctx, from_json, force, apm_domain_id, dedicated_vantage_point_id, status, dvp_stack_details, region_parameterconflict, freeform_tags, defined_tags, if_match):
+
+    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
+    if not force:
+        if dvp_stack_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to dvp-stack-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if status is not None:
+        _details['status'] = status
+
+    if dvp_stack_details is not None:
+        _details['dvpStackDetails'] = cli_util.parse_json_parameter("dvp_stack_details", dvp_stack_details)
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.update_dedicated_vantage_point(
+        apm_domain_id=apm_domain_id,
+        dedicated_vantage_point_id=dedicated_vantage_point_id,
+        update_dedicated_vantage_point_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.update_dedicated_vantage_point_oracle_rm_stack.command_name', 'update-dedicated-vantage-point-oracle-rm-stack'), help=u"""Updates the dedicated vantage point. \n[Command Reference](updateDedicatedVantagePoint)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--dedicated-vantage-point-id', required=True, help=u"""The OCID of the dedicated vantage point.""")
+@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP.""")
+@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
+@cli_util.option('--region-parameterconflict', help=u"""Name of the region.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def update_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, force, apm_domain_id, dedicated_vantage_point_id, dvp_version, dvp_stack_id, dvp_stream_id, status, region_parameterconflict, freeform_tags, defined_tags, if_match):
+
+    if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dvpStackDetails'] = {}
+    _details['dvpStackDetails']['dvpVersion'] = dvp_version
+    _details['dvpStackDetails']['dvpStackId'] = dvp_stack_id
+    _details['dvpStackDetails']['dvpStreamId'] = dvp_stream_id
+
+    if status is not None:
+        _details['status'] = status
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['dvpStackDetails']['dvpStackType'] = 'ORACLE_RM_STACK'
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.update_dedicated_vantage_point(
+        apm_domain_id=apm_domain_id,
+        dedicated_vantage_point_id=dedicated_vantage_point_id,
+        update_dedicated_vantage_point_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor.command_name', 'update'), help=u"""Updates the monitor. \n[Command Reference](updateMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
-@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -964,12 +1304,12 @@ def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_nam
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
-@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -1057,12 +1397,12 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
-@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -1154,12 +1494,12 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
-@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -1291,12 +1631,12 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
-@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds.""")
+@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. Timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
 @cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
@@ -1306,7 +1646,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verify all the search strings present in response. If any search string is not present in the response, then it will be considered as a failure.
+@cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verifies all the search strings present in the response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

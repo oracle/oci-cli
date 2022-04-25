@@ -6,6 +6,7 @@ import sys
 import click
 import json
 import oci
+import six  # noqa: F401
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
@@ -2710,3 +2711,228 @@ def convert_to_pdb_rollback_extended(ctx, **kwargs):
 def convert_to_pdb_sync_extended(ctx, **kwargs):
     kwargs['action'] = "SYNC"
     ctx.invoke(database_cli.convert_to_pdb, **kwargs)
+
+
+# CLI-341
+@cli_util.copy_params_from_generated_command(database_cli.failover_data_guard_association, params_to_exclude=[''])
+@database_cli.data_guard_association_group.command(name=database_cli.failover_data_guard_association.name, help=database_cli.failover_data_guard_association.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def failover_data_guard_association_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.failover_data_guard_association(
+        database_id=database_id,
+        data_guard_association_id=data_guard_association_id,
+        failover_data_guard_association_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(database_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.reinstate_data_guard_association, params_to_exclude=[''])
+@database_cli.data_guard_association_group.command(name=database_cli.reinstate_data_guard_association.name, help=database_cli.reinstate_data_guard_association.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def reinstate_data_guard_association_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.reinstate_data_guard_association(
+        database_id=database_id,
+        data_guard_association_id=data_guard_association_id,
+        reinstate_data_guard_association_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(database_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.switchover_data_guard_association, params_to_exclude=[''])
+@database_cli.data_guard_association_group.command(name=database_cli.switchover_data_guard_association.name, help=database_cli.switchover_data_guard_association.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def switchover_data_guard_association_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.switchover_data_guard_association(
+        database_id=database_id,
+        data_guard_association_id=data_guard_association_id,
+        switchover_data_guard_association_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(database_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_data_guard_association, params_to_exclude=[''])
+@database_cli.data_guard_association_group.command(name=database_cli.update_data_guard_association.name, help=database_cli.update_data_guard_association.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if database_admin_password is not None:
+        _details['databaseAdminPassword'] = database_admin_password
+
+    if protection_mode is not None:
+        _details['protectionMode'] = protection_mode
+
+    if transport_type is not None:
+        _details['transportType'] = transport_type
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_data_guard_association(
+        database_id=database_id,
+        data_guard_association_id=data_guard_association_id,
+        update_data_guard_association_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(database_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)

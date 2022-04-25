@@ -10262,33 +10262,6 @@ def get_db_system_upgrade_history_entry(ctx, from_json, db_system_id, upgrade_hi
     cli_util.render_response(result, ctx)
 
 
-@db_system_upgrade_history_entry_group.command(name=cli_util.override('db.get_db_system_upgrade_history_entry.command_name', 'get'), help=u"""Gets the details of the specified operating system upgrade operation for the specified DB system. \n[Command Reference](getDbSystemUpgradeHistoryEntry)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
-@cli_util.option('--upgrade-history-entry-id', required=True, help=u"""The database/db system upgrade History [OCID].""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystemUpgradeHistoryEntry'})
-@cli_util.wrap_exceptions
-def get_db_system_upgrade_history_entry(ctx, from_json, db_system_id, upgrade_history_entry_id):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    if isinstance(upgrade_history_entry_id, six.string_types) and len(upgrade_history_entry_id.strip()) == 0:
-        raise click.UsageError('Parameter --upgrade-history-entry-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', 'database', ctx)
-    result = client.get_db_system_upgrade_history_entry(
-        db_system_id=db_system_id,
-        upgrade_history_entry_id=upgrade_history_entry_id,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @exadata_infrastructure_group.command(name=cli_util.override('db.get_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Exadata infrastructure. Applies to Exadata Cloud@Customer instances only. To get information on an Exadata Cloud Service infrastructure resource, use the  [GetCloudExadataInfrastructure] operation. \n[Command Reference](getExadataInfrastructure)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})

@@ -116,6 +116,7 @@ IGNORED_COMMANDS = [
     ['mysql', 'db-system', 'import'],
     ['devops', 'deploy-environment', 'update-oke-cluster-environment'],
     ['db', 'backup', 'list'],
+    ['speech', 'transcription-job', 'create'],
 ]
 
 IGNORED_COMMANDS_DOCS = [
