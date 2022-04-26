@@ -44,6 +44,13 @@ apmsynthetic_cli.monitor_group.commands.pop(apmsynthetic_cli.create_monitor_rest
 apmsynthetic_cli.monitor_group.commands.pop(apmsynthetic_cli.update_monitor_rest_monitor_configuration.name)
 
 
+# oci apm-synthetics dedicated-vantage-point create-dedicated-vantage-point-oracle-rm-stack -> oci apm-synthetics dedicated-vantage-point create-with-oracle-rm-stack
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_point_group, apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, "create-with-oracle-rm-stack")
+
+# oci apm-synthetics dedicated-vantage-point update-dedicated-vantage-point-oracle-rm-stack -> oci apm-synthetics dedicated-vantage-point update-with-oracle-rm-stack
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_point_group, apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, "update-with-oracle-rm-stack")
+
+
 @cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_browser_monitor_configuration.command_name', 'create-browser-monitor'), help=apmsynthetic_cli.create_monitor_browser_monitor_configuration.help)
 @cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
@@ -424,3 +431,76 @@ def update_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs
         kwargs.pop('is_failure_retried')
 
     ctx.invoke(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_dedicated_vantage_point, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
+@apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.create_dedicated_vantage_point.name, help=apmsynthetic_cli.create_dedicated_vantage_point.help)
+@cli_util.option('--dvp-endpoint', required=True, help=u"""Upload endpoint. It will be a stream ocid for OCI OSS stream. [required]""")
+@cli_util.option('--dvp-region', required=True, help=u"""Region name. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def create_dedicated_vantage_point_extended(ctx, **kwargs):
+    if 'dvp_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['dvp_endpoint']
+        kwargs.pop('dvp_endpoint')
+
+    if 'dvp_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['dvp_region']
+        kwargs.pop('dvp_region')
+
+    ctx.invoke(apmsynthetic_cli.create_dedicated_vantage_point, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_dedicated_vantage_point, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
+@apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.update_dedicated_vantage_point.name, help=apmsynthetic_cli.update_dedicated_vantage_point.help)
+@cli_util.option('--dvp-endpoint', help=u"""Upload endpoint. It will be a stream ocid for OCI OSS stream.""")
+@cli_util.option('--dvp-region', help=u"""Region name.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def update_dedicated_vantage_point_extended(ctx, **kwargs):
+    if 'dvp_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['dvp_endpoint']
+        kwargs.pop('dvp_endpoint')
+
+    if 'dvp_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['dvp_region']
+        kwargs.pop('dvp_region')
+
+    ctx.invoke(apmsynthetic_cli.update_dedicated_vantage_point, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict'])
+@apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack.name, help=apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack.help)
+@cli_util.option('--dvp-region', required=True, help=u"""Name of the region. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def create_dedicated_vantage_point_oracle_rm_stack_extended(ctx, **kwargs):
+    if 'dvp_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['dvp_region']
+        kwargs.pop('dvp_region')
+
+    ctx.invoke(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict'])
+@apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack.name, help=apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack.help)
+@cli_util.option('--dvp-region', help=u"""Name of the region.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
+@cli_util.wrap_exceptions
+def update_dedicated_vantage_point_oracle_rm_stack_extended(ctx, **kwargs):
+    if 'dvp_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['dvp_region']
+        kwargs.pop('dvp_region')
+
+    ctx.invoke(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, **kwargs)
+
+
+# Remove create from oci apm-synthetics dedicated-vantage-point
+apmsynthetic_cli.dedicated_vantage_point_group.commands.pop(apmsynthetic_cli.create_dedicated_vantage_point.name)
+
+# Remove update from oci apm-synthetics dedicated-vantage-point
+apmsynthetic_cli.dedicated_vantage_point_group.commands.pop(apmsynthetic_cli.update_dedicated_vantage_point.name)

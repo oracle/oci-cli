@@ -27,15 +27,8 @@ def rover_entitlement_group():
     pass
 
 
-@click.command(cli_util.override('rover_entitlement.rover_cluster_group.command_name', 'rover-cluster'), cls=CommandGroupWithAlias, help="""Description of RoverCluster.""")
-@cli_util.help_option_group
-def rover_cluster_group():
-    pass
-
-
 rover_service_cli.rover_service_group.add_command(rover_entitlement_root_group)
 rover_entitlement_root_group.add_command(rover_entitlement_group)
-rover_entitlement_root_group.add_command(rover_cluster_group)
 
 
 @rover_entitlement_group.command(name=cli_util.override('rover_entitlement.change_rover_entitlement_compartment.command_name', 'change-compartment'), help=u"""Moves an entitlement into a different compartment. \n[Command Reference](changeRoverEntitlementCompartment)""")
@@ -305,7 +298,7 @@ def list_rover_entitlements(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@rover_cluster_group.command(name=cli_util.override('rover_entitlement.update_rover_entitlement.command_name', 'update-rover-entitlement'), help=u"""Updates the RoverEntitlement \n[Command Reference](updateRoverEntitlement)""")
+@rover_entitlement_group.command(name=cli_util.override('rover_entitlement.update_rover_entitlement.command_name', 'update'), help=u"""Updates the RoverEntitlement \n[Command Reference](updateRoverEntitlement)""")
 @cli_util.option('--rover-entitlement-id', required=True, help=u"""ID of the rover node or cluster entitlement""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--tenant-id', help=u"""tenant Id.""")

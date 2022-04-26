@@ -93,6 +93,7 @@ def change_rover_node_compartment(ctx, from_json, rover_node_id, compartment_id,
 @rover_node_group.command(name=cli_util.override('rover_node.create_rover_node.command_name', 'create'), help=u"""Creates a new RoverNode. \n[Command Reference](createRoverNode)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the RoverNode.""")
+@cli_util.option('--shape', help=u"""The shape of the node.""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-workloads', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of existing workloads that should be provisioned on the node.
 
@@ -116,6 +117,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--import-compartment-id', help=u"""An OCID of a compartment where data will be imported to upon Rover node return.""")
 @cli_util.option('--import-file-bucket', help=u"""Name of a bucket where files from NFS share will be imported to upon Rover node return.""")
 @cli_util.option('--data-validation-code', help=u"""Validation code returned by data validation tool. Required for return shipping label generation if data import was requested.""")
+@cli_util.option('--master-key-id', help=u"""Customer provided master key ID to encrypt secret information. If not provided, Rover's master key will be used for encryption.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The system tags associated with this resource, if any. The system tags are set by Oracle cloud infrastructure services. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{orcl-cloud: {free-tier-retain: true}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -127,7 +129,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
-def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, public_key, time_return_window_starts, time_return_window_ends, lifecycle_state, enclosure_type, lifecycle_state_details, serial_number, oracle_shipping_tracking_url, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, freeform_tags, defined_tags, system_tags):
+def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, shape, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, public_key, time_return_window_starts, time_return_window_ends, lifecycle_state, enclosure_type, lifecycle_state_details, serial_number, oracle_shipping_tracking_url, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, master_key_id, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -135,6 +137,9 @@ def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     _details = {}
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if customer_shipping_address is not None:
         _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
@@ -198,6 +203,9 @@ def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if data_validation_code is not None:
         _details['dataValidationCode'] = data_validation_code
+
+    if master_key_id is not None:
+        _details['masterKeyId'] = master_key_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -397,6 +405,7 @@ def get_rover_node_get_rpt(ctx, from_json, rover_node_id, jwt):
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--node-type', type=custom_types.CliCaseInsensitiveChoice(["STANDALONE", "CLUSTERED", "STATION"]), help=u"""A filter to return only Nodes of type matched with the given node type.""")
+@cli_util.option('--shape', help=u"""A filter to return only Nodes of type matched with the given node shape.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
@@ -409,7 +418,7 @@ def get_rover_node_get_rpt(ctx, from_json, rover_node_id, jwt):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RoverNodeCollection'})
 @cli_util.wrap_exceptions
-def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, display_name, node_type, limit, page, lifecycle_state, sort_order, sort_by):
+def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, display_name, node_type, shape, limit, page, lifecycle_state, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -419,6 +428,8 @@ def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, displ
         kwargs['display_name'] = display_name
     if node_type is not None:
         kwargs['node_type'] = node_type
+    if shape is not None:
+        kwargs['shape'] = shape
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -494,6 +505,7 @@ def rover_node_action_set_key(ctx, from_json, rover_node_id, jwt, public_key, if
 @rover_node_group.command(name=cli_util.override('rover_node.update_rover_node.command_name', 'update'), help=u"""Updates the RoverNode \n[Command Reference](updateRoverNode)""")
 @cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--shape', help=u"""The shape of workloads in the node.""")
 @cli_util.option('--serial-number', help=u"""Serial number of the node.""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-workloads', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of existing workloads that should be provisioned on the node.
@@ -530,7 +542,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
-def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_node_id, display_name, serial_number, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, oracle_shipping_tracking_url, shipping_preference, shipping_vendor, time_pickup_expected, lifecycle_state, enclosure_type, lifecycle_state_details, time_return_window_starts, time_return_window_ends, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, public_key, freeform_tags, defined_tags, system_tags, if_match):
+def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_node_id, display_name, shape, serial_number, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, oracle_shipping_tracking_url, shipping_preference, shipping_vendor, time_pickup_expected, lifecycle_state, enclosure_type, lifecycle_state_details, time_return_window_starts, time_return_window_ends, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, public_key, freeform_tags, defined_tags, system_tags, if_match):
 
     if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
@@ -548,6 +560,9 @@ def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if serial_number is not None:
         _details['serialNumber'] = serial_number

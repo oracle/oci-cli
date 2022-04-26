@@ -320,7 +320,7 @@ def list_available_regions(ctx, from_json, all_pages, subscription_id, page):
 
 
 @subscription_mapping_group.command(name=cli_util.override('subscription.list_subscription_mappings.command_name', 'list'), help=u"""Lists the subscription mappings for all the subscriptions owned by a given compartmentId. Only the root compartment is allowed. \n[Command Reference](listSubscriptionMappings)""")
-@cli_util.option('--subscription-id', help=u"""The ID of the subscription to which the tenancy is associated.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The ID of the subscription to which the tenancy is associated.""")
 @cli_util.option('--subscription-mapping-id', help=u"""SubscriptionMappingId is a unique ID for subscription and tenancy mapping.""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the resource.""")
@@ -341,8 +341,6 @@ def list_subscription_mappings(ctx, from_json, all_pages, page_size, subscriptio
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if subscription_id is not None:
-        kwargs['subscription_id'] = subscription_id
     if subscription_mapping_id is not None:
         kwargs['subscription_mapping_id'] = subscription_mapping_id
     if compartment_id is not None:
@@ -365,6 +363,7 @@ def list_subscription_mappings(ctx, from_json, all_pages, page_size, subscriptio
 
         result = cli_util.list_call_get_all_results(
             client.list_subscription_mappings,
+            subscription_id=subscription_id,
             **kwargs
         )
     elif limit is not None:
@@ -372,10 +371,12 @@ def list_subscription_mappings(ctx, from_json, all_pages, page_size, subscriptio
             client.list_subscription_mappings,
             limit,
             page_size,
+            subscription_id=subscription_id,
             **kwargs
         )
     else:
         result = client.list_subscription_mappings(
+            subscription_id=subscription_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

@@ -47,3 +47,11 @@ serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.c
 
 # Remove update-service-connector-streaming-source-details from oci sch service-connector
 serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.update_service_connector_streaming_source_details.name)
+
+
+# Remove create-service-connector-monitoring-source-details from oci sch service-connector
+serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.create_service_connector_monitoring_source_details.name)
+
+
+# Remove update-service-connector-monitoring-source-details from oci sch service-connector
+serviceconnector_cli.service_connector_group.commands.pop(serviceconnector_cli.update_service_connector_monitoring_source_details.name)

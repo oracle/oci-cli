@@ -6,6 +6,113 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.8.0 - 2022-04-26
+------------------
+Added
+~~~~~
+* Support for the Service Mesh service
+
+  * ``oci service-mesh``
+
+* Big Data service
+
+  * Support for compute only worker nodes
+
+    * ``oci bds instance remove  --node-id``
+    * ``oci bds instance remove  --node-id --is-force-remove-enabled``
+
+  * Support for horizontal autoscaling policy
+
+    * ``oci bds auto-scale-config create --policy-details``
+    * ``oci bds auto-scale-config edit --policy-details``
+
+  * Support for bootstrap script
+
+    * ``oci bds instance create --bootstrap-script-url``
+    * ``oci bds instance update --bootstrap-script-url``
+
+  * Support for customizable kerberos realm name
+
+    * ``oci bds instance create --kerberos-realm-name``
+
+  * Support for ODH patch patch management
+
+    * ``oci bds instance install-patch``
+    * ``oci bds instance list-patch-histories``
+    * ``oci bds instance list-patches``
+
+* Rover service
+
+  * [BREAKING] Support for required shape parameter to the creation of a roving edge node
+
+    * ``oci rover node create --shape``
+
+  * Support to list the available shapes for Rover
+
+    * ``oci rover shape list --compartment-id``
+
+  * Support the option for the user to provide their own master key OCID to encrypt secret data to roving edge nodes, standalone clusters and station clusters.
+
+    * ``oci rover node create --master-key-id --policy-compartment-id --policy-name``
+    * ``oci rover standalone-cluster --master-key-id --policy-compartment-id --policy-name``
+    * ``oci rover station-cluster --master-key-id``
+
+  * Support to create the master key policy with required parameter master-key-id and optional parameters policy-compartment-id and policy-name
+
+    * ``oci rover create-master-key-policy --master-key-id --policy-compartment-id --policy-name``
+
+* APM Synthetics service
+
+  * Support for create/update/delete of dedicated-vantage-points
+
+    * ``oci apm-synthetics dedicated-vantage-point``
+
+  * Support for list of dedicated-vantage-points
+
+    * ``oci apm-synthetics dedicated-vantage-point-collection list-dedicated-vantage-points``
+
+* Support for Additional Transcription Format (SRT) and Punctuation in the Speech service
+
+  * ``oci speech transcription-job create --additional-transcription-formats``
+
+* Support for cost management schedule in the Usage service
+
+  * ``oci usage-api schedule``
+  * ``oci usage-api scheduled-run``
+
+* Support for Security Zone in the Cloud Guard service
+
+  * ``oci cloud-guard security-zone``
+  * ``oci cloud-guard security-policy``
+
+* Support for creating budgets that target subscriptions and child tenancies
+
+  * ``oci budgets budget create --processing-period-type``
+
+* Support for Virtual Test Access Point (VTAP) feature as a part of the vcn service
+
+  * ``oci network vtap``
+  * ``oci network capture-filter``
+
+* Support to reactive child tenancy in the Organizations service
+
+  * ``oci organizations organization-tenancy restore --organization-tenancy-id``
+
+
+Fixed
+~~~~~~~
+* Bug in --wait-for-state param for following commands in the Database service
+
+  * ``oci db data-guard-association switchover``
+  * ``oci db data-guard-association failover``
+  * ``oci db data-guard-association reinstate``
+
+Changed
+~~~~~~~
+* [BREAKING] --subscription-id is now required in the below command in the Organization service
+
+  * ``oci organizations subscription-mapping list --subscription-id``
+
 3.7.3 - 2022-04-19
 ------------------
 Added
