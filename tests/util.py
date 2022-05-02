@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 
+import collections.abc as abc
 import contextlib
 import functools
 import json
@@ -25,7 +26,8 @@ import oci_cli.cli_util
 from conftest import runner
 from oci_cli.dynamic_loader import ALL_SERVICES_DIR
 from . import test_config_container
-import collections.abc as abc
+from oci_cli.service_mapping import service_mapping
+from common_util import ignored_commands
 
 TEST_DATA_VERSION = '1'
 
@@ -842,3 +844,26 @@ def parse_json_response_from_mixed_output(output):
             object_begun = True
             json_str += line
     return json.loads(json_str)
+
+
+COMMANDS_LIST = [cmd for cmd in sorted(collect_commands(oci_cli.cli, leaf_commands_only=True))]
+
+
+def find_service_name_from_command(command, service_name):
+    if command[0] in service_mapping and service_mapping[command[0]][0] == service_name:
+        return command
+    else:
+        return None
+
+
+def filter_commands_list(service):
+    service_commands_list = []
+    commands_list_all = [cmd for cmd in COMMANDS_LIST if cmd not in ignored_commands.IGNORED_COMMANDS]
+    if service == 'all':
+        return commands_list_all
+    else:
+        for command in commands_list_all:
+            service_cmd_name = find_service_name_from_command(command, service)
+            if service_cmd_name:
+                service_commands_list.append(service_cmd_name)
+        return service_commands_list

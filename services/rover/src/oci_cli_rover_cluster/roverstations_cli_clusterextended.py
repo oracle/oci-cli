@@ -15,7 +15,8 @@ from services.rover.src.oci_cli_rover.generated import rover_service_cli
 from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE, ROVER_CLUSTER_STATION_TYPE
 from services.rover.src.oci_cli_rover_cluster.generated import rovercluster_cli
 from services.rover.src.oci_cli_rover.rover_utils import get_compute_image_helper, export_compute_image_helper, \
-    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name
+    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name, \
+    create_master_key_policy_rover_resource, remove_additional_params_after_policy
 
 
 @click.command('station-cluster', cls=CommandGroupWithAlias,
@@ -87,12 +88,22 @@ def get_rover_station_helper(ctx, cluster_id):
 @cli_util.option('--zip-postal-code', help=u"""Zip or Postal Code""")
 @cli_util.option('--phone-number', help=u"""Phone number.""")
 @cli_util.option('--email', help=u"""Email address.""")
+@cli_util.option('--policy-compartment-id', help=u"""Compartment ID where the master key policy (if master key provided) would be created""")
+@cli_util.option('--policy-name', help=u"""Display name for the policy to be created for the master key (if provided)""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'cluster-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverCluster'})
 @cli_util.wrap_exceptions
 def create_rover_station_extended(ctx, **kwargs):
     if kwargs['cluster_size'] < 15 and kwargs['cluster_size'] > 30:
         raise click.UsageError("Please enter cluster-size in valid range from 15 to 30")
+
+    # set up policy for master key if provided
+    if kwargs['master_key_id']:
+        create_master_key_policy_rover_resource("cluster", ctx, **kwargs)
+    elif kwargs['policy_name'] or kwargs['policy_compartment_id']:
+        raise click.UsageError('policy-compartment-id or policy-name cannot be provided without master-key-id')
+    # Remove additional parameters of policy from kwargs
+    kwargs = remove_additional_params_after_policy(**kwargs)
 
     kwargs = complex_shipping_address_param(**kwargs)
     kwargs['cluster_type'] = ROVER_CLUSTER_STATION_TYPE

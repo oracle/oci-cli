@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.8.1 - 2022-05-03
+------------------
+Added
+~~~~~
+* Support for Application Dependency Management service
+
+  * ``oci adm``
+
+* Support for provisioned concurrency in the Functions service
+
+  * ``oci fn function create --provisioned-concurrency``
+  * ``oci fn function update --provisioned-concurrency``
+
+* Support for allow reboot migration for DenseIO shape in maintenance situations in Compute service
+
+  * ``oci compute instance instance-action-reset-action-details``
+  * ``oci compute instance instance-action-soft-reset-action-details``
+
 3.8.0 - 2022-04-26
 ------------------
 Added

@@ -3,7 +3,6 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from . import util
-from . import test_config_container
 import click
 import json
 import oci_cli
@@ -48,34 +47,13 @@ COMMANDS_WITH_NO_PARAMS = sorted(command for command, _, _ in
                                         util.collect_leaf_commands_with_counts(oci_cli.cli)))
 
 
-# Commands whose parameters are all marked as optional
-# though some combination of them may be needed for calls to succeed
-# Current output:
-# [['bv', 'volume', 'create'],
-# ['bv', 'volume-backup-policy', 'list'],
-# ['db', 'backup', 'list'],
-# ['fs', 'export', 'list'],
-# ['iam', 'compartment', 'list'],
-# ['iam', 'region', 'list'],
-# ['network', 'peer-region-for-remote-peering', 'list-allowed-peer-regions-for-remote-peering'],
-# ['network', 'private-ip', 'list'],
-# ['network', 'public-ip', 'get'],
-# ['network', 'service', 'list'],
-# ['os', 'ns', 'get'],
-# ['os', 'ns', 'get-metadata'],
-# ['os', 'ns', 'update-metadata'],
-# ['rqs', 'resource-type', 'list']]
-# From returned list of (command, number of params, number of required params),
-# filter command names with number of required params == 0 and command not in ignored_commands.IGNORED_COMMANDS list into a sorted list.
-COMMANDS_WITH_ALL_OPTIONAL_PARAMS = sorted(command for command, _, _ in
-                                           filter(lambda x: x[2] == 0 and x[0] not in ignored_commands.IGNORED_COMMANDS,
-                                                  util.collect_leaf_commands_with_counts(oci_cli.cli)))
-commands_list = [cmd for cmd in sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
-                 if cmd not in ignored_commands.IGNORED_COMMANDS]
+@pytest.fixture(autouse=True, scope='function')
+def commands_list(service):
+    commands_list = util.filter_commands_list(service)
+    return commands_list
 
 
-def test_all_commands_generate_skeleton():
-
+def test_all_commands_generate_skeleton(commands_list):
     failed_to_parse_commands = []
     commands_with_bad_json = []  # We don't expect any commands that emit an empty dict
     for cmd in commands_list:
@@ -102,7 +80,7 @@ none_mode_vcr = vcr.VCR(record_mode='none')
 # The main aim of this test is to verify if all the generated CLI code is function and CLI <-> PythonSDK interaction.
 # In this test, we use VCR with record mode none as to stop any out-going http request.
 @none_mode_vcr.use_cassette('invalid-file-path')
-def test_run_all_commands(runner, config_file, config_profile, tmpdir, ignored_extended_commands):
+def test_run_all_commands(runner, config_file, config_profile, tmpdir, ignored_extended_commands, commands_list):
     failed_commands = []
     for cmd in commands_list:
         if cmd not in ignored_extended_commands:
@@ -216,38 +194,6 @@ def test_generate_param_json_input_for_all_complex_types(ignored_extended_comman
     _traverse_oci_cli(oci_cli.cli, [], failed_commands, ignored_extended_commands)
 
     handle_failed_commands(failed_commands)
-
-
-def test_all_commands_can_accept_from_json_input(ignored_extended_commands):
-    with test_config_container.create_vcr().use_cassette('json_skeleton_command_coverage_test_all_commands_can_accept_from_json_input.yml'):
-        for cmd in commands_list:
-            if cmd not in ignored_extended_commands:
-                full_command = list(cmd)
-                full_command.extend(['--from-json', 'file://tests/resources/json_input/dummy.json'])
-                result = util.invoke_command(full_command)
-                if result.output:
-                    if 'CannotOverwriteExistingCassetteException' in result.output:
-                        continue
-                    assert 'from-json' not in result.output
-                    if cmd in [['iam', 'compartment', 'list'],
-                               ['iam', 'availability-domain', 'list']]:
-                        # This command works with only optional parameters, so check that there are no errors and that\
-                        # a response was received
-                        assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-                        assert 'compartment-id' in result.output
-                    elif cmd in [['iam', 'region-subscription', 'list']]:
-                        # This command works with only optional parameters, so check that there are no errors and that\
-                        # a response was received
-                        assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-                        assert 'region-name' in result.output
-                    elif cmd in [['network', 'service', 'list']]:
-                        assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-                    else:
-                        assert 'from-json' not in result.output
-                        if cmd == ['network', 'public-ip', 'get']:
-                            # This command displays a different message
-                            assert 'At least one of the options' in str(result.output)
-        return
 
 
 def teardown_module(module):

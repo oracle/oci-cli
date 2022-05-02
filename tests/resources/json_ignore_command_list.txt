@@ -20,6 +20,7 @@ rover, standalone-cluster, create
 rover, station-cluster, set-secrets
 rover, standalone-cluster, set-secrets
 rover, node, set-secrets
+rover, create-master-key-policy
 waas, protection-settings, update
 db, external-non-cdb, enable-operations-insights
 db, external-pdb, enable-operations-insights

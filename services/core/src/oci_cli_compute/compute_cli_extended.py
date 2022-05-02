@@ -13,6 +13,7 @@ import sys
 from services.core.src.oci_cli_compute.generated import compute_cli
 
 from oci import wait_until
+from oci import exceptions
 from oci.exceptions import ServiceError
 from oci.exceptions import MaximumWaitTimeExceeded
 from oci_cli.cli_root import cli
@@ -201,6 +202,68 @@ def export_image_to_object(ctx, from_json, image_id, if_match, namespace, bucket
         export_image_details['exportFormat'] = export_format
 
     export_image_internal(ctx, image_id, export_image_details, if_match)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.instance_action, params_to_exclude=['action_type'])
+@compute_cli.instance_group.command(name=cli_util.override('compute.instance_action.command_name', 'instance-action'), help=u"""Performs one of the following power actions on the specified instance:
+
+- **START** - Powers on the instance.
+
+- **STOP** - Powers off the instance.
+
+- **RESET** - Powers off the instance and then powers it back on.
+
+- **SOFTSTOP** - Gracefully shuts down the instance by sending a shutdown command to the operating system. After waiting 15 minutes for the OS to shut down, the instance is powered off. If the applications that run on the instance take more than 15 minutes to shut down, they could be improperly stopped, resulting in data corruption. To avoid this, manually shut down the instance using the commands available in the OS before you softstop the instance.
+
+- **SOFTRESET** - Gracefully reboots the instance by sending a shutdown command to the operating system. After waiting 15 minutes for the OS to shut down, the instance is powered off and then powered back on.
+
+- **SENDDIAGNOSTICINTERRUPT** - For advanced users. **Warning: Sending a diagnostic interrupt to a live system can cause data corruption or system failure.** Sends a diagnostic interrupt that causes the instance's OS to crash and then reboot. Before you send a diagnostic interrupt, you must configure the instance to generate a crash dump file when it crashes. The crash dump captures information about the state of the OS at the time of the crash. After the OS restarts, you can analyze the crash dump to diagnose the issue. For more information, see [Sending a Diagnostic Interrupt].
+
+ - **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it on the physical host, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
+
+ For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
+def instance_action_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match):
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.instance_action(
+        instance_id=instance_id,
+        action=action,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])

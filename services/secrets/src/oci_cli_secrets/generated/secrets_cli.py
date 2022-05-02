@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('secrets.secrets_root_group.command_name', 'secrets'), cls=CommandGroupWithAlias, help=cli_util.override('secrets.secrets_root_group.help', """API for retrieving secrets from vaults."""), short_help=cli_util.override('secrets.secrets_root_group.short_help', """Vault Service Secret Retrieval API"""))
+@cli.command(cli_util.override('secrets.secrets_root_group.command_name', 'secrets'), cls=CommandGroupWithAlias, help=cli_util.override('secrets.secrets_root_group.help', """Use the Secret Retrieval API to retrieve secrets and secret versions from vaults. For more information, see [Managing Secrets]."""), short_help=cli_util.override('secrets.secrets_root_group.short_help', """Vault Secret Retrieval API"""))
 @cli_util.help_option_group
 def secrets_root_group():
     pass
@@ -102,7 +102,7 @@ def get_secret_bundle_by_name(ctx, from_json, secret_name, vault_id, version_num
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["VERSION_NUMBER"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `VERSION_NUMBER` is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["VERSION_NUMBER"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `VERSION_NUMBER` is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")

@@ -15,8 +15,8 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('artifacts.artifacts_root_group.command_name', 'artifacts'), cls=CommandGroupWithAlias, help=cli_util.override('artifacts.artifacts_root_group.help', """API covering the [Registry] services.
-Use this API to manage resources such as container images and repositories."""), short_help=cli_util.override('artifacts.artifacts_root_group.short_help', """Container Images API"""))
+@cli.command(cli_util.override('artifacts.artifacts_root_group.command_name', 'artifacts'), cls=CommandGroupWithAlias, help=cli_util.override('artifacts.artifacts_root_group.help', """API covering the Artifacts and [Registry] services.
+Use this API to manage resources such as generic artifacts and container images."""), short_help=cli_util.override('artifacts.artifacts_root_group.short_help', """Artifacts and Container Images API"""))
 @cli_util.help_option_group
 def artifacts_root_group():
     pass

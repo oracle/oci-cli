@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('vault.vault_root_group.command_name', 'vault'), cls=CommandGroupWithAlias, help=cli_util.override('vault.vault_root_group.help', """API for managing secrets."""), short_help=cli_util.override('vault.vault_root_group.short_help', """Secrets Management API"""))
+@cli.command(cli_util.override('vault.vault_root_group.command_name', 'vault'), cls=CommandGroupWithAlias, help=cli_util.override('vault.vault_root_group.help', """Use the Secret Management API to manage secrets and secret versions. For more information, see [Managing Secrets]."""), short_help=cli_util.override('vault.vault_root_group.short_help', """Vault Secret Management API"""))
 @cli_util.help_option_group
 def vault_root_group():
     pass
@@ -135,7 +135,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A brief description of the secret. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--key-id', help=u"""The OCID of the master encryption key that is used to encrypt the secret.""")
+@cli_util.option('--key-id', help=u"""The OCID of the master encryption key that is used to encrypt the secret. You must specify a symmetric key to encrypt the secret during import to the vault. You cannot encrypt secrets with asymmetric keys. Furthermore, the key must exist in the vault that you specify.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -217,7 +217,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A brief description of the secret. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--key-id', help=u"""The OCID of the master encryption key that is used to encrypt the secret.""")
+@cli_util.option('--key-id', help=u"""The OCID of the master encryption key that is used to encrypt the secret. You must specify a symmetric key to encrypt the secret during import to the vault. You cannot encrypt secrets with asymmetric keys. Furthermore, the key must exist in the vault that you specify.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -544,7 +544,7 @@ def schedule_secret_version_deletion(ctx, from_json, secret_id, secret_version_n
     cli_util.render_response(result, ctx)
 
 
-@secret_group.command(name=cli_util.override('vault.update_secret.command_name', 'update'), help=u"""Updates the properties of a secret. Specifically, you can update the version number of the secret to make that version number the current version. You can also update a secret's description, its free-form or defined tags, rules and the secret contents. Updating the secret content automatically creates a new secret version. You cannot, however, update the current secret version number and the secret contents and the rules at the same time. Furthermore, the secret must in an `ACTIVE` lifecycle state to be updated.
+@secret_group.command(name=cli_util.override('vault.update_secret.command_name', 'update'), help=u"""Updates the properties of a secret. Specifically, you can update the version number of the secret to make that version number the current version. You can also update a secret's description, its free-form or defined tags, rules and the secret contents. Updating the secret content automatically creates a new secret version. You cannot, however, update the current secret version number, secret contents, and secret rules at the same time. Furthermore, the secret must in an `ACTIVE` lifecycle state to be updated.
 
 This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider. \n[Command Reference](updateSecret)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
@@ -636,7 +636,7 @@ def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@secret_group.command(name=cli_util.override('vault.update_secret_base64_secret_content_details.command_name', 'update-secret-base64-secret-content-details'), help=u"""Updates the properties of a secret. Specifically, you can update the version number of the secret to make that version number the current version. You can also update a secret's description, its free-form or defined tags, rules and the secret contents. Updating the secret content automatically creates a new secret version. You cannot, however, update the current secret version number and the secret contents and the rules at the same time. Furthermore, the secret must in an `ACTIVE` lifecycle state to be updated.
+@secret_group.command(name=cli_util.override('vault.update_secret_base64_secret_content_details.command_name', 'update-secret-base64-secret-content-details'), help=u"""Updates the properties of a secret. Specifically, you can update the version number of the secret to make that version number the current version. You can also update a secret's description, its free-form or defined tags, rules and the secret contents. Updating the secret content automatically creates a new secret version. You cannot, however, update the current secret version number, secret contents, and secret rules at the same time. Furthermore, the secret must in an `ACTIVE` lifecycle state to be updated.
 
 This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider. \n[Command Reference](updateSecret)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")

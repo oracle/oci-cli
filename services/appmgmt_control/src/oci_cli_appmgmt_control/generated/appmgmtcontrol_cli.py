@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('appmgmt_control.appmgmt_control_root_group.command_name', 'appmgmt-control'), cls=CommandGroupWithAlias, help=cli_util.override('appmgmt_control.appmgmt_control_root_group.help', """AppMgmt Control API"""), short_help=cli_util.override('appmgmt_control.appmgmt_control_root_group.short_help', """AppMgmt Control API"""))
+@cli.command(cli_util.override('appmgmt_control.appmgmt_control_root_group.command_name', 'appmgmt-control'), cls=CommandGroupWithAlias, help=cli_util.override('appmgmt_control.appmgmt_control_root_group.help', """Use the Resource Discovery and Monitoring Control API to get details about monitored instances and perform actions. For more information, see [Resource Discovery and Monitoring]."""), short_help=cli_util.override('appmgmt_control.appmgmt_control_root_group.short_help', """Resource Discovery and Monitoring Control API"""))
 @cli_util.help_option_group
 def appmgmt_control_root_group():
     pass

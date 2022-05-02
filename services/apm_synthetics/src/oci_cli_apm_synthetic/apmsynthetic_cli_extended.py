@@ -471,9 +471,12 @@ def update_dedicated_vantage_point_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_dedicated_vantage_point, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict', 'dvp_stack_details_dvp_stack_id', 'dvp_stack_details_dvp_stream_id', 'dvp_stack_details_dvp_version'])
 @apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack.name, help=apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack.help)
 @cli_util.option('--dvp-region', required=True, help=u"""Name of the region. [required]""")
+@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack. [required]""")
+@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack. [required]""")
+@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
 @cli_util.wrap_exceptions
@@ -482,12 +485,27 @@ def create_dedicated_vantage_point_oracle_rm_stack_extended(ctx, **kwargs):
         kwargs['region_parameterconflict'] = kwargs['dvp_region']
         kwargs.pop('dvp_region')
 
+    if 'dvp_stack_id' in kwargs:
+        kwargs['dvp_stack_details_dvp_stack_id'] = kwargs['dvp_stack_id']
+        kwargs.pop('dvp_stack_id')
+
+    if 'dvp_stream_id' in kwargs:
+        kwargs['dvp_stack_details_dvp_stream_id'] = kwargs['dvp_stream_id']
+        kwargs.pop('dvp_stream_id')
+
+    if 'dvp_version' in kwargs:
+        kwargs['dvp_stack_details_dvp_version'] = kwargs['dvp_version']
+        kwargs.pop('dvp_version')
+
     ctx.invoke(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict', 'dvp_stack_details_dvp_stack_id', 'dvp_stack_details_dvp_stream_id', 'dvp_stack_details_dvp_version'])
 @apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack.name, help=apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack.help)
 @cli_util.option('--dvp-region', help=u"""Name of the region.""")
+@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack. [required]""")
+@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack. [required]""")
+@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
 @cli_util.wrap_exceptions
@@ -495,6 +513,18 @@ def update_dedicated_vantage_point_oracle_rm_stack_extended(ctx, **kwargs):
     if 'dvp_region' in kwargs:
         kwargs['region_parameterconflict'] = kwargs['dvp_region']
         kwargs.pop('dvp_region')
+
+    if 'dvp_stack_id' in kwargs:
+        kwargs['dvp_stack_details_dvp_stack_id'] = kwargs['dvp_stack_id']
+        kwargs.pop('dvp_stack_id')
+
+    if 'dvp_stream_id' in kwargs:
+        kwargs['dvp_stack_details_dvp_stream_id'] = kwargs['dvp_stream_id']
+        kwargs.pop('dvp_stream_id')
+
+    if 'dvp_version' in kwargs:
+        kwargs['dvp_stack_details_dvp_version'] = kwargs['dvp_version']
+        kwargs.pop('dvp_version')
 
     ctx.invoke(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, **kwargs)
 

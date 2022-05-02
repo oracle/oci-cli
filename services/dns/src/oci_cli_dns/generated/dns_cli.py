@@ -60,9 +60,7 @@ def zone_group():
     pass
 
 
-@click.command(cli_util.override('dns.tsig_key_group.command_name', 'tsig-key'), cls=CommandGroupWithAlias, help="""A TSIG key.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('dns.tsig_key_group.command_name', 'tsig-key'), cls=CommandGroupWithAlias, help="""A TSIG key. **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def tsig_key_group():
     pass
@@ -108,7 +106,9 @@ dns_root_group.add_command(resolver_endpoint_group)
 dns_root_group.add_command(records_group)
 
 
-@resolver_group.command(name=cli_util.override('dns.change_resolver_compartment.command_name', 'change-compartment'), help=u"""Moves a resolver into a different compartment along with its protected default view and any endpoints. Zones in the default view are not moved. Requires a `PRIVATE` scope query parameter. \n[Command Reference](changeResolverCompartment)""")
+@resolver_group.command(name=cli_util.override('dns.change_resolver_compartment.command_name', 'change-compartment'), help=u"""Moves a resolver into a different compartment along with its protected default view and any endpoints.
+
+Zones in the default view are not moved. VCN-dedicated resolvers are initially created in the same compartment as their corresponding VCN, but can then be moved to a different compartment. \n[Command Reference](changeResolverCompartment)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resolver, along with its protected default view and resolver endpoints, should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -210,7 +210,9 @@ def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_
     cli_util.render_response(result, ctx)
 
 
-@view_group.command(name=cli_util.override('dns.change_view_compartment.command_name', 'change-compartment'), help=u"""Moves a view into a different compartment. Protected views cannot have their compartment changed. Requires a `PRIVATE` scope query parameter. \n[Command Reference](changeViewCompartment)""")
+@view_group.command(name=cli_util.override('dns.change_view_compartment.command_name', 'change-compartment'), help=u"""Moves a view into a different compartment.
+
+To change the compartment of a protected view, change the compartment of its corresponding resolver. \n[Command Reference](changeViewCompartment)""")
 @cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the view should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -244,7 +246,9 @@ def change_view_compartment(ctx, from_json, view_id, compartment_id, if_match, s
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. Protected zones cannot have their compartment changed. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required.
+@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment.
+
+Protected zones cannot have their compartment changed. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required.
 
 **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment. \n[Command Reference](changeZoneCompartment)""")
 @cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
@@ -280,7 +284,7 @@ def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match, s
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.create_resolver_endpoint.command_name', 'create'), help=u"""Creates a new resolver endpoint. Requires a `PRIVATE` scope query parameter. \n[Command Reference](createResolverEndpoint)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.create_resolver_endpoint.command_name', 'create'), help=u"""Creates a new resolver endpoint in the same compartment as the resolver. \n[Command Reference](createResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--name', required=True, help=u"""The name of the resolver endpoint. Must be unique, case-insensitive, within the resolver.""")
 @cli_util.option('--is-forwarding', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for forwarding.""")
@@ -353,7 +357,7 @@ def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.create_resolver_endpoint_create_resolver_vnic_endpoint_details.command_name', 'create-resolver-endpoint-create-resolver-vnic-endpoint-details'), help=u"""Creates a new resolver endpoint. Requires a `PRIVATE` scope query parameter. \n[Command Reference](createResolverEndpoint)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.create_resolver_endpoint_create_resolver_vnic_endpoint_details.command_name', 'create-resolver-endpoint-create-resolver-vnic-endpoint-details'), help=u"""Creates a new resolver endpoint in the same compartment as the resolver. \n[Command Reference](createResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--name', required=True, help=u"""The name of the resolver endpoint. Must be unique, case-insensitive, within the resolver.""")
 @cli_util.option('--is-forwarding', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for forwarding.""")
@@ -674,7 +678,7 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@view_group.command(name=cli_util.override('dns.create_view.command_name', 'create'), help=u"""Creates a new view in the specified compartment. Requires a `PRIVATE` scope query parameter. \n[Command Reference](createView)""")
+@view_group.command(name=cli_util.override('dns.create_view.command_name', 'create'), help=u"""Creates a new view in the specified compartment. \n[Command Reference](createView)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the owning compartment.""")
 @cli_util.option('--display-name', help=u"""The display name of the view.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -742,7 +746,9 @@ def create_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment. For global zones, if the `Content-Type` header for the request is `text/dns`, the `compartmentId` query parameter is required. `text/dns` for the `Content-Type` header is not supported for private zones. Query parameter scope with a value of `PRIVATE` is required when creating a private zone. Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
+@zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment.
+
+Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--migration-source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DYNECT"]), help=u"""Discriminator that is used to determine whether to create a new zone (NONE) or to migrate an existing DynECT zone (DYNECT).""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -751,7 +757,9 @@ def create_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -817,7 +825,9 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment. For global zones, if the `Content-Type` header for the request is `text/dns`, the `compartmentId` query parameter is required. `text/dns` for the `Content-Type` header is not supported for private zones. Query parameter scope with a value of `PRIVATE` is required when creating a private zone. Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
+@zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment.
+
+Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -829,7 +839,9 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -906,7 +918,9 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment. For global zones, if the `Content-Type` header for the request is `text/dns`, the `compartmentId` query parameter is required. `text/dns` for the `Content-Type` header is not supported for private zones. Query parameter scope with a value of `PRIVATE` is required when creating a private zone. Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
+@zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment.
+
+Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -915,7 +929,9 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dynect-migration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -983,14 +999,18 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.delete_domain_records.command_name', 'delete-domain'), help=u"""Deletes all records at the specified zone and domain. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](deleteDomainRecords)""")
+@records_group.command(name=cli_util.override('dns.delete_domain_records.command_name', 'delete-domain'), help=u"""Deletes all records at the specified zone and domain.
+
+When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](deleteDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1026,7 +1046,9 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.delete_resolver_endpoint.command_name', 'delete'), help=u"""Deletes the specified resolver endpoint. Note that attempting to delete a resolver endpoint in the DELETED lifecycle state will result in a `404` response to be consistent with other operations of the API. Resolver endpoints may not be deleted if they are referenced by a resolver rule. Requires a `PRIVATE` scope query parameter. \n[Command Reference](deleteResolverEndpoint)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.delete_resolver_endpoint.command_name', 'delete'), help=u"""Deletes the specified resolver endpoint.
+
+Note that attempting to delete a resolver endpoint in the DELETED lifecycle state will result in a `404` response to be consistent with other operations of the API. Resolver endpoints may not be deleted if they are referenced by a resolver rule. \n[Command Reference](deleteResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -1063,13 +1085,17 @@ def delete_resolver_endpoint(ctx, from_json, resolver_id, resolver_endpoint_name
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.delete_rr_set.command_name', 'delete'), help=u"""Deletes all records in the specified RRSet. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](deleteRRSet)""")
+@rr_set_group.command(name=cli_util.override('dns.delete_rr_set.command_name', 'delete'), help=u"""Deletes all records in the specified RRSet.
+
+When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](deleteRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.confirm_delete_option
@@ -1111,7 +1137,9 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.delete_steering_policy.command_name', 'delete'), help=u"""Deletes the specified steering policy. A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones. To detach a policy from a zone, see `DeleteSteeringPolicyAttachment`. \n[Command Reference](deleteSteeringPolicy)""")
+@steering_policy_group.command(name=cli_util.override('dns.delete_steering_policy.command_name', 'delete'), help=u"""Deletes the specified steering policy.
+
+A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones. To detach a policy from a zone, see `DeleteSteeringPolicyAttachment`. \n[Command Reference](deleteSteeringPolicy)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -1321,7 +1349,9 @@ def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@view_group.command(name=cli_util.override('dns.delete_view.command_name', 'delete'), help=u"""Deletes the specified view. Note that attempting to delete a view in the DELETED lifecycleState will result in a `404` response to be consistent with other operations of the API. Views cannot be deleted if they are referenced by non-deleted zones or resolvers. Protected views cannot be deleted. Requires a `PRIVATE` scope query parameter. \n[Command Reference](deleteView)""")
+@view_group.command(name=cli_util.override('dns.delete_view.command_name', 'delete'), help=u"""Deletes the specified view.
+
+Note that attempting to delete a view in the DELETED lifecycleState will result in a `404` response to be consistent with other operations of the API. Views cannot be deleted if they are referenced by non-deleted zones or resolvers. Protected views cannot be deleted. \n[Command Reference](deleteView)""")
 @cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -1391,13 +1421,17 @@ def delete_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.delete_zone.command_name', 'delete'), help=u"""Deletes the specified zone and all its steering policy attachments. A `204` response indicates that the zone has been successfully deleted. Protected zones cannot be deleted. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](deleteZone)""")
+@zone_group.command(name=cli_util.override('dns.delete_zone.command_name', 'delete'), help=u"""Deletes the specified zone and all its steering policy attachments.
+
+A `204` response indicates that the zone has been successfully deleted. Protected zones cannot be deleted. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](deleteZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1467,7 +1501,9 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.get_domain_records.command_name', 'get-domain'), help=u"""Gets a list of all records at the specified zone and domain. The results are sorted by `rtype` in alphabetical order by default. You can optionally filter and/or sort the results using the listed parameters. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getDomainRecords)""")
+@records_group.command(name=cli_util.override('dns.get_domain_records.command_name', 'get-domain'), help=u"""Gets a list of all records at the specified zone and domain.
+
+The results are sorted by `rtype` in alphabetical order by default. You can optionally filter and/or sort the results using the listed parameters. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
@@ -1480,7 +1516,9 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1552,7 +1590,9 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
     cli_util.render_response(result, ctx)
 
 
-@resolver_group.command(name=cli_util.override('dns.get_resolver.command_name', 'get'), help=u"""Gets information about a specific resolver. Note that attempting to get a resolver in the DELETED lifecycleState will result in a `404` response to be consistent with other operations of the API. Requires a `PRIVATE` scope query parameter. \n[Command Reference](getResolver)""")
+@resolver_group.command(name=cli_util.override('dns.get_resolver.command_name', 'get'), help=u"""Gets information about a specific resolver.
+
+Note that attempting to get a resolver in the DELETED lifecycleState will result in a `404` response to be consistent with other operations of the API. \n[Command Reference](getResolver)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
@@ -1583,7 +1623,9 @@ def get_resolver(ctx, from_json, resolver_id, if_modified_since, if_none_match, 
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.get_resolver_endpoint.command_name', 'get'), help=u"""Gets information about a specific resolver endpoint. Note that attempting to get a resolver endpoint in the DELETED lifecycle state will result in a `404` response to be consistent with other operations of the API. Requires a `PRIVATE` scope query parameter. \n[Command Reference](getResolverEndpoint)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.get_resolver_endpoint.command_name', 'get'), help=u"""Gets information about a specific resolver endpoint.
+
+Note that attempting to get a resolver endpoint in the DELETED lifecycle state will result in a `404` response to be consistent with other operations of the API. \n[Command Reference](getResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1619,7 +1661,9 @@ def get_resolver_endpoint(ctx, from_json, resolver_id, resolver_endpoint_name, i
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.get_rr_set.command_name', 'get'), help=u"""Gets a list of all records in the specified RRSet. The results are sorted by `recordHash` by default. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getRRSet)""")
+@rr_set_group.command(name=cli_util.override('dns.get_rr_set.command_name', 'get'), help=u"""Gets a list of all records in the specified RRSet.
+
+The results are sorted by `recordHash` by default. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -1628,7 +1672,9 @@ def get_resolver_endpoint(ctx, from_json, resolver_id, resolver_endpoint_name, i
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--zone-version', help=u"""The version of the zone for which data is requested.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1795,7 +1841,9 @@ def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since, 
     cli_util.render_response(result, ctx)
 
 
-@view_group.command(name=cli_util.override('dns.get_view.command_name', 'get'), help=u"""Gets information about a specific view. Note that attempting to get a view in the DELETED lifecycleState will result in a `404` response to be consistent with other operations of the API. Requires a `PRIVATE` scope query parameter. \n[Command Reference](getView)""")
+@view_group.command(name=cli_util.override('dns.get_view.command_name', 'get'), help=u"""Gets information about a specific view.
+
+Note that attempting to get a view in the DELETED lifecycleState will result in a `404` response to be consistent with other operations of the API. \n[Command Reference](getView)""")
 @cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
@@ -1826,13 +1874,17 @@ def get_view(ctx, from_json, view_id, if_modified_since, if_none_match, scope):
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.get_zone.command_name', 'get'), help=u"""Gets information about the specified zone, including its creation date, zone type, and serial. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getZone)""")
+@zone_group.command(name=cli_util.override('dns.get_zone.command_name', 'get'), help=u"""Gets information about the specified zone, including its creation date, zone type, and serial.
+
+When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1920,7 +1972,9 @@ def get_zone_content(ctx, from_json, file, zone_name_or_id, if_none_match, if_mo
         file.close()
 
 
-@records_group.command(name=cli_util.override('dns.get_zone_records.command_name', 'get-zone'), help=u"""Gets all records in the specified zone. The results are sorted by `domain` in alphabetical order by default. For more information about records, see [Resource Record (RR) TYPEs]. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getZoneRecords)""")
+@records_group.command(name=cli_util.override('dns.get_zone_records.command_name', 'get-zone'), help=u"""Gets all records in the specified zone.
+
+The results are sorted by `domain` in alphabetical order by default. For more information about records, see [Resource Record (RR) TYPEs]. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](getZoneRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1932,7 +1986,9 @@ def get_zone_content(ctx, from_json, file, zone_name_or_id, if_none_match, if_mo
 @cli_util.option('--rtype', help=u"""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["domain", "rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2004,7 +2060,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.list_resolver_endpoints.command_name', 'list'), help=u"""Gets a list of all endpoints within a resolver. The collection can be filtered by name or lifecycle state. It can be sorted on creation time or name both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include resolver endpoints in the DELETED lifecycle state to be consistent with other operations of the API. Requires a `PRIVATE` scope query parameter. \n[Command Reference](listResolverEndpoints)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.list_resolver_endpoints.command_name', 'list'), help=u"""Gets a list of all endpoints within a resolver. The collection can be filtered by name or lifecycle state. It can be sorted on creation time or name both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include resolver endpoints in the DELETED lifecycle state to be consistent with other operations of the API. \n[Command Reference](listResolverEndpoints)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--name', help=u"""The name of a resource.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -2070,7 +2126,9 @@ def list_resolver_endpoints(ctx, from_json, all_pages, page_size, resolver_id, n
     cli_util.render_response(result, ctx)
 
 
-@resolver_group.command(name=cli_util.override('dns.list_resolvers.command_name', 'list'), help=u"""Gets a list of all resolvers within a compartment. The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include resolvers in the DELETED lifecycleState to be consistent with other operations of the API. Requires a `PRIVATE` scope query parameter. \n[Command Reference](listResolvers)""")
+@resolver_group.command(name=cli_util.override('dns.list_resolvers.command_name', 'list'), help=u"""Gets a list of all resolvers within a compartment.
+
+The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include resolvers in the DELETED lifecycleState to be consistent with other operations of the API. \n[Command Reference](listResolvers)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--display-name', help=u"""The displayName of a resource.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
@@ -2367,7 +2425,9 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@view_group.command(name=cli_util.override('dns.list_views.command_name', 'list'), help=u"""Gets a list of all views within a compartment. The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include views in the DELETED lifecycleState to be consistent with other operations of the API. Requires a `PRIVATE` scope query parameter. \n[Command Reference](listViews)""")
+@view_group.command(name=cli_util.override('dns.list_views.command_name', 'list'), help=u"""Gets a list of all views within a compartment.
+
+The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided, the collection does not include views in the DELETED lifecycleState to be consistent with other operations of the API. \n[Command Reference](listViews)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--display-name', help=u"""The displayName of a resource.""")
 @cli_util.option('--id', help=u"""The OCID of a resource.""")
@@ -2466,7 +2526,9 @@ def list_zone_transfer_servers(ctx, from_json, all_pages, compartment_id, scope,
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment. The collection can be filtered by name, time created, scope, associated view, and zone type. Filtering by view is only supported for private zones. \n[Command Reference](listZones)""")
+@zone_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment.
+
+The collection can be filtered by name, time created, scope, associated view, and zone type. Filtering by view is only supported for private zones. \n[Command Reference](listZones)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -2547,7 +2609,9 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.patch_domain_records.command_name', 'patch-domain'), help=u"""Updates records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](patchDomainRecords)""")
+@records_group.command(name=cli_util.override('dns.patch_domain_records.command_name', 'patch-domain'), help=u"""Updates records in the specified zone at a domain.
+
+You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](patchDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
@@ -2557,7 +2621,9 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2599,7 +2665,9 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.patch_rr_set.command_name', 'patch'), help=u"""Updates records in the specified RRSet. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](patchRRSet)""")
+@rr_set_group.command(name=cli_util.override('dns.patch_rr_set.command_name', 'patch'), help=u"""Updates records in the specified RRSet.
+
+When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](patchRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -2610,7 +2678,9 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2656,7 +2726,9 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.patch_zone_records.command_name', 'patch-zone'), help=u"""Updates a collection of records in the specified zone. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](patchZoneRecords)""")
+@records_group.command(name=cli_util.override('dns.patch_zone_records.command_name', 'patch-zone'), help=u"""Updates a collection of records in the specified zone.
+
+You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](patchZoneRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
@@ -2665,7 +2737,9 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
@@ -2703,7 +2777,9 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.update_domain_records.command_name', 'update-domain'), help=u"""Replaces records in the specified zone at a domain with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateDomainRecords)""")
+@records_group.command(name=cli_util.override('dns.update_domain_records.command_name', 'update-domain'), help=u"""Replaces records in the specified zone at a domain with the records specified in the request body.
+
+If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
@@ -2713,7 +2789,9 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
 @cli_util.help_option
@@ -2760,7 +2838,7 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
     cli_util.render_response(result, ctx)
 
 
-@resolver_group.command(name=cli_util.override('dns.update_resolver.command_name', 'update'), help=u"""Updates the specified resolver with your new information. Requires a `PRIVATE` scope query parameter. \n[Command Reference](updateResolver)""")
+@resolver_group.command(name=cli_util.override('dns.update_resolver.command_name', 'update'), help=u"""Updates the specified resolver with your new information. \n[Command Reference](updateResolver)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--display-name', help=u"""The display name of the resolver.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2854,7 +2932,7 @@ def update_resolver(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint.command_name', 'update'), help=u"""Updates the specified resolver endpoint with your new information. Requires a `PRIVATE` scope query parameter. \n[Command Reference](updateResolverEndpoint)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint.command_name', 'update'), help=u"""Updates the specified resolver endpoint with your new information. \n[Command Reference](updateResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
 @cli_util.option('--endpoint-type', type=custom_types.CliCaseInsensitiveChoice(["VNIC"]), help=u"""The type of resolver endpoint. VNIC is currently the only supported type.""")
@@ -2924,7 +3002,7 @@ def update_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint_update_resolver_vnic_endpoint_details.command_name', 'update-resolver-endpoint-update-resolver-vnic-endpoint-details'), help=u"""Updates the specified resolver endpoint with your new information. Requires a `PRIVATE` scope query parameter. \n[Command Reference](updateResolverEndpoint)""")
+@resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint_update_resolver_vnic_endpoint_details.command_name', 'update-resolver-endpoint-update-resolver-vnic-endpoint-details'), help=u"""Updates the specified resolver endpoint with your new information. \n[Command Reference](updateResolverEndpoint)""")
 @cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
 @cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs for the resolver endpoint. These must be part of the VCN that the resolver endpoint is a part of.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3001,7 +3079,9 @@ def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_jso
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.update_rr_set.command_name', 'update'), help=u"""Replaces records in the specified RRSet. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateRRSet)""")
+@rr_set_group.command(name=cli_util.override('dns.update_rr_set.command_name', 'update'), help=u"""Replaces records in the specified RRSet.
+
+When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -3012,7 +3092,9 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
 @cli_util.help_option
@@ -3336,7 +3418,7 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@view_group.command(name=cli_util.override('dns.update_view.command_name', 'update'), help=u"""Updates the specified view with your new information. Requires a `PRIVATE` scope query parameter. \n[Command Reference](updateView)""")
+@view_group.command(name=cli_util.override('dns.update_view.command_name', 'update'), help=u"""Updates the specified view with your new information. \n[Command Reference](updateView)""")
 @cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
 @cli_util.option('--display-name', help=u"""The display name of the view.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -3418,7 +3500,9 @@ def update_view(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.update_zone.command_name', 'update'), help=u"""Updates the zone with the specified information. Global secondary zones may have their external masters updated. For more information about secondary zone, see [Manage DNS Service Zone]. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateZone)""")
+@zone_group.command(name=cli_util.override('dns.update_zone.command_name', 'update'), help=u"""Updates the zone with the specified information.
+
+Global secondary zones may have their external masters updated. For more information about secondary zones, see [Manage DNS Service Zone]. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -3433,7 +3517,9 @@ This option is a JSON list with items of type ExternalMaster.  For documentation
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3508,7 +3594,9 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.update_zone_records.command_name', 'update-zone'), help=u"""Replaces records in the specified zone with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone. For private zones, the scope query parameter is required with a value of `PRIVATE`. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateZoneRecords)""")
+@records_group.command(name=cli_util.override('dns.update_zone_records.command_name', 'update-zone'), help=u"""Replaces records in the specified zone with the records specified in the request body.
+
+If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone. When the zone name is provided as a path parameter and `PRIVATE` is used for the scope query parameter then the viewId query parameter is required. \n[Command Reference](updateZoneRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
@@ -3517,7 +3605,9 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
+
+This parameter is deprecated and should be omitted.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
 @cli_util.help_option

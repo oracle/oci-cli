@@ -54,6 +54,7 @@ def pytest_addoption(parser):
     add_test_option(parser, "--vcr-record-mode", "store", 'once', "Record mode option for VCRpy library.")
     add_test_option(parser, "--run-recordable-tests-only", "store", False, "Skip tests where we don't want to record their output.")
     add_test_option(parser, "--instance-principals", "store_true", False, "Enables tests for instance principals")
+    add_test_option(parser, "--service", "store", "all", "Name of the service for which you want to run test")
 
 
 def add_test_option(parser, option, action, default, help):
@@ -69,6 +70,11 @@ def add_test_option(parser, option, action, default, help):
 
 def pytest_configure(config):
     test_config_container.vcr_mode = config.getoption("--vcr-record-mode")
+
+
+@pytest.fixture(scope="session", autouse=True)
+def service(pytestconfig):
+    return pytestconfig.getoption("service")
 
 
 @pytest.fixture(scope='session', autouse=True)
