@@ -123,3 +123,11 @@ compute_cli.instance_group.commands.pop(compute_cli.launch_instance_intel_skylak
 
 # Remove launch-instance-intel-vm-launch-instance-platform-config from oci compute instance
 compute_cli.instance_group.commands.pop(compute_cli.launch_instance_intel_vm_launch_instance_platform_config.name)
+
+
+# Remove launch-instance-amd-rome-bm-gpu-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_rome_bm_gpu_launch_instance_platform_config.name)
+
+
+# Remove launch-instance-intel-icelake-bm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_intel_icelake_bm_launch_instance_platform_config.name)

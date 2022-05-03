@@ -819,7 +819,7 @@ def create_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--job-artifact', required=True, help=u"""The job artifact to upload.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
-@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--content-disposition', help=u"""This header is for specifying a filename during upload. It is used to identify the file type and validate if the file type is supported. Example: `--content-disposition \"attachment; filename=hello-world.py\"`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

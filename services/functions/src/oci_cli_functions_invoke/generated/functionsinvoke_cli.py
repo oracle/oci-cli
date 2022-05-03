@@ -36,7 +36,7 @@ functions_invoke_root_group.add_command(function_group)
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--invoke-function-body', help=u"""The body of the function invocation. Note: The maximum size of the request is limited. This limit is currently 6MB and the endpoint will not accept requests that are bigger than this limit.""")
 @cli_util.option('--fn-intent', type=custom_types.CliCaseInsensitiveChoice(["httprequest", "cloudevent"]), help=u"""An optional intent header that indicates to the FDK the way the event should be interpreted. E.g. 'httprequest', 'cloudevent'.""")
-@cli_util.option('--fn-invoke-type', type=custom_types.CliCaseInsensitiveChoice(["detached", "sync"]), help=u"""Indicates whether the functions platform should execute the request directly and return the result ('sync') or whether the platform should enqueue the request for later processing and acknowledge that it has been processed ('detached').""")
+@cli_util.option('--fn-invoke-type', type=custom_types.CliCaseInsensitiveChoice(["detached", "sync"]), help=u"""Indicates whether Oracle Functions should execute the request and return the result ('sync') of the execution, or whether Oracle Functions should return as soon as processing has begun ('detached') and leave result handling to the function.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

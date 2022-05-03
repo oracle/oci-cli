@@ -3,6 +3,10 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 service_mapping = {
+    "adm": [
+        "adm",
+        "ADM"
+    ],
     "ai": [
         "ai_language",
         "Language"
@@ -49,11 +53,11 @@ service_mapping = {
     ],
     "appmgmt-control": [
         "appmgmt_control",
-        "AppMgmt Control"
+        "Resource Discovery and Monitoring Control"
     ],
     "artifacts": [
         "artifacts",
-        "Container Images"
+        "Artifacts and Container Images"
     ],
     "audit": [
         "audit",
@@ -349,7 +353,7 @@ service_mapping = {
     ],
     "secrets": [
         "secrets",
-        "Vault Service Secret Retrieval"
+        "Vault Secret Retrieval"
     ],
     "service-catalog": [
         "service_catalog",
@@ -393,7 +397,7 @@ service_mapping = {
     ],
     "vault": [
         "vault",
-        "Secrets Management"
+        "Vault Secret Management"
     ],
     "visual-builder": [
         "visual_builder",

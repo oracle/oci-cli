@@ -90,9 +90,11 @@ class UnitTestRover(unittest.TestCase):
         self.cluster_subcommands = [
             {"sub_command": "create",
              "required_params": ["compartment-id", "display-name", "cluster-size", "cluster-type"],
-             "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact", "addressee", "care-of", "address1",
+             "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact",
+                                 "addressee", "care-of", "address1",
                                  "city-or-locality", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4", "subscription-id"],
+                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3",
+                                 "address4", "master-key-id", "policy-name", "policy-compartment-id"],
              },
             {"sub_command": "change-compartment",
              "required_params": ["compartment-id", "cluster-id"],
@@ -106,8 +108,8 @@ class UnitTestRover(unittest.TestCase):
             {"sub_command": "update",
              "required_params": ["cluster-id"],
              "optional_params": ["addressee", "care-of", "address1",
-                                 "city-or-locality", "lifecycle-state-details", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email"]},
+                                 "city-or-locality", "lifecycle-state-details", "state-province-region",
+                                 "country", "zip-postal-code", "phone-number", "email"]},
             {"sub_command": "request-approval",
              "required_params": ["cluster-id"],
              "optional_params": []},
@@ -136,7 +138,9 @@ class UnitTestRover(unittest.TestCase):
              "required_params": ["compartment-id", "display-name", "shape"],
              "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact", "addressee", "care-of", "address1",
                                  "city-or-locality", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4"]},
+                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3",
+                                 "address4", "master-key-id", "policy-name",
+                                 "policy-compartment-id"]},
             {"sub_command": "change-compartment",
              "required_params": ["compartment-id", "node-id"],
              "optional_params": ["if-match"]},
@@ -180,10 +184,17 @@ class UnitTestRover(unittest.TestCase):
              "optional_params": []},
         ]
 
+        self.policy_subcommands = [
+            {"sub_command": "create-master-key-policy",
+             "required_params": ["master-key-id"],
+             "optional_params": ["policy-name", "policy-compartment-id"]},
+        ]
+
         self.command_defs = [
             {"command": "cluster", "sub_commands": self.cluster_subcommands},
             {"command": "node", "sub_commands": self.node_subcommands},
             {"command": "shape", "sub_commands": self.shape_subcommands},
+            {"command": "rover", "sub_commands": self.policy_subcommands}
         ]
         self.success_count = 0
         self.failed_count = 0
@@ -270,7 +281,10 @@ class UnitTestRover(unittest.TestCase):
 
     def _generate_command_list(self, command, sub_command_def, test_type):
         # click.echo("command=%s,sub_command=%s::::%s" % (command, sub_command_def["sub_command"], test_type))
-        c_list = ["rover", command, sub_command_def["sub_command"]]
+        if command == 'rover':
+            c_list = [command, sub_command_def["sub_command"]]
+        else:
+            c_list = ["rover", command, sub_command_def["sub_command"]]
         # if (test_type == self.TestType.NoArgs):
         #     return c_list
         if 'update' in sub_command_def["sub_command"] or 'delete' in sub_command_def["sub_command"]:

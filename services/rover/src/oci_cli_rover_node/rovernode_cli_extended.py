@@ -14,7 +14,8 @@ from oci_cli import custom_types  # noqa: F401
 from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
 from services.rover.src.oci_cli_rover.rover_utils import get_compute_image_helper, export_compute_image_helper, \
-    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name
+    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name, \
+    create_master_key_policy_rover_resource, remove_additional_params_after_policy
 from services.rover.src.oci_cli_rover_node.generated import rovernode_cli
 from oci.util import formatted_flat_dict
 
@@ -145,6 +146,8 @@ def setup_identity_helper(ctx, **kwargs):
 @cli_util.option('--phone-number', help=u"""Phone number.""")
 @cli_util.option('--email', help=u"""Email address.""")
 @cli_util.option('--setup-identity', help=u"""Creating dynamic group and Assigning Policies for Rover node""", is_flag=True)
+@cli_util.option('--policy-compartment-id', help=u"""Compartment ID where the master key policy (if master key provided) would be created""")
+@cli_util.option('--policy-name', help=u"""Display name for the policy to be created for the master key (if provided)""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[object]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
@@ -194,6 +197,15 @@ def create_rover_node_extended(ctx, **kwargs):
 
     if kwargs['system_tags'] is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", kwargs['system_tags'])
+
+    # set up policy for master key if provided
+    if kwargs['master_key_id']:
+        create_master_key_policy_rover_resource("node", ctx, **kwargs)
+        _details['masterKeyId'] = kwargs['master_key_id']
+    elif kwargs['policy_name'] or kwargs['policy_compartment_id']:
+        raise click.UsageError('policy-compartment-id or policy-name cannot be provided without master-key-id')
+    # Remove additional parameters of policy from kwargs
+    kwargs = remove_additional_params_after_policy(**kwargs)
 
     # creating rover node
 

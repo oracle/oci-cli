@@ -124,9 +124,9 @@ def create_dedicated_vantage_point(ctx, from_json, apm_domain_id, display_name, 
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique dedicated vantage point name that cannot be edited. The name should not contain any confidential information.""")
 @cli_util.option('--region-parameterconflict', required=True, help=u"""Name of the region.""")
-@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP.""")
-@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
-@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stack-details-dvp-version', required=True, help=u"""Version of DVP.""")
+@cli_util.option('--dvp-stack-details-dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stack-details-dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -135,7 +135,7 @@ def create_dedicated_vantage_point(ctx, from_json, apm_domain_id, display_name, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
 @cli_util.wrap_exceptions
-def create_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, apm_domain_id, display_name, region_parameterconflict, dvp_version, dvp_stack_id, dvp_stream_id, status, freeform_tags, defined_tags):
+def create_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, apm_domain_id, display_name, region_parameterconflict, dvp_stack_details_dvp_version, dvp_stack_details_dvp_stack_id, dvp_stack_details_dvp_stream_id, status, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -144,9 +144,9 @@ def create_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, apm_domain_id
     _details['dvpStackDetails'] = {}
     _details['displayName'] = display_name
     _details['region'] = region_parameterconflict
-    _details['dvpStackDetails']['dvpVersion'] = dvp_version
-    _details['dvpStackDetails']['dvpStackId'] = dvp_stack_id
-    _details['dvpStackDetails']['dvpStreamId'] = dvp_stream_id
+    _details['dvpStackDetails']['dvpVersion'] = dvp_stack_details_dvp_version
+    _details['dvpStackDetails']['dvpStackId'] = dvp_stack_details_dvp_stack_id
+    _details['dvpStackDetails']['dvpStreamId'] = dvp_stack_details_dvp_stream_id
 
     if status is not None:
         _details['status'] = status
@@ -1156,9 +1156,9 @@ def update_dedicated_vantage_point(ctx, from_json, force, apm_domain_id, dedicat
 @dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.update_dedicated_vantage_point_oracle_rm_stack.command_name', 'update-dedicated-vantage-point-oracle-rm-stack'), help=u"""Updates the dedicated vantage point. \n[Command Reference](updateDedicatedVantagePoint)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--dedicated-vantage-point-id', required=True, help=u"""The OCID of the dedicated vantage point.""")
-@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP.""")
-@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
-@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stack-details-dvp-version', required=True, help=u"""Version of DVP.""")
+@cli_util.option('--dvp-stack-details-dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stack-details-dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
 @cli_util.option('--region-parameterconflict', help=u"""Name of the region.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1170,7 +1170,7 @@ def update_dedicated_vantage_point(ctx, from_json, force, apm_domain_id, dedicat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
 @cli_util.wrap_exceptions
-def update_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, force, apm_domain_id, dedicated_vantage_point_id, dvp_version, dvp_stack_id, dvp_stream_id, status, region_parameterconflict, freeform_tags, defined_tags, if_match):
+def update_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, force, apm_domain_id, dedicated_vantage_point_id, dvp_stack_details_dvp_version, dvp_stack_details_dvp_stack_id, dvp_stack_details_dvp_stream_id, status, region_parameterconflict, freeform_tags, defined_tags, if_match):
 
     if isinstance(dedicated_vantage_point_id, six.string_types) and len(dedicated_vantage_point_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vantage-point-id cannot be whitespace or empty string')
@@ -1186,9 +1186,9 @@ def update_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, force, apm_do
 
     _details = {}
     _details['dvpStackDetails'] = {}
-    _details['dvpStackDetails']['dvpVersion'] = dvp_version
-    _details['dvpStackDetails']['dvpStackId'] = dvp_stack_id
-    _details['dvpStackDetails']['dvpStreamId'] = dvp_stream_id
+    _details['dvpStackDetails']['dvpVersion'] = dvp_stack_details_dvp_version
+    _details['dvpStackDetails']['dvpStackId'] = dvp_stack_details_dvp_stack_id
+    _details['dvpStackDetails']['dvpStreamId'] = dvp_stack_details_dvp_stream_id
 
     if status is not None:
         _details['status'] = status
