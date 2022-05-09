@@ -6,6 +6,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.9.0 - 2022-05-10
+------------------
+Added
+~~~~~
+
+* Data Integration service
+
+  * Support for BIP connection in the following commands
+
+    * ``oci data-integration connection create-connection-create-connection-from-bip``
+    * ``oci data-integration connection-validation create-connection-validation-create-connection-from-bip``
+
+  * New parameters --conditional-composite-field-map, --is-single-load and --parallel-load-limit for the below commands
+
+    * ``oci data-integration task create-data-loader-task --conditional-composite-field-map --is-single-load --parallel-load-limit``
+    * ``oci data-integration task update-data-loader-task --conditional-composite-field-map --is-single-load --parallel-load-limit``
+
+
+Changed
+~~~~~~~
+* Rover service
+
+  * [BREAKING] Parameters --compartment-id and --bucket-id for add-workload operations for node and cluster are being deleted
+
+    * ``oci rover node add-workload``
+    * ``oci rover standalone-cluster add-workload``
+    * ``oci rover station-cluster add-workload``
+
+
 3.8.1 - 2022-05-03
 ------------------
 Added

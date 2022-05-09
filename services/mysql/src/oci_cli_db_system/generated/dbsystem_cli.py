@@ -1813,7 +1813,9 @@ Updating different fields in the DB System will have different results on the up
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the subnet the DB System is associated with.""")
-@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""If the policy is to enable high availability of the instance, by maintaining secondary/failover capacity as necessary.""")
+@cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
+
+Set to true to enable high availability. Two secondary MySQL instances are created and placed in the unused availability or fault domains, depending on your region and subnet type. Set to false to disable high availability. The secondary MySQL instances are removed and the MySQL instance in the preferred location is used.""")
 @cli_util.option('--availability-domain', help=u"""The availability domain on which to deploy the Read/Write endpoint. This defines the preferred primary instance.
 
 In a failover scenario, the Read/Write endpoint is redirected to one of the other availability domains and the MySQL instance in that domain is promoted to the primary instance. This redirection does not affect the IP address of the DB System in any way.
