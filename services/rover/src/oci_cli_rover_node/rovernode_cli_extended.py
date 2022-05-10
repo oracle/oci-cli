@@ -13,8 +13,9 @@ from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
-from services.rover.src.oci_cli_rover.rover_utils import get_compute_image_helper, export_compute_image_helper, \
-    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name, \
+from services.rover.src.oci_cli_rover.rover_utils import export_compute_image_helper, \
+    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, \
+    validate_bucket, validate_get_image, prepare_image_workload_data, prepare_bucket_workload_data, \
     create_master_key_policy_rover_resource, remove_additional_params_after_policy
 from services.rover.src.oci_cli_rover_node.generated import rovernode_cli
 from oci.util import formatted_flat_dict
@@ -295,9 +296,9 @@ def update_rover_node_extended(ctx, **kwargs):
     cli_util.build_client('rover', 'rover_node', ctx)
 
     kwargs = complex_shipping_address_param(**kwargs)
-    if kwargs['lifecycle_state_details']:
+    if not kwargs['lifecycle_state_details']:
         pending_lifecycle_state = "PENDING_SUBMISSION"
-        click.echo("WARNING:Rover node will be update with lifecycle state details " + pending_lifecycle_state)
+        click.echo("WARNING:Rover node will be updated with lifecycle state details " + pending_lifecycle_state)
         kwargs['lifecycle_state_details'] = pending_lifecycle_state
     kwargs.update({
         'rover_node_id': kwargs['node_id']
@@ -345,10 +346,8 @@ def delete_rover_node_extended(ctx, **kwargs):
 
 @rovernode_cli.rover_node_group.command(name="add-workload", help=u"""Add workload information to Rover Node""")
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Id of Bucket""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BUCKET", "IMAGE"]), help=u"""Type of workload""")
 @cli_util.option('--image-id', help=u"""Object Store Image OCID for the workload""")
-@cli_util.option('--bucket-id', help=u"""Object Store Bucket OCID for the workload""")
 @cli_util.option('--bucket-name', help=u"""Object Store Bucket name for the workload""")
 @cli_util.option('--prefix', help=u"""List of objects with names matching this prefix would be part of this export job.""")
 @cli_util.option('--range-start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
@@ -361,39 +360,27 @@ def delete_rover_node_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def add_workload(ctx, **kwargs):
 
-    workload_data = image_id = workload_id = compute_obj = destination_uri = None
+    workload_data = image_id = workload_id = destination_uri = None
     result = get_rover_node_helper(ctx, kwargs['node_id'])
 
     if kwargs['type'].lower() == "bucket":
-        if not ('bucket_id' in kwargs and kwargs['bucket_id']) or not ('bucket_name' in kwargs and kwargs['bucket_name']):
-            raise click.UsageError('Parameter bucket-id and bucket-name cannot be whitespace or empty string')
-        workload_id = kwargs['bucket_id']
-        workload_data = [{
-            "workloadType": "BUCKET", "id": kwargs['bucket_id'], "name": kwargs['bucket_name'], "compartmentId": kwargs['compartment_id'],
-            'prefix': kwargs['prefix'], 'rangeStart': kwargs['range_start'], 'rangeEnd': kwargs['range_end']
-        }]
+        result_bucket = validate_bucket(ctx, **kwargs)
+
+        workload_id = result_bucket.data.name
+        workload_data = prepare_bucket_workload_data(result_bucket, **kwargs)
 
     elif kwargs['type'].lower() == "image":
-        if 'image_id' in kwargs and not kwargs['image_id']:
-            raise click.UsageError('Parameter image-id cannot be whitespace or empty string')
+        compute_image_obj = validate_get_image(ctx, **kwargs)
         workload_id = image_id = kwargs['image_id']
-        compute_image_obj = get_compute_image_helper(ctx, image_id)
-        compute_image_obj_name = modify_image_workload_name(compute_image_obj.data.display_name)
-        destination_uri = result.data.image_export_par + compute_image_obj_name + "_" + image_id + ".oci"
-        workload_data = [
-            {'workloadType': "IMAGE", 'id': image_id, 'name': compute_image_obj_name,
-             'size': compute_image_obj.data.size_in_mbs, 'compartmentId': kwargs['compartment_id'],
-             }
-        ]
+        workload_data = prepare_image_workload_data(compute_image_obj, image_id)
+        destination_uri = result.data.image_export_par + workload_data[0]['name'] + "_" + image_id + ".oci"
     confirm_prompt = "Would you like to submit the following workload information ? " + formatted_flat_dict(workload_data)
-    if result.data.node_workloads:
-        if any(existing_workload.id == workload_id for existing_workload in result.data.node_workloads):
-            raise click.UsageError("Workload with {} is already attached".format(workload_id))
+    if result.data.node_workloads and len(result.data.node_workloads) > 0 and any(existing_workload.id == workload_id for existing_workload in result.data.node_workloads):
+        raise click.UsageError("Workload with {} is already attached".format(workload_id))
 
-    if not kwargs['force']:
-        if not click.confirm(click.style(confirm_prompt, fg="yellow")):
-            click.echo("Aborting workload selection for Rover Cluster")
-            ctx.abort()
+    if not kwargs['force'] and not click.confirm(click.style(confirm_prompt, fg="yellow")):
+        click.echo("Aborting workload selection for Rover Cluster")
+        ctx.abort()
 
     if kwargs['type'].lower() == "image":
         export_return_response = export_compute_image_helper(ctx, image_id, destination_uri)

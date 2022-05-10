@@ -49,6 +49,18 @@ def get_mock_context():
                          obj=context_obj)
 
 
+class mock_compute_img_obj():
+    class data:
+        display_name = 'name1'
+        size_in_mbs = 123
+        compartment_id = 'compartment1'
+
+
+class mock_object_storage_obj():
+    class data:
+        compartment_id = 'compartment1'
+
+
 class UnitTestRover(unittest.TestCase):
     class TestResult(enum.Enum):
         Success = 1
@@ -114,11 +126,11 @@ class UnitTestRover(unittest.TestCase):
              "required_params": ["cluster-id"],
              "optional_params": []},
             {"sub_command": "add-workload",
-             "required_params": ["cluster-id", "compartment-id", "type"],
-             "test_necessary_params": ["bucket-id", "bucket-name", "force"],
+             "required_params": ["cluster-id", "type"],
+             "test_necessary_params": ["bucket-name", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             {"sub_command": "add-workload",
-             "required_params": ["cluster-id", "compartment-id", "type"],
+             "required_params": ["cluster-id", "type"],
              "test_necessary_params": ["image-id", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             {"sub_command": "delete-workload",
@@ -159,11 +171,11 @@ class UnitTestRover(unittest.TestCase):
              "required_params": ["node-id"],
              "optional_params": []},
             {"sub_command": "add-workload",
-             "required_params": ["node-id", "compartment-id", "type"],
-             "test_necessary_params": ["bucket-id", "bucket-name", "force"],
+             "required_params": ["node-id", "type"],
+             "test_necessary_params": ["bucket-name", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             {"sub_command": "add-workload",
-             "required_params": ["node-id", "compartment-id", "type"],
+             "required_params": ["node-id", "type"],
              "test_necessary_params": ["image-id", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             # {"sub_command": "delete-workload",
@@ -191,7 +203,8 @@ class UnitTestRover(unittest.TestCase):
         ]
 
         self.command_defs = [
-            {"command": "cluster", "sub_commands": self.cluster_subcommands},
+            {"command": "standalone-cluster", "sub_commands": self.cluster_subcommands},
+            {"command": "station-cluster", "sub_commands": self.cluster_subcommands},
             {"command": "node", "sub_commands": self.node_subcommands},
             {"command": "shape", "sub_commands": self.shape_subcommands},
             {"command": "rover", "sub_commands": self.policy_subcommands}
@@ -205,12 +218,19 @@ class UnitTestRover(unittest.TestCase):
     #       - CLI errors when any of the Required params is not supplied.
     #       - CLI accepts all Required params
     #       - CLI accepts all Optional params
-
+    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.validate_bucket', return_value=mock_object_storage_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.validate_bucket', return_value=mock_object_storage_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.validate_get_image', return_value=mock_compute_img_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.validate_get_image', return_value=mock_compute_img_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.export_compute_image_helper')
+    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.export_compute_image_helper')
     @mock.patch('services.rover.src.oci_cli_rover.rover_utils.prompt_for_secrets')
     @mock.patch('click.prompt', return_value=True)
     @mock.patch('oci_cli.cli_util.build_client')
     @mock.patch('oci_cli.cli_util.render_response')
-    def test_rover(self, mock_client_render_response, mock_client, mock_prompt, mock_prompt_for_secrets):
+    def test_rover(self, mock_client_render_response, mock_client, mock_prompt, mock_prompt_for_secrets, mock_node_export_compute_image,
+                   mock_cluster_export_compute_image, mock_node_validate_image, mock_cluster_validate_image, mock_node_validate_bucket,
+                   mock_cluster_validate_bucket):
         for command_def in self.command_defs:
             command = command_def["command"]
             specific_sub_command_set = self._sub_command_list_in_specific_test_set(command)
