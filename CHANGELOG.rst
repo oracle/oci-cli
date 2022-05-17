@@ -6,6 +6,84 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.9.1 - 2022-05-17
+------------------
+Added
+~~~~~
+* Support for Interactive mode for all services
+
+  * ``oci -i``
+
+* Support for the following features in the DevOps service
+
+  * Application Dependency Management service scan results in response to ``oci devops build-run get``
+
+  * Build resources to use Bitbucket Cloud repositories for source code
+  
+    * ``oci devops connection create-bitbucket-cloud-connection``
+    * ``oci devops connection update-bitbucket-cloud-connection``
+    * ``oci devops trigger create-bitbucket-cloud-trigger``
+    * ``oci devops trigger update-bitbucket-cloud-trigger``
+
+  * Helm charts and repositories on deployments 
+     
+    * ``oci devops deploy-artifact create-helm-repository-artifact``
+    * ``oci devops deploy-artifact update-helm-repository-artifact``
+    * ``oci devops deploy-stage create-oke-helm-chart-stage``
+    * ``oci devops deploy-stage update-oke-helm-chart-stage``
+
+* Support for the following features in the Database service
+
+  * CharacterSet and nCharacterSet selection on autonomous dedicated databases. If not specified, the databases are created with default characterSets.
+
+    * ``oci db autonomous-database create --character-set, --ncharacter-set``
+    * ``oci db autonomous-database create-from-backup-id --character-set, --ncharacter-set``
+    * ``oci db autonomous-database create-refreshable-clone --character-set, --ncharacter-set``
+
+  * Support for listing autonomous dedicated database supported character sets
+    
+    * ``oci db autonomous-database-character-sets list`` 
+
+  * Support for AMD E4 flex shapes on virtual machine database systems
+
+    * ``oci db compute-performance list``
+    * ``oci db storage-performance list``    
+
+* Support for information requests in the Operator Access Control service
+
+  * ``oci opctl access-request list-interactions``
+  * ``oci opctl access-request interaction-request``
+
+
+Changed
+~~~~~~~~
+* Support for terraform and improvements for cross-region ADGs in the Database service
+
+  * Changes to the response fields for ``oci db autonomous-database get`` 
+
+    * Deprecated: ``isDataGuardEnabled``, ``standbyDb``
+    * ``isLocalDataGuardEnabled`` Indicates whether the Autonomous Database has local (in-region) Data Guard enabled.
+    * ``isRemoteDataGuardEnabled`` Indicates whether the Autonomous Database has Cross Region Data Guard enabled.
+    * ``localStandbyDb`` Autonomous Data Guard standby database details.
+
+  * Changes to the response fields for ``oci db autonomous-database update``
+
+    * Deprecated: ``isDataGuardEnabled``
+    * ``isLocalDataGuardEnabled`` Indicates whether the Autonomous Database has local (in-region) Data Guard enabled.
+
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details``
+
+    * ``--db-name`` is not a required parameter
+
+  * ``oci db autonomous-database delete``
+
+    * Can now be used to delete a standby instance for Cross Region Data Guard.
+
+Fixed
+~~~~~~~
+
+* Bug for KeyError while running ``oci session export``
+
 3.9.0 - 2022-05-10
 ------------------
 Added

@@ -269,13 +269,13 @@ def get_config_profiles(config_file):
 # Output: None. It changes the file permissions for 'config' and 'key' files for all profiles in config file.
 @pytest.fixture(scope='session', autouse=True)
 def fix_config_and_key_file_permissions(config_file):
-    cli_setup.apply_user_only_access_permissions(os.path.expandvars(os.path.expanduser(config_file)))
+    cli_util.apply_user_only_access_permissions(os.path.expandvars(os.path.expanduser(config_file)))
     config, config_profiles = get_config_profiles(config_file)
     for config_profile_name in config_profiles:
         config_key_file_path = os.path.expandvars(os.path.expanduser(config[config_profile_name]['key_file']))
         # Below check ensures we do not raise an exception when the key file is not found for a particular profile
         if (os.path.isfile(config_key_file_path)):
-            cli_setup.apply_user_only_access_permissions(config_key_file_path)
+            cli_util.apply_user_only_access_permissions(config_key_file_path)
 
 
 @pytest.fixture(scope='module')

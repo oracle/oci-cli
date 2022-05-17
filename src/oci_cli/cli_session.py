@@ -190,7 +190,7 @@ def refresh(ctx):
         refreshed_token = json.loads(response.content.decode('UTF-8'))['token']
         with open(expanded_security_token_location, 'w') as security_token_file:
             security_token_file.write(refreshed_token)
-        cli_setup.apply_user_only_access_permissions(expanded_security_token_location)
+        cli_util.apply_user_only_access_permissions(expanded_security_token_location)
         click.echo("Successfully refreshed token", file=sys.stderr)
     elif response.status_code == 401:
         click.echo("Your session is no longer valid and cannot be refreshed. Please use 'oci session authenticate' to create a new session.", file=sys.stderr)
@@ -212,6 +212,7 @@ def export(ctx, output_file, force):
     profile = ctx.obj['profile']
 
     config = configparser.ConfigParser()
+    config_file = os.path.expanduser(config_file)
     config.read(config_file)
     profile_to_export = {key: value for key, value in config[profile].items()}
 
@@ -310,7 +311,7 @@ def import_session(ctx, session_archive, force):
                     existing_file_location = os.path.join(temp_dir_name, value)
                     copy(existing_file_location, imported_resources_dir)
 
-                    cli_setup.apply_user_only_access_permissions(new_file_location)
+                    cli_util.apply_user_only_access_permissions(new_file_location)
 
             # write new profile to existing config file
             archived_profile = translate_config_filepaths_to_prefix(archived_profile, imported_resources_dir)

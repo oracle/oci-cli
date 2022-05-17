@@ -100,6 +100,8 @@ LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports paginati
 
 TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING = "WARNING: The active profile contains a value for 'security_token_file' which is not being used. To authenticate using the token, specify --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN)
 
+OCI_CLI_IN_INTERACTIVE_MODE = "OCI_CLI_IN_INTERACTIVE_MODE"
+
 logger = logging.getLogger("{}".format(__name__))
 logger.addHandler(logging.NullHandler())
 logger.setLevel(logging.DEBUG)
@@ -365,6 +367,8 @@ def create_config_and_signer_based_on_click_context(ctx):
             else:
                 sys.exit(1)
         client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
+        if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
+            client_config["additional_user_agent"] += " Oracle-Interactive "
         if ctx.obj['debug']:
             client_config["log_requests"] = True
 
@@ -582,6 +586,8 @@ def build_config(command_args):
                 logger.debug("%s: Environment Variable", cli_constants.OCI_CONFIG_ENV_VARS[env])
 
     client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
+    if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
+        client_config["additional_user_agent"] += " Oracle-Interactive "
 
     if command_args['region']:
         client_config["region"] = command_args['region']
@@ -2443,6 +2449,56 @@ def get_config_setup_function():
     # this will only be reached if the user says no to the first prompt about browser login, or if they said yes to that prompt but webbrowser.get() couldn't locate a runnable browser
     from .cli_setup import generate_oci_config
     return generate_oci_config
+
+
+def create_directory(dirname):
+    os.makedirs(dirname)
+    apply_user_only_access_permissions(dirname)
+
+
+def apply_user_only_access_permissions(path):
+    if not os.path.exists(path):
+        raise RuntimeError("Failed attempting to set permissions on path that does not exist: {}".format(path))
+
+    if is_windows():
+        # General permissions strategy is:
+        #   - if we create a new folder (e.g. C:\Users\opc\.oci), set access to allow full control for current user and no access for anyone else
+        #   - if we create a new file, set access to allow full control for current user and no access for anyone else
+        #   - thus if the user elects to place a new file (config or key) in an existing directory, we will not change the
+        #     permissions of that directory but will explicitly set the permissions on that file
+        username = os.environ['USERNAME']
+        userdomain = os.environ['UserDomain']
+        userWithDomain = os.environ['USERNAME']
+        if userdomain:
+            userWithDomain = userdomain + "\\" + username
+        admin_grp = '*S-1-5-32-544'
+        system_usr = '*S-1-5-18'
+        try:
+            if os.path.isfile(path):
+                subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
+                try:
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:F" /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+                except subprocess.CalledProcessError:
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:F" /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+            else:
+                if os.listdir(path):
+                    # safety check to make sure we aren't changing permissions of existing files
+                    raise RuntimeError("Failed attempting to set permissions on existing folder that is not empty.")
+                subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
+                try:
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:(OI)(CI)F"  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+                except subprocess.CalledProcessError:
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:(OI)(CI)F"  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc_info:
+            print("Error occurred while attempting to set permissions for {path}: {exception}".format(path=path, exception=str(exc_info)))
+            sys.exit(exc_info.returncode)
+    else:
+        if os.path.isfile(path):
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR)
+        else:
+            # For directories, we need to apply S_IXUSER otherwise it looks like on Linux/Unix/macOS if we create the directory then
+            # it won't behave like a directory and let files be put into it
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
 
 
 class CommandExample:
