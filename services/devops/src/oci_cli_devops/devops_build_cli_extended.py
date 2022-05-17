@@ -1112,3 +1112,182 @@ def create_deployment_create_single_deploy_stage_redeployment_details_extended(c
         kwargs.pop('stage_id')
 
     ctx.invoke(devops_cli.create_deployment_create_single_deploy_stage_redeployment_details, **kwargs)
+
+
+# oci devops connection create-connection-create-bitbucket-cloud-app-password-connection-details -> oci devops connection create-bitbucket-cloud-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.create_connection_create_bitbucket_cloud_app_password_connection_details, "create-bitbucket-cloud-connection")
+
+
+# oci devops connection update-connection-update-bitbucket-cloud-app-password-connection-details -> oci devops connection update-bitbucket-cloud-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.update_connection_update_bitbucket_cloud_app_password_connection_details, "update-bitbucket-cloud-connection")
+
+
+# oci devops trigger create-trigger-create-bitbucket-cloud-trigger-details -> oci devops trigger create-bitbucket-cloud-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.create_trigger_create_bitbucket_cloud_trigger_details, "create-bitbucket-cloud-trigger")
+
+
+# oci devops trigger update-trigger-update-bitbucket-cloud-trigger-details -> oci devops trigger update-bitbucket-cloud-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.update_trigger_update_bitbucket_cloud_trigger_details, "update-bitbucket-cloud-trigger")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_connection_create_bitbucket_cloud_app_password_connection_details, params_to_exclude=['username'])
+@devops_cli.connection_group.command(name=devops_cli.create_connection_create_bitbucket_cloud_app_password_connection_details.name, help=devops_cli.create_connection_create_bitbucket_cloud_app_password_connection_details.help)
+@cli_util.option('--bitbucket-cloud-username', required=True, help=u"""Public Bitbucket Cloud Username in plain text(not more than 30 characters) [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_bitbucket_cloud_app_password_connection_details_extended(ctx, **kwargs):
+    if 'bitbucket_cloud_username' in kwargs:
+        kwargs['username'] = kwargs['bitbucket_cloud_username']
+        kwargs.pop('bitbucket_cloud_username')
+
+    ctx.invoke(devops_cli.create_connection_create_bitbucket_cloud_app_password_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_connection_update_bitbucket_cloud_app_password_connection_details, params_to_exclude=['username'])
+@devops_cli.connection_group.command(name=devops_cli.update_connection_update_bitbucket_cloud_app_password_connection_details.name, help=devops_cli.update_connection_update_bitbucket_cloud_app_password_connection_details.help)
+@cli_util.option('--bitbucket-cloud-username', help=u"""Public Bitbucket Cloud Username in plain text(not more than 30 characters)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_bitbucket_cloud_app_password_connection_details_extended(ctx, **kwargs):
+    if 'bitbucket_cloud_username' in kwargs:
+        kwargs['username'] = kwargs['bitbucket_cloud_username']
+        kwargs.pop('bitbucket_cloud_username')
+
+    ctx.invoke(devops_cli.update_connection_update_bitbucket_cloud_app_password_connection_details, **kwargs)
+
+
+# oci devops deploy-artifact create-deploy-artifact-helm-repository-deploy-artifact-source -> oci devops deploy-artifact create-helm-repository-artifact
+cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_group, devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source, "create-helm-repository-artifact")
+
+
+# oci devops deploy-artifact update-deploy-artifact-helm-repository-deploy-artifact-source -> oci devops deploy-artifact update-helm-repository-artifact
+cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_group, devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source, "update-helm-repository-artifact")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-helm-chart-deploy-stage-details -> oci devops deploy-stage create-oke-helm-chart-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, "create-oke-helm-chart-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-helm-chart-deploy-stage-details -> oci devops deploy-stage update-oke-helm-chart-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, "update-oke-helm-chart-stage")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source, params_to_exclude=['deploy_artifact_source_chart_url', 'deploy_artifact_source_deploy_artifact_version', 'deploy_artifact_type'])
+@devops_cli.deploy_artifact_group.command(name=devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source.name, help=devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source.help)
+@cli_util.option('--artifact-type', required=True, help="""Type of the deployment artifact. [required]""")
+@cli_util.option('--artifact-version', required=True, help="""Users can set this as a placeholder value that refers to a pipeline parameter, for example, ${appVersion}. [required]""")
+@cli_util.option('--artifact-chart-url', required=True, help=u"""The URL of an OCIR repository. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def create_deploy_artifact_helm_repository_deploy_artifact_source_extended(ctx, **kwargs):
+
+    if 'artifact_type' in kwargs:
+        kwargs['deploy_artifact_type'] = kwargs['artifact_type']
+        kwargs.pop('artifact_type')
+
+    if 'artifact_version' in kwargs:
+        kwargs['deploy_artifact_source_deploy_artifact_version'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+
+    if 'artifact_chart_url' in kwargs:
+        kwargs['deploy_artifact_source_chart_url'] = kwargs['artifact_chart_url']
+        kwargs.pop('artifact_chart_url')
+
+    ctx.invoke(devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source, params_to_exclude=['deploy_artifact_id', 'deploy_artifact_source_chart_url', 'deploy_artifact_source_deploy_artifact_version'])
+@devops_cli.deploy_artifact_group.command(name=devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source.name, help=devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source.help)
+@cli_util.option('--artifact-version', required=True, help="""Users can set this as a placeholder value that refers to a pipeline parameter, for example, ${appVersion}. [required]""")
+@cli_util.option('--artifact-chart-url', required=True, help="""The URL of an OCIR repository. [required]""")
+@cli_util.option('--artifact-id', required=True, help=u"""Unique artifact identifier. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def update_deploy_artifact_helm_repository_deploy_artifact_source_extended(ctx, **kwargs):
+
+    if 'artifact_version' in kwargs:
+        kwargs['deploy_artifact_source_deploy_artifact_version'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+
+    if 'artifact_chart_url' in kwargs:
+        kwargs['deploy_artifact_source_chart_url'] = kwargs['artifact_chart_url']
+        kwargs.pop('artifact_chart_url')
+
+    if 'artifact_id' in kwargs:
+        kwargs['deploy_artifact_id'] = kwargs['artifact_id']
+        kwargs.pop('artifact_id')
+
+    ctx.invoke(devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'helm_chart_deploy_artifact_id', 'oke_cluster_deploy_environment_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.help)
+@cli_util.option('--oke-cluster-environment-id', required=True, help="""Kubernetes cluster environment OCID for deployment. [required]""")
+@cli_util.option('--helm-chart-artifact-id', required=True, help="""Helm chart artifact OCID. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
+
+    if 'oke_cluster_environment_id' in kwargs:
+        kwargs['oke_cluster_deploy_environment_id'] = kwargs['oke_cluster_environment_id']
+        kwargs.pop('oke_cluster_environment_id')
+
+    if 'helm_chart_artifact_id' in kwargs:
+        kwargs['helm_chart_deploy_artifact_id'] = kwargs['helm_chart_artifact_id']
+        kwargs.pop('helm_chart_artifact_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection', 'helm_chart_deploy_artifact_id', 'oke_cluster_deploy_environment_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.help)
+@cli_util.option('--oke-cluster-environment-id', help="""Kubernetes cluster environment OCID for deployment.""")
+@cli_util.option('--helm-chart-artifact-id', help="""Helm chart artifact OCID.""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
+
+    if 'oke_cluster_environment_id' in kwargs:
+        kwargs['oke_cluster_deploy_environment_id'] = kwargs['oke_cluster_environment_id']
+        kwargs.pop('oke_cluster_environment_id')
+
+    if 'helm_chart_artifact_id' in kwargs:
+        kwargs['helm_chart_deploy_artifact_id'] = kwargs['helm_chart_artifact_id']
+        kwargs.pop('helm_chart_artifact_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, **kwargs)

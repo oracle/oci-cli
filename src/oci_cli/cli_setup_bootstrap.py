@@ -213,7 +213,7 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
     # prompt for directory to place keys
     session_auth_location = os.path.abspath(os.path.join(cli_setup.DEFAULT_TOKEN_DIRECTORY, profile_name))
     if not os.path.exists(session_auth_location):
-        cli_setup.create_directory(session_auth_location)
+        cli_util.create_directory(session_auth_location)
 
     public_key_file_path = os.path.join(session_auth_location, DEFAULT_KEY_NAME + PUBLIC_KEY_FILENAME_SUFFIX)
     private_key_file_path = os.path.join(session_auth_location, DEFAULT_KEY_NAME + PRIVATE_KEY_FILENAME_SUFFIX)
@@ -235,7 +235,7 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
         token_location = os.path.join(session_auth_location, 'token')
         with open(token_location, 'w') as security_token_file:
             security_token_file.write(user_session.token)
-        cli_setup.apply_user_only_access_permissions(token_location)
+        cli_util.apply_user_only_access_permissions(token_location)
 
     # remove conflicting profile entry if exists
     cli_setup.remove_profile_from_config(config_location, profile_name)

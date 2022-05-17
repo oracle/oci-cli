@@ -768,7 +768,7 @@ def get_db_token(ctx, from_json, scope, db_token_location):
     with open(db_token_path, "w") as f:
         f.write(response['token'])
         click.echo('db-token written at: {}'.format(db_token_path))
-    cli_setup.apply_user_only_access_permissions(db_token_path)
+    cli_util.apply_user_only_access_permissions(db_token_path)
     with open(db_token_path, 'r') as db_token_file:
         token = db_token_file.read()
 

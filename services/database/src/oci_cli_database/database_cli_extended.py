@@ -343,7 +343,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.disable_autonomous_database_operations_insights, "disable-operations-insights")
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
@@ -359,6 +359,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
+@cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
 @cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
@@ -428,6 +429,10 @@ def launch_db_system_extended(ctx, **kwargs):
     if create_db_system_options:
         kwargs['db_system_options'] = json.dumps(create_db_system_options)
 
+    if 'storage_performance' in kwargs:
+        kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
+        kwargs.pop('storage_performance')
+
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['admin_password']
     del kwargs['tde_wallet_password']
@@ -450,7 +455,7 @@ def launch_db_system_extended(ctx, **kwargs):
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode'])
 @database_cli.db_system_group.command(name='launch-from-backup', help=database_cli.launch_db_system_launch_db_system_from_backup_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
@@ -460,6 +465,7 @@ def launch_db_system_extended(ctx, **kwargs):
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
+@cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -501,6 +507,10 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     if create_db_system_options:
         kwargs['db_system_options'] = json.dumps(create_db_system_options)
 
+    if 'storage_performance' in kwargs:
+        kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
+        kwargs.pop('storage_performance')
+
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['db_unique_name']
     del kwargs['admin_password']
@@ -512,6 +522,21 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     del kwargs['database_software_image_id']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_backup_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_database_details, params_to_exclude=['storage_volume_performance_mode'])
+@database_cli.db_system_group.command(name='launch-from-database', help=database_cli.launch_db_system_launch_db_system_from_database_details.help)
+@cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def launch_db_system_from_database_extended(ctx, **kwargs):
+
+    if 'storage_performance' in kwargs:
+        kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
+        kwargs.pop('storage_performance')
+
+    ctx.invoke(database_cli.launch_db_system_launch_db_system_from_database_details, **kwargs)
 
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
@@ -1261,7 +1286,7 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'peer_db_unique_name', 'peer_sid_prefix'])
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'peer_db_unique_name', 'peer_sid_prefix', 'storage_volume_performance_mode'])
 @create_data_guard_association_group.command('with-new-db-system', help="""Creates a new Data Guard association with a new DB System.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 
@@ -1269,6 +1294,8 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @cli_util.option('--display-name', required=True, help="""The user-friendly name for the DB System to create the standby database on. It does not have to be unique.""")
 @cli_util.option('--hostname', required=True, help="""The host name for the DB Node.""")
 @cli_util.option('--availability-domain', required=True, help="""The name of the Availability Domain that the standby database DB System will be located in.""")
+@cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores available for AMD-based virtual machine DB systems.""")
 @cli_util.option('--shape', help=u"""The shape of the DB system to launch to set up the Data Guard association. The shape determines the number of CPU cores and the amount of memory available for the DB system. Only virtual machine shapes are valid shapes. If you do not supply this parameter, the default shape is the shape of the primary DB system. To get a list of all shapes, use the [ListDbSystemShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB Systems, do not use a subnet that overlaps with 192.168.16.16/28
 
@@ -1277,7 +1304,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count):
     kwargs = {}
 
     details = {}
@@ -1300,6 +1327,10 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         details['shape'] = shape
     if is_active_data_guard_enabled is not None:
         details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
+    if cpu_core_count is not None:
+        details['cpuCoreCount'] = cpu_core_count
+    if storage_performance is not None:
+        details['storageVolumePerformanceMode'] = storage_performance
 
     details['creationType'] = 'NewDbSystem'
 
@@ -1613,7 +1644,6 @@ def update_cloud_exadata_infrastructure(ctx, **kwargs):
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--db-version', required=False, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
-@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -2524,7 +2554,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 
 
 @cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details, params_to_exclude=['autonomous_maintenance_schedule_type'])
-@database_cli.autonomous_database_group.command(name=database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details.name, help=u"""Details to create an Autonomous Data Guard association for an existing Autonomous Database where the standby is in a different (remote) region from the source primary database.\r\nThe following parameters are required for the cross-region standby database and must contain the same values as the source Autonomous Database:\n\r    - dbName\n\r    - cpuCoreCount\n\r    - dataStorageSizeInTB\n\r    - dbVersion\n\rThe following parameters are optional for the cross-region standby database. If included in the request, these parameters contain the same values as the source Autonomous Database:\n\r    - customerContacts\n\r    - scheduledOperations\n\r    - isAutoScalingForStorageEnabled\n\r    - definedTags\n\r    - freeformTags\n\r    - licenseModel\n\r    - whitelistedIps\n\r    - isMtlsConnectionRequired\n\rExample I - Creating a cross-region standby with required parameters only:\n\r{\n\r   "compartmentId": "ocid.compartment.oc1..<var>&lt;unique_ID&gt;</var>",\n\r   "cpuCoreCount": 1,\n\r   "dbName": "adatabasedb1",\n\r   "sourceId": "ocid1.autonomousdatabase.oc1.phx..<var>&lt;unique_ID&gt;</var>",\n\r   "dataStorageSizeInTBs": 1,\n\r   "source": "CROSS_REGION_DATAGUARD",\n\r   "adminPassword" : "<var>&lt;password&gt;</var>"\n\r}\n\rExample II - Creating a cross-region standby that specifies optional parameters in addition to the required parameters:\n\r{\n\r   "compartmentId": "ocid.compartment.oc1..<var>&lt;unique_ID&gt;</var>",\n\r   "cpuCoreCount": 1,\n\r   "dbName": "adatabasedb1",\n\r   "sourceId": "ocid1.autonomousdatabase.oc1.phx..<var>&lt;unique_ID&gt;</var>",\n\r   "dataStorageSizeInTBs": 1,\n\r   "source": "CROSS_REGION_DATAGUARD",\n\r   "adminPassword" : "<var>&lt;password&gt;</var>",\n\r   "dbVersion": "19c",\n\r   "licenseModel": "LICENSE_INCLUDED",\n\r   "isAutoScalingForStorageEnabled": "true"\n\r}""")
+@database_cli.autonomous_database_group.command(name=database_cli.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details.name, help=u"""Details to create an Autonomous Data Guard association for an existing Autonomous Database where the standby is in a different (remote) region from the source primary database.\n\r\n\rThe following parameters are optional for the cross-region standby database. If included in the request, these parameters contain the same values as the source Autonomous Database:\n\r    - customerContacts\n\r    - scheduledOperations\n\r    - isAutoScalingForStorageEnabled\n\r    - definedTags\n\r    - freeformTags\n\r    - licenseModel\n\r    - whitelistedIps\n\r    - isMtlsConnectionRequired\n\r    - dbName\n\r    - adminPassword\n\r    - cpuCoreCount\n\r    - dataStorageSizeInTB\n\r    - dbVersion\n\r\n\rExample I - Creating a cross-region standby with required parameters only:\n\r{\n\r   "compartmentId": "ocid.compartment.oc1..<var>&lt;unique_ID&gt;</var>",\n\r   "sourceId": "ocid1.autonomousdatabase.oc1.phx..<var>&lt;unique_ID&gt;</var>",\n\r   "source": "CROSS_REGION_DATAGUARD"\n\r}\n\rExample II - Creating a cross-region standby that specifies optional parameters in addition to the required parameters:\n\r{\n\r   "compartmentId": "ocid.compartment.oc1..<var>&lt;unique_ID&gt;</var>",\n\r   "cpuCoreCount": 1,\n\r   "dbName": "adatabasedb1",\n\r   "sourceId": "ocid1.autonomousdatabase.oc1.phx..<var>&lt;unique_ID&gt;</var>",\n\r   "dataStorageSizeInTBs": 1,\n\r   "source": "CROSS_REGION_DATAGUARD",\n\r   "adminPassword" : "<var>&lt;password&gt;</var>",\n\r   "dbVersion": "19c",\n\r   "licenseModel": "LICENSE_INCLUDED",\n\r   "isAutoScalingForStorageEnabled": "true"\n\r}""")
 @cli_util.option('--maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database on shared Exadata infrastructure. The EARLY maintenance schedule of this Autonomous Database follows a schedule that applies patches prior to the REGULAR schedule.The REGULAR maintenance schedule of this Autonomous Database follows the normal cycle.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
@@ -2711,6 +2741,26 @@ def convert_to_pdb_rollback_extended(ctx, **kwargs):
 def convert_to_pdb_sync_extended(ctx, **kwargs):
     kwargs['action'] = "SYNC"
     ctx.invoke(database_cli.convert_to_pdb, **kwargs)
+
+
+# Renaming the parameter storage-volume-performance-mode to storage-performance
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_db_system_details, params_to_exclude=['storage_volume_performance_mode'])
+@database_cli.db_system_group.command(name='launch-from-db-system', help=database_cli.launch_db_system_launch_db_system_from_db_system_details.help)
+@cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDbSystemDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def launch_db_system_launch_db_system_from_db_system_details_extended(ctx, **kwargs):
+    if 'storage_performance' in kwargs:
+        kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
+        kwargs.pop('storage_performance')
+    ctx.invoke(database_cli.launch_db_system_launch_db_system_from_db_system_details, **kwargs)
+
+
+# renaming db-system-storage-performance command group to storage-performance
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_storage_performance_group, "storage-performance")
+# renaming db-system-compute-performance command group to compute-performance
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_compute_performance_group, "compute-performance")
 
 
 # CLI-341

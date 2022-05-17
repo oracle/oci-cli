@@ -15,7 +15,6 @@ import base64
 import configparser
 import os
 import os.path
-import stat
 import subprocess
 import sys
 import errno
@@ -238,7 +237,7 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
 
     output_dir = os.path.expanduser(output_dir)
     if not os.path.exists(output_dir):
-        create_directory(output_dir)
+        cli_util.create_directory(output_dir)
 
     private_key = cli_util.generate_key()
     public_key = private_key.public_key()
@@ -269,7 +268,7 @@ def generate_oci_config():
     if click.confirm("Do you want to generate a new API Signing RSA key pair? (If you decline you will be asked to supply the path to an existing key.)", default=True):
         key_location = os.path.abspath(os.path.expanduser(click.prompt(text='Enter a directory for your keys to be created', default=DEFAULT_DIRECTORY)))
         if not os.path.exists(key_location):
-            create_directory(key_location)
+            cli_util.create_directory(key_location)
 
         private_key = cli_util.generate_key()
         public_key = private_key.public_key()
@@ -639,7 +638,7 @@ def repair_file_permissions(file):
     if not os.path.isfile(file):
         raise click.UsageError('This command is only supported for files.')
 
-    apply_user_only_access_permissions(file)
+    cli_util.apply_user_only_access_permissions(file)
 
 
 def public_key_to_fingerprint(public_key):
@@ -679,7 +678,7 @@ def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenanc
             f.write("security_token_file={}\n".format(security_token_file))
 
     # only user has R/W permissions to the config file
-    apply_user_only_access_permissions(filename)
+    cli_util.apply_user_only_access_permissions(filename)
 
 
 def write_public_key_to_file(filename, public_key, overwrite=False, silent=False):
@@ -690,7 +689,7 @@ def write_public_key_to_file(filename, public_key, overwrite=False, silent=False
         f.write(cli_util.serialize_key(public_key=public_key))
 
     # only user has R/W permissions to the key file
-    apply_user_only_access_permissions(filename)
+    cli_util.apply_user_only_access_permissions(filename)
 
     if not silent:
         click.echo('Public key written to: {}'.format(filename))
@@ -705,56 +704,11 @@ def write_private_key_to_file(filename, private_key, passphrase, overwrite=False
         f.write(cli_util.serialize_key(private_key=private_key, passphrase=passphrase))
 
     # only user has R/W permissions to the key file
-    apply_user_only_access_permissions(filename)
+    cli_util.apply_user_only_access_permissions(filename)
 
     if not silent:
         click.echo('Private key written to: {}'.format(filename))
     return True
-
-
-def apply_user_only_access_permissions(path):
-    if not os.path.exists(path):
-        raise RuntimeError("Failed attempting to set permissions on path that does not exist: {}".format(path))
-
-    if cli_util.is_windows():
-        # General permissions strategy is:
-        #   - if we create a new folder (e.g. C:\Users\opc\.oci), set access to allow full control for current user and no access for anyone else
-        #   - if we create a new file, set access to allow full control for current user and no access for anyone else
-        #   - thus if the user elects to place a new file (config or key) in an existing directory, we will not change the
-        #     permissions of that directory but will explicitly set the permissions on that file
-        username = os.environ['USERNAME']
-        userdomain = os.environ['UserDomain']
-        userWithDomain = os.environ['USERNAME']
-        if userdomain:
-            userWithDomain = userdomain + "\\" + username
-        admin_grp = '*S-1-5-32-544'
-        system_usr = '*S-1-5-18'
-        try:
-            if os.path.isfile(path):
-                subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
-                try:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:F" /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
-                except subprocess.CalledProcessError:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:F" /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
-            else:
-                if os.listdir(path):
-                    # safety check to make sure we aren't changing permissions of existing files
-                    raise RuntimeError("Failed attempting to set permissions on existing folder that is not empty.")
-                subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
-                try:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:(OI)(CI)F"  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
-                except subprocess.CalledProcessError:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:(OI)(CI)F"  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc_info:
-            print("Error occurred while attempting to set permissions for {path}: {exception}".format(path=path, exception=str(exc_info)))
-            sys.exit(exc_info.returncode)
-    else:
-        if os.path.isfile(path):
-            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR)
-        else:
-            # For directories, we need to apply S_IXUSER otherwise it looks like on Linux/Unix/macOS if we create the directory then
-            # it won't behave like a directory and let files be put into it
-            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
 
 
 def validate_private_key_passphrase(filename, passphrase):
@@ -844,11 +798,6 @@ def validate_resource_name(name):
     return name
 
 
-def create_directory(dirname):
-    os.makedirs(dirname)
-    apply_user_only_access_permissions(dirname)
-
-
 def validate_profile_name(value, config_parser, overwrite=False, makeUpper=True):
     if not value:
         click.echo('Cannot specify blank profile name')
@@ -896,7 +845,7 @@ def prompt_for_config_location():
 
         # if user inputs only a filename (dirname=='') it implies the current directory so no need to create a dir
         if dirname and not os.path.exists(dirname):
-            create_directory(dirname)
+            cli_util.create_directory(dirname)
 
     return (config_location, DEFAULT_PROFILE_NAME)
 

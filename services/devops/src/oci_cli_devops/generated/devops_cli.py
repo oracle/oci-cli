@@ -1113,6 +1113,77 @@ def create_connection_create_github_access_token_connection_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('devops.create_connection_create_bitbucket_cloud_app_password_connection_details.command_name', 'create-connection-create-bitbucket-cloud-app-password-connection-details'), help=u"""Creates a new connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project.""")
+@cli_util.option('--username', required=True, help=u"""Public Bitbucket Cloud Username in plain text(not more than 30 characters)""")
+@cli_util.option('--app-password', required=True, help=u"""OCID of personal Bitbucket Cloud AppPassword saved in secret store""")
+@cli_util.option('--description', help=u"""Optional description about the connection.""")
+@cli_util.option('--display-name', help=u"""Optional connection display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_bitbucket_cloud_app_password_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, username, app_password, description, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['username'] = username
+    _details['appPassword'] = app_password
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['connectionType'] = 'BITBUCKET_CLOUD_APP_PASSWORD'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('devops.create_connection_create_gitlab_access_token_connection_details.command_name', 'create-connection-create-gitlab-access-token-connection-details'), help=u"""Creates a new connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project.""")
 @cli_util.option('--access-token', required=True, help=u"""The OCID of personal access token saved in secret store.""")
@@ -1299,6 +1370,82 @@ def create_deploy_artifact_generic_deploy_artifact_source(ctx, from_json, wait_f
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['deployArtifactSource']['deployArtifactSourceType'] = 'GENERIC_ARTIFACT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_deploy_artifact(
+        create_deploy_artifact_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@deploy_artifact_group.command(name=cli_util.override('devops.create_deploy_artifact_helm_repository_deploy_artifact_source.command_name', 'create-deploy-artifact-helm-repository-deploy-artifact-source'), help=u"""Creates a new deployment artifact. \n[Command Reference](createDeployArtifact)""")
+@cli_util.option('--deploy-artifact-type', required=True, help=u"""Type of the deployment artifact.""")
+@cli_util.option('--argument-substitution-mode', required=True, help=u"""Mode for artifact parameter substitution.""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of a project.""")
+@cli_util.option('--deploy-artifact-source-chart-url', required=True, help=u"""The URL of an OCIR repository.""")
+@cli_util.option('--deploy-artifact-source-deploy-artifact-version', required=True, help=u"""Users can set this as a placeholder value that refers to a pipeline parameter, for example, ${appVersion}.""")
+@cli_util.option('--description', help=u"""Optional description about the deployment artifact.""")
+@cli_util.option('--display-name', help=u"""Deployment artifact display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def create_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_type, argument_substitution_mode, project_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['deployArtifactSource'] = {}
+    _details['deployArtifactType'] = deploy_artifact_type
+    _details['argumentSubstitutionMode'] = argument_substitution_mode
+    _details['projectId'] = project_id
+    _details['deployArtifactSource']['chartUrl'] = deploy_artifact_source_chart_url
+    _details['deployArtifactSource']['deployArtifactVersion'] = deploy_artifact_source_deploy_artifact_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['deployArtifactSource']['deployArtifactSourceType'] = 'HELM_CHART'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.create_deploy_artifact(
@@ -2904,6 +3051,97 @@ def create_deploy_stage_create_compute_instance_group_canary_approval_deploy_sta
     cli_util.render_response(result, ctx)
 
 
+@deploy_stage_group.command(name=cli_util.override('devops.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.command_name', 'create-deploy-stage-create-oke-helm-chart-deploy-stage-details'), help=u"""Creates a new deployment stage. \n[Command Reference](createDeployStage)""")
+@cli_util.option('--deploy-pipeline-id', required=True, help=u"""The OCID of a pipeline.""")
+@cli_util.option('--deploy-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oke-cluster-deploy-environment-id', required=True, help=u"""Kubernetes cluster environment OCID for deployment.""")
+@cli_util.option('--helm-chart-deploy-artifact-id', required=True, help=u"""Helm chart artifact OCID.""")
+@cli_util.option('--release-name', required=True, help=u"""Default name of the chart instance. Must be unique within a Kubernetes namespace.""")
+@cli_util.option('--description', help=u"""Optional description about the deployment stage.""")
+@cli_util.option('--display-name', help=u"""Deployment stage display name, which can be renamed and is not necessarily unique. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--values-artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of values.yaml file artifact OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--namespace', help=u"""Default namespace to be used for Kubernetes deployment when not specified in the manifest.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Time to wait for execution of a helm stage. Defaults to 300 seconds.""")
+@cli_util.option('--rollback-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_helm_chart_deploy_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, deploy_stage_predecessor_collection, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, release_name, description, display_name, freeform_tags, defined_tags, values_artifact_ids, namespace, timeout_in_seconds, rollback_policy):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['deployPipelineId'] = deploy_pipeline_id
+    _details['deployStagePredecessorCollection'] = cli_util.parse_json_parameter("deploy_stage_predecessor_collection", deploy_stage_predecessor_collection)
+    _details['okeClusterDeployEnvironmentId'] = oke_cluster_deploy_environment_id
+    _details['helmChartDeployArtifactId'] = helm_chart_deploy_artifact_id
+    _details['releaseName'] = release_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if values_artifact_ids is not None:
+        _details['valuesArtifactIds'] = cli_util.parse_json_parameter("values_artifact_ids", values_artifact_ids)
+
+    if namespace is not None:
+        _details['namespace'] = namespace
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if rollback_policy is not None:
+        _details['rollbackPolicy'] = cli_util.parse_json_parameter("rollback_policy", rollback_policy)
+
+    _details['deployStageType'] = 'OKE_HELM_CHART_DEPLOYMENT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_deploy_stage(
+        create_deploy_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @deploy_stage_group.command(name=cli_util.override('devops.create_deploy_stage_create_manual_approval_deploy_stage_details.command_name', 'create-deploy-stage-create-manual-approval-deploy-stage-details'), help=u"""Creates a new deployment stage. \n[Command Reference](createDeployStage)""")
 @cli_util.option('--deploy-pipeline-id', required=True, help=u"""The OCID of a pipeline.""")
 @cli_util.option('--deploy-stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3884,6 +4122,75 @@ def create_trigger_create_devops_code_repository_trigger_details(ctx, from_json,
         _details['repositoryId'] = repository_id
 
     _details['triggerSource'] = 'DEVOPS_CODE_REPOSITORY'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.create_trigger_create_bitbucket_cloud_trigger_details.command_name', 'create-trigger-create-bitbucket-cloud-trigger-details'), help=u"""Creates a new trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project to which the trigger belongs to.""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Trigger display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Optional description about the trigger.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger_create_bitbucket_cloud_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'BITBUCKET_CLOUD'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.create_trigger(
@@ -5623,7 +5930,7 @@ def list_commits(ctx, from_json, all_pages, page_size, repository_id, ref_name, 
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""A filter to return only connections that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GITHUB_ACCESS_TOKEN", "GITLAB_ACCESS_TOKEN"]), help=u"""A filter to return only resources that match the given connection type.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GITHUB_ACCESS_TOKEN", "GITLAB_ACCESS_TOKEN", "BITBUCKET_CLOUD_APP_PASSWORD"]), help=u"""A filter to return only resources that match the given connection type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
@@ -7659,6 +7966,92 @@ def update_connection_update_gitlab_access_token_connection_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('devops.update_connection_update_bitbucket_cloud_app_password_connection_details.command_name', 'update-connection-update-bitbucket-cloud-app-password-connection-details'), help=u"""Updates the connection. \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""Unique connection identifier.""")
+@cli_util.option('--description', help=u"""Optional description about the connection.""")
+@cli_util.option('--display-name', help=u"""Optional connection display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""Public Bitbucket Cloud Username in plain text(not more than 30 characters)""")
+@cli_util.option('--app-password', help=u"""OCID of personal Bitbucket Cloud AppPassword saved in secret store""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_bitbucket_cloud_app_password_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, username, app_password, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if username is not None:
+        _details['username'] = username
+
+    if app_password is not None:
+        _details['appPassword'] = app_password
+
+    _details['connectionType'] = 'BITBUCKET_CLOUD_APP_PASSWORD'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @deploy_artifact_group.command(name=cli_util.override('devops.update_deploy_artifact.command_name', 'update'), help=u"""Updates the deployment artifact. \n[Command Reference](updateDeployArtifact)""")
 @cli_util.option('--deploy-artifact-id', required=True, help=u"""Unique artifact identifier.""")
 @cli_util.option('--description', help=u"""Optional description about the deployment artifact.""")
@@ -7807,6 +8200,97 @@ def update_deploy_artifact_generic_deploy_artifact_source(ctx, from_json, force,
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['deployArtifactSource']['deployArtifactSourceType'] = 'GENERIC_ARTIFACT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_deploy_artifact(
+        deploy_artifact_id=deploy_artifact_id,
+        update_deploy_artifact_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@deploy_artifact_group.command(name=cli_util.override('devops.update_deploy_artifact_helm_repository_deploy_artifact_source.command_name', 'update-deploy-artifact-helm-repository-deploy-artifact-source'), help=u"""Updates the deployment artifact. \n[Command Reference](updateDeployArtifact)""")
+@cli_util.option('--deploy-artifact-id', required=True, help=u"""Unique artifact identifier.""")
+@cli_util.option('--deploy-artifact-source-chart-url', required=True, help=u"""The URL of an OCIR repository.""")
+@cli_util.option('--deploy-artifact-source-deploy-artifact-version', required=True, help=u"""Users can set this as a placeholder value that refers to a pipeline parameter, for example, ${appVersion}.""")
+@cli_util.option('--description', help=u"""Optional description about the deployment artifact.""")
+@cli_util.option('--display-name', help=u"""Deployment artifact display name. Avoid entering confidential information.""")
+@cli_util.option('--deploy-artifact-type', help=u"""Type of the deployment artifact.""")
+@cli_util.option('--argument-substitution-mode', help=u"""Mode for artifact parameter substitution.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def update_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match):
+
+    if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
+        raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['deployArtifactSource'] = {}
+    _details['deployArtifactSource']['chartUrl'] = deploy_artifact_source_chart_url
+    _details['deployArtifactSource']['deployArtifactVersion'] = deploy_artifact_source_deploy_artifact_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if deploy_artifact_type is not None:
+        _details['deployArtifactType'] = deploy_artifact_type
+
+    if argument_substitution_mode is not None:
+        _details['argumentSubstitutionMode'] = argument_substitution_mode
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['deployArtifactSource']['deployArtifactSourceType'] = 'HELM_CHART'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.update_deploy_artifact(
@@ -8651,6 +9135,116 @@ def update_deploy_stage_update_oke_canary_deploy_stage_details(ctx, from_json, f
         _details['kubernetesManifestDeployArtifactIds'] = cli_util.parse_json_parameter("kubernetes_manifest_deploy_artifact_ids", kubernetes_manifest_deploy_artifact_ids)
 
     _details['deployStageType'] = 'OKE_CANARY_DEPLOYMENT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_deploy_stage(
+        deploy_stage_id=deploy_stage_id,
+        update_deploy_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@deploy_stage_group.command(name=cli_util.override('devops.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.command_name', 'update-deploy-stage-update-oke-helm-chart-deploy-stage-details'), help=u"""Updates the deployment stage. \n[Command Reference](updateDeployStage)""")
+@cli_util.option('--deploy-stage-id', required=True, help=u"""Unique stage identifier.""")
+@cli_util.option('--description', help=u"""Optional description about the deployment stage.""")
+@cli_util.option('--display-name', help=u"""Deployment stage display name, which can be renamed and is not necessarily unique. Avoid entering confidential information.""")
+@cli_util.option('--deploy-stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oke-cluster-deploy-environment-id', help=u"""Kubernetes cluster environment OCID for deployment.""")
+@cli_util.option('--helm-chart-deploy-artifact-id', help=u"""Helm chart artifact OCID.""")
+@cli_util.option('--values-artifact-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of values.yaml file artifact OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--release-name', help=u"""Name of the Helm chart release.""")
+@cli_util.option('--namespace', help=u"""Default namespace to be used for Kubernetes deployment when not specified in the manifest.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Time to wait for execution of a helm stage. Defaults to 300 seconds.""")
+@cli_util.option('--rollback-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_helm_chart_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, values_artifact_ids, release_name, namespace, timeout_in_seconds, rollback_policy, if_match):
+
+    if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
+    if not force:
+        if deploy_stage_predecessor_collection or freeform_tags or defined_tags or values_artifact_ids or rollback_policy:
+            if not click.confirm("WARNING: Updates to deploy-stage-predecessor-collection and freeform-tags and defined-tags and values-artifact-ids and rollback-policy will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if deploy_stage_predecessor_collection is not None:
+        _details['deployStagePredecessorCollection'] = cli_util.parse_json_parameter("deploy_stage_predecessor_collection", deploy_stage_predecessor_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if oke_cluster_deploy_environment_id is not None:
+        _details['okeClusterDeployEnvironmentId'] = oke_cluster_deploy_environment_id
+
+    if helm_chart_deploy_artifact_id is not None:
+        _details['helmChartDeployArtifactId'] = helm_chart_deploy_artifact_id
+
+    if values_artifact_ids is not None:
+        _details['valuesArtifactIds'] = cli_util.parse_json_parameter("values_artifact_ids", values_artifact_ids)
+
+    if release_name is not None:
+        _details['releaseName'] = release_name
+
+    if namespace is not None:
+        _details['namespace'] = namespace
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if rollback_policy is not None:
+        _details['rollbackPolicy'] = cli_util.parse_json_parameter("rollback_policy", rollback_policy)
+
+    _details['deployStageType'] = 'OKE_HELM_CHART_DEPLOYMENT'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.update_deploy_stage(
@@ -10919,6 +11513,90 @@ def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['triggerSource'] = 'GITLAB'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger_update_bitbucket_cloud_trigger_details.command_name', 'update-trigger-update-bitbucket-cloud-trigger-details'), help=u"""Updates the trigger. \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""Unique trigger identifier.""")
+@cli_util.option('--display-name', help=u"""Trigger display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Optional description about the trigger.""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger_update_bitbucket_cloud_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'BITBUCKET_CLOUD'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.update_trigger(
