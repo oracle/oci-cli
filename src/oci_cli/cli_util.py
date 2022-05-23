@@ -851,7 +851,14 @@ def wrap_exceptions(func):
             if ctx.obj["debug"]:
                 raise
             tpl = "{exc}:\n{details}"
-            exception.args[0]['message'] += ". Please visit https://docs.oracle.com/en-us/iaas/Content/API/References/apierrors.htm to learn more about this error code"
+            # exception dict will only have one list element. Updating "logging_tips" and "troubleshooting_tips" field of 0th index of list.
+            if 'logging_tips' in exception.args[0]:
+                exception.args[0]['logging_tips'] = "Please run the OCI CLI command using --debug flag to find more debug information."
+            api_errors_info = "See https://docs.oracle.com/iaas/Content/API/References/apierrors.htm#apierrors_{}__{}_{} for more information about resolving this error".format(str(exception.args[0]['status']), str(exception.args[0]['status']), str(exception.args[0]['code']).lower())
+            if 'troubleshooting_tips' in exception.args[0]:
+                exception.args[0]['troubleshooting_tips'] = "{}. If you are unable to resolve this issue, run this CLI command with --debug option and contact Oracle support and provide them the full error message.".format(api_errors_info)
+            if 'client_version' in exception.args[0]:
+                exception.args[0]['client_version'] += ', Oracle-PythonCLI/{}'.format(__version__)
             details = json.dumps(exception.args[0], indent=4, sort_keys=True)
             sys.exit(tpl.format(exc=exception.__class__.__name__, details=details))
         except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError as exception:

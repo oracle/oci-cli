@@ -7,15 +7,15 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.oda.src.oci_cli_oda.generated import oda_service_cli
 
 
-@cli.command(cli_util.override('oda.oda_root_group.command_name', 'oda'), cls=CommandGroupWithAlias, help=cli_util.override('oda.oda_root_group.help', """API to create and maintain Oracle Digital Assistant service instances."""), short_help=cli_util.override('oda.oda_root_group.short_help', """Digital Assistant Service Instance API"""))
+@click.command(cli_util.override('oda.oda_root_group.command_name', 'oda'), cls=CommandGroupWithAlias, help=cli_util.override('oda.oda_root_group.help', """API to create and maintain Oracle Digital Assistant service instances."""), short_help=cli_util.override('oda.oda_root_group.short_help', """Digital Assistant Service Instance API"""))
 @cli_util.help_option_group
 def oda_root_group():
     pass
@@ -39,16 +39,39 @@ def work_request_log_entry_group():
     pass
 
 
+@click.command(cli_util.override('oda.oda_instance_attachment_collection_group.command_name', 'oda-instance-attachment-collection'), cls=CommandGroupWithAlias, help="""Results of a Oda instance attachment search. Contains OdaInstanceAttachment items.""")
+@cli_util.help_option_group
+def oda_instance_attachment_collection_group():
+    pass
+
+
+@click.command(cli_util.override('oda.oda_instance_attachment_group.command_name', 'oda-instance-attachment'), cls=CommandGroupWithAlias, help="""Description of an ODA instance attachment.""")
+@cli_util.help_option_group
+def oda_instance_attachment_group():
+    pass
+
+
 @click.command(cli_util.override('oda.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The description of work request, including its status.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
+oda_service_cli.oda_service_group.add_command(oda_root_group)
 oda_root_group.add_command(oda_instance_group)
 oda_root_group.add_command(work_request_error_group)
 oda_root_group.add_command(work_request_log_entry_group)
+oda_root_group.add_command(oda_instance_attachment_collection_group)
+oda_root_group.add_command(oda_instance_attachment_group)
 oda_root_group.add_command(work_request_group)
+# oci oda oda --> oci oda
+oda_service_cli.oda_service_group.commands.pop(oda_root_group.name)
+oda_service_cli.oda_service_group.add_command(oda_instance_group)
+oda_service_cli.oda_service_group.add_command(work_request_error_group)
+oda_service_cli.oda_service_group.add_command(work_request_log_entry_group)
+oda_service_cli.oda_service_group.add_command(oda_instance_attachment_collection_group)
+oda_service_cli.oda_service_group.add_command(oda_instance_attachment_group)
+oda_service_cli.oda_service_group.add_command(work_request_group)
 
 
 @oda_instance_group.command(name=cli_util.override('oda.change_oda_instance_compartment.command_name', 'change-compartment'), help=u"""Moves an Digital Assistant instance into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOdaInstanceCompartment)""")
@@ -110,13 +133,15 @@ def change_oda_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 
 @oda_instance_group.command(name=cli_util.override('oda.create_oda_instance.command_name', 'create'), help=u"""Starts an asynchronous job to create a Digital Assistant instance.
 
-To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestID}`. \n[Command Reference](createOdaInstance)""")
+To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestId}`. \n[Command Reference](createOdaInstance)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Identifier of the compartment.""")
 @cli_util.option('--shape-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEVELOPMENT", "PRODUCTION"]), help=u"""Shape or size of the instance.""")
 @cli_util.option('--display-name', help=u"""User-friendly name for the instance. Avoid entering confidential information. You can change this value anytime.""")
 @cli_util.option('--description', help=u"""Description of the Digital Assistant instance.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-role-based-access', type=click.BOOL, help=u"""Should this Digital Assistant instance use role-based authorization via an identity domain (true) or use the default policy-based authorization via IAM policies (false)""")
+@cli_util.option('--identity-domain', help=u"""If isRoleBasedAccess is set to true, this property specifies the identity domain that is to be used to implement this type of authorzation. Digital Assistant will create an Identity Application instance and Application Roles within this identity domain. The caller may then perform and user roll mappings they like to grant access to users within the identity domain.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -125,7 +150,7 @@ To monitor the status of the job, take the `opc-work-request-id` response header
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'oda', 'class': 'OdaInstance'})
 @cli_util.wrap_exceptions
-def create_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, display_name, description, freeform_tags, defined_tags):
+def create_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, display_name, description, freeform_tags, defined_tags, is_role_based_access, identity_domain):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -145,6 +170,12 @@ def create_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_role_based_access is not None:
+        _details['isRoleBasedAccess'] = is_role_based_access
+
+    if identity_domain is not None:
+        _details['identityDomain'] = identity_domain
 
     client = cli_util.build_client('oda', 'oda', ctx)
     result = client.create_oda_instance(
@@ -179,7 +210,83 @@ def create_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@oda_instance_group.command(name=cli_util.override('oda.delete_oda_instance.command_name', 'delete'), help=u"""Starts an asynchronous job to delete the specified Digital Assistant instance. To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestID}`. \n[Command Reference](deleteOdaInstance)""")
+@oda_instance_attachment_group.command(name=cli_util.override('oda.create_oda_instance_attachment.command_name', 'create'), help=u"""Starts an asynchronous job to create a Digital Assistant instance attachment.
+
+To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestId}`. \n[Command Reference](createOdaInstanceAttachment)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--attach-to-id', required=True, help=u"""The OCID of the target instance (which could be any other OCI PaaS/SaaS resource), to which this ODA instance is being attached.""")
+@cli_util.option('--attachment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FUSION"]), help=u"""The type of target instance which this ODA instance is being attached.""")
+@cli_util.option('--owner', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attachment-metadata', help=u"""Attachment specific metadata. Defined by the target service.""")
+@cli_util.option('--restricted-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of operations that are restricted while this instance is attached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'restricted-operations': {'module': 'oda', 'class': 'list[string]'}, 'owner': {'module': 'oda', 'class': 'OdaInstanceAttachmentOwner'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'restricted-operations': {'module': 'oda', 'class': 'list[string]'}, 'owner': {'module': 'oda', 'class': 'OdaInstanceAttachmentOwner'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_oda_instance_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, attach_to_id, attachment_type, owner, attachment_metadata, restricted_operations, freeform_tags, defined_tags):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['attachToId'] = attach_to_id
+    _details['attachmentType'] = attachment_type
+    _details['owner'] = cli_util.parse_json_parameter("owner", owner)
+
+    if attachment_metadata is not None:
+        _details['attachmentMetadata'] = attachment_metadata
+
+    if restricted_operations is not None:
+        _details['restrictedOperations'] = cli_util.parse_json_parameter("restricted_operations", restricted_operations)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('oda', 'oda', ctx)
+    result = client.create_oda_instance_attachment(
+        oda_instance_id=oda_instance_id,
+        create_oda_instance_attachment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@oda_instance_group.command(name=cli_util.override('oda.delete_oda_instance.command_name', 'delete'), help=u"""Starts an asynchronous job to delete the specified Digital Assistant instance. To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestId}`. \n[Command Reference](deleteOdaInstance)""")
 @cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
 @cli_util.confirm_delete_option
@@ -231,6 +338,63 @@ def delete_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@oda_instance_attachment_group.command(name=cli_util.override('oda.delete_oda_instance_attachment.command_name', 'delete'), help=u"""Starts an asynchronous job to delete the specified Digital Assistant instance attachment. \n[Command Reference](deleteOdaInstanceAttachment)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--attachment-id', required=True, help=u"""Unique Digital Assistant instance attachment identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_oda_instance_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, attachment_id, if_match):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('oda', 'oda', ctx)
+    result = client.delete_oda_instance_attachment(
+        oda_instance_id=oda_instance_id,
+        attachment_id=attachment_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @oda_instance_group.command(name=cli_util.override('oda.get_oda_instance.command_name', 'get'), help=u"""Gets the specified Digital Assistant instance. \n[Command Reference](getOdaInstance)""")
 @cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -248,6 +412,36 @@ def get_oda_instance(ctx, from_json, oda_instance_id):
     client = cli_util.build_client('oda', 'oda', ctx)
     result = client.get_oda_instance(
         oda_instance_id=oda_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@oda_instance_attachment_group.command(name=cli_util.override('oda.get_oda_instance_attachment.command_name', 'get'), help=u"""Gets an ODA instance attachment by identifier \n[Command Reference](getOdaInstanceAttachment)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--attachment-id', required=True, help=u"""Unique Digital Assistant instance attachment identifier.""")
+@cli_util.option('--include-owner-metadata', type=click.BOOL, help=u"""Whether to send attachment owner info during get/list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'oda', 'class': 'OdaInstanceAttachment'})
+@cli_util.wrap_exceptions
+def get_oda_instance_attachment(ctx, from_json, oda_instance_id, attachment_id, include_owner_metadata):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if include_owner_metadata is not None:
+        kwargs['include_owner_metadata'] = include_owner_metadata
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('oda', 'oda', ctx)
+    result = client.get_oda_instance_attachment(
+        oda_instance_id=oda_instance_id,
+        attachment_id=attachment_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -274,6 +468,73 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@oda_instance_attachment_collection_group.command(name=cli_util.override('oda.list_oda_instance_attachments.command_name', 'list-oda-instance-attachments'), help=u"""Returns a list of ODA instance attachments \n[Command Reference](listOdaInstanceAttachments)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--include-owner-metadata', type=click.BOOL, help=u"""Whether to send attachment owner info during get/list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The page at which to start retrieving results.
+
+You get this value from the `opc-next-page` header in a previous list request. To retireve the first page, omit this query parameter.
+
+Example: `MToxMA==`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ACTIVE", "DETACHING", "INACTIVE", "FAILED"]), help=u"""List only the ODA instance attachments that are in this lifecycle state.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Sort the results in this order, use either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED"]), help=u"""Sort on this field. You can specify one sort order only. The default sort field is `TIMECREATED`. The default sort order for `TIMECREATED` is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'oda', 'class': 'OdaInstanceAttachmentCollection'})
+@cli_util.wrap_exceptions
+def list_oda_instance_attachments(ctx, from_json, all_pages, page_size, oda_instance_id, include_owner_metadata, limit, page, lifecycle_state, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if include_owner_metadata is not None:
+        kwargs['include_owner_metadata'] = include_owner_metadata
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('oda', 'oda', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_oda_instance_attachments,
+            oda_instance_id=oda_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_oda_instance_attachments,
+            limit,
+            page_size,
+            oda_instance_id=oda_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_oda_instance_attachments(
+            oda_instance_id=oda_instance_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -648,7 +909,7 @@ def stop_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
 @cli_util.option('--display-name', help=u"""User-friendly name for the Digital Assistant instance.""")
 @cli_util.option('--description', help=u"""Description of the Digital Assistant instance.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -717,4 +978,83 @@ def update_oda_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@oda_instance_attachment_group.command(name=cli_util.override('oda.update_oda_instance_attachment.command_name', 'update'), help=u"""Updates the ODA instance attachment \n[Command Reference](updateOdaInstanceAttachment)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--attachment-id', required=True, help=u"""Unique Digital Assistant instance attachment identifier.""")
+@cli_util.option('--attachment-metadata', required=True, help=u"""Attachment specific metadata. Defined by the target service.""")
+@cli_util.option('--restricted-operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of operations that are restricted while this instance is attached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'restricted-operations': {'module': 'oda', 'class': 'list[string]'}, 'owner': {'module': 'oda', 'class': 'OdaInstanceAttachmentOwner'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'restricted-operations': {'module': 'oda', 'class': 'list[string]'}, 'owner': {'module': 'oda', 'class': 'OdaInstanceAttachmentOwner'}, 'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_oda_instance_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, attachment_id, attachment_metadata, restricted_operations, owner, freeform_tags, defined_tags, if_match):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
+    if not force:
+        if restricted_operations or owner or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to restricted-operations and owner and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['attachmentMetadata'] = attachment_metadata
+    _details['restrictedOperations'] = cli_util.parse_json_parameter("restricted_operations", restricted_operations)
+    _details['owner'] = cli_util.parse_json_parameter("owner", owner)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('oda', 'oda', ctx)
+    result = client.update_oda_instance_attachment(
+        oda_instance_id=oda_instance_id,
+        attachment_id=attachment_id,
+        update_oda_instance_attachment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

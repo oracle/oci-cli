@@ -15,33 +15,26 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.apigateway.src.oci_cli_apigateway.generated import api_gateway_service_cli
 
 
-@click.command(cli_util.override('deployment.deployment_root_group.command_name', 'deployment'), cls=CommandGroupWithAlias, help=cli_util.override('deployment.deployment_root_group.help', """API for the API Gateway service. Use this API to manage gateways, deployments, and related items.
+@click.command(cli_util.override('usage_plans.usage_plans_root_group.command_name', 'usage-plans'), cls=CommandGroupWithAlias, help=cli_util.override('usage_plans.usage_plans_root_group.help', """API for the API Gateway service. Use this API to manage gateways, deployments, and related items.
 For more information, see
-[Overview of API Gateway]."""), short_help=cli_util.override('deployment.deployment_root_group.short_help', """API Gateway API"""))
+[Overview of API Gateway]."""), short_help=cli_util.override('usage_plans.usage_plans_root_group.short_help', """API Gateway API"""))
 @cli_util.help_option_group
-def deployment_root_group():
+def usage_plans_root_group():
     pass
 
 
-@click.command(cli_util.override('deployment.deployment_summary_group.command_name', 'deployment-summary'), cls=CommandGroupWithAlias, help="""A summary of the deployment.""")
+@click.command(cli_util.override('usage_plans.usage_plan_group.command_name', 'usage-plan'), cls=CommandGroupWithAlias, help="""A usage plan controls access of subscribers to deployments, controlling rate limits and quotas for usage.""")
 @cli_util.help_option_group
-def deployment_summary_group():
+def usage_plan_group():
     pass
 
 
-@click.command(cli_util.override('deployment.deployment_group.command_name', 'deployment'), cls=CommandGroupWithAlias, help="""A deployment deploys an API on a gateway. Avoid entering confidential information. For more information, see [API Gateway Concepts].""")
-@cli_util.help_option_group
-def deployment_group():
-    pass
+api_gateway_service_cli.api_gateway_service_group.add_command(usage_plans_root_group)
+usage_plans_root_group.add_command(usage_plan_group)
 
 
-api_gateway_service_cli.api_gateway_service_group.add_command(deployment_root_group)
-deployment_root_group.add_command(deployment_summary_group)
-deployment_root_group.add_command(deployment_group)
-
-
-@deployment_group.command(name=cli_util.override('deployment.change_deployment_compartment.command_name', 'change-compartment'), help=u"""Changes the deployment compartment. \n[Command Reference](changeDeploymentCompartment)""")
-@cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
+@usage_plan_group.command(name=cli_util.override('usage_plans.change_usage_plan_compartment.command_name', 'change-compartment'), help=u"""Changes the usage plan compartment. \n[Command Reference](changeUsagePlanCompartment)""")
+@cli_util.option('--usage-plan-id', required=True, help=u"""The ocid of the usage plan.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -52,10 +45,10 @@ deployment_root_group.add_command(deployment_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, compartment_id, if_match):
+def change_usage_plan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, compartment_id, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
-        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -65,10 +58,10 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
     _details = {}
     _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('apigateway', 'deployment', ctx)
-    result = client.change_deployment_compartment(
-        deployment_id=deployment_id,
-        change_deployment_compartment_details=_details,
+    client = cli_util.build_client('apigateway', 'usage_plans', ctx)
+    result = client.change_usage_plan_compartment(
+        usage_plan_id=usage_plan_id,
+        change_usage_plan_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -99,11 +92,9 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.create_deployment.command_name', 'create'), help=u"""Creates a new deployment. \n[Command Reference](createDeployment)""")
-@cli_util.option('--gateway-id', required=True, help=u"""The [OCID] of the resource.""")
+@usage_plan_group.command(name=cli_util.override('usage_plans.create_usage_plan.command_name', 'create'), help=u"""Creates a new usage plan. \n[Command Reference](createUsagePlan)""")
+@cli_util.option('--entitlements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of entitlements to assign to the newly created usage plan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
-@cli_util.option('--path-prefix', required=True, help=u"""A path on which to deploy all routes contained in the API deployment specification. For more information, see [Deploying an API on an API Gateway by Creating an API Deployment].""")
-@cli_util.option('--specification', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -116,21 +107,19 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'specification': {'module': 'apigateway', 'class': 'ApiSpecification'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'entitlements': {'module': 'apigateway', 'class': 'list[Entitlement]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'specification': {'module': 'apigateway', 'class': 'ApiSpecification'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'entitlements': {'module': 'apigateway', 'class': 'list[Entitlement]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'UsagePlan'})
 @cli_util.wrap_exceptions
-def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, compartment_id, path_prefix, specification, display_name, freeform_tags, defined_tags):
+def create_usage_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entitlements, compartment_id, display_name, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['gatewayId'] = gateway_id
+    _details['entitlements'] = cli_util.parse_json_parameter("entitlements", entitlements)
     _details['compartmentId'] = compartment_id
-    _details['pathPrefix'] = path_prefix
-    _details['specification'] = cli_util.parse_json_parameter("specification", specification)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -141,9 +130,9 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('apigateway', 'deployment', ctx)
-    result = client.create_deployment(
-        create_deployment_details=_details,
+    client = cli_util.build_client('apigateway', 'usage_plans', ctx)
+    result = client.create_usage_plan(
+        create_usage_plan_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -174,8 +163,8 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.delete_deployment.command_name', 'delete'), help=u"""Deletes the deployment with the given identifier. \n[Command Reference](deleteDeployment)""")
-@cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
+@usage_plan_group.command(name=cli_util.override('usage_plans.delete_usage_plan.command_name', 'delete'), help=u"""Deletes the usage plan with the given identifier. \n[Command Reference](deleteUsagePlan)""")
+@cli_util.option('--usage-plan-id', required=True, help=u"""The ocid of the usage plan.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -186,18 +175,18 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, if_match):
+def delete_usage_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
-        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apigateway', 'deployment', ctx)
-    result = client.delete_deployment(
-        deployment_id=deployment_id,
+    client = cli_util.build_client('apigateway', 'usage_plans', ctx)
+    result = client.delete_usage_plan(
+        usage_plan_id=usage_plan_id,
         **kwargs
     )
     if wait_for_state:
@@ -228,37 +217,34 @@ def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.get_deployment.command_name', 'get'), help=u"""Gets a deployment by identifier. \n[Command Reference](getDeployment)""")
-@cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
+@usage_plan_group.command(name=cli_util.override('usage_plans.get_usage_plan.command_name', 'get'), help=u"""Gets a usage plan by identifier. \n[Command Reference](getUsagePlan)""")
+@cli_util.option('--usage-plan-id', required=True, help=u"""The ocid of the usage plan.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'UsagePlan'})
 @cli_util.wrap_exceptions
-def get_deployment(ctx, from_json, deployment_id):
+def get_usage_plan(ctx, from_json, usage_plan_id):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
-        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apigateway', 'deployment', ctx)
-    result = client.get_deployment(
-        deployment_id=deployment_id,
+    client = cli_util.build_client('apigateway', 'usage_plans', ctx)
+    result = client.get_usage_plan(
+        usage_plan_id=usage_plan_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@deployment_summary_group.command(name=cli_util.override('deployment.list_deployments.command_name', 'list-deployments'), help=u"""Returns a list of deployments. \n[Command Reference](listDeployments)""")
+@usage_plan_group.command(name=cli_util.override('usage_plans.list_usage_plans.command_name', 'list'), help=u"""Returns a list of usage plans. \n[Command Reference](listUsagePlans)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
-@cli_util.option('--gateway-id', help=u"""Filter deployments by the gateway ocid.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
-
-Example: `SUCCEEDED`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. Example: `ACTIVE`""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. The default order depends on the sortBy value.""")
@@ -268,16 +254,14 @@ Example: `SUCCEEDED`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'DeploymentCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'UsagePlanCollection'})
 @cli_util.wrap_exceptions
-def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, gateway_id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
+def list_usage_plans(ctx, from_json, all_pages, page_size, compartment_id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if gateway_id is not None:
-        kwargs['gateway_id'] = gateway_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if lifecycle_state is not None:
@@ -291,38 +275,40 @@ def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, gatew
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apigateway', 'deployment', ctx)
+    client = cli_util.build_client('apigateway', 'usage_plans', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
 
         result = cli_util.list_call_get_all_results(
-            client.list_deployments,
+            client.list_usage_plans,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
         result = cli_util.list_call_get_up_to_limit(
-            client.list_deployments,
+            client.list_usage_plans,
             limit,
             page_size,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
-        result = client.list_deployments(
+        result = client.list_usage_plans(
             compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.update_deployment.command_name', 'update'), help=u"""Updates the deployment with the given identifier. \n[Command Reference](updateDeployment)""")
-@cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
+@usage_plan_group.command(name=cli_util.override('usage_plans.update_usage_plan.command_name', 'update'), help=u"""Updates the usage plan with the given identifier. \n[Command Reference](updateUsagePlan)""")
+@cli_util.option('--usage-plan-id', required=True, help=u"""The ocid of the usage plan.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--specification', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--entitlements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of entitlements to update the current usage plan with.
+
+This option is a JSON list with items of type Entitlement.  For documentation on Entitlement please see our API reference: https://docs.cloud.oracle.com/api/#/en/usageplans/20190501/datatypes/Entitlement.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -334,18 +320,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'specification': {'module': 'apigateway', 'class': 'ApiSpecification'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'entitlements': {'module': 'apigateway', 'class': 'list[Entitlement]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'specification': {'module': 'apigateway', 'class': 'ApiSpecification'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'entitlements': {'module': 'apigateway', 'class': 'list[Entitlement]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, specification, freeform_tags, defined_tags, if_match):
+def update_usage_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, display_name, entitlements, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
-        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
     if not force:
-        if specification or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to specification and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if entitlements or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to entitlements and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -358,8 +344,8 @@ def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     if display_name is not None:
         _details['displayName'] = display_name
 
-    if specification is not None:
-        _details['specification'] = cli_util.parse_json_parameter("specification", specification)
+    if entitlements is not None:
+        _details['entitlements'] = cli_util.parse_json_parameter("entitlements", entitlements)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -367,10 +353,10 @@ def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('apigateway', 'deployment', ctx)
-    result = client.update_deployment(
-        deployment_id=deployment_id,
-        update_deployment_details=_details,
+    client = cli_util.build_client('apigateway', 'usage_plans', ctx)
+    result = client.update_usage_plan(
+        usage_plan_id=usage_plan_id,
+        update_usage_plan_details=_details,
         **kwargs
     )
     if wait_for_state:

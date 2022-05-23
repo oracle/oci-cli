@@ -223,6 +223,10 @@ service_mapping = {
         "load_balancer",
         "Load Balancing"
     ],
+    "license-manager": [
+        "license_manager",
+        "License Manager"
+    ],
     "limits": [
         "limits",
         "Service Limits"
