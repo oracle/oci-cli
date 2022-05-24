@@ -22,15 +22,15 @@ def os_management_root_group():
     pass
 
 
-@click.command(cli_util.override('os_management.software_source_group.command_name', 'software-source'), cls=CommandGroupWithAlias, help="""A software source contains a collection of packages""")
-@cli_util.help_option_group
-def software_source_group():
-    pass
-
-
 @click.command(cli_util.override('os_management.erratum_group.command_name', 'erratum'), cls=CommandGroupWithAlias, help="""Details about the erratum.""")
 @cli_util.help_option_group
 def erratum_group():
+    pass
+
+
+@click.command(cli_util.override('os_management.module_stream_group.command_name', 'module-stream'), cls=CommandGroupWithAlias, help="""A module stream provided by a software source""")
+@cli_util.help_option_group
+def module_stream_group():
     pass
 
 
@@ -46,21 +46,15 @@ def managed_instance_group():
     pass
 
 
-@click.command(cli_util.override('os_management.scheduled_job_group.command_name', 'scheduled-job'), cls=CommandGroupWithAlias, help="""Detailed information about a Scheduled Job""")
-@cli_util.help_option_group
-def scheduled_job_group():
-    pass
-
-
 @click.command(cli_util.override('os_management.windows_update_group.command_name', 'windows-update'), cls=CommandGroupWithAlias, help="""An update available for a Windows managed instance.""")
 @cli_util.help_option_group
 def windows_update_group():
     pass
 
 
-@click.command(cli_util.override('os_management.update_managed_instance_details_group.command_name', 'update-managed-instance-details'), cls=CommandGroupWithAlias, help="""Information to update a managed instance""")
+@click.command(cli_util.override('os_management.module_stream_profile_group.command_name', 'module-stream-profile'), cls=CommandGroupWithAlias, help="""A module stream profile provided by a software source""")
 @cli_util.help_option_group
-def update_managed_instance_details_group():
+def module_stream_profile_group():
     pass
 
 
@@ -76,6 +70,36 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('os_management.software_source_group.command_name', 'software-source'), cls=CommandGroupWithAlias, help="""A software source contains a collection of packages""")
+@cli_util.help_option_group
+def software_source_group():
+    pass
+
+
+@click.command(cli_util.override('os_management.scheduled_job_group.command_name', 'scheduled-job'), cls=CommandGroupWithAlias, help="""Detailed information about a Scheduled Job""")
+@cli_util.help_option_group
+def scheduled_job_group():
+    pass
+
+
+@click.command(cli_util.override('os_management.module_stream_details_group.command_name', 'module-stream-details'), cls=CommandGroupWithAlias, help="""Updatable information for a module stream""")
+@cli_util.help_option_group
+def module_stream_details_group():
+    pass
+
+
+@click.command(cli_util.override('os_management.update_managed_instance_details_group.command_name', 'update-managed-instance-details'), cls=CommandGroupWithAlias, help="""Information to update a managed instance""")
+@cli_util.help_option_group
+def update_managed_instance_details_group():
+    pass
+
+
+@click.command(cli_util.override('os_management.module_stream_profile_details_group.command_name', 'module-stream-profile-details'), cls=CommandGroupWithAlias, help="""Updatable information for a module stream profile""")
+@cli_util.help_option_group
+def module_stream_profile_details_group():
+    pass
+
+
 @click.command(cli_util.override('os_management.erratum_summary_group.command_name', 'erratum-summary'), cls=CommandGroupWithAlias, help="""Important changes for software. This can include security | advisories, bug fixes, or enhancements.""")
 @cli_util.help_option_group
 def erratum_summary_group():
@@ -83,27 +107,35 @@ def erratum_summary_group():
 
 
 os_management_service_cli.os_management_service_group.add_command(os_management_root_group)
-os_management_root_group.add_command(software_source_group)
 os_management_root_group.add_command(erratum_group)
+os_management_root_group.add_command(module_stream_group)
 os_management_root_group.add_command(managed_instance_group_group)
 os_management_root_group.add_command(managed_instance_group)
-os_management_root_group.add_command(scheduled_job_group)
 os_management_root_group.add_command(windows_update_group)
-os_management_root_group.add_command(update_managed_instance_details_group)
+os_management_root_group.add_command(module_stream_profile_group)
 os_management_root_group.add_command(work_request_summary_group)
 os_management_root_group.add_command(work_request_group)
+os_management_root_group.add_command(software_source_group)
+os_management_root_group.add_command(scheduled_job_group)
+os_management_root_group.add_command(module_stream_details_group)
+os_management_root_group.add_command(update_managed_instance_details_group)
+os_management_root_group.add_command(module_stream_profile_details_group)
 os_management_root_group.add_command(erratum_summary_group)
 # oci os_management os_management --> oci os_management
 os_management_service_cli.os_management_service_group.commands.pop(os_management_root_group.name)
-os_management_service_cli.os_management_service_group.add_command(software_source_group)
 os_management_service_cli.os_management_service_group.add_command(erratum_group)
+os_management_service_cli.os_management_service_group.add_command(module_stream_group)
 os_management_service_cli.os_management_service_group.add_command(managed_instance_group_group)
 os_management_service_cli.os_management_service_group.add_command(managed_instance_group)
-os_management_service_cli.os_management_service_group.add_command(scheduled_job_group)
 os_management_service_cli.os_management_service_group.add_command(windows_update_group)
-os_management_service_cli.os_management_service_group.add_command(update_managed_instance_details_group)
+os_management_service_cli.os_management_service_group.add_command(module_stream_profile_group)
 os_management_service_cli.os_management_service_group.add_command(work_request_summary_group)
 os_management_service_cli.os_management_service_group.add_command(work_request_group)
+os_management_service_cli.os_management_service_group.add_command(software_source_group)
+os_management_service_cli.os_management_service_group.add_command(scheduled_job_group)
+os_management_service_cli.os_management_service_group.add_command(module_stream_details_group)
+os_management_service_cli.os_management_service_group.add_command(update_managed_instance_details_group)
+os_management_service_cli.os_management_service_group.add_command(module_stream_profile_details_group)
 os_management_service_cli.os_management_service_group.add_command(erratum_summary_group)
 
 
@@ -386,7 +418,7 @@ def create_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--display-name', required=True, help=u"""Scheduled Job name""")
 @cli_util.option('--schedule-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONETIME", "RECURRING"]), help=u"""the type of scheduling this Scheduled Job follows""")
 @cli_util.option('--time-next-execution', required=True, type=custom_types.CLI_DATETIME, help=u"""the desired time for the next execution of this Scheduled Job""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--operation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL"]), help=u"""the type of operation this Scheduled Job performs""")
+@cli_util.option('--operation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL", "ENABLEMODULESTREAM", "DISABLEMODULESTREAM", "SWITCHMODULESTREAM", "INSTALLMODULESTREAMPROFILE", "REMOVEMODULESTREAMPROFILE", "COMPOUND"]), help=u"""the type of operation this Scheduled Job performs""")
 @cli_util.option('--description', help=u"""Details describing the Scheduled Job.""")
 @cli_util.option('--interval-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK", "MONTH"]), help=u"""the interval period for a recurring Scheduled Job (only if schedule type is RECURRING)""")
 @cli_util.option('--interval-value', help=u"""the value for the interval period for a recurring Scheduled Job (only if schedule type is RECURRING)""")
@@ -845,6 +877,118 @@ def detach_parent_software_source_from_managed_instance(ctx, from_json, managed_
     cli_util.render_response(result, ctx)
 
 
+@module_stream_details_group.command(name=cli_util.override('os_management.disable_module_stream_on_managed_instance.command_name', 'disable-module-stream-on-managed-instance'), help=u"""Disables a module stream on a managed instance.  After the stream is disabled, it is no longer possible to install the profiles that are contained by the stream.  All installed profiles must be removed prior to disabling a module stream. \n[Command Reference](disableModuleStreamOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, if_match, stream_name):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.disable_module_stream_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        module_name=module_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@module_stream_details_group.command(name=cli_util.override('os_management.enable_module_stream_on_managed_instance.command_name', 'enable-module-stream-on-managed-instance'), help=u"""Enables a module stream on a managed instance.  After the stream is enabled, it is possible to install the profiles that are contained by the stream.  Enabling a stream that is already enabled will succeed.  Attempting to enable a different stream for a module that already has a stream enabled results in an error. \n[Command Reference](enableModuleStreamOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, if_match, stream_name):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.enable_module_stream_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        module_name=module_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @erratum_group.command(name=cli_util.override('os_management.get_erratum.command_name', 'get'), help=u"""Returns a specific erratum. \n[Command Reference](getErratum)""")
 @cli_util.option('--erratum-id', required=True, help=u"""The OCID of the erratum.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -908,6 +1052,127 @@ def get_managed_instance_group(ctx, from_json, managed_instance_group_id):
         managed_instance_group_id=managed_instance_group_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@module_stream_group.command(name=cli_util.override('os_management.get_module_stream.command_name', 'get'), help=u"""Retrieve a detailed description of a module stream from a software source. \n[Command Reference](getModuleStream)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
+@cli_util.option('--module-name', required=True, help=u"""The name of the module""")
+@cli_util.option('--stream-name', required=True, help=u"""The name of the stream of the containing module""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'ModuleStream'})
+@cli_util.wrap_exceptions
+def get_module_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, module_name, stream_name):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    if isinstance(module_name, six.string_types) and len(module_name.strip()) == 0:
+        raise click.UsageError('Parameter --module-name cannot be whitespace or empty string')
+
+    if isinstance(stream_name, six.string_types) and len(stream_name.strip()) == 0:
+        raise click.UsageError('Parameter --stream-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.get_module_stream(
+        software_source_id=software_source_id,
+        module_name=module_name,
+        stream_name=stream_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@module_stream_profile_group.command(name=cli_util.override('os_management.get_module_stream_profile.command_name', 'get'), help=u"""Retrieve a detailed description of a module stream profile from a software source. \n[Command Reference](getModuleStreamProfile)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
+@cli_util.option('--module-name', required=True, help=u"""The name of the module""")
+@cli_util.option('--stream-name', required=True, help=u"""The name of the stream of the containing module""")
+@cli_util.option('--profile-name', required=True, help=u"""The name of the profile of the containing module stream""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'ModuleStreamProfile'})
+@cli_util.wrap_exceptions
+def get_module_stream_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, module_name, stream_name, profile_name):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    if isinstance(module_name, six.string_types) and len(module_name.strip()) == 0:
+        raise click.UsageError('Parameter --module-name cannot be whitespace or empty string')
+
+    if isinstance(stream_name, six.string_types) and len(stream_name.strip()) == 0:
+        raise click.UsageError('Parameter --stream-name cannot be whitespace or empty string')
+
+    if isinstance(profile_name, six.string_types) and len(profile_name.strip()) == 0:
+        raise click.UsageError('Parameter --profile-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.get_module_stream_profile(
+        software_source_id=software_source_id,
+        module_name=module_name,
+        stream_name=stream_name,
+        profile_name=profile_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1151,6 +1416,65 @@ def install_all_windows_updates_on_managed_instance(ctx, from_json, wait_for_sta
     client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.install_all_windows_updates_on_managed_instance(
         managed_instance_id=managed_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@module_stream_profile_details_group.command(name=cli_util.override('os_management.install_module_stream_profile_on_managed_instance.command_name', 'install-module-stream-profile-on-managed-instance'), help=u"""Installs a profile for an module stream.  The stream must be enabled before a profile can be installed.  If a module stream defines multiple profiles, each one can be installed independently. \n[Command Reference](installModuleStreamProfileOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--profile-name', help=u"""The name of the profile of the containing module stream""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_module_stream_profile_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, if_match, stream_name, profile_name):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    if profile_name is not None:
+        kwargs['profile_name'] = profile_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.install_module_stream_profile_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        module_name=module_name,
         **kwargs
     )
     if wait_for_state:
@@ -1855,6 +2179,414 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@module_stream_profile_group.command(name=cli_util.override('os_management.list_module_stream_profiles.command_name', 'list'), help=u"""Retrieve a list of module stream profiles from a software source. Filters may be applied to select a subset of module stream profiles based on the filter criteria.
+
+The \"moduleName\", \"streamName\", and \"profileName\" attributes combine to form a set of filters on the list of module stream profiles.  If a \"moduleName\" is provided, only profiles that belong to that module are returned.  If both a \"moduleName\" and \"streamName\" are given, only profiles belonging to that module stream are returned.  Finally, if all three are given then only the particular profile indicated by the triple is returned.  It is not valid to supply a \"streamName\" without a \"moduleName\".  It is also not valid to supply a \"profileName\" without a \"streamName\". \n[Command Reference](listModuleStreamProfiles)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--module-name', help=u"""The name of a module.  This parameter is required if a streamName is specified.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--profile-name', help=u"""The name of the profile of the containing module stream""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ModuleStreamProfileSummary]'})
+@cli_util.wrap_exceptions
+def list_module_stream_profiles(ctx, from_json, all_pages, page_size, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, module_name, stream_name, profile_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if module_name is not None:
+        kwargs['module_name'] = module_name
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    if profile_name is not None:
+        kwargs['profile_name'] = profile_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_module_stream_profiles,
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_module_stream_profiles,
+            limit,
+            page_size,
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    else:
+        result = client.list_module_stream_profiles(
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('os_management.list_module_stream_profiles_on_managed_instance.command_name', 'list-module-stream-profiles'), help=u"""Retrieve a list of module stream profiles, along with a summary of their of their status, from a managed instance.  Filters may be applied to select a subset of profiles based on the filter criteria.
+
+The \"moduleName\", \"streamName\", and \"profileName\" attributes combine to form a set of filters on the list of module stream profiles.  If a \"modulName\" is provided, only profiles that belong to that module are returned.  If both a \"moduleName\" and \"streamName\" are given, only profiles belonging to that module stream are returned.  Finally, if all three are given then only the particular profile indicated by the triple is returned.  It is not valid to supply a \"streamName\" without a \"moduleName\".  It is also not valid to supply a \"profileName\" without a \"streamName\".
+
+The \"status\" attribute filters against the state of a module stream profile.  Valid values are \"INSTALLED\" and \"AVAILABLE\".  If the attribute is set to \"INSTALLED\", only module stream profiles that are installed are included in the result set.  If the attribute is set to \"AVAILABLE\", only module stream profiles that are not installed are included in the result set.  If the attribute is not defined, the request is not subject to this filter.
+
+When sorting by display name, the result set is sorted first by module name, then by stream name, and finally by profile name. \n[Command Reference](listModuleStreamProfilesOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--module-name', help=u"""The name of a module.  This parameter is required if a streamName is specified.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--profile-name', help=u"""The name of the profile of the containing module stream""")
+@cli_util.option('--profile-status', type=custom_types.CliCaseInsensitiveChoice(["INSTALLED", "AVAILABLE"]), help=u"""The status of the profile.
+
+A profile with the \"INSTALLED\" status indicates that the profile has been installed.
+
+A profile with the \"AVAILABLE\" status indicates that the profile is not installed, but can be.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ModuleStreamProfileOnManagedInstanceSummary]'})
+@cli_util.wrap_exceptions
+def list_module_stream_profiles_on_managed_instance(ctx, from_json, all_pages, page_size, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, compartment_id, module_name, stream_name, profile_name, profile_status, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if module_name is not None:
+        kwargs['module_name'] = module_name
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    if profile_name is not None:
+        kwargs['profile_name'] = profile_name
+    if profile_status is not None:
+        kwargs['profile_status'] = profile_status
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_module_stream_profiles_on_managed_instance,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_module_stream_profiles_on_managed_instance,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_module_stream_profiles_on_managed_instance(
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@module_stream_group.command(name=cli_util.override('os_management.list_module_streams.command_name', 'list'), help=u"""Retrieve a list of module streams from a software source. Filters may be applied to select a subset of module streams based on the filter criteria.
+
+The 'moduleName' attribute filters against the name of a module. It accepts strings of the format \"<module>\".  If this attribute is defined, only streams that belong to the specified module are included in the result set.  If it is not defined, the request is not subject to this filter.  The 'streamName' attribute filters against the name of a stream of a module.  If this attribute is defined, only the particular module stream that matches both the module and stream names is included in the result set.  It is not valid to supply 'streamName' without also supplying a 'moduleName'.
+
+When sorting by display name, the result set is sorted first by module name, then by stream name. \n[Command Reference](listModuleStreams)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--module-name', help=u"""The name of a module.  This parameter is required if a streamName is specified.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ModuleStreamSummary]'})
+@cli_util.wrap_exceptions
+def list_module_streams(ctx, from_json, all_pages, page_size, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, module_name, stream_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if module_name is not None:
+        kwargs['module_name'] = module_name
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_module_streams,
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_module_streams,
+            limit,
+            page_size,
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    else:
+        result = client.list_module_streams(
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('os_management.list_module_streams_on_managed_instance.command_name', 'list-module-streams'), help=u"""Retrieve a list of module streams, along with a summary of their status, from a managed instance.  Filters may be applied to select a subset of module streams based on the filter criteria.
+
+The 'moduleName' attribute filters against the name of a module. It accepts strings of the format \"<module>\".  If this attribute is defined, only streams that belong to the specified module are included in the result set.  If it is not defined, the request is not subject to this filter.
+
+The \"status\" attribute filters against the state of a module stream. Valid values are \"ENABLED\", \"DISABLED\", and \"ACTIVE\".  If the attribute is set to \"ENABLED\", only module streams that are enabled are included in the result set.  If the attribute is set to \"DISABLED\", only module streams that are not enabled are included in the result set.  If the attribute is set to \"ACTIVE\", only module streams that are active are included in the result set.  If the attribute is not defined, the request is not subject to this filter.
+
+When sorting by the display name, the result set is sorted first by the module name and then by the stream name. \n[Command Reference](listModuleStreamsOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--module-name', help=u"""The name of a module.  This parameter is required if a streamName is specified.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--stream-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "ACTIVE"]), help=u"""The status of the stream
+
+A stream with the \"ENABLED\" status can be used as a source for installing profiles.  Streams with this status are also \"ACTIVE\".
+
+A stream with the \"DISABLED\" status cannot be the source for installing profiles.  To install profiles and packages from this stream, it must be enabled.
+
+A stream with the \"ACTIVE\" status can be used as a source for installing profiles.  The packages that comprise the stream are also used when a matching package is installed directly.  In general, a stream can have this status if it is the default stream for the module and no stream has been explicitly enabled.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ModuleStreamOnManagedInstanceSummary]'})
+@cli_util.wrap_exceptions
+def list_module_streams_on_managed_instance(ctx, from_json, all_pages, page_size, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, compartment_id, module_name, stream_name, stream_status, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if module_name is not None:
+        kwargs['module_name'] = module_name
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    if stream_status is not None:
+        kwargs['stream_status'] = stream_status
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_module_streams_on_managed_instance,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_module_streams_on_managed_instance,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_module_streams_on_managed_instance(
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_instance_group.command(name=cli_util.override('os_management.list_packages_installed_on_managed_instance.command_name', 'list-packages-installed'), help=u"""Returns a list of installed packages on the Managed Instance. \n[Command Reference](listPackagesInstalledOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
@@ -1927,7 +2659,7 @@ def list_packages_installed_on_managed_instance(ctx, from_json, all_pages, page_
 Example: `My new resource`""")
 @cli_util.option('--managed-instance-id', help=u"""The ID of the managed instance for which to list resources.""")
 @cli_util.option('--managed-instance-group-id', help=u"""The ID of the managed instace group for which to list resources.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL"]), help=u"""The operation type for which to list resources""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL", "ENABLEMODULESTREAM", "DISABLEMODULESTREAM", "SWITCHMODULESTREAM", "INSTALLMODULESTREAMPROFILE", "REMOVEMODULESTREAMPROFILE", "COMPOUND"]), help=u"""The operation type for which to list resources""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -2503,6 +3235,164 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, dis
     cli_util.render_response(result, ctx)
 
 
+@managed_instance_group.command(name=cli_util.override('os_management.manage_module_streams_on_managed_instance.command_name', 'manage-module-streams'), help=u"""Perform an operation involving modules, streams, and profiles on a managed instance.  Each operation may enable or disable an arbitrary amount of module streams, and install or remove an arbitrary number of module stream profiles.  When the operation is complete, the state of the modules, streams, and profiles on the managed instance will match the state indicated in the operation.
+
+Each module stream specified in the list of module streams to enable will be in the \"ENABLED\" state upon completion of the operation. If there was already a stream of that module enabled, any work required to switch from the current stream to the new stream is performed implicitly.
+
+Each module stream specified in the list of module streams to disable will be in the \"DISABLED\" state upon completion of the operation. Any profiles that are installed for the module stream will be removed as part of the operation.
+
+Each module stream profile specified in the list of profiles to install will be in the \"INSTALLED\" state upon completion of the operation, indicating that any packages that are part of the profile are installed on the managed instance.  If the module stream containing the profile is not enabled, it will be enabled as part of the operation.  There is an exception when attempting to install a stream of a profile when another stream of the same module is enabled.  It is an error to attempt to install a profile of another module stream, unless enabling the new module stream is explicitly included in this operation.
+
+Each module stream profile specified in the list of profiles to remove will be in the \"AVAILABLE\" state upon completion of the operation. The status of packages within the profile after the operation is complete is defined by the package manager on the managed instance.
+
+Operations that contain one or more elements that are not allowed are rejected.
+
+The result of this request is a WorkRequest object.  The returned WorkRequest is the parent of a structure of other WorkRequests.  Taken as a whole, this structure indicates the entire set of work to be performed to complete the operation.
+
+This interface can also be used to perform a dry run of the operation rather than committing it to a managed instance.  If a dry run is requested, the OS Management Service will evaluate the operation against the current module, stream, and profile state on the managed instance.  It will calculate the impact of the operation on all modules, streams, and profiles on the managed instance, including those that are implicitly impacted by the operation.
+
+The WorkRequest resulting from a dry run behaves differently than a WorkRequest resulting from a committable operation.  Dry run WorkRequests are always singletons and never have children.  The impact of the operation is returned using the log and error facilities of WorkRequests.  The impact of operations that are allowed by the OS Management Service are communicated as one or more work request log entries.  Operations that are not allowed by the OS Management Service are communicated as one or more work requst error entries.  Each entry, for either logs or errors, contains a structured message containing the results of one or more operations. \n[Command Reference](manageModuleStreamsOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Indicates if this operation is a dry run or if the operation should be commited.  If set to true, the result of the operation will be evaluated but not committed.  If set to false, the operation is committed to the managed instance.  The default is false.""")
+@cli_util.option('--enable', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module streams to enable.
+
+This option is a JSON list with items of type ModuleStreamDetails.  For documentation on ModuleStreamDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/ModuleStreamDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--disable', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module streams to disable.
+
+This option is a JSON list with items of type ModuleStreamDetails.  For documentation on ModuleStreamDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/ModuleStreamDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--install', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module stream profiles to install.
+
+This option is a JSON list with items of type ModuleStreamProfileDetails.  For documentation on ModuleStreamProfileDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/ModuleStreamProfileDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--remove', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module stream profiles to remove.
+
+This option is a JSON list with items of type ModuleStreamProfileDetails.  For documentation on ModuleStreamProfileDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/ModuleStreamProfileDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'enable': {'module': 'os_management', 'class': 'list[ModuleStreamDetails]'}, 'disable': {'module': 'os_management', 'class': 'list[ModuleStreamDetails]'}, 'install': {'module': 'os_management', 'class': 'list[ModuleStreamProfileDetails]'}, 'remove': {'module': 'os_management', 'class': 'list[ModuleStreamProfileDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'enable': {'module': 'os_management', 'class': 'list[ModuleStreamDetails]'}, 'disable': {'module': 'os_management', 'class': 'list[ModuleStreamDetails]'}, 'install': {'module': 'os_management', 'class': 'list[ModuleStreamProfileDetails]'}, 'remove': {'module': 'os_management', 'class': 'list[ModuleStreamProfileDetails]'}})
+@cli_util.wrap_exceptions
+def manage_module_streams_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, is_dry_run, enable, disable, install, remove, if_match):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if is_dry_run is not None:
+        _details['isDryRun'] = is_dry_run
+
+    if enable is not None:
+        _details['enable'] = cli_util.parse_json_parameter("enable", enable)
+
+    if disable is not None:
+        _details['disable'] = cli_util.parse_json_parameter("disable", disable)
+
+    if install is not None:
+        _details['install'] = cli_util.parse_json_parameter("install", install)
+
+    if remove is not None:
+        _details['remove'] = cli_util.parse_json_parameter("remove", remove)
+
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.manage_module_streams_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        manage_module_streams_on_managed_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@module_stream_profile_details_group.command(name=cli_util.override('os_management.remove_module_stream_profile_from_managed_instance.command_name', 'remove'), help=u"""Removes a profile for a module stream that is installed on a managed instance. If a module stream is provided, rather than a fully qualified profile, all profiles that have been installed for the module stream will be removed. \n[Command Reference](removeModuleStreamProfileFromManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--profile-name', help=u"""The name of the profile of the containing module stream""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_module_stream_profile_from_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, if_match, stream_name, profile_name):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    if profile_name is not None:
+        kwargs['profile_name'] = profile_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.remove_module_stream_profile_from_managed_instance(
+        managed_instance_id=managed_instance_id,
+        module_name=module_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_instance_group.command(name=cli_util.override('os_management.remove_package_from_managed_instance.command_name', 'remove'), help=u"""Removes an installed package from a managed instance. \n[Command Reference](removePackageFromManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-package-name', required=True, help=u"""Package name""")
@@ -2671,6 +3561,62 @@ def skip_next_scheduled_job_execution(ctx, from_json, scheduled_job_id, if_match
     cli_util.render_response(result, ctx)
 
 
+@module_stream_details_group.command(name=cli_util.override('os_management.switch_module_stream_on_managed_instance.command_name', 'switch-module-stream-on-managed-instance'), help=u"""Enables a new stream for a module that already has a stream enabled. If any profiles or packages from the original module are installed, switching to a new stream will remove the existing packages and install their counterparts in the new stream. \n[Command Reference](switchModuleStreamOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def switch_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, if_match, stream_name):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if stream_name is not None:
+        kwargs['stream_name'] = stream_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.switch_module_stream_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        module_name=module_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @update_managed_instance_details_group.command(name=cli_util.override('os_management.update_managed_instance.command_name', 'update-managed-instance'), help=u"""Updates a specific Managed Instance. \n[Command Reference](updateManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--notification-topic-id', help=u"""OCID of the ONS topic used to send notification to users""")
@@ -2792,7 +3738,7 @@ def update_managed_instance_group(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.option('--time-next-execution', type=custom_types.CLI_DATETIME, help=u"""the desired time for the next execution of this Scheduled Job""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--interval-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK", "MONTH"]), help=u"""the interval period for a recurring Scheduled Job (only if schedule type is RECURRING)""")
 @cli_util.option('--interval-value', help=u"""the value for the interval period for a recurring Scheduled Job (only if schedule type is RECURRING)""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL"]), help=u"""the type of operation this Scheduled Job performs""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL", "ENABLEMODULESTREAM", "DISABLEMODULESTREAM", "SWITCHMODULESTREAM", "INSTALLMODULESTREAMPROFILE", "REMOVEMODULESTREAMPROFILE", "COMPOUND"]), help=u"""the type of operation this Scheduled Job performs""")
 @cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE", "ALL"]), help=u"""Type of the update (only if operation type is UPDATEALL)""")
 @cli_util.option('--package-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""the id of the package (only if operation type is INSTALL/UPDATE/REMOVE)
 

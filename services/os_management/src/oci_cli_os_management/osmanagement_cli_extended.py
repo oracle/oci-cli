@@ -3,10 +3,11 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import click
-
+from services.os_management.src.oci_cli_os_management.generated import os_management_service_cli
 from services.os_management.src.oci_cli_os_management.generated import osmanagement_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from oci_cli.aliasing import CommandGroupWithAlias
 
 # Managed Instance - rename commands
 managed_instance_group = osmanagement_cli.managed_instance_group
@@ -156,4 +157,88 @@ work_request_summary_group.commands.pop(osmanagement_cli.list_work_requests.name
 work_request_group.add_command(osmanagement_cli.list_work_requests)
 
 # remove the work request summary command from the top-level
-osmanagement_cli.os_management_root_group.commands.pop(work_request_summary_group.name)
+os_management_service_cli.os_management_service_group.commands.pop(work_request_summary_group.name)
+
+
+# oci os-management managed-instance list-module-stream-profiles -> oci os-management managed-instance list-module-profiles
+cli_util.rename_command(osmanagement_cli, osmanagement_cli.managed_instance_group, osmanagement_cli.list_module_stream_profiles_on_managed_instance, "list-module-profiles")
+
+
+# oci os-management module-stream-profile-details install-module-stream-profile-on-managed-instance -> oci os-management module-stream-profile-details install-module-profile
+cli_util.rename_command(osmanagement_cli, osmanagement_cli.module_stream_profile_details_group, osmanagement_cli.install_module_stream_profile_on_managed_instance, "install-module-profile")
+
+
+# oci os-management module-stream-profile-details remove -> oci os-management module-stream-profile-details remove-module-profile
+cli_util.rename_command(osmanagement_cli, osmanagement_cli.module_stream_profile_details_group, osmanagement_cli.remove_module_stream_profile_from_managed_instance, "remove-module-profile")
+
+
+# oci os-management module-stream-details disable-module-stream-on-managed-instance -> oci os-management module-stream-details disable-module-stream
+cli_util.rename_command(osmanagement_cli, osmanagement_cli.module_stream_details_group, osmanagement_cli.disable_module_stream_on_managed_instance, "disable-module-stream")
+
+
+# oci os-management module-stream-details enable-module-stream-on-managed-instance -> oci os-management module-stream-details enable-module-stream
+cli_util.rename_command(osmanagement_cli, osmanagement_cli.module_stream_details_group, osmanagement_cli.enable_module_stream_on_managed_instance, "enable-module-stream")
+
+
+# oci os-management module-stream-details switch-module-stream-on-managed-instance -> oci os-management module-stream-details switch-module-stream
+cli_util.rename_command(osmanagement_cli, osmanagement_cli.module_stream_details_group, osmanagement_cli.switch_module_stream_on_managed_instance, "switch-module-stream")
+
+
+# Remove module-stream-profile-details from oci os-management
+os_management_service_cli.os_management_service_group.commands.pop(osmanagement_cli.module_stream_profile_details_group.name)
+
+
+# Remove module-stream-details from oci os-management
+os_management_service_cli.os_management_service_group.commands.pop(osmanagement_cli.module_stream_details_group.name)
+
+
+# Remove manage-module-streams from oci os-management managed-instance
+osmanagement_cli.managed_instance_group.commands.pop(osmanagement_cli.manage_module_streams_on_managed_instance.name)
+
+
+# oci os-management module-stream-profile-details install-module-stream-profile-on-managed-instance -> oci os-management managed-instance
+osmanagement_cli.module_stream_profile_details_group.commands.pop(osmanagement_cli.install_module_stream_profile_on_managed_instance.name)
+osmanagement_cli.managed_instance_group.add_command(osmanagement_cli.install_module_stream_profile_on_managed_instance)
+
+
+# oci os-management module-stream-profile-details remove -> oci os-management managed-instance
+osmanagement_cli.module_stream_profile_details_group.commands.pop(osmanagement_cli.remove_module_stream_profile_from_managed_instance.name)
+osmanagement_cli.managed_instance_group.add_command(osmanagement_cli.remove_module_stream_profile_from_managed_instance)
+
+
+# oci os-management module-stream-details disable-module-stream-on-managed-instance -> oci os-management managed-instance
+osmanagement_cli.module_stream_details_group.commands.pop(osmanagement_cli.disable_module_stream_on_managed_instance.name)
+osmanagement_cli.managed_instance_group.add_command(osmanagement_cli.disable_module_stream_on_managed_instance)
+
+
+# oci os-management module-stream-details enable-module-stream-on-managed-instance -> oci os-management managed-instance
+osmanagement_cli.module_stream_details_group.commands.pop(osmanagement_cli.enable_module_stream_on_managed_instance.name)
+osmanagement_cli.managed_instance_group.add_command(osmanagement_cli.enable_module_stream_on_managed_instance)
+
+
+# oci os-management module-stream-details switch-module-stream-on-managed-instance -> oci os-management managed-instance
+osmanagement_cli.module_stream_details_group.commands.pop(osmanagement_cli.switch_module_stream_on_managed_instance.name)
+osmanagement_cli.managed_instance_group.add_command(osmanagement_cli.switch_module_stream_on_managed_instance)
+
+
+#
+# Rename group module-stream-profile to module-profile
+# oci os-management module-stream-profile get -> oci os-management module-profile get
+# oci os-management module-stream-profile list -> oci os-management module-profile list
+#
+# Define the module-profile group
+@click.command('module-profile', cls=CommandGroupWithAlias, help="""A module stream profile provided by a software source""")
+@cli_util.help_option_group
+def module_profile_group():
+    pass
+
+
+osmanagement_cli.os_management_root_group.add_command(module_profile_group)
+os_management_service_cli.os_management_service_group.add_command(module_profile_group)
+
+# Move the commands from module-stream-profile group to module-profile group
+module_profile_group.add_command(osmanagement_cli.module_stream_profile_group.commands['get'])
+module_profile_group.add_command(osmanagement_cli.module_stream_profile_group.commands['list'])
+
+# Remove module-stream-profile group from os-management
+os_management_service_cli.os_management_service_group.commands.pop(osmanagement_cli.module_stream_profile_group.name)

@@ -58,6 +58,7 @@ Avoid entering confidential information.""")
 @cli_util.option('--failed-esxi-host-id', help=u"""The [OCID] of the ESXi host that is failed. This is an optional parameter. If this parameter is specified, a new ESXi host will be created to replace the failed one, and the `failedEsxiHostId` field will be udpated in the newly created Esxi host.""")
 @cli_util.option('--host-shape-name', help=u"""The compute shape name of the ESXi host. [ListSupportedHostShapes].""")
 @cli_util.option('--host-ocpu-count', type=click.FLOAT, help=u"""The OCPU count of the ESXi host.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -72,7 +73,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, current_sku, next_sku, compute_availability_domain, failed_esxi_host_id, host_shape_name, host_ocpu_count, freeform_tags, defined_tags):
+def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, current_sku, next_sku, compute_availability_domain, failed_esxi_host_id, host_shape_name, host_ocpu_count, capacity_reservation_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -100,6 +101,9 @@ def create_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if host_ocpu_count is not None:
         _details['hostOcpuCount'] = host_ocpu_count
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

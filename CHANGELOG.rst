@@ -6,6 +6,68 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.10.0 - 2022-05-24
+------------------
+Added
+~~~~~
+
+* Support for License Manager Service
+
+  * ``oci license-manager``
+
+* Support the use of compute capacity reservation in OCVS SDDCs in the Oracle Cloud VMware Solution service
+
+  * ``oci ocvs esxi-host create --capacity-reservation-id``
+  * ``oci ocvs sddc create --capacity-reservation-id``
+
+* Oracle Digital Assistant service
+
+  * Support for Packaged skill management APIs
+
+    * ``oci oda odapackage``
+
+  * Support for Role-based access on instance creation
+
+    * ``oci oda oda-instance create --is-role-based-access``
+
+  * Support for assigned ownership (attachment) APIs
+
+    * ``oci oda oda-instance-attachment``
+
+  * Support for instance metadata management APIs
+
+    * ``oci oda management``
+
+* Support for Usage Plans in the API Gateway service
+
+  * ``oci api-gateway usage-plan``
+  * ``oci api-gateway subscriber``
+
+* Support for Oracle Linux 8 Application Streams in the OS Management Service
+
+  * ``oci os-management managed-instance disable-module-stream``
+  * ``oci os-management managed-instance enable-module-stream``
+  * ``oci os-management managed-instance install-module-profile``
+  * ``oci os-management managed-instance list-module-profiles``
+  * ``oci os-management managed-instance list-module-streams``
+  * ``oci os-management managed-instance remove-module-profile``
+  * ``oci os-management managed-instance switch-module-stream``
+  * ``oci os-management module-profile``
+  * ``oci os-management module-stream``
+
+Changed
+~~~~~~~
+
+* Improved service error exception for all CLI commands
+
+* [BREAKING] The parameter --specification is now required in the below command
+
+  * ``oci api-gateway deployment create --specification``
+
+* [BREAKING] The command below is deleted in the OS Management Service
+
+  * ``oci os-management work-request-summary``
+
 3.9.1 - 2022-05-17
 ------------------
 Added
