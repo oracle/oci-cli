@@ -53,7 +53,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_home_metrics_group.command_name', 'database-home-metrics'), cls=CommandGroupWithAlias, help="""The response containing the metric collection for a specific database.""")
+@click.command(cli_util.override('db_management.database_home_metrics_group.command_name', 'database-home-metrics'), cls=CommandGroupWithAlias, help="""The response containing the metric collection for a specific Managed Database.""")
 @cli_util.help_option_group
 def database_home_metrics_group():
     pass
@@ -1333,7 +1333,7 @@ def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, en
 @cli_util.option('--compare-target-time', required=True, help=u"""The target time for metrics comparison.""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY"]), help=u"""The time window used for metrics comparison.""")
+@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK"]), help=u"""The time window used for metrics comparison.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--filter-by-database-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database type.""")
 @cli_util.option('--filter-by-database-sub-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database subtype.""")
@@ -1533,7 +1533,7 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY"]), help=u"""The time window used for metrics comparison.""")
+@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK"]), help=u"""The time window used for metrics comparison.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('adm.adm_root_group.command_name', 'adm'), cls=CommandGroupWithAlias, help=cli_util.override('adm.adm_root_group.help', """Use the ADM API to create ADM knowledge base and vulnerability audits.  For more information, see [ADM]."""), short_help=cli_util.override('adm.adm_root_group.short_help', """ADM API"""))
+@cli.command(cli_util.override('adm.adm_root_group.command_name', 'adm'), cls=CommandGroupWithAlias, help=cli_util.override('adm.adm_root_group.help', """Use the Application Dependency Management API to create knowledge bases and vulnerability audits.  For more information, see [ADM]."""), short_help=cli_util.override('adm.adm_root_group.short_help', """Application Dependency Management API"""))
 @cli_util.help_option_group
 def adm_root_group():
     pass

@@ -68,6 +68,8 @@ IGNORED_COMMANDS = [
     ['os', 'retention-rule', 'update'],
     ['data-flow', 'application', 'create'],
     ['data-flow', 'application', 'update'],
+    ['data-flow', 'run', 'create'],
+    ['data-flow', 'run', 'submit'],
     # input requires a valid file to upload
     ['data-science', 'model', 'create-model-artifact'],
     ['data-science', 'job', 'create-job-artifact'],

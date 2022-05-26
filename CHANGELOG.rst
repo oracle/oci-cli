@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.10.1 - 2022-05-31
+--------------------
+Added
+~~~~~
+* Support for in-depth monitoring, diagnostics capabilities, and advanced management functionality for on-premise Oracle databases in the Database Management service
+
+  * ``oci database-management fleet-health-metrics``
+  * ``oci database-management summary-metrics``
+  * ``oci database-management managed-database list-users``
+
+* Support for using Oracle Cloud Agent to perform iSCSI login and logout for non-multipath-enabled iSCSI attachments in the Container Engine for Kubernetes service
+
+  * ``oci compute volume-attachment attach-iscsi-volume --is-agent-auto-iscsi-login-enabled``
+
+* Kubernetes service
+
+  * Support for Fault Domain placement in the Container Engine
+
+    * ``oci ce node-pool create --placement-configs``
+    * ``oci ce node-pool update --placement-configs``
+
+  * Support for worker node images in the Container Engine
+
+    * ``oci ce node-pool create --kubernetes-version``
+
+* Support for flexible shapes using the ``--driver-shape-config``  and ``--executor-shape-config`` properties in the Data Flow service
+
+  * ``oci data-flow run create``
+  * ``oci data-flow application create``
+  * ``oci data-flow application update``
+  * ``oci data-flow run create``
+  * ``oci data-flow run submit``
+
 3.10.0 - 2022-05-24
 ------------------
 Added
