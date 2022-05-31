@@ -286,8 +286,8 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the node pool exists.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster to which this node pool is attached.""")
 @cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
-@cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
 @cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
+@cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
 @cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-image-name', help=u"""Deprecated. Use `nodeSourceDetails` instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool.""")
 @cli_util.option('--node-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the source to use to launch nodes in the node pool. Currently, image is the only supported source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -309,7 +309,7 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_metadata, node_image_name, node_source_details, node_shape_config, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, freeform_tags, defined_tags):
+def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, node_shape, kubernetes_version, node_metadata, node_image_name, node_source_details, node_shape_config, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -318,8 +318,10 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     _details['compartmentId'] = compartment_id
     _details['clusterId'] = cluster_id
     _details['name'] = name
-    _details['kubernetesVersion'] = kubernetes_version
     _details['nodeShape'] = node_shape
+
+    if kubernetes_version is not None:
+        _details['kubernetesVersion'] = kubernetes_version
 
     if node_metadata is not None:
         _details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
@@ -389,9 +391,9 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the node pool exists.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster to which this node pool is attached.""")
 @cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
-@cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
 @cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
 @cli_util.option('--node-source-details-image-id', required=True, help=u"""The OCID of the image used to boot the node.""")
+@cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
 @cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-image-name', help=u"""Deprecated. Use `nodeSourceDetails` instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool.""")
 @cli_util.option('--node-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the configuration of the shape to launch nodes in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -413,7 +415,7 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_source_details_image_id, node_metadata, node_image_name, node_shape_config, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, freeform_tags, defined_tags, node_source_details_boot_volume_size_in_gbs):
+def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, node_shape, node_source_details_image_id, kubernetes_version, node_metadata, node_image_name, node_shape_config, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, freeform_tags, defined_tags, node_source_details_boot_volume_size_in_gbs):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -423,9 +425,11 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
     _details['compartmentId'] = compartment_id
     _details['clusterId'] = cluster_id
     _details['name'] = name
-    _details['kubernetesVersion'] = kubernetes_version
     _details['nodeShape'] = node_shape
     _details['nodeSourceDetails']['imageId'] = node_source_details_image_id
+
+    if kubernetes_version is not None:
+        _details['kubernetesVersion'] = kubernetes_version
 
     if node_metadata is not None:
         _details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)

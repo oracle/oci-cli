@@ -5,7 +5,7 @@
 service_mapping = {
     "adm": [
         "adm",
-        "ADM"
+        "Application Dependency Management"
     ],
     "ai": [
         "ai_language",

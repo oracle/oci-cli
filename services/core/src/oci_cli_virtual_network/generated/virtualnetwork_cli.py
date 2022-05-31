@@ -87,7 +87,7 @@ def ip_sec_connection_tunnel_shared_secret_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A dynamic routing gateway (DRG) is a virtual router that provides a path for private network traffic between networks. You use it with other Networking Service components to create a connection to your on-premises network using [Site-to-Site VPN] or a connection that uses [FastConnect]. For more information, see [Overview of the Networking Service].
+@click.command(cli_util.override('virtual_network.drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A dynamic routing gateway (DRG) is a virtual router that provides a path for private network traffic between networks. You use it with other Networking Service components to create a connection to your on-premises network using [Site-to-Site VPN] or a connection that uses [FastConnect]. For more information, see [Networking Overview].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group

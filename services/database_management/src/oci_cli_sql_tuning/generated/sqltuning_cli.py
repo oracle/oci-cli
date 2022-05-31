@@ -294,7 +294,7 @@ def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sq
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-advisor-task-id', required=True, type=click.INT, help=u"""The SQL tuning task identifier. This is not the [OCID].""")
 @cli_util.option('--sql-object-id', required=True, type=click.INT, help=u"""The SQL object ID for the SQL tuning task. This is not the [OCID].""")
-@cli_util.option('--attribute', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORIGINAL", "ORIGINAL_WITH_ADJUSTED_COST", "USING_SQL_PROFILE", "USING_NEW_INDICES"]), help=u"""The attribute of the SQL execution plan.""")
+@cli_util.option('--attribute', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORIGINAL", "ORIGINAL_WITH_ADJUSTED_COST", "USING_SQL_PROFILE", "USING_NEW_INDICES", "USING_PARALLEL_EXECUTION"]), help=u"""The attribute of the SQL execution plan.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

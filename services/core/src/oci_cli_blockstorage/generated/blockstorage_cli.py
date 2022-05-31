@@ -451,7 +451,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('blockstorage.copy_volume_group_backup.command_name', 'copy'), help=u"""Creates a volume group backup copy in specified region. For general information about volume group backups, see [Overview of Block Volume Service Backups] \n[Command Reference](copyVolumeGroupBackup)""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.copy_volume_group_backup.command_name', 'copy'), help=u"""Creates a volume group backup copy in specified region. For general information about volume group backups, see [Overview of Block Volume Backups]. \n[Command Reference](copyVolumeGroupBackup)""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
 

@@ -638,6 +638,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--use-chap', type=click.BOOL, help=u"""Whether to use CHAP authentication for the volume attachment. Defaults to false.""")
 @cli_util.option('--encryption-in-transit-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "BM_ENCRYPTION_IN_TRANSIT"]), help=u"""Refer the top-level definition of encryptionInTransitType. The default value is NONE.""")
+@cli_util.option('--is-agent-auto-iscsi-login-enabled', type=click.BOOL, help=u"""Whether to enable Oracle Cloud Agent to perform the iSCSI login and logout commands after the volume attach or detach operations for non multipath-enabled iSCSI attachments.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -646,7 +647,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable, use_chap, encryption_in_transit_type):
+def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable, use_chap, encryption_in_transit_type, is_agent_auto_iscsi_login_enabled):
 
     kwargs = {}
 
@@ -671,6 +672,9 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 
     if encryption_in_transit_type is not None:
         _details['encryptionInTransitType'] = encryption_in_transit_type
+
+    if is_agent_auto_iscsi_login_enabled is not None:
+        _details['isAgentAutoIscsiLoginEnabled'] = is_agent_auto_iscsi_login_enabled
 
     _details['type'] = 'iscsi'
 
