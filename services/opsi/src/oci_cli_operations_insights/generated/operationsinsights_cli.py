@@ -29,9 +29,9 @@ def enterprise_manager_bridges_group():
     pass
 
 
-@click.command(cli_util.override('opsi.operations_insights_private_endpoint_collection_group.command_name', 'operations-insights-private-endpoint-collection'), cls=CommandGroupWithAlias, help="""A collection of Operation Insights private endpoint objects.""")
+@click.command(cli_util.override('opsi.opsi_data_objects_group.command_name', 'opsi-data-objects'), cls=CommandGroupWithAlias, help="""Logical grouping used for OPSI data object targeted operations.""")
 @cli_util.help_option_group
-def operations_insights_private_endpoint_collection_group():
+def opsi_data_objects_group():
     pass
 
 
@@ -84,7 +84,7 @@ def work_requests_group():
 
 
 opsi_root_group.add_command(enterprise_manager_bridges_group)
-opsi_root_group.add_command(operations_insights_private_endpoint_collection_group)
+opsi_root_group.add_command(opsi_data_objects_group)
 opsi_root_group.add_command(exadata_insights_group)
 opsi_root_group.add_command(operations_insights_warehouses_group)
 opsi_root_group.add_command(database_insights_group)
@@ -2882,6 +2882,30 @@ def get_operations_insights_warehouse_user(ctx, from_json, operations_insights_w
     cli_util.render_response(result, ctx)
 
 
+@opsi_data_objects_group.command(name=cli_util.override('opsi.get_opsi_data_object.command_name', 'get'), help=u"""Gets details of an OPSI data object. \n[Command Reference](getOpsiDataObject)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--opsi-data-object-identifier', required=True, help=u"""Unique OPSI data object identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OpsiDataObject'})
+@cli_util.wrap_exceptions
+def get_opsi_data_object(ctx, from_json, compartment_id, opsi_data_object_identifier):
+
+    if isinstance(opsi_data_object_identifier, six.string_types) and len(opsi_data_object_identifier.strip()) == 0:
+        raise click.UsageError('Parameter --opsi-data-object-identifier cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_opsi_data_object(
+        compartment_id=compartment_id,
+        opsi_data_object_identifier=opsi_data_object_identifier,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @work_requests_group.command(name=cli_util.override('opsi.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4001,7 +4025,7 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_private_endpoint_collection_group.command(name=cli_util.override('opsi.list_operations_insights_private_endpoints.command_name', 'list-operations-insights-private-endpoints'), help=u"""Gets a list of Operation Insights private endpoints. \n[Command Reference](listOperationsInsightsPrivateEndpoints)""")
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.list_operations_insights_private_endpoints.command_name', 'list'), help=u"""Gets a list of Operation Insights private endpoints. \n[Command Reference](listOperationsInsightsPrivateEndpoints)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""Unique Operations Insights PrivateEndpoint identifier""")
@@ -4195,6 +4219,66 @@ def list_operations_insights_warehouses(ctx, from_json, all_pages, page_size, co
         )
     else:
         result = client.list_operations_insights_warehouses(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_data_objects_group.command(name=cli_util.override('opsi.list_opsi_data_objects.command_name', 'list'), help=u"""Gets a list of OPSI data objects based on the query parameters specified. CompartmentId id query parameter must be specified. \n[Command Reference](listOpsiDataObjects)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--data-object-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_INSIGHTS_DATA_OBJECT", "HOST_INSIGHTS_DATA_OBJECT", "EXADATA_INSIGHTS_DATA_OBJECT"]), multiple=True, help=u"""OPSI data object types.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "dataObjectType"]), help=u"""OPSI data object list sort options.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OpsiDataObjectsCollection'})
+@cli_util.wrap_exceptions
+def list_opsi_data_objects(ctx, from_json, all_pages, page_size, compartment_id, data_object_type, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if data_object_type is not None and len(data_object_type) > 0:
+        kwargs['data_object_type'] = data_object_type
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_opsi_data_objects,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_opsi_data_objects,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_opsi_data_objects(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -4529,6 +4613,109 @@ def list_work_requests(ctx, from_json, all_pages, page_size, page, limit, compar
         result = client.list_work_requests(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data.command_name', 'query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--query-parameterconflict', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
+@cli_util.option('--resource-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_opsi_data_object_data(ctx, from_json, compartment_id, query_parameterconflict, data_object_identifier, resource_filters, limit, page):
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['query'] = cli_util.parse_json_parameter("query_parameterconflict", query_parameterconflict)
+
+    if data_object_identifier is not None:
+        _details['dataObjectIdentifier'] = data_object_identifier
+
+    if resource_filters is not None:
+        _details['resourceFilters'] = cli_util.parse_json_parameter("resource_filters", resource_filters)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.query_opsi_data_object_data(
+        compartment_id=compartment_id,
+        query_opsi_data_object_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_templatized_query.command_name', 'query-opsi-data-object-data-data-object-templatized-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
+@cli_util.option('--resource-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--query-select-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the SELECT clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-where-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the WHERE clause of the query; items will be added with AND separation. Item can contain a single condition or multiple conditions. Single condition e.g:  \"optimizer_mode='mode1'\" Multiple conditions e.g: (module='module1' OR module='module2')""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-group-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the GROUP BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-having-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the HAVING clause of the query; items will be added with AND separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-order-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the ORDER BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-time-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_opsi_data_object_data_data_object_templatized_query(ctx, from_json, compartment_id, data_object_identifier, resource_filters, limit, page, query_select_list, query_where_conditions_list, query_group_by_list, query_having_conditions_list, query_order_by_list, query_time_filters):
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['query'] = {}
+
+    if data_object_identifier is not None:
+        _details['dataObjectIdentifier'] = data_object_identifier
+
+    if resource_filters is not None:
+        _details['resourceFilters'] = cli_util.parse_json_parameter("resource_filters", resource_filters)
+
+    if query_select_list is not None:
+        _details['query']['selectList'] = cli_util.parse_json_parameter("query_select_list", query_select_list)
+
+    if query_where_conditions_list is not None:
+        _details['query']['whereConditionsList'] = cli_util.parse_json_parameter("query_where_conditions_list", query_where_conditions_list)
+
+    if query_group_by_list is not None:
+        _details['query']['groupByList'] = cli_util.parse_json_parameter("query_group_by_list", query_group_by_list)
+
+    if query_having_conditions_list is not None:
+        _details['query']['havingConditionsList'] = cli_util.parse_json_parameter("query_having_conditions_list", query_having_conditions_list)
+
+    if query_order_by_list is not None:
+        _details['query']['orderByList'] = cli_util.parse_json_parameter("query_order_by_list", query_order_by_list)
+
+    if query_time_filters is not None:
+        _details['query']['timeFilters'] = cli_util.parse_json_parameter("query_time_filters", query_time_filters)
+
+    _details['query']['queryType'] = 'TEMPLATIZED_QUERY'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.query_opsi_data_object_data(
+        compartment_id=compartment_id,
+        query_opsi_data_object_data_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

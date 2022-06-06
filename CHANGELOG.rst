@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.10.2 - 2022-06-07
+--------------------
+Added
+~~~~~
+* Support for private endpoint in the Resource Manager service
+
+  * ``oci resource-manager private-endpoint``
+  
+* Support for generated downloading terraform plan output in json or binary format in the Resource Manager service
+
+  * ``oci resource-manager job get-job-tf-plan`` 
+  
+* Support for query OPSI Data Objects
+
+  * ``oci opsi opsi-data-objects``
+
+Changed
+~~~~~~~
+* Modified supported version for the following package: prompt-toolkit (==3.0.29)
+
+Fixed
+~~~~~~~
+* Bug fix for --arguments property to be able to correctly convert string to json in dataflow service
+
+  * ``oci data-flow run create --arguments``
+
+* Bug in --wait-for-state param for following commands in the Key management system service
+
+  * ``oci kms management key-version create``
+  * ``oci kms management key-version cancel-key-version-deletion``
+  * ``oci kms management key-version schedule-key-version-deletion``
+
+
 3.10.1 - 2022-05-31
 --------------------
 Added
@@ -90,7 +123,6 @@ Added
 
 Changed
 ~~~~~~~
-
 * Improved service error exception for all CLI commands
 
 * [BREAKING] The parameter --specification is now required in the below command
