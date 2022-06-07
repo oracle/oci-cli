@@ -705,3 +705,29 @@ resourcemanager_cli.stack_group.add_command(copy_stack)
 
 # oci resource-manager job get-job-detailed-log-content -> oci resource-manager job get-detailed-log-content
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.job_group, resourcemanager_cli.get_job_detailed_log_content, "get-detailed-log-content")
+
+
+# oci resource-manager private-endpoint-summary list-private-endpoints -> oci resource-manager private-endpoint-summary list
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.private_endpoint_summary_group, resourcemanager_cli.list_private_endpoints, "list")
+
+
+# oci resource-manager reachable-ip get -> oci resource-manager reachable-ip get-reachable-ip
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.reachable_ip_group, resourcemanager_cli.get_reachable_ip, "get-reachable-ip")
+
+
+# Remove reachable-ip from oci resource-manager
+resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.reachable_ip_group.name)
+
+
+# Remove private-endpoint-summary from oci resource-manager
+resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.private_endpoint_summary_group.name)
+
+
+# oci resource-manager private-endpoint-summary list-private-endpoints -> oci resource-manager private-endpoint
+resourcemanager_cli.private_endpoint_summary_group.commands.pop(resourcemanager_cli.list_private_endpoints.name)
+resourcemanager_cli.private_endpoint_group.add_command(resourcemanager_cli.list_private_endpoints)
+
+
+# oci resource-manager reachable-ip get -> oci resource-manager private-endpoint
+resourcemanager_cli.reachable_ip_group.commands.pop(resourcemanager_cli.get_reachable_ip.name)
+resourcemanager_cli.private_endpoint_group.add_command(resourcemanager_cli.get_reachable_ip)

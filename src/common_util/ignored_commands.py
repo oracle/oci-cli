@@ -119,6 +119,9 @@ IGNORED_COMMANDS = [
     ['devops', 'deploy-environment', 'update-oke-cluster-environment'],
     ['db', 'backup', 'list'],
     ['speech', 'transcription-job', 'create'],
+    ['opsi', 'opsi-data-objects', 'query-data-templatized-query'],
+    ['opsi', 'opsi-data-objects', 'get'],
+    ['opsi', 'opsi-data-objects', 'list'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

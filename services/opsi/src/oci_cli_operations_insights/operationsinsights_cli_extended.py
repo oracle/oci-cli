@@ -372,14 +372,6 @@ def list_host_configurations_extended(ctx, **kwargs):
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_root_group, operationsinsights_cli.operations_insights_private_endpoint_group, "opsi-private-endpoint")
 
 
-# oci opsi operations-insights-private-endpoint-collection -> oci opsi opsi-private-endpoint
-cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_root_group, operationsinsights_cli.operations_insights_private_endpoint_collection_group, "opsi-private-endpoint")
-
-
-# oci opsi operations-insights-private-endpoint-collection list-operations-insights-private-endpoints -> oci opsi operations-insights-private-endpoint-collection list
-cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.operations_insights_private_endpoint_collection_group, operationsinsights_cli.list_operations_insights_private_endpoints, "list")
-
-
 # oci opsi database-insights create-database-insight-create-pe-comanaged-database-insight-details -> oci opsi database-insights create-pe-comanged-database
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_pe_comanaged_database_insight_details, "create-pe-comanged-database")
 
@@ -462,3 +454,9 @@ def update_operations_insights_private_endpoint_extended(ctx, **kwargs):
 
 # oci opsi host-insights summarize-host-insight-top-processes-usage-trend -> oci opsi host-insights summarize-top-processes-usage-trend
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_top_processes_usage_trend, "summarize-top-processes-usage-trend")
+
+# oci opsi opsi-data-objects query-opsi-data-object-data-data-object-templatized-query -> oci opsi opsi-data-objects query-data-templatized-query
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_data_objects_group, operationsinsights_cli.query_opsi_data_object_data_data_object_templatized_query, "query-data-templatized-query")
+
+# Remove query from oci opsi opsi-data-objects
+operationsinsights_cli.opsi_data_objects_group.commands.pop(operationsinsights_cli.query_opsi_data_object_data.name)

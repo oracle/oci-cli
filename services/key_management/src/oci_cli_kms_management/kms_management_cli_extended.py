@@ -3,6 +3,9 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import click
+import oci  # noqa: F401
+import six  # noqa: F401
+import sys  # noqa: F401
 from services.key_management.src.oci_cli_kms_management.generated import kmsmanagement_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
@@ -134,3 +137,162 @@ def restore_from_file(ctx, **kwargs):
         ctx.invoke(kmsmanagement_cli.restore_key_from_file, **kwargs)
     except Exception:
         click.echo("Can't open the file")
+
+
+@cli_util.copy_params_from_generated_command(kmsmanagement_cli.create_key_version, params_to_exclude=[''])
+@kmsmanagement_cli.key_version_group.command(name=cli_util.override('kms_management.create_key_version.command_name', 'create'), help=u"""Generates a new [KeyVersion] resource that provides new cryptographic material for a master encryption key. The key must be in an `ENABLED` state to be rotated.
+
+As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all  management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createKeyVersion)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'KeyVersion'})
+@cli_util.wrap_exceptions
+def create_key_version_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id):
+
+    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.create_key_version(
+        key_id=key_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_key_version') and callable(getattr(client, 'get_key_version')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_key_version(key_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(kmsmanagement_cli.schedule_key_version_deletion, params_to_exclude=[''])
+@kmsmanagement_cli.key_version_group.command(name=cli_util.override('kms_management.schedule_key_version_deletion.command_name', 'schedule-key-version-deletion'), help=u"""Schedules the deletion of the specified key version. This sets the lifecycle state of the key version to `PENDING_DELETION` and then deletes it after the specified retention period ends.
+
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](scheduleKeyVersionDeletion)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'KeyVersion'})
+@cli_util.wrap_exceptions
+def schedule_key_version_deletion_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, key_version_id, time_of_deletion, if_match):
+
+    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
+    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if time_of_deletion is not None:
+        _details['timeOfDeletion'] = time_of_deletion
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.schedule_key_version_deletion(
+        key_id=key_id,
+        key_version_id=key_version_id,
+        schedule_key_version_deletion_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_key_version') and callable(getattr(client, 'get_key_version')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_key_version(key_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(kmsmanagement_cli.cancel_key_version_deletion, params_to_exclude=[''])
+@kmsmanagement_cli.key_version_group.command(name=cli_util.override('kms_management.cancel_key_version_deletion.command_name', 'cancel-key-version-deletion'), help=u"""Cancels the scheduled deletion of the specified key version. Canceling a scheduled deletion restores the key version to its lifecycle state from before its scheduled deletion.
+
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](cancelKeyVersionDeletion)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'KeyVersion'})
+@cli_util.wrap_exceptions
+def cancel_key_version_deletion_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, key_version_id, if_match):
+
+    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
+    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.cancel_key_version_deletion(
+        key_id=key_id,
+        key_version_id=key_version_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_key_version') and callable(getattr(client, 'get_key_version')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_key_version(key_id, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
