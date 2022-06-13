@@ -6,6 +6,65 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.10.3 - 2022-06-14
+--------------------
+Added
+~~~~~
+
+* Support for clearing commands history with 'F7' in interactive mode
+  
+  * ``oci -i``
+
+* Support for the Web Application Acceleration (WAA) service
+
+  * ``oci waa``
+
+* Support for the Governance Rules service
+
+  * ``oci governance-rules-control-plane governance-rule``
+
+* Support for the OneSubscription service
+
+  * ``oci onesubscription``
+
+* Support for quota resource locking in the Limits service
+
+  * ``oci limits quota addlock``
+  * ``oci limits quota removelock``
+  * ``oci limits quota create --locks``
+  * ``oci limits quota delete --is-lock-override``
+
+* Support for ``--wait-for-state`` for following command in the MySQL Database service
+
+  * ``oci mysql backup update``
+
+* Support for time zone in Cloud Autonomous VM (CAVM) clusters in the Database service
+
+  * ``oci db cloud-autonomous-vm-cluster create --cluster-time-zone``
+
+* Support for configuration options in the Application Performance Monitoring service
+
+  * ``oci apm-config config create-options``
+
+* Support for MySQL connections in the Database Tools service
+
+  * ``oci dbtools connection``
+
+* Support for resource locking in the Identity service
+
+  * ``oci iam tag-namespace add --tag-namespace-id $tag_namespace_id --type $lock_type``
+  * ``oci iam tag-namespace remove --tag-namespace-id $tag_namespace_id --type $lock_type``
+  * ``oci iam tag-default add --tag-default-id $tag_default_id --type $lock_type``
+  * ``oci iam tag-default remove --tag-default-id $tag_default_id --type $lock_type``
+
+Fixed
+~~~~~~~
+* Fixed bugs in the following commands in Rover service
+
+  * ``oci rover node add-workload``
+  * ``oci rover node create``
+
+
 3.10.2 - 2022-06-07
 --------------------
 Added

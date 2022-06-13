@@ -112,6 +112,8 @@ def create_master_key_policy_rover_resource(resource_name, ctx, **kwargs):
             value_policy_compartment = click.confirm(click.style(confirm_policy_compartment, fg="yellow"))
             if value_policy_compartment:
                 policy_kwargs['policy_compartment_id'] = kwargs['compartment_id']
+        else:
+            policy_kwargs['policy_compartment_id'] = kwargs['policy_compartment_id']
 
         # Pass policy name as display name if provided else generate one
         if kwargs['policy_name']:
@@ -162,7 +164,8 @@ def setup_master_key_policy(ctx, **kwargs):
 
     # setting up policies
     click.echo('Setting up the policies in the compartment.')
-    statement_1 = "Allow service rover to use keys where target.key.id is " + kwargs['master_key_id']
+    statement_1 = "Allow service rover to use keys in compartment ID " + \
+        compartment_id + " where target.key.id = " + kwargs['master_key_id']
     iam_kwargs = {}
     iam_details = {
         'compartmentId': compartment_id,
@@ -228,9 +231,8 @@ def validate_get_image(ctx, **kwargs):
 
 def validate_bucket(ctx, **kwargs):
     if kwargs['type'].lower() == "bucket":
-        if not ('bucket_id' in kwargs and kwargs['bucket_id']) or not (
-                'bucket_name' in kwargs and kwargs['bucket_name']):
-            raise click.UsageError('Parameter bucket-id and bucket-name cannot be whitespace or empty string')
+        if not ('bucket_name' in kwargs and kwargs['bucket_name']):
+            raise click.UsageError('Parameter bucket-name cannot be whitespace or empty string')
         try:
             object_storage_obj = get_object_storage_helper(ctx)
             namespace = object_storage_obj.get_namespace().data
@@ -247,7 +249,7 @@ def validate_bucket(ctx, **kwargs):
 
 def prepare_bucket_workload_data(result_bucket, **kwargs):
     workload_data = [{
-        "workloadType": "BUCKET", "id": kwargs['bucket_id'], "name": kwargs['bucket_name'],
+        "workloadType": "BUCKET", "id": result_bucket.data.name, "name": kwargs['bucket_name'],
         "compartmentId": result_bucket.data.compartment_id,
         'prefix': kwargs['prefix'], 'rangeStart': kwargs['range_start'], 'rangeEnd': kwargs['range_end']
     }]

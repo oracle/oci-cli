@@ -4242,6 +4242,7 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
+@cli_util.option('--cluster-time-zone', help=u"""The time zone to use for the Cloud Autonomous VM cluster. For details, see [DB System Time Zones].""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -4256,7 +4257,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, cloud_exadata_infrastructure_id, description, license_model, nsg_ids, freeform_tags, defined_tags):
+def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, display_name, cloud_exadata_infrastructure_id, description, cluster_time_zone, license_model, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4269,6 +4270,9 @@ def create_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
 
     if description is not None:
         _details['description'] = description
+
+    if cluster_time_zone is not None:
+        _details['clusterTimeZone'] = cluster_time_zone
 
     if license_model is not None:
         _details['licenseModel'] = license_model
