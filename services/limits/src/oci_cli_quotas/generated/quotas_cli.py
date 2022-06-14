@@ -31,22 +31,90 @@ limits_service_cli.limits_service_group.add_command(quotas_root_group)
 quotas_root_group.add_command(quota_group)
 
 
+@quota_group.command(name=cli_util.override('quotas.add_quota_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addQuotaLock)""")
+@cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
+@cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
+@cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'limits', 'class': 'Quota'})
+@cli_util.wrap_exceptions
+def add_quota_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, type, related_resource_id, message, if_match):
+
+    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+        raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('limits', 'quotas', ctx)
+    result = client.add_quota_lock(
+        quota_id=quota_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_quota') and callable(getattr(client, 'get_quota')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_quota(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @quota_group.command(name=cli_util.override('quotas.create_quota.command_name', 'create'), help=u"""Creates a new quota with the details supplied. \n[Command Reference](createQuota)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resource this quota applies to.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the quota.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the quota during creation. The name must be unique across all quotas in the tenancy and cannot be changed.""")
 @cli_util.option('--statements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative quota statement language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddLockDetails.  For documentation on AddLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/quotas/20181025/datatypes/AddLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'statements': {'module': 'limits', 'class': 'list[string]'}, 'freeform-tags': {'module': 'limits', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'limits', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'statements': {'module': 'limits', 'class': 'list[string]'}, 'locks': {'module': 'limits', 'class': 'list[AddLockDetails]'}, 'freeform-tags': {'module': 'limits', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'limits', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'limits', 'class': 'list[string]'}, 'freeform-tags': {'module': 'limits', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'limits', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'limits', 'class': 'Quota'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'limits', 'class': 'list[string]'}, 'locks': {'module': 'limits', 'class': 'list[AddLockDetails]'}, 'freeform-tags': {'module': 'limits', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'limits', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'limits', 'class': 'Quota'})
 @cli_util.wrap_exceptions
-def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, description, name, statements, freeform_tags, defined_tags):
+def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, description, name, statements, locks, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -56,6 +124,9 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     _details['description'] = description
     _details['name'] = name
     _details['statements'] = cli_util.parse_json_parameter("statements", statements)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -97,6 +168,7 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @quota_group.command(name=cli_util.override('quotas.delete_quota.command_name', 'delete'), help=u"""Deletes the quota corresponding to the given OCID. \n[Command Reference](deleteQuota)""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -106,7 +178,7 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, if_match):
+def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, if_match, is_lock_override):
 
     if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
@@ -114,6 +186,8 @@ def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('limits', 'quotas', ctx)
     result = client.delete_quota(
@@ -240,6 +314,63 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
+@quota_group.command(name=cli_util.override('quotas.remove_quota_lock.command_name', 'remove'), help=u"""Remove a lock from a resource. \n[Command Reference](removeQuotaLock)""")
+@cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'limits', 'class': 'Quota'})
+@cli_util.wrap_exceptions
+def remove_quota_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, type, if_match):
+
+    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+        raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('limits', 'quotas', ctx)
+    result = client.remove_quota_lock(
+        quota_id=quota_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_quota') and callable(getattr(client, 'get_quota')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_quota(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @quota_group.command(name=cli_util.override('quotas.update_quota.command_name', 'update'), help=u"""Updates the quota corresponding to given OCID with the details supplied. \n[Command Reference](updateQuota)""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
 @cli_util.option('--description', help=u"""The description you assign to the quota.""")
@@ -247,6 +378,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -256,7 +388,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'limits', 'class': 'list[string]'}, 'freeform-tags': {'module': 'limits', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'limits', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'limits', 'class': 'Quota'})
 @cli_util.wrap_exceptions
-def update_quota(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, description, statements, freeform_tags, defined_tags, if_match):
+def update_quota(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, description, statements, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
@@ -268,6 +400,8 @@ def update_quota(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}

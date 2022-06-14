@@ -82,4 +82,29 @@ def override_key_binding(**kwargs):
             buffer.reset()
             buffer.document = document_with_selection
 
+    @kb.add("f7")
+    def _clear_history(event) -> None:
+        buffer = event.current_buffer
+
+        # Clear history when user presses [F7] shortcut keys
+        try:
+            # Clear Command History
+            cli_interactive_history = buffer.history
+            cli_interactive_history.delete_history_file()
+
+            # Clear Cache
+            buffer.reset()
+
+        # Notify User
+        except Exception as e:
+            kwargs["toolbar"].set_toolbar_text(
+                get_error_message("try_again"),
+                is_error=True,
+            )
+        else:
+            kwargs["toolbar"].set_toolbar_text(
+                get_error_message("history_clear"),
+                is_error=False,
+            )
+
     return kb

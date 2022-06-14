@@ -44,3 +44,23 @@ config_cli.config_group.commands.pop(config_cli.create_config.name)
 
 # Remove update from oci apm-config config
 config_cli.config_group.commands.pop(config_cli.update_config.name)
+
+
+# oci apm-config config create-config-create-options-details -> oci apm-config config create-options
+cli_util.rename_command(config_cli, config_cli.config_group, config_cli.create_config_create_options_details, "create-options")
+
+
+# oci apm-config config update-config-update-options-details -> oci apm-config config update-options
+cli_util.rename_command(config_cli, config_cli.config_group, config_cli.update_config_update_options_details, "update-options")
+
+
+# oci apm-config metric-group retrieve-namespace-metrics -> oci apm-config metric-group get-namespace-metrics
+cli_util.rename_command(config_cli, config_cli.metric_group_group, config_cli.retrieve_namespace_metrics, "get-namespace-metrics")
+
+
+# oci apm-config metric-group retrieve-namespaces -> oci apm-config metric-group get-namespaces
+cli_util.rename_command(config_cli, config_cli.metric_group_group, config_cli.retrieve_namespaces, "get-namespaces")
+
+
+# oci apm-config span-filter validate-span-filter-pattern -> oci apm-config span-filter validate-pattern
+cli_util.rename_command(config_cli, config_cli.span_filter_group, config_cli.validate_span_filter_pattern, "validate-pattern")

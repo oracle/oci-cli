@@ -4,14 +4,16 @@
 
 
 """The main purpose of this page is to have all the error messages which is being used in the Interactive CLI,
-so updating those in the future should be easy, it is recommended not to call those of those error messages from
-outside this page, instead call get_error_message funstion"""
+so updating those in the future should be easy, it is recommended not to call error messages from
+outside this page, instead call get_error_message function"""
 
 error_messages = {
     "invalid_input": "Incorrect input:",
     "missing_required_params": "Error: Missing required parameters",
     "resource_search_failed": "Error: Resource search failed, please check you are correctly authorized to view resources",
     "no_items_found": "No items found",
+    "try_again": "Something went wrong. Please try again later",
+    "history_clear": "History cleared"
 }
 
 

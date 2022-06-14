@@ -463,6 +463,136 @@ def activate_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, totp_t
     cli_util.render_response(result, ctx)
 
 
+@tag_default_group.command(name=cli_util.override('iam.add_tag_default_lock.command_name', 'add'), help=u"""Add a resource lock to a tag default. \n[Command Reference](addTagDefaultLock)""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def add_tag_default_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, type, related_resource_id, message, if_match):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.add_tag_default_lock(
+        tag_default_id=tag_default_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_default(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tag_namespace_group.command(name=cli_util.override('iam.add_tag_namespace_lock.command_name', 'add'), help=u"""Add a resource lock to a tag namespace. \n[Command Reference](addTagNamespaceLock)""")
+@cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagNamespace'})
+@cli_util.wrap_exceptions
+def add_tag_namespace_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, type, related_resource_id, message, if_match):
+
+    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.add_tag_namespace_lock(
+        tag_namespace_id=tag_namespace_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_namespace(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @user_group_membership_group.command(name=cli_util.override('iam.add_user_to_group.command_name', 'add'), help=u"""Adds the specified user to the specified group and returns a `UserGroupMembership` object with its own OCID.
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE. \n[Command Reference](addUserToGroup)""")
@@ -602,6 +732,7 @@ After you start this operation, you cannot start either the [DeleteTag] or the [
 
 In order to delete tags, you must first retire the tags. Use [UpdateTag] to retire a tag. \n[Command Reference](bulkDeleteTags)""")
 @cli_util.option('--tag-definition-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the tag definitions to delete""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -610,9 +741,11 @@ In order to delete tags, you must first retire the tags. Use [UpdateTag] to reti
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tag-definition-ids': {'module': 'identity', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_definition_ids):
+def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_definition_ids, is_lock_override):
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -779,6 +912,7 @@ After you start this operation, you cannot start either the [DeleteTag] or the [
 To delete a tag namespace, you must first retire it. Use [UpdateTagNamespace] to retire a tag namespace. \n[Command Reference](cascadeDeleteTagNamespace)""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -787,7 +921,7 @@ To delete a tag namespace, you must first retire it. Use [UpdateTagNamespace] to
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match):
+def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -795,6 +929,8 @@ def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_second
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.cascade_delete_tag_namespace(
@@ -956,17 +1092,20 @@ To move the tag namespace, you must have the manage tag-namespaces permission on
 Moving a tag namespace moves all the tag key definitions contained in the tag namespace. \n[Command Reference](changeTagNamespaceCompartment)""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The Oracle Cloud ID (OCID) of the destination compartment.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartment_id):
+def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartment_id, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['compartmentId'] = compartment_id
@@ -1671,7 +1810,7 @@ After your network resource is created, you can use it in policy to restrict acc
 @cli_util.option('--virtual-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed VCN OCID and IP range pairs. Example:`\"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaaexampleuniqueID\", \"ipRanges\": [ \"129.213.39.0/24\" ]`
 
 This option is a JSON list with items of type NetworkSourcesVirtualSourceList.  For documentation on NetworkSources_virtualSourceList please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/NetworkSourcesVirtualSourceList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of services allowed to make on-behalf-of requests. These requests can have different source IP addresses than those listed in the network source. Currently, only `all` and `none` are supported. The default is `all`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""-- The services attribute has no effect and is reserved for use by Oracle. --""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'public-source-list': {'module': 'identity', 'class': 'list[string]'}, 'virtual-source-list': {'module': 'identity', 'class': 'list[NetworkSourcesVirtualSourceList]'}, 'services': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
@@ -1960,6 +2099,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1968,12 +2108,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator': {'module': 'identity', 'class': 'BaseTagDefinitionValidator'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, validator):
+def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, validator, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['name'] = name
@@ -2044,6 +2186,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2052,12 +2195,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking):
+def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -2128,6 +2273,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2137,12 +2283,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator-values': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag_enum_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, validator_values):
+def create_tag_enum_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, is_lock_override, validator_values):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -2208,15 +2356,18 @@ If you specify that a value is required, a value is set during resource creation
 * If the `isRequired` flag is set to \"true\", the value is set during resource creation. * If the `isRequired` flag is set to \"false\", the value you enter is set during resource creation.
 
 Example: `false`""")
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddLockDetails.  For documentation on AddLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/AddLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}}, output_type={'module': 'identity', 'class': 'TagDefault'})
 @cli_util.wrap_exceptions
-def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tag_definition_id, value, is_required):
+def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tag_definition_id, value, is_required, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2228,6 +2379,9 @@ def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if is_required is not None:
         _details['isRequired'] = is_required
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag_default(
@@ -2276,15 +2430,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddLockDetails.  For documentation on AddLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/AddLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions
-def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags, locks):
 
     kwargs = {}
 
@@ -2298,6 +2455,9 @@ def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag_namespace(
@@ -3128,7 +3288,7 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
 
 @tag_group.command(name=cli_util.override('iam.delete_tag.command_name', 'delete'), help=u"""Deletes the specified tag definition. This operation triggers a process that removes the tag from all resources in your tenancy.
 
-These things happen immediately: \u00A0   * If the tag was a cost-tracking tag, it no longer counts against your 10 cost-tracking   tags limit, whether you first disabled it or not.   * If the tag was used with dynamic groups, none of the rules that contain the tag will   be evaluated against the tag.
+These things happen immediately:   * If the tag was a cost-tracking tag, it no longer counts against your 10 cost-tracking   tags limit, whether you first disabled it or not.   * If the tag was used with dynamic groups, none of the rules that contain the tag will   be evaluated against the tag.
 
 When you start the delete operation, the state of the tag changes to DELETING and tag removal from resources begins. This can take up to 48 hours depending on the number of resources that were tagged as well as the regions in which those resources reside.
 
@@ -3140,6 +3300,7 @@ To delete a tag, you must first retire it. Use [UpdateTag] to retire a tag. \n[C
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--tag-name', required=True, help=u"""The name of the tag.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3149,7 +3310,7 @@ To delete a tag, you must first retire it. Use [UpdateTag] to retire a tag. \n[C
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, if_match):
+def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -3160,6 +3321,8 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag(
         tag_namespace_id=tag_namespace_id,
@@ -3195,6 +3358,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @tag_default_group.command(name=cli_util.override('iam.delete_tag_default.command_name', 'delete'), help=u"""Deletes the the specified tag default. \n[Command Reference](deleteTagDefault)""")
 @cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3204,7 +3368,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, if_match):
+def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, if_match, is_lock_override):
 
     if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
@@ -3212,6 +3376,8 @@ def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag_default(
@@ -3263,6 +3429,7 @@ Use [CascadeDeleteTagNamespace] to delete a tag namespace along with all of the 
 Use [DeleteTag] to delete a tag definition. \n[Command Reference](deleteTagNamespace)""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3272,7 +3439,7 @@ Use [DeleteTag] to delete a tag definition. \n[Command Reference](deleteTagNames
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match):
+def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -3280,6 +3447,8 @@ def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag_namespace(
@@ -5934,6 +6103,120 @@ def recover_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@tag_default_group.command(name=cli_util.override('iam.remove_tag_default_lock.command_name', 'remove'), help=u"""Remove a resource lock from a tag default. \n[Command Reference](removeTagDefaultLock)""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def remove_tag_default_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, type, if_match):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.remove_tag_default_lock(
+        tag_default_id=tag_default_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_default(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tag_namespace_group.command(name=cli_util.override('iam.remove_tag_namespace_lock.command_name', 'remove'), help=u"""Remove a resource lock from a tag namespace. \n[Command Reference](removeTagNamespaceLock)""")
+@cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagNamespace'})
+@cli_util.wrap_exceptions
+def remove_tag_namespace_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, type, if_match):
+
+    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.remove_tag_namespace_lock(
+        tag_namespace_id=tag_namespace_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_namespace(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @user_group_membership_group.command(name=cli_util.override('iam.remove_user_from_group.command_name', 'remove'), help=u"""Removes a user from a group by deleting the corresponding `UserGroupMembership`. \n[Command Reference](removeUserFromGroup)""")
 @cli_util.option('--user-group-membership-id', required=True, help=u"""The OCID of the userGroupMembership.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6646,7 +6929,7 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--virtual-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed VCN OCID and IP range pairs. Example:`\"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaaexampleuniqueID\", \"ipRanges\": [ \"129.213.39.0/24\" ]`
 
 This option is a JSON list with items of type NetworkSourcesVirtualSourceList.  For documentation on NetworkSources_virtualSourceList please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/NetworkSourcesVirtualSourceList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of services allowed to make on-behalf-of requests. These requests can have different source IPs than those specified in the network source. Currently, only `all` and `none` are supported. The default is `all`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""-- The services attribute has no effect and is reserved for use by Oracle. --""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6923,6 +7206,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6932,7 +7216,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator': {'module': 'identity', 'class': 'BaseTagDefinitionValidator'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, validator, if_match):
+def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, validator, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -6947,6 +7231,8 @@ def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
 
@@ -7018,6 +7304,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7027,7 +7314,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match):
+def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -7042,6 +7329,8 @@ def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -7113,6 +7402,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7123,7 +7413,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator-values': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match, validator_values):
+def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match, is_lock_override, validator_values):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -7138,6 +7428,8 @@ def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_sta
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -7205,6 +7497,7 @@ def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_sta
 * If the `isRequired` flag is set to \"true\", the value is set during resource creation. * If the `isRequired` flag is set to \"false\", the value you enter is set during resource creation.
 
 Example: `false`""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7214,12 +7507,14 @@ Example: `false`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
 @cli_util.wrap_exceptions
-def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, value, is_required, if_match):
+def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, value, is_required, is_lock_override, if_match):
 
     if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -7272,6 +7567,7 @@ You can't add a namespace with the same name as a retired namespace in the same 
 @cli_util.option('--is-retired', type=click.BOOL, help=u"""Whether the tag namespace is retired. See [Retiring Key Definitions and Namespace Definitions].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7281,7 +7577,7 @@ You can't add a namespace with the same name as a retired namespace in the same 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions
-def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, description, is_retired, freeform_tags, defined_tags):
+def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, description, is_retired, freeform_tags, defined_tags, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -7291,6 +7587,8 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
 

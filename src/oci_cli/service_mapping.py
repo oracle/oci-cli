@@ -195,6 +195,10 @@ service_mapping = {
         "golden_gate",
         "GoldenGate"
     ],
+    "governance-rules-control-plane": [
+        "governance_rules_control_plane",
+        "GovernanceRulesControlPlane"
+    ],
     "health-checks": [
         "healthchecks",
         "Health Checks"
@@ -290,6 +294,10 @@ service_mapping = {
     "oda": [
         "oda",
         "Digital Assistant Service Instance"
+    ],
+    "onesubscription": [
+        "onesubscription",
+        "OneSubscription"
     ],
     "ons": [
         "ons",
@@ -410,6 +418,10 @@ service_mapping = {
     "vulnerability-scanning": [
         "vulnerability_scanning",
         "Scanning"
+    ],
+    "waa": [
+        "waa",
+        "Web Application Acceleration (WAA)"
     ],
     "waas": [
         "waas",

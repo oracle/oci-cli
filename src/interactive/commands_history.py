@@ -8,6 +8,7 @@ from prompt_toolkit.history import FileHistory
 from oci_cli import cli_util
 from interactive.utils import (
     INTERACTIVE_COMMANDS_HISTORY_DIR_NAME,
+    INTERACTIVE_COMMANDS_HISTORY_FILE_NAME,
     validate_commands_limit,
 )
 
@@ -35,3 +36,18 @@ class CommandsHistory(FileHistory):
             write("\n# %s\n" % datetime.datetime.now())
             write("+%s\n" % string)
         validate_commands_limit(self.filename)
+
+    def delete_history_file(self) -> None:
+        """
+        When user presses clear key bindings, this function is being called by the prompt toolkit to remove the history file
+        """
+
+        # The location of the history file consists of directory (~/.oci) and file name, so checking if the directory does
+        # not exist, return
+        if not os.path.isfile(INTERACTIVE_COMMANDS_HISTORY_FILE_NAME):
+            return
+        os.remove(INTERACTIVE_COMMANDS_HISTORY_FILE_NAME)
+
+        # Update history state
+        self._loaded = False
+        self._loaded_strings = []
