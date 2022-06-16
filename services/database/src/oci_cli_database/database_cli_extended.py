@@ -1050,6 +1050,9 @@ def list_databases(ctx, **kwargs):
     response = client.list_db_homes(compartment_id, **list_db_home_kw_args)
     db_homes = response.data
     while response.has_next_page:
+        if response.next_page is not None:
+            list_db_home_kw_args['page'] = response.next_page
+
         response = client.list_db_homes(compartment_id, **list_db_home_kw_args)
 
         if response.data is not None:

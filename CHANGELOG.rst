@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.10.4 - 2022-06-21
+--------------------
+Added
+~~~~~
+* Support for the Network Firewall service
+
+  * ``oci network-firewall``
+  
+* Support for CSV file type datasets for text labeling and JSONL in the Data Labeling service
+
+  * ``oci data-labeling-service dataset create-dataset-text-dataset-format-details --dataset-format-details-text-file-type-metadata``
+
+* Support for diagnostics in the Database Management service
+
+  * ``oci database-management diagnosability``
+  * ``oci database-management sql-tuning-task``
+
+Fixed
+~~~~~~~
+* Fixed following command/operations input, output filenames and path for windows OS in object storage service
+
+  * ``oci os object sync``
+
+* Fixed pagination bug in list database service
+
+  * ``oci db database list``
+
 3.10.3 - 2022-06-14
 --------------------
 Added

@@ -23,6 +23,24 @@ def db_management_root_group():
     pass
 
 
+@click.command(cli_util.override('db_management.addm_tasks_collection_group.command_name', 'addm-tasks-collection'), cls=CommandGroupWithAlias, help="""The list of ADDM task metadata.""")
+@cli_util.help_option_group
+def addm_tasks_collection_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.snapshot_details_group.command_name', 'snapshot-details'), cls=CommandGroupWithAlias, help="""The details of the newly generated AWR snapshot.""")
+@cli_util.help_option_group
+def snapshot_details_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.historic_addm_result_group.command_name', 'historic-addm-result'), cls=CommandGroupWithAlias, help="""The details of the historic ADDM task.""")
+@cli_util.help_option_group
+def historic_addm_result_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
 @cli_util.help_option_group
 def cluster_cache_metric_group():
@@ -120,6 +138,9 @@ def job_group():
 
 
 database_management_service_cli.database_management_service_group.add_command(db_management_root_group)
+db_management_root_group.add_command(addm_tasks_collection_group)
+db_management_root_group.add_command(snapshot_details_group)
+db_management_root_group.add_command(historic_addm_result_group)
 db_management_root_group.add_command(cluster_cache_metric_group)
 db_management_root_group.add_command(work_request_log_entry_group)
 db_management_root_group.add_command(managed_database_group_group)
@@ -228,6 +249,44 @@ def add_managed_database_to_managed_database_group(ctx, from_json, managed_datab
     result = client.add_managed_database_to_managed_database_group(
         managed_database_group_id=managed_database_group_id,
         add_managed_database_to_managed_database_group_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@addm_tasks_collection_group.command(name=cli_util.override('db_management.addm_tasks.command_name', 'add'), help=u"""Lists the metadata for each ADDM task who's end snapshot time falls within the provided start and end time. Details include the name of the ADDM task, description, user, status and creation date time. \n[Command Reference](addmTasks)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--time-start', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the time range to search for ADDM tasks as defined by date-time RFC3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""The end of the time range to search for ADDM tasks as defined by date-time RFC3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TASK_NAME", "TASK_ID", "DESCRIPTION", "DB_USER", "STATUS", "TIME_CREATED", "BEGIN_TIME", "END_TIME"]), help=u"""The option to sort the list of ADDM tasks.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AddmTasksCollection'})
+@cli_util.wrap_exceptions
+def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, limit, sort_by, sort_order):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.addm_tasks(
+        managed_database_id=managed_database_id,
+        time_start=time_start,
+        time_end=time_end,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1196,6 +1255,28 @@ def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, m
         managed_database_id=managed_database_id,
         tablespace_name=tablespace_name,
         drop_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@snapshot_details_group.command(name=cli_util.override('db_management.generate_awr_snapshot.command_name', 'generate-awr-snapshot'), help=u"""Creates an AWR snapshot for the target database. \n[Command Reference](generateAwrSnapshot)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SnapshotDetails'})
+@cli_util.wrap_exceptions
+def generate_awr_snapshot(ctx, from_json, managed_database_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.generate_awr_snapshot(
+        managed_database_id=managed_database_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3362,6 +3443,36 @@ def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, crede
         managed_database_id=managed_database_id,
         tablespace_name=tablespace_name,
         resize_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@historic_addm_result_group.command(name=cli_util.override('db_management.run_historic_addm.command_name', 'run-historic-addm'), help=u"""Creates and executes a historic ADDM task using the specified AWR snapshot IDs. If an existing ADDM task uses the provided awr snapshot IDs, the existing task will be returned. \n[Command Reference](runHistoricAddm)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-snapshot-id', required=True, type=click.INT, help=u"""The ID number of the beginning AWR snapshot.""")
+@cli_util.option('--end-snapshot-id', required=True, type=click.INT, help=u"""The ID of the ending AWR snapshot.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'HistoricAddmResult'})
+@cli_util.wrap_exceptions
+def run_historic_addm(ctx, from_json, managed_database_id, start_snapshot_id, end_snapshot_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['startSnapshotId'] = start_snapshot_id
+    _details['endSnapshotId'] = end_snapshot_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.run_historic_addm(
+        managed_database_id=managed_database_id,
+        run_historic_addm_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
