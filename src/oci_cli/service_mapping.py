@@ -275,6 +275,10 @@ service_mapping = {
         "core",
         "Networking Service"
     ],
+    "network-firewall": [
+        "network_firewall",
+        "Network Firewall"
+    ],
     "nlb": [
         "network_load_balancer",
         "NetworkLoadBalancer"

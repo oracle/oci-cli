@@ -586,23 +586,89 @@ def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('sql_tuning.list_sql_tuning_sets.command_name', 'list-sql-tuning-sets'), help=u"""Lists the SQL tuning sets for the specified Managed Database. \n[Command Reference](listSqlTuningSets)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--owner', help=u"""The owner of the SQL tuning set.""")
+@cli_util.option('--name-contains', help=u"""Allow searching the name of the SQL tuning set by partial matching. The search is case insensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The option to sort the SQL tuning set summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetCollection'})
+@cli_util.wrap_exceptions
+def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_id, owner, name_contains, sort_by, sort_order, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if owner is not None:
+        kwargs['owner'] = owner
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sql_tuning_sets,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sql_tuning_sets,
+            limit,
+            page_size,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sql_tuning_sets(
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('sql_tuning.start_sql_tuning_task.command_name', 'start-sql-tuning-task'), help=u"""Starts a SQL tuning task for a given set of SQL statements from the active session history top SQL statements. \n[Command Reference](startSqlTuningTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
-@cli_util.option('--sql-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of the details of SQL statement on which tuning is performed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--time-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
 @cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
+
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, credential_details, total_time_limit_in_minutes, scope, sql_details, time_started, time_ended, task_description, statement_time_limit_in_minutes):
+def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, credential_details, total_time_limit_in_minutes, scope, task_description, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -615,15 +681,24 @@ def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, creden
     _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
     _details['scope'] = scope
-    _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
-    _details['timeStarted'] = time_started
-    _details['timeEnded'] = time_ended
 
     if task_description is not None:
         _details['taskDescription'] = task_description
 
     if statement_time_limit_in_minutes is not None:
         _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
+
+    if sql_tuning_set is not None:
+        _details['sqlTuningSet'] = cli_util.parse_json_parameter("sql_tuning_set", sql_tuning_set)
+
+    if sql_details is not None:
+        _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
+
+    if time_started is not None:
+        _details['timeStarted'] = time_started
+
+    if time_ended is not None:
+        _details['timeEnded'] = time_ended
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.start_sql_tuning_task(
@@ -639,20 +714,23 @@ def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, creden
 @cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
 @cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
-@cli_util.option('--sql-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of the details of SQL statement on which tuning is performed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--time-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--credential-details-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
 @cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
-@json_skeleton_utils.get_cli_json_input_option({'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
+
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, sql_details, time_started, time_ended, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, statement_time_limit_in_minutes):
+def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -665,9 +743,6 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
     _details['taskName'] = task_name
     _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
     _details['scope'] = scope
-    _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
-    _details['timeStarted'] = time_started
-    _details['timeEnded'] = time_ended
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
@@ -677,6 +752,18 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 
     if statement_time_limit_in_minutes is not None:
         _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
+
+    if sql_tuning_set is not None:
+        _details['sqlTuningSet'] = cli_util.parse_json_parameter("sql_tuning_set", sql_tuning_set)
+
+    if sql_details is not None:
+        _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
+
+    if time_started is not None:
+        _details['timeStarted'] = time_started
+
+    if time_ended is not None:
+        _details['timeEnded'] = time_ended
 
     _details['credentialDetails']['sqlTuningTaskCredentialType'] = 'SECRET'
 
@@ -694,20 +781,23 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 @cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
 @cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
-@cli_util.option('--sql-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of the details of SQL statement on which tuning is performed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--time-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--credential-details-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
 @cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
-@json_skeleton_utils.get_cli_json_input_option({'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
+
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, sql_details, time_started, time_ended, credential_details_username, credential_details_role, credential_details_password, task_description, statement_time_limit_in_minutes):
+def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password, task_description, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -720,9 +810,6 @@ def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
     _details['taskName'] = task_name
     _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
     _details['scope'] = scope
-    _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
-    _details['timeStarted'] = time_started
-    _details['timeEnded'] = time_ended
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
@@ -732,6 +819,18 @@ def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
 
     if statement_time_limit_in_minutes is not None:
         _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
+
+    if sql_tuning_set is not None:
+        _details['sqlTuningSet'] = cli_util.parse_json_parameter("sql_tuning_set", sql_tuning_set)
+
+    if sql_details is not None:
+        _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
+
+    if time_started is not None:
+        _details['timeStarted'] = time_started
+
+    if time_ended is not None:
+        _details['timeEnded'] = time_ended
 
     _details['credentialDetails']['sqlTuningTaskCredentialType'] = 'PASSWORD'
 

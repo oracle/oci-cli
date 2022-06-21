@@ -960,7 +960,7 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
                 if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
                     continue
 
-            object_name = normalize_object_name_path_for_object_storage(full_file_path[len(expanded_directory):])
+            object_name = normalize_file_path_for_object_storage(full_file_path[len(expanded_directory):])
             if is_python2():
                 object_name = object_name.decode("utf-8")
 
@@ -982,8 +982,8 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
                     if len(file_list) > (idx + parallel_head_object_look_ahead_window):
                         for i in range(parallel_head_object_look_ahead_window):
                             look_ahead_file_path = os.path.join(dir_name, file_list[idx + i])
-                            look_ahead_object_name = normalize_object_name_path_for_object_storage(
-                                look_ahead_file_path[len(expanded_directory):])
+                            look_ahead_object_name = normalize_file_path_for_object_storage(look_ahead_file_path[len(expanded_directory):])
+                            look_ahead_file_path = normalize_file_path_for_object_storage(look_ahead_file_path)
                             if look_ahead_object_name[0] == '/':
                                 look_ahead_object_name = look_ahead_object_name[1:]
                             if prefix:
@@ -1031,13 +1031,13 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
                             continue
 
                 upload_transfers.add(object_name)
+                file_size = os.stat(full_file_path).st_size
+                full_file_path = normalize_file_path_for_object_storage(full_file_path)
                 if dry_run:
                     if syncing:
                         print("Uploading file:", end=" ")
                     print(full_file_path)
                     continue
-
-                file_size = os.stat(full_file_path).st_size
 
                 if ctx.obj['debug']:
                     update_progress_kwargs = {'message': u'Uploaded {}'.format(object_name)}
@@ -1412,21 +1412,19 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
 
                 # If the object name starts with the path separator (account for Unix and Windows paths) then remove it when we
                 # do the joining to create a full file name, otherwise we could get an unexpected result
-                if object_name[0] == '/' or object_name[0] == '\\':
-                    full_file_path = os.path.join(expanded_directory, object_name[1:])
-                else:
-                    full_file_path = os.path.join(expanded_directory, object_name)
-                    if cli_util.is_windows():
-                        full_file_path = full_file_path.replace('/', '\\')
-
+                object_name = normalize_file_path_for_object_storage(object_name)
+                if object_name[0] == '/':
+                    object_name = object_name[1:]
+                full_file_path = os.path.join(expanded_directory, object_name)
                 if file_filter_collection:
                     if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
                         continue
 
                 # We skip the objects in the Archived/Restoring state and don't consider them for further evaluations
+                normalized_full_file_path = normalize_file_path_for_object_storage(full_file_path)
                 if syncing and obj.archival_state and obj.archival_state.lower() != 'restored':
                     download_output.add_skipped(obj.name)
-                    download_skipped.add(full_file_path)
+                    download_skipped.add(normalized_full_file_path)
                     continue
 
                 # HEAD operation doesn't have microsecond information which is being used while uploading. To have
@@ -1438,7 +1436,7 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
                     not_syncing = syncing and not requires_sync(full_file_path, obj.size, last_modified, to_remote=False)
                     if not overwrite and (no_overwrite or not_syncing):
                         download_output.add_skipped(obj.name)
-                        download_skipped.add(full_file_path)
+                        download_skipped.add(normalized_full_file_path)
                         continue
 
                     if not overwrite and not dry_run and not syncing:
@@ -1447,7 +1445,7 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
                                 object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
                         if confirm == 'N':
                             download_output.add_skipped(obj.name)
-                            download_skipped.add(full_file_path)
+                            download_skipped.add(normalized_full_file_path)
                             continue
                         elif confirm == 'A':
                             overwrite = True
@@ -1455,12 +1453,12 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
                 dl_obj = {
                     "name": obj.name,
                     "size": obj.size,
-                    "full_file_path": full_file_path
+                    "full_file_path": normalized_full_file_path
                 }
                 to_download.append(dl_obj)
-                download_transfers.add(full_file_path)
+                download_transfers.add(normalized_full_file_path)
                 if syncing:
-                    files_to_process.append({"last_modified": last_modified, "full_file_path": full_file_path})
+                    files_to_process.append({"last_modified": last_modified, "full_file_path": normalized_full_file_path})
                 list_objects_response = None
             if dry_run:
                 for obj in to_download:
@@ -1731,9 +1729,10 @@ def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_contro
 
         output_data = sync_output.get_output(output_format)
         expanded_directory = os.path.expandvars(os.path.expanduser(dest_dir))
+        normalize_expanded_dir = normalize_file_path_for_object_storage(expanded_directory)
         if dry_run:
             for on in download_skipped:
-                on = on[len(expanded_directory):].strip('/')
+                on = on[len(normalize_expanded_dir):].strip('/')
                 if prefix is not None:
                     on = prefix + on
                 print('Skipping object:', on)
@@ -1755,19 +1754,22 @@ def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_contro
                     if _filter and _filter.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
                         continue
 
-                    if full_file_path in excluded_local_objects:
+                    if normalize_file_path_for_object_storage(full_file_path) in excluded_local_objects:
                         continue
 
+                    full_file_path = normalize_file_path_for_object_storage(full_file_path)
                     print('Deleting file:', full_file_path)
                     if not dry_run:
                         os.remove(full_file_path)
                     deleted_objects.append(full_file_path)
 
                 # after deleting the files check and delete the empty parent directories
-                try:
-                    os.rmdir(dir_name)
-                except OSError:
-                    pass
+                # Don't delete empty folders for dry run
+                if not dry_run:
+                    try:
+                        os.rmdir(dir_name)
+                    except OSError:
+                        pass
 
             # combine download output data with delete data based on output format
             if output_format == 'json':
@@ -3021,7 +3023,7 @@ def retrying_list_object_versions(client, request_id, namespace, bucket_name, pr
 #
 # On Unix filesystems this should be a no-op because the path separator is already the slash but on Windows systems this will replace
 # the Windows path separator (\) with /
-def normalize_object_name_path_for_object_storage(object_name_path, path_separator=os.sep):
+def normalize_file_path_for_object_storage(object_name_path, path_separator=os.sep):
     return object_name_path.replace(path_separator, '/')
 
 
@@ -3073,20 +3075,22 @@ def _print_to_console(**kwargs):
 
 def _get_file_filter_collection(base_directory, include, exclude, object_prefix):
     file_filter_collection = None
+    if object_prefix:
+        object_prefix = object_prefix.replace('/', os.sep)
     if include:
         file_filter_collection = SingleTypeFileFilterCollection(base_directory, BaseFileFilterCollection.INCLUDE)
         for i in include:
             # If objects have a prefix with a path separator, we're going to transform that into part of the path
             # so a caller's --include and --exclude filters may not take that into account. Instead, try and do that
             # for them here
-            if object_prefix and (object_prefix.find(os.sep) >= 0 or object_prefix.find('/') >= 0):
+            if object_prefix and (object_prefix.find(os.sep) >= 0):
                 file_filter_collection.add_filter(os.path.join(object_prefix, i))
 
             file_filter_collection.add_filter(i)
     elif exclude:
         file_filter_collection = SingleTypeFileFilterCollection(base_directory, BaseFileFilterCollection.EXCLUDE)
         for e in exclude:
-            if object_prefix and (object_prefix.find(os.sep) >= 0 or object_prefix.find('/') >= 0):
+            if object_prefix and (object_prefix.find(os.sep) >= 0):
                 file_filter_collection.add_filter(os.path.join(object_prefix, e))
 
             file_filter_collection.add_filter(e)
