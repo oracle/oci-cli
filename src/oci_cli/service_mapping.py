@@ -175,6 +175,10 @@ service_mapping = {
         "dts",
         "Data Transfer Service"
     ],
+    "em-warehouse": [
+        "em_warehouse",
+        "EmdwControlPlane"
+    ],
     "email": [
         "email",
         "Email Delivery"
@@ -418,6 +422,10 @@ service_mapping = {
     "visual-builder": [
         "visual_builder",
         "Visual Builder"
+    ],
+    "vn-monitoring": [
+        "vn_monitoring",
+        "Network Monitoring"
     ],
     "vulnerability-scanning": [
         "vulnerability_scanning",

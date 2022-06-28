@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.10.5 - 2022-06-28
+--------------------
+Added
+~~~~~
+* Support for the Network Monitoring service
+
+  * ``oci vn-monitoring``
+
+* Support for EmWarehouse Service
+
+  * ``oci em-warehouse``
+
+* Support for specifying application scan settings when creating or updating host scan recipes in the Vulnerability Scanning service
+
+  * ``oci vulnerability-scanning host scan recipe create --application-settings``
+  * ``oci vulnerability-scanning host scan recipe update --application-settings``
+
+* Support for shared infrastructure autonomous database character sets in the Database service
+
+  * ``oci db autonomous-database-character-sets list``
+
+* Support for safe-deleting nodes in the Container Engine for Kubernetes service
+
+  * ``oci ce node-pool create --is-force-deletion-after-override-grace-duration-query-param``
+  * ``oci ce node-pool update --is-force-deletion-after-override-grace-duration-query-param``
+  * ``oci ce node-pool delete --is-force-deletion-after-override-grace-duration-query-param``
+  * ``oci ce node-pool delete-node --is-force-deletion-after-override-grace-duration-query-param``
+
+Changed
+~~~~~~~~
+* Support for ``ncharacter-set`` and ``ncharacter-set`` in Autonomous database service
+
+  * ``oci db autonomous-database create --character-set "AL32UTF8" --ncharacter-set "AL16UTF16"``
+
 3.10.4 - 2022-06-21
 --------------------
 Added
