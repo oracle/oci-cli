@@ -122,6 +122,8 @@ IGNORED_COMMANDS = [
     ['opsi', 'opsi-data-objects', 'query-data-templatized-query'],
     ['opsi', 'opsi-data-objects', 'get'],
     ['opsi', 'opsi-data-objects', 'list'],
+    ['db', 'cloud-vm-cluster', 'create'],
+    ['db', 'cloud-vm-cluster', 'update'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

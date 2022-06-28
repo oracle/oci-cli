@@ -215,7 +215,7 @@ def create_cluster(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.create_node_pool,
-                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+                                             params_to_exclude=['node_config_details', 'node_eviction_node_pool_settings'], copy_from_json=False)
 @containerengine_cli.node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'),
                                              help="""Create a new node pool.""")
 @cli_util.option('--node-image-id', help="""The OCID of the image used to launch the node. This is a shortcut for specifying an image id via the --node-source-details complex JSON parameter. If this parameter is provided, you cannot provide the --node-source-details parameter""")
@@ -226,6 +226,7 @@ def create_cluster(ctx, **kwargs):
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for the nodes. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for the nodes. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-eviction-node-pool-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Node eviction settings for this nodepool. Example: `{\"evictionGraceDuration\": \"PT30M\", \"isForceDeleteAfterGraceDuration\": \"true\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @json_skeleton_utils.get_cli_json_input_option(
@@ -254,7 +255,8 @@ def create_cluster(ctx, **kwargs):
                                                          'class': 'list[NodePoolPlacementConfigDetails]'},
                                    'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
-                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'}})
 @cli_util.wrap_exceptions
 def create_node_pool(ctx, **kwargs):
     if 'size' in kwargs and kwargs['size'] is not None:
@@ -310,7 +312,7 @@ def create_node_pool(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.update_node_pool,
-                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+                                             params_to_exclude=['node_config_details', 'node_eviction_node_pool_settings'], copy_from_json=False)
 @containerengine_cli.node_pool_group.command(name=cli_util.override('update_node_pool.command_name', 'update'),
                                              help="""Update a node pool.""")
 @cli_util.option('--size', type=click.INT, help="""The number of nodes spread across placement configurations.""")
@@ -319,6 +321,7 @@ def create_node_pool(ctx, **kwargs):
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for the nodes. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for the nodes. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-eviction-node-pool-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Node eviction settings for this nodepool. Example: `{\"evictionGraceDuration\": \"PT30M\", \"isForceDeleteAfterGraceDuration\": \"true\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @json_skeleton_utils.get_cli_json_input_option(
@@ -346,7 +349,8 @@ def create_node_pool(ctx, **kwargs):
                                                          'class': 'list[NodePoolPlacementConfigDetails]'},
                                    'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
-                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'}})
 @cli_util.wrap_exceptions
 def update_node_pool(ctx, **kwargs):
     if 'size' in kwargs and kwargs['size'] is not None:
