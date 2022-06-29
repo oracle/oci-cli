@@ -347,7 +347,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
         echo_help(ctx)
         sys.exit()
 
-    if profile == Sentinel(DEFAULT_PROFILE):
+    if str(profile) == str(Sentinel(DEFAULT_PROFILE)):
         # if --profile is not supplied, fallback accordingly:
         #   - if OCI_CLI_PROFILE exists, use that
         #   - if default_profile is specified in oci_cli_rc then use that
