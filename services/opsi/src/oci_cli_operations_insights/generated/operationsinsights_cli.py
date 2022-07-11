@@ -898,12 +898,13 @@ def create_database_insight_create_em_managed_external_database_insight_details(
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
 @cli_util.option('--database-resource-type', required=True, help=u"""OCI database resource type""")
-@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIRTUAL_MACHINE", "BARE_METAL", "EXACS"]), help=u"""Database Deployment Type""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--dbm-private-endpoint-id', help=u"""The [OCID] of the Database Management private endpoint""")
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -913,7 +914,7 @@ def create_database_insight_create_em_managed_external_database_insight_details(
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'DatabaseInsight'})
 @cli_util.wrap_exceptions
-def create_database_insight_create_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_id, database_resource_type, opsi_private_endpoint_id, service_name, credential_details, deployment_type, freeform_tags, defined_tags, system_tags):
+def create_database_insight_create_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_id, database_resource_type, service_name, credential_details, deployment_type, freeform_tags, defined_tags, opsi_private_endpoint_id, dbm_private_endpoint_id, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -922,7 +923,6 @@ def create_database_insight_create_pe_comanaged_database_insight_details(ctx, fr
     _details['compartmentId'] = compartment_id
     _details['databaseId'] = database_id
     _details['databaseResourceType'] = database_resource_type
-    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
     _details['serviceName'] = service_name
     _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['deploymentType'] = deployment_type
@@ -932,6 +932,12 @@ def create_database_insight_create_pe_comanaged_database_insight_details(ctx, fr
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if opsi_private_endpoint_id is not None:
+        _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if dbm_private_endpoint_id is not None:
+        _details['dbmPrivateEndpointId'] = dbm_private_endpoint_id
 
     if system_tags is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
@@ -1169,7 +1175,7 @@ def create_exadata_insight_create_em_managed_external_exadata_insight_details(ct
 
 
 @host_insights_group.command(name=cli_util.override('opsi.create_host_insight.command_name', 'create'), help=u"""Create a Host Insight resource for a host in Operations Insights. The host will be enabled in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST"]), help=u"""Source of the host entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST", "PE_COMANAGED_HOST"]), help=u"""Source of the host entity.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2494,7 +2500,7 @@ def enable_exadata_insight_enable_em_managed_external_exadata_insight_details(ct
 
 
 @host_insights_group.command(name=cli_util.override('opsi.enable_host_insight.command_name', 'enable'), help=u"""Enables a host in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST"]), help=u"""Source of the host entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST", "PE_COMANAGED_HOST"]), help=u"""Source of the host entity.""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3766,7 +3772,7 @@ def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
-@cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible value is EXTERNAL-HOST.""")
+@cli_util.option('--host-type', type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL-HOST"]), multiple=True, help=u"""Filter by one or more host types. Possible value is EXTERNAL-HOST.""")
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -3777,10 +3783,10 @@ def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""A flag to search all resources within a given compartment and all sub-compartments.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'HostInsightSummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'HostInsightSummaryCollection'})
 @cli_util.wrap_exceptions
 def list_host_insights(ctx, from_json, all_pages, page_size, compartment_id, id, status, lifecycle_state, host_type, platform_type, limit, page, sort_order, sort_by, enterprise_manager_bridge_id, exadata_insight_id, compartment_id_in_subtree):
 
@@ -7318,7 +7324,7 @@ def update_exadata_insight_update_em_managed_external_exadata_insight_details(ct
 
 @host_insights_group.command(name=cli_util.override('opsi.update_host_insight.command_name', 'update'), help=u"""Updates configuration of a host insight. \n[Command Reference](updateHostInsight)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST"]), help=u"""Source of the host entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST", "PE_COMANAGED_HOST"]), help=u"""Source of the host entity.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

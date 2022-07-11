@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.11.0 - 2022-07-12
+--------------------
+Added
+~~~~~
+* Support to provide database management private endpoint ID as input to enable DBCS databases in the Operations Insights service
+
+  * ``oci opsi database-insights create-pe-comanged-database --dbm-private-endpoint-id``
+
+* Support for the below new fields to create data guard association with new db system in the Database service
+
+  * ``oci db data-guard-association create with-new-db-system --database-defined-tags --database-freeform-tags --db-system-defined-tags --db-system-freeform-tags --fault-domains --license-model --node-count --private-ip --time-zone``
+
+* Support for Native Pod Networking in Oracle Kubernetes Engine service
+
+  * ``oci ce cluster create --cluster-pod-network-options``
+  * ``oci ce node-pool create --max-pods-per-node --pod-nsg-ids --pod-subnet-ids``
+  * ``oci ce node-pool update --max-pods-per-node --pod-nsg-ids --pod-subnet-ids``
+
+* Support for Compute Instance Maintenance in the Compute service
+
+  * ``oci compute instance action --action rebootmigrate``
+
+Changed
+~~~~~~~
+* [BREAKING] The confusing flag naming for preserving data volumes created on instance launch --preserve-data-volumes is removed in the compute service
+
+  * ``oci compute instance terminate --preserve-data-volumes``
+
+* Bug fixes and improvements to project_o
+
 3.10.5 - 2022-06-28
 --------------------
 Added

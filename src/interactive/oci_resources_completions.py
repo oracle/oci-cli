@@ -68,7 +68,7 @@ def get_oci_resources(
             search_details=search_details, limit=500
         )
         if len(response.data.items) == 0:
-            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"))
+            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"), is_error=True)
         else:
             items = response.data.items
             for item in items:
@@ -107,7 +107,7 @@ def get_availability_domains(ctx, word_before_cursor, bottom_toolbar, sub_string
             compartment_id=compartment_id
         )
         if len(response.data) == 0:
-            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"))
+            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"), is_error=True)
         else:
             items = response.data
             for item in items:
@@ -133,7 +133,7 @@ def get_compute_shapes(ctx, word_before_cursor, bottom_toolbar, sub_string=""):
         compute_client = cli_util.build_client("core", "compute", ctx)
         response = compute_client.list_shapes(compartment_id=compartment_id)
         if len(response.data) == 0:
-            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"))
+            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"), is_error=True)
         else:
             items = response.data
             for item in items:
@@ -170,9 +170,10 @@ def get_compute_images(ctx, word_before_cursor, bottom_toolbar, sub_string=""):
                     )
                 )
         if not completions:
-            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"))
+            bottom_toolbar.set_toolbar_text(get_error_message("no_items_found"), is_error=True)
     except Exception:
         bottom_toolbar.set_toolbar_text(
-            get_error_message("resource_search_failed"), is_error=True
+            get_error_message("resource_search_failed"),
+            is_error=True
         )
     return completions

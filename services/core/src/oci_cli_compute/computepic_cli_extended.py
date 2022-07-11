@@ -131,3 +131,13 @@ compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_rome_bm_
 
 # Remove launch-instance-intel-icelake-bm-launch-instance-platform-config from oci compute instance
 compute_cli.instance_group.commands.pop(compute_cli.launch_instance_intel_icelake_bm_launch_instance_platform_config.name)
+
+# Remove instance-action-reset-action-details from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.instance_action_reset_action_details.name)
+
+
+# Remove instance-action-soft-reset-action-details from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.instance_action_soft_reset_action_details.name)
+
+# Remove instance-action-reboot-migrate-action-details from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.instance_action_reboot_migrate_action_details.name)

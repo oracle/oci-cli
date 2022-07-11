@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('bastion.bastion_root_group.command_name', 'bastion'), cls=CommandGroupWithAlias, help=cli_util.override('bastion.bastion_root_group.help', """Oracle Cloud Infrastructure Bastion provides restricted and time-limited access to target resources that don't have public endpoints. Through the configuration of a bastion, you can let authorized users connect from specific IP addresses to target resources by way of Secure Shell (SSH) sessions hosted on the bastion."""), short_help=cli_util.override('bastion.bastion_root_group.short_help', """Bastion API"""))
+@cli.command(cli_util.override('bastion.bastion_root_group.command_name', 'bastion'), cls=CommandGroupWithAlias, help=cli_util.override('bastion.bastion_root_group.help', """Use the Bastion API to provide restricted and time-limited access to target resources that don't have public endpoints. Bastions let authorized users connect from specific IP addresses to target resources using Secure Shell (SSH) sessions. For more information, see [the Bastion documentation]."""), short_help=cli_util.override('bastion.bastion_root_group.short_help', """Bastion API"""))
 @cli_util.help_option_group
 def bastion_root_group():
     pass
