@@ -247,6 +247,7 @@ def oce_cluster(runner, config_file, config_profile):
 
 
 @util.slow
+@pytest.mark.skip('Skipped to allow DEXREQ-2587')
 def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
     # Set-up of cross-connect group
     node_pool_id = None

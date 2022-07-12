@@ -125,7 +125,8 @@ containerengine_cli.cluster_group.add_command(generate_token)
      'service-lb-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'persistent-volume-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
-     'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
+     'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'},
+     'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -136,7 +137,8 @@ containerengine_cli.cluster_group.add_command(generate_token)
                                    'service-lb-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'persistent-volume-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
-                                   'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
+                                   'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'},
+                                   'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}
@@ -229,6 +231,9 @@ def create_cluster(ctx, **kwargs):
 @cli_util.option('--node-eviction-node-pool-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Node eviction settings for this nodepool. Example: `{\"evictionGraceDuration\": \"PT30M\", \"isForceDeleteAfterGraceDuration\": \"true\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--max-pods-per-node', type=click.INT, help="""The maximum number of pods that will live on a node of the node pool.""")
+@cli_util.option('--pod-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate pods for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pod-subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place pods for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option(
     {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
@@ -240,7 +245,10 @@ def create_cluster(ctx, **kwargs):
      'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'},
      'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
-     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+     'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -256,11 +264,44 @@ def create_cluster(ctx, **kwargs):
                                    'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
-                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'}})
+                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'},
+                                   'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+                                   'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_node_pool(ctx, **kwargs):
+
+    kwargs['node_config_details'] = {}
+
+    if kwargs.get('max_pods_per_node') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --max-pods-per-node without --pod-subnet-ids'
+        )
+
+    if kwargs.get('pod_nsg_ids') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --pod-nsg-ids without --pod-subnet-ids'
+        )
+
+    nodePoolPodNetworkOptionDetails = {}
+    if 'max_pods_per_node' in kwargs and kwargs['max_pods_per_node'] is not None:
+        nodePoolPodNetworkOptionDetails['maxPodsPerNode'] = cli_util.parse_json_parameter("max_pods_per_node", kwargs['max_pods_per_node'])
+    kwargs.pop('max_pods_per_node', None)
+
+    if 'pod_nsg_ids' in kwargs and kwargs['pod_nsg_ids'] is not None:
+        nodePoolPodNetworkOptionDetails['podNsgIds'] = cli_util.parse_json_parameter("pod_nsg_ids", kwargs['pod_nsg_ids'])
+    kwargs.pop('pod_nsg_ids', None)
+
+    # existence of pod_subnet_ids hints that the CNI used is OCI_VCN_IP_NATIVE
+    # with it's absence, we will pass a null nodePoolPodNetworkOptionDetails, which means use default CNI FLANNEL_OVERLAY
+    if 'pod_subnet_ids' in kwargs and kwargs['pod_subnet_ids'] is not None:
+        # if cniType is absent, defaults to FLANNEL
+        nodePoolPodNetworkOptionDetails['cniType'] = "OCI_VCN_IP_NATIVE"
+        nodePoolPodNetworkOptionDetails['podSubnetIds'] = cli_util.parse_json_parameter("pod_subnet_ids", kwargs['pod_subnet_ids'])
+        kwargs['node_config_details']['nodePoolPodNetworkOptionDetails'] = nodePoolPodNetworkOptionDetails
+    kwargs.pop('pod_subnet_ids', None)
+
     if 'size' in kwargs and kwargs['size'] is not None:
-        kwargs['node_config_details'] = {}
         kwargs['node_config_details']['size'] = kwargs['size']
     kwargs.pop('size', None)
 
@@ -324,6 +365,9 @@ def create_node_pool(ctx, **kwargs):
 @cli_util.option('--node-eviction-node-pool-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Node eviction settings for this nodepool. Example: `{\"evictionGraceDuration\": \"PT30M\", \"isForceDeleteAfterGraceDuration\": \"true\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--max-pods-per-node', type=click.INT, help="""The maximum number of pods that will live on a node of the node pool.""")
+@cli_util.option('--pod-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate pods for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pod-subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place pods for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option(
     {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
@@ -335,7 +379,10 @@ def create_node_pool(ctx, **kwargs):
      'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'},
      'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
-     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+     'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -350,11 +397,43 @@ def create_node_pool(ctx, **kwargs):
                                    'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
-                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'}})
+                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'},
+                                   'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+                                   'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_node_pool(ctx, **kwargs):
+    kwargs['node_config_details'] = {}
+
+    if kwargs.get('max_pods_per_node') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --max-pods-per-node without --pod-subnet-ids'
+        )
+
+    if kwargs.get('pod_nsg_ids') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --pod-nsg-ids without --pod-subnet-ids'
+        )
+
+    nodePoolPodNetworkOptionDetails = {}
+    if 'max_pods_per_node' in kwargs and kwargs['max_pods_per_node'] is not None:
+        nodePoolPodNetworkOptionDetails['maxPodsPerNode'] = cli_util.parse_json_parameter("max_pods_per_node", kwargs['max_pods_per_node'])
+    kwargs.pop('max_pods_per_node', None)
+
+    if 'pod_nsg_ids' in kwargs and kwargs['pod_nsg_ids'] is not None:
+        nodePoolPodNetworkOptionDetails['podNsgIds'] = cli_util.parse_json_parameter("pod_nsg_ids", kwargs['pod_nsg_ids'])
+    kwargs.pop('pod_nsg_ids', None)
+
+    # existence of pod_subnet_ids hints that the CNI used is OCI_VCN_IP_NATIVE
+    # with it's absence, we will pass a null nodePoolPodNetworkOptionDetails, which means use default CNI FLANNEL_OVERLAY
+    if 'pod_subnet_ids' in kwargs and kwargs['pod_subnet_ids'] is not None:
+        # if cniType is absent, defaults to FLANNEL
+        nodePoolPodNetworkOptionDetails['cniType'] = "OCI_VCN_IP_NATIVE"
+        nodePoolPodNetworkOptionDetails['podSubnetIds'] = cli_util.parse_json_parameter("pod_subnet_ids", kwargs['pod_subnet_ids'])
+        kwargs['node_config_details']['nodePoolPodNetworkOptionDetails'] = nodePoolPodNetworkOptionDetails
+    kwargs.pop('pod_subnet_ids', None)
+
     if 'size' in kwargs and kwargs['size'] is not None:
-        kwargs['node_config_details'] = {}
         kwargs['node_config_details']['size'] = kwargs['size']
     kwargs.pop('size', None)
 

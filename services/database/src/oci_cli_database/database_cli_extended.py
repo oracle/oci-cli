@@ -1304,10 +1304,19 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
+@cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes to launch for the DB system of the standby in the Data Guard association. For a 2-node RAC virtual machine DB system, specify either 1 or 2. If you do not supply this parameter, the default is the node count of the primary DB system.""")
+@cli_util.option('--time-zone', help=u"""The time zone of the dataguard standby DB system. For details, see [DB System Time Zones].""")
+@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.\n\nIf you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.\n\nIf the node count is greater than 1, you can specify which Fault Domains these nodes will be distributed into. The system assigns your nodes automatically to the Fault Domains you specify so that no Fault Domain contains more than one node.\n\nTo get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.\n\nExample: `FAULT-DOMAIN-1`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-ip', help=u"""The IPv4 address from the provided OCI subnet which needs to be assigned to the VNIC. If not provided, it will be auto-assigned with an available IPv4 address from the subnet.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the dataguard standby DB system. The default is LICENSE_INCLUDED.""")
+@cli_util.option('--db-system-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].\n\nExample: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-system-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].\n\nExample: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, **kwargs):
     kwargs = {}
 
     details = {}
@@ -1334,6 +1343,24 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         details['cpuCoreCount'] = cpu_core_count
     if storage_performance is not None:
         details['storageVolumePerformanceMode'] = storage_performance
+    if node_count is not None:
+        details['nodeCount'] = node_count
+    if time_zone is not None:
+        details['timeZone'] = time_zone
+    if fault_domains is not None:
+        details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
+    if private_ip is not None:
+        details['privateIp'] = private_ip
+    if license_model is not None:
+        details['licenseModel'] = license_model
+    if db_system_freeform_tags is not None:
+        details['dbSystemFreeformTags'] = cli_util.parse_json_parameter("db_system_freeform_tags", db_system_freeform_tags)
+    if db_system_defined_tags is not None:
+        details['dbSystemDefinedTags'] = cli_util.parse_json_parameter("db_system_defined_tags", db_system_defined_tags)
+    if database_freeform_tags is not None:
+        details['databaseFreeformTags'] = cli_util.parse_json_parameter("database_freeform_tags", database_freeform_tags)
+    if database_defined_tags is not None:
+        details['databaseDefinedTags'] = cli_util.parse_json_parameter("database_defined_tags", database_defined_tags)
 
     details['creationType'] = 'NewDbSystem'
 

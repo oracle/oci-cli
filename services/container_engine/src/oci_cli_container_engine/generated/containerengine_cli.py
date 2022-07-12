@@ -153,15 +153,18 @@ def cluster_migrate_to_native_vcn(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional attributes for the cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The image verification policy for signature validation. Once a policy is created and enabled with one or more kms keys, the policy will ensure all images deployed has been signed with the key(s) attached to the policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-pod-network-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Available CNIs and network options for existing and new node pools of the cluster
+
+This option is a JSON list with items of type ClusterPodNetworkOptionDetails.  For documentation on ClusterPodNetworkOptionDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/ClusterPodNetworkOptionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}, 'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'endpoint-config': {'module': 'container_engine', 'class': 'CreateClusterEndpointConfigDetails'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}, 'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}, 'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
 @cli_util.wrap_exceptions
-def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, endpoint_config, kms_key_id, freeform_tags, defined_tags, options, image_policy_config):
+def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, endpoint_config, kms_key_id, freeform_tags, defined_tags, options, image_policy_config, cluster_pod_network_options):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -189,6 +192,9 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if image_policy_config is not None:
         _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
+
+    if cluster_pod_network_options is not None:
+        _details['clusterPodNetworkOptions'] = cli_util.parse_json_parameter("cluster_pod_network_options", cluster_pod_network_options)
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_cluster(

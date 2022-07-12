@@ -20,23 +20,24 @@ import os
 import fcntl
 import errno
 import datetime
-VERSION = "1.1"
-UPDATED = "2021-09-08"
+VERSION = "1.2"
+UPDATED = "2022-05-25"
 
 # ==============================================================================
 # Global variables
 # ==============================================================================
 ocids_file_name = ''     # name of file where OCIDs are saved
-ocid = {}           # dict of known ocids
-ocids = []          # list of known ocids
-command = []        # commands with required and optional params
-show_help = False   # user asked for help
-go = False          # execute the oci cli command
-nogo = False        # don't execute due to error in ocid substitutions
-quiet = False       # quiet mode - don't show expanded command or headers
-Quiet = False       # Quieter mode - don't show matching commands
-region = ''         # region
-region_code = ''    # 3-letter region code
+ocid = {}                # dict of known ocids
+ocids = []               # list of known ocids
+orphans = []             # orphaned ocids (with no compartment) found in ocids file
+command = []             # commands with required and optional params
+show_help = False        # user asked for help
+go = False               # execute the oci cli command
+nogo = False             # don't execute due to error in ocid substitutions
+quiet = False            # quiet mode - don't show expanded command or headers
+Quiet = False            # Quieter mode - don't show matching commands
+region = ''              # region
+region_code = ''         # 3-letter region code
 ocids_in_output = False  # substitute names for ocids in output
 
 # Universally useful fields as default output, if no "-o" on command line.
@@ -50,17 +51,17 @@ default_out_spec = 'name{:.30}#shape#cidr-block#prohibit-public{:5.5}' \
     '#direction#destination' \
     '#ip-address#public-ip#private-ip' \
     '#vnic-id#desc{:.40}' \
-    '#access-uri'
+    '#access-uri#storage-tier'
 
-matches = []        # list of commands that match user input
-best_match = None   # matches[best_match] is the closest match
+matches = []                   # list of commands that match user input
+best_match = None              # matches[best_match] is the closest match
 all_options_for_this_cmd = ''  # for best_match
-remaining_options = ''  # for best_match
-options_out = []    # list of expanded options to be passed to oci cli
-oci_command_line = ''  # the complete oci cli command in string form
-column = {}         # field format info: format:'{:}', offset:0, maxwidth:n
-use_bold = True     # enable xterm bold highlighting
-wrap = 120          # wrap at column <wrap>
+remaining_options = ''         # for best_match
+options_out = []               # list of expanded options to be passed to oci cli
+oci_command_line = ''          # the complete oci cli command in string form
+column = {}                    # field format info: format:'{:}', offset:0, maxwidth:n
+use_bold = True                # enable xterm bold highlighting
+wrap = 120                     # wrap at column <wrap>
 global_options = ''
 
 # ==============================================================================
@@ -87,8 +88,8 @@ def usage(s=''):
 
          ocids "name"  Show saved OCIDs for resources matching "name"
 
-         prune "name"  Remove saved OCIDs matching "name"
-                       Useful for cleanup and removing duplicates
+         prune "name"  Remove saved OCIDs for resources matching "name",
+                       or everything under compartment "name"
 
          help          This help.  Use "--help go" for oci help""")
     print("""
@@ -96,7 +97,7 @@ def usage(s=''):
       <oci-options>    Options and parameters for <oci-command>
                        These will be expanded into a more correct oci command
 
-      go               Run the oci command if the line ends with "go"
+      go               Run the oci command if the line ends with "go" (or ".")
 
     o Version {} - {}
     """.format(VERSION, UPDATED))
@@ -125,8 +126,7 @@ def error_out(msg):
 
     if msg.startswith('ServiceError:'):
         j = json.loads(msg[14:])
-        print(bold('ServiceError(' + str(j['status']) + '): '
-                   + str(j['code'])), file=sys.stderr)
+        print(bold('ServiceError(' + str(j['status']) + '): ' + str(j['code'])), file=sys.stderr)
         print(bold(j['message']), file=sys.stderr)
     else:
         print(bold(msg), file=sys.stderr)
@@ -155,7 +155,7 @@ def read_oci_commands_file():
             if re.match(r'oci ', line):
                 command_list.append(parse_oci_command_options(line))
             elif re.match(r'global_options ', line):
-                global_options = line[line.find(' ')+1:]
+                global_options = line[line.find(' ') + 1:]
 
     except FileNotFoundError:
         print(bold('No ' + oci_commands_file + ' file.'))
@@ -193,7 +193,7 @@ def get_from_oci_config(key):
 
     s = oci_command_line
     if '--profile' in s:
-        profile = s.split()[s.split().index('--profile')+1]
+        profile = s.split()[s.split().index('--profile') + 1]
     elif os.getenv('OCI_CLI_PROFILE'):
         profile = os.getenv('OCI_CLI_PROFILE')
     else:
@@ -201,7 +201,7 @@ def get_from_oci_config(key):
 
     config_file = os.path.expanduser('~/.oci/config')
     if '--config' in oci_command_line:
-        config_file = s.split()[s.split().index('--config')+1]
+        config_file = s.split()[s.split().index('--config') + 1]
 
     if not os.path.exists(config_file) and os.path.exists('/etc/oci/config'):
         config_file = '/etc/oci/config'
@@ -237,7 +237,7 @@ def setup_ocids_file():
     On completion exit; do not return from this function.
     """
 
-    if not (len(sys.argv) == 2 and re.search(
+    if not (len(sys.argv) in [2, 3] and re.search(
             'ocid1.tenancy.{50}', sys.argv[1])):
         # No ocid provide; offer help
         print(bold('No ' + ocids_file_name + ' found.\n'))
@@ -264,17 +264,24 @@ and I'll do this for you:
 
     else:
         # <tenancy-ocid> provided... Let's roll!
+        print("Tenancy ocid:", sys.argv[1])
+        if len(sys.argv) == 3:
+            print("Tenancy name:", sys.argv[2])
         print(bold('Setting up your ' + ocids_file_name + ' file:'))
-        if run_command(sys.argv[0] + ' -o name iam compartment get -c '
-                       + sys.argv[1] + ' go'):
+        if run_command(sys.argv[0] + ' -o name iam compartment get -c ' + sys.argv[1] + ' go'):
             # compartment get on tenancy failed; try saving a stub for tenancy
             print("\nThat didn't work.  Creating a stub for tenancy root.")
-            newids = {'root': {'type': 'tenancy',
-                               'alias': 'root',
-                               'id': sys.argv[1]}}
+            newids = {'root': {
+                      'type': 'tenancy',
+                      'alias': 'root' if len(sys.argv) == 2
+                               else sys.argv[2],
+                      'id': sys.argv[1],
+                      'name': 'root' if len(sys.argv) == 2 else sys.argv[2]
+                      },
+                      }
             ocids_file('write', newids)
-        run_command(sys.argv[0] + ' -o name iam ad list -c '
-                    + sys.argv[1] + ' go')
+            exit(0)
+        run_command(sys.argv[0] + ' -o name iam ad list -c ' + sys.argv[1] + ' go')
         run_command(sys.argv[0] + ' -o name iam region list go')
         run_command(sys.argv[0] + ' -o name iam compartment list -c '
                     + sys.argv[1] + ' -ciis true -all go')
@@ -309,10 +316,10 @@ def ocids_file(action, new_ocids={}):
 
     # Run setup if no ocids_file exists or
     # if this is an "o <tenancy>" setup command and new_ocids is empty
-    if (not new_ocids and
-            (not re.search('get.*-c ocid..tenancy', ' '.join(sys.argv))
-             and (not os.path.exists(ocids_file_name)
-                  or re.search('o [^c]*ocid..tenancy', ' '.join(sys.argv))))):
+    if (not new_ocids
+            and (not re.search('get.*-c ocid..tenancy', ' '.join(sys.argv))
+                 and (not os.path.exists(ocids_file_name)
+                 or re.search('o [^c]*ocid..tenancy', ' '.join(sys.argv))))):
         setup_ocids_file()
 
     if action == 'read' and not os.path.exists(ocids_file_name):
@@ -329,29 +336,26 @@ def ocids_file(action, new_ocids={}):
                 if new_ocids or action == 'read':
                     ocids = json.load(f)
                     # Convert list of ocids into dict of ocids. Use id as key.
-                    ocid = {i['id']: i for i in ocids
-                            if 'availabilitydomain' != i['type']}
-                    ocid.update({i['name']: i for i in ocids
-                                 if 'availabilitydomain' == i['type']})
+                    ocid = {i['id']: i for i in ocids if 'availabilitydomain' != i['type']}
+                    ocid.update({i['name']: i for i in ocids if 'availabilitydomain' == i['type']})
             else:
                 os.umask(0o077)
                 f = open(ocids_file_name, 'w+')
 
             if action == 'write':
                 # merge
-                if new_ocids:
-                    ocid.update(new_ocids)
-                    # Don't save ocids for deleted resources
-                    ocid = {k: v for (k, v) in ocid.items()
-                            if 'lifecycle-state' not in v or
-                            v['lifecycle-state'] not in ('DELETED',
-                            'TERMINATED')}
-                    # clean up temp values in ocid
-                    for k, v in ocid.items():
-                        if 'score' in v:
-                            del v['score']
-                        if 'parents' in v:
-                            del v['parents']
+                ocid.update(new_ocids)
+                # Don't save ocids for deleted resources
+                ocid = {k: v for (k, v) in ocid.items()
+                        if 'lifecycle-state' not in v
+                        or v['lifecycle-state'] not in ('DELETED', 'TERMINATED')
+                        and k not in orphans}
+                # clean up temp values in ocid
+                for k, v in ocid.items():
+                    if 'score' in v:
+                        del v['score']
+                    if 'parents' in v:
+                        del v['parents']
 
                 # convert dict to list
                 ocids = [ocid[k] for k in ocid.keys()]
@@ -366,22 +370,20 @@ def ocids_file(action, new_ocids={}):
 
         except IOError as e:
             if e.errno != errno.EAGAIN:
-                print(bold(ocids_file_name + ': not accessible'),
-                      file=sys.stderr)
+                print(bold(ocids_file_name + ': not accessible'), file=sys.stderr)
             f.close()
-            time.sleep(0.05*2**tries)
+            time.sleep(0.05 * 2**tries)
             tries += 1
         except ValueError:
             # Try again
-            print(bold(ocids_file_name + ': JSON error on read - retry #' +
-                  str(tries)), file=sys.stderr)
+            print(bold(ocids_file_name + ': JSON error on read - retry #' + str(tries)),
+                  file=sys.stderr)
             f.close()
-            time.sleep(0.05*tries)
+            time.sleep(0.05 * tries)
             tries += 1
 
     if tries >= 10:
-        print(bold(ocids_file_name + ':  ' + action + ' failed'),
-              file=sys.stderr)
+        print(bold(ocids_file_name + ':  ' + action + ' failed'), file=sys.stderr)
 
     return
 
@@ -397,10 +399,10 @@ def get_new_ocids_from_returned_items(items):
     # special case for region list - save the whole list in one entry
     if 'oci iam region list' in oci_command_line:
         return {'regionlist': {
-                    'type':  'regionlist',
-                    'alias': 'regionlist',
-                    'id':    'regionlist',
-                    'data':  items}}
+                'type': 'regionlist',
+                'alias': 'regionlist',
+                'id': 'regionlist',
+                'data': items}}
 
     if oci_command_line.startswith('oci search'):
         for i in items:
@@ -429,24 +431,20 @@ def get_new_ocids_from_returned_items(items):
             elif 'object-name' in item:
                 alias = item['name']
                 type = "par"
-            elif (type == 'routetable' and
-                  item['display-name'].startswith('Default Route Table for ')):
+            elif (type == 'routetable'
+                  and item['display-name'].startswith('Default Route Table for ')):
                 alias = item['display-name'][len('Default Route Table for '):]
-            elif (type == 'securitylist' and
-                  item['display-name'].startswith(
-                          'Default Security List for ')):
-                alias = item['display-name'][len(
-                    'Default Security List for '):]
+            elif (type == 'securitylist'
+                  and item['display-name'].startswith('Default Security List for ')):
+                alias = item['display-name'][len('Default Security List for '):]
             elif type == 'vnicattachment':
                 if item['instance-id'] in ocid:
                     alias = ocid[item['instance-id']]['alias']
                 else:
                     alias = item['instance-id'][-8:]
-                alias = '-'.join([alias, str(item['nic-index']),
-                                  'vlan' + str(item['vlan-tag'])])
+                alias = '-'.join([alias, str(item['nic-index']), 'vlan' + str(item['vlan-tag'])])
             elif type == 'providerservice':
-                alias = str(item['provider-name']) + \
-                    ' ' + str(item['provider-service-name'])
+                alias = str(item['provider-name']) + ' ' + str(item['provider-service-name'])
             elif 'instanceconsoleconnection' in type:
                 alias = ocid[item['instance-id']]['alias']
             elif 'name' in item:
@@ -498,8 +496,8 @@ def get_new_ocids_from_returned_items(items):
             if type == 'par' and ID in ocid and 'access-uri' in ocid[ID]:
                 collected[ID]['access-uri'] = ocid[ID]['access-uri']
     except BaseException:
-        print(bold('Unable to collect ocids of type ' + type +
-                   '. Please provide this data with your problem report:\n')
+        print(bold('Unable to collect ocids of type ' + type
+              + '. Please provide this data with your problem report:\n')
               + json.dumps(item, indent=4), file=sys.stderr)
 
     return collected
@@ -513,11 +511,8 @@ def show_command(c, full=False, prefix='oci '):
         print('    requires\t' + re.sub(r' -', r'\n\t\t-', c['required']))
         print('    optional\t' + re.sub(r' -', r'\n\t\t-', c['optional']))
         if show_help:
-            print('    global\t'
-                  + re.sub(r'\n', r'\n                ',
-                           textwrap.fill(global_options,
-                                         width=60,
-                                         break_on_hyphens=False)))
+            print('    global\t' + re.sub(r'\n', r'\n                ',
+                  textwrap.fill(global_options, width=60, break_on_hyphens=False)))
 
 # ==============================================================================
 
@@ -543,8 +538,7 @@ def args_match_command(c, params):
     for a in params:
 
         # accept plurals in place of singulars
-        if (len(a) > 3 and a[-1] == 's' and
-                a not in ['address', 'access', 'waas']):
+        if (len(a) > 3 and a[-1] == 's' and a not in ['address', 'access', 'waas']):
             a = a[:-1]
 
         # stop searching at first -opt
@@ -620,14 +614,14 @@ def alias_match_score(spec, name):
         return 40 + len(spec)
     elif spec.lower() == name.lower():
         return 25 + len(spec)
-    elif re.match(spec+' ', name):
-        return 25 + int(200 * len(spec)/len(name))/10.0
+    elif re.match(spec + ' ', name):
+        return 25 + int(200 * len(spec) / len(name)) / 10.0
     elif re.match(spec, name):
-        return 20 + int(200 * len(spec)/len(name))/10.0
+        return 20 + int(200 * len(spec) / len(name)) / 10.0
     elif re.match(spec, name, flags=re.I):
-        return 10 + int(200 * len(spec)/len(name))/10.0
+        return 10 + int(200 * len(spec) / len(name)) / 10.0
     elif re.search(spec, name, flags=re.I):
-        return 5 + int(200 * len(spec)/len(name))/10.0
+        return 5 + int(200 * len(spec) / len(name)) / 10.0
     return 0
 
 # ==============================================================================
@@ -647,11 +641,8 @@ def get_item_parents(i):
         else:
             return get_item_parents(ocid[i['compartment-id']]) + [i['alias']]
     else:
-        itemname = i['alias'][-10:] if 'ocid1.' in i['alias'] else i['alias']
-        print(bold('Parent missing:'), i['type'], ('ocid..'
-              if i['alias'].startswith('ocid1') else '') + itemname)
-        print('Clean up stale reference with:',
-              bold('o prune ' + itemname + ' go'))
+        # Tag this as orphan for later removal?
+        orphans.append(i['id'])
         return [i['alias']]
 
 # ==============================================================================
@@ -675,7 +666,7 @@ def alias_match(spec, item):
             score = alias_match_score(s, i)
             if score > 0:
                 if item['score'] == 0:
-                    item['score'] = 2*score
+                    item['score'] = 2 * score
                 else:
                     item['score'] += score
                 break  # from while, to next "s"
@@ -683,8 +674,7 @@ def alias_match(spec, item):
                 # not an alias match, look for ocid match
                 if len(specs) == 1:
                     if re.search(spec, item['id'], flags=re.I):
-                        item['score'] = int(1000 *
-                                            len(spec)/len(item['id']))/10.0
+                        item['score'] = int(1000 * len(spec) / len(item['id'])) / 10.0
                         return True
                     return False
                 # This item heirarchy did not match specs.
@@ -692,11 +682,9 @@ def alias_match(spec, item):
                 if item['score'] == 0 or not item_path:
                     return False
                 # Otherwise deduct 20% from score as a penalty
-                item['score'] = int(item['score']*.8)
+                item['score'] = int(item['score'] * .8)
 
     if item['score'] > 0:
-        # print ('X', item['type'], item['score'],
-        #        item['alias'], item['parents'])
         return True
     return False
 
@@ -722,8 +710,7 @@ def type_match(option, item_type):
             or (option == 'dhcp' and item_type == 'dhcpoptions')
             or (option == 'application' and item_type == 'fnapp')
             or (option == 'function' and item_type == 'fnfunc')
-            or (option == 'asset' and item_type in
-                ('volume', 'bootvolume', 'volumegroup'))
+            or (option == 'asset' and item_type in ('volume', 'bootvolume', 'volumegroup'))
             or (option == 'sddc' and item_type == 'vmwaresddc')
             or (option == 'avail' and len(item_type) == 1)):
         return True
@@ -740,10 +727,8 @@ def ambiguous_value(option, value, matches):
           file=sys.stderr)
     for m in matches:
         if m['score'] > 2:
-            print('  (score=' + str(m['score']) + ')', '  ' +
-                  bold(('/'.join(m['parents'])
-                       if 'parents' in m else m['alias'])),
-                  ' ({:8})'.format(m['id'][-8:]))
+            print('  (score=' + str(m['score']) + ')', '  ' + bold(('/'.join(m['parents'])
+                  if 'parents' in m else m['alias'])), ' ({:8})'.format(m['id'][-8:]))
     global nogo
     nogo = True
 
@@ -767,20 +752,18 @@ def datetime_parameter(dt):
         if m.group(1) == 'now':
             time = datetime.datetime.utcnow()
         elif m.group(1) in ('today', 'yesterday'):
-            time = datetime.datetime.utcnow().replace(hour=0, minute=0,
-                                                      second=0, microsecond=0)
+            time = datetime.datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
             if m.group(1) == 'yesterday':
                 time = time - datetime.timedelta(hours=24)
         dts = time.strftime('%Y-%m-%dT%H:%M:%S') + 'Z'
     if m and m.group('delta'):
-        deltas = {'s': 1, 'm': 60, 'h': 60*60, 'd': 60*60*24, 'w': 60*60*24*7}
-        m2 = re.search(r'(?P<s>[@+-]{,1})(?P<v>[\d:Z]*)(?P<u>[smhdw]{0,1})',
-                       m.group('delta'))
+        deltas = {'s': 1, 'm': 60, 'h': 60*60, 'd': 60*60*24, 'w': 60*60*24*7}  # noqa: E226
+        m2 = re.search(r'(?P<s>[@+-]{,1})(?P<v>[\d:Z]*)(?P<u>[smhdw]{0,1})', m.group('delta'))
         try:
             # optional time delta +/- <n> week/day/hour/minute/second
-            value = int(m2.group('v'))*deltas[m2.group('u')]
+            value = int(m2.group('v')) * deltas[m2.group('u')]
             if m2.group('s') == '-':
-                value = value*-1
+                value = value * -1
             time = time + datetime.timedelta(seconds=value)
             dts = time.strftime('%Y-%m-%dT%H:%M:%S') + 'Z'
         except (ValueError, KeyError):
@@ -793,7 +776,7 @@ def datetime_parameter(dt):
     if dts.endswith('00:00:00Z'):
         return dts[:10]
     if dts.endswith(':00Z'):
-        return dts[:16]+'Z'
+        return dts[:16] + 'Z'
     return dts
 
 # ==============================================================================
@@ -814,7 +797,7 @@ def get_region():
     r = ''
     if '--region ' in oci_command_line:
         ocl = oci_command_line.split()
-        r = ocl[ocl.index('--region')+1]
+        r = ocl[ocl.index('--region') + 1]
     elif os.getenv('OCI_CLI_REGION'):
         r = os.getenv('OCI_CLI_REGION')
 
@@ -824,8 +807,7 @@ def get_region():
     if not r:
         return None, None
 
-    rmatch = [i for i in ocid['regionlist']['data']
-              if r.upper() == i['key'] or r in i['name']]
+    rmatch = [i for i in ocid['regionlist']['data'] if r.upper() == i['key'] or r in i['name']]
     if rmatch:
         return rmatch[0]['key'].lower(), rmatch[0]['name']
     return None, None
@@ -835,7 +817,7 @@ def get_region():
 
 def region_match(id):
     """Does ocid region match profile region?"""
-    region_from_id = (id+'....').split('.')[3]
+    region_from_id = (id + '....').split('.')[3]
     if not region_code \
             or region_from_id == '' \
             or region_from_id == region_code \
@@ -852,7 +834,7 @@ def get_matching_ocid(option, value):
     If ambiguous, display possible matches and return None.
     """
 
-    global go
+    global nogo
     if value.startswith('ocid') and len(value) > 60:
         return value
     if '-' not in option:
@@ -862,6 +844,8 @@ def get_matching_ocid(option, value):
         # ocid type doesn't exactly match --resource-id type
         if opt_type == 'job':
             opt_type = 'ormjob'
+        if opt_type == 'node' and 'rover' in oci_command_line:
+            opt_type = 'rovernode'
 
     matches = [item for k, item in ocid.items() if
                type_match(opt_type, item['type'])
@@ -872,15 +856,18 @@ def get_matching_ocid(option, value):
                    type_match(opt_type, item['type'])
                    and alias_match(value, item)]
         if matches:
-            print(bold('\n' + value + ' found in ' +
-                  matches[0]['id'].split('.')[3].upper() + ' region,' +
-                  ' but you are working in ' + region_code.upper()))
+            print(bold('\n' + value + ' found in '
+                  + matches[0]['id'].split('.')[3].upper() + ' region,'
+                  + ' but you are working in ' + region_code.upper()))
     matches = sorted(matches, key=lambda i: i['score'], reverse=True)
+
+    if option == 'bucket' and '/' not in value:
+        return value
 
     if not matches:
         if option != 'bucket':
             print(opt_type, bold(value), 'not found.', file=sys.stderr)
-            go = False
+            nogo = True
         return value
 
     # Is this match unique, or is it strong relative to other matches?
@@ -905,7 +892,7 @@ def value_parameter(option, value):
 
     # Get the parameter from help: --option [param_type]
     param_type = ''
-    m = re.search(option+r' \[([\w -\|]+?)\]', all_options_for_this_cmd)
+    m = re.search(option + r' \[([\w -\|]+?)\]', all_options_for_this_cmd)
     if m:
         param_type = m.group(1)
 
@@ -941,7 +928,7 @@ def value_parameter(option, value):
             for v in m.group(1).split():
                 o = get_matching_ocid('compartment', v)
                 if o != v:
-                    value = re.sub(v, '"'+o+'"', value)
+                    value = re.sub(v, '"' + o + '"', value)
 
     return value
 
@@ -1006,10 +993,7 @@ def get_fields_from(spec, keynames):
             for k in sorted(keynames):
                 if s in k and k not in fields:  # partial keyname match
                     fields.append(k)
-                    column[k] = {
-                        'format': fmt,
-                        'offset': 0,
-                        'minwidth': len(s)}
+                    column[k] = {'format': fmt, 'offset': 0, 'minwidth': len(s)}
     if len(fields) == 0:
         if user_out_spec != default_out_spec:
             print(bold("no matching output fields: " + spec), file=sys.stderr)
@@ -1049,8 +1033,7 @@ def set_column_widths(fields, item_list):
         if column[k]['format'] == '{}' \
                 and out_sep == '|' \
                 and k is not fields[-1]:
-            column[k]['format'] = '{:<' + \
-                str(maxwidth) + '.' + str(maxwidth) + '}'
+            column[k]['format'] = '{:<' + str(maxwidth) + '.' + str(maxwidth) + '}'
     maxkeylen = max([len(str(k)) for k in fields])
     # keyfmt - with of longest field name, for raw text output
     column['keyfmt'] = '{:>' + str(maxkeylen) + '}'
@@ -1064,13 +1047,11 @@ def show_column_headers(out_fields, sep):
         return
     if sep == '|':
         for k in out_fields:
-            print(bold(column[k]['format'].format(k)), end=' ',
-                  file=sys.stderr)
+            print(bold(column[k]['format'].format(k)), end=' ', file=sys.stderr)
         print('', file=sys.stderr)
     elif sep != '/':
         if sep == ',':
-            print(bold(sep.join([repr(f) for f in out_fields])),
-                  file=sys.stderr)
+            print(bold(sep.join([repr(f) for f in out_fields])), file=sys.stderr)
         else:
             print(bold(sep.join(out_fields)), file=sys.stderr)
 
@@ -1083,15 +1064,16 @@ def show_item(item, fields, sep):
     out = []
     for field in fields:
         value = str(item[field]) if field in item else ''
-        if field != 'id' and value in ocid and not ocids_in_output:
+        if field not in ('id', 'identifier') and value in ocid and not ocids_in_output:
             value = ocid[item[field]]['alias']
-            out.append(column[field]['format'].format(
-                value[column[field]['offset']:]))
+            out.append(column[field]['format'].format(value[column[field]['offset']:]))
         else:
-            out.append(
-                column[field]['format'].format(
-                    re.sub(r'[{}\'[\]]', '', value)[
-                        column[field]['offset']:]))
+            if column[field]['format'] == '{}' and sep != '|':
+                if field in item:
+                    out.append(re.sub(r'[{}\'"[\]]', '', json.dumps(item[field], indent=4)))
+            else:
+                out.append(column[field]['format'].format(re.sub(r'[{}\'[\]]', '', value)[
+                           column[field]['offset']:]))
 
     # one field per line
     if sep == '/':
@@ -1101,12 +1083,16 @@ def show_item(item, fields, sep):
             if k == 'access-uri':
                 print(column['keyfmt'].format(k), ' ', value)
             else:
-                print(column['keyfmt'].format(k), ' ',
-                      textwrap.fill(value,
-                                    subsequent_indent=indent,
-                                    break_on_hyphens=True,
-                                    break_long_words=True,
-                                    width=wrap - maxkeylen - 3))
+                if '\n' in value:
+                    value = re.sub(r'(,){0,1}\n', '\n' + ' ' * (maxkeylen - 1), value).strip()
+                    print(column['keyfmt'].format(k), ' ', value)
+                else:
+                    print(column['keyfmt'].format(k), ' ',
+                          textwrap.fill(value,
+                                        subsequent_indent=indent,
+                                        break_on_hyphens=True,
+                                        break_long_words=True,
+                                        width=wrap - maxkeylen - 3))
         if len(fields) > 1:
             print('')
 
@@ -1138,18 +1124,13 @@ def omap(argv):
         suffix = '' if len(items) == 1 else 's'
         itemstr = ', '.join([i['alias'] for i in items])
         itemstr = re.sub(r' \(Boot Volume\)', '', itemstr)
-        # itemstr = re.sub(r': ocid[^ ,]*([^ ,]{8})', '$1', itemstr)
         itemstr = re.sub(r': ocid[^ ,]{73}', '...', itemstr)
-        # itemstr.replace(' ','#-#')
-        print(
-            textwrap.fill(
-                bold(str(len(items)) + ' ' + resourcetype + suffix + ': ')
-                + itemstr,
-                initial_indent=' ' * len(prefix),
-                subsequent_indent='        ' + ' ' * len(prefix),
-                break_on_hyphens=False,
-                break_long_words=True,
-                width=wrap))
+        print(textwrap.fill(bold(str(len(items)) + ' ' + resourcetype + suffix + ': ') + itemstr,
+              initial_indent=' ' * len(prefix),
+              subsequent_indent='        ' + ' ' * len(prefix),
+              break_on_hyphens=False,
+              break_long_words=True,
+              width=wrap))
 
     # ==========================================================================
 
@@ -1168,24 +1149,16 @@ def omap(argv):
             for k in i.keys():
                 if k not in column:
                     if k == 'availability-domain':
-                        column[k] = {'head': 'AD',
-                                     'maxwidth': 2,
-                                     'width': 2,
-                                     'format': '{:>2}'}
+                        column[k] = {'head': 'AD', 'maxwidth': 2, 'width': 2, 'format': '{:>2}'}
                     else:
-                        maxwidth = max([len(str(f[k]))
-                                       for f in items if k in f])
+                        maxwidth = max([len(str(f[k])) for f in items if k in f])
                         maxwidth = max(maxwidth, len(k))
                         if k.endswith('id'):
                             width = 8
                         else:
                             width = min(maxwidth, 30)
-                        column[k] = {
-                            'head': k,
-                            'maxwidth': maxwidth,
-                            'width': width,
-                            'format': '{:' + str(width) + '.' + str(width) +
-                            '}'}
+                        column[k] = {'head': k, 'maxwidth': maxwidth, 'width': width,
+                                     'format': '{:' + str(width) + '.' + str(width) + '}'}
 
         # shorten long column headings
         for k in column.keys():
@@ -1200,8 +1173,7 @@ def omap(argv):
         column['alias']['head'] = 'name'
 
         suffix = '' if len(items) == 1 else 's'
-        print(prefix
-              + bold(str(len(items)) + ' ' + resourcetype + suffix + ': '))
+        print(prefix + bold(str(len(items)) + ' ' + resourcetype + suffix + ': '))
         header = []
         hide_these_columns = ['type', 'name', 'display-name']
 
@@ -1219,11 +1191,10 @@ def omap(argv):
                     if long == 1 and k.endswith('id'):
                         print(column[k]['format'].format(i[k][-8:]), end=' ')
                     elif k == 'availability-domain':
-                        print(column[k]['format'].format(str(i[k])[-1:]),
-                              end=' ')
+                        print(column[k]['format'].format(str(i[k])[-1:]), end=' ')
                     else:
-                        print(column[k]['format'].format(
-                            str(i[k])[:column[k]['maxwidth']]), end=' ')
+                        print(column[k]['format'].format(str(i[k])[:column[k]['maxwidth']]),
+                              end=' ')
             print('')
         print('')
         return
@@ -1238,18 +1209,15 @@ def omap(argv):
 
         # list everything in this compartment that is not DELETED
         stuff = [i for i in ocids
-                 if ('compartment-id' in i and
-                     i['compartment-id'] == this['id'] and
-                     (('lifecycle-state' not in i) or
-                         ('lifecycle-state' in i and
-                             i['lifecycle-state'] != 'DELETED')))]
+                 if ('compartment-id' in i and i['compartment-id'] == this['id']
+                     and (('lifecycle-state' not in i)
+                          or ('lifecycle-state' in i and i['lifecycle-state'] != 'DELETED')))]
         types = sorted(list(set([i['type'] for i in stuff])))
 
         subcompartments = [i for i in stuff if i['type'] == 'compartment']
 
         if long and subcompartments:
-            print('\n' + indent + bold(this['type'].upper() + ' '
-                  + this['alias']))
+            print('\n' + indent + bold(this['type'].upper() + ' ' + this['alias']))
         else:
             # print(bold(indent + this['alias']), end='')
             if compartments_only:
@@ -1260,28 +1228,22 @@ def omap(argv):
         if vcns:
             vcnlist = [i for i in stuff if i['type'] == 'vcn']
             for vcn in vcnlist:
-                vcnstuff = [i for i in ocids if 'vcn-id' in i
-                            and i['vcn-id'] == vcn['id']]
+                vcnstuff = [i for i in ocids if 'vcn-id' in i and i['vcn-id'] == vcn['id']]
                 print('VCN:', vcn['alias'])
                 for i in vcnstuff:
                     if i['type'] not in ['subnet', 'securitylist']:
                         print('    {:25}'.format(i['type'] + ':'), i['alias'])
                 for subnet in [i for i in vcnstuff if i['type'] == 'subnet']:
-                    print('\n    SUBNET', '{:18}'.format(subnet['alias']),
-                          subnet['cidr-block'])
+                    print('\n    SUBNET', '{:18}'.format(subnet['alias']), subnet['cidr-block'])
                     # get vnics and vnicattachments
                     vnics = [i for i in ocids if i['type'] == 'vnic'
                              and i['subnet-id'] == subnet['id']]
                     for vnic in vnics:
-                        print(
-                            '      vnic',
-                            '{:18}'.format(
-                                vnic['alias']),
-                            '{:18}'.format(vnic['private-ip']
-                                           if 'private-ip' in vnic else ''),
-                            ('{:16}'.format(vnic['public-ip']
-                                            if 'public-ip' in vnic else '')),
-                            end='')
+                        print('      vnic',
+                              '{:18}'.format(vnic['alias']),
+                              '{:18}'.format(vnic['private-ip'] if 'private-ip' in vnic else ''),
+                              ('{:16}'.format(vnic['public-ip'] if 'public-ip' in vnic else '')),
+                              end='')
                         vnicattachments = [i for i in stuff
                                if (i['type'] == 'vnicattachment'  # noqa: E128
                                    and i['vnic-id'] == vnic['id']
@@ -1291,29 +1253,24 @@ def omap(argv):
                         # instance name.  But if either has been renamed,
                         # it's good to be able to connect the two.
                         for va in vnicattachments:
-                            print('  inst:',
-                                  ocid[va['instance-id']]['alias'],
-                                  end='')
+                            print('  inst:', ocid[va['instance-id']]['alias'], end='')
                         print('')
                     lbs = [i for i in ocids if i['type'] == 'loadbalancer'
                            and subnet['id'] in i['subnet-ids']]
                     for lb in lbs:
-                        print('      ' + '{:21}'.format(lb['type']),
-                              '{:28}'.format(lb['alias']),
-                              ', '.join([ip['ip-address']
-                                         for ip in lb['ip-addresses']]))
+                        print('      ' + '{:21}'.format(lb['type']), '{:28}'.format(lb['alias']),
+                              ', '.join([ip['ip-address'] for ip in lb['ip-addresses']]))
                     try:
                         print('      securitylists:',
-                              ', '.join([ocid[sl]['alias'] for sl in
-                                        subnet['security-list-ids']]))
+                              ', '.join([ocid[sl]['alias'] for sl in subnet['security-list-ids']]))
                     except BaseException:
                         pass
                 print('')
         else:
             for type in types:
-                if ((not compartments_only and not instances) or
-                    (compartments_only and type == 'compartment') or
-                        (instances and type == 'instance')):
+                if ((not compartments_only and not instances)
+                        or (compartments_only and type == 'compartment')
+                        or (instances and type == 'instance')):
                     tstuff = [i for i in stuff if i['type'] == type]
                     if long:
                         omap_show_items(indent, type, tstuff)
@@ -1321,8 +1278,6 @@ def omap(argv):
                         omap_show_item_names(indent, type, tstuff)
 
         subcompartments = [i for i in stuff if i['type'] == 'compartment']
-        # if this['type'] == 'tenancy':
-        #     this['alias'] = ''
         if not compartments_only and stuff:
             print('')
         for c in subcompartments:
@@ -1404,11 +1359,10 @@ def prune(argv):
               '/'.join(item['parents']) if 'parents' in item else '')
         stuff = []
         if item['type'] == 'vcn':
-            stuff = [i for i in ocids if ('vcn-id' in i and
-                                          i['vcn-id'] == item['id'])]
+            stuff = [i for i in ocids if ('vcn-id' in i and i['vcn-id'] == item['id'])]
         elif item['type'] == 'compartment':
-            stuff = [i for i in ocids if ('compartment-id' in i and
-                                          i['compartment-id'] == item['id'])]
+            stuff = [i for i in ocids if ('compartment-id' in i
+                                          and i['compartment-id'] == item['id'])]
 
         for i in stuff:
             n += prune_this(i)
@@ -1437,8 +1391,7 @@ def prune(argv):
 
         if arg in ['DELETED', 'TERMINATED', 'INACTIVE', 'DETACHED']:
             m = [item for k, item in ocid.items()
-                 if 'lifecycle-state' in item and
-                 item['lifecycle-state'] == arg]
+                 if 'lifecycle-state' in item and item['lifecycle-state'] == arg]
             for i in m:
                 pruned += prune_this(i)
         else:
@@ -1462,12 +1415,11 @@ def prune(argv):
 
     item = 'item' if pruned == 1 else 'items'
     if not go:
-        print(bold('Use "go" to prune ' + str(pruned) + '  ' + item
-              + ' from ' + ocids_file_name))
+        print(bold('Use "go" to prune ' + str(pruned) + '  ' + item + ' from ' + ocids_file_name))
     elif pruned > 0:
         ocids_file('write', {})
-        print('Pruned', pruned, 'of', num_ocids, 'OCIDs. ', len(ocid),
-              'OCIDs remain in ', ocids_file_name)
+        print('Pruned', pruned, 'of', num_ocids, 'OCIDs. ', len(ocid), 'OCIDs remain in ',
+              ocids_file_name)
     exit(0)
 
 # ==============================================================================
@@ -1479,8 +1431,8 @@ def ocid_lookup(argv):
     ocids_file('read')
 
     for arg in argv:
-        m = sorted([item for k, item in ocid.items() if alias_match(
-            arg, item)], key=lambda i: i['score'], reverse=True)
+        m = sorted([item for k, item in ocid.items() if alias_match(arg, item)],
+                   key=lambda i: i['score'], reverse=True)
         if len(m) == 0:
             print(arg + ': no match', file=sys.stderr)
         else:
@@ -1489,7 +1441,7 @@ def ocid_lookup(argv):
                 s = ''
                 if sys.argv[1] == 'ocids' and 'parents' in item:
                     s = '/'.join(item['parents'])
-                print(('{:'+str(width)+'}').format(item['id']), s)
+                print(('{:' + str(width) + '}').format(item['id']), s)
     exit(0)
 
 # ==============================================================================
@@ -1508,7 +1460,7 @@ def get_oci_commands(argv):
         #         out: --compartment-id [text]
         # print(s)
         param = re.sub(r' [A-Z[].*', '', s)
-        type = s[len(param)+1:]
+        type = s[len(param) + 1:]
         if type and not type.startswith('['):
             type = '[' + type.lower() + ']'
         longest_param = max(param.split(', '), key=len).strip()
@@ -1520,12 +1472,10 @@ def get_oci_commands(argv):
 
     # o oci_commands - no service name; get commands for all services
     if len(sys.argv) == 2:
-        sp = subprocess.run(['oci', '--help'],
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        sp = subprocess.run(['oci', '--help'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out = sp.stdout.decode('utf-8')
         part1 = re.sub(r'.*Options:\n|Commands:\n.*', '', out, flags=re.S)
-        globals = sorted(list(dict.fromkeys(
-                         re.findall(r'--[A-Za-z-]*', part1))))
+        globals = sorted(list(dict.fromkeys(re.findall(r'--[A-Za-z-]*', part1))))
         if not os.path.exists(oci_dir):
             os.mkdir(oci_dir, mode=0o755)
         print("Creating", bold(oci_commands_file))
@@ -1536,10 +1486,11 @@ def get_oci_commands(argv):
         part2 = re.sub(r'.*Commands:\n', '', out, flags=re.S)
         r = re.compile("  [a-z]")
         services = [re.sub('^  |  .*$', '', s)
-                    for s in list(filter(r.match, part2.splitlines()))]
+                    for s in list(set(filter(r.match, part2.splitlines())))]
+        services.sort()
         for n, service in enumerate(services, start=1):
             print('\033[2K\r({}/{}) Getting {} commands...'.format(
-                  n, len(services), service) + 30*' ')
+                  n, len(services), service) + 30 * ' ')
             subprocess.run([sys.argv[0], 'oci_commands', service])
         print('\033[2K\rDone.')
         exit(0)
@@ -1565,8 +1516,7 @@ def get_oci_commands(argv):
             for line in commands.splitlines():
                 if re.match(r'^  [a-z0-9-]+', line):
                     cmd = line.strip().split(' ')[0]
-                    subprocess.run([sys.argv[0], 'oci_commands'] +
-                                   sys.argv[2:] + [cmd])
+                    subprocess.run([sys.argv[0], 'oci_commands'] + sys.argv[2:] + [cmd])
             print('\033[2K\r', end='')
             exit(0)
 
@@ -1623,7 +1573,7 @@ def get_oci_commands(argv):
 
         # elif re.search('Accepted values are:', line):
         elif line.endswith('Accepted values are:'):
-            s = re.sub(r', ', r'|', lines[n+2].strip())
+            s = re.sub(r', ', r'|', lines[n + 2].strip())
             cmd = cmd[:-5] + s + ']'
 
     oci_command_out(cmd, eol='\033[2K\r')
@@ -1682,18 +1632,22 @@ else:
 if len(CLI_params) == 0:
     usage()
 
-# if 'go' == CLI_params[-1]:
 if CLI_params[-1] in ('go', '!', '.'):
     go = True
+    if CLI_params[-1] == '!':
+        go = 2
     CLI_params.pop(-1)
 elif CLI_params[-1].endswith('!') or CLI_params[-1].endswith('.'):
     go = True
+    if CLI_params[-1].endswith('!'):
+        go = 2
     CLI_params[-1] = CLI_params[-1][:-1]
 elif 'help' == CLI_params[-1]:
     if len(CLI_params) == 1:
         usage('help')
     show_help = True
     CLI_params.pop(-1)
+
 
 # ==============================================================================
 # Identify matching oci cli command(s)
@@ -1719,27 +1673,26 @@ if len(matches) == 0:
           + '\n\nTry:  o .')
 
 # If many matches, list matches and exit
-elif len(matches) > 9:
+elif len(matches) > 16:
     print(bold('Possible commands:'))
     for c in matches:
         show_command(c, prefix='    ')
     print('use:', bold('o <command>'), 'for options')
     exit(0)
 
-# Fewer than 10 matches - if options provided, try the shortest command
+# Fewer than 16 matches - if options provided, try the shortest command
 elif show_help:
     for c in matches:
         show_command(c, full=True)
     print('use:', bold('o ' + c['action'] + ' --help go'), 'for full oci help')
     exit(0)
 
-# Fewer than 10 matches. Didn't ask for help.
+# Fewer than 16 matches. Didn't ask for help.
 elif not go and not Quiet:
     if len(matches) > 1:
         if options_in_args:
-            print(bold(str(len(matches)) +
-                       ' other matching commands not shown.' +
-                       ' (Remove parameters to see other commands.)'), end='')
+            print(bold(str(len(matches)) + ' other matching commands not shown.'
+                  + ' (Remove parameters to see other commands.)'), end='')
         else:
             print(bold('Possible matches:'))
             for i in range(len(matches)):
@@ -1753,12 +1706,13 @@ elif not go and not Quiet:
 # Continue interpreting additional parameters (even if no 'go')
 # ==============================================================================
 c = matches[best_match]
+oci_command_line = 'oci ' + c['action']
+
 if c['action'] in ('audit event list', 'logging-search search-logs') and \
         user_out_spec == default_out_spec:
     user_out_spec = ''
 
-all_options_for_this_cmd = c['required'] + ' ' + c['optional'] \
-    + ' ' + global_options + ' '
+all_options_for_this_cmd = c['required'] + ' ' + c['optional'] + ' ' + global_options + ' '
 remaining_options = all_options_for_this_cmd
 while CLI_params and CLI_params[0][0] != '-':
     CLI_params.pop(0)
@@ -1770,10 +1724,10 @@ for i in range(len(CLI_params)):
     if len(a) == 0 or not a.startswith('-'):
         continue
     if option_parameter(a) == '--region':
-        oci_command_line = '--region ' + CLI_params[i+1]
+        oci_command_line += ' --region ' + CLI_params[i + 1]
         break
     if option_parameter(a) == '--profile':
-        oci_command_line = '--profile ' + CLI_params[i+1]
+        oci_command_line += '--profile ' + CLI_params[i + 1]
 region_code, region = get_region()
 
 # Interpret remaining command line arguments based on command:
@@ -1786,15 +1740,18 @@ for a in CLI_params:
         options_out.append(option_parameter(a))
         last_option = options_out[-1]
         # don't match the same parameter more than once
-        remaining_options = re.sub(last_option + ' ' +
-                                   r'(\[[A-Za-z0-9-_|\]]* )',
+        remaining_options = re.sub(last_option + ' '
+                                   + r'(\[[A-Za-z0-9-_|\]]* )',
                                    '', remaining_options)
     else:
         if last_option == '--region':
             rn = len(options_out)
         options_out.append(value_parameter(last_option, a))
 
-oci_command_line = 'oci ' + c['action']
+# if orphans found while processing parameters, remove them from ocids file
+if orphans:
+    ocids_file('write')
+
 for o in options_out:
     if o.startswith('-') and o != '-':
         oci_command_line += '\\\n   '
@@ -1823,7 +1780,7 @@ if '--force' in c['optional'] and '--force' not in options_out:
         print(bold('If the command seems stuck, it may be waiting for a '
               + '"yes" confirmation.'))
 
-if nogo:
+if nogo and go != 2:
     exit(1)
 if not go:
     exit(0)
@@ -1834,8 +1791,7 @@ if not go:
 try:
     if sys.version_info[1] > 6:
         # capture_output option requires 3.7+
-        cli = subprocess.run(['oci'] + c['action'].split(' ') + options_out,
-                             capture_output=True)
+        cli = subprocess.run(['oci'] + c['action'].split(' ') + options_out, capture_output=True)
     else:
         cli = subprocess.run(['oci'] + c['action'].split(' ') + options_out,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -1877,8 +1833,7 @@ if type(jsonOut) is dict and 'data' in jsonOut:
     if type(jsonOut['data']) is list:
         results = jsonOut['data']
     elif type(jsonOut['data']) is dict:
-        if 'items' in jsonOut['data'] \
-                and type(jsonOut['data']['items']) is list:
+        if 'items' in jsonOut['data'] and type(jsonOut['data']['items']) is list:
             results = jsonOut['data']['items']
         else:
             results = [jsonOut['data']]
@@ -1891,20 +1846,18 @@ elif type(jsonOut) is list and type(jsonOut[0]) is dict:
     # -gfcji: { "messages": [ { "key": "string", "value": "string" },
     #    or   {'agentConfig': {'isMonitoringDisabled': True}, 'definedTags...
     # I may be able to format the output, but don't try to save this data.
-    # print ("QUERY?  GFCJI?")
     results = jsonOut
 
 else:
     # It's JSON, but I don't understand its format.
-    # print ("JSON")
     print(cli.stdout.decode('utf-8'))
     exit(cli.returncode)
 
 # Try to preserve access-uri from existing record
 for item in results:
     if 'access-uri' in item:
-        item['access-uri'] = 'https://objectstorage.' + region \
-                + '.oraclecloud.com' + item['access-uri']
+        item['access-uri'] = 'https://objectstorage.' + region\
+            + '.oraclecloud.com' + item['access-uri']
     elif ('object-name' in item and 'id' in item and item['id'] in ocid
             and 'access-uri' in ocid[item['id']]):
         item['access-uri'] = ocid[item['id']]['access-uri']
@@ -1917,16 +1870,13 @@ else:
     # Identify output fields from user -o spec, format for each field
     # Get max width of each field - or format with user spec
     out_fields, out_sep = \
-        get_fields_from(user_out_spec,
-                        list(set([k for i in results for k in i.keys()])))
+        get_fields_from(user_out_spec, list(set([k for i in results for k in i.keys()])))
     if out_fields:
         set_column_widths(out_fields, results)
         # Then output header and requested fields from item_list
         show_column_headers(out_fields, out_sep)
         for item in results:
             show_item(item, out_fields, out_sep)
-    # else:
-    #     print(cli.stdout.decode('utf-8'))
 
 # report stderr from oci cli, if any, AFTER results
 if cli.stderr is not None and len(cli.stderr):
