@@ -533,6 +533,15 @@ def build_client(spec_name, service_name, ctx):
         if ctx.obj['endpoint']:
             client.base_client.endpoint = ctx.obj['endpoint']
 
+        if ctx.obj['connection_timeout']:
+            if ctx.obj['read_timeout']:
+                client.base_client.timeout = (ctx.obj['connection_timeout'], ctx.obj['read_timeout'])
+            else:
+                client.base_client.timeout = (ctx.obj['connection_timeout'], client.base_client.timeout[1])
+        else:
+            if ctx.obj['read_timeout']:
+                client.base_client.timeout = (client.base_client.timeout[0], ctx.obj['read_timeout'])
+
         cert_bundle = ctx.obj['cert_bundle']
         if cert_bundle:
             cert_bundle = os.path.expanduser(cert_bundle)

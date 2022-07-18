@@ -16,7 +16,8 @@ def set_up_context(command):
                    'output': 'json', 'query': None, 'raw_output': None, 'generate_full_command_json_input': None,
                    'generate_param_json_input': None, 'debug': None, 'auth': 'api_key', 'auth_purpose': None,
                    'proxy': None,
-                   'no_retry': None, 'max_attempts': None, 'input_params_to_complex_types': {}, 'output_type': None}
+                   'no_retry': None, 'max_attempts': None, 'input_params_to_complex_types': {}, 'output_type': None,
+                   'connection_timeout': None, 'read_timeout': None}
     context = click.Context(command, parent=None, info_name=command.name, obj=context_obj)
     return context
 

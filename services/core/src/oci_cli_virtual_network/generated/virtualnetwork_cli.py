@@ -2879,6 +2879,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the Internet Gateway is using.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2887,7 +2888,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InternetGateway'})
 @cli_util.wrap_exceptions
-def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_enabled, vcn_id, defined_tags, display_name, freeform_tags):
+def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_enabled, vcn_id, defined_tags, display_name, freeform_tags, route_table_id):
 
     kwargs = {}
 
@@ -2904,6 +2905,9 @@ def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if route_table_id is not None:
+        _details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_internet_gateway(
@@ -3211,6 +3215,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `true`""")
 @cli_util.option('--public-ip-id', help=u"""The [OCID] of the public IP address associated with the NAT gateway.""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table used by the NAT gateway.
+
+If you don't specify a route table here, the NAT gateway is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the NAT gateway.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3219,7 +3226,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'NatGateway'})
 @cli_util.wrap_exceptions
-def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, block_traffic, public_ip_id):
+def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, block_traffic, public_ip_id, route_table_id):
 
     kwargs = {}
 
@@ -3241,6 +3248,9 @@ def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if public_ip_id is not None:
         _details['publicIpId'] = public_ip_id
+
+    if route_table_id is not None:
+        _details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_nat_gateway(
@@ -11737,6 +11747,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the gateway is enabled.""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the Internet Gateway is using.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -11747,7 +11758,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InternetGateway'})
 @cli_util.wrap_exceptions
-def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ig_id, defined_tags, display_name, freeform_tags, is_enabled, if_match):
+def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ig_id, defined_tags, display_name, freeform_tags, is_enabled, route_table_id, if_match):
 
     if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
@@ -11773,6 +11784,9 @@ def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
+
+    if route_table_id is not None:
+        _details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_internet_gateway(
@@ -12234,6 +12248,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--block-traffic', type=click.BOOL, help=u"""Whether the NAT gateway blocks traffic through it. The default is `false`.
 
 Example: `true`""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table used by the NAT gateway.
+
+If you don't specify a route table here, the NAT gateway is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the NAT gateway.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12244,7 +12261,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'NatGateway'})
 @cli_util.wrap_exceptions
-def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, nat_gateway_id, defined_tags, display_name, freeform_tags, block_traffic, if_match):
+def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, nat_gateway_id, defined_tags, display_name, freeform_tags, block_traffic, route_table_id, if_match):
 
     if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
@@ -12270,6 +12287,9 @@ def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if block_traffic is not None:
         _details['blockTraffic'] = block_traffic
+
+    if route_table_id is not None:
+        _details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_nat_gateway(

@@ -59,6 +59,18 @@ def test_cert_bundle_option(runner, config_file):
     assert 0 != result.exit_code
 
 
+def test_connection_timeout_read_timeout_option_success(runner, config_file):
+    # Should take the given timeout
+    result = invoke_example_operation(runner, ['--connection-timeout', "20", "--read-timeout", "20"], config_file)
+    assert 0 == result.exit_code
+
+
+def test_connection_timeout_option_success(runner, config_file):
+    # Should take the given timeout
+    result = invoke_example_operation(runner, ['--connection-timeout', "30"], config_file)
+    assert 0 == result.exit_code
+
+
 def test_profile_option_overrides_default_setting(runner, config_file):
     result = invoke_example_operation(runner, ['--profile', 'DEFAULT', '--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
     assert 0 == result.exit_code

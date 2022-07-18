@@ -315,6 +315,8 @@ For information on configuration, see https://docs.cloud.oracle.com/Content/API/
               help='The request id to use for tracking the request.')
 @click.option('--region', callback=read_values_from_env, help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
 @click.option('--endpoint', callback=read_values_from_env, help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
+@click.option('--connection-timeout', 'connection_timeout', type=click.INT, callback=read_values_from_env, help='The value of the connection timeout in seconds to make establish connection from sdk to services. This will override the default connection timeout value of 10 secs. ')
+@click.option('--read-timeout', 'read_timeout', type=click.INT, callback=read_values_from_env, help='The value of the read timeout in seconds to wait for service calls to send response to sdk. This will override the default read timeout value of 60 secs. ')
 @click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
 @click.option('--query', help="""JMESPath query [http://jmespath.org/] to run on the response JSON before output.
@@ -336,7 +338,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-i', '--cli-auto-prompt', is_flag=True, help='Use the CLI in interactive mode.')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
@@ -377,6 +379,8 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
         'request_id': request_id,
         'region': region,
         'endpoint': endpoint,
+        'connection_timeout': connection_timeout,
+        'read_timeout': read_timeout,
         'cert_bundle': cert_bundle,
         'output': output,
         'query': query,

@@ -6,6 +6,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.11.1 - 2022-07-19
+--------------------
+Added
+~~~~~
+* Support for 2 new global parameters to provide connection and read timeout value
+
+  * ``oci --connection-timeout --read-timeout``
+  
+* Support for Container Databases (CDBs) and Pluggable Databases (PDBs) discovery in the Stack Monitoring service
+
+  * ``oci stack-monitoring discovery-job create --compartment-id --discovery-details``
+  
+* Support for the Fusion Apps service 
+
+  * ``oci fusion-apps``
+
+* Support for the Oracle Process Automation service
+
+  * ``oci opa``
+
+* Support for ingress routing tables to NAT Gateway and Internet Gateway in the VCN Routing service
+
+  * ``oci network nat-gateway create --route-table-id``
+  * ``oci network nat-gateway update --route-table-id`` 
+  * ``oci network internet-gateway create --route-table-id``
+  * ``oci network internet-gateway update --route-table-id``
+  
+* Support for maintenance reboot due date extension on Virtual Machine instances in the core service
+
+  * ``oci compute instance-maintenance-reboot get``
+  * ``oci compute instance update --time-maintenance-reboot-due``
+  
+* Support for Oracle Managed Access service
+  
+  * ``oci oma``
+  
+* Support for grapePeriod for wallet rotation feature in the Autonomous Database service
+
+  * ``oci db autonomous-database-wallet rotate --grace-period``
+  * ``oci db autonomous-database-wallet rotate-regional-wallet --grace-period`` 
+  
+* Support for the Media service
+
+  * ``oci media-services``
+  
+Changed
+~~~~~~~
+* Modified supported version for the following package: cryptography (>=3.2.1, <=37.0.2), pyOpenSSL (>=17.5.0, <=22.0.0)
+
 3.11.0 - 2022-07-12
 --------------------
 Added
