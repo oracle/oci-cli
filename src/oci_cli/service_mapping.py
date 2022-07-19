@@ -195,6 +195,10 @@ service_mapping = {
         "file_storage",
         "File Storage"
     ],
+    "fusion-apps": [
+        "fusion_apps",
+        "Fusion Applications Environment Management"
+    ],
     "goldengate": [
         "golden_gate",
         "GoldenGate"
@@ -267,6 +271,10 @@ service_mapping = {
         "marketplace",
         "Marketplace Service"
     ],
+    "media-services": [
+        "media_services",
+        "Media Services"
+    ],
     "monitoring": [
         "monitoring",
         "Monitoring"
@@ -303,6 +311,10 @@ service_mapping = {
         "oda",
         "Digital Assistant Service Instance"
     ],
+    "oma": [
+        "lockbox",
+        "Managed Access"
+    ],
     "onesubscription": [
         "onesubscription",
         "OneSubscription"
@@ -310,6 +322,10 @@ service_mapping = {
     "ons": [
         "ons",
         "Notifications"
+    ],
+    "opa": [
+        "opa",
+        "OracleProcessAutomation"
     ],
     "opctl": [
         "operator_access_control",

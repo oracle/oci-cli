@@ -113,6 +113,12 @@ def image_group():
     pass
 
 
+@click.command(cli_util.override('compute.instance_maintenance_reboot_group.command_name', 'instance-maintenance-reboot'), cls=CommandGroupWithAlias, help="""The maximum possible date and time that a maintenance reboot can be extended.""")
+@cli_util.help_option_group
+def instance_maintenance_reboot_group():
+    pass
+
+
 @click.command(cli_util.override('compute.shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance]. For more information, see [Overview of the Compute Service] and [Compute Shapes].""")
 @cli_util.help_option_group
 def shape_group():
@@ -224,6 +230,7 @@ compute_root_group.add_command(capacity_reservation_instance_group)
 compute_root_group.add_command(compute_capacity_reservation_instance_shape_group)
 compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
+compute_root_group.add_command(instance_maintenance_reboot_group)
 compute_root_group.add_command(shape_group)
 compute_root_group.add_command(compute_image_capability_schema_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_group)
@@ -2816,6 +2823,28 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_instance_console_connection(
         instance_console_connection_id=instance_console_connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_maintenance_reboot_group.command(name=cli_util.override('compute.get_instance_maintenance_reboot.command_name', 'get'), help=u"""Gets the maximum possible date that a maintenance reboot can be extended. \n[Command Reference](getInstanceMaintenanceReboot)""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceMaintenanceReboot'})
+@cli_util.wrap_exceptions
+def get_instance_maintenance_reboot(ctx, from_json, instance_id):
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_instance_maintenance_reboot(
+        instance_id=instance_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7547,6 +7576,9 @@ To get a list of fault domains, use the [ListFaultDomains] operation in the Iden
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-maintenance-reboot-due', type=custom_types.CLI_DATETIME, help=u"""The date and time the instance is expected to be stopped and restarted, in the format defined by [RFC3339]. If the instance hasn't been rebooted after this date, Oracle reboots the instance within 24 hours of the time and date that maintenance is due. Regardless of how the instance is stopped, this flag is reset to empty as soon as the instance reaches Stopped state.
+
+Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7557,7 +7589,7 @@ Example: `FAULT-DOMAIN-1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, instance_options, fault_domain, launch_options, availability_config, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -7610,6 +7642,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if availability_config is not None:
         _details['availabilityConfig'] = cli_util.parse_json_parameter("availability_config", availability_config)
+
+    if time_maintenance_reboot_due is not None:
+        _details['timeMaintenanceRebootDue'] = time_maintenance_reboot_due
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_instance(

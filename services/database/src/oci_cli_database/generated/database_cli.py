@@ -17244,6 +17244,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
 @autonomous_database_wallet_group.command(name=cli_util.override('db.update_autonomous_database_regional_wallet.command_name', 'update-autonomous-database-regional-wallet'), help=u"""Updates the Autonomous Database regional wallet. \n[Command Reference](updateAutonomousDatabaseRegionalWallet)""")
 @cli_util.option('--should-rotate', type=click.BOOL, help=u"""Indicates whether to rotate the wallet or not. If `false`, the wallet will not be rotated. The default is `false`.""")
+@cli_util.option('--grace-period', type=click.INT, help=u"""Grace period in hours to keep the existing wallet valid after rotation.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -17252,7 +17253,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_autonomous_database_regional_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, should_rotate):
+def update_autonomous_database_regional_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, should_rotate, grace_period):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -17261,6 +17262,9 @@ def update_autonomous_database_regional_wallet(ctx, from_json, wait_for_state, m
 
     if should_rotate is not None:
         _details['shouldRotate'] = should_rotate
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database_regional_wallet(
@@ -17304,6 +17308,7 @@ def update_autonomous_database_regional_wallet(ctx, from_json, wait_for_state, m
 @autonomous_database_wallet_group.command(name=cli_util.override('db.update_autonomous_database_wallet.command_name', 'update'), help=u"""Updates the wallet for the specified Autonomous Database. \n[Command Reference](updateAutonomousDatabaseWallet)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--should-rotate', type=click.BOOL, help=u"""Indicates whether to rotate the wallet or not. If `false`, the wallet will not be rotated. The default is `false`.""")
+@cli_util.option('--grace-period', type=click.INT, help=u"""Grace period in hours to keep the existing wallet valid after rotation.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -17312,7 +17317,7 @@ def update_autonomous_database_regional_wallet(ctx, from_json, wait_for_state, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_autonomous_database_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, should_rotate):
+def update_autonomous_database_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, should_rotate, grace_period):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -17324,6 +17329,9 @@ def update_autonomous_database_wallet(ctx, from_json, wait_for_state, max_wait_s
 
     if should_rotate is not None:
         _details['shouldRotate'] = should_rotate
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database_wallet(

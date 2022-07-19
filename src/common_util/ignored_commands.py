@@ -126,6 +126,9 @@ IGNORED_COMMANDS = [
     ['db', 'cloud-vm-cluster', 'update'],
     ['opsi', 'host-insights', 'list'],
     ['compute', 'instance', 'action'],
+    ['oma', 'lockboxes', 'list'],
+    ['media-services', 'media-asset-distribution-channel-attachment-collection'],
+    ['media-services', 'media-workflow-configuration-collection']
 ]
 
 IGNORED_COMMANDS_DOCS = [
