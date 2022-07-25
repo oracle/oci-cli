@@ -659,6 +659,7 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "SOLARIS"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
+@cli_util.option('--agent-id', help=u"""The ManagementAgentID of the agent from which the Management Agents to be filtered.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -666,7 +667,7 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentPluginSummary]'})
 @cli_util.wrap_exceptions
-def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state, platform_type):
+def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state, platform_type, agent_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -686,6 +687,8 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
         kwargs['lifecycle_state'] = lifecycle_state
     if platform_type is not None and len(platform_type) > 0:
         kwargs['platform_type'] = platform_type
+    if agent_id is not None:
+        kwargs['agent_id'] = agent_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('management_agent', 'management_agent', ctx)
     if all_pages:
@@ -713,7 +716,7 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agents. If no explicit page size limit is specified, it will default to 5000. \n[Command Reference](listManagementAgents)""")
+@management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agents. If no explicit page size limit is specified, it will default to 1000 when compartmentIdInSubtree is true and 5000 otherwise. The response is limited to maximum 1000 records when compartmentIdInSubtree is true. \n[Command Reference](listManagementAgents)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
 @cli_util.option('--plugin-name', multiple=True, help=u"""Filter to return only Management Agents having the particular Plugin installed. A special pluginName of 'None' can be provided and this will return only Management Agents having no plugin installed.""")
 @cli_util.option('--version-parameterconflict', multiple=True, help=u"""Filter to return only Management Agents having the particular agent version.""")
@@ -728,6 +731,8 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "host", "availabilityStatus", "platformType", "pluginDisplayNames", "version"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""if set to true then it fetches resources for all compartments where user has access to else only on the compartment specified.""")
+@cli_util.option('--access-level', help=u"""When the value is \"ACCESSIBLE\", insufficient permissions for a compartment will filter out resources in that compartment without rejecting the request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'plugin-name': {'module': 'management_agent', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'management_agent', 'class': 'list[string]'}})
@@ -735,7 +740,7 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'plugin-name': {'module': 'management_agent', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'management_agent', 'class': 'list[string]'}}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentSummary]'})
 @cli_util.wrap_exceptions
-def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id, plugin_name, version_parameterconflict, display_name, lifecycle_state, availability_status, host_id, platform_type, is_customer_deployed, install_type, limit, page, sort_order, sort_by):
+def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id, plugin_name, version_parameterconflict, display_name, lifecycle_state, availability_status, host_id, platform_type, is_customer_deployed, install_type, limit, page, sort_order, sort_by, compartment_id_in_subtree, access_level):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -767,6 +772,10 @@ def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('management_agent', 'management_agent', ctx)
     if all_pages:
@@ -914,6 +923,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""The OperationStatus of the workRequest""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DEPLOY_PLUGIN", "UPGRADE_PLUGIN", "CREATE_UPGRADE_PLUGINS", "AGENTIMAGE_UPGRADE"]), help=u"""The OperationType of the workRequest""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Filter for items with timeCreated greater or equal to provided value. given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending. If no value is specified timeAccepted is default.""")
@@ -924,7 +934,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'list[WorkRequestSummary]'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, agent_id, page, limit, status, time_created_greater_than_or_equal_to, sort_order, sort_by):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, agent_id, page, limit, status, type, time_created_greater_than_or_equal_to, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -938,6 +948,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, age
         kwargs['limit'] = limit
     if status is not None:
         kwargs['status'] = status
+    if type is not None:
+        kwargs['type'] = type
     if time_created_greater_than_or_equal_to is not None:
         kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
     if sort_order is not None:

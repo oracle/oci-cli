@@ -71,7 +71,7 @@ def change_operator_control_assignment_compartment(ctx, from_json, operator_cont
 @cli_util.option('--operator-control-id', required=True, help=u"""The OCID of the operator control that is being assigned to a target resource.""")
 @cli_util.option('--resource-id', required=True, help=u"""The OCID of the target resource being brought under the governance of the operator control.""")
 @cli_util.option('--resource-name', required=True, help=u"""Name of the target resource.""")
-@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER"]), help=u"""Type of the target resource.""")
+@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER", "CLOUDAUTONOMOUSVMCLUSTER"]), help=u"""Type of the target resource.""")
 @cli_util.option('--resource-compartment-id', required=True, help=u"""The OCID of the compartment that contains the target resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the operator control assignment.""")
 @cli_util.option('--is-enforced-always', required=True, type=click.BOOL, help=u"""If set, then the target resource is always governed by the operator control.""")

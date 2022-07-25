@@ -54,7 +54,7 @@ def configuration_source_provider_group():
     pass
 
 
-@click.command(cli_util.override('resource_manager.private_endpoint_group.command_name', 'private-endpoint'), cls=CommandGroupWithAlias, help="""A private endpoint. For more information about private endpoints, see [About Private Endpoints].""")
+@click.command(cli_util.override('resource_manager.private_endpoint_group.command_name', 'private-endpoint'), cls=CommandGroupWithAlias, help="""A private endpoint allowing Resource Manager to access nonpublic cloud resources. For more information about private endpoints, see [Private Endpoint Management].""")
 @cli_util.help_option_group
 def private_endpoint_group():
     pass
@@ -66,7 +66,7 @@ def private_endpoint_summary_group():
     pass
 
 
-@click.command(cli_util.override('resource_manager.reachable_ip_group.command_name', 'reachable-ip'), cls=CommandGroupWithAlias, help="""A reachableIp ip address used by Resource Manager Service to connect to the private resource.""")
+@click.command(cli_util.override('resource_manager.reachable_ip_group.command_name', 'reachable-ip'), cls=CommandGroupWithAlias, help="""The reachable, or alternative, IP address for a nonpublic IP address that is associated with the private endpoint. Resource Manager uses this IP address to connect to nonpublic resources through the associated private endpoint.""")
 @cli_util.help_option_group
 def reachable_ip_group():
     pass
@@ -628,6 +628,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -636,7 +637,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_tf_state_base64_encoded, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags):
+def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_tf_state_base64_encoded, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_is_provider_upgrade_required):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -660,6 +661,9 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_is_provider_upgrade_required is not None:
+        _details['jobOperationDetails']['isProviderUpgradeRequired'] = job_operation_details_is_provider_upgrade_required
 
     _details['jobOperationDetails']['operation'] = 'IMPORT_TF_STATE'
 
@@ -701,6 +705,7 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
 @cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
 @cli_util.option('--job-operation-details-terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-operation-details-execution-plan-strategy', help=u"""Specifies the source of the execution plan to apply. Use `AUTO_APPROVED` to run the job without an execution plan.""")
 @cli_util.option('--job-operation-details-execution-plan-job-id', help=u"""The [OCID] of a plan job, for use when specifying `FROM_PLAN_JOB_ID` as the `executionPlanStrategy`.""")
@@ -712,7 +717,7 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_terraform_advanced_options, job_operation_details_execution_plan_strategy, job_operation_details_execution_plan_job_id):
+def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_is_provider_upgrade_required, job_operation_details_terraform_advanced_options, job_operation_details_execution_plan_strategy, job_operation_details_execution_plan_job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -735,6 +740,9 @@ def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_is_provider_upgrade_required is not None:
+        _details['jobOperationDetails']['isProviderUpgradeRequired'] = job_operation_details_is_provider_upgrade_required
 
     if job_operation_details_terraform_advanced_options is not None:
         _details['jobOperationDetails']['terraformAdvancedOptions'] = cli_util.parse_json_parameter("job_operation_details_terraform_advanced_options", job_operation_details_terraform_advanced_options)
@@ -785,6 +793,7 @@ def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state
 @cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
 @cli_util.option('--job-operation-details-terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -794,7 +803,7 @@ def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_terraform_advanced_options):
+def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_is_provider_upgrade_required, job_operation_details_terraform_advanced_options):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -817,6 +826,9 @@ def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_is_provider_upgrade_required is not None:
+        _details['jobOperationDetails']['isProviderUpgradeRequired'] = job_operation_details_is_provider_upgrade_required
 
     if job_operation_details_terraform_advanced_options is not None:
         _details['jobOperationDetails']['terraformAdvancedOptions'] = cli_util.parse_json_parameter("job_operation_details_terraform_advanced_options", job_operation_details_terraform_advanced_options)
@@ -862,6 +874,7 @@ def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state,
 @cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
 @cli_util.option('--job-operation-details-terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -871,7 +884,7 @@ def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_execution_plan_strategy, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_terraform_advanced_options):
+def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_execution_plan_strategy, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_is_provider_upgrade_required, job_operation_details_terraform_advanced_options):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -895,6 +908,9 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_is_provider_upgrade_required is not None:
+        _details['jobOperationDetails']['isProviderUpgradeRequired'] = job_operation_details_is_provider_upgrade_required
 
     if job_operation_details_terraform_advanced_options is not None:
         _details['jobOperationDetails']['terraformAdvancedOptions'] = cli_util.parse_json_parameter("job_operation_details_terraform_advanced_options", job_operation_details_terraform_advanced_options)
@@ -932,14 +948,14 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('resource_manager.create_private_endpoint.command_name', 'create'), help=u"""Creates a a private endpoint in the specified compartment. \n[Command Reference](createPrivateEndpoint)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this private endpoint details.""")
+@private_endpoint_group.command(name=cli_util.override('resource_manager.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint in the specified compartment. \n[Command Reference](createPrivateEndpoint)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing this private endpoint.""")
 @cli_util.option('--display-name', required=True, help=u"""The private endpoint display name. Avoid entering confidential information.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN for the private endpoint.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet within the VCN for the private endpoint.""")
 @cli_util.option('--description', help=u"""Description of the private endpoint. Avoid entering confidential information.""")
 @cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""DNS Proxy forwards any DNS FQDN queries over into the consumer DNS resolver if the DNS FQDN is included in the dns zones list otherwise it goes to service provider VCN resolver.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--nsg-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group (NSG) [OCIDs] for the private endpoint. Order does not matter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCIDs] of [network security groups (NSGs)] for the private endpoint. Order does not matter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-used-with-configuration-source-provider', type=click.BOOL, help=u"""When `true`, allows the private endpoint to be used with a configuration source provider.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1016,6 +1032,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1023,12 +1040,12 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-source': {'module': 'resource_manager', 'class': 'CreateConfigSourceDetails'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config-source': {'module': 'resource_manager', 'class': 'CreateConfigSourceDetails'}, 'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-source': {'module': 'resource_manager', 'class': 'CreateConfigSourceDetails'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-source': {'module': 'resource_manager', 'class': 'CreateConfigSourceDetails'}, 'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source, display_name, description, variables, terraform_version, freeform_tags, defined_tags):
+def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source, display_name, description, custom_terraform_provider, variables, terraform_version, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1042,6 +1059,9 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -1091,6 +1111,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1099,12 +1120,12 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_zip_file_base64_encoded, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
+def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_zip_file_base64_encoded, display_name, description, custom_terraform_provider, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1119,6 +1140,9 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -1173,6 +1197,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1183,12 +1208,12 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_configuration_source_provider_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory, config_source_repository_url, config_source_branch_name):
+def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_configuration_source_provider_id, display_name, description, custom_terraform_provider, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory, config_source_repository_url, config_source_branch_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1203,6 +1228,9 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -1265,6 +1293,7 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
 @cli_util.option('--config-source-bucket-name', required=True, help=u"""The name of the bucket that contains the Terraform configuration files.""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1273,12 +1302,12 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack_create_object_storage_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_region, config_source_namespace, config_source_bucket_name, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
+def create_stack_create_object_storage_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_region, config_source_namespace, config_source_bucket_name, display_name, description, custom_terraform_provider, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1295,6 +1324,9 @@ def create_stack_create_object_storage_config_source_details(ctx, from_json, wai
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -1350,6 +1382,7 @@ def create_stack_create_object_storage_config_source_details(ctx, from_json, wai
 @cli_util.option('--config-source-region', required=True, help=u"""The region to use for creating the stack. The new stack will include definitions for supported resource types in this region.""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1359,12 +1392,12 @@ def create_stack_create_object_storage_config_source_details(ctx, from_json, wai
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'config-source-services-to-discover': {'module': 'resource_manager', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'config-source-services-to-discover': {'module': 'resource_manager', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'config-source-services-to-discover': {'module': 'resource_manager', 'class': 'list[string]'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'config-source-services-to-discover': {'module': 'resource_manager', 'class': 'list[string]'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack_create_compartment_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_compartment_id, config_source_region, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory, config_source_services_to_discover):
+def create_stack_create_compartment_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_compartment_id, config_source_region, display_name, description, custom_terraform_provider, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory, config_source_services_to_discover):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1380,6 +1413,9 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -1437,6 +1473,7 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
 @cli_util.option('--config-source-template-id', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1445,12 +1482,12 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def create_stack_create_stack_template_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_template_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
+def create_stack_create_stack_template_config_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_template_id, display_name, description, custom_terraform_provider, variables, terraform_version, freeform_tags, defined_tags, config_source_working_directory):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1465,6 +1502,9 @@ def create_stack_create_stack_template_config_source_details(ctx, from_json, wai
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -1919,6 +1959,7 @@ def delete_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--resource-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of resources in the specified stack to detect drift for. Each resource is identified by a resource address, which is a string derived from the resource type and name specified in the stack's Terraform configuration plus an optional index. For example, the resource address for the fourth Compute instance with the name \"test_instance\" is oci_core_instance.test_instance[3]. For more details and examples of resource addresses, see the Terraform documentation at [Resource spec].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1927,7 +1968,7 @@ def delete_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-addresses': {'module': 'resource_manager', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match, resource_addresses):
+def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match, resource_addresses, is_provider_upgrade_required):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
@@ -1941,6 +1982,9 @@ def detect_stack_drift(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if resource_addresses is not None:
         _details['resourceAddresses'] = cli_util.parse_json_parameter("resource_addresses", resource_addresses)
+
+    if is_provider_upgrade_required is not None:
+        _details['isProviderUpgradeRequired'] = is_provider_upgrade_required
 
     client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.detect_stack_drift(
@@ -2265,7 +2309,7 @@ def get_private_endpoint(ctx, from_json, private_endpoint_id):
     cli_util.render_response(result, ctx)
 
 
-@reachable_ip_group.command(name=cli_util.override('resource_manager.get_reachable_ip.command_name', 'get'), help=u"""Gets the alternative IP address of the private resource. This IP will be used by Resource Manager Service to connect to the private resource. \n[Command Reference](getReachableIp)""")
+@reachable_ip_group.command(name=cli_util.override('resource_manager.get_reachable_ip.command_name', 'get'), help=u"""Gets the reachable, or alternative, IP address for a nonpublic IP address that is associated with the private endpoint. Resource Manager uses this IP address to connect to nonpublic resources through the associated private endpoint. \n[Command Reference](getReachableIp)""")
 @cli_util.option('--private-ip', required=True, help=u"""The IP address of the resource in the private subnet.""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of the private endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2666,7 +2710,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, stack_id, id
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_summary_group.command(name=cli_util.override('resource_manager.list_private_endpoints.command_name', 'list-private-endpoints'), help=u"""Lists private endpoints according to the specified filter. - For `compartmentId`, lists all private endpoint in the matching compartment. - For `privateEndpointId`, lists the matching private endpoint. \n[Command Reference](listPrivateEndpoints)""")
+@private_endpoint_summary_group.command(name=cli_util.override('resource_manager.list_private_endpoints.command_name', 'list-private-endpoints'), help=u"""Lists private endpoints according to the specified filter. - For `compartmentId`, lists all private endpoints in the matching compartment. - For `privateEndpointId`, lists the matching private endpoint. \n[Command Reference](listPrivateEndpoints)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--private-endpoint-id', help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a resource by name. Requires `sortBy` set to `DISPLAYNAME`. Alternatively, when you know the resource OCID, use the related Get operation.""")
@@ -3479,7 +3523,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN for the private endpoint.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet within the VCN for the private endpoint.""")
 @cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""DNS Proxy forwards any DNS FQDN queries over into the consumer DNS resolver if the DNS FQDN is included in the dns zones list otherwise it goes to service provider VCN resolver.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--nsg-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group (NSG) [OCIDs] for the private endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-id-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCIDs] of [network security groups (NSGs)] for the private endpoint. Order does not matter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-used-with-configuration-source-provider', type=click.BOOL, help=u"""When `true`, allows the private endpoint to be used with a configuration source provider.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with the resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3573,6 +3617,8 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--config-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3582,18 +3628,18 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-source': {'module': 'resource_manager', 'class': 'UpdateConfigSourceDetails'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config-source': {'module': 'resource_manager', 'class': 'UpdateConfigSourceDetails'}, 'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-source': {'module': 'resource_manager', 'class': 'UpdateConfigSourceDetails'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-source': {'module': 'resource_manager', 'class': 'UpdateConfigSourceDetails'}, 'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, config_source, variables, terraform_version, freeform_tags, defined_tags, if_match):
+def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, config_source, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
-        if config_source or variables or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to config-source and variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if config_source or custom_terraform_provider or variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config-source and custom-terraform-provider and variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3611,6 +3657,12 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if config_source is not None:
         _details['configSource'] = cli_util.parse_json_parameter("config_source", config_source)
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
+
+    if is_third_party_provider_experience_enabled is not None:
+        _details['isThirdPartyProviderExperienceEnabled'] = is_third_party_provider_experience_enabled
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -3661,6 +3713,8 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3673,18 +3727,18 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def update_stack_update_git_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, config_source_configuration_source_provider_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_repository_url, config_source_branch_name):
+def update_stack_update_git_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, config_source_configuration_source_provider_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_repository_url, config_source_branch_name):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
-        if variables or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if custom_terraform_provider or variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to custom-terraform-provider and variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3701,6 +3755,12 @@ def update_stack_update_git_config_source_details(ctx, from_json, force, wait_fo
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
+
+    if is_third_party_provider_experience_enabled is not None:
+        _details['isThirdPartyProviderExperienceEnabled'] = is_third_party_provider_experience_enabled
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -3761,6 +3821,8 @@ def update_stack_update_git_config_source_details(ctx, from_json, force, wait_fo
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3774,18 +3836,18 @@ def update_stack_update_git_config_source_details(ctx, from_json, force, wait_fo
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def update_stack_update_object_storage_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_region, config_source_namespace, config_source_bucket_name):
+def update_stack_update_object_storage_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_region, config_source_namespace, config_source_bucket_name):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
-        if variables or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if custom_terraform_provider or variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to custom-terraform-provider and variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3801,6 +3863,12 @@ def update_stack_update_object_storage_config_source_details(ctx, from_json, for
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
+
+    if is_third_party_provider_experience_enabled is not None:
+        _details['isThirdPartyProviderExperienceEnabled'] = is_third_party_provider_experience_enabled
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)
@@ -3864,6 +3932,8 @@ def update_stack_update_object_storage_config_source_details(ctx, from_json, for
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
+@cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3875,18 +3945,18 @@ def update_stack_update_object_storage_config_source_details(ctx, from_json, for
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
-def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_zip_file_base64_encoded):
+def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, description, custom_terraform_provider, is_third_party_provider_experience_enabled, variables, terraform_version, freeform_tags, defined_tags, if_match, config_source_working_directory, config_source_zip_file_base64_encoded):
 
     if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
-        if variables or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if custom_terraform_provider or variables or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to custom-terraform-provider and variables and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3902,6 +3972,12 @@ def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, 
 
     if description is not None:
         _details['description'] = description
+
+    if custom_terraform_provider is not None:
+        _details['customTerraformProvider'] = cli_util.parse_json_parameter("custom_terraform_provider", custom_terraform_provider)
+
+    if is_third_party_provider_experience_enabled is not None:
+        _details['isThirdPartyProviderExperienceEnabled'] = is_third_party_provider_experience_enabled
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)

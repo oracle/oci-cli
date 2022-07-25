@@ -9,6 +9,7 @@ import six
 import sys
 
 from oci_cli import cli_util
+from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
 from services.dts.src.oci_cli_dts.generated import dts_service_cli
 from services.dts.src.oci_cli_transfer_appliance.generated import transferappliance_cli
@@ -41,7 +42,7 @@ transferappliance_cli.transfer_appliance_root_group.commands.pop(transferapplian
 transferappliance_cli.transfer_appliance_root_group.commands.pop(transferappliance_cli.transfer_appliance_public_key_group.name)
 
 
-@cli_util.copy_params_from_generated_command(transferappliance_cli.create_transfer_appliance, params_to_exclude=['id', 'customer_shipping_address'])
+@cli_util.copy_params_from_generated_command(transferappliance_cli.create_transfer_appliance, params_to_exclude=['id', 'customer_shipping_address', 'wait_for_state'])
 @transferappliance_cli.transfer_appliance_root_group.command(name="request", help=transferappliance_cli.create_transfer_appliance.help)
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
 @cli_util.option('--addressee', required=True, help=u"""Company or person to send the appliance to""")
@@ -57,6 +58,7 @@ transferappliance_cli.transfer_appliance_root_group.commands.pop(transferapplian
 @cli_util.option('--phone-number', required=True, help=u"""Phone number.""")
 @cli_util.option('--email', required=True, help=u"""Email address.""")
 @cli_util.option('--setup-notifications', is_flag=True, help=u"""Setup notifications for the transfer appliance""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler({})
 @cli_util.wrap_exceptions
@@ -76,6 +78,7 @@ def create_transfer_appliance_extended(ctx, **kwargs):
     max_wait_seconds = kwargs['max_wait_seconds']
     wait_interval_seconds = kwargs['wait_interval_seconds']
     setup_notifications = kwargs['setup_notifications']
+    minimum_storage_capacity_in_terabytes = kwargs['minimum_storage_capacity_in_terabytes']
 
     # Copied from the generated file because the result of the create is required to setup notifications
     if isinstance(id, six.string_types) and len(id.strip()) == 0:
@@ -87,6 +90,9 @@ def create_transfer_appliance_extended(ctx, **kwargs):
 
     if customer_shipping_address is not None:
         details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+
+    if minimum_storage_capacity_in_terabytes is not None:
+        details['minimumStorageCapacityInTerabytes'] = cli_util.parse_json_parameter("minimum_storage_capacity_in_terabytes", minimum_storage_capacity_in_terabytes)
 
     client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.create_transfer_appliance(
@@ -221,7 +227,7 @@ def delete_transfer_appliance_extended(ctx, **kwargs):
     ctx.invoke(transferappliance_cli.update_transfer_appliance, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(transferappliance_cli.update_transfer_appliance, params_to_exclude=['id', 'customer_shipping_address', 'transfer_appliance_label', 'lifecycle_state', 'max_wait_seconds', 'wait_interval_seconds', 'wait_for_state', 'if_match'])
+@cli_util.copy_params_from_generated_command(transferappliance_cli.update_transfer_appliance, params_to_exclude=['id', 'customer_shipping_address', 'transfer_appliance_label', 'lifecycle_state', 'max_wait_seconds', 'wait_interval_seconds', 'wait_for_state', 'if_match', 'minimum_storage_capacity_in_terabytes', 'expected_return_date', 'pickup_window_start_time', 'pickup_window_end_time'])
 @transferappliance_cli.transfer_appliance_root_group.command(name='update-shipping-address', help="""Updates the shipping address""")
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
 @cli_util.option('--appliance-label', required=True, help=u"""Appliance label""")
@@ -310,3 +316,21 @@ def setup_import_notifications(ctx, appliance_label):
         }
     }
     setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs)
+
+
+@cli_util.copy_params_from_generated_command(transferappliance_cli.get_transfer_appliance, params_to_exclude=['id', 'transfer_appliance_label'])
+@transferappliance_cli.transfer_appliance_root_group.command(name="update-minimum-storage-capacity", help="""Updates the minimum storage capacity""")
+@cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
+@cli_util.option('--appliance-label', required=True, help=u"""Appliance label""")
+@cli_util.option('--minimum-storage-capacity-in-terabytes', required=True, type=click.INT, help=u"""Minimum storage capacity of the device, in terabytes. Valid options are 50, 95 and 150.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def update_minimum_storage_capacity_transfer_appliance(ctx, **kwargs):
+    if 'job_id' in kwargs:
+        kwargs['id'] = kwargs['job_id']
+        kwargs.pop('job_id')
+    if 'appliance_label' in kwargs:
+        kwargs['transfer_appliance_label'] = kwargs['appliance_label']
+        kwargs.pop('appliance_label')
+    ctx.invoke(transferappliance_cli.update_transfer_appliance, **kwargs)

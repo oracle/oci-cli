@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.fusion_apps import ServiceAttachmentClient
+from oci.media_services import MediaStreamClient
 
-MODULE_TO_TYPE_MAPPINGS["fusion_apps"] = oci.fusion_apps.models.fusion_apps_type_mapping
-if CLIENT_MAP.get("fusion_apps") is None:
-    CLIENT_MAP["fusion_apps"] = {}
-CLIENT_MAP["fusion_apps"]["service_attachment"] = ServiceAttachmentClient
+MODULE_TO_TYPE_MAPPINGS["media_services"] = oci.media_services.models.media_services_type_mapping
+if CLIENT_MAP.get("media_services") is None:
+    CLIENT_MAP["media_services"] = {}
+CLIENT_MAP["media_services"]["media_stream"] = MediaStreamClient

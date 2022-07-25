@@ -71,7 +71,7 @@ def change_operator_control_compartment(ctx, from_json, operator_control_id, com
 @cli_util.option('--operator-control-name', required=True, help=u"""Name of the operator control.""")
 @cli_util.option('--approver-groups-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of user groups who can approve an access request associated with a resource governed by this operator control.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-fully-pre-approved', required=True, type=click.BOOL, help=u"""Whether all the operator actions have been pre-approved. If yes, all access requests associated with a resource governed by this operator control will be auto-approved.""")
-@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER"]), help=u"""resourceType for which the OperatorControl is applicable""")
+@cli_util.option('--resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXADATAINFRASTRUCTURE", "AUTONOMOUSVMCLUSTER", "CLOUDAUTONOMOUSVMCLUSTER"]), help=u"""resourceType for which the OperatorControl is applicable""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this operator control.""")
 @cli_util.option('--description', help=u"""Description of the operator control.""")
 @cli_util.option('--approvers-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of users who can approve an access request associated with a resource governed by this operator control.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
