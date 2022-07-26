@@ -1673,7 +1673,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
@@ -1753,7 +1753,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
@@ -1836,7 +1836,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
@@ -1919,7 +1919,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}})
@@ -2002,7 +2002,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--volume-group-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of volume group replicas that this volume group will be enabled to have in the specified destination availability domains.
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})
@@ -2474,7 +2474,7 @@ def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id,
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2927,10 +2927,11 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
 
 
 @block_volume_replica_group.command(name=cli_util.override('blockstorage.list_block_volume_replicas.command_name', 'list'), help=u"""Lists the block volume replicas in the specified compartment and availability domain. \n[Command Reference](listBlockVolumeReplicas)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--volume-group-replica-id', help=u"""The OCID of the volume group replica.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2948,7 +2949,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BlockVolumeReplica]'})
 @cli_util.wrap_exceptions
-def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, volume_group_replica_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2956,6 +2957,12 @@ def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availabilit
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
     kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if volume_group_replica_id is not None:
+        kwargs['volume_group_replica_id'] = volume_group_replica_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -2975,8 +2982,6 @@ def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availabilit
 
         result = cli_util.list_call_get_all_results(
             client.list_block_volume_replicas,
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -2984,14 +2989,10 @@ def list_block_volume_replicas(ctx, from_json, all_pages, page_size, availabilit
             client.list_block_volume_replicas,
             limit,
             page_size,
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_block_volume_replicas(
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3067,10 +3068,11 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @boot_volume_replica_group.command(name=cli_util.override('blockstorage.list_boot_volume_replicas.command_name', 'list'), help=u"""Lists the boot volume replicas in the specified compartment and availability domain. \n[Command Reference](listBootVolumeReplicas)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--volume-group-replica-id', help=u"""The OCID of the volume group replica.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3088,7 +3090,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BootVolumeReplica]'})
 @cli_util.wrap_exceptions
-def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, volume_group_replica_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3096,6 +3098,12 @@ def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
     kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if volume_group_replica_id is not None:
+        kwargs['volume_group_replica_id'] = volume_group_replica_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -3115,8 +3123,6 @@ def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability
 
         result = cli_util.list_call_get_all_results(
             client.list_boot_volume_replicas,
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -3124,24 +3130,20 @@ def list_boot_volume_replicas(ctx, from_json, all_pages, page_size, availability
             client.list_boot_volume_replicas,
             limit,
             page_size,
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_boot_volume_replicas(
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
 @boot_volume_group.command(name=cli_util.override('blockstorage.list_boot_volumes.command_name', 'list'), help=u"""Lists the boot volumes in the specified compartment and availability domain. \n[Command Reference](listBootVolumes)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3160,6 +3162,10 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -3173,8 +3179,6 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
 
         result = cli_util.list_call_get_all_results(
             client.list_boot_volumes,
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -3182,14 +3186,10 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
             client.list_boot_volumes,
             limit,
             page_size,
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_boot_volumes(
-            availability_domain=availability_domain,
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3462,7 +3462,7 @@ Example: `50`""")
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3519,10 +3519,10 @@ def list_volume_groups(ctx, from_json, all_pages, page_size, compartment_id, ava
 
 
 @volume_group.command(name=cli_util.override('blockstorage.list_volumes.command_name', 'list'), help=u"""Lists the volumes in the specified compartment and availability domain. \n[Command Reference](listVolumes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3541,7 +3541,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Volume]'})
 @cli_util.wrap_exceptions
-def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, display_name, sort_by, sort_order, volume_group_id, lifecycle_state):
+def list_volumes(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, display_name, sort_by, sort_order, volume_group_id, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3551,6 +3551,8 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -3572,7 +3574,6 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
 
         result = cli_util.list_call_get_all_results(
             client.list_volumes,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -3580,12 +3581,10 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
             client.list_volumes,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_volumes(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -4057,7 +4056,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--preserve-volume-replica', type=click.BOOL, help=u"""Specifies whether to disable or preserve the individual volume replication when removing a volume from the replication enabled volume group. When set to `true`, the individual volume replica is preserved. The default value is `true`.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-ids': {'module': 'core', 'class': 'list[string]'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}})

@@ -7,19 +7,17 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.media_services.src.oci_cli_media_services.generated import media_services_service_cli
 
 
-@cli.command(cli_util.override('media_services.media_services_root_group.command_name', 'media-services'), cls=CommandGroupWithAlias, help=cli_util.override('media_services.media_services_root_group.help', """Media Services (includes Media Flow and Media Streams) is a fully managed service for processing media (video) source content. Use Media Flow and Media Streams to transcode and package digital video using configurable workflows and stream video outputs.
+@click.command(cli_util.override('media_services.media_services_root_group.command_name', 'media-services'), cls=CommandGroupWithAlias, help=cli_util.override('media_services.media_services_root_group.help', """Media Services (includes Media Flow and Media Streams) is a fully managed service for processing media (video) source content. Use Media Flow and Media Streams to transcode and package digital video using configurable workflows and stream video outputs.
 
-Use the Media Services API to configure media workflows and run Media Flow jobs, create distribution channels, ingest assets, create Preview URLs and play assets. For more information, see [Media Flow] and Media Streams [Media Streams].
-
-Use the table of contents and search tool to explore the Media Flow API and Media Streams API."""), short_help=cli_util.override('media_services.media_services_root_group.short_help', """Media Services"""))
+Use the Media Services API to configure media workflows and run Media Flow jobs, create distribution channels, ingest assets, create Preview URLs and play assets. For more information, see [Media Flow] and [Media Streams]."""), short_help=cli_util.override('media_services.media_services_root_group.short_help', """Media Services API"""))
 @cli_util.help_option_group
 def media_services_root_group():
     pass
@@ -97,6 +95,7 @@ def media_workflow_configuration_collection_group():
     pass
 
 
+media_services_service_cli.media_services_service_group.add_command(media_services_root_group)
 media_services_root_group.add_command(stream_packaging_config_group)
 media_services_root_group.add_command(media_asset_group)
 media_services_root_group.add_command(media_workflow_job_fact_group)
@@ -109,6 +108,20 @@ media_services_root_group.add_command(media_workflow_task_declaration_collection
 media_services_root_group.add_command(media_asset_distribution_channel_attachment_collection_group)
 media_services_root_group.add_command(media_workflow_group)
 media_services_root_group.add_command(media_workflow_configuration_collection_group)
+# oci media_services media_services --> oci media_services
+media_services_service_cli.media_services_service_group.commands.pop(media_services_root_group.name)
+media_services_service_cli.media_services_service_group.add_command(stream_packaging_config_group)
+media_services_service_cli.media_services_service_group.add_command(media_asset_group)
+media_services_service_cli.media_services_service_group.add_command(media_workflow_job_fact_group)
+media_services_service_cli.media_services_service_group.add_command(media_workflow_job_group)
+media_services_service_cli.media_services_service_group.add_command(stream_cdn_config_group)
+media_services_service_cli.media_services_service_group.add_command(stream_distribution_channel_group)
+media_services_service_cli.media_services_service_group.add_command(media_asset_distribution_channel_attachment_group)
+media_services_service_cli.media_services_service_group.add_command(media_workflow_configuration_group)
+media_services_service_cli.media_services_service_group.add_command(media_workflow_task_declaration_collection_group)
+media_services_service_cli.media_services_service_group.add_command(media_asset_distribution_channel_attachment_collection_group)
+media_services_service_cli.media_services_service_group.add_command(media_workflow_group)
+media_services_service_cli.media_services_service_group.add_command(media_workflow_configuration_collection_group)
 
 
 @media_asset_group.command(name=cli_util.override('media_services.change_media_asset_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaAsset resource from one compartment identifier to another. \n[Command Reference](changeMediaAssetCompartment)""")
@@ -459,7 +472,7 @@ def create_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.create_media_workflow_configuration.command_name', 'create'), help=u"""Creates a new MediaWorkflowConfiguration. \n[Command Reference](createMediaWorkflowConfiguration)""")
-@cli_util.option('--display-name', required=True, help=u"""MediaWorkflowConfiguration identifier.""")
+@cli_util.option('--display-name', required=True, help=u"""MediaWorkflowConfiguration identifier. Avoid entering confidential information.""")
 @cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Reuseable parameter values encoded as a JSON; the top and second level JSON elements are objects. Each key of the top level object refers to a task key that is unqiue to the workflow, each of the second level objects' keys refer to the name of a parameter that is unique to the task. taskKey -> parameterName -> parameterValue""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -982,7 +995,7 @@ def create_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, wait_for_sta
 
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.create_stream_distribution_channel.command_name', 'create'), help=u"""Creates a new Stream Distribution Channel. \n[Command Reference](createStreamDistributionChannel)""")
-@cli_util.option('--display-name', required=True, help=u"""Stream Distribution Channel display name.""")
+@cli_util.option('--display-name', required=True, help=u"""Stream Distribution Channel display name. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1042,7 +1055,7 @@ def create_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.create_stream_packaging_config.command_name', 'create'), help=u"""Creates a new Packaging Configuration. \n[Command Reference](createStreamPackagingConfig)""")
 @cli_util.option('--distribution-channel-id', required=True, help=u"""Unique identifier of the Distribution Channel that this stream packaging configuration belongs to.""")
-@cli_util.option('--display-name', required=True, help=u"""The name of the stream Packaging Configuration.""")
+@cli_util.option('--display-name', required=True, help=u"""The name of the stream Packaging Configuration. Avoid entering confidential information.""")
 @cli_util.option('--stream-packaging-format', required=True, type=custom_types.CliCaseInsensitiveChoice(["HLS", "DASH"]), help=u"""The output format for the package.""")
 @cli_util.option('--segment-time-in-seconds', required=True, type=click.INT, help=u"""The duration in seconds for each fragment.""")
 @cli_util.option('--encryption', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1109,7 +1122,7 @@ def create_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seco
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.create_stream_packaging_config_stream_packaging_config_encryption_aes128.command_name', 'create-stream-packaging-config-stream-packaging-config-encryption-aes128'), help=u"""Creates a new Packaging Configuration. \n[Command Reference](createStreamPackagingConfig)""")
 @cli_util.option('--distribution-channel-id', required=True, help=u"""Unique identifier of the Distribution Channel that this stream packaging configuration belongs to.""")
-@cli_util.option('--display-name', required=True, help=u"""The name of the stream Packaging Configuration.""")
+@cli_util.option('--display-name', required=True, help=u"""The name of the stream Packaging Configuration. Avoid entering confidential information.""")
 @cli_util.option('--stream-packaging-format', required=True, type=custom_types.CliCaseInsensitiveChoice(["HLS", "DASH"]), help=u"""The output format for the package.""")
 @cli_util.option('--segment-time-in-seconds', required=True, type=click.INT, help=u"""The duration in seconds for each fragment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1179,7 +1192,7 @@ def create_stream_packaging_config_stream_packaging_config_encryption_aes128(ctx
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.create_stream_packaging_config_stream_packaging_config_encryption_none.command_name', 'create-stream-packaging-config-stream-packaging-config-encryption-none'), help=u"""Creates a new Packaging Configuration. \n[Command Reference](createStreamPackagingConfig)""")
 @cli_util.option('--distribution-channel-id', required=True, help=u"""Unique identifier of the Distribution Channel that this stream packaging configuration belongs to.""")
-@cli_util.option('--display-name', required=True, help=u"""The name of the stream Packaging Configuration.""")
+@cli_util.option('--display-name', required=True, help=u"""The name of the stream Packaging Configuration. Avoid entering confidential information.""")
 @cli_util.option('--stream-packaging-format', required=True, type=custom_types.CliCaseInsensitiveChoice(["HLS", "DASH"]), help=u"""The output format for the package.""")
 @cli_util.option('--segment-time-in-seconds', required=True, type=click.INT, help=u"""The duration in seconds for each fragment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3319,7 +3332,7 @@ def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.update_stream_distribution_channel.command_name', 'update'), help=u"""Updates the Stream Distribution Channel. \n[Command Reference](updateStreamDistributionChannel)""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
-@cli_util.option('--display-name', help=u"""Stream Distribution channel display name.""")
+@cli_util.option('--display-name', help=u"""Stream Distribution channel display name. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3391,7 +3404,7 @@ def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, ma
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.update_stream_packaging_config.command_name', 'update'), help=u"""Updates the Stream Packaging Configuration. \n[Command Reference](updateStreamPackagingConfig)""")
 @cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration path identifier.""")
-@cli_util.option('--display-name', help=u"""The name of the stream Packaging Configuration.""")
+@cli_util.option('--display-name', help=u"""The name of the stream Packaging Configuration. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

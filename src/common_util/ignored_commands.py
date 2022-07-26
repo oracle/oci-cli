@@ -128,7 +128,11 @@ IGNORED_COMMANDS = [
     ['compute', 'instance', 'action'],
     ['oma', 'lockboxes', 'list'],
     ['media-services', 'media-asset-distribution-channel-attachment-collection'],
-    ['media-services', 'media-workflow-configuration-collection']
+    ['media-services', 'media-workflow-configuration-collection'],
+    ['db', 'autonomous-database', 'delete'],
+    ['resource-manager', 'stack', 'create-from-template'],
+    ['data-science', 'notebook-session', 'create'],
+    ['data-science', 'notebook-session', 'update']
 ]
 
 IGNORED_COMMANDS_DOCS = [

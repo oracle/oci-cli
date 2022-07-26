@@ -55,7 +55,8 @@ transfer_appliance_root_group.add_command(transfer_appliance_encryption_passphra
 @transfer_appliance_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance.command_name', 'create'), help=u"""Create a new Transfer Appliance \n[Command Reference](createTransferAppliance)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--minimum-storage-capacity-in-terabytes', type=click.INT, help=u"""Minimum storage capacity of the device, in terabytes. Valid options are 50, 95 and 150.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_LABEL_REQUESTED", "RETURN_LABEL_GENERATING", "RETURN_LABEL_AVAILABLE", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}})
@@ -63,7 +64,7 @@ transfer_appliance_root_group.add_command(transfer_appliance_encryption_passphra
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}}, output_type={'module': 'dts', 'class': 'TransferAppliance'})
 @cli_util.wrap_exceptions
-def create_transfer_appliance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, id, customer_shipping_address):
+def create_transfer_appliance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, id, customer_shipping_address, minimum_storage_capacity_in_terabytes):
 
     if isinstance(id, six.string_types) and len(id.strip()) == 0:
         raise click.UsageError('Parameter --id cannot be whitespace or empty string')
@@ -74,6 +75,9 @@ def create_transfer_appliance(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if customer_shipping_address is not None:
         _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+
+    if minimum_storage_capacity_in_terabytes is not None:
+        _details['minimumStorageCapacityInTerabytes'] = minimum_storage_capacity_in_terabytes
 
     client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.create_transfer_appliance(
@@ -248,7 +252,7 @@ def get_transfer_appliance_encryption_passphrase(ctx, from_json, id, transfer_ap
 
 @transfer_appliance_group.command(name=cli_util.override('transfer_appliance.list_transfer_appliances.command_name', 'list'), help=u"""Lists Transfer Appliances associated with a transferJob \n[Command Reference](listTransferAppliances)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), help=u"""filtering by lifecycleState""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_LABEL_REQUESTED", "RETURN_LABEL_GENERATING", "RETURN_LABEL_AVAILABLE", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -274,11 +278,15 @@ def list_transfer_appliances(ctx, from_json, all_pages, id, lifecycle_state):
 @transfer_appliance_group.command(name=cli_util.override('transfer_appliance.update_transfer_appliance.command_name', 'update'), help=u"""Updates a Transfer Appliance \n[Command Reference](updateTransferAppliance)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "FINALIZED", "DELETED", "CUSTOMER_NEVER_RECEIVED", "CANCELLED"]), help=u"""""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "FINALIZED", "RETURN_LABEL_REQUESTED", "RETURN_LABEL_GENERATING", "RETURN_LABEL_AVAILABLE", "DELETED", "CUSTOMER_NEVER_RECEIVED", "CANCELLED"]), help=u"""""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--expected-return-date', type=custom_types.CLI_DATETIME, help=u"""Expected return date from customer for the device, time portion should be zero.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--pickup-window-start-time', type=custom_types.CLI_DATETIME, help=u"""Start time for the window to pickup the device from customer.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--pickup-window-end-time', type=custom_types.CLI_DATETIME, help=u"""End time for the window to pickup the device from customer.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--minimum-storage-capacity-in-terabytes', type=click.INT, help=u"""Minimum storage capacity of the device, in terabytes. Valid options are 50, 95 and 150.""")
 @cli_util.option('--if-match', help=u"""The entity tag to match. Optional, if set, the update will be successful only if the object's tag matches the tag specified in the request.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_LABEL_REQUESTED", "RETURN_LABEL_GENERATING", "RETURN_LABEL_AVAILABLE", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}})
@@ -286,7 +294,7 @@ def list_transfer_appliances(ctx, from_json, all_pages, id, lifecycle_state):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}}, output_type={'module': 'dts', 'class': 'TransferAppliance'})
 @cli_util.wrap_exceptions
-def update_transfer_appliance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, id, transfer_appliance_label, lifecycle_state, customer_shipping_address, if_match):
+def update_transfer_appliance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, id, transfer_appliance_label, lifecycle_state, customer_shipping_address, expected_return_date, pickup_window_start_time, pickup_window_end_time, minimum_storage_capacity_in_terabytes, if_match):
 
     if isinstance(id, six.string_types) and len(id.strip()) == 0:
         raise click.UsageError('Parameter --id cannot be whitespace or empty string')
@@ -309,6 +317,18 @@ def update_transfer_appliance(ctx, from_json, force, wait_for_state, max_wait_se
 
     if customer_shipping_address is not None:
         _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+
+    if expected_return_date is not None:
+        _details['expectedReturnDate'] = expected_return_date
+
+    if pickup_window_start_time is not None:
+        _details['pickupWindowStartTime'] = pickup_window_start_time
+
+    if pickup_window_end_time is not None:
+        _details['pickupWindowEndTime'] = pickup_window_end_time
+
+    if minimum_storage_capacity_in_terabytes is not None:
+        _details['minimumStorageCapacityInTerabytes'] = minimum_storage_capacity_in_terabytes
 
     client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.update_transfer_appliance(

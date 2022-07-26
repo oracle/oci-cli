@@ -2670,6 +2670,95 @@ def enable_host_insight_enable_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@awr_hubs_group.command(name=cli_util.override('opsi.get_awr_database_report.command_name', 'get-awr-database-report'), help=u"""Gets the AWR report for the specified database. \n[Command Reference](getAwrDatabaseReport)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--report-type', type=custom_types.CliCaseInsensitiveChoice(["AWR", "ASH"]), help=u"""The query parameter to filter the AWR report types.""")
+@cli_util.option('--report-format', type=custom_types.CliCaseInsensitiveChoice(["HTML", "TEXT"]), help=u"""The format of the AWR report.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseReport'})
+@cli_util.wrap_exceptions
+def get_awr_database_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_type, report_format):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if report_type is not None:
+        kwargs['report_type'] = report_type
+    if report_format is not None:
+        kwargs['report_format'] = report_format
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_awr_database_report(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.get_awr_database_sql_report.command_name', 'get-awr-database-sql-report'), help=u"""Gets the SQL health check report for one SQL of the specified database. \n[Command Reference](getAwrDatabaseSqlReport)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--sql-id', required=True, help=u"""The parameter to filter SQL by ID. Note that the SQL ID is generated internally by Oracle for each SQL statement and can be retrieved from AWR Report API (/awrHubs/{awrHubId}/awrDbReport).""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--report-format', type=custom_types.CliCaseInsensitiveChoice(["HTML", "TEXT"]), help=u"""The format of the AWR report.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseSqlReport'})
+@cli_util.wrap_exceptions
+def get_awr_database_sql_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, sql_id, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_format):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if report_format is not None:
+        kwargs['report_format'] = report_format
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_awr_database_sql_report(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        sql_id=sql_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @awr_hubs_group.command(name=cli_util.override('opsi.get_awr_hub.command_name', 'get'), help=u"""Gets details of an AWR hub. \n[Command Reference](getAwrHub)""")
 @cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3172,6 +3261,148 @@ def ingest_sql_text(ctx, from_json, items, compartment_id, database_id, id, if_m
         ingest_sql_text_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.list_awr_database_snapshots.command_name', 'list-awr-database-snapshots'), help=u"""Lists AWR snapshots for the specified database in the AWR. \n[Command Reference](listAwrDatabaseSnapshots)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "SNAPSHOT_ID"]), help=u"""The option to sort the AWR snapshot summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseSnapshotCollection'})
+@cli_util.wrap_exceptions
+def list_awr_database_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_awr_database_snapshots,
+            awr_hub_id=awr_hub_id,
+            awr_source_database_identifier=awr_source_database_identifier,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_awr_database_snapshots,
+            limit,
+            page_size,
+            awr_hub_id=awr_hub_id,
+            awr_source_database_identifier=awr_source_database_identifier,
+            **kwargs
+        )
+    else:
+        result = client.list_awr_database_snapshots(
+            awr_hub_id=awr_hub_id,
+            awr_source_database_identifier=awr_source_database_identifier,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.list_awr_databases.command_name', 'list-awr-databases'), help=u"""Gets the list of databases and their snapshot summary details available in the AWRHub. \n[Command Reference](listAwrDatabases)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--name', help=u"""The optional single value query parameter to filter the entity name.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["END_INTERVAL_TIME", "NAME"]), help=u"""The option to sort the AWR summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseCollection'})
+@cli_util.wrap_exceptions
+def list_awr_databases(ctx, from_json, all_pages, page_size, awr_hub_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_awr_databases,
+            awr_hub_id=awr_hub_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_awr_databases,
+            limit,
+            page_size,
+            awr_hub_id=awr_hub_id,
+            **kwargs
+        )
+    else:
+        result = client.list_awr_databases(
+            awr_hub_id=awr_hub_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -4773,6 +5004,502 @@ def rotate_operations_insights_warehouse_wallet(ctx, from_json, wait_for_state, 
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_cpu_usages.command_name', 'summarize-awr-database-cpu-usages'), help=u"""Summarizes the AWR CPU resource limits and metrics for the specified database in AWR. Based on the time range provided as part of query param, the metrics points will be returned in the response as below. - if time range is <=7 days then the metrics points will be for every MINUTES - if time range is <=2 hours then the metrics points will be for every 10 SECONDS - if time range is >7 days then the metrics points will be for every HOUR. \n[Command Reference](summarizeAwrDatabaseCpuUsages)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--session-type', type=custom_types.CliCaseInsensitiveChoice(["FOREGROUND", "BACKGROUND", "ALL"]), help=u"""The optional query parameter to filter ASH activities by FOREGROUND or BACKGROUND.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_SAMPLED", "AVG_VALUE"]), help=u"""The option to sort the AWR CPU usage summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseCpuUsageCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_cpu_usages(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if session_type is not None:
+        kwargs['session_type'] = session_type
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_cpu_usages(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_metrics.command_name', 'summarize-awr-database-metrics'), help=u"""Summarizes the metric samples for the specified database in the AWR. The metric samples are summarized based on the Time dimension for each metric. \n[Command Reference](summarizeAwrDatabaseMetrics)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--name', required=True, multiple=True, help=u"""The required multiple value query parameter to filter the entity name.""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMESTAMP", "NAME"]), help=u"""The option to sort the AWR time series summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'AwrDatabaseMetricCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_metrics(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_metrics(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        name=name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_parameter_changes.command_name', 'summarize-awr-database-parameter-changes'), help=u"""Summarizes the database parameter change history for one database parameter of the specified database in AWR. One change history record contains the previous value, the changed value, and the corresponding time range. If the database parameter value was changed multiple times within the time range, then multiple change history records are created for the same parameter. Note that this API only returns information on change history details for one database parameter. To get a list of all the database parameters whose values were changed during a specified time range, use the following API endpoint: /awrHubs/{awrHubId}/awrDbParameters?awrSourceDatabaseIdentifier={awrSourceDbId} \n[Command Reference](summarizeAwrDatabaseParameterChanges)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--name', required=True, help=u"""The required single value query parameter to filter the entity name.""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["IS_CHANGED", "NAME"]), help=u"""The option to sort the AWR database parameter change history data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseParameterChangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_parameter_changes(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_parameter_changes(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        name=name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_parameters.command_name', 'summarize-awr-database-parameters'), help=u"""Summarizes the database parameter history for the specified database in AWR. This includes the list of database parameters, with information on whether the parameter values were modified within the query time range. Note that each database parameter is only listed once. Depending on the optional query parameters, the returned summary gets all the database parameters, which include:
+
+Queryparam (valueChanged =\"Y\") - Each parameter whose value was changed during the time range, \"isChanged : true\" in response for the DB params. Queryparam (valueChanged =\"N\") - Each parameter whose value was unchanged during the time range, \"isChanged : false\" in response for the DB params. Queryparam (valueChanged =\"Y\"  and valueModified = \"SYSTEM_MOD\") - Each parameter whose value was changed at the system level during the time range, \"isChanged : true\" & \"valueModified : SYSTEM_MOD\" in response for the DB params. Queryparam (valueChanged =\"N\" and  valueDefault = \"FALSE\") - Each parameter whose value was unchanged during the time range, however, the value is not the default value, \"isChanged : true\" & \"isDefault : false\" in response for the DB params.
+
+Note that this API does not return information on the number of times each database parameter has been changed within the time range. To get the database parameter value change history for a specific parameter, use the following API endpoint: /awrHubs/{awrHubId}/awrDbParameterChanges?awrSourceDatabaseIdentifier={awrSourceDbId} \n[Command Reference](summarizeAwrDatabaseParameters)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--name', multiple=True, help=u"""The optional multiple value query parameter to filter the entity name.""")
+@cli_util.option('--name-contains', help=u"""The optional contains query parameter to filter the entity name by any part of the name.""")
+@cli_util.option('--value-changed', type=custom_types.CliCaseInsensitiveChoice(["Y", "N"]), help=u"""The optional query parameter to filter database parameters whose values were changed.""")
+@cli_util.option('--value-default', type=custom_types.CliCaseInsensitiveChoice(["TRUE", "FALSE"]), help=u"""The optional query parameter to filter the database parameters that had the default value in the last snapshot.""")
+@cli_util.option('--value-modified', type=custom_types.CliCaseInsensitiveChoice(["MODIFIED", "SYSTEM_MOD", "FALSE"]), help=u"""The optional query parameter to filter the database parameters that had a modified value in the last snapshot.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["IS_CHANGED", "NAME"]), help=u"""The option to sort the AWR database parameter change history data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'AwrDatabaseParameterCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_parameters(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, name_contains, value_changed, value_default, value_modified, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
+    if value_changed is not None:
+        kwargs['value_changed'] = value_changed
+    if value_default is not None:
+        kwargs['value_default'] = value_default
+    if value_modified is not None:
+        kwargs['value_modified'] = value_modified
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_parameters(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_snapshot_ranges.command_name', 'summarize-awr-database-snapshot-ranges'), help=u"""Summarizes the AWR snapshot ranges that contain continuous snapshots, for the specified AWRHub. \n[Command Reference](summarizeAwrDatabaseSnapshotRanges)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--name', help=u"""The optional single value query parameter to filter the entity name.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["END_INTERVAL_TIME", "NAME"]), help=u"""The option to sort the AWR summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseSnapshotRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_snapshot_ranges(ctx, from_json, awr_hub_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_snapshot_ranges(
+        awr_hub_id=awr_hub_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_sysstats.command_name', 'summarize-awr-database-sysstats'), help=u"""Summarizes the AWR SYSSTAT sample data for the specified database in AWR. The statistical data is summarized based on the Time dimension for each statistic. \n[Command Reference](summarizeAwrDatabaseSysstats)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--name', required=True, multiple=True, help=u"""The required multiple value query parameter to filter the entity name.""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "NAME"]), help=u"""The option to sort the data within a time period.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'AwrDatabaseSysstatCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_sysstats(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_sysstats(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        name=name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_top_wait_events.command_name', 'summarize-awr-database-top-wait-events'), help=u"""Summarizes the AWR top wait events. \n[Command Reference](summarizeAwrDatabaseTopWaitEvents)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--session-type', type=custom_types.CliCaseInsensitiveChoice(["FOREGROUND", "BACKGROUND", "ALL"]), help=u"""The optional query parameter to filter ASH activities by FOREGROUND or BACKGROUND.""")
+@cli_util.option('--top-n', type=click.INT, help=u"""The optional query parameter to filter the number of top categories to be returned.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["WAITS_PERSEC", "AVG_WAIT_TIME_PERSEC"]), help=u"""The option to sort the AWR top event summary data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseTopWaitEventCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_top_wait_events(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, top_n, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if session_type is not None:
+        kwargs['session_type'] = session_type
+    if top_n is not None:
+        kwargs['top_n'] = top_n
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_top_wait_events(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_wait_event_buckets.command_name', 'summarize-awr-database-wait-event-buckets'), help=u"""Summarizes AWR wait event data into value buckets and frequency, for the specified database in the AWR. \n[Command Reference](summarizeAwrDatabaseWaitEventBuckets)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--name', required=True, help=u"""The required single value query parameter to filter the entity name.""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--num-bucket', type=click.INT, help=u"""The number of buckets within the histogram.""")
+@cli_util.option('--min-value', help=u"""The minimum value of the histogram.""")
+@cli_util.option('--max-value', help=u"""The maximum value of the histogram.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["CATEGORY", "PERCENTAGE"]), help=u"""The option to sort distribution data.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'AwrDatabaseWaitEventBucketCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_wait_event_buckets(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, num_bucket, min_value, max_value, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if num_bucket is not None:
+        kwargs['num_bucket'] = num_bucket
+    if min_value is not None:
+        kwargs['min_value'] = min_value
+    if max_value is not None:
+        kwargs['max_value'] = max_value
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_wait_event_buckets(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        name=name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@awr_hubs_group.command(name=cli_util.override('opsi.summarize_awr_database_wait_events.command_name', 'summarize-awr-database-wait-events'), help=u"""Summarizes the AWR wait event sample data for the specified database in the AWR. The event data is summarized based on the Time dimension for each event. \n[Command Reference](summarizeAwrDatabaseWaitEvents)""")
+@cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
+@cli_util.option('--awr-source-database-identifier', required=True, help=u"""The internal ID of the database. The internal ID of the database is not the [OCID]. It can be retrieved from the following endpoint: /awrHubs/{awrHubId}/awrDatabases""")
+@cli_util.option('--instance-number', help=u"""The optional single value query parameter to filter by database instance number.""")
+@cli_util.option('--begin-snapshot-identifier-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the snapshot ID.""")
+@cli_util.option('--end-snapshot-identifier-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter the snapshot Identifier.""")
+@cli_util.option('--time-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional greater than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. The timestamp format to be followed is: YYYY-MM-DDTHH:MM:SSZ, example 2020-12-03T19:00:53Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--name', multiple=True, help=u"""The optional multiple value query parameter to filter the entity name.""")
+@cli_util.option('--session-type', type=custom_types.CliCaseInsensitiveChoice(["FOREGROUND", "BACKGROUND", "ALL"]), help=u"""The optional query parameter to filter ASH activities by FOREGROUND or BACKGROUND.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "NAME"]), help=u"""The option to sort the data within a time period.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'AwrDatabaseWaitEventCollection'})
+@cli_util.wrap_exceptions
+def summarize_awr_database_wait_events(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, session_type, page, limit, sort_by, sort_order):
+
+    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+        raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if instance_number is not None:
+        kwargs['instance_number'] = instance_number
+    if begin_snapshot_identifier_greater_than_or_equal_to is not None:
+        kwargs['begin_snapshot_identifier_greater_than_or_equal_to'] = begin_snapshot_identifier_greater_than_or_equal_to
+    if end_snapshot_identifier_less_than_or_equal_to is not None:
+        kwargs['end_snapshot_identifier_less_than_or_equal_to'] = end_snapshot_identifier_less_than_or_equal_to
+    if time_greater_than_or_equal_to is not None:
+        kwargs['time_greater_than_or_equal_to'] = time_greater_than_or_equal_to
+    if time_less_than_or_equal_to is not None:
+        kwargs['time_less_than_or_equal_to'] = time_less_than_or_equal_to
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if session_type is not None:
+        kwargs['session_type'] = session_type
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_awr_database_wait_events(
+        awr_hub_id=awr_hub_id,
+        awr_source_database_identifier=awr_source_database_identifier,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

@@ -299,6 +299,9 @@ def list_appliance_export_jobs(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--first-object', help=u"""First object in the list of objects that are exported in this job.""")
 @cli_util.option('--last-object', help=u"""Last object in the list of objects that are exported in this job.""")
 @cli_util.option('--next-object', help=u"""First object from which the next potential export job could start.""")
+@cli_util.option('--expected-return-date', type=custom_types.CLI_DATETIME, help=u"""Expected return date from customer for the device, time portion should be zero.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--pickup-window-start-time', type=custom_types.CLI_DATETIME, help=u"""Start time for the window to pickup the device from customer.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--pickup-window-end-time', type=custom_types.CLI_DATETIME, help=u"""End time for the window to pickup the device from customer.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -316,7 +319,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}, 'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'ApplianceExportJob'})
 @cli_util.wrap_exceptions
-def update_appliance_export_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, appliance_export_job_id, bucket_name, prefix, range_start, range_end, display_name, lifecycle_state, lifecycle_state_details, manifest_file, manifest_md5, number_of_objects, total_size_in_bytes, first_object, last_object, next_object, customer_shipping_address, freeform_tags, defined_tags, if_match):
+def update_appliance_export_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, appliance_export_job_id, bucket_name, prefix, range_start, range_end, display_name, lifecycle_state, lifecycle_state_details, manifest_file, manifest_md5, number_of_objects, total_size_in_bytes, first_object, last_object, next_object, expected_return_date, pickup_window_start_time, pickup_window_end_time, customer_shipping_address, freeform_tags, defined_tags, if_match):
 
     if isinstance(appliance_export_job_id, six.string_types) and len(appliance_export_job_id.strip()) == 0:
         raise click.UsageError('Parameter --appliance-export-job-id cannot be whitespace or empty string')
@@ -373,6 +376,15 @@ def update_appliance_export_job(ctx, from_json, force, wait_for_state, max_wait_
 
     if next_object is not None:
         _details['nextObject'] = next_object
+
+    if expected_return_date is not None:
+        _details['expectedReturnDate'] = expected_return_date
+
+    if pickup_window_start_time is not None:
+        _details['pickupWindowStartTime'] = pickup_window_start_time
+
+    if pickup_window_end_time is not None:
+        _details['pickupWindowEndTime'] = pickup_window_end_time
 
     if customer_shipping_address is not None:
         _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)

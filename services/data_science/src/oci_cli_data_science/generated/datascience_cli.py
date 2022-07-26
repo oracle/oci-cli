@@ -1334,15 +1334,16 @@ def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch
 @cli_util.option('--notebook-session-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--notebook-session-runtime-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
-def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, notebook_session_configuration_details, notebook_session_config_details, freeform_tags, defined_tags):
+def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, notebook_session_configuration_details, notebook_session_config_details, freeform_tags, defined_tags, notebook_session_runtime_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1365,6 +1366,9 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if notebook_session_runtime_config_details is not None:
+        _details['notebookSessionRuntimeConfigDetails'] = cli_util.parse_json_parameter("notebook_session_runtime_config_details", notebook_session_runtime_config_details)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_notebook_session(
@@ -3664,23 +3668,24 @@ def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch
 @cli_util.option('--notebook-session-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--notebook-session-runtime-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
-def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, display_name, notebook_session_configuration_details, freeform_tags, defined_tags, if_match):
+def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, display_name, notebook_session_configuration_details, freeform_tags, defined_tags, notebook_session_runtime_config_details, if_match):
 
     if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
     if not force:
-        if notebook_session_configuration_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to notebook-session-configuration-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if notebook_session_configuration_details or freeform_tags or defined_tags or notebook_session_runtime_config_details:
+            if not click.confirm("WARNING: Updates to notebook-session-configuration-details and freeform-tags and defined-tags and notebook-session-runtime-config-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3701,6 +3706,9 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if notebook_session_runtime_config_details is not None:
+        _details['notebookSessionRuntimeConfigDetails'] = cli_util.parse_json_parameter("notebook_session_runtime_config_details", notebook_session_runtime_config_details)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_notebook_session(

@@ -222,7 +222,7 @@ def reset_passphrase(result):
     result.data.appliance_decryption_passphrase = "********"
 
 
-@cli_util.copy_params_from_generated_command(applianceexportjob_cli.update_appliance_export_job, params_to_exclude=['appliance_export_job_id', 'customer_shipping_address', 'lifecycle_state', 'lifecycle_state_details'])
+@cli_util.copy_params_from_generated_command(applianceexportjob_cli.update_appliance_export_job, params_to_exclude=['appliance_export_job_id', 'customer_shipping_address', 'lifecycle_state', 'lifecycle_state_details', 'expected_return_date', 'pickup_window_start_time', 'pickup_window_end_time'])
 @applianceexportjob_cli.appliance_export_job_root_group.command(name=applianceexportjob_cli.update_appliance_export_job.name, help=applianceexportjob_cli.update_appliance_export_job.help)
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Export Job""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")

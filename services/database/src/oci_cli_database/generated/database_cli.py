@@ -8852,6 +8852,10 @@ def enable_autonomous_database_operations_insights(ctx, from_json, wait_for_stat
 @cli_util.option('--private-end-point-id', required=True, help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--service-name', required=True, help=u"""The name of the Oracle Database service that will be used to connect to the database.""")
 @cli_util.option('--management-type', type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The Database Management type.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["TCP", "TCPS"]), help=u"""Protocol used by the database connection.""")
+@cli_util.option('--port', type=click.INT, help=u"""The port used to connect to the database.""")
+@cli_util.option('--ssl-secret-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["SYSDBA", "NORMAL"]), help=u"""The role of the user that will be connecting to the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -8861,7 +8865,7 @@ def enable_autonomous_database_operations_insights(ctx, from_json, wait_for_stat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def enable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, credential_details, private_end_point_id, service_name, management_type, if_match):
+def enable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, credential_details, private_end_point_id, service_name, management_type, protocol, port, ssl_secret_id, role, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -8878,6 +8882,18 @@ def enable_database_management(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if management_type is not None:
         _details['managementType'] = management_type
+
+    if protocol is not None:
+        _details['protocol'] = protocol
+
+    if port is not None:
+        _details['port'] = port
+
+    if ssl_secret_id is not None:
+        _details['sslSecretId'] = ssl_secret_id
+
+    if role is not None:
+        _details['role'] = role
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.enable_database_management(
@@ -14507,6 +14523,7 @@ def list_key_stores(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
+@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY"]), help=u"""The sub-type of the maintenance run.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -14514,7 +14531,7 @@ def list_key_stores(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[MaintenanceRunSummary]'})
 @cli_util.wrap_exceptions
-def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, target_resource_id, target_resource_type, maintenance_type, limit, page, sort_by, sort_order, lifecycle_state, availability_domain):
+def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, target_resource_id, target_resource_type, maintenance_type, limit, page, sort_by, sort_order, lifecycle_state, availability_domain, maintenance_subtype):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -14540,6 +14557,8 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['lifecycle_state'] = lifecycle_state
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
+    if maintenance_subtype is not None:
+        kwargs['maintenance_subtype'] = maintenance_subtype
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
@@ -15207,6 +15226,10 @@ def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--private-end-point-id', help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--management-type', type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The Database Management type.""")
 @cli_util.option('--service-name', help=u"""The name of the Oracle Database service that will be used to connect to the database.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["TCP", "TCPS"]), help=u"""Protocol used by the database connection.""")
+@cli_util.option('--port', type=click.INT, help=u"""The port used to connect to the database.""")
+@cli_util.option('--ssl-secret-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["SYSDBA", "NORMAL"]), help=u"""The role of the user that will be connecting to the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15216,7 +15239,7 @@ def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def modify_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, credential_details, private_end_point_id, management_type, service_name, if_match):
+def modify_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, credential_details, private_end_point_id, management_type, service_name, protocol, port, ssl_secret_id, role, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -15239,6 +15262,18 @@ def modify_database_management(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if service_name is not None:
         _details['serviceName'] = service_name
+
+    if protocol is not None:
+        _details['protocol'] = protocol
+
+    if port is not None:
+        _details['port'] = port
+
+    if ssl_secret_id is not None:
+        _details['sslSecretId'] = ssl_secret_id
+
+    if role is not None:
+        _details['role'] = role
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.modify_database_management(

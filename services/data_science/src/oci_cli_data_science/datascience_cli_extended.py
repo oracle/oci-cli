@@ -19,13 +19,22 @@ def list_work_request_logs_extended(ctx, **kwargs):
 
 # Rename oci data-science notebook-session update --notebook-session-configuration-details to
 # oci data-science notebook-session update --configuration-details
-@cli_util.copy_params_from_generated_command(datascience_cli.update_notebook_session, params_to_exclude=['notebook_session_configuration_details'])
+@cli_util.copy_params_from_generated_command(datascience_cli.update_notebook_session, params_to_exclude=['notebook_session_configuration_details', 'notebook_session_runtime_config_details'])
 @datascience_cli.notebook_session_group.command(name=cli_util.override('update_notebook_session.command_name', 'update'), help=datascience_cli.update_notebook_session.help)
+@cli_util.option('--runtime-config-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
 def update_notebook_session_extended(ctx, **kwargs):
+
+    if 'runtime_config_details' in kwargs:
+        kwargs['notebook_session_runtime_config_details'] = kwargs['runtime_config_details']
+        kwargs.pop('runtime_config_details')
     if 'configuration_details' in kwargs:
         kwargs['notebook_session_configuration_details'] = kwargs['configuration_details']
         del kwargs['configuration_details']
@@ -37,14 +46,23 @@ def update_notebook_session_extended(ctx, **kwargs):
 # oci data-science notebook-session create --configuration-details
 # Rename oci data-science notebook-session create --notebook-session-config-details to
 # oci data-science notebook-session create --config-details
-@cli_util.copy_params_from_generated_command(datascience_cli.create_notebook_session, params_to_exclude=['notebook_session_configuration_details', 'notebook_session_config_details'])
+@cli_util.copy_params_from_generated_command(datascience_cli.create_notebook_session, params_to_exclude=['notebook_session_configuration_details', 'notebook_session_config_details', 'notebook_session_runtime_config_details'])
 @datascience_cli.notebook_session_group.command(name=cli_util.override('create_notebook_session.command_name', 'create'), help=datascience_cli.create_notebook_session.help)
+@cli_util.option('--runtime-config-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--configuration-details', required=False, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use --config-details. If you specify values for both, then the values must match.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-details', required=False, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Used to configure the infrastructure details of a Data Science notebook. To use the default network configuration, omit the subnet value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
 def create_notebook_session_extended(ctx, **kwargs):
+
+    if 'runtime_config_details' in kwargs:
+        kwargs['notebook_session_runtime_config_details'] = kwargs['runtime_config_details']
+        kwargs.pop('runtime_config_details')
     if 'configuration_details' in kwargs:
         kwargs['notebook_session_configuration_details'] = kwargs['configuration_details']
         del kwargs['configuration_details']

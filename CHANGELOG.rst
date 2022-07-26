@@ -6,6 +6,72 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.12.0 - 2022-07-26
+--------------------
+Added
+~~~~~
+* [BREAKING]  Support for the Fusion Apps as a Service
+
+ * ``oci fusion-apps``
+
+* Support for specifying size preference when requesting a Data Transfer Appliance in the Data Transfer Service
+
+  * ``oci dts appliance request --minimum-storage-capacity-in-terabytes``
+
+* Support for listing all boot volume and replicas within a volume group replica in Boot-volume service
+
+  * ``oci bv boot-volume list --volume-group-id``
+  * ``oci bv boot-volume-replica list --volume-group-replica-id``
+
+* ``Big data service``
+
+    * Added support for encryption of boot and block volumes associated with the cluster using customer specified kmsKeyId
+
+       * ``oci bds instance create --kms-key-id``
+       * ``oci bds instance update --kms-key-id``
+
+    * Added support for VM.Standard.E4.Flex shape for Cloud SQL (CSQL) node
+
+       * ``oci bds cloudsql add --shape-config``
+
+* Support for Autonomous Database Dedicated on ExaCS in Operator Access Control Service
+
+  * ``oci opctl operator-control create --resource-type``
+  * ``oci opctl operator-control-assignment create --resource-type``
+
+* Support for new parameter in management-agent service
+
+      * ``oci management-agent work-request list --type``
+      * ``oci management-agent plugin list --agent-id``
+      * ``oci management-agent agent list --access-level --compartment-id-in-subtree``
+
+* Support for viewing Automatic Workload Repository (AWR) data for databases added to AWRHub in Operations Insights service
+
+  * ``oci opsi awr-hubs *``
+
+* Support for Monthly Security Maintenance with subtype "SECURITY_MONTHLY" in Database service
+
+  * ``oci db maintenance-run list --maintenance-subtype SECURITY_MONTHLY``
+
+* Support for new fields to enable/modify database management in Database service
+
+  * ``oci db database modify-database-management --port --protocol --role --ssl-secret-id``
+
+* Support for runtime configuration in notebook session in Data-science service
+
+  * ``oci data-science notebook-session create --runtime-config-details``
+  * ``oci data-science notebook-session update --runtime-config-details``
+
+* Support for following command in Media service
+
+  * ``oci media-services media-stream``
+
+Fixed
+~~~~~~~
+* Fixed "wait-for-state" for oci db autonomous-database delete
+
+  * ``oci db autonomous-database delete --wait-for-state``
+
 3.11.1 - 2022-07-19
 --------------------
 Added
@@ -76,6 +142,12 @@ Added
 * Support for Compute Instance Maintenance in the Compute service
 
   * ``oci compute instance action --action rebootmigrate``
+
+* Support Point-in-time Recovery for non-HA MySQL Database service
+
+  * oci mysql db-system create ... --backup-policy='{"pitr-policy": {"isEnabled": true | false}}'
+
+  * oci mysql db-system create ... --source='{"sourceType": "PITR", "dbSystemId": "$DBSYSTEM_ID", "recoveryPoint": "$RECOVERY_POINT"}'
 
 Changed
 ~~~~~~~

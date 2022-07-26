@@ -593,17 +593,18 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--shape', required=True, help=u"""Shape of the node.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
+@cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. All details needed for attaching the block volume are managed by the service itself.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, cluster_admin_password, block_volume_size_in_gbs, if_match):
+def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, cluster_admin_password, shape_config, block_volume_size_in_gbs, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -616,6 +617,9 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     _details = {}
     _details['shape'] = shape
     _details['clusterAdminPassword'] = cluster_admin_password
+
+    if shape_config is not None:
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
     if block_volume_size_in_gbs is not None:
         _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
@@ -917,6 +921,7 @@ def create_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--kerberos-realm-name', help=u"""The user-defined kerberos realm name.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. For example, `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example, `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management master encryption key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -925,7 +930,7 @@ def create_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-config': {'module': 'bds', 'class': 'NetworkConfig'}, 'nodes': {'module': 'bds', 'class': 'list[CreateNodeDetails]'}, 'freeform-tags': {'module': 'bds', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bds', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cluster_version, cluster_public_key, cluster_admin_password, is_high_availability, is_secure, nodes, network_config, bootstrap_script_url, kerberos_realm_name, freeform_tags, defined_tags):
+def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cluster_version, cluster_public_key, cluster_admin_password, is_high_availability, is_secure, nodes, network_config, bootstrap_script_url, kerberos_realm_name, freeform_tags, defined_tags, kms_key_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -954,6 +959,9 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.create_bds_instance(
@@ -2779,6 +2787,7 @@ def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_pol
 @cli_util.option('--bootstrap-script-url', help=u"""Pre-authenticated URL of the bootstrap script in Object Store that can be downloaded and executed..""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. For example, `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example, `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management master encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2789,7 +2798,7 @@ def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_pol
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'bds', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bds', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, bootstrap_script_url, freeform_tags, defined_tags, if_match):
+def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, bootstrap_script_url, freeform_tags, defined_tags, kms_key_id, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -2816,6 +2825,9 @@ def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.update_bds_instance(

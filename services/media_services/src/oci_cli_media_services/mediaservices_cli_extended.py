@@ -6,6 +6,9 @@ from oci_cli import json_skeleton_utils, cli_util
 
 from services.media_services.src.oci_cli_media_services.generated import mediaservices_cli
 
+# exclude media-workflow-job-fact command
+mediaservices_cli.media_services_service_cli.media_services_service_group.commands.pop(mediaservices_cli.media_workflow_job_fact_group.name)
+
 
 # Rename the version-parameterconflict to avoid conflict
 @cli_util.copy_params_from_generated_command(mediaservices_cli.delete_media_asset_distribution_channel_attachment,
@@ -38,6 +41,10 @@ def update_get_madc_attachment_version(ctx, **kwargs):
 
 # oci media-services media-workflow-task-declaration-collection list-media-workflow-task-declarations -> oci media-services media-workflow-task-declaration-collection list
 cli_util.rename_command(mediaservices_cli, mediaservices_cli.media_workflow_task_declaration_collection_group, mediaservices_cli.list_media_workflow_task_declarations, "list")
+
+
+# oci media-services media-workflow-task-declaration-collection -> oci media-services media-workflow-task-declaration
+cli_util.rename_command(mediaservices_cli.media_services_service_cli, mediaservices_cli.media_services_service_cli.media_services_service_group, mediaservices_cli.media_workflow_task_declaration_collection_group, "media-workflow-task-declaration")
 
 
 @cli_util.copy_params_from_generated_command(mediaservices_cli.list_media_workflow_task_declarations,
@@ -78,6 +85,7 @@ mediaservices_cli.media_workflow_configuration_group.add_command(mediaservices_c
 
 cli_util.rename_command(mediaservices_cli, mediaservices_cli.media_workflow_configuration_group, mediaservices_cli.list_media_workflow_configurations, "list")
 
+mediaservices_cli.media_services_service_cli.media_services_service_group.commands.pop(mediaservices_cli.media_workflow_configuration_collection_group.name)
 
 mediaservices_cli.media_asset_distribution_channel_attachment_collection_group.commands.pop(mediaservices_cli.list_media_asset_distribution_channel_attachments.name)
 
@@ -85,6 +93,7 @@ mediaservices_cli.media_asset_distribution_channel_attachment_group.add_command(
 
 cli_util.rename_command(mediaservices_cli, mediaservices_cli.media_asset_distribution_channel_attachment_group, mediaservices_cli.list_media_asset_distribution_channel_attachments, "list")
 
+mediaservices_cli.media_services_service_cli.media_services_service_group.commands.pop(mediaservices_cli.media_asset_distribution_channel_attachment_collection_group.name)
 
 # exclude stream-packaging-config create command
 mediaservices_cli.stream_packaging_config_group.commands.pop(mediaservices_cli.create_stream_packaging_config.name)
