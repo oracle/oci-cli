@@ -331,6 +331,10 @@ service_mapping = {
         "operator_access_control",
         "OperatorAccessControl"
     ],
+    "opensearch": [
+        "opensearch",
+        "OpenSearch Service"
+    ],
     "opsi": [
         "opsi",
         "Operations Insights"

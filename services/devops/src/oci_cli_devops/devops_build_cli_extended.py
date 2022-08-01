@@ -144,12 +144,13 @@ def create_build_pipeline_stage_create_wait_stage_details_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(
     devops_cli.create_build_pipeline_stage_create_build_stage_details,
-    params_to_exclude=['build_pipeline_stage_predecessor_collection'])
+    params_to_exclude=['build_pipeline_stage_predecessor_collection', 'private_access_config'])
 @devops_cli.build_pipeline_stage_group.command(
     name=cli_util.override(
         'build_pipeline_stage.create_build_pipeline_stage_create_build_stage_details.command_name', 'create-build-stage'),
     help=devops_cli.create_build_pipeline_stage_create_build_stage_details.help)
 @cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-channel', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={
@@ -160,6 +161,9 @@ def create_build_pipeline_stage_create_wait_stage_details_extended(ctx, **kwargs
     output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
 def create_build_pipeline_stage_create_build_stage_details_extended(ctx, **kwargs):
+    if 'network_channel' in kwargs:
+        kwargs['private_access_config'] = kwargs['network_channel']
+        kwargs.pop('network_channel')
     if 'stage_predecessor_collection' in kwargs:
         kwargs['build_pipeline_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
         kwargs.pop('stage_predecessor_collection')
@@ -245,13 +249,14 @@ def update_build_pipeline_stage_update_wait_stage_details_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(
     devops_cli.update_build_pipeline_stage_update_build_stage_details,
-    params_to_exclude=['build_pipeline_stage_id', 'build_pipeline_stage_predecessor_collection'])
+    params_to_exclude=['build_pipeline_stage_id', 'build_pipeline_stage_predecessor_collection', 'private_access_config'])
 @devops_cli.build_pipeline_stage_group.command(
     name=cli_util.override(
         'build_pipeline_stage.update_build_pipeline_stage_update_build_stage_details.command_name', 'update-build-stage'),
     help=devops_cli.update_build_pipeline_stage_update_build_stage_details.help)
 @cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier.""")
 @cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-channel', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={
@@ -265,6 +270,9 @@ def update_build_pipeline_stage_update_build_stage_details_extended(ctx, **kwarg
     if 'stage_id' in kwargs:
         kwargs['build_pipeline_stage_id'] = kwargs['stage_id']
         kwargs.pop('stage_id')
+    if 'network_channel' in kwargs:
+        kwargs['private_access_config'] = kwargs['network_channel']
+        kwargs.pop('network_channel')
     if 'stage_predecessor_collection' in kwargs:
         kwargs['build_pipeline_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
         kwargs.pop('stage_predecessor_collection')
@@ -1291,3 +1299,95 @@ def update_deploy_stage_update_oke_helm_chart_deploy_stage_details_extended(ctx,
         kwargs.pop('stage_id')
 
     ctx.invoke(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, **kwargs)
+
+
+# oci devops connection create-connection-create-bitbucket-server-access-token-connection-details -> oci devops connection create-bitbucket-server-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.create_connection_create_bitbucket_server_access_token_connection_details, "create-bitbucket-server-connection")
+
+
+# oci devops connection create-connection-create-gitlab-server-access-token-connection-details -> oci devops connection create-gitlab-server-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.create_connection_create_gitlab_server_access_token_connection_details, "create-gitlab-server-connection")
+
+
+# oci devops connection update-connection-update-bitbucket-server-access-token-connection-details -> oci devops connection update-bitbucket-server-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.update_connection_update_bitbucket_server_access_token_connection_details, "update-bitbucket-server-connection")
+
+
+# oci devops connection update-connection-update-gitlab-server-access-token-connection-details -> oci devops connection update-gitlab-server-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.update_connection_update_gitlab_server_access_token_connection_details, "update-gitlab-server-connection")
+
+
+# oci devops trigger create-trigger-create-bitbucket-server-trigger-details -> oci devops trigger create-bitbucket-server-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.create_trigger_create_bitbucket_server_trigger_details, "create-bitbucket-server-trigger")
+
+
+# oci devops trigger create-trigger-create-gitlab-server-trigger-details -> oci devops trigger create-gitlab-server-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.create_trigger_create_gitlab_server_trigger_details, "create-gitlab-server-trigger")
+
+
+# oci devops trigger update-trigger-update-bitbucket-server-trigger-details -> oci devops trigger update-bitbucket-server-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.update_trigger_update_bitbucket_server_trigger_details, "update-bitbucket-server-trigger")
+
+
+# oci devops trigger update-trigger-update-gitlab-server-trigger-details -> oci devops trigger update-gitlab-server-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.update_trigger_update_gitlab_server_trigger_details, "update-gitlab-server-trigger")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_connection_create_bitbucket_server_access_token_connection_details, params_to_exclude=['access_token'])
+@devops_cli.connection_group.command(name=devops_cli.create_connection_create_bitbucket_server_access_token_connection_details.name, help=devops_cli.create_connection_create_bitbucket_server_access_token_connection_details.help)
+@cli_util.option('--personal-access-token', required=True, help=u"""The OCID of personal access token saved in secret store. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_bitbucket_server_access_token_connection_details_extended(ctx, **kwargs):
+
+    if 'personal_access_token' in kwargs:
+        kwargs['access_token'] = kwargs['personal_access_token']
+        kwargs.pop('personal_access_token')
+
+    ctx.invoke(devops_cli.create_connection_create_bitbucket_server_access_token_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_connection_create_gitlab_server_access_token_connection_details, params_to_exclude=['access_token'])
+@devops_cli.connection_group.command(name=devops_cli.create_connection_create_gitlab_server_access_token_connection_details.name, help=devops_cli.create_connection_create_gitlab_server_access_token_connection_details.help)
+@cli_util.option('--personal-access-token', required=True, help=u"""The OCID of personal access token saved in secret store. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_gitlab_server_access_token_connection_details_extended(ctx, **kwargs):
+
+    if 'personal_access_token' in kwargs:
+        kwargs['access_token'] = kwargs['personal_access_token']
+        kwargs.pop('personal_access_token')
+
+    ctx.invoke(devops_cli.create_connection_create_gitlab_server_access_token_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_connection_update_bitbucket_server_access_token_connection_details, params_to_exclude=['access_token'])
+@devops_cli.connection_group.command(name=devops_cli.update_connection_update_bitbucket_server_access_token_connection_details.name, help=devops_cli.update_connection_update_bitbucket_server_access_token_connection_details.help)
+@cli_util.option('--personal-access-token', help=u"""OCID of personal access token saved in secret store""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_bitbucket_server_access_token_connection_details_extended(ctx, **kwargs):
+
+    if 'personal_access_token' in kwargs:
+        kwargs['access_token'] = kwargs['personal_access_token']
+        kwargs.pop('personal_access_token')
+
+    ctx.invoke(devops_cli.update_connection_update_bitbucket_server_access_token_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_connection_update_gitlab_server_access_token_connection_details, params_to_exclude=['access_token'])
+@devops_cli.connection_group.command(name=devops_cli.update_connection_update_gitlab_server_access_token_connection_details.name, help=devops_cli.update_connection_update_gitlab_server_access_token_connection_details.help)
+@cli_util.option('--personal-access-token', help=u"""The OCID of personal access token saved in secret store.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_gitlab_server_access_token_connection_details_extended(ctx, **kwargs):
+
+    if 'personal_access_token' in kwargs:
+        kwargs['access_token'] = kwargs['personal_access_token']
+        kwargs.pop('personal_access_token')
+
+    ctx.invoke(devops_cli.update_connection_update_gitlab_server_access_token_connection_details, **kwargs)

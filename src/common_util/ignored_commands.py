@@ -132,7 +132,9 @@ IGNORED_COMMANDS = [
     ['db', 'autonomous-database', 'delete'],
     ['resource-manager', 'stack', 'create-from-template'],
     ['data-science', 'notebook-session', 'create'],
-    ['data-science', 'notebook-session', 'update']
+    ['data-science', 'notebook-session', 'update'],
+    ['devops', 'build-pipeline-stage', 'create-build-stage'],
+    ['devops', 'build-pipeline-stage', 'update-build-stage']
 ]
 
 IGNORED_COMMANDS_DOCS = [
