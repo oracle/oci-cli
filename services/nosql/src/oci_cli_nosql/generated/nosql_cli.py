@@ -190,7 +190,7 @@ def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--name', required=True, help=u"""Table name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
 @cli_util.option('--ddl-statement', required=True, help=u"""Complete CREATE TABLE DDL statement.""")
-@cli_util.option('--table-limits', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--table-limits', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-reclaimable', type=click.BOOL, help=u"""True if table can be reclaimed after an idle period.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.  Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -211,7 +211,9 @@ def create_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     _details['name'] = name
     _details['compartmentId'] = compartment_id
     _details['ddlStatement'] = ddl_statement
-    _details['tableLimits'] = cli_util.parse_json_parameter("table_limits", table_limits)
+
+    if table_limits is not None:
+        _details['tableLimits'] = cli_util.parse_json_parameter("table_limits", table_limits)
 
     if is_auto_reclaimable is not None:
         _details['isAutoReclaimable'] = is_auto_reclaimable

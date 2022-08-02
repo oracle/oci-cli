@@ -832,15 +832,16 @@ def create_build_pipeline_stage_create_wait_stage_details(ctx, from_json, wait_f
 @cli_util.option('--build-spec-file', help=u"""The path to the build specification file for this environment. The default location of the file if not specified is build_spec.yaml.""")
 @cli_util.option('--stage-execution-timeout-in-seconds', type=click.INT, help=u"""Timeout for the build stage execution. Specify value in seconds.""")
 @cli_util.option('--primary-build-source', help=u"""Name of the build source where the build_spec.yml file is located. If not specified, the first entry in the build source collection is chosen as primary build source.""")
+@cli_util.option('--private-access-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}})
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
-def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, image, build_source_collection, display_name, description, freeform_tags, defined_tags, build_spec_file, stage_execution_timeout_in_seconds, primary_build_source):
+def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, image, build_source_collection, display_name, description, freeform_tags, defined_tags, build_spec_file, stage_execution_timeout_in_seconds, primary_build_source, private_access_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -871,6 +872,9 @@ def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_
 
     if primary_build_source is not None:
         _details['primaryBuildSource'] = primary_build_source
+
+    if private_access_config is not None:
+        _details['privateAccessConfig'] = cli_util.parse_json_parameter("private_access_config", private_access_config)
 
     _details['buildPipelineStageType'] = 'BUILD'
 
@@ -1012,6 +1016,156 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.create_connection_create_gitlab_server_access_token_connection_details.command_name', 'create-connection-create-gitlab-server-access-token-connection-details'), help=u"""Creates a new connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project.""")
+@cli_util.option('--access-token', required=True, help=u"""The OCID of personal access token saved in secret store.""")
+@cli_util.option('--base-url', required=True, help=u"""The baseUrl of the hosted GitLabServer.""")
+@cli_util.option('--description', help=u"""Optional description about the connection.""")
+@cli_util.option('--display-name', help=u"""Optional connection display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tls-verify-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_gitlab_server_access_token_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, access_token, base_url, description, display_name, freeform_tags, defined_tags, tls_verify_config):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['accessToken'] = access_token
+    _details['baseUrl'] = base_url
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if tls_verify_config is not None:
+        _details['tlsVerifyConfig'] = cli_util.parse_json_parameter("tls_verify_config", tls_verify_config)
+
+    _details['connectionType'] = 'GITLAB_SERVER_ACCESS_TOKEN'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.create_connection_create_bitbucket_server_access_token_connection_details.command_name', 'create-connection-create-bitbucket-server-access-token-connection-details'), help=u"""Creates a new connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project.""")
+@cli_util.option('--access-token', required=True, help=u"""The OCID of personal access token saved in secret store.""")
+@cli_util.option('--base-url', required=True, help=u"""The Base URL of the hosted BitbucketServer.""")
+@cli_util.option('--description', help=u"""Optional description about the connection.""")
+@cli_util.option('--display-name', help=u"""Optional connection display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tls-verify-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_bitbucket_server_access_token_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, access_token, base_url, description, display_name, freeform_tags, defined_tags, tls_verify_config):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['accessToken'] = access_token
+    _details['baseUrl'] = base_url
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if tls_verify_config is not None:
+        _details['tlsVerifyConfig'] = cli_util.parse_json_parameter("tls_verify_config", tls_verify_config)
+
+    _details['connectionType'] = 'BITBUCKET_SERVER_ACCESS_TOKEN'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.create_connection(
@@ -2676,7 +2830,7 @@ def create_deploy_stage_create_compute_instance_group_deploy_stage_details(ctx, 
 @cli_util.option('--display-name', help=u"""Deployment stage display name, which can be renamed and is not necessarily unique. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--deploy-artifact-id', help=u"""Optional binary artifact OCID user may provide to this stage.""")
+@cli_util.option('--deploy-artifact-id', help=u"""Optional artifact OCID. The artifact will be included in the body for the function invocation during the stage's execution. If the DeployArtifact.argumentSubstituitionMode is set to SUBSTITUTE_PLACEHOLDERS, then the pipeline parameter values will be used to replace the placeholders in the artifact content.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4223,6 +4377,75 @@ def create_trigger_create_bitbucket_cloud_trigger_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
+@trigger_group.command(name=cli_util.override('devops.create_trigger_create_gitlab_server_trigger_details.command_name', 'create-trigger-create-gitlab-server-trigger-details'), help=u"""Creates a new trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project to which the trigger belongs to.""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Trigger display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Optional description about the trigger.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger_create_gitlab_server_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'GITLAB_SERVER'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @trigger_group.command(name=cli_util.override('devops.create_trigger_create_gitlab_trigger_details.command_name', 'create-trigger-create-gitlab-trigger-details'), help=u"""Creates a new trigger. \n[Command Reference](createTrigger)""")
 @cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project to which the trigger belongs to.""")
 @cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4260,6 +4483,75 @@ def create_trigger_create_gitlab_trigger_details(ctx, from_json, wait_for_state,
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['triggerSource'] = 'GITLAB'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_trigger(
+        create_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.create_trigger_create_bitbucket_server_trigger_details.command_name', 'create-trigger-create-bitbucket-server-trigger-details'), help=u"""Creates a new trigger. \n[Command Reference](createTrigger)""")
+@cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project to which the trigger belongs to.""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Trigger display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Optional description about the trigger.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
+@cli_util.wrap_exceptions
+def create_trigger_create_bitbucket_server_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'BITBUCKET_SERVER'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.create_trigger(
@@ -5930,7 +6222,7 @@ def list_commits(ctx, from_json, all_pages, page_size, repository_id, ref_name, 
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""A filter to return only connections that matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GITHUB_ACCESS_TOKEN", "GITLAB_ACCESS_TOKEN", "BITBUCKET_CLOUD_APP_PASSWORD"]), help=u"""A filter to return only resources that match the given connection type.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GITHUB_ACCESS_TOKEN", "GITLAB_ACCESS_TOKEN", "GITLAB_SERVER_ACCESS_TOKEN", "BITBUCKET_SERVER_ACCESS_TOKEN", "BITBUCKET_CLOUD_APP_PASSWORD"]), help=u"""A filter to return only resources that match the given connection type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
@@ -7386,23 +7678,24 @@ def update_build_pipeline_stage_update_wait_stage_details(ctx, from_json, force,
 @cli_util.option('--stage-execution-timeout-in-seconds', type=click.INT, help=u"""Timeout for the build stage execution. Specify value in seconds.""")
 @cli_util.option('--build-source-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--primary-build-source', help=u"""Name of the build source where the build_spec.yml file is located. If not specified, the first entry in the build source collection is chosen as primary build source.""")
+@cli_util.option('--private-access-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}})
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
-def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, image, build_spec_file, stage_execution_timeout_in_seconds, build_source_collection, primary_build_source, if_match):
+def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, image, build_spec_file, stage_execution_timeout_in_seconds, build_source_collection, primary_build_source, private_access_config, if_match):
 
     if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
-        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or build_source_collection:
-            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and build-source-collection will replace any existing values. Are you sure you want to continue?"):
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or build_source_collection or private_access_config:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and build-source-collection and private-access-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7441,6 +7734,9 @@ def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force
 
     if primary_build_source is not None:
         _details['primaryBuildSource'] = primary_build_source
+
+    if private_access_config is not None:
+        _details['privateAccessConfig'] = cli_util.parse_json_parameter("private_access_config", private_access_config)
 
     _details['buildPipelineStageType'] = 'BUILD'
 
@@ -7884,6 +8180,96 @@ def update_connection_update_github_access_token_connection_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('devops.update_connection_update_bitbucket_server_access_token_connection_details.command_name', 'update-connection-update-bitbucket-server-access-token-connection-details'), help=u"""Updates the connection. \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""Unique connection identifier.""")
+@cli_util.option('--description', help=u"""Optional description about the connection.""")
+@cli_util.option('--display-name', help=u"""Optional connection display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token', help=u"""OCID of personal access token saved in secret store""")
+@cli_util.option('--base-url', help=u"""The Base URL of the hosted BitbucketServer.""")
+@cli_util.option('--tls-verify-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_bitbucket_server_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, base_url, tls_verify_config, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or tls_verify_config:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and tls-verify-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if access_token is not None:
+        _details['accessToken'] = access_token
+
+    if base_url is not None:
+        _details['baseUrl'] = base_url
+
+    if tls_verify_config is not None:
+        _details['tlsVerifyConfig'] = cli_util.parse_json_parameter("tls_verify_config", tls_verify_config)
+
+    _details['connectionType'] = 'BITBUCKET_SERVER_ACCESS_TOKEN'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('devops.update_connection_update_gitlab_access_token_connection_details.command_name', 'update-connection-update-gitlab-access-token-connection-details'), help=u"""Updates the connection. \n[Command Reference](updateConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""Unique connection identifier.""")
 @cli_util.option('--description', help=u"""Optional description about the connection.""")
@@ -8019,6 +8405,96 @@ def update_connection_update_bitbucket_cloud_app_password_connection_details(ctx
         _details['appPassword'] = app_password
 
     _details['connectionType'] = 'BITBUCKET_CLOUD_APP_PASSWORD'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('devops.update_connection_update_gitlab_server_access_token_connection_details.command_name', 'update-connection-update-gitlab-server-access-token-connection-details'), help=u"""Updates the connection. \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""Unique connection identifier.""")
+@cli_util.option('--description', help=u"""Optional description about the connection.""")
+@cli_util.option('--display-name', help=u"""Optional connection display name. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--access-token', help=u"""The OCID of personal access token saved in secret store.""")
+@cli_util.option('--base-url', help=u"""The baseUrl of the hosted GitLabServer.""")
+@cli_util.option('--tls-verify-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'tls-verify-config': {'module': 'devops', 'class': 'TlsVerifyConfig'}}, output_type={'module': 'devops', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_gitlab_server_access_token_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, description, display_name, freeform_tags, defined_tags, access_token, base_url, tls_verify_config, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or tls_verify_config:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and tls-verify-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if access_token is not None:
+        _details['accessToken'] = access_token
+
+    if base_url is not None:
+        _details['baseUrl'] = base_url
+
+    if tls_verify_config is not None:
+        _details['tlsVerifyConfig'] = cli_util.parse_json_parameter("tls_verify_config", tls_verify_config)
+
+    _details['connectionType'] = 'GITLAB_SERVER_ACCESS_TOKEN'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.update_connection(
@@ -10582,7 +11058,7 @@ def update_deploy_stage_update_compute_instance_group_canary_traffic_shift_deplo
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--function-deploy-environment-id', help=u"""Function environment OCID.""")
-@cli_util.option('--deploy-artifact-id', help=u"""Optional binary artifact OCID user may provide to this stage.""")
+@cli_util.option('--deploy-artifact-id', help=u"""Optional artifact OCID. The artifact will be included in the body for the function invocation during the stage's execution. If the DeployArtifact.argumentSubstituitionMode is set to SUBSTITUTE_PLACEHOLDERS, then the pipeline parameter values will be used to replace the placeholders in the artifact content.""")
 @cli_util.option('--is-async', type=click.BOOL, help=u"""A boolean flag specifies whether this stage executes asynchronously.""")
 @cli_util.option('--is-validation-enabled', type=click.BOOL, help=u"""A boolean flag specifies whether the invoked function must be validated.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -11257,6 +11733,174 @@ def update_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger_update_bitbucket_server_trigger_details.command_name', 'update-trigger-update-bitbucket-server-trigger-details'), help=u"""Updates the trigger. \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""Unique trigger identifier.""")
+@cli_util.option('--display-name', help=u"""Trigger display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Optional description about the trigger.""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger_update_bitbucket_server_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'BITBUCKET_SERVER'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_trigger(
+        trigger_id=trigger_id,
+        update_trigger_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_group.command(name=cli_util.override('devops.update_trigger_update_gitlab_server_trigger_details.command_name', 'update-trigger-update-gitlab-server-trigger-details'), help=u"""Updates the trigger. \n[Command Reference](updateTrigger)""")
+@cli_util.option('--trigger-id', required=True, help=u"""Unique trigger identifier.""")
+@cli_util.option('--display-name', help=u"""Trigger display name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Optional description about the trigger.""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of actions that are to be performed for this trigger.
+
+This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
+@cli_util.wrap_exceptions
+def update_trigger_update_gitlab_server_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
+        raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
+    if not force:
+        if actions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to actions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['triggerSource'] = 'GITLAB_SERVER'
 
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.update_trigger(

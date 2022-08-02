@@ -6,13 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.13.0 - 2022-08-02
+--------------------
+Added
+~~~~~
+* Support for the Open Search service
+
+  * ``oci opensearch``
+
+* Support for private repositories in the DevOps service
+
+  * Added support for DevOps Build connection resource for private repositories
+  
+    * ``oci devops connection create-bitbucket-server-connection``
+    * ``oci devops connection create-gitlab-server-connection``
+    * ``oci devops connection update-bitbucket-server-connection``
+    * ``oci devops connection update-gitlab-server-connection``
+
+  * Added support for DevOps Build trigger resource for private repositories
+  
+    * ``oci devops trigger create-gitlab-server-trigger``
+    * ``oci devops trigger create-bitbucket-server-trigger``
+    * ``oci devops trigger update-bitbucket-server-trigger``
+    * ``oci devops trigger update-gitlab-server-trigger``
+
+  * Added support for DevOps Build stage resource to use private connections
+  
+    * ``oci devops build-pipeline-stage create-build-stage --network-channel``
+    * ``oci devops build-pipeline-stage update-build-stage --network-channel``
+  
+Changed
+~~~~~~~
+* Changed --table-limits argument to optional in the NoSQL service
+
+  * ``oci nosql table create --table-limits``
+
+* Changed loading json document to support case insensitive prefix (file://) for global parameter and all json loading commands
+
+  * ``--from-json``
+  
+* [BREAKING] Command and subgroup work-request-log list renamed in the Governance Rules Control Plane service
+
+  * ``oci governance-rules-control-plane work-request work-request-log-entry list-work-request-logs``
+  
+* [BREAKING] Subgroup work-request renamed in the Tenant Manager Control Plane service
+
+  * ``oci organizations work-request-log list``
+
 3.12.0 - 2022-07-26
 --------------------
 Added
 ~~~~~
 * [BREAKING]  Support for the Fusion Apps as a Service
 
- * ``oci fusion-apps``
+  * ``oci fusion-apps``
 
 * Support for specifying size preference when requesting a Data Transfer Appliance in the Data Transfer Service
 

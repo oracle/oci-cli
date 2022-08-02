@@ -1237,7 +1237,8 @@ def load_file_contents(path):
     file_contents = None
     if isinstance(path, six.string_types):
         for prefix, function_spec in FILE_LOAD_PREFIX_MAP.items():
-            if path.startswith(prefix):
+            # Case insenstive prefix check
+            if path.lower().startswith(prefix):
                 function, kwargs = function_spec
                 file_contents = function(prefix, path, **kwargs)
 
