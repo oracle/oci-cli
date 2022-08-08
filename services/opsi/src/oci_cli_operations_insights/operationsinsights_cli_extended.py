@@ -460,3 +460,18 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_data
 
 # Remove query from oci opsi opsi-data-objects
 operationsinsights_cli.opsi_data_objects_group.commands.pop(operationsinsights_cli.query_opsi_data_object_data.name)
+
+# oci opsi host-insights create-host-insight-create-macs-managed-cloud-host-insight-details -> oci opsi host-insights create-macs-cloud-host
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.create_host_insight_create_macs_managed_cloud_host_insight_details, "create-macs-cloud-host")
+
+
+# oci opsi host-insights enable-host-insight-enable-macs-managed-cloud-host-insight-details -> oci opsi host-insights enable-macs-cloud-host
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.enable_host_insight_enable_macs_managed_cloud_host_insight_details, "enable-macs-cloud-host")
+
+
+# oci opsi host-insights update-host-insight-update-macs-managed-cloud-host-insight-details -> oci opsi host-insights update-macs-cloud-host
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.update_host_insight_update_macs_managed_cloud_host_insight_details, "update-macs-cloud-host")
+
+
+# oci opsi host-insights list-importable-compute-entities -> oci opsi host-insights list-macs-cloud-hosts
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.list_importable_compute_entities, "list-macs-cloud-hosts")

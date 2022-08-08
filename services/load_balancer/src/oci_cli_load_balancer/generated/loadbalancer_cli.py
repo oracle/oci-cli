@@ -211,7 +211,11 @@ lb_root_group.add_command(network_security_groups_group)
 @load_balancer_group.command(name=cli_util.override('lb.change_load_balancer_compartment.command_name', 'change-compartment'), help=u"""Moves a load balancer into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLoadBalancerCompartment)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to move.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the load balancer to.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. Set the if-match parameter to the value of the ETag from a previous GET or POST response for that resource. The resource is moved only if the ETag you provide matches the resource's current ETag value.
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
 
 Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -292,6 +296,13 @@ Example: `false`""")
 @cli_util.option('--offline', type=click.BOOL, help=u"""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
 
 Example: `false`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -300,7 +311,7 @@ Example: `false`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, weight, backup, drain, offline):
+def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, weight, backup, drain, offline, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -309,6 +320,8 @@ def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -377,6 +390,13 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--lb-cookie-session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -385,12 +405,14 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -463,6 +485,13 @@ Example:
 Example:
 
     -----BEGIN CERTIFICATE-----     MIIEczCCA1ugAwIBAgIBADANBgkqhkiG9w0BAQQFAD..AkGA1UEBhMCR0Ix     EzARBgNVBAgTClNvbWUtU3RhdGUxFDASBgNVBAoTC0..0EgTHRkMTcwNQYD     VQQLEy5DbGFzcyAxIFB1YmxpYyBQcmltYXJ5IENlcn..XRpb24gQXV0aG9y     aXR5MRQwEgYDVQQDEwtCZXN0IENBIEx0ZDAeFw0wMD..TUwMTZaFw0wMTAy     ...     -----END CERTIFICATE-----""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -471,12 +500,14 @@ Example:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_name, load_balancer_id, passphrase, private_key, public_certificate, ca_certificate):
+def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_name, load_balancer_id, passphrase, private_key, public_certificate, ca_certificate, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -534,6 +565,13 @@ Example: `example_hostname_001`""")
 
 Example: `app.example.com`""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the hostname to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -542,12 +580,14 @@ Example: `app.example.com`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, hostname, load_balancer_id):
+def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, hostname, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -614,6 +654,13 @@ Example: `example_routing_policy`""")
 @cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The names of the [rule sets] to apply to the listener.
 
 Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -622,12 +669,14 @@ Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, name, load_balancer_id, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, routing_policy_name, rule_set_names):
+def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, name, load_balancer_id, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, routing_policy_name, rule_set_names, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -705,7 +754,7 @@ When you create a load balancer, the system assigns an IP address. To get the IP
 Example: `example_load_balancer`""")
 @cli_util.option('--shape-name', required=True, help=u"""A template that determines the total pre-provisioned bandwidth (ingress plus egress). To get a list of available shapes, use the [ListShapes] operation.
 
-Example: `100Mbps`""")
+Example: `flexible` NOTE: Starting May 2023, Fixed shapes - 10Mbps, 100Mbps, 400Mbps, 8000Mbps would be deprecated and only shape       allowed would be `Flexible`""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of subnet [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details to create load balancer using Flexible shape. This is required only if shapeName is `Flexible`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-private', type=click.BOOL, help=u"""Whether the load balancer has a VCN-local (private) IP address.
@@ -865,6 +914,13 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 Example: `example_path_route_set`""")
 @cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the path route set to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -873,12 +929,14 @@ Example: `example_path_route_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'path-routes': {'module': 'load_balancer', 'class': 'list[PathRoute]'}})
 @cli_util.wrap_exceptions
-def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, path_routes, load_balancer_id):
+def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, path_routes, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -924,6 +982,13 @@ Example: `example_routing_rules`""")
 @cli_util.option('--condition-language-version', required=True, type=custom_types.CliCaseInsensitiveChoice(["V1"]), help=u"""The version of the language in which `condition` of `rules` are composed.""")
 @cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of routing rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the routing policy rule list to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -932,12 +997,14 @@ Example: `example_routing_rules`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rules': {'module': 'load_balancer', 'class': 'list[RoutingRule]'}})
 @cli_util.wrap_exceptions
-def create_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, condition_language_version, rules, load_balancer_id):
+def create_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, condition_language_version, rules, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -983,6 +1050,13 @@ def create_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 Example: `example_rule_set`""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -991,12 +1065,14 @@ Example: `example_rule_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'load_balancer', 'class': 'list[Rule]'}})
 @cli_util.wrap_exceptions
-def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, items):
+def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, items, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1057,6 +1133,13 @@ The following ciphers are valid values for this property:
 
 example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"ECDHE-RSA-AES128-GCM-SHA256\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1065,12 +1148,14 @@ example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"E
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, ciphers, load_balancer_id):
+def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, ciphers, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1117,6 +1202,13 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to remove.
 
 Example: `10.0.0.3:8080`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1126,7 +1218,7 @@ Example: `10.0.0.3:8080`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, backend_set_name, backend_name):
+def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, backend_set_name, backend_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1138,6 +1230,8 @@ def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_backend(
@@ -1179,6 +1273,13 @@ Before you can delete a backend set, you must remove it from any active listener
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to delete.
 
 Example: `example_backend_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1188,7 +1289,7 @@ Example: `example_backend_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, backend_set_name):
+def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, backend_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1197,6 +1298,8 @@ def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_backend_set(
@@ -1235,6 +1338,13 @@ def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--certificate-name', required=True, help=u"""The name of the certificate bundle to delete.
 
 Example: `example_certificate_bundle`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1244,7 +1354,7 @@ Example: `example_certificate_bundle`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, certificate_name):
+def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, certificate_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1253,6 +1363,8 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         raise click.UsageError('Parameter --certificate-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_certificate(
@@ -1291,6 +1403,13 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--name', required=True, help=u"""The name of the hostname resource to delete.
 
 Example: `example_hostname_001`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1300,7 +1419,7 @@ Example: `example_hostname_001`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name):
+def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1309,6 +1428,8 @@ def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_hostname(
@@ -1347,6 +1468,13 @@ def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--listener-name', required=True, help=u"""The name of the listener to delete.
 
 Example: `example_listener`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1356,7 +1484,7 @@ Example: `example_listener`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, listener_name):
+def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, listener_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1365,6 +1493,8 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_listener(
@@ -1400,6 +1530,13 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 @load_balancer_group.command(name=cli_util.override('lb.delete_load_balancer.command_name', 'delete'), help=u"""Stops a load balancer and removes it from service. \n[Command Reference](deleteLoadBalancer)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to delete.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1409,12 +1546,14 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id):
+def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_load_balancer(
@@ -1454,6 +1593,13 @@ To delete a path route rule from a path route set, use the [UpdatePathRouteSet] 
 @cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to delete.
 
 Example: `example_path_route_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1463,7 +1609,7 @@ Example: `example_path_route_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, path_route_set_name):
+def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, path_route_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1472,6 +1618,8 @@ def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_path_route_set(
@@ -1512,6 +1660,13 @@ To delete a routing rule from a routing policy, use the [UpdateRoutingPolicy] op
 @cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to delete.
 
 Example: `example_routing_policy`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1521,7 +1676,7 @@ Example: `example_routing_policy`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, routing_policy_name):
+def delete_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, routing_policy_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1530,6 +1685,8 @@ def delete_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
         raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_routing_policy(
@@ -1570,6 +1727,13 @@ To delete a rule from a rule set, use the [UpdateRuleSet] operation. \n[Command 
 @cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to delete.
 
 Example: `example_rule_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1579,7 +1743,7 @@ Example: `example_rule_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name):
+def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1588,6 +1752,8 @@ def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_rule_set(
@@ -1626,6 +1792,13 @@ def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to delete.
 
 example: `example_cipher_suite`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1635,7 +1808,7 @@ example: `example_cipher_suite`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name):
+def delete_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1644,6 +1817,8 @@ def delete_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wa
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_ssl_cipher_suite(
@@ -1685,12 +1860,19 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to retrieve.
 
 Example: `10.0.0.3:8080`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'Backend'})
 @cli_util.wrap_exceptions
-def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name):
+def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1702,6 +1884,8 @@ def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend(
@@ -1721,12 +1905,19 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to retrieve the health status for.
 
 Example: `10.0.0.3:8080`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'BackendHealth'})
 @cli_util.wrap_exceptions
-def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backend_name):
+def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backend_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1738,6 +1929,8 @@ def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backe
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend_health(
@@ -1754,12 +1947,19 @@ def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backe
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to retrieve.
 
 Example: `example_backend_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'BackendSet'})
 @cli_util.wrap_exceptions
-def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name):
+def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1768,6 +1968,8 @@ def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name):
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend_set(
@@ -1783,12 +1985,19 @@ def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name):
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to retrieve the health status for.
 
 Example: `example_backend_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'BackendSetHealth'})
 @cli_util.wrap_exceptions
-def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name):
+def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1797,6 +2006,8 @@ def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name):
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend_set_health(
@@ -1812,12 +2023,19 @@ def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name):
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the health check policy to be retrieved.
 
 Example: `example_backend_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'HealthChecker'})
 @cli_util.wrap_exceptions
-def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name):
+def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1826,6 +2044,8 @@ def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name):
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_health_checker(
@@ -1841,12 +2061,19 @@ def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name):
 @cli_util.option('--name', required=True, help=u"""The name of the hostname resource to retrieve.
 
 Example: `example_hostname_001`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'Hostname'})
 @cli_util.wrap_exceptions
-def get_hostname(ctx, from_json, load_balancer_id, name):
+def get_hostname(ctx, from_json, load_balancer_id, name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1855,6 +2082,8 @@ def get_hostname(ctx, from_json, load_balancer_id, name):
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_hostname(
@@ -1867,17 +2096,26 @@ def get_hostname(ctx, from_json, load_balancer_id, name):
 
 @load_balancer_group.command(name=cli_util.override('lb.get_load_balancer.command_name', 'get'), help=u"""Gets the specified load balancer's configuration information. \n[Command Reference](getLoadBalancer)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to retrieve.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'LoadBalancer'})
 @cli_util.wrap_exceptions
-def get_load_balancer(ctx, from_json, load_balancer_id):
+def get_load_balancer(ctx, from_json, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_load_balancer(
@@ -1889,17 +2127,26 @@ def get_load_balancer(ctx, from_json, load_balancer_id):
 
 @load_balancer_health_group.command(name=cli_util.override('lb.get_load_balancer_health.command_name', 'get'), help=u"""Gets the health status for the specified load balancer. \n[Command Reference](getLoadBalancerHealth)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to return health status for.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'LoadBalancerHealth'})
 @cli_util.wrap_exceptions
-def get_load_balancer_health(ctx, from_json, load_balancer_id):
+def get_load_balancer_health(ctx, from_json, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_load_balancer_health(
@@ -1914,12 +2161,19 @@ def get_load_balancer_health(ctx, from_json, load_balancer_id):
 @cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to retrieve.
 
 Example: `example_path_route_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'PathRouteSet'})
 @cli_util.wrap_exceptions
-def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
+def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1928,6 +2182,8 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_path_route_set(
@@ -1943,12 +2199,19 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
 @cli_util.option('--routing-policy-name', required=True, help=u"""The name of the routing policy to retrieve.
 
 Example: `example_routing_policy`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'RoutingPolicy'})
 @cli_util.wrap_exceptions
-def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name):
+def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1957,6 +2220,8 @@ def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name):
         raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_routing_policy(
@@ -1972,12 +2237,19 @@ def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name):
 @cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to retrieve.
 
 Example: `example_rule_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'RuleSet'})
 @cli_util.wrap_exceptions
-def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
+def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1986,6 +2258,8 @@ def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
         raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_rule_set(
@@ -2001,12 +2275,19 @@ def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
 @cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to retrieve.
 
 example: `example_cipher_suite`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'SSLCipherSuite'})
 @cli_util.wrap_exceptions
-def get_ssl_cipher_suite(ctx, from_json, load_balancer_id, name):
+def get_ssl_cipher_suite(ctx, from_json, load_balancer_id, name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2015,6 +2296,8 @@ def get_ssl_cipher_suite(ctx, from_json, load_balancer_id, name):
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_ssl_cipher_suite(
@@ -2049,18 +2332,27 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @backend_set_group.command(name=cli_util.override('lb.list_backend_sets.command_name', 'list'), help=u"""Lists all backend sets associated with a given load balancer. \n[Command Reference](listBackendSets)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend sets to retrieve.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[BackendSet]'})
 @cli_util.wrap_exceptions
-def list_backend_sets(ctx, from_json, all_pages, load_balancer_id):
+def list_backend_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_backend_sets(
@@ -2075,13 +2367,20 @@ def list_backend_sets(ctx, from_json, all_pages, load_balancer_id):
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend servers.
 
 Example: `example_backend_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[Backend]'})
 @cli_util.wrap_exceptions
-def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name):
+def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2090,6 +2389,8 @@ def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name)
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_backends(
@@ -2102,18 +2403,27 @@ def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name)
 
 @certificate_group.command(name=cli_util.override('lb.list_certificates.command_name', 'list'), help=u"""Lists all SSL certificates bundles associated with a given load balancer. \n[Command Reference](listCertificates)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the certificate bundles to be listed.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[Certificate]'})
 @cli_util.wrap_exceptions
-def list_certificates(ctx, from_json, all_pages, load_balancer_id):
+def list_certificates(ctx, from_json, all_pages, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_certificates(
@@ -2125,18 +2435,27 @@ def list_certificates(ctx, from_json, all_pages, load_balancer_id):
 
 @hostname_group.command(name=cli_util.override('lb.list_hostnames.command_name', 'list'), help=u"""Lists all hostname resources associated with the specified load balancer. \n[Command Reference](listHostnames)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the hostnames to retrieve.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[Hostname]'})
 @cli_util.wrap_exceptions
-def list_hostnames(ctx, from_json, all_pages, load_balancer_id):
+def list_hostnames(ctx, from_json, all_pages, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_hostnames(
@@ -2151,13 +2470,20 @@ def list_hostnames(ctx, from_json, all_pages, load_balancer_id):
 *  Access control rules *  Allow method rules *  Request header rules *  Response header rules \n[Command Reference](listListenerRules)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener.""")
 @cli_util.option('--listener-name', required=True, help=u"""The name of the listener the rules are associated with.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[ListenerRuleSummary]'})
 @cli_util.wrap_exceptions
-def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_name):
+def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2166,6 +2492,8 @@ def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_na
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_listener_rules(
@@ -2303,18 +2631,27 @@ def list_load_balancers(ctx, from_json, all_pages, page_size, compartment_id, li
 
 @path_route_set_group.command(name=cli_util.override('lb.list_path_route_sets.command_name', 'list'), help=u"""Lists all path route sets associated with the specified load balancer. \n[Command Reference](listPathRouteSets)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route sets to retrieve.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[PathRouteSet]'})
 @cli_util.wrap_exceptions
-def list_path_route_sets(ctx, from_json, all_pages, load_balancer_id):
+def list_path_route_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_path_route_sets(
@@ -2436,6 +2773,13 @@ Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2443,7 +2787,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[RoutingPolicy]'})
 @cli_util.wrap_exceptions
-def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id, limit, page):
+def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id, limit, page, if_match):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2456,6 +2800,8 @@ def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
@@ -2485,18 +2831,27 @@ def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id
 
 @rule_set_group.command(name=cli_util.override('lb.list_rule_sets.command_name', 'list'), help=u"""Lists all rule sets associated with the specified load balancer. \n[Command Reference](listRuleSets)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[RuleSet]'})
 @cli_util.wrap_exceptions
-def list_rule_sets(ctx, from_json, all_pages, load_balancer_id):
+def list_rule_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_rule_sets(
@@ -2560,18 +2915,27 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
 
 @ssl_cipher_suite_group.command(name=cli_util.override('lb.list_ssl_cipher_suites.command_name', 'list'), help=u"""Lists all SSL cipher suites associated with the specified load balancer. \n[Command Reference](listSSLCipherSuites)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[SSLCipherSuite]'})
 @cli_util.wrap_exceptions
-def list_ssl_cipher_suites(ctx, from_json, all_pages, load_balancer_id):
+def list_ssl_cipher_suites(ctx, from_json, all_pages, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_ssl_cipher_suites(
@@ -2658,6 +3022,13 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to update.
 
 Example: `10.0.0.3:8080`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2666,7 +3037,7 @@ Example: `10.0.0.3:8080`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, weight, backup, drain, offline, load_balancer_id, backend_set_name, backend_name):
+def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, weight, backup, drain, offline, load_balancer_id, backend_set_name, backend_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2678,6 +3049,8 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2733,6 +3106,13 @@ Example: `example_backend_set`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--lb-cookie-session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2742,7 +3122,7 @@ Example: `example_backend_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2755,6 +3135,8 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2833,6 +3215,13 @@ Example: `example_backend_set`""")
 @cli_util.option('--url-path', help=u"""The path against which to run the health check.
 
 Example: `/healthcheck`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2841,7 +3230,7 @@ Example: `/healthcheck`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path):
+def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2850,6 +3239,8 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2905,6 +3296,13 @@ Example: `example_hostname_001`""")
 @cli_util.option('--hostname', help=u"""The virtual hostname to update. For more information about virtual hostname string construction, see [Managing Request Routing].
 
 Example: `app.example.com`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2913,7 +3311,7 @@ Example: `app.example.com`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, hostname):
+def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, hostname, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2922,6 +3320,8 @@ def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2990,6 +3390,13 @@ Example: `example_routing_policy`""")
 @cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The names of the [rule sets] to apply to the listener.
 
 Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2999,7 +3406,7 @@ Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, hostname_names, path_route_set_name, routing_policy_name, ssl_configuration, connection_configuration, rule_set_names):
+def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, hostname_names, path_route_set_name, routing_policy_name, ssl_configuration, connection_configuration, rule_set_names, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3012,6 +3419,8 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3081,6 +3490,13 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3090,7 +3506,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, freeform_tags, defined_tags):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3100,6 +3516,8 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3153,8 +3571,17 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 Allowed values are :   *  10Mbps   *  100Mbps   *  400Mbps   *  8000Mbps   *  Flexible
 
-  Example: `Flexible`""")
+  Example: `flexible`
+
+  * NOTE: Fixed shapes 10Mbps, 100Mbps, 400Mbps, 8000Mbps will be deprecated from May 2023. This api   * will only support `Flexible` shape after that date.""")
 @cli_util.option('--shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details to update load balancer to a different profile.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3164,7 +3591,7 @@ Allowed values are :   *  10Mbps   *  100Mbps   *  400Mbps   *  8000Mbps   *  Fl
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}})
 @cli_util.wrap_exceptions
-def update_load_balancer_shape(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, shape_name, shape_details):
+def update_load_balancer_shape(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, shape_name, shape_details, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3174,6 +3601,8 @@ def update_load_balancer_shape(ctx, from_json, force, wait_for_state, max_wait_s
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3225,6 +3654,13 @@ The benefits of associating the load balancer with NSGs include:
 *  NSGs define network security rules to govern ingress and egress traffic for the load balancer.
 
 *  The network security rules of other resources can reference the NSGs associated with the load balancer    to ensure access.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3234,7 +3670,7 @@ The benefits of associating the load balancer with NSGs include:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, network_security_group_ids):
+def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, network_security_group_ids, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3244,6 +3680,8 @@ def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wa
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3291,6 +3729,13 @@ To add a new path route rule to a path route set, the `pathRoutes` in the [Updat
 @cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to update.
 
 Example: `example_path_route_set`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3300,7 +3745,7 @@ Example: `example_path_route_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'path-routes': {'module': 'load_balancer', 'class': 'list[PathRoute]'}})
 @cli_util.wrap_exceptions
-def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, path_routes, load_balancer_id, path_route_set_name):
+def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, path_routes, load_balancer_id, path_route_set_name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3313,6 +3758,8 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3360,6 +3807,13 @@ To add a new routing rule to a routing policy, the body must include both the ne
 
 Example: `example_routing_policy_name`""")
 @cli_util.option('--condition-language-version', type=custom_types.CliCaseInsensitiveChoice(["V1"]), help=u"""The version of the language in which `condition` of `rules` are composed.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3369,7 +3823,7 @@ Example: `example_routing_policy_name`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rules': {'module': 'load_balancer', 'class': 'list[RoutingRule]'}})
 @cli_util.wrap_exceptions
-def update_routing_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rules, load_balancer_id, routing_policy_name, condition_language_version):
+def update_routing_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rules, load_balancer_id, routing_policy_name, condition_language_version, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3382,6 +3836,8 @@ def update_routing_policy(ctx, from_json, force, wait_for_state, max_wait_second
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3431,6 +3887,13 @@ To add a new rule to a set, the body must include both the new rule to add and t
 
 Example: `example_rule_set`""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3440,7 +3903,7 @@ Example: `example_rule_set`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'load_balancer', 'class': 'list[Rule]'}})
 @cli_util.wrap_exceptions
-def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name, items):
+def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name, items, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3453,6 +3916,8 @@ def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -3509,6 +3974,13 @@ example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"E
 @cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to update.
 
 example: `example_cipher_suite`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
+
+For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
+
+The resource is updated or deleted only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3518,7 +3990,7 @@ example: `example_cipher_suite`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_ssl_cipher_suite(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ciphers, load_balancer_id, name):
+def update_ssl_cipher_suite(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ciphers, load_balancer_id, name, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3531,6 +4003,8 @@ def update_ssl_cipher_suite(ctx, from_json, force, wait_for_state, max_wait_seco
                 ctx.abort()
 
     kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}

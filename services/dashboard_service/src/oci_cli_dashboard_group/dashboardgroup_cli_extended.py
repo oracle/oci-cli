@@ -25,3 +25,6 @@ dashboardgroup_cli.dashboard_group_root_group.add_command(dashboardgroup_cli.upd
 # Move commands under 'oci dashboard-service dashboard-group dashboard-groups' -> 'oci dashboard-service dashboard-group'
 dashboardgroup_cli.dashboard_group_root_group.commands.pop(dashboardgroup_cli.dashboard_group_collection_group.name)
 dashboardgroup_cli.dashboard_group_root_group.add_command(dashboardgroup_cli.list_dashboard_groups)
+
+# Add Change_dashboard_group command in oci dashboard-service dashboard
+dashboardgroup_cli.dashboard_group_root_group.add_command(dashboardgroup_cli.change_dashboard_group_compartment)

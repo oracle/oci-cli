@@ -45,6 +45,37 @@ dashboard_group_root_group.add_command(dashboard_group_collection_group)
 dashboard_group_root_group.add_command(dashboard_group_group)
 
 
+@dashboard_group_group.command(name=cli_util.override('dashboard_group.change_dashboard_group_compartment.command_name', 'change-compartment'), help=u"""Moves a DashboardGroup resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDashboardGroupCompartment)""")
+@cli_util.option('--dashboard-group-id', required=True, help=u"""The [OCID] of the dashboard group.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_dashboard_group_compartment(ctx, from_json, dashboard_group_id, compartment_id, if_match):
+
+    if isinstance(dashboard_group_id, six.string_types) and len(dashboard_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --dashboard-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dashboard_service', 'dashboard_group', ctx)
+    result = client.change_dashboard_group_compartment(
+        dashboard_group_id=dashboard_group_id,
+        change_dashboard_group_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @dashboard_group_group.command(name=cli_util.override('dashboard_group.create_dashboard_group.command_name', 'create'), help=u"""Creates a new dashboard group using the details provided in request body.
 
 **Caution:** Resources for the Dashboard service are created in the tenacy's home region. Although it is possible to create dashboard group resource in regions other than the home region, you won't be able to view those resources in the Console. Therefore, creating resources outside of the home region is not recommended. \n[Command Reference](createDashboardGroup)""")
