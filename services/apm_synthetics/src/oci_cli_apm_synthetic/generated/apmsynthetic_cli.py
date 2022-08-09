@@ -27,6 +27,12 @@ def dedicated_vantage_point_group():
     pass
 
 
+@click.command(cli_util.override('apm_synthetics.aggregated_network_data_result_group.command_name', 'aggregated-network-data-result'), cls=CommandGroupWithAlias, help="""The aggregated network results.""")
+@cli_util.help_option_group
+def aggregated_network_data_result_group():
+    pass
+
+
 @click.command(cli_util.override('apm_synthetics.script_collection_group.command_name', 'script-collection'), cls=CommandGroupWithAlias, help="""The results of a script search, which contains both ScriptSummary items and other data in an APM domain.""")
 @cli_util.help_option_group
 def script_collection_group():
@@ -70,6 +76,7 @@ def script_group():
 
 
 apm_synthetics_root_group.add_command(dedicated_vantage_point_group)
+apm_synthetics_root_group.add_command(aggregated_network_data_result_group)
 apm_synthetics_root_group.add_command(script_collection_group)
 apm_synthetics_root_group.add_command(monitor_group)
 apm_synthetics_root_group.add_command(monitor_result_group)
@@ -77,6 +84,36 @@ apm_synthetics_root_group.add_command(monitor_collection_group)
 apm_synthetics_root_group.add_command(dedicated_vantage_point_collection_group)
 apm_synthetics_root_group.add_command(public_vantage_point_collection_group)
 apm_synthetics_root_group.add_command(script_group)
+
+
+@aggregated_network_data_result_group.command(name=cli_util.override('apm_synthetics.aggregate_network_data.command_name', 'aggregate-network-data'), help=u"""Gets aggregated network data for given executions. \n[Command Reference](aggregateNetworkData)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
+@cli_util.option('--vantage-point-execution-times', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of VantagePointExecution items.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-point-execution-times': {'module': 'apm_synthetics', 'class': 'list[VantagePointExecution]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-point-execution-times': {'module': 'apm_synthetics', 'class': 'list[VantagePointExecution]'}}, output_type={'module': 'apm_synthetics', 'class': 'AggregatedNetworkDataResult'})
+@cli_util.wrap_exceptions
+def aggregate_network_data(ctx, from_json, apm_domain_id, monitor_id, vantage_point_execution_times):
+
+    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['vantagePointExecutionTimes'] = cli_util.parse_json_parameter("vantage_point_execution_times", vantage_point_execution_times)
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.aggregate_network_data(
+        apm_domain_id=apm_domain_id,
+        monitor_id=monitor_id,
+        aggregate_network_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.create_dedicated_vantage_point.command_name', 'create'), help=u"""Registers a new dedicated vantage point. \n[Command Reference](createDedicatedVantagePoint)""")
@@ -124,9 +161,9 @@ def create_dedicated_vantage_point(ctx, from_json, apm_domain_id, display_name, 
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique dedicated vantage point name that cannot be edited. The name should not contain any confidential information.""")
 @cli_util.option('--region-parameterconflict', required=True, help=u"""Name of the region.""")
-@cli_util.option('--dvp-stack-details-dvp-version', required=True, help=u"""Version of DVP.""")
-@cli_util.option('--dvp-stack-details-dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
-@cli_util.option('--dvp-stack-details-dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stack-details-dvp-version', required=True, help=u"""Version of the dedicated vantage point.""")
+@cli_util.option('--dvp-stack-details-dvp-stack-id', required=True, help=u"""Stack [OCID] of the Resource Manager stack for dedicated vantage point.""")
+@cli_util.option('--dvp-stack-details-dvp-stream-id', required=True, help=u"""Stream [OCID] of the Resource Manager stack for dedicated vantage point.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -185,12 +222,15 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'configuration': {'module': 'apm_synthetics', 'class': 'MonitorConfiguration'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'configuration': {'module': 'apm_synthetics', 'class': 'MonitorConfiguration'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags):
+def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -228,6 +268,15 @@ def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, va
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
     result = client.create_monitor(
         apm_domain_id=apm_domain_id,
@@ -253,14 +302,18 @@ def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, va
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_network_configuration):
+def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, configuration_is_failure_retried, configuration_dns_configuration, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -296,8 +349,20 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_network_configuration is not None:
         _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
@@ -329,15 +394,19 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_network_configuration):
+def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_certificate_validation_enabled, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -373,8 +442,20 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_is_certificate_validation_enabled is not None:
         _details['configuration']['isCertificateValidationEnabled'] = configuration_is_certificate_validation_enabled
@@ -409,7 +490,11 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-redirection-enabled', type=click.BOOL, help=u"""If redirection enabled, then redirects will be allowed while accessing target URL.""")
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation enabled, then call will fail for certificate errors.""")
 @cli_util.option('--configuration-request-method', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST"]), help=u"""Request HTTP method.""")
@@ -425,12 +510,12 @@ This option is a JSON list with items of type RequestQueryParam.  For documentat
 @cli_util.option('--configuration-verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @cli_util.option('--configuration-verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
+def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -466,8 +551,20 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_is_redirection_enabled is not None:
         _details['configuration']['isRedirectionEnabled'] = configuration_is_redirection_enabled
@@ -529,18 +626,22 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
 @cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verifies all the search strings present in the response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_verify_texts, configuration_network_configuration):
+def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_certificate_validation_enabled, configuration_verify_texts, configuration_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -576,8 +677,20 @@ def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_is_certificate_validation_enabled is not None:
         _details['configuration']['isCertificateValidationEnabled'] = configuration_is_certificate_validation_enabled
@@ -840,11 +953,11 @@ def get_script(ctx, from_json, apm_domain_id, script_id):
 @dedicated_vantage_point_collection_group.command(name=cli_util.override('apm_synthetics.list_dedicated_vantage_points.command_name', 'list-dedicated-vantage-points'), help=u"""Returns a list of dedicated vantage points. \n[Command Reference](listDedicatedVantagePoints)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""The maximum number of results per page, or items to return in a paginated \"List\" call. For information on how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). Default sort order is ascending.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "name", "timeCreated", "timeUpdated", "status"]), help=u"""The field to sort by. Only one sort order may be provided. Default order of displayName is ascending. Default order of timeCreated and timeUpdated is descending. The displayName sort by is case sensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "name", "timeCreated", "timeUpdated", "status"]), help=u"""The field to sort by. Only one sort order may be provided. Default order of displayName is ascending. Default order of timeCreated and timeUpdated is descending. The displayName sort by is case-sensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name.""")
 @cli_util.option('--name', help=u"""A filter to return only the resources that match the entire name.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""A filter to return only the dedicated vantage points that match a given status.""")
@@ -910,7 +1023,7 @@ def list_dedicated_vantage_points(ctx, from_json, all_pages, page_size, apm_doma
 @cli_util.option('--monitor-type', help=u"""A filter to return only monitors that match the given monitor type. Supported values are SCRIPTED_BROWSER, BROWSER, SCRIPTED_REST and REST.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""A filter to return only monitors that match the status given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""The maximum number of results per page, or items to return in a paginated \"List\" call. For information on how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). Default sort order is ascending.""")
@@ -976,7 +1089,7 @@ def list_monitors(ctx, from_json, all_pages, page_size, apm_domain_id, display_n
 @public_vantage_point_collection_group.command(name=cli_util.override('apm_synthetics.list_public_vantage_points.command_name', 'list-public-vantage-points'), help=u"""Returns a list of public vantage points. \n[Command Reference](listPublicVantagePoints)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""The maximum number of results per page, or items to return in a paginated \"List\" call. For information on how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). Default sort order is ascending.""")
@@ -1040,7 +1153,7 @@ def list_public_vantage_points(ctx, from_json, all_pages, page_size, apm_domain_
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name.""")
 @cli_util.option('--content-type', help=u"""A filter to return only resources that match the content type given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""The maximum number of results per page, or items to return in a paginated \"List\" call. For information on how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). Default sort order is ascending.""")
@@ -1156,9 +1269,9 @@ def update_dedicated_vantage_point(ctx, from_json, force, apm_domain_id, dedicat
 @dedicated_vantage_point_group.command(name=cli_util.override('apm_synthetics.update_dedicated_vantage_point_oracle_rm_stack.command_name', 'update-dedicated-vantage-point-oracle-rm-stack'), help=u"""Updates the dedicated vantage point. \n[Command Reference](updateDedicatedVantagePoint)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--dedicated-vantage-point-id', required=True, help=u"""The OCID of the dedicated vantage point.""")
-@cli_util.option('--dvp-stack-details-dvp-version', required=True, help=u"""Version of DVP.""")
-@cli_util.option('--dvp-stack-details-dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack.""")
-@cli_util.option('--dvp-stack-details-dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack.""")
+@cli_util.option('--dvp-stack-details-dvp-version', required=True, help=u"""Version of the dedicated vantage point.""")
+@cli_util.option('--dvp-stack-details-dvp-stack-id', required=True, help=u"""Stack [OCID] of the Resource Manager stack for dedicated vantage point.""")
+@cli_util.option('--dvp-stack-details-dvp-stream-id', required=True, help=u"""Stream [OCID] of the Resource Manager stack for dedicated vantage point.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of the dedicated vantage point.""")
 @cli_util.option('--region-parameterconflict', help=u"""Name of the region.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1231,6 +1344,9 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'configuration': {'module': 'apm_synthetics', 'class': 'MonitorConfiguration'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}})
@@ -1238,7 +1354,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'configuration': {'module': 'apm_synthetics', 'class': 'MonitorConfiguration'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags, if_match):
+def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, configuration, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, if_match):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1290,6 +1406,15 @@ def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_nam
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
     result = client.update_monitor(
         apm_domain_id=apm_domain_id,
@@ -1316,16 +1441,20 @@ def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_nam
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_network_configuration):
+def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1375,8 +1504,20 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_network_configuration is not None:
         _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
@@ -1409,17 +1550,21 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_network_configuration):
+def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_certificate_validation_enabled, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1469,8 +1614,20 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_is_certificate_validation_enabled is not None:
         _details['configuration']['isCertificateValidationEnabled'] = configuration_is_certificate_validation_enabled
@@ -1506,8 +1663,12 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-redirection-enabled', type=click.BOOL, help=u"""If redirection enabled, then redirects will be allowed while accessing target URL.""")
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation enabled, then call will fail for certificate errors.""")
 @cli_util.option('--configuration-request-method', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST"]), help=u"""Request HTTP method.""")
@@ -1524,12 +1685,12 @@ This option is a JSON list with items of type RequestQueryParam.  For documentat
 @cli_util.option('--configuration-verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'configuration-request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'configuration-request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'configuration-verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
+def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_redirection_enabled, configuration_is_certificate_validation_enabled, configuration_request_method, configuration_req_authentication_scheme, configuration_req_authentication_details, configuration_request_headers, configuration_request_query_params, configuration_request_post_body, configuration_verify_response_content, configuration_verify_response_codes, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1579,8 +1740,20 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_is_redirection_enabled is not None:
         _details['configuration']['isRedirectionEnabled'] = configuration_is_redirection_enabled
@@ -1643,20 +1816,24 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run now.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy on Vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between 2 runs in round robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
 @cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verifies all the search strings present in the response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
-def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, if_match, configuration_is_failure_retried, configuration_is_certificate_validation_enabled, configuration_verify_texts, configuration_network_configuration):
+def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, if_match, configuration_is_failure_retried, configuration_dns_configuration, configuration_is_certificate_validation_enabled, configuration_verify_texts, configuration_network_configuration):
 
     if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
@@ -1706,8 +1883,20 @@ def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_doma
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
     if configuration_is_failure_retried is not None:
         _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
 
     if configuration_is_certificate_validation_enabled is not None:
         _details['configuration']['isCertificateValidationEnabled'] = configuration_is_certificate_validation_enabled

@@ -51,9 +51,14 @@ cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_poi
 cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_point_group, apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, "update-with-oracle-rm-stack")
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_browser_monitor_configuration.command_name', 'create-browser-monitor'), help=apmsynthetic_cli.create_monitor_browser_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -72,6 +77,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -92,9 +101,14 @@ def create_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_browser_monitor_configuration.command_name', 'update-browser-monitor'), help=apmsynthetic_cli.update_monitor_browser_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -113,6 +127,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'verify-texts': {'module': 'apm_synthetics', 'class': 'list[VerifyText]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -133,9 +151,14 @@ def update_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_rest_monitor_configuration.command_name', 'create-rest-monitor'), help=apmsynthetic_cli.create_monitor_rest_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -178,6 +201,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -230,9 +257,14 @@ def create_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_rest_monitor_configuration.command_name', 'update-rest-monitor'), help=apmsynthetic_cli.update_monitor_rest_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -275,6 +307,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -327,9 +363,14 @@ def update_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -339,6 +380,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -351,9 +396,14 @@ def create_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -363,6 +413,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -375,9 +429,14 @@ def update_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -388,6 +447,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -404,9 +467,14 @@ def create_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs
     ctx.invoke(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration.help)
-@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Details of the network configuration. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
@@ -417,6 +485,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']

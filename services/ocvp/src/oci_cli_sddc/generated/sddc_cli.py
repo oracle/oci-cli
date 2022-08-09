@@ -152,9 +152,9 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 @cli_util.option('--compute-availability-domain', required=True, help=u"""The availability domain to create the SDDC's ESXi hosts in. For multi-AD SDDC deployment, set to `multi-AD`.""")
 @cli_util.option('--vmware-software-version', required=True, help=u"""The VMware software bundle to install on the ESXi hosts in the SDDC. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the SDDC.""")
-@cli_util.option('--esxi-hosts-count', required=True, type=click.INT, help=u"""The number of ESXi hosts to create in the SDDC. You can add more hosts later (see [CreateEsxiHost]).
+@cli_util.option('--esxi-hosts-count', required=True, type=click.INT, help=u"""The number of ESXi hosts to create in the SDDC. You can add more hosts later (see [CreateEsxiHost]). Creating a SDDC with a ESXi host count of 1 will be considered a single ESXi host SDDC.
 
-**Note:** If you later delete EXSi hosts from the SDDC to total less than 3, you are still billed for the 3 minimum recommended ESXi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.""")
+**Note:** If you later delete EXSi hosts from a production SDDC to total less than 3, you are still billed for the 3 minimum recommended ESXi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.""")
 @cli_util.option('--ssh-authorized-keys', required=True, help=u"""One or more public SSH keys to be included in the `~/.ssh/authorized_keys` file for the default user on each ESXi host. Use a newline character to separate multiple keys. The SSH keys must be in the format required for the `authorized_keys` file""")
 @cli_util.option('--provisioning-subnet-id', required=True, help=u"""The [OCID] of the management subnet to use for provisioning the SDDC.""")
 @cli_util.option('--vsphere-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the vSphere component of the VMware environment.""")
@@ -174,6 +174,7 @@ For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `myS
 @cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX for this SDDC.""")
 @cli_util.option('--hcx-vlan-id', help=u"""The [OCID] of the VLAN to use for the HCX component of the VMware environment. This value is required only when `isHcxEnabled` is true.""")
 @cli_util.option('--is-hcx-enterprise-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX Enterprise for this SDDC.""")
+@cli_util.option('--is-single-host-sddc', type=click.BOOL, help=u"""Indicates whether this SDDC is designated for only single ESXi host.""")
 @cli_util.option('--workload-network-cidr', help=u"""The CIDR block for the IP addresses that VMware VMs in the SDDC use to run application workloads.""")
 @cli_util.option('--replication-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the vSphere Replication component of the VMware environment.""")
 @cli_util.option('--provisioning-vlan-id', help=u"""The [OCID] of the VLAN used by the SDDC for the Provisioning component of the VMware environment.""")
@@ -195,7 +196,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, is_single_host_sddc, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -232,6 +233,9 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if is_hcx_enterprise_enabled is not None:
         _details['isHcxEnterpriseEnabled'] = is_hcx_enterprise_enabled
+
+    if is_single_host_sddc is not None:
+        _details['isSingleHostSddc'] = is_single_host_sddc
 
     if workload_network_cidr is not None:
         _details['workloadNetworkCidr'] = workload_network_cidr

@@ -6,6 +6,111 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.14.0 - 2022-08-09
+--------------------
+Added
+~~~~~
+* Support for moving resources in the Dashboard Service
+ 
+  * ``oci dashboard-service dashboard-group change-compartment``
+  * ``oci dashboard-service dashboard change-dashboard-group`` 
+  
+* Java Management service
+
+  * Support for Java download and installation
+
+    * ``oci jms java-family get``
+    * ``oci jms java-family-collection list-java-families``
+    * ``oci jms java-release``
+    * ``oci jms installation-site-summary add``
+    * ``oci jms fleet generate-agent-deploy-script``
+  
+  * Support for new parameters
+
+    * ``oci jms application-usage summarize --display-name-contains``
+    * ``oci jms fleet create --inventory-log, --is-advanced-features-enabled``
+    * ``oci jms fleet list --display-name-contains``
+    * ``oci jms fleet update --is-advanced-features-enabled``
+    * ``oci jms installation-site-summary list-installation-sites --path-contains, --time-end, --time-start``
+    * ``oci jms installation-usage summarize --path-contains``
+    * ``oci jms managed-instance-usage summarize --hostname-contains``
+  
+* Support for ETags for Optimistic Concurrency Control for all commands in Load Balancer service 
+
+  * ``oci lb --if-match``
+   
+* Support for single host Software Defined Data Center in the Oracle Cloud VMware Provisioning service
+ 
+  * `` oci ocvs sddc create --is-single-host-sddc ``
+  
+* Support for maintenance run history for Infrastructure maintenance for ExaCC as part of Database service
+
+  * ``oci db maintenance-run-history``
+  
+* Support for Optimiser statistics monitoring and management for Database Management service
+ 
+  * ``oci database-management managed-database get-optimizer-statistics-advisor-execution``
+  * ``oci database-management managed-database get-optimizer-statistics-advisor-execution-script``
+  * ``oci database-management managed-database get-optimizer-statistics-collection-operation``
+  * ``oci database-management managed-database implement-optimizer-statistics-advisor-recommendations``
+  * ``oci database-management managed-database list-optimizer-statistics-advisor-executions``
+  * ``oci database-management managed-database list-optimizer-statistics-collection-aggregations``
+  * ``oci database-management managed-database list-optimizer-statistics-collection-operations``
+  * ``oci database-management managed-database list-table-statistics``
+    
+* APM Synthetic service
+
+  * Support for Round Robin Alerting for create/update monitors
+
+    * ``oci apm-synthetics monitor create-browser-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor create-rest-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor create-scripted-browser-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor create-scripted-rest-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor update-browser-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor update-rest-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor update-scripted-browser-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+    * ``oci apm-synthetics monitor update-scripted-rest-monitor --batch-interval-in-seconds, --dns-configuration, --is-run-now, --scheduling-policy``
+        
+  * Support for aggregated network data
+
+    * ``oci apm-synthetics aggregated-network-data-result aggregate-network-data``
+  
+* Operations Insights (OPSI) service
+
+  * Support for OCI Compute Instances
+
+    * ``oci opsi host-insights create-macs-cloud-host``
+    * ``oci opsi host-insights enable-macs-cloud-host``
+    * ``oci opsi host-insights list-macs-cloud-hosts``
+    * ``oci opsi host-insights update-macs-cloud-host``
+    
+  * Support to filter by host Id and host type for capacity planning
+  
+    * oci opsi host-insights summarize-host-insight-resource-capacity-trend --host-id --host-type
+    * oci opsi host-insights summarize-host-insight-resource-forecast-trend --host-id --host-type
+    * oci opsi host-insights summarize-host-insight-resource-statistics --host-id --host-type
+    * oci opsi host-insights summarize-host-insight-resource-usage-trend --host-id --host-type
+    * oci opsi host-insights summarize-host-insight-resource-usage --host-id --host-type
+    * oci opsi host-insights summarize-host-insight-resource-utilization-insight --resource-metric --host-id --host-type
+    * oci opsi host-insights summarize-top-processes-usage-trend --host-id --host-type
+    * oci opsi host-insights list-host-configurations --host-id --host-type
+    * oci opsi host-insights list-hosted-entities --host-id --host-type
+  
+* Support shape option for creating instance in the Integration service
+
+  * ``oci integration integration-instance create --shape``
+
+Changed
+~~~~~~~
+* [BREAKING] Multiple subgroup and command renames in the Open Search service
+
+  * ``oci opensearch cluster``
+  * ``oci opensearch backup``
+
+* [BREAKING] --inventory-log is now a required parameter in the Java Management Service
+
+  * ``oci jms fleet create --inventory-log`` 
+
 3.13.0 - 2022-08-02
 --------------------
 Added

@@ -1609,6 +1609,91 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('db_management.get_optimizer_statistics_advisor_execution.command_name', 'get-optimizer-statistics-advisor-execution'), help=u"""Gets a comprehensive report of the Optimizer Statistics Advisor execution, which includes details of the Managed Database, findings, recommendations, rationale, and examples. \n[Command Reference](getOptimizerStatisticsAdvisorExecution)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--execution-name', required=True, help=u"""The name of the Optimizer Statistics Advisor execution.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the optimizer statistics collection execution task.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsAdvisorExecution'})
+@cli_util.wrap_exceptions
+def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_id, execution_name, task_name):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(execution_name, six.string_types) and len(execution_name.strip()) == 0:
+        raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_optimizer_statistics_advisor_execution(
+        managed_database_id=managed_database_id,
+        execution_name=execution_name,
+        task_name=task_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.get_optimizer_statistics_advisor_execution_script.command_name', 'get-optimizer-statistics-advisor-execution-script'), help=u"""Gets the Oracle system-generated script for the specified Optimizer Statistics Advisor execution. \n[Command Reference](getOptimizerStatisticsAdvisorExecutionScript)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--execution-name', required=True, help=u"""The name of the Optimizer Statistics Advisor execution.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the optimizer statistics collection execution task.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsAdvisorExecutionScript'})
+@cli_util.wrap_exceptions
+def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_database_id, execution_name, task_name):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(execution_name, six.string_types) and len(execution_name.strip()) == 0:
+        raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_optimizer_statistics_advisor_execution_script(
+        managed_database_id=managed_database_id,
+        execution_name=execution_name,
+        task_name=task_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.get_optimizer_statistics_collection_operation.command_name', 'get-optimizer-statistics-collection-operation'), help=u"""Gets a detailed report of the Optimizer Statistics Collection operation for the specified Managed Database. \n[Command Reference](getOptimizerStatisticsCollectionOperation)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--optimizer-statistics-collection-operation-id', required=True, type=click.FLOAT, help=u"""The ID of the Optimizer Statistics Collection operation.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsCollectionOperation'})
+@cli_util.wrap_exceptions
+def get_optimizer_statistics_collection_operation(ctx, from_json, managed_database_id, optimizer_statistics_collection_operation_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(optimizer_statistics_collection_operation_id, six.string_types) and len(optimizer_statistics_collection_operation_id.strip()) == 0:
+        raise click.UsageError('Parameter --optimizer-statistics-collection-operation-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_optimizer_statistics_collection_operation(
+        managed_database_id=managed_database_id,
+        optimizer_statistics_collection_operation_id=optimizer_statistics_collection_operation_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @pdb_metrics_group.command(name=cli_util.override('db_management.get_pdb_metrics.command_name', 'get'), help=u"""Gets a summary of the resource usage metrics such as CPU, User I/O, and Storage for each PDB within a specific CDB. If comparmentId is specified, then the metrics for each PDB (within the CDB) in the specified compartment are retrieved. If compartmentId is not specified, then the metrics for all the PDBs within the CDB are retrieved. \n[Command Reference](getPdbMetrics)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
@@ -1715,6 +1800,41 @@ def get_work_request(ctx, from_json, work_request_id):
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.implement_optimizer_statistics_advisor_recommendations.command_name', 'implement-optimizer-statistics-advisor-recommendations'), help=u"""Asynchronously implements the findings and recommendations of the Optimizer Statistics Advisor execution. \n[Command Reference](implementOptimizerStatisticsAdvisorRecommendations)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--execution-name', required=True, help=u"""The name of the Optimizer Statistics Advisor execution.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the task.""")
+@cli_util.option('--job-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'job-details': {'module': 'database_management', 'class': 'ImplementOptimizerStatisticsAdvisorRecommendationsJob'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-details': {'module': 'database_management', 'class': 'ImplementOptimizerStatisticsAdvisorRecommendationsJob'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def implement_optimizer_statistics_advisor_recommendations(ctx, from_json, managed_database_id, execution_name, task_name, job_details):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(execution_name, six.string_types) and len(execution_name.strip()) == 0:
+        raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskName'] = task_name
+    _details['jobDetails'] = cli_util.parse_json_parameter("job_details", job_details)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.implement_optimizer_statistics_advisor_recommendations(
+        managed_database_id=managed_database_id,
+        execution_name=execution_name,
+        implement_optimizer_statistics_advisor_recommendations_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2639,6 +2759,168 @@ def list_object_privileges(ctx, from_json, all_pages, page_size, managed_databas
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('db_management.list_optimizer_statistics_advisor_executions.command_name', 'list-optimizer-statistics-advisor-executions'), help=u"""Lists the details of the Optimizer Statistics Advisor task executions, such as their duration, and the number of findings, if any. Optionally, you can specify a date-time range (of seven days) to obtain the list of executions that fall within the specified time range. If the date-time range is not specified, then the executions in the last seven days are listed. \n[Command Reference](listOptimizerStatisticsAdvisorExecutions)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time-greater-than-or-equal-to', help=u"""The start time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time-less-than-or-equal-to', help=u"""The end time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsAdvisorExecutionsCollection'})
+@cli_util.wrap_exceptions
+def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if start_time_greater_than_or_equal_to is not None:
+        kwargs['start_time_greater_than_or_equal_to'] = start_time_greater_than_or_equal_to
+    if end_time_less_than_or_equal_to is not None:
+        kwargs['end_time_less_than_or_equal_to'] = end_time_less_than_or_equal_to
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.list_optimizer_statistics_advisor_executions(
+        managed_database_id=managed_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.list_optimizer_statistics_collection_aggregations.command_name', 'list-optimizer-statistics-collection-aggregations'), help=u"""Gets a list of the optimizer statistics collection operations per hour, grouped by task or object status for the specified Managed Database. You must specify a value for GroupByQueryParam to determine whether the data should be grouped by task status or task object status. Optionally, you can specify a date-time range (of seven days) to obtain collection aggregations within the specified time range. If the date-time range is not specified, then the operations in the last seven days are listed. You can further filter the results by providing the optional type of TaskTypeQueryParam. If the task type not provided, then both Auto and Manual tasks are considered for aggregation. \n[Command Reference](listOptimizerStatisticsCollectionAggregations)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--group-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TASK_STATUS", "TASK_OBJECTS_STATUS"]), help=u"""The optimizer statistics tasks grouped by type.""")
+@cli_util.option('--start-time-greater-than-or-equal-to', help=u"""The start time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time-less-than-or-equal-to', help=u"""The end time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--task-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "MANUAL", "AUTO"]), help=u"""The filter types of the optimizer statistics tasks.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsCollectionAggregationsCollection'})
+@cli_util.wrap_exceptions
+def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages, page_size, managed_database_id, group_type, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, task_type, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if start_time_greater_than_or_equal_to is not None:
+        kwargs['start_time_greater_than_or_equal_to'] = start_time_greater_than_or_equal_to
+    if end_time_less_than_or_equal_to is not None:
+        kwargs['end_time_less_than_or_equal_to'] = end_time_less_than_or_equal_to
+    if task_type is not None:
+        kwargs['task_type'] = task_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_optimizer_statistics_collection_aggregations,
+            managed_database_id=managed_database_id,
+            group_type=group_type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_optimizer_statistics_collection_aggregations,
+            limit,
+            page_size,
+            managed_database_id=managed_database_id,
+            group_type=group_type,
+            **kwargs
+        )
+    else:
+        result = client.list_optimizer_statistics_collection_aggregations(
+            managed_database_id=managed_database_id,
+            group_type=group_type,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.list_optimizer_statistics_collection_operations.command_name', 'list-optimizer-statistics-collection-operations'), help=u"""Lists the Optimizer Statistics Collection (Auto and Manual) task operation summary for the specified Managed Database. The summary includes the details of each operation and the number of tasks grouped by status: Completed, In Progress, Failed, and so on. Optionally, you can specify a date-time range (of seven days) to obtain the list of operations that fall within the specified time range. If the date-time range is not specified, then the operations in the last seven days are listed. This API also enables the pagination of results and the opc-next-page response header indicates whether there is a next page. If you use the same header value in a consecutive request, the next page records are returned. To obtain the required results, you can apply the different types of filters supported by this API. \n[Command Reference](listOptimizerStatisticsCollectionOperations)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time-greater-than-or-equal-to', help=u"""The start time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time-less-than-or-equal-to', help=u"""The end time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--task-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "MANUAL", "AUTO"]), help=u"""The filter types of the optimizer statistics tasks.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--filter-by', help=u"""The parameter used to filter the optimizer statistics operations. Any property of the OptimizerStatisticsCollectionOperationSummary can be used to define the filter condition. The allowed conditional operators are AND or OR, and the allowed binary operators are are >, < and =. Any other operator is regarded invalid. Example: jobName=<replace with job name> AND status=<replace with status>""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["START_TIME", "END_TIME", "STATUS"]), help=u"""Sorts the list of optimizer statistics operations based on a specific attribute.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsCollectionOperationsCollection'})
+@cli_util.wrap_exceptions
+def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, page_size, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, task_type, limit, page, filter_by, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if start_time_greater_than_or_equal_to is not None:
+        kwargs['start_time_greater_than_or_equal_to'] = start_time_greater_than_or_equal_to
+    if end_time_less_than_or_equal_to is not None:
+        kwargs['end_time_less_than_or_equal_to'] = end_time_less_than_or_equal_to
+    if task_type is not None:
+        kwargs['task_type'] = task_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if filter_by is not None:
+        kwargs['filter_by'] = filter_by
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_optimizer_statistics_collection_operations,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_optimizer_statistics_collection_operations,
+            limit,
+            page_size,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_optimizer_statistics_collection_operations(
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.list_proxied_for_users.command_name', 'list-proxied-for-users'), help=u"""Gets the list of users on whose behalf the current user acts as proxy. \n[Command Reference](listProxiedForUsers)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
@@ -2904,6 +3186,29 @@ def list_system_privileges(ctx, from_json, all_pages, page_size, managed_databas
             user_name=user_name,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.list_table_statistics.command_name', 'list-table-statistics'), help=u"""Lists the database table statistics grouped by different statuses such as Not Stale Stats, Stale Stats, and No Stats. This also includes the percentage of each status. \n[Command Reference](listTableStatistics)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TableStatisticsCollection'})
+@cli_util.wrap_exceptions
+def list_table_statistics(ctx, from_json, all_pages, managed_database_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.list_table_statistics(
+        managed_database_id=managed_database_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

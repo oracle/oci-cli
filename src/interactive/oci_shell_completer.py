@@ -35,6 +35,7 @@ class OciShellCompleter(Completer):
         self.list_of_required_params = (
             set()
         )  # used in key_binding to know set of all required params
+        self.size = 0
 
     def get_top_level_commands(self):
         top_level_commands = {}
@@ -186,8 +187,11 @@ class OciShellCompleter(Completer):
     # deselecting already chosen params
     # if last token is a parameter, it returns resources from the cloud or user can type the param value
     def get_completions(self, document, _):
+        # Setup Variables
         is_leaf_command_met = False
+        validate = True
         completions = []
+        self.size = 0
         self.list_of_required_params.clear()  # remove required param from previous command
         word_before_cursor = document.get_word_before_cursor(WORD=True)
         tokens = shlex.split(handle_invalid_chars(document.text))
@@ -201,6 +205,8 @@ class OciShellCompleter(Completer):
         already_chosen_parameters = set()
         parameter = None
         param_value = ""  # this will save parameter value between quotes ( " " or ' ' ) with space
+
+        # Parse Input Buffer
         for token_index, token in enumerate(token_check):
             # add parameters to the list so they will be excluded from the list given to the user
             if token.startswith("-"):
@@ -230,13 +236,14 @@ class OciShellCompleter(Completer):
                 service_subcommands = collections.OrderedDict(
                     sorted(service_subcommands.items())
                 )
-            elif (
-                not parameter
-            ):  # Not valid command, subcommand or parameter and not a value for a parameter
+
+            elif not parameter:
+                # Not valid command, subcommand or parameter and not a value for a parameter
                 self.bottom_toolbar.set_toolbar_text(
                     get_error_message("invalid_input", token), is_error=True
                 )
                 return completions
+
             elif parameter and (
                 token.startswith('"') or token.startswith("'") or param_value
             ):
@@ -247,51 +254,33 @@ class OciShellCompleter(Completer):
                 if is_matching_quotes(param_value):
                     parameter = None
                     param_value = ""
+
             else:
                 parameter = None
+
             remaining_command_tokens.remove(token)
+
         remaing_sub_string = (
             "" if len(remaining_command_tokens) == 0 else remaining_command_tokens[0]
         )
+        if is_leaf_command_met:
+            self.get_list_of_req_param(command)
+
         # If at top level, read top level commands and show them in the list
         if only_at_top_level:
             completions = self.append_top_level_command_completions(
                 word_before_cursor, remaing_sub_string
             )
-            validate_incorrect_input(
-                completions, word_before_cursor, self.bottom_toolbar
-            )
-            return completions
 
         # If the last token is a command, then show the sub commands
-        if len(service_subcommands) > 0:
+        elif len(service_subcommands) > 0:
             completions = self.append_command_completions(
                 service_subcommands, word_before_cursor, remaing_sub_string
             )
-            validate_incorrect_input(
-                completions, word_before_cursor, self.bottom_toolbar
-            )
-            return completions
-
-        if is_leaf_command_met:
-            self.get_list_of_req_param(command)
-
-        if not parameter:
-            completions = self.append_parameter_completions(
-                command,
-                word_before_cursor,
-                "",
-                already_chosen_parameters,
-                remaing_sub_string,
-            )
-            validate_incorrect_input(
-                completions, word_before_cursor, self.bottom_toolbar
-            )
-            return completions
 
         # if the last token is a parameter, then check if a list of resources need to be provided or the parameter
         # does not need a value like --all
-        if check_param_is_flag(command, parameter):
+        elif not parameter or check_param_is_flag(command, parameter):
             completions = self.append_parameter_completions(
                 command,
                 word_before_cursor,
@@ -299,6 +288,7 @@ class OciShellCompleter(Completer):
                 already_chosen_parameters,
                 remaing_sub_string,
             )
+
         else:
             completions = get_oci_resources(
                 self.ctx,
@@ -307,6 +297,13 @@ class OciShellCompleter(Completer):
                 self.bottom_toolbar,
                 remaing_sub_string,
             )
+            validate = False
+
+        if validate:
+            validate_incorrect_input(
+                completions, word_before_cursor, self.bottom_toolbar
+            )
+        self.size = len(completions)
         return completions
 
 

@@ -13,7 +13,8 @@ error_messages = {
     "resource_search_failed": "Error: Resource search failed, please check you are correctly authorized to view resources",
     "no_items_found": "No items found",
     "try_again": "Something went wrong. Please try again later",
-    "history_clear": "History cleared"
+    "history_clear": "History cleared",
+    "terminal_too_small": "Terminal is too small. Expand terminal height to see full menu."
 }
 
 

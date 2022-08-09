@@ -321,6 +321,12 @@ def key_store_group():
     pass
 
 
+@click.command(cli_util.override('db.maintenance_run_history_group.command_name', 'maintenance-run-history'), cls=CommandGroupWithAlias, help="""Details of a maintenance run history.""")
+@cli_util.help_option_group
+def maintenance_run_history_group():
+    pass
+
+
 @click.command(cli_util.override('db.cloud_autonomous_vm_cluster_group.command_name', 'cloud-autonomous-vm-cluster'), cls=CommandGroupWithAlias, help="""Details of the cloud Autonomous VM cluster.""")
 @cli_util.help_option_group
 def cloud_autonomous_vm_cluster_group():
@@ -420,6 +426,7 @@ db_root_group.add_command(db_system_storage_performance_group)
 db_root_group.add_command(db_system_group)
 db_root_group.add_command(autonomous_vm_cluster_group)
 db_root_group.add_command(key_store_group)
+db_root_group.add_command(maintenance_run_history_group)
 db_root_group.add_command(cloud_autonomous_vm_cluster_group)
 db_root_group.add_command(cloud_vm_cluster_group)
 db_root_group.add_command(autonomous_db_version_group)
@@ -10717,6 +10724,27 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
     cli_util.render_response(result, ctx)
 
 
+@maintenance_run_history_group.command(name=cli_util.override('db.get_maintenance_run_history.command_name', 'get'), help=u"""Gets information about the specified maintenance run history. \n[Command Reference](getMaintenanceRunHistory)""")
+@cli_util.option('--maintenance-run-history-id', required=True, help=u"""The maintenance run history OCID.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'MaintenanceRunHistory'})
+@cli_util.wrap_exceptions
+def get_maintenance_run_history(ctx, from_json, maintenance_run_history_id):
+
+    if isinstance(maintenance_run_history_id, six.string_types) and len(maintenance_run_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-run-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_maintenance_run_history(
+        maintenance_run_history_id=maintenance_run_history_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @pdb_conversion_history_entry_group.command(name=cli_util.override('db.get_pdb_conversion_history_entry.command_name', 'get'), help=u"""Gets the details of operations performed to convert the specified database from non-container (non-CDB) to pluggable (PDB). \n[Command Reference](getPdbConversionHistoryEntry)""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-conversion-history-entry-id', required=True, help=u"""The database conversion history [OCID].""")
@@ -14504,6 +14532,81 @@ def list_key_stores(ctx, from_json, all_pages, page_size, compartment_id, limit,
         )
     else:
         result = client.list_key_stores(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_run_history_group.command(name=cli_util.override('db.list_maintenance_run_history.command_name', 'list'), help=u"""Gets a list of the maintenance run histories in the specified compartment. \n[Command Reference](listMaintenanceRunHistory)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
+@cli_util.option('--target-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_EXADATA_INFRASTRUCTURE", "AUTONOMOUS_CONTAINER_DATABASE", "EXADATA_DB_SYSTEM", "CLOUD_EXADATA_INFRASTRUCTURE", "EXACC_INFRASTRUCTURE", "AUTONOMOUS_VM_CLUSTER", "AUTONOMOUS_DATABASE"]), help=u"""The type of the target resource.""")
+@cli_util.option('--maintenance-type', type=custom_types.CliCaseInsensitiveChoice(["PLANNED", "UNPLANNED"]), help=u"""The maintenance type.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_SCHEDULED", "TIME_ENDED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIME_SCHEDULED and TIME_ENDED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), help=u"""The state of the maintenance run history.""")
+@cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
+@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY"]), help=u"""The sub-type of the maintenance run.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[MaintenanceRunHistorySummary]'})
+@cli_util.wrap_exceptions
+def list_maintenance_run_history(ctx, from_json, all_pages, page_size, compartment_id, target_resource_id, target_resource_type, maintenance_type, limit, page, sort_by, sort_order, lifecycle_state, availability_domain, maintenance_subtype):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if target_resource_id is not None:
+        kwargs['target_resource_id'] = target_resource_id
+    if target_resource_type is not None:
+        kwargs['target_resource_type'] = target_resource_type
+    if maintenance_type is not None:
+        kwargs['maintenance_type'] = maintenance_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if maintenance_subtype is not None:
+        kwargs['maintenance_subtype'] = maintenance_subtype
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_maintenance_run_history,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_maintenance_run_history,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_maintenance_run_history(
             compartment_id=compartment_id,
             **kwargs
         )

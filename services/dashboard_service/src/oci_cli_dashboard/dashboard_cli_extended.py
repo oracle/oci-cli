@@ -31,7 +31,6 @@ dashboard_cli.dashboard_root_group.add_command(dashboard_cli.update_dashboard)
 dashboard_cli.dashboard_root_group.add_command(dashboard_cli.update_dashboard_update_v1_dashboard_details)
 dashboard_cli.dashboard_root_group.add_command(dashboard_cli.create_dashboard_create_v1_dashboard_details)
 
-
 # Move commands under 'oci dashboard-service dashboard dashboards' -> 'oci dashboard-service dashboard'
 dashboard_cli.dashboard_root_group.commands.pop(dashboard_cli.dashboard_collection_group.name)
 dashboard_cli.dashboard_root_group.add_command(dashboard_cli.list_dashboards)
@@ -43,3 +42,6 @@ dashboard_cli.dashboard_root_group.commands.pop(dashboard_cli.create_dashboard.n
 
 # Remove update from oci dashboard-service dashboard
 dashboard_cli.dashboard_root_group.commands.pop(dashboard_cli.update_dashboard.name)
+
+# Add Change_dashboard_group command in oci dashboard-service dashboard
+dashboard_cli.dashboard_root_group.add_command(dashboard_cli.change_dashboard_group)

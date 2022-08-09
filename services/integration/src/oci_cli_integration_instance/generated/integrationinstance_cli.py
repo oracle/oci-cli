@@ -172,7 +172,7 @@ def change_integration_instance_network_endpoint(ctx, from_json, wait_for_state,
 @integration_instance_group.command(name=cli_util.override('integration.change_integration_instance_network_endpoint_public_endpoint_details.command_name', 'change-integration-instance-network-endpoint-public-endpoint-details'), help=u"""Change an Integration instance network endpoint. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeIntegrationInstanceNetworkEndpoint)""")
 @cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--network-endpoint-details-allowlisted-http-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges ingress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-allowlisted-http-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges ingress rules. (ex: \"168.122.59.5\", \"10.20.30.0/26\") An invalid IP or CIDR block will result in a 400 response.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-allowlisted-http-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
 This option is a JSON list with items of type VirtualCloudNetwork.  For documentation on VirtualCloudNetwork please see our API reference: https://docs.cloud.oracle.com/api/#/en/integrationinstance/20190131/datatypes/VirtualCloudNetwork.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -244,7 +244,7 @@ def change_integration_instance_network_endpoint_public_endpoint_details(ctx, fr
 @integration_instance_group.command(name=cli_util.override('integration.create_integration_instance.command_name', 'create'), help=u"""Creates a new Integration Instance. \n[Command Reference](createIntegrationInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Integration Instance Identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
-@cli_util.option('--integration-instance-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
+@cli_util.option('--integration-instance-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX"]), help=u"""Standard or Enterprise type, Oracle Integration Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration 3 uses ENTERPRISEX and STANDARDX""")
 @cli_util.option('--is-byol', required=True, type=click.BOOL, help=u"""Bring your own license.""")
 @cli_util.option('--message-packs', required=True, type=click.INT, help=u"""The number of configured message packs""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -258,6 +258,7 @@ This option is a JSON list with items of type CreateCustomEndpointDetails.  For 
 @cli_util.option('--consumption-model', type=custom_types.CliCaseInsensitiveChoice(["UCM", "GOV", "OIC4SAAS"]), help=u"""Optional parameter specifying which entitlement to use for billing purposes. Only required if the account possesses more than one entitlement.""")
 @cli_util.option('--is-file-server-enabled', type=click.BOOL, help=u"""The file server is enabled or not.""")
 @cli_util.option('--network-endpoint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', type=custom_types.CliCaseInsensitiveChoice(["DEVELOPMENT", "PRODUCTION"]), help=u"""Shape""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -266,7 +267,7 @@ This option is a JSON list with items of type CreateCustomEndpointDetails.  For 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
-def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, network_endpoint_details):
+def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, network_endpoint_details, shape):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -305,6 +306,9 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
     if network_endpoint_details is not None:
         _details['networkEndpointDetails'] = cli_util.parse_json_parameter("network_endpoint_details", network_endpoint_details)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.create_integration_instance(
         create_integration_instance_details=_details,
@@ -339,7 +343,7 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 @integration_instance_group.command(name=cli_util.override('integration.create_integration_instance_public_endpoint_details.command_name', 'create-integration-instance-public-endpoint-details'), help=u"""Creates a new Integration Instance. \n[Command Reference](createIntegrationInstance)""")
 @cli_util.option('--display-name', required=True, help=u"""Integration Instance Identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
-@cli_util.option('--integration-instance-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
+@cli_util.option('--integration-instance-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX"]), help=u"""Standard or Enterprise type, Oracle Integration Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration 3 uses ENTERPRISEX and STANDARDX""")
 @cli_util.option('--is-byol', required=True, type=click.BOOL, help=u"""Bring your own license.""")
 @cli_util.option('--message-packs', required=True, type=click.INT, help=u"""The number of configured message packs""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -352,7 +356,8 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 This option is a JSON list with items of type CreateCustomEndpointDetails.  For documentation on CreateCustomEndpointDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/integrationinstance/20190131/datatypes/CreateCustomEndpointDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--consumption-model', type=custom_types.CliCaseInsensitiveChoice(["UCM", "GOV", "OIC4SAAS"]), help=u"""Optional parameter specifying which entitlement to use for billing purposes. Only required if the account possesses more than one entitlement.""")
 @cli_util.option('--is-file-server-enabled', type=click.BOOL, help=u"""The file server is enabled or not.""")
-@cli_util.option('--network-endpoint-details-allowlisted-http-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges ingress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', type=custom_types.CliCaseInsensitiveChoice(["DEVELOPMENT", "PRODUCTION"]), help=u"""Shape""")
+@cli_util.option('--network-endpoint-details-allowlisted-http-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges ingress rules. (ex: \"168.122.59.5\", \"10.20.30.0/26\") An invalid IP or CIDR block will result in a 400 response.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-allowlisted-http-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
 This option is a JSON list with items of type VirtualCloudNetwork.  For documentation on VirtualCloudNetwork please see our API reference: https://docs.cloud.oracle.com/api/#/en/integrationinstance/20190131/datatypes/VirtualCloudNetwork.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -365,7 +370,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
 @cli_util.wrap_exceptions
-def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
+def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, shape, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -401,6 +406,9 @@ def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for
 
     if is_file_server_enabled is not None:
         _details['isFileServerEnabled'] = is_file_server_enabled
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if network_endpoint_details_allowlisted_http_ips is not None:
         _details['networkEndpointDetails']['allowlistedHttpIps'] = cli_util.parse_json_parameter("network_endpoint_details_allowlisted_http_ips", network_endpoint_details_allowlisted_http_ips)
@@ -868,7 +876,7 @@ def stop_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @integration_instance_group.command(name=cli_util.override('integration.update_integration_instance.command_name', 'update'), help=u"""Updates the Integration Instance. \n[Command Reference](updateIntegrationInstance)""")
 @cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
 @cli_util.option('--display-name', help=u"""Integration Instance Identifier.""")
-@cli_util.option('--integration-instance-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
+@cli_util.option('--integration-instance-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX"]), help=u"""Standard or Enterprise type, Oracle Integration Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration 3 uses ENTERPRISEX and STANDARDX""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-byol', type=click.BOOL, help=u"""Bring your own license.""")
