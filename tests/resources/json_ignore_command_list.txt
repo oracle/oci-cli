@@ -30,3 +30,4 @@ db, database, create
 stack-monitoring, resource, create
 stack-monitoring, resource, updateopsi, host-insights, list
 stack-monitoring, resource, update
+service-mesh, debug, report

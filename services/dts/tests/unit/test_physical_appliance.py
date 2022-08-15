@@ -174,6 +174,7 @@ class PhysicalApplianceTest(unittest.TestCase):
             f.write(ssl_cert)
         return cert.digest("md5")
 
+    @unittest.skip("skipped to prevent comment on tickets")
     def test_init_auth_valid_cert_fingerprint(self):
         # Mock only the fetch_cert() method of the cert_manager
         auth_spec = self._get_test_auth_spec(self._get_config_manager(), "1.2.3.4", 443)
@@ -186,6 +187,7 @@ class PhysicalApplianceTest(unittest.TestCase):
         self._test_init_auth(auth_spec, validate_cert_manager_calls=False, cert_fingerprint=cert_fingerprint)
         self._validate_init_auth(auth_spec)
 
+    @unittest.skip("skipped to prevent comment on tickets")
     def test_init_auth_invalid_cert_fingerprint(self):
         with self.assertRaises(exceptions.RequestException):
             # Mock only the fetch_cert() method of the cert_manager
