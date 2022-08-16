@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.15.0 - 2022-08-16
+--------------------
+Added
+~~~~~
+* Support for debug reports and analysis in Service Mesh service
+
+  * ``oci service-mesh debug report``
+
+* Support for Logging Analytics as a target for Streaming Source feature for Service Connector Hub in the Logging service
+
+  * ``oci logging analytics target``
+
+* Support for streaming Application logs to Logging Service in the Data Flow Service
+
+  * ``oci data-flow run create --application-log-config``
+  * ``oci data-flow application create --application-log-config``
+  * ``oci data-flow application update --application-log-config``
+  * ``oci data-flow run submit --application-log-config``
+
+* Support for the below commands in the Cloud Guard service
+
+  * ``oci cloud-guard data-source``
+  * ``oci cloud-guard detector-recipe-detector-rule``
+  * ``oci cloud-guard problem list-problem-entities``
+  * ``oci cloud-guard work-request``
+  * ``oci cloud-guard work-request-error``
+  * ``oci cloud-guard work-request-log-entry``
+
+Changed
+~~~~~
+* The parameter --source-detector-recipe-id is now optional in the below command in the Cloud Guard service
+
+  * ``oci cloud-guard detector-recipe create``
+
+Fixed
+~~~~~
+* [BREAKING] The command ``oci logging-search search-result search-logs`` has been changed back to be ``oci logging-search search-logs``
+
 3.14.0 - 2022-08-09
 --------------------
 Added
