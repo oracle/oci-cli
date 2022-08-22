@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('em_warehouse.em_warehouse_root_group.command_name', 'em-warehouse'), cls=CommandGroupWithAlias, help=cli_util.override('em_warehouse.em_warehouse_root_group.help', """A description of the EmdwControlPlane API"""), short_help=cli_util.override('em_warehouse.em_warehouse_root_group.short_help', """EmdwControlPlane API"""))
+@cli.command(cli_util.override('em_warehouse.em_warehouse_root_group.command_name', 'em-warehouse'), cls=CommandGroupWithAlias, help=cli_util.override('em_warehouse.em_warehouse_root_group.help', """Use the EM Warehouse API to manage EM Warehouse data collection."""), short_help=cli_util.override('em_warehouse.em_warehouse_root_group.short_help', """EM Warehouse API"""))
 @cli_util.help_option_group
 def em_warehouse_root_group():
     pass
@@ -90,7 +90,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -123,7 +123,7 @@ def change_em_warehouse_compartment(ctx, from_json, wait_for_state, max_wait_sec
     _details = {}
     _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.change_em_warehouse_compartment(
         em_warehouse_id=em_warehouse_id,
         change_em_warehouse_compartment_details=_details,
@@ -189,7 +189,7 @@ def create_em_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.create_em_warehouse(
         create_em_warehouse_details=_details,
         **kwargs
@@ -241,7 +241,7 @@ def delete_em_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.delete_em_warehouse(
         em_warehouse_id=em_warehouse_id,
         **kwargs
@@ -286,7 +286,7 @@ def get_em_warehouse(ctx, from_json, em_warehouse_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.get_em_warehouse(
         em_warehouse_id=em_warehouse_id,
         **kwargs
@@ -308,7 +308,7 @@ def get_em_warehouse_resource_usage(ctx, from_json, em_warehouse_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.get_em_warehouse_resource_usage(
         em_warehouse_id=em_warehouse_id,
         **kwargs
@@ -330,7 +330,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -380,7 +380,7 @@ def list_em_warehouses(ctx, from_json, all_pages, page_size, compartment_id, lif
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -440,7 +440,7 @@ def list_etl_runs(ctx, from_json, all_pages, page_size, em_warehouse_id, compart
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -497,7 +497,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -554,7 +554,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -619,7 +619,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -686,7 +686,7 @@ def update_em_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds,
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('em_warehouse', 'em_data_lake', ctx)
+    client = cli_util.build_client('em_warehouse', 'em_warehouse', ctx)
     result = client.update_em_warehouse(
         em_warehouse_id=em_warehouse_id,
         update_em_warehouse_details=_details,

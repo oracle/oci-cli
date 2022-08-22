@@ -359,23 +359,44 @@ def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@resource_action_summary_group.command(name=cli_util.override('optimizer.filter_resource_actions.command_name', 'filter-resource-actions'), help=u"""Queries the Cloud Advisor resource actions that are supported by the specified recommendation. \n[Command Reference](filterResourceActions)""")
+@resource_action_summary_group.command(name=cli_util.override('optimizer.filter_resource_actions.command_name', 'filter-resource-actions'), help=u"""Queries the Cloud Advisor resource actions that are supported. \n[Command Reference](filterResourceActions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
-@cli_util.option('--recommendation-id', required=True, help=u"""The unique OCID associated with the recommendation.""")
 @cli_util.option('--query-parameterconflict', help=u"""The query describing which resources to search for. For more information, see [Query Language Syntax].""")
+@cli_util.option('--recommendation-id', help=u"""The unique OCID associated with the recommendation.""")
+@cli_util.option('--recommendation-name', help=u"""Optional. A filter that returns results that match the recommendation name specified.""")
+@cli_util.option('--child-tenancy-ids', multiple=True, help=u"""A list of child tenancies for which the respective data will be returned. Please note that the parent tenancy id can also be included in this list. For example, if there is a parent P with two children A and B, to return results of only parent P and child A, this list should be populated with tenancy id of parent P and child A.
+
+If this list contains a tenancy id that isn't part of the organization of parent P, the request will fail. That is, let's say there is an organization with parent P with children A and B, and also one other tenant T that isn't part of the organization. If T is included in the list of childTenancyIds, the request will fail.
+
+It is important to note that if you are setting the includeOrganization parameter value as true and also populating the childTenancyIds parameter with a list of child tenancies, the request will fail. The childTenancyIds and includeOrganization should be used exclusively.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
+@cli_util.option('--include-organization', type=click.BOOL, help=u"""When set to true, the data for all child tenancies including the parent is returned. That is, if there is an organization with parent P and children A and B, to return the data for the parent P, child A and child B, this parameter value should be set to true.
+
+Please note that this parameter shouldn't be used along with childTenancyIds parameter. If you would like to get results specifically for parent P and only child A, use the childTenancyIds parameter and populate the list with tenancy id of P and A.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
 @cli_util.wrap_exceptions
-def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_subtree, recommendation_id, query_parameterconflict, limit, page):
+def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_subtree, query_parameterconflict, recommendation_id, recommendation_name, child_tenancy_ids, include_organization, limit, page):
 
     kwargs = {}
+    if recommendation_id is not None:
+        kwargs['recommendation_id'] = recommendation_id
+    if recommendation_name is not None:
+        kwargs['recommendation_name'] = recommendation_name
+    if child_tenancy_ids is not None and len(child_tenancy_ids) > 0:
+        kwargs['child_tenancy_ids'] = child_tenancy_ids
+    if include_organization is not None:
+        kwargs['include_organization'] = include_organization
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -391,7 +412,6 @@ def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_su
     result = client.filter_resource_actions(
         compartment_id=compartment_id,
         compartment_id_in_subtree=compartment_id_in_subtree,
-        recommendation_id=recommendation_id,
         query_details=_details,
         **kwargs
     )
@@ -535,6 +555,18 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
+@cli_util.option('--child-tenancy-ids', multiple=True, help=u"""A list of child tenancies for which the respective data will be returned. Please note that the parent tenancy id can also be included in this list. For example, if there is a parent P with two children A and B, to return results of only parent P and child A, this list should be populated with tenancy id of parent P and child A.
+
+If this list contains a tenancy id that isn't part of the organization of parent P, the request will fail. That is, let's say there is an organization with parent P with children A and B, and also one other tenant T that isn't part of the organization. If T is included in the list of childTenancyIds, the request will fail.
+
+It is important to note that if you are setting the includeOrganization parameter value as true and also populating the childTenancyIds parameter with a list of child tenancies, the request will fail. The childTenancyIds and includeOrganization should be used exclusively.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
+@cli_util.option('--include-organization', type=click.BOOL, help=u"""When set to true, the data for all child tenancies including the parent is returned. That is, if there is an organization with parent P and children A and B, to return the data for the parent P, child A and child B, this parameter value should be set to true.
+
+Please note that this parameter shouldn't be used along with childTenancyIds parameter. If you would like to get results specifically for parent P and only child A, use the childTenancyIds parameter and populate the list with tenancy id of P and A.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
 @cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -543,17 +575,21 @@ Can only be set to true when performing ListCompartments on the tenancy (root co
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), help=u"""A filter that returns results that match the lifecycle state specified.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'CategoryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'CategoryCollection'})
 @cli_util.wrap_exceptions
-def list_categories(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, name, limit, page, sort_order, sort_by, lifecycle_state):
+def list_categories(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, child_tenancy_ids, include_organization, name, limit, page, sort_order, sort_by, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if child_tenancy_ids is not None and len(child_tenancy_ids) > 0:
+        kwargs['child_tenancy_ids'] = child_tenancy_ids
+    if include_organization is not None:
+        kwargs['include_organization'] = include_organization
     if name is not None:
         kwargs['name'] = name
     if limit is not None:
@@ -926,12 +962,25 @@ def list_recommendation_strategies(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@recommendation_summary_group.command(name=cli_util.override('optimizer.list_recommendations.command_name', 'list-recommendations'), help=u"""Lists the Cloud Advisor recommendations that are currently supported in the specified category. \n[Command Reference](listRecommendations)""")
+@recommendation_summary_group.command(name=cli_util.override('optimizer.list_recommendations.command_name', 'list-recommendations'), help=u"""Lists the Cloud Advisor recommendations that are currently supported. \n[Command Reference](listRecommendations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
-@cli_util.option('--category-id', required=True, help=u"""The unique OCID associated with the category.""")
+@cli_util.option('--category-id', help=u"""The unique OCID associated with the category.""")
+@cli_util.option('--category-name', help=u"""Optional. A filter that returns results that match the category name specified.""")
+@cli_util.option('--child-tenancy-ids', multiple=True, help=u"""A list of child tenancies for which the respective data will be returned. Please note that the parent tenancy id can also be included in this list. For example, if there is a parent P with two children A and B, to return results of only parent P and child A, this list should be populated with tenancy id of parent P and child A.
+
+If this list contains a tenancy id that isn't part of the organization of parent P, the request will fail. That is, let's say there is an organization with parent P with children A and B, and also one other tenant T that isn't part of the organization. If T is included in the list of childTenancyIds, the request will fail.
+
+It is important to note that if you are setting the includeOrganization parameter value as true and also populating the childTenancyIds parameter with a list of child tenancies, the request will fail. The childTenancyIds and includeOrganization should be used exclusively.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
+@cli_util.option('--include-organization', type=click.BOOL, help=u"""When set to true, the data for all child tenancies including the parent is returned. That is, if there is an organization with parent P and children A and B, to return the data for the parent P, child A and child B, this parameter value should be set to true.
+
+Please note that this parameter shouldn't be used along with childTenancyIds parameter. If you would like to get results specifically for parent P and only child A, use the childTenancyIds parameter and populate the list with tenancy id of P and A.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
 @cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -941,17 +990,25 @@ Can only be set to true when performing ListCompartments on the tenancy (root co
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "DISMISSED", "POSTPONED", "IMPLEMENTED"]), help=u"""A filter that returns recommendations that match the status specified.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'RecommendationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'RecommendationCollection'})
 @cli_util.wrap_exceptions
-def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, category_id, name, limit, page, sort_order, sort_by, lifecycle_state, status):
+def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, category_id, category_name, child_tenancy_ids, include_organization, name, limit, page, sort_order, sort_by, lifecycle_state, status):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if category_id is not None:
+        kwargs['category_id'] = category_id
+    if category_name is not None:
+        kwargs['category_name'] = category_name
+    if child_tenancy_ids is not None and len(child_tenancy_ids) > 0:
+        kwargs['child_tenancy_ids'] = child_tenancy_ids
+    if include_organization is not None:
+        kwargs['include_organization'] = include_organization
     if name is not None:
         kwargs['name'] = name
     if limit is not None:
@@ -976,7 +1033,6 @@ def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, c
             client.list_recommendations,
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
-            category_id=category_id,
             **kwargs
         )
     elif limit is not None:
@@ -986,14 +1042,12 @@ def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, c
             page_size,
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
-            category_id=category_id,
             **kwargs
         )
     else:
         result = client.list_recommendations(
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
-            category_id=category_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1053,12 +1107,25 @@ def list_resource_action_queryable_fields(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@resource_action_summary_group.command(name=cli_util.override('optimizer.list_resource_actions.command_name', 'list-resource-actions'), help=u"""Lists the Cloud Advisor resource actions that are supported by the specified recommendation. \n[Command Reference](listResourceActions)""")
+@resource_action_summary_group.command(name=cli_util.override('optimizer.list_resource_actions.command_name', 'list-resource-actions'), help=u"""Lists the Cloud Advisor resource actions that are supported. \n[Command Reference](listResourceActions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--compartment-id-in-subtree', required=True, type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.
 
 Can only be set to true when performing ListCompartments on the tenancy (root compartment).""")
-@cli_util.option('--recommendation-id', required=True, help=u"""The unique OCID associated with the recommendation.""")
+@cli_util.option('--recommendation-id', help=u"""The unique OCID associated with the recommendation.""")
+@cli_util.option('--recommendation-name', help=u"""Optional. A filter that returns results that match the recommendation name specified.""")
+@cli_util.option('--child-tenancy-ids', multiple=True, help=u"""A list of child tenancies for which the respective data will be returned. Please note that the parent tenancy id can also be included in this list. For example, if there is a parent P with two children A and B, to return results of only parent P and child A, this list should be populated with tenancy id of parent P and child A.
+
+If this list contains a tenancy id that isn't part of the organization of parent P, the request will fail. That is, let's say there is an organization with parent P with children A and B, and also one other tenant T that isn't part of the organization. If T is included in the list of childTenancyIds, the request will fail.
+
+It is important to note that if you are setting the includeOrganization parameter value as true and also populating the childTenancyIds parameter with a list of child tenancies, the request will fail. The childTenancyIds and includeOrganization should be used exclusively.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
+@cli_util.option('--include-organization', type=click.BOOL, help=u"""When set to true, the data for all child tenancies including the parent is returned. That is, if there is an organization with parent P and children A and B, to return the data for the parent P, child A and child B, this parameter value should be set to true.
+
+Please note that this parameter shouldn't be used along with childTenancyIds parameter. If you would like to get results specifically for parent P and only child A, use the childTenancyIds parameter and populate the list with tenancy id of P and A.
+
+When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
 @cli_util.option('--name', help=u"""Optional. A filter that returns results that match the name specified.""")
 @cli_util.option('--resource-type', help=u"""Optional. A filter that returns results that match the resource type specified.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -1069,17 +1136,25 @@ Can only be set to true when performing ListCompartments on the tenancy (root co
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "DISMISSED", "POSTPONED", "IMPLEMENTED"]), help=u"""A filter that returns recommendations that match the status specified.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
 @cli_util.wrap_exceptions
-def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, recommendation_id, name, resource_type, limit, page, sort_order, sort_by, lifecycle_state, status):
+def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, recommendation_id, recommendation_name, child_tenancy_ids, include_organization, name, resource_type, limit, page, sort_order, sort_by, lifecycle_state, status):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if recommendation_id is not None:
+        kwargs['recommendation_id'] = recommendation_id
+    if recommendation_name is not None:
+        kwargs['recommendation_name'] = recommendation_name
+    if child_tenancy_ids is not None and len(child_tenancy_ids) > 0:
+        kwargs['child_tenancy_ids'] = child_tenancy_ids
+    if include_organization is not None:
+        kwargs['include_organization'] = include_organization
     if name is not None:
         kwargs['name'] = name
     if resource_type is not None:
@@ -1106,7 +1181,6 @@ def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, 
             client.list_resource_actions,
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
-            recommendation_id=recommendation_id,
             **kwargs
         )
     elif limit is not None:
@@ -1116,14 +1190,12 @@ def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, 
             page_size,
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
-            recommendation_id=recommendation_id,
             **kwargs
         )
     else:
         result = client.list_resource_actions(
             compartment_id=compartment_id,
             compartment_id_in_subtree=compartment_id_in_subtree,
-            recommendation_id=recommendation_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

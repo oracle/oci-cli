@@ -50,6 +50,7 @@ mysqlaas_root_group.add_command(version_group)
 @cli_util.option('--shape-name', required=True, help=u"""The name of the associated Shape.""")
 @cli_util.option('--description', help=u"""User-provided data about the Configuration.""")
 @cli_util.option('--display-name', help=u"""The display name of the Configuration.""")
+@cli_util.option('--init-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parent-configuration-id', help=u"""The OCID of the Configuration from which the new Configuration is derived. The values in CreateConfigurationDetails.variables supersede the variables of the parent Configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -57,12 +58,12 @@ mysqlaas_root_group.add_command(version_group)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'variables': {'module': 'mysql', 'class': 'ConfigurationVariables'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'init-variables': {'module': 'mysql', 'class': 'InitializationVariables'}, 'variables': {'module': 'mysql', 'class': 'ConfigurationVariables'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'mysql', 'class': 'ConfigurationVariables'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'Configuration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'init-variables': {'module': 'mysql', 'class': 'InitializationVariables'}, 'variables': {'module': 'mysql', 'class': 'ConfigurationVariables'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'Configuration'})
 @cli_util.wrap_exceptions
-def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, description, display_name, variables, parent_configuration_id, freeform_tags, defined_tags):
+def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, description, display_name, init_variables, variables, parent_configuration_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -76,6 +77,9 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if init_variables is not None:
+        _details['initVariables'] = cli_util.parse_json_parameter("init_variables", init_variables)
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)

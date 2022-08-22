@@ -183,6 +183,12 @@ def vm_cluster_network_group():
     pass
 
 
+@click.command(cli_util.override('db.infrastructure_target_version_group.command_name', 'infrastructure-target-version'), cls=CommandGroupWithAlias, help="""Infrastructure target version details.""")
+@cli_util.help_option_group
+def infrastructure_target_version_group():
+    pass
+
+
 @click.command(cli_util.override('db.backup_destination_summary_group.command_name', 'backup-destination-summary'), cls=CommandGroupWithAlias, help="""Backup destination details, including the list of databases using the backup destination.""")
 @cli_util.help_option_group
 def backup_destination_summary_group():
@@ -405,6 +411,7 @@ db_root_group.add_command(autonomous_patch_group)
 db_root_group.add_command(ocp_us_group)
 db_root_group.add_command(patch_history_entry_group)
 db_root_group.add_command(vm_cluster_network_group)
+db_root_group.add_command(infrastructure_target_version_group)
 db_root_group.add_command(backup_destination_summary_group)
 db_root_group.add_command(db_node_group)
 db_root_group.add_command(console_connection_group)
@@ -10681,6 +10688,31 @@ def get_external_pluggable_database(ctx, from_json, external_pluggable_database_
     cli_util.render_response(result, ctx)
 
 
+@infrastructure_target_version_group.command(name=cli_util.override('db.get_infrastructure_target_versions.command_name', 'get'), help=u"""Gets details of the Exadata Infrastructure target system software versions that can be applied to the specified infrastructure resource for maintenance updates. Applies to Exadata Cloud@Customer and Exadata Cloud instances only. \n[Command Reference](getInfrastructureTargetVersions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
+@cli_util.option('--target-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_EXADATA_INFRASTRUCTURE", "AUTONOMOUS_CONTAINER_DATABASE", "EXADATA_DB_SYSTEM", "CLOUD_EXADATA_INFRASTRUCTURE", "EXACC_INFRASTRUCTURE", "AUTONOMOUS_VM_CLUSTER", "AUTONOMOUS_DATABASE"]), help=u"""The type of the target resource.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'InfrastructureTargetVersion'})
+@cli_util.wrap_exceptions
+def get_infrastructure_target_versions(ctx, from_json, compartment_id, target_resource_id, target_resource_type):
+
+    kwargs = {}
+    if target_resource_id is not None:
+        kwargs['target_resource_id'] = target_resource_id
+    if target_resource_type is not None:
+        kwargs['target_resource_type'] = target_resource_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_infrastructure_target_versions(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @key_store_group.command(name=cli_util.override('db.get_key_store.command_name', 'get'), help=u"""Gets information about the specified key store. \n[Command Reference](getKeyStore)""")
 @cli_util.option('--key-store-id', required=True, help=u"""The [OCID] of the key store.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -19294,6 +19326,8 @@ def update_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 @cli_util.option('--custom-action-timeout-in-mins', type=click.INT, help=u"""Determines the amount of time the system will wait before the start of each database server patching operation. Specify a number of minutes from 15 to 120.""")
 @cli_util.option('--current-custom-action-timeout-in-mins', type=click.INT, help=u"""The current custom action timeout between the current database servers during waiting state in addition to custom action timeout, from 0 (zero) to 30 minutes.""")
 @cli_util.option('--is-resume-patching', type=click.BOOL, help=u"""If true, then the patching is resumed and the next component will be patched immediately.""")
+@cli_util.option('--target-db-server-version', help=u"""The target database server system software version for the patching operation.""")
+@cli_util.option('--target-storage-server-version', help=u"""The target storage cell system software version for the patching operation.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -19303,7 +19337,7 @@ def update_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'MaintenanceRun'})
 @cli_util.wrap_exceptions
-def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_run_id, is_enabled, time_scheduled, is_patch_now_enabled, patch_id, patching_mode, is_custom_action_timeout_enabled, custom_action_timeout_in_mins, current_custom_action_timeout_in_mins, is_resume_patching, if_match):
+def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_run_id, is_enabled, time_scheduled, is_patch_now_enabled, patch_id, patching_mode, is_custom_action_timeout_enabled, custom_action_timeout_in_mins, current_custom_action_timeout_in_mins, is_resume_patching, target_db_server_version, target_storage_server_version, if_match):
 
     if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
@@ -19340,6 +19374,12 @@ def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if is_resume_patching is not None:
         _details['isResumePatching'] = is_resume_patching
+
+    if target_db_server_version is not None:
+        _details['targetDbServerVersion'] = target_db_server_version
+
+    if target_storage_server_version is not None:
+        _details['targetStorageServerVersion'] = target_storage_server_version
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_maintenance_run(

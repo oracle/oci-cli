@@ -177,7 +177,7 @@ service_mapping = {
     ],
     "em-warehouse": [
         "em_warehouse",
-        "EmdwControlPlane"
+        "EM Warehouse"
     ],
     "email": [
         "email",
