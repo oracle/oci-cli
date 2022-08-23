@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.15.1 - 2022-08-23
+--------------------
+
+Added
+~~~~~
+* Support for support rewards redemption summaries in the Usage service 
+
+  * ``oci usage redemption-summary list-redemption-summaries``
+
+* Support for parent tenancy of an organization to view child tenancy categories, recommendations, and resource actions in the Optimizer service
+
+  * ``oci optimizer category-summary list``
+  * ``oci optimizer recommendation-summary list``
+  * ``oci optimizer resource-action-summary list``
+
+* Support for File filter in the DevOps service
+  
+  * ``oci devops trigger create-bitbucket-cloud-trigger``
+  * ``oci devops trigger create-github-trigger``
+  * ``oci devops trigger create-gitlab-trigger``
+  * ``oci devops trigger update-bitbucket-cloud-trigger``
+  * ``oci devops trigger update-github-trigger``
+  * ``oci devops trigger update-gitlab-trigger``
+
+* Added additional support for Configuration variables to MDS in the MySQL Service
+ 
+  * ``oci mysql configuration create --init-variables``
+
+* Database service
+
+  * Support for allowing choosing prior versions for Infrastructure Maintenance for ExaCC
+   
+    * ``oci db infrastructure-target-version get``
+
+  * Support for new optional parameters
+
+    * ``oci db maintenance-run update --target-db-server-version --target-storage-server-version``
+
+Changed
+~~~~~
+* Optimizer service
+
+  * The parameter --category-id is now optional in the below command
+  
+    * ``oci optimizer recommendation-summary list``
+
+  * The parameter --recommendation-id is now optional in the below commands
+
+    * ``oci optimizer resource-action-summary filter-resource-actions``
+    * ``oci optimizer resource-action-summary list``
+
 3.15.0 - 2022-08-16
 --------------------
 Added

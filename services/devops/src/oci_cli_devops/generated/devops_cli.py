@@ -4173,6 +4173,7 @@ def create_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--description', help=u"""Optional description about the trigger.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-id', help=u"""The OCID of the connection resource used to get details for triggered events.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4181,7 +4182,7 @@ def create_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
 @cli_util.wrap_exceptions
-def create_trigger_create_github_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+def create_trigger_create_github_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags, connection_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4201,6 +4202,9 @@ def create_trigger_create_github_trigger_details(ctx, from_json, wait_for_state,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_id is not None:
+        _details['connectionId'] = connection_id
 
     _details['triggerSource'] = 'GITHUB'
 
@@ -4315,6 +4319,7 @@ def create_trigger_create_devops_code_repository_trigger_details(ctx, from_json,
 @cli_util.option('--description', help=u"""Optional description about the trigger.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-id', help=u"""The OCID of the connection resource used to get details for triggered events.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4323,7 +4328,7 @@ def create_trigger_create_devops_code_repository_trigger_details(ctx, from_json,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
 @cli_util.wrap_exceptions
-def create_trigger_create_bitbucket_cloud_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+def create_trigger_create_bitbucket_cloud_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags, connection_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4343,6 +4348,9 @@ def create_trigger_create_bitbucket_cloud_trigger_details(ctx, from_json, wait_f
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_id is not None:
+        _details['connectionId'] = connection_id
 
     _details['triggerSource'] = 'BITBUCKET_CLOUD'
 
@@ -4453,6 +4461,7 @@ def create_trigger_create_gitlab_server_trigger_details(ctx, from_json, wait_for
 @cli_util.option('--description', help=u"""Optional description about the trigger.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-id', help=u"""The OCID of the connection resource used to get details for triggered events.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4461,7 +4470,7 @@ def create_trigger_create_gitlab_server_trigger_details(ctx, from_json, wait_for
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerCreateResult'})
 @cli_util.wrap_exceptions
-def create_trigger_create_gitlab_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags):
+def create_trigger_create_gitlab_trigger_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, actions, display_name, description, freeform_tags, defined_tags, connection_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4481,6 +4490,9 @@ def create_trigger_create_gitlab_trigger_details(ctx, from_json, wait_for_state,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_id is not None:
+        _details['connectionId'] = connection_id
 
     _details['triggerSource'] = 'GITLAB'
 
@@ -12031,6 +12043,7 @@ def update_trigger_update_devops_code_repository_trigger_details(ctx, from_json,
 This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-id', help=u"""The OCID of the connection resource used to get details for triggered events.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12041,7 +12054,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
 @cli_util.wrap_exceptions
-def update_trigger_update_github_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+def update_trigger_update_github_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
     if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
@@ -12071,6 +12084,9 @@ def update_trigger_update_github_trigger_details(ctx, from_json, force, wait_for
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_id is not None:
+        _details['connectionId'] = connection_id
 
     _details['triggerSource'] = 'GITHUB'
 
@@ -12115,6 +12131,7 @@ def update_trigger_update_github_trigger_details(ctx, from_json, force, wait_for
 This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-id', help=u"""The OCID of the connection resource used to get details for triggered events.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12125,7 +12142,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
 @cli_util.wrap_exceptions
-def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
     if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
@@ -12155,6 +12172,9 @@ def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_id is not None:
+        _details['connectionId'] = connection_id
 
     _details['triggerSource'] = 'GITLAB'
 
@@ -12199,6 +12219,7 @@ def update_trigger_update_gitlab_trigger_details(ctx, from_json, force, wait_for
 This option is a JSON list with items of type TriggerAction.  For documentation on TriggerAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/TriggerAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-id', help=u"""The OCID of the connection resource used to get details for triggered events.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12209,7 +12230,7 @@ This option is a JSON list with items of type TriggerAction.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'actions': {'module': 'devops', 'class': 'list[TriggerAction]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Trigger'})
 @cli_util.wrap_exceptions
-def update_trigger_update_bitbucket_cloud_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, if_match):
+def update_trigger_update_bitbucket_cloud_trigger_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_id, display_name, description, actions, freeform_tags, defined_tags, connection_id, if_match):
 
     if isinstance(trigger_id, six.string_types) and len(trigger_id.strip()) == 0:
         raise click.UsageError('Parameter --trigger-id cannot be whitespace or empty string')
@@ -12239,6 +12260,9 @@ def update_trigger_update_bitbucket_cloud_trigger_details(ctx, from_json, force,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_id is not None:
+        _details['connectionId'] = connection_id
 
     _details['triggerSource'] = 'BITBUCKET_CLOUD'
 

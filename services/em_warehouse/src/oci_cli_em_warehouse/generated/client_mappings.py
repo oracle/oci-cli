@@ -5,9 +5,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.em_warehouse import EmDataLakeClient
+from oci.em_warehouse import EmWarehouseClient
 
 MODULE_TO_TYPE_MAPPINGS["em_warehouse"] = oci.em_warehouse.models.em_warehouse_type_mapping
 if CLIENT_MAP.get("em_warehouse") is None:
     CLIENT_MAP["em_warehouse"] = {}
-CLIENT_MAP["em_warehouse"]["em_data_lake"] = EmDataLakeClient
+CLIENT_MAP["em_warehouse"]["em_warehouse"] = EmWarehouseClient
