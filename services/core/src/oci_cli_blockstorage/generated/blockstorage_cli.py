@@ -537,24 +537,29 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -591,6 +596,9 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if boot_volume_replicas is not None:
         _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
@@ -643,24 +651,29 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -698,6 +711,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
     if boot_volume_replicas is not None:
         _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     _details['sourceDetails']['type'] = 'bootVolumeBackup'
 
@@ -752,24 +768,29 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -807,6 +828,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
 
     if boot_volume_replicas is not None:
         _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     _details['sourceDetails']['type'] = 'bootVolume'
 
@@ -861,24 +885,29 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Allowed values:
 
-  * `10`: Represents Balanced option.
+  * `10`: Represents the Balanced option.
 
-  * `20`: Represents Higher Performance option.
+  * `20`: Represents the Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas):
+def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -916,6 +945,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, 
 
     if boot_volume_replicas is not None:
         _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     _details['sourceDetails']['type'] = 'bootVolumeReplica'
 
@@ -1048,24 +1080,29 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -1110,6 +1147,9 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if block_volume_replicas is not None:
         _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
@@ -1171,23 +1211,28 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -1231,6 +1276,9 @@ def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json
 
     if block_volume_replicas is not None:
         _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     _details['sourceDetails']['type'] = 'blockVolumeReplica'
 
@@ -1294,23 +1342,28 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -1354,6 +1407,9 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 
     if block_volume_replicas is not None:
         _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     _details['sourceDetails']['type'] = 'volume'
 
@@ -1417,23 +1473,28 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas):
+def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
 
     kwargs = {}
 
@@ -1477,6 +1538,9 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
 
     if block_volume_replicas is not None:
         _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     _details['sourceDetails']['type'] = 'volumeBackup'
 
@@ -3608,28 +3672,33 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas that this boot volume will be updated to have in the specified destination availability domains.
 
 This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, if_match):
+def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or boot_volume_replicas:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and boot-volume-replicas will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or boot_volume_replicas or autotune_policies:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and boot-volume-replicas and autotune-policies will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3658,6 +3727,9 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if boot_volume_replicas is not None:
         _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume(
@@ -3817,29 +3889,34 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.
 
-  * `30`-`120`: Represents the Ultra High Performance option.""")
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
-@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
 @cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas that this volume will be updated to have in the specified destination availability domains.
 
 This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, is_auto_tune_enabled, block_volume_replicas, if_match):
+def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, is_auto_tune_enabled, block_volume_replicas, autotune_policies, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or block_volume_replicas:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and block-volume-replicas will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or block_volume_replicas or autotune_policies:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and block-volume-replicas and autotune-policies will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3868,6 +3945,9 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if block_volume_replicas is not None:
         _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume(

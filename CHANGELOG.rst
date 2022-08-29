@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.15.2 - 2022-08-26
+--------------------
+
+Added
+~~~~~
+* Support for dynamic window sizing and new terminal too small error message in interactive mode
+
+  * ``oci -i``
+
+* Support for in-place upgrade in the OCVS service
+
+  * ``oci ocvs esxi-host create``
+
+* Support for customers to choose to opt for Guest VM event collection, diagnostics logs and traces in the Database service
+
+  * ``oci db system launch``
+  * ``oci db system launch-from-backup``
+  * ``oci db system launch-from-database``
+  * ``oci db system launch-from-db-system``
+  * ``oci db system update``
+  * ``oci db data-guard-association create with-new-db-system``
+
+* Support for performance-based autotuning of Block and Boot Volumes in the Block Storage service
+
+  * ``oci bv boot-volume create``
+  * ``oci bv boot-volume create-boot-volume-boot-volume-source-from-boot-volume-replica-details``
+  * ``oci bv boot-volume update``
+  * ``oci bv volume create``
+  * ``oci bv volume create-volume-volume-source-from-block-volume-replica-details``
+  * ``oci bv volume update``
+
+* Support for Single Client Access Name protocol as Data Source and for Network Security Groups in Private Access Channel in the Analytics service
+
+  * ``oci analytics analytics-instance create-private-access-channel``
+
 3.15.1 - 2022-08-23
 --------------------
 
@@ -45,7 +80,7 @@ Added
     * ``oci db maintenance-run update --target-db-server-version --target-storage-server-version``
 
 Changed
-~~~~~
+~~~~~~~
 * Optimizer service
 
   * The parameter --category-id is now optional in the below command
