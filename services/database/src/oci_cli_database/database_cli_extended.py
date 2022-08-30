@@ -343,7 +343,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.disable_autonomous_database_operations_insights, "disable-operations-insights")
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode', 'data_collection_options'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
@@ -361,6 +361,9 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
 @cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
 @cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
+@cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
+@cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
+@cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -433,6 +436,19 @@ def launch_db_system_extended(ctx, **kwargs):
         kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
         kwargs.pop('storage_performance')
 
+    data_collection_options = {}
+    if 'is_diagnostics_events_enabled' in kwargs and kwargs['is_diagnostics_events_enabled'] is not None:
+        data_collection_options['is_diagnostics_events_enabled'] = kwargs['is_diagnostics_events_enabled']
+
+    if 'is_health_monitoring_enabled' in kwargs and kwargs['is_health_monitoring_enabled'] is not None:
+        data_collection_options['is_health_monitoring_enabled'] = kwargs['is_health_monitoring_enabled']
+
+    if 'is_incident_logs_enabled' in kwargs and kwargs['is_incident_logs_enabled'] is not None:
+        data_collection_options['is_incident_logs_enabled'] = kwargs['is_incident_logs_enabled']
+
+    if len(data_collection_options) > 0:
+        kwargs['data_collection_options'] = json.dumps(data_collection_options)
+
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['admin_password']
     del kwargs['tde_wallet_password']
@@ -451,11 +467,14 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['vault_id']
     del kwargs['kms_key_id']
     del kwargs['kms_key_version_id']
+    del kwargs['is_diagnostics_events_enabled']
+    del kwargs['is_health_monitoring_enabled']
+    del kwargs['is_incident_logs_enabled']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys', 'storage_volume_performance_mode', 'data_collection_options'])
 @database_cli.db_system_group.command(name='launch-from-backup', help=database_cli.launch_db_system_launch_db_system_from_backup_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
@@ -466,6 +485,9 @@ def launch_db_system_extended(ctx, **kwargs):
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
 @cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
+@cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
+@cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
+@cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -511,6 +533,19 @@ def launch_db_system_backup_extended(ctx, **kwargs):
         kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
         kwargs.pop('storage_performance')
 
+    data_collection_options = {}
+    if 'is_diagnostics_events_enabled' in kwargs and kwargs['is_diagnostics_events_enabled'] is not None:
+        data_collection_options['is_diagnostics_events_enabled'] = kwargs['is_diagnostics_events_enabled']
+
+    if 'is_health_monitoring_enabled' in kwargs and kwargs['is_health_monitoring_enabled'] is not None:
+        data_collection_options['is_health_monitoring_enabled'] = kwargs['is_health_monitoring_enabled']
+
+    if 'is_incident_logs_enabled' in kwargs and kwargs['is_incident_logs_enabled'] is not None:
+        data_collection_options['is_incident_logs_enabled'] = kwargs['is_incident_logs_enabled']
+
+    if len(data_collection_options) > 0:
+        kwargs['data_collection_options'] = json.dumps(data_collection_options)
+
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['db_unique_name']
     del kwargs['admin_password']
@@ -520,13 +555,19 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     del kwargs['db_name']
     del kwargs['storage_management']
     del kwargs['database_software_image_id']
+    del kwargs['is_diagnostics_events_enabled']
+    del kwargs['is_health_monitoring_enabled']
+    del kwargs['is_incident_logs_enabled']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_backup_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_database_details, params_to_exclude=['storage_volume_performance_mode'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_database_details, params_to_exclude=['storage_volume_performance_mode', 'data_collection_options'])
 @database_cli.db_system_group.command(name='launch-from-database', help=database_cli.launch_db_system_launch_db_system_from_database_details.help)
 @cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
+@cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
+@cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
+@cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -535,6 +576,24 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
     if 'storage_performance' in kwargs:
         kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
         kwargs.pop('storage_performance')
+
+    data_collection_options = {}
+    if 'is_diagnostics_events_enabled' in kwargs and kwargs['is_diagnostics_events_enabled'] is not None:
+        data_collection_options['is_diagnostics_events_enabled'] = kwargs['is_diagnostics_events_enabled']
+
+    if 'is_health_monitoring_enabled' in kwargs and kwargs['is_health_monitoring_enabled'] is not None:
+        data_collection_options['is_health_monitoring_enabled'] = kwargs['is_health_monitoring_enabled']
+
+    if 'is_incident_logs_enabled' in kwargs and kwargs['is_incident_logs_enabled'] is not None:
+        data_collection_options['is_incident_logs_enabled'] = kwargs['is_incident_logs_enabled']
+
+    if len(data_collection_options) > 0:
+        kwargs['data_collection_options'] = json.dumps(data_collection_options)
+
+    # remove all of the kwargs that launch_db_system wont recognize
+    del kwargs['is_diagnostics_events_enabled']
+    del kwargs['is_health_monitoring_enabled']
+    del kwargs['is_incident_logs_enabled']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_database_details, **kwargs)
 
@@ -1125,11 +1184,14 @@ def db_node_reset(ctx, **kwargs):
     ctx.invoke(database_cli.db_node_action, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version_parameterconflict'])
+@cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version_parameterconflict', 'data_collection_options'])
 @database_cli.db_system_group.command(name='update', help=database_cli.update_db_system.help)
 @cli_util.option('--patch-action', help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', help="""The OCID of the patch.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
+@cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
+@cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -1150,10 +1212,26 @@ def update_db_system_extended(ctx, **kwargs):
             "patchId": patch_id
         }
 
+    data_collection_options = {}
+    if 'is_diagnostics_events_enabled' in kwargs and kwargs['is_diagnostics_events_enabled'] is not None:
+        data_collection_options['is_diagnostics_events_enabled'] = kwargs['is_diagnostics_events_enabled']
+
+    if 'is_health_monitoring_enabled' in kwargs and kwargs['is_health_monitoring_enabled'] is not None:
+        data_collection_options['is_health_monitoring_enabled'] = kwargs['is_health_monitoring_enabled']
+
+    if 'is_incident_logs_enabled' in kwargs and kwargs['is_incident_logs_enabled'] is not None:
+        data_collection_options['is_incident_logs_enabled'] = kwargs['is_incident_logs_enabled']
+
+    if len(data_collection_options) > 0:
+        kwargs['data_collection_options'] = json.dumps(data_collection_options)
+
     # remove kwargs that update_db_system wont recognize
     del kwargs['ssh_authorized_keys_file']
     del kwargs['patch_action']
     del kwargs['patch_id']
+    del kwargs['is_diagnostics_events_enabled']
+    del kwargs['is_health_monitoring_enabled']
+    del kwargs['is_incident_logs_enabled']
 
     ctx.invoke(database_cli.update_db_system, **kwargs)
 
@@ -1313,10 +1391,13 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @cli_util.option('--db-system-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].\n\nExample: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
+@cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
+@cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, **kwargs):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, **kwargs):
     kwargs = {}
 
     details = {}
@@ -1361,6 +1442,16 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         details['databaseFreeformTags'] = cli_util.parse_json_parameter("database_freeform_tags", database_freeform_tags)
     if database_defined_tags is not None:
         details['databaseDefinedTags'] = cli_util.parse_json_parameter("database_defined_tags", database_defined_tags)
+
+    data_collection_options = {}
+    if is_diagnostics_events_enabled is not None:
+        data_collection_options['isDiagnosticsEventsEnabled'] = is_diagnostics_events_enabled
+    if is_health_monitoring_enabled is not None:
+        data_collection_options['isHealthMonitoringEnabled'] = is_health_monitoring_enabled
+    if is_incident_logs_enabled is not None:
+        data_collection_options['isIncidentLogsEnabled'] = is_incident_logs_enabled
+    if len(data_collection_options) > 0:
+        details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
 
     details['creationType'] = 'NewDbSystem'
 
@@ -2774,9 +2865,12 @@ def convert_to_pdb_sync_extended(ctx, **kwargs):
 
 
 # Renaming the parameter storage-volume-performance-mode to storage-performance
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_db_system_details, params_to_exclude=['storage_volume_performance_mode'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_db_system_details, params_to_exclude=['storage_volume_performance_mode', 'data_collection_options'])
 @database_cli.db_system_group.command(name='launch-from-db-system', help=database_cli.launch_db_system_launch_db_system_from_db_system_details.help)
 @cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
+@cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
+@cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
+@cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDbSystemDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -2784,6 +2878,22 @@ def launch_db_system_launch_db_system_from_db_system_details_extended(ctx, **kwa
     if 'storage_performance' in kwargs:
         kwargs['storage_volume_performance_mode'] = kwargs['storage_performance']
         kwargs.pop('storage_performance')
+    data_collection_options = {}
+    if 'is_diagnostics_events_enabled' in kwargs and kwargs['is_diagnostics_events_enabled'] is not None:
+        data_collection_options['is_diagnostics_events_enabled'] = kwargs['is_diagnostics_events_enabled']
+
+    if 'is_health_monitoring_enabled' in kwargs and kwargs['is_health_monitoring_enabled'] is not None:
+        data_collection_options['is_health_monitoring_enabled'] = kwargs['is_health_monitoring_enabled']
+
+    if 'is_incident_logs_enabled' in kwargs and kwargs['is_incident_logs_enabled'] is not None:
+        data_collection_options['is_incident_logs_enabled'] = kwargs['is_incident_logs_enabled']
+
+    if len(data_collection_options) > 0:
+        kwargs['data_collection_options'] = json.dumps(data_collection_options)
+
+    del kwargs['is_diagnostics_events_enabled']
+    del kwargs['is_health_monitoring_enabled']
+    del kwargs['is_incident_logs_enabled']
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_db_system_details, **kwargs)
 
 

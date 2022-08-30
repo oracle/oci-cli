@@ -170,15 +170,16 @@ def change_analytics_instance_network_endpoint(ctx, from_json, wait_for_state, m
 @cli_util.option('--network-endpoint-details-vcn-id', required=True, help=u"""The VCN OCID for the private endpoint.""")
 @cli_util.option('--network-endpoint-details-subnet-id', required=True, help=u"""The subnet OCID for the private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--network-endpoint-details-network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for an Analytics instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'network-endpoint-details-network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-endpoint-details-network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def change_analytics_instance_network_endpoint_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, if_match):
+def change_analytics_instance_network_endpoint_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, if_match, network_endpoint_details_network_security_group_ids):
 
     if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
@@ -192,6 +193,9 @@ def change_analytics_instance_network_endpoint_private_endpoint_details(ctx, fro
     _details['networkEndpointDetails'] = {}
     _details['networkEndpointDetails']['vcnId'] = network_endpoint_details_vcn_id
     _details['networkEndpointDetails']['subnetId'] = network_endpoint_details_subnet_id
+
+    if network_endpoint_details_network_security_group_ids is not None:
+        _details['networkEndpointDetails']['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_endpoint_details_network_security_group_ids", network_endpoint_details_network_security_group_ids)
 
     _details['networkEndpointDetails']['networkEndpointType'] = 'PRIVATE'
 
@@ -230,10 +234,11 @@ def change_analytics_instance_network_endpoint_private_endpoint_details(ctx, fro
 @analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint_public_endpoint_details.command_name', 'change-analytics-instance-network-endpoint-public-endpoint-details'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeAnalyticsInstanceNetworkEndpoint)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--network-endpoint-details-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges igress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges in ingress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-whitelisted-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
 This option is a JSON list with items of type VirtualCloudNetwork.  For documentation on VirtualCloudNetwork please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/VirtualCloudNetwork.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-whitelisted-services', type=custom_types.CliCaseInsensitiveChoice(["ALL"]), help=u"""Oracle Cloud Services that are allowed to access this Analytics instance.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -242,7 +247,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-endpoint-details-whitelisted-ips': {'module': 'analytics', 'class': 'list[string]'}, 'network-endpoint-details-whitelisted-vcns': {'module': 'analytics', 'class': 'list[VirtualCloudNetwork]'}})
 @cli_util.wrap_exceptions
-def change_analytics_instance_network_endpoint_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, if_match, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns):
+def change_analytics_instance_network_endpoint_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, if_match, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
 
     if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
@@ -260,6 +265,9 @@ def change_analytics_instance_network_endpoint_public_endpoint_details(ctx, from
 
     if network_endpoint_details_whitelisted_vcns is not None:
         _details['networkEndpointDetails']['whitelistedVcns'] = cli_util.parse_json_parameter("network_endpoint_details_whitelisted_vcns", network_endpoint_details_whitelisted_vcns)
+
+    if network_endpoint_details_whitelisted_services is not None:
+        _details['networkEndpointDetails']['whitelistedServices'] = cli_util.parse_json_parameter("network_endpoint_details_whitelisted_services", network_endpoint_details_whitelisted_services)
 
     _details['networkEndpointDetails']['networkEndpointType'] = 'PUBLIC'
 
@@ -402,15 +410,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--network-endpoint-details-network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for an Analytics instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id):
+def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, network_endpoint_details_network_security_group_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -442,6 +451,9 @@ def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
+
+    if network_endpoint_details_network_security_group_ids is not None:
+        _details['networkEndpointDetails']['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_endpoint_details_network_security_group_ids", network_endpoint_details_network_security_group_ids)
 
     _details['networkEndpointDetails']['networkEndpointType'] = 'PRIVATE'
 
@@ -492,10 +504,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
-@cli_util.option('--network-endpoint-details-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges igress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges in ingress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-whitelisted-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
 This option is a JSON list with items of type VirtualCloudNetwork.  For documentation on VirtualCloudNetwork please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/VirtualCloudNetwork.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-whitelisted-services', type=custom_types.CliCaseInsensitiveChoice(["ALL"]), help=u"""Oracle Cloud Services that are allowed to access this Analytics instance.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -504,7 +517,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-whitelisted-ips': {'module': 'analytics', 'class': 'list[string]'}, 'network-endpoint-details-whitelisted-vcns': {'module': 'analytics', 'class': 'list[VirtualCloudNetwork]'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns):
+def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -540,6 +553,9 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
 
     if network_endpoint_details_whitelisted_vcns is not None:
         _details['networkEndpointDetails']['whitelistedVcns'] = cli_util.parse_json_parameter("network_endpoint_details_whitelisted_vcns", network_endpoint_details_whitelisted_vcns)
+
+    if network_endpoint_details_whitelisted_services is not None:
+        _details['networkEndpointDetails']['whitelistedServices'] = cli_util.parse_json_parameter("network_endpoint_details_whitelisted_services", network_endpoint_details_whitelisted_services)
 
     _details['networkEndpointDetails']['networkEndpointType'] = 'PUBLIC'
 
@@ -580,15 +596,19 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
 @cli_util.option('--vcn-id', required=True, help=u"""OCID of the customer VCN peered with private access channel.""")
 @cli_util.option('--subnet-id', required=True, help=u"""OCID of the customer subnet connected to private access channel.""")
 @cli_util.option('--private-source-dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-source-scan-hosts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DB SCAN hosts registered with Private Access Channel for access from Analytics Instance.
+
+This option is a JSON list with items of type PrivateSourceScanHost.  For documentation on PrivateSourceScanHost please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/PrivateSourceScanHost.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for an Analytics instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@json_skeleton_utils.get_cli_json_input_option({'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}, 'private-source-scan-hosts': {'module': 'analytics', 'class': 'list[PrivateSourceScanHost]'}, 'network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}, 'private-source-scan-hosts': {'module': 'analytics', 'class': 'list[PrivateSourceScanHost]'}, 'network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_private_access_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones):
+def create_private_access_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones, private_source_scan_hosts, network_security_group_ids):
 
     if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
@@ -601,6 +621,12 @@ def create_private_access_channel(ctx, from_json, wait_for_state, max_wait_secon
     _details['vcnId'] = vcn_id
     _details['subnetId'] = subnet_id
     _details['privateSourceDnsZones'] = cli_util.parse_json_parameter("private_source_dns_zones", private_source_dns_zones)
+
+    if private_source_scan_hosts is not None:
+        _details['privateSourceScanHosts'] = cli_util.parse_json_parameter("private_source_scan_hosts", private_source_scan_hosts)
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.create_private_access_channel(
@@ -1513,17 +1539,21 @@ def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--private-source-dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.
 
 This option is a JSON list with items of type PrivateSourceDnsZone.  For documentation on PrivateSourceDnsZone please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/PrivateSourceDnsZone.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-source-scan-hosts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Private Source DB SCAN hosts registered with Private Access Channel for access from Analytics Instance.
+
+This option is a JSON list with items of type PrivateSourceScanHost.  For documentation on PrivateSourceScanHost please see our API reference: https://docs.cloud.oracle.com/api/#/en/analytics/20190331/datatypes/PrivateSourceScanHost.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for an Analytics instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@json_skeleton_utils.get_cli_json_input_option({'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}, 'private-source-scan-hosts': {'module': 'analytics', 'class': 'list[PrivateSourceScanHost]'}, 'network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-source-dns-zones': {'module': 'analytics', 'class': 'list[PrivateSourceDnsZone]'}, 'private-source-scan-hosts': {'module': 'analytics', 'class': 'list[PrivateSourceScanHost]'}, 'network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_access_channel_key, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones, if_match):
+def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_access_channel_key, analytics_instance_id, display_name, vcn_id, subnet_id, private_source_dns_zones, private_source_scan_hosts, network_security_group_ids, if_match):
 
     if isinstance(private_access_channel_key, six.string_types) and len(private_access_channel_key.strip()) == 0:
         raise click.UsageError('Parameter --private-access-channel-key cannot be whitespace or empty string')
@@ -1531,8 +1561,8 @@ def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wai
     if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
     if not force:
-        if private_source_dns_zones:
-            if not click.confirm("WARNING: Updates to private-source-dns-zones will replace any existing values. Are you sure you want to continue?"):
+        if private_source_dns_zones or private_source_scan_hosts or network_security_group_ids:
+            if not click.confirm("WARNING: Updates to private-source-dns-zones and private-source-scan-hosts and network-security-group-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1553,6 +1583,12 @@ def update_private_access_channel(ctx, from_json, force, wait_for_state, max_wai
 
     if private_source_dns_zones is not None:
         _details['privateSourceDnsZones'] = cli_util.parse_json_parameter("private_source_dns_zones", private_source_dns_zones)
+
+    if private_source_scan_hosts is not None:
+        _details['privateSourceScanHosts'] = cli_util.parse_json_parameter("private_source_scan_hosts", private_source_scan_hosts)
+
+    if network_security_group_ids is not None:
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.update_private_access_channel(
