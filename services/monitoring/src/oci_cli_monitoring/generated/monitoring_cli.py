@@ -23,13 +23,19 @@ def monitoring_root_group():
     pass
 
 
+@click.command(cli_util.override('monitoring.alarm_dimension_states_collection_group.command_name', 'alarm-dimension-states-collection'), cls=CommandGroupWithAlias, help="""The list of current alarm state entries for each metric stream that matches the filters.""")
+@cli_util.help_option_group
+def alarm_dimension_states_collection_group():
+    pass
+
+
 @click.command(cli_util.override('monitoring.metric_data_group.command_name', 'metric-data'), cls=CommandGroupWithAlias, help="""The set of aggregated data returned for a metric. For information about metrics, see [Metrics Overview].
 
 Limits information for returned data follows.
 
 * Data points: 100,000. * Metric streams* within data points: 2,000. * Time range returned for 1-day resolution: 90 days. * Time range returned for 1-hour resolution: 90 days. * Time range returned for 5-minute resolution: 30 days. * Time range returned for 1-minute resolution: 7 days.
 
-*A metric stream is an individual set of aggregated data for a metric, typically specific to a single resource. Metric streams cannot be aggregated across metric groups. A metric group is the combination of a given metric, metric namespace, and tenancy for the purpose of determining limits. For more information about metric-related concepts, see [Monitoring Concepts].""")
+*A metric stream is an individual set of aggregated data for a metric with zero or more dimension values. Metric streams cannot be aggregated across metric groups. A metric group is the combination of a given metric, metric namespace, and tenancy for the purpose of determining limits. For more information about metric-related concepts, see [Monitoring Concepts].""")
 @cli_util.help_option_group
 def metric_data_group():
     pass
@@ -73,6 +79,7 @@ def suppression_group():
     pass
 
 
+monitoring_root_group.add_command(alarm_dimension_states_collection_group)
 monitoring_root_group.add_command(metric_data_group)
 monitoring_root_group.add_command(metric_group)
 monitoring_root_group.add_command(alarm_status_group)
@@ -170,6 +177,7 @@ Example: `PT5M`""")
 @cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
+@cli_util.option('--is-notifications-per-metric-dimension-enabled', type=click.BOOL, help=u"""When set to `true`, splits notifications per metric stream. When set to `false`, groups notifications across metric streams. Example: `true`""")
 @cli_util.option('--message-format', type=custom_types.CliCaseInsensitiveChoice(["RAW", "PRETTY_JSON", "ONS_OPTIMIZED"]), help=u"""The format to use for notification messages sent from this alarm. The formats are: * `RAW` - Raw JSON blob. Default value. * `PRETTY_JSON`: JSON with new lines and indents. * `ONS_OPTIMIZED`: Simplified, user-friendly layout. Applies only to messages sent through the Notifications service to the following subscription types: Email.""")
 @cli_util.option('--repeat-notification-duration', help=u"""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
 
@@ -187,7 +195,7 @@ Example: `PT2H`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags):
+def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, is_notifications_per_metric_dimension_enabled, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -216,6 +224,9 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if body is not None:
         _details['body'] = body
+
+    if is_notifications_per_metric_dimension_enabled is not None:
+        _details['isNotificationsPerMetricDimensionEnabled'] = is_notifications_per_metric_dimension_enabled
 
     if message_format is not None:
         _details['messageFormat'] = message_format
@@ -477,7 +488,7 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@alarm_status_group.command(name=cli_util.override('monitoring.list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
+@alarm_status_group.command(name=cli_util.override('monitoring.list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. Status is collective, across all metric streams in the alarm. To list alarm status for each metric stream, use [RetrieveDimensionStates]. The alarm attribute `isNotificationsPerMetricDimensionEnabled` must be set to `true`. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](listAlarmsStatus)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
@@ -662,7 +673,7 @@ Per-call limits information follows.
 
 * Dimensions per metric group*. Maximum: 20. Minimum: 1. * Unique metric streams*. Maximum: 50. * Transactions Per Second (TPS) per-tenancy limit for this operation: 50.
 
-*A metric group is the combination of a given metric, metric namespace, and tenancy for the purpose of determining limits. A dimension is a qualifier provided in a metric definition. A metric stream is an individual set of aggregated data for a metric, typically specific to a resource. For more information about metric-related concepts, see [Monitoring Concepts].
+*A metric group is the combination of a given metric, metric namespace, and tenancy for the purpose of determining limits. A dimension is a qualifier provided in a metric definition. A metric stream is an individual set of aggregated data for a metric with zero or more dimension values. For more information about metric-related concepts, see [Monitoring Concepts].
 
 The endpoints for this operation differ from other Monitoring operations. Replace the string `telemetry` with `telemetry-ingestion` in the endpoint, as in the following example:
 
@@ -671,14 +682,17 @@ https://telemetry-ingestion.eu-frankfurt-1.oraclecloud.com \n[Command Reference]
 @cli_util.option('--batch-atomicity', type=custom_types.CliCaseInsensitiveChoice(["ATOMIC", "NON_ATOMIC"]), help=u"""Batch atomicity behavior. Requires either partial or full pass of input validation for metric objects in PostMetricData requests. The default value of NON_ATOMIC requires a partial pass: at least one metric object in the request must pass input validation, and any objects that failed validation are identified in the returned summary, along with their error messages. A value of ATOMIC requires a full pass: all metric objects in the request must pass input validation.
 
 Example: `NON_ATOMIC`""")
+@cli_util.option('--content-encoding', help=u"""The optional Content-Encoding header that defines the content encodings that were applied to the payload.""")
 @json_skeleton_utils.get_cli_json_input_option({'metric-data': {'module': 'monitoring', 'class': 'list[MetricDataDetails]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-data': {'module': 'monitoring', 'class': 'list[MetricDataDetails]'}}, output_type={'module': 'monitoring', 'class': 'PostMetricDataResponseDetails'})
 @cli_util.wrap_exceptions
-def post_metric_data(ctx, from_json, metric_data, batch_atomicity):
+def post_metric_data(ctx, from_json, metric_data, batch_atomicity, content_encoding):
 
     kwargs = {}
+    if content_encoding is not None:
+        kwargs['content_encoding'] = content_encoding
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -717,6 +731,54 @@ def remove_alarm_suppression(ctx, from_json, alarm_id, if_match):
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.remove_alarm_suppression(
         alarm_id=alarm_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@alarm_dimension_states_collection_group.command(name=cli_util.override('monitoring.retrieve_dimension_states.command_name', 'retrieve-dimension-states'), help=u"""Lists the current alarm status of each metric stream, where status is derived from the metric stream's last associated transition. Optionally filter by status value and one or more dimension key-value pairs. This operation is only valid for alarms that have notifications per dimension enabled (`isNotificationsPerMetricDimensionEnabled=true`).  If `isNotificationsPerMetricDimensionEnabled` for the alarm is false or null, then no results are returned.
+
+For important limits information, see [Limits on Monitoring].
+
+ This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations.  Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests,  or transactions, per second (TPS) for a given tenancy. \n[Command Reference](retrieveDimensionStates)""")
+@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Default: 1000
+
+Example: 500""")
+@cli_util.option('--dimension-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A filter to return only alarm state entries that match the exact set of specified dimension key-value pairs. If you specify `\"availabilityDomain\": \"phx-ad-1\"` but the alarm state entry corresponds to the set `\"availabilityDomain\": \"phx-ad-1\"` and `\"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"`, then no results are returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--status', help=u"""A filter to return only alarm state entries that match the status value. Example: `FIRING`""")
+@json_skeleton_utils.get_cli_json_input_option({'dimension-filters': {'module': 'monitoring', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimension-filters': {'module': 'monitoring', 'class': 'dict(str, string)'}}, output_type={'module': 'monitoring', 'class': 'AlarmDimensionStatesCollection'})
+@cli_util.wrap_exceptions
+def retrieve_dimension_states(ctx, from_json, alarm_id, page, limit, dimension_filters, status):
+
+    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+        raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if dimension_filters is not None:
+        _details['dimensionFilters'] = cli_util.parse_json_parameter("dimension_filters", dimension_filters)
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
+    result = client.retrieve_dimension_states(
+        alarm_id=alarm_id,
+        retrieve_dimension_states_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -841,6 +903,7 @@ Example: `CRITICAL`""")
 @cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
+@cli_util.option('--is-notifications-per-metric-dimension-enabled', type=click.BOOL, help=u"""When set to `true`, splits notifications per metric stream. When set to `false`, groups notifications across metric streams. Example: `true`""")
 @cli_util.option('--message-format', type=custom_types.CliCaseInsensitiveChoice(["RAW", "PRETTY_JSON", "ONS_OPTIMIZED"]), help=u"""The format to use for notification messages sent from this alarm. The formats are: * `RAW` - Raw JSON blob. Default value. * `PRETTY_JSON`: JSON with new lines and indents. * `ONS_OPTIMIZED`: Simplified, user-friendly layout. Applies only to messages sent through the Notifications service to the following subscription types: Email.""")
 @cli_util.option('--destinations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of destinations to which the notifications for this alarm will be delivered. Each destination is represented by an [OCID] related to the supported destination service. For example, a destination using the Notifications service is represented by a topic OCID. Supported destination services: Notifications Service. Limit: One destination per supported destination service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-notification-duration', help=u"""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
@@ -864,7 +927,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
+def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, is_notifications_per_metric_dimension_enabled, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
@@ -912,6 +975,9 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if body is not None:
         _details['body'] = body
+
+    if is_notifications_per_metric_dimension_enabled is not None:
+        _details['isNotificationsPerMetricDimensionEnabled'] = is_notifications_per_metric_dimension_enabled
 
     if message_format is not None:
         _details['messageFormat'] = message_format

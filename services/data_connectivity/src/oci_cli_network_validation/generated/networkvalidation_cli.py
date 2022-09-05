@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.data_connectivity.src.oci_cli_data_connectivity.generated import data_connectivity_service_cli
 
 
-@click.command(cli_util.override('network_validation.network_validation_root_group.command_name', 'network-validation'), cls=CommandGroupWithAlias, help=cli_util.override('network_validation.network_validation_root_group.help', """Use the DCMS APIs to perform Metadata/Data operations."""), short_help=cli_util.override('network_validation.network_validation_root_group.short_help', """Data Connectivity Management API"""))
+@click.command(cli_util.override('network_validation.network_validation_root_group.command_name', 'network-validation'), cls=CommandGroupWithAlias, help=cli_util.override('network_validation.network_validation_root_group.help', """Use the Data Connectivity Management Service APIs to perform common extract, load, and transform (ETL) tasks."""), short_help=cli_util.override('network_validation.network_validation_root_group.short_help', """Data Connectivity Management API"""))
 @cli_util.help_option_group
 def network_validation_root_group():
     pass
@@ -31,12 +31,12 @@ data_connectivity_service_cli.data_connectivity_service_group.add_command(networ
 network_validation_root_group.add_command(test_network_connectivity_group)
 
 
-@test_network_connectivity_group.command(name=cli_util.override('network_validation.get_network_connectivity_status_collection.command_name', 'get-network-connectivity-status-collection'), help=u"""This api is used to get Network Connectivity Status for all the Data Assets attatched to the provided Private endpoint. \n[Command Reference](getNetworkConnectivityStatusCollection)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@test_network_connectivity_group.command(name=cli_util.override('network_validation.get_network_connectivity_status_collection.command_name', 'get-network-connectivity-status-collection'), help=u"""This API is used to get the network connectivity status fofor all the data assets attached to the provided private endpoint. \n[Command Reference](getNetworkConnectivityStatusCollection)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--endpoint-key', required=True, help=u"""The endpoint key.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
