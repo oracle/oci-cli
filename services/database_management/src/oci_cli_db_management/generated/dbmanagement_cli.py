@@ -137,6 +137,12 @@ def job_group():
     pass
 
 
+@click.command(cli_util.override('db_management.preferred_credential_group.command_name', 'preferred-credential'), cls=CommandGroupWithAlias, help="""The details of the preferred credential.""")
+@cli_util.help_option_group
+def preferred_credential_group():
+    pass
+
+
 database_management_service_cli.database_management_service_group.add_command(db_management_root_group)
 db_management_root_group.add_command(addm_tasks_collection_group)
 db_management_root_group.add_command(snapshot_details_group)
@@ -157,6 +163,7 @@ db_management_root_group.add_command(job_run_group)
 db_management_root_group.add_command(job_execution_group)
 db_management_root_group.add_command(associated_database_summary_group)
 db_management_root_group.add_command(job_group)
+db_management_root_group.add_command(preferred_credential_group)
 
 
 @tablespace_group.command(name=cli_util.override('db_management.add_data_files.command_name', 'add'), help=u"""Adds data files or temp files to the tablespace. \n[Command Reference](addDataFiles)""")
@@ -1111,6 +1118,34 @@ def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@preferred_credential_group.command(name=cli_util.override('db_management.delete_preferred_credential.command_name', 'delete'), help=u"""Deletes the preferred credential based on the credentialName. \n[Command Reference](deletePreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_preferred_credential(ctx, from_json, managed_database_id, credential_name):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @tablespace_group.command(name=cli_util.override('db_management.drop_tablespace.command_name', 'drop'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
@@ -1724,6 +1759,33 @@ def get_pdb_metrics(ctx, from_json, managed_database_id, start_time, end_time, c
         managed_database_id=managed_database_id,
         start_time=start_time,
         end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.get_preferred_credential.command_name', 'get'), help=u"""Gets the preferred credential details for a Managed Database based on credentialName. \n[Command Reference](getPreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PreferredCredential'})
+@cli_util.wrap_exceptions
+def get_preferred_credential(ctx, from_json, managed_database_id, credential_name):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2918,6 +2980,29 @@ def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, p
             managed_database_id=managed_database_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.list_preferred_credentials.command_name', 'list'), help=u"""Gets the list of preferred credentials for a given Managed Database. \n[Command Reference](listPreferredCredentials)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PreferredCredentialCollection'})
+@cli_util.wrap_exceptions
+def list_preferred_credentials(ctx, from_json, all_pages, managed_database_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.list_preferred_credentials(
+        managed_database_id=managed_database_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -4368,6 +4453,84 @@ def summarize_job_executions_statuses(ctx, from_json, compartment_id, start_time
     cli_util.render_response(result, ctx)
 
 
+@preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential.command_name', 'test'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC"]), help=u"""The type of preferred credential. Only 'BASIC' is supported currently.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TestPreferredCredentialStatus'})
+@cli_util.wrap_exceptions
+def test_preferred_credential(ctx, from_json, managed_database_id, credential_name, type):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.test_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        test_preferred_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential_test_basic_preferred_credential_details.command_name', 'test-preferred-credential-test-basic-preferred-credential-details'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--user-name', help=u"""The user name used to connect to the database.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TestPreferredCredentialStatus'})
+@cli_util.wrap_exceptions
+def test_preferred_credential_test_basic_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, user_name, role, password_secret_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if user_name is not None:
+        _details['userName'] = user_name
+
+    if role is not None:
+        _details['role'] = role
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
+    _details['type'] = 'BASIC'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.test_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        test_preferred_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.update_db_management_private_endpoint.command_name', 'update'), help=u"""Updates one or more attributes of a specific Database Management private endpoint. \n[Command Reference](updateDbManagementPrivateEndpoint)""")
 @cli_util.option('--db-management-private-endpoint-id', required=True, help=u"""The [OCID] of the Database Management private endpoint.""")
 @cli_util.option('--name', help=u"""The display name of the private endpoint.""")
@@ -4761,6 +4924,90 @@ def update_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential.command_name', 'update'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC"]), help=u"""The type of preferred credential.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PreferredCredential'})
+@cli_util.wrap_exceptions
+def update_preferred_credential(ctx, from_json, managed_database_id, credential_name, type, if_match):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        update_preferred_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential_update_basic_preferred_credential_details.command_name', 'update-preferred-credential-update-basic-preferred-credential-details'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--user-name', help=u"""The user name used to connect to the database.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PreferredCredential'})
+@cli_util.wrap_exceptions
+def update_preferred_credential_update_basic_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, user_name, role, password_secret_id, if_match):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if user_name is not None:
+        _details['userName'] = user_name
+
+    if role is not None:
+        _details['role'] = role
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
+    _details['type'] = 'BASIC'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        update_preferred_credential_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

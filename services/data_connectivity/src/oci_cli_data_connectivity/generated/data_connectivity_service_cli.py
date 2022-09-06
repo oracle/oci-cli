@@ -7,7 +7,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('network_validation.data_connectivity_service_group.command_name', 'data-connectivity'), cls=CommandGroupWithAlias, help=cli_util.override('network_validation.data_connectivity_service_group.help', """Use the DCMS APIs to perform Metadata/Data operations."""), short_help=cli_util.override('network_validation.data_connectivity_service_group.short_help', """Data Connectivity Management API"""))
+@cli.command(cli_util.override('network_validation.data_connectivity_service_group.command_name', 'data-connectivity'), cls=CommandGroupWithAlias, help=cli_util.override('network_validation.data_connectivity_service_group.help', """Use the Data Connectivity Management Service APIs to perform common extract, load, and transform (ETL) tasks."""), short_help=cli_util.override('network_validation.data_connectivity_service_group.short_help', """Data Connectivity Management API"""))
 @cli_util.help_option_group
 def data_connectivity_service_group():
     pass

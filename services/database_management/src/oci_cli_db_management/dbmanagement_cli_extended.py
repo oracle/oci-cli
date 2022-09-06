@@ -222,6 +222,7 @@ database_management_service_cli.database_management_service_group.add_command(db
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.job_execution_group)
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.associated_database_summary_group)
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.job_group)
+database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.preferred_credential_group)
 # database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.user_group)
 
 
@@ -335,3 +336,11 @@ def remove_data_file_tablespace_admin_secret_credential_details_extended(ctx, **
         kwargs.pop('username')
 
     ctx.invoke(dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details, **kwargs)
+
+
+# oci database-management preferred-credential test-preferred-credential-test-basic-preferred-credential-details -> oci database-management preferred-credential test-basic-preferred-credential-details
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.preferred_credential_group, dbmanagement_cli.test_preferred_credential_test_basic_preferred_credential_details, "test-basic-preferred-credential-details")
+
+
+# oci database-management preferred-credential update-preferred-credential-update-basic-preferred-credential-details -> oci database-management preferred-credential update-basic-preferred-credential-details
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.preferred_credential_group, dbmanagement_cli.update_preferred_credential_update_basic_preferred_credential_details, "update-basic-preferred-credential-details")

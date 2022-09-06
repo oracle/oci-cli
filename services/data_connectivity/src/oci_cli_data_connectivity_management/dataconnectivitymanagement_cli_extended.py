@@ -11,14 +11,14 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
 
 
-@cli_util.copy_params_from_generated_command(dataconnectivitymanagement_cli.list_connection_validations, params_to_exclude=['query_parameterconflict'])
-@dataconnectivitymanagement_cli.connection_validation_group.command(name=dataconnectivitymanagement_cli.list_connection_validations.name, help=dataconnectivitymanagement_cli.list_connection_validations.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'ConnectionValidationSummaryCollection'})
-@cli_util.wrap_exceptions
-def list_connection_validations_extended(ctx, **kwargs):
-
-    ctx.invoke(dataconnectivitymanagement_cli.list_connection_validations, **kwargs)
+# @cli_util.copy_params_from_generated_command(dataconnectivitymanagement_cli.list_connection_validations, params_to_exclude=['query_parameterconflict'])
+# @dataconnectivitymanagement_cli.connection_validation_group.command(name=dataconnectivitymanagement_cli.list_connection_validations.name, help=dataconnectivitymanagement_cli.list_connection_validations.help)
+# @click.pass_context
+# @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'ConnectionValidationSummaryCollection'})
+# @cli_util.wrap_exceptions
+# def list_connection_validations_extended(ctx, **kwargs):
+#
+#     ctx.invoke(dataconnectivitymanagement_cli.list_connection_validations, **kwargs)
 
 
 # oci data-connectivity data-entity create-data-preview-data-entity-from-data-store -> oci data-connectivity data-entity create-data-preview-ds
@@ -81,34 +81,6 @@ cli_util.rename_command(dataconnectivitymanagement_cli, dataconnectivitymanageme
 cli_util.rename_command(dataconnectivitymanagement_cli, dataconnectivitymanagement_cli.data_entity_group, dataconnectivitymanagement_cli.create_entity_shape_create_entity_shape_from_view, "create-entity-shape-view")
 
 
-@cli_util.copy_params_from_generated_command(dataconnectivitymanagement_cli.delete_connection_validation, params_to_exclude=['connection_validation_key'])
-@dataconnectivitymanagement_cli.connection_validation_group.command(name=dataconnectivitymanagement_cli.delete_connection_validation.name, help=dataconnectivitymanagement_cli.delete_connection_validation.help)
-@cli_util.option('--key', required=True, help=u"""The key of the connection validation. [required]""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def delete_connection_validation_extended(ctx, **kwargs):
-    if 'key' in kwargs:
-        kwargs['connection_validation_key'] = kwargs['key']
-        kwargs.pop('key')
-
-    ctx.invoke(dataconnectivitymanagement_cli.delete_connection_validation, **kwargs)
-
-
-@cli_util.copy_params_from_generated_command(dataconnectivitymanagement_cli.get_connection_validation, params_to_exclude=['connection_validation_key'])
-@dataconnectivitymanagement_cli.connection_validation_group.command(name=dataconnectivitymanagement_cli.get_connection_validation.name, help=dataconnectivitymanagement_cli.get_connection_validation.help)
-@cli_util.option('--key', required=True, help=u"""The key of the connection validation. [required]""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_connectivity', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def get_connection_validation_extended(ctx, **kwargs):
-    if 'key' in kwargs:
-        kwargs['connection_validation_key'] = kwargs['key']
-        kwargs.pop('key')
-
-    ctx.invoke(dataconnectivitymanagement_cli.get_connection_validation, **kwargs)
-
-
 @cli_util.copy_params_from_generated_command(dataconnectivitymanagement_cli.create_data_preview_data_entity_from_data_store, params_to_exclude=['data_entity_external_key', 'data_entity_foreign_keys', 'data_entity_is_effective_date_disabled', 'data_entity_is_flex_data_store', 'data_entity_is_silent_error', 'data_entity_model_version', 'data_entity_object_status', 'data_entity_object_version', 'data_entity_other_type_label', 'data_entity_resource_name', 'data_entity_supports_incremental', 'data_entity_external_key', 'data_entity_foreign_keys', 'data_entity_is_effective_date_disabled', 'data_entity_is_flex_data_store', 'data_entity_is_silent_error', 'data_entity_model_version', 'data_entity_object_status', 'data_entity_object_version', 'data_entity_other_type_label', 'data_entity_resource_name', 'data_entity_supports_incremental'])
 @dataconnectivitymanagement_cli.data_entity_group.command(name=dataconnectivitymanagement_cli.create_data_preview_data_entity_from_data_store.name, help=dataconnectivitymanagement_cli.create_data_preview_data_entity_from_data_store.help)
 @cli_util.option('--external-key', help="""The external key for the object""")
@@ -148,7 +120,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--supports-incremental', type=click.BOOL, help=u"""It shows whether the datastore supports Incremental Extract or not.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
 def create_data_preview_data_entity_from_data_store_extended(ctx, **kwargs):
 
@@ -274,7 +246,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
 def create_data_preview_data_entity_from_file_extended(ctx, **kwargs):
 
@@ -368,7 +340,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
 def create_data_preview_data_entity_from_sql_extended(ctx, **kwargs):
 
@@ -462,7 +434,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
 def create_data_preview_data_entity_from_table_extended(ctx, **kwargs):
 
@@ -556,7 +528,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
 def create_data_preview_data_entity_from_view_extended(ctx, **kwargs):
 
@@ -658,7 +630,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--supports-incremental', type=click.BOOL, help=u"""It shows whether the datastore supports Incremental Extract or not.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
 def create_data_profile_data_entity_from_data_store_extended(ctx, **kwargs):
 
@@ -784,7 +756,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
 def create_data_profile_data_entity_from_file_extended(ctx, **kwargs):
 
@@ -878,7 +850,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
 def create_data_profile_data_entity_from_sql_extended(ctx, **kwargs):
 
@@ -972,7 +944,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
 def create_data_profile_data_entity_from_table_extended(ctx, **kwargs):
 
@@ -1066,7 +1038,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
 def create_data_profile_data_entity_from_view_extended(ctx, **kwargs):
 
@@ -1147,7 +1119,7 @@ def get_execute_operation_job_extended(ctx, **kwargs):
 @dataconnectivitymanagement_cli.execute_operation_job_details_group.command(name=dataconnectivitymanagement_cli.create_execute_operation_job_operation_from_procedure.name, help=dataconnectivitymanagement_cli.create_execute_operation_job_operation_from_procedure.help)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}}, output_type={'module': 'data_connectivity', 'class': 'ExecuteOperationJobDetails'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-operation-attributes': {'module': 'data_connectivity', 'class': 'AbstractOperationAttributes'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}}, output_type={'module': 'data_connectivity', 'class': 'ExecuteOperationJobDetails'})
 @cli_util.wrap_exceptions
 def create_execute_operation_job_operation_from_procedure_extended(ctx, **kwargs):
     if 'object_version' in kwargs:

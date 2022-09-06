@@ -6,6 +6,80 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.16.0 - 2022-09-06
+--------------------
+
+Added
+~~~~~
+* Monitoring service
+
+  * Support for new parameters
+  
+    * ``oci monitoring alarm create --is-notifications-per-metric-dimension-enabled``
+    * ``oci monitoring alarm update --is-notifications-per-metric-dimension-enabled``
+    * ``oci monitoring metric-data post --content-encoding``
+
+  * Support for retrieving dimension
+
+    * ``oci monitoring alarm-dimension-states-collection retrieve-dimension-states``
+
+* Support for Preferred Credentials for performing privileged operations in the Database Management service
+ 
+  * ``oci database-management preferred-credential``
+
+* Data Connectivity service
+
+  * Support for new commands
+
+    * ``oci data-connectivity data-entity create-entity-shape-create-entity-shape-from-message``
+    * ``oci data-connectivity data-preview create-data-preview-derived-entity``
+    * ``oci data-connectivity data-profile create-data-profile-derived-entity``
+    * ``oci data-connectivity execute-operation-job-details create-execute-operation-job-operation-from-api``
+
+  * Support for new parameters
+
+    * ``oci data-connectivity endpoint update --dns-zones``
+    * ``oci data-connectivity data-entity list --include-types``
+    * ``oci data-connectivity schema list --include-types``
+
+  * Support for new optional parameter data-entity-entity-properties in the below commands
+
+    * ``oci data-connectivity data-entity create-data-preview-ds``
+    * ``oci data-connectivity data-entity create-data-preview-file``
+    * ``oci data-connectivity data-entity create-data-preview-sql``
+    * ``oci data-connectivity data-entity create-data-preview-table``
+    * ``oci data-connectivity data-entity create-data-preview-view``
+    * ``oci data-connectivity data-entity create-data-profile-ds``
+    * ``oci data-connectivity data-entity create-data-profile-file``
+    * ``oci data-connectivity data-entity create-data-profile-sql``
+    * ``oci data-connectivity data-entity create-data-profile-table``
+    * ``oci data-connectivity data-entity create-data-profile-view``
+    * ``oci data-connectivity data-preview create-data-preview-data-entity-from-data-store``
+    * ``oci data-connectivity data-preview create-data-preview-data-entity-from-file``
+    * ``oci data-connectivity data-preview create-data-preview-data-entity-from-sql``
+    * ``oci data-connectivity data-preview create-data-preview-data-entity-from-table``
+    * ``oci data-connectivity data-preview create-data-preview-data-entity-from-view``
+    * ``oci data-connectivity data-profile create-data-profile-data-entity-from-data-store``
+    * ``oci data-connectivity data-profile create-data-profile-data-entity-from-file``
+    * ``oci data-connectivity data-profile create-data-profile-data-entity-from-sql``
+    * ``oci data-connectivity data-profile create-data-profile-data-entity-from-table``
+    * ``oci data-connectivity data-profile create-data-profile-data-entity-from-view``
+    * ``oci data-connectivity execute-operation-job-details create-execute-operation-job-operation-from-procedure``
+
+Changed
+~~~~~~~
+* [BREAKING] Data Connectivity service
+
+  * The optional parameter resource-id renamed to registry-id for the command
+
+    * ``oci data-connectivity work-request list``
+
+  * The commands below are deleted
+
+    * ``oci data-connectivity connection-validation delete``
+    * ``oci data-connectivity connection-validation get``
+    * ``oci data-connectivity connection-validation list``
+
 3.15.2 - 2022-08-26
 --------------------
 

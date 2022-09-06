@@ -423,7 +423,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
 
     # Show auto prompt mode for the user
     if cli_auto_prompt_env() or cli_auto_prompt:
-        cli_interactive.start_interactive_mode(ctx)
+        cli_interactive.start_interactive_shell(ctx)
         ctx.exit()
 
     if ctx.obj['debug']:

@@ -30,4 +30,7 @@ db, database, create
 stack-monitoring, resource, create
 stack-monitoring, resource, updateopsi, host-insights, list
 stack-monitoring, resource, update
-service-mesh, debug, report
+service-mesh, debug, reportdata-connectivity, connection-validation, delete
+data-connectivity, connection-validation, get
+data-connectivity, connection-validation, list
+data-connectivity, work-request, list

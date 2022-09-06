@@ -15,7 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.data_connectivity.src.oci_cli_data_connectivity.generated import data_connectivity_service_cli
 
 
-@click.command(cli_util.override('data_connectivity_management.data_connectivity_management_root_group.command_name', 'data-connectivity-management'), cls=CommandGroupWithAlias, help=cli_util.override('data_connectivity_management.data_connectivity_management_root_group.help', """Use the DCMS APIs to perform Metadata/Data operations."""), short_help=cli_util.override('data_connectivity_management.data_connectivity_management_root_group.short_help', """Data Connectivity Management API"""))
+@click.command(cli_util.override('data_connectivity_management.data_connectivity_management_root_group.command_name', 'data-connectivity-management'), cls=CommandGroupWithAlias, help=cli_util.override('data_connectivity_management.data_connectivity_management_root_group.help', """Use the Data Connectivity Management Service APIs to perform common extract, load, and transform (ETL) tasks."""), short_help=cli_util.override('data_connectivity_management.data_connectivity_management_root_group.short_help', """Data Connectivity Management API"""))
 @cli_util.help_option_group
 def data_connectivity_management_root_group():
     pass
@@ -27,7 +27,7 @@ def schema_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.full_push_down_task_response_group.command_name', 'full-push-down-task-response'), cls=CommandGroupWithAlias, help="""The full pushdown task""")
+@click.command(cli_util.override('data_connectivity_management.full_push_down_task_response_group.command_name', 'full-push-down-task-response'), cls=CommandGroupWithAlias, help="""The full pushdown task.""")
 @cli_util.help_option_group
 def full_push_down_task_response_group():
     pass
@@ -45,13 +45,13 @@ def data_profile_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
+@click.command(cli_util.override('data_connectivity_management.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of the status of the work request.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.type_group.command_name', 'type'), cls=CommandGroupWithAlias, help="""DataAsset & Connection Registry Attributes""")
+@click.command(cli_util.override('data_connectivity_management.type_group.command_name', 'type'), cls=CommandGroupWithAlias, help="""DataAsset and Connection Registry Attributes""")
 @cli_util.help_option_group
 def type_group():
     pass
@@ -63,13 +63,13 @@ def work_request_log_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.endpoint_group.command_name', 'endpoint'), cls=CommandGroupWithAlias, help="""An Endpoint is an organizational construct to keep multiple data Connectivity Management solutions and their resources (pe-id, dnsProxyIp, dnsZones, and so on) separate from each other, helping you to stay organized. For example, you could have separate registries for development, testing, and production.""")
+@click.command(cli_util.override('data_connectivity_management.endpoint_group.command_name', 'endpoint'), cls=CommandGroupWithAlias, help="""An endpoint is an organizational construct to keep multiple data connectivity management solutions and their resources (pe-id, dnsProxyIp, dnsZones, and so on) separate from each other, helping you to stay organized. For example, you could have separate registries for development, testing, and production.""")
 @cli_util.help_option_group
 def endpoint_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.connectivity_validation_group.command_name', 'connectivity-validation'), cls=CommandGroupWithAlias, help="""The information about connectivity validation results""")
+@click.command(cli_util.override('data_connectivity_management.connectivity_validation_group.command_name', 'connectivity-validation'), cls=CommandGroupWithAlias, help="""The information about connectivity validation results.""")
 @cli_util.help_option_group
 def connectivity_validation_group():
     pass
@@ -99,7 +99,7 @@ def test_network_connectivity_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.operation_summary_collection_group.command_name', 'operation-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of operation summaries, it will contain very shallow details of an operation.""")
+@click.command(cli_util.override('data_connectivity_management.operation_summary_collection_group.command_name', 'operation-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of operation summaries, with minimal details of an operation.""")
 @cli_util.help_option_group
 def operation_summary_collection_group():
     pass
@@ -117,7 +117,7 @@ def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.reference_info_group.command_name', 'reference-info'), cls=CommandGroupWithAlias, help="""Represents reference details of a dcms artifact.""")
+@click.command(cli_util.override('data_connectivity_management.reference_info_group.command_name', 'reference-info'), cls=CommandGroupWithAlias, help="""Represents reference details of a DCMS artifact.""")
 @cli_util.help_option_group
 def reference_info_group():
     pass
@@ -129,7 +129,19 @@ def connection_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.registry_group.command_name', 'registry'), cls=CommandGroupWithAlias, help="""A registry is an organizational construct to keep multiple data Connectivity Management solutions and their resources (data assets, data flows, tasks, and so on) separate from each other, helping you to stay organized. For example, you could have separate registries for development, testing, and production.""")
+@click.command(cli_util.override('data_connectivity_management.config_details_group.command_name', 'config-details'), cls=CommandGroupWithAlias, help="""The connector-specific engine configurations.""")
+@cli_util.help_option_group
+def config_details_group():
+    pass
+
+
+@click.command(cli_util.override('data_connectivity_management.derived_entity_group.command_name', 'derived-entity'), cls=CommandGroupWithAlias, help="""The Derive entity object""")
+@cli_util.help_option_group
+def derived_entity_group():
+    pass
+
+
+@click.command(cli_util.override('data_connectivity_management.registry_group.command_name', 'registry'), cls=CommandGroupWithAlias, help="""A registry is an organizational construct to keep multiple data connectivity management solutions and their resources (data assets, data flows, tasks, and so on) separate from each other, helping you to stay organized. For example, you could have separate registries for development, testing, and production.""")
 @cli_util.help_option_group
 def registry_group():
     pass
@@ -153,7 +165,7 @@ def execute_operation_job_group():
     pass
 
 
-@click.command(cli_util.override('data_connectivity_management.reference_artifact_summary_collection_group.command_name', 'reference-artifact-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of Reference details summaries, it may be a collection of lightweight details or full definitions.""")
+@click.command(cli_util.override('data_connectivity_management.reference_artifact_summary_collection_group.command_name', 'reference-artifact-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of reference details summaries; it can be a collection of lightweight details or full definitions.""")
 @cli_util.help_option_group
 def reference_artifact_summary_collection_group():
     pass
@@ -196,6 +208,8 @@ data_connectivity_management_root_group.add_command(data_asset_group)
 data_connectivity_management_root_group.add_command(work_request_error_group)
 data_connectivity_management_root_group.add_command(reference_info_group)
 data_connectivity_management_root_group.add_command(connection_group)
+data_connectivity_management_root_group.add_command(config_details_group)
+data_connectivity_management_root_group.add_command(derived_entity_group)
 data_connectivity_management_root_group.add_command(registry_group)
 data_connectivity_management_root_group.add_command(detach_data_asset_info_group)
 data_connectivity_management_root_group.add_command(data_preview_group)
@@ -206,10 +220,10 @@ data_connectivity_management_root_group.add_command(operation_group)
 data_connectivity_management_root_group.add_command(attach_data_asset_info_group)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.change_endpoint_compartment.command_name', 'change-compartment'), help=u"""The Endpoint will be moved to the desired compartment. \n[Command Reference](changeEndpointCompartment)""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.change_endpoint_compartment.command_name', 'change-compartment'), help=u"""The endpoint will be moved to the specified compartment. \n[Command Reference](changeEndpointCompartment)""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -266,8 +280,8 @@ def change_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@registry_group.command(name=cli_util.override('data_connectivity_management.change_registry_compartment.command_name', 'change-compartment'), help=u"""The registry will be moved to the desired compartment. \n[Command Reference](changeRegistryCompartment)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@registry_group.command(name=cli_util.override('data_connectivity_management.change_registry_compartment.command_name', 'change-compartment'), help=u"""The registry will be moved to the specified compartment. \n[Command Reference](changeRegistryCompartment)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -323,10 +337,10 @@ def change_registry_compartment(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@attach_data_asset_info_group.command(name=cli_util.override('data_connectivity_management.create_attach_data_asset.command_name', 'create-attach-data-asset'), help=u"""Attaches list of DataAssets to the given endpoint \n[Command Reference](createAttachDataAsset)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
-@cli_util.option('--data-assets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of DataAsset keys""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@attach_data_asset_info_group.command(name=cli_util.override('data_connectivity_management.create_attach_data_asset.command_name', 'create-attach-data-asset'), help=u"""Attaches a list of data assets to the given endpoint. \n[Command Reference](createAttachDataAsset)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
+@cli_util.option('--data-assets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of DataAsset keys.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({'data-assets': {'module': 'data_connectivity', 'class': 'list[DataAsset]'}})
 @cli_util.help_option
@@ -360,22 +374,22 @@ def create_attach_data_asset(ctx, from_json, registry_id, endpoint_id, data_asse
 
 
 @connection_group.command(name=cli_util.override('data_connectivity_management.create_connection.command_name', 'create'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties for the connection in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties of the connection in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', required=True, help=u"""Specific Connection Type""")
-@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify the connection. In scenarios where reference to the connection is required, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--model-type', help=u"""The type of the object.""")
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--description', help=u"""User-defined description of the connection.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--primary-schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties of the connection.
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-default', type=click.BOOL, help=u"""The default property for the connection.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""The default property of the connection.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'primary-schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'connection-properties': {'module': 'data_connectivity', 'class': 'list[ConnectionProperty]'}, 'properties': {'module': 'data_connectivity', 'class': 'dict(str, object)'}, 'metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'registry-metadata': {'module': 'data_connectivity', 'class': 'RegistryMetadata'}})
@@ -440,11 +454,11 @@ def create_connection(ctx, from_json, registry_id, name, identifier, properties,
 
 
 @connection_validation_group.command(name=cli_util.override('data_connectivity_management.create_connection_validation.command_name', 'create'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_connectivity', 'class': 'CreateDataAssetDetails'}, 'connection': {'module': 'data_connectivity', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_connectivity', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
 @click.pass_context
@@ -481,12 +495,12 @@ def create_connection_validation(ctx, from_json, registry_id, data_asset, connec
 
 
 @connectivity_validation_group.command(name=cli_util.override('data_connectivity_management.create_connectivity_validation.command_name', 'create'), help=u"""This endpoint is used to trigger validation of dataAsset, connection, schema, entity, dataOperationConfig \n[Command Reference](createConnectivityValidation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SOURCE_OPERATOR", "TARGET_OPERATOR"]), help=u"""The model type of the operator.""")
 @cli_util.option('--key', help=u"""The key of the object.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""Details about the operator.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
@@ -496,12 +510,12 @@ This option is a JSON list with items of type InputPort.  For documentation on I
 
 This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters used in the data flow.
 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_connectivity', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_connectivity', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_connectivity', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_connectivity', 'class': 'ConfigValues'}})
 @cli_util.help_option
 @click.pass_context
@@ -566,12 +580,12 @@ def create_connectivity_validation(ctx, from_json, registry_id, model_type, key,
 
 
 @connectivity_validation_group.command(name=cli_util.override('data_connectivity_management.create_connectivity_validation_target.command_name', 'create-connectivity-validation-target'), help=u"""This endpoint is used to trigger validation of dataAsset, connection, schema, entity, dataOperationConfig \n[Command Reference](createConnectivityValidation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--entity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key', help=u"""The key of the object.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""Details about the operator.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
@@ -581,7 +595,7 @@ This option is a JSON list with items of type InputPort.  For documentation on I
 
 This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters used in the data flow.
 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -593,7 +607,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--schema-drift-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fixed-data-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--write-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_connectivity', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_connectivity', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_connectivity', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_connectivity', 'class': 'ConfigValues'}, 'entity': {'module': 'data_connectivity', 'class': 'DataEntity'}, 'schema-drift-config': {'module': 'data_connectivity', 'class': 'SchemaDriftConfig'}, 'fixed-data-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'write-operation-config': {'module': 'data_connectivity', 'class': 'WriteOperationConfig'}})
 @cli_util.help_option
 @click.pass_context
@@ -681,12 +695,12 @@ def create_connectivity_validation_target(ctx, from_json, registry_id, entity, k
 
 
 @connectivity_validation_group.command(name=cli_util.override('data_connectivity_management.create_connectivity_validation_source.command_name', 'create-connectivity-validation-source'), help=u"""This endpoint is used to trigger validation of dataAsset, connection, schema, entity, dataOperationConfig \n[Command Reference](createConnectivityValidation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--entity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key', help=u"""The key of the object.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""Details about the operator.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--input-ports', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of input ports.
@@ -696,7 +710,7 @@ This option is a JSON list with items of type InputPort.  For documentation on I
 
 This option is a JSON list with items of type OutputPort.  For documentation on OutputPort please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/OutputPort.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of parameters used in the data flow.
 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -707,7 +721,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--schema-drift-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fixed-data-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_connectivity', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_connectivity', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_connectivity', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_connectivity', 'class': 'ConfigValues'}, 'entity': {'module': 'data_connectivity', 'class': 'DataEntity'}, 'schema-drift-config': {'module': 'data_connectivity', 'class': 'SchemaDriftConfig'}, 'fixed-data-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}})
 @cli_util.help_option
 @click.pass_context
@@ -792,18 +806,18 @@ def create_connectivity_validation_source(ctx, from_json, registry_id, entity, k
 
 
 @data_asset_group.command(name=cli_util.override('data_connectivity_management.create_data_asset.command_name', 'create'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties for the data asset in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', required=True, help=u"""Specific DataAsset Type""")
-@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify dataasset.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify the data asset.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--model-type', help=u"""The type of the object.""")
 @cli_util.option('--description', help=u"""User-defined description of the data asset.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--native-type-system', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -879,15 +893,15 @@ def create_data_asset(ctx, from_json, registry_id, name, identifier, properties,
     cli_util.render_response(result, ctx)
 
 
-@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview.command_name', 'create'), help=u"""Provide data preview on live schema \n[Command Reference](createDataPreview)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview.command_name', 'create'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity': {'module': 'data_connectivity', 'class': 'DataEntity'}})
 @cli_util.help_option
 @click.pass_context
@@ -931,25 +945,26 @@ def create_data_preview(ctx, from_json, registry_id, read_operation_config, data
     cli_util.render_response(result, ctx)
 
 
-@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_table.command_name', 'create-data-preview-data-entity-from-table'), help=u"""Provide data preview on live schema \n[Command Reference](createDataPreview)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_table.command_name', 'create-data-preview-data-entity-from-table'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -959,13 +974,13 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
-def create_data_preview_data_entity_from_table(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
+def create_data_preview_data_entity_from_table(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -991,6 +1006,9 @@ def create_data_preview_data_entity_from_table(ctx, from_json, registry_id, read
 
     if schema is not None:
         _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1054,25 +1072,26 @@ def create_data_preview_data_entity_from_table(ctx, from_json, registry_id, read
     cli_util.render_response(result, ctx)
 
 
-@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_data_store.command_name', 'create-data-preview-data-entity-from-data-store'), help=u"""Provide data preview on live schema \n[Command Reference](createDataPreview)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_data_store.command_name', 'create-data-preview-data-entity-from-data-store'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1082,18 +1101,18 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-entity-filters', help=u"""Filters present in the Datastore. It can be Null.""")
-@cli_util.option('--data-entity-is-effective-date-disabled', type=click.BOOL, help=u"""It shows whether or not effective date is disabled""")
-@cli_util.option('--data-entity-is-flex-data-store', type=click.BOOL, help=u"""It shows whether the datastore is of flex type""")
-@cli_util.option('--data-entity-is-silent-error', type=click.BOOL, help=u"""It shows whether the extraction of this datastore will stop on error""")
-@cli_util.option('--data-entity-supports-incremental', type=click.BOOL, help=u"""It shows whether the datastore supports Incremental Extract or not.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-entity-filters', help=u"""Filters present in the datastore. It can be null.""")
+@cli_util.option('--data-entity-is-effective-date-disabled', type=click.BOOL, help=u"""It shows whether the effective date is disabled.""")
+@cli_util.option('--data-entity-is-flex-data-store', type=click.BOOL, help=u"""It shows whether the datastore is of flex type.""")
+@cli_util.option('--data-entity-is-silent-error', type=click.BOOL, help=u"""It shows whether the extraction of this datastore will stop when an error occurs.""")
+@cli_util.option('--data-entity-supports-incremental', type=click.BOOL, help=u"""It shows whether the datastore supports incremental extract.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
-def create_data_preview_data_entity_from_data_store(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_filters, data_entity_is_effective_date_disabled, data_entity_is_flex_data_store, data_entity_is_silent_error, data_entity_supports_incremental):
+def create_data_preview_data_entity_from_data_store(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_filters, data_entity_is_effective_date_disabled, data_entity_is_flex_data_store, data_entity_is_silent_error, data_entity_supports_incremental):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1119,6 +1138,9 @@ def create_data_preview_data_entity_from_data_store(ctx, from_json, registry_id,
 
     if schema is not None:
         _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1197,25 +1219,26 @@ def create_data_preview_data_entity_from_data_store(ctx, from_json, registry_id,
     cli_util.render_response(result, ctx)
 
 
-@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_view.command_name', 'create-data-preview-data-entity-from-view'), help=u"""Provide data preview on live schema \n[Command Reference](createDataPreview)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_view.command_name', 'create-data-preview-data-entity-from-view'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1225,13 +1248,13 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
-def create_data_preview_data_entity_from_view(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
+def create_data_preview_data_entity_from_view(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1257,6 +1280,9 @@ def create_data_preview_data_entity_from_view(ctx, from_json, registry_id, read_
 
     if schema is not None:
         _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1320,25 +1346,26 @@ def create_data_preview_data_entity_from_view(ctx, from_json, registry_id, read_
     cli_util.render_response(result, ctx)
 
 
-@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_sql.command_name', 'create-data-preview-data-entity-from-sql'), help=u"""Provide data preview on live schema \n[Command Reference](createDataPreview)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_sql.command_name', 'create-data-preview-data-entity-from-sql'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1348,14 +1375,14 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--data-entity-sql-query', help=u"""sqlQuery""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
-def create_data_preview_data_entity_from_sql(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_sql_query):
+def create_data_preview_data_entity_from_sql(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_sql_query):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1381,6 +1408,9 @@ def create_data_preview_data_entity_from_sql(ctx, from_json, registry_id, read_o
 
     if schema is not None:
         _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1447,25 +1477,26 @@ def create_data_preview_data_entity_from_sql(ctx, from_json, registry_id, read_o
     cli_util.render_response(result, ctx)
 
 
-@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_file.command_name', 'create-data-preview-data-entity-from-file'), help=u"""Provide data preview on live schema \n[Command Reference](createDataPreview)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_data_entity_from_file.command_name', 'create-data-preview-data-entity-from-file'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1476,13 +1507,13 @@ This option is a JSON list with items of type ForeignKey.  For documentation on 
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
 @cli_util.wrap_exceptions
-def create_data_preview_data_entity_from_file(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_data_format, data_entity_object_status, data_entity_identifier):
+def create_data_preview_data_entity_from_file(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_data_format, data_entity_object_status, data_entity_identifier):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1508,6 +1539,9 @@ def create_data_preview_data_entity_from_file(ctx, from_json, registry_id, read_
 
     if schema is not None:
         _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1574,8 +1608,115 @@ def create_data_preview_data_entity_from_file(ctx, from_json, registry_id, read_
     cli_util.render_response(result, ctx)
 
 
-@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile.command_name', 'create'), help=u"""Execute data profiling on live schema \n[Command Reference](createDataProfile)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_preview_group.command(name=cli_util.override('data_connectivity_management.create_data_preview_derived_entity.command_name', 'create-data-preview-derived-entity'), help=u"""Provide data preview on live schema. \n[Command Reference](createDataPreview)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--data-entity-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is unique, editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-resource-name', required=True, help=u"""The resource name.""")
+@cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-key', help=u"""The object key.""")
+@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
+@cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow reference across objects, other values reserved.""")
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-entity-ref-data-object', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-mode', type=custom_types.CliCaseInsensitiveChoice(["IN", "OUT"]), help=u"""Determines whether entity is treated as source or target""")
+@cli_util.option('--data-entity-derived-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Property-bag (key-value pairs where key is Shape Field resource name and value is object)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-ref-data-object': {'module': 'data_connectivity', 'class': 'ReferencedDataObject'}, 'data-entity-derived-properties': {'module': 'data_connectivity', 'class': 'dict(str, object)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-ref-data-object': {'module': 'data_connectivity', 'class': 'ReferencedDataObject'}, 'data-entity-derived-properties': {'module': 'data_connectivity', 'class': 'dict(str, object)'}}, output_type={'module': 'data_connectivity', 'class': 'DataPreview'})
+@cli_util.wrap_exceptions
+def create_data_preview_derived_entity(ctx, from_json, registry_id, data_entity_name, data_entity_resource_name, read_operation_config, data_asset, connection, schema, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_object_version, data_entity_shape, data_entity_shape_id, data_entity_object_status, data_entity_identifier, data_entity_ref_data_object, data_entity_mode, data_entity_derived_properties):
+
+    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
+        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if endpoint_id is not None:
+        kwargs['endpoint_id'] = endpoint_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataEntity'] = {}
+    _details['dataEntity']['name'] = data_entity_name
+    _details['dataEntity']['resourceName'] = data_entity_resource_name
+
+    if read_operation_config is not None:
+        _details['readOperationConfig'] = cli_util.parse_json_parameter("read_operation_config", read_operation_config)
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if schema is not None:
+        _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
+
+    if data_entity_metadata is not None:
+        _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
+
+    if data_entity_key is not None:
+        _details['dataEntity']['key'] = data_entity_key
+
+    if data_entity_model_version is not None:
+        _details['dataEntity']['modelVersion'] = data_entity_model_version
+
+    if data_entity_parent_ref is not None:
+        _details['dataEntity']['parentRef'] = cli_util.parse_json_parameter("data_entity_parent_ref", data_entity_parent_ref)
+
+    if data_entity_object_version is not None:
+        _details['dataEntity']['objectVersion'] = data_entity_object_version
+
+    if data_entity_shape is not None:
+        _details['dataEntity']['shape'] = cli_util.parse_json_parameter("data_entity_shape", data_entity_shape)
+
+    if data_entity_shape_id is not None:
+        _details['dataEntity']['shapeId'] = data_entity_shape_id
+
+    if data_entity_object_status is not None:
+        _details['dataEntity']['objectStatus'] = data_entity_object_status
+
+    if data_entity_identifier is not None:
+        _details['dataEntity']['identifier'] = data_entity_identifier
+
+    if data_entity_ref_data_object is not None:
+        _details['dataEntity']['refDataObject'] = cli_util.parse_json_parameter("data_entity_ref_data_object", data_entity_ref_data_object)
+
+    if data_entity_mode is not None:
+        _details['dataEntity']['mode'] = data_entity_mode
+
+    if data_entity_derived_properties is not None:
+        _details['dataEntity']['derivedProperties'] = cli_util.parse_json_parameter("data_entity_derived_properties", data_entity_derived_properties)
+
+    _details['dataEntity']['modelType'] = 'DERIVED_ENTITY'
+
+    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
+    result = client.create_data_preview(
+        registry_id=registry_id,
+        create_data_preview_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile.command_name', 'create'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1583,7 +1724,7 @@ def create_data_preview_data_entity_from_file(ctx, from_json, registry_id, read_
 @cli_util.option('--data-entity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'data-entity': {'module': 'data_connectivity', 'class': 'DataEntity'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}})
 @cli_util.help_option
 @click.pass_context
@@ -1630,26 +1771,27 @@ def create_data_profile(ctx, from_json, registry_id, read_operation_config, data
     cli_util.render_response(result, ctx)
 
 
-@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_table.command_name', 'create-data-profile-data-entity-from-table'), help=u"""Execute data profiling on live schema \n[Command Reference](createDataProfile)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_table.command_name', 'create-data-profile-data-entity-from-table'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1659,13 +1801,13 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
-def create_data_profile_data_entity_from_table(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
+def create_data_profile_data_entity_from_table(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1694,6 +1836,9 @@ def create_data_profile_data_entity_from_table(ctx, from_json, registry_id, read
 
     if profile_config is not None:
         _details['profileConfig'] = cli_util.parse_json_parameter("profile_config", profile_config)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1757,26 +1902,27 @@ def create_data_profile_data_entity_from_table(ctx, from_json, registry_id, read
     cli_util.render_response(result, ctx)
 
 
-@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_data_store.command_name', 'create-data-profile-data-entity-from-data-store'), help=u"""Execute data profiling on live schema \n[Command Reference](createDataProfile)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_data_store.command_name', 'create-data-profile-data-entity-from-data-store'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1786,18 +1932,18 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-entity-filters', help=u"""Filters present in the Datastore. It can be Null.""")
-@cli_util.option('--data-entity-is-effective-date-disabled', type=click.BOOL, help=u"""It shows whether or not effective date is disabled""")
-@cli_util.option('--data-entity-is-flex-data-store', type=click.BOOL, help=u"""It shows whether the datastore is of flex type""")
-@cli_util.option('--data-entity-is-silent-error', type=click.BOOL, help=u"""It shows whether the extraction of this datastore will stop on error""")
-@cli_util.option('--data-entity-supports-incremental', type=click.BOOL, help=u"""It shows whether the datastore supports Incremental Extract or not.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-entity-filters', help=u"""Filters present in the datastore. It can be null.""")
+@cli_util.option('--data-entity-is-effective-date-disabled', type=click.BOOL, help=u"""It shows whether the effective date is disabled.""")
+@cli_util.option('--data-entity-is-flex-data-store', type=click.BOOL, help=u"""It shows whether the datastore is of flex type.""")
+@cli_util.option('--data-entity-is-silent-error', type=click.BOOL, help=u"""It shows whether the extraction of this datastore will stop when an error occurs.""")
+@cli_util.option('--data-entity-supports-incremental', type=click.BOOL, help=u"""It shows whether the datastore supports incremental extract.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
-def create_data_profile_data_entity_from_data_store(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_filters, data_entity_is_effective_date_disabled, data_entity_is_flex_data_store, data_entity_is_silent_error, data_entity_supports_incremental):
+def create_data_profile_data_entity_from_data_store(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_filters, data_entity_is_effective_date_disabled, data_entity_is_flex_data_store, data_entity_is_silent_error, data_entity_supports_incremental):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1826,6 +1972,9 @@ def create_data_profile_data_entity_from_data_store(ctx, from_json, registry_id,
 
     if profile_config is not None:
         _details['profileConfig'] = cli_util.parse_json_parameter("profile_config", profile_config)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -1904,26 +2053,27 @@ def create_data_profile_data_entity_from_data_store(ctx, from_json, registry_id,
     cli_util.render_response(result, ctx)
 
 
-@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_view.command_name', 'create-data-profile-data-entity-from-view'), help=u"""Execute data profiling on live schema \n[Command Reference](createDataProfile)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_view.command_name', 'create-data-profile-data-entity-from-view'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -1933,13 +2083,13 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
-def create_data_profile_data_entity_from_view(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
+def create_data_profile_data_entity_from_view(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -1968,6 +2118,9 @@ def create_data_profile_data_entity_from_view(ctx, from_json, registry_id, read_
 
     if profile_config is not None:
         _details['profileConfig'] = cli_util.parse_json_parameter("profile_config", profile_config)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -2031,26 +2184,27 @@ def create_data_profile_data_entity_from_view(ctx, from_json, registry_id, read_
     cli_util.render_response(result, ctx)
 
 
-@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_sql.command_name', 'create-data-profile-data-entity-from-sql'), help=u"""Execute data profiling on live schema \n[Command Reference](createDataProfile)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_sql.command_name', 'create-data-profile-data-entity-from-sql'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2060,14 +2214,14 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--data-entity-sql-query', help=u"""sqlQuery""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
-def create_data_profile_data_entity_from_sql(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_sql_query):
+def create_data_profile_data_entity_from_sql(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_object_status, data_entity_identifier, data_entity_sql_query):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -2096,6 +2250,9 @@ def create_data_profile_data_entity_from_sql(ctx, from_json, registry_id, read_o
 
     if profile_config is not None:
         _details['profileConfig'] = cli_util.parse_json_parameter("profile_config", profile_config)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -2162,26 +2319,27 @@ def create_data_profile_data_entity_from_sql(ctx, from_json, registry_id, read_o
     cli_util.render_response(result, ctx)
 
 
-@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_file.command_name', 'create-data-profile-data-entity-from-file'), help=u"""Execute data profiling on live schema \n[Command Reference](createDataProfile)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_data_entity_from_file.command_name', 'create-data-profile-data-entity-from-file'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-key', help=u"""The object key.""")
-@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-model-version', help=u"""The model version of the object.""")
 @cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-entity-description', help=u"""Detailed description for the object.""")
+@cli_util.option('--data-entity-name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-description', help=u"""Detailed description of the object.""")
 @cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--data-entity-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-entity-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
-@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE"]), help=u"""The entity type.""")
+@cli_util.option('--data-entity-entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--data-entity-other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--data-entity-unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2192,13 +2350,13 @@ This option is a JSON list with items of type ForeignKey.  For documentation on 
 @cli_util.option('--data-entity-resource-name', help=u"""The resource name.""")
 @cli_util.option('--data-entity-data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}})
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'data-entity-foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'data-entity-data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
 @cli_util.wrap_exceptions
-def create_data_profile_data_entity_from_file(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_data_format, data_entity_object_status, data_entity_identifier):
+def create_data_profile_data_entity_from_file(ctx, from_json, registry_id, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_name, data_entity_description, data_entity_object_version, data_entity_external_key, data_entity_shape, data_entity_shape_id, data_entity_entity_type, data_entity_other_type_label, data_entity_unique_keys, data_entity_foreign_keys, data_entity_resource_name, data_entity_data_format, data_entity_object_status, data_entity_identifier):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -2227,6 +2385,9 @@ def create_data_profile_data_entity_from_file(ctx, from_json, registry_id, read_
 
     if profile_config is not None:
         _details['profileConfig'] = cli_util.parse_json_parameter("profile_config", profile_config)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
 
     if data_entity_metadata is not None:
         _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
@@ -2293,10 +2454,121 @@ def create_data_profile_data_entity_from_file(ctx, from_json, registry_id, read_
     cli_util.render_response(result, ctx)
 
 
-@reference_info_group.command(name=cli_util.override('data_connectivity_management.create_de_reference_artifact.command_name', 'create-de-reference-artifact'), help=u"""DeRereferenced a dcms artifact. \n[Command Reference](createDeReferenceArtifact)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_profile_group.command(name=cli_util.override('data_connectivity_management.create_data_profile_derived_entity.command_name', 'create-data-profile-derived-entity'), help=u"""Execute data profiling on live schema. \n[Command Reference](createDataProfile)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--data-entity-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is unique, editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-entity-resource-name', required=True, help=u"""The resource name.""")
+@cli_util.option('--read-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--profile-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--data-entity-entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-key', help=u"""The object key.""")
+@cli_util.option('--data-entity-model-version', help=u"""The object's model version.""")
+@cli_util.option('--data-entity-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--data-entity-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-shape-id', help=u"""The shape ID.""")
+@cli_util.option('--data-entity-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow reference across objects, other values reserved.""")
+@cli_util.option('--data-entity-identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-entity-ref-data-object', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-entity-mode', type=custom_types.CliCaseInsensitiveChoice(["IN", "OUT"]), help=u"""Determines whether entity is treated as source or target""")
+@cli_util.option('--data-entity-derived-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Property-bag (key-value pairs where key is Shape Field resource name and value is object)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-ref-data-object': {'module': 'data_connectivity', 'class': 'ReferencedDataObject'}, 'data-entity-derived-properties': {'module': 'data_connectivity', 'class': 'dict(str, object)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'read-operation-config': {'module': 'data_connectivity', 'class': 'ReadOperationConfig'}, 'data-asset': {'module': 'data_connectivity', 'class': 'DataAsset'}, 'connection': {'module': 'data_connectivity', 'class': 'Connection'}, 'schema': {'module': 'data_connectivity', 'class': 'Schema'}, 'profile-config': {'module': 'data_connectivity', 'class': 'ProfileConfig'}, 'data-entity-entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-entity-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'data-entity-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-entity-shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'data-entity-ref-data-object': {'module': 'data_connectivity', 'class': 'ReferencedDataObject'}, 'data-entity-derived-properties': {'module': 'data_connectivity', 'class': 'dict(str, object)'}}, output_type={'module': 'data_connectivity', 'class': 'DataProfile'})
+@cli_util.wrap_exceptions
+def create_data_profile_derived_entity(ctx, from_json, registry_id, data_entity_name, data_entity_resource_name, read_operation_config, data_asset, connection, schema, profile_config, if_match, endpoint_id, data_entity_entity_properties, data_entity_metadata, data_entity_key, data_entity_model_version, data_entity_parent_ref, data_entity_object_version, data_entity_shape, data_entity_shape_id, data_entity_object_status, data_entity_identifier, data_entity_ref_data_object, data_entity_mode, data_entity_derived_properties):
+
+    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
+        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if endpoint_id is not None:
+        kwargs['endpoint_id'] = endpoint_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataEntity'] = {}
+    _details['dataEntity']['name'] = data_entity_name
+    _details['dataEntity']['resourceName'] = data_entity_resource_name
+
+    if read_operation_config is not None:
+        _details['readOperationConfig'] = cli_util.parse_json_parameter("read_operation_config", read_operation_config)
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if schema is not None:
+        _details['schema'] = cli_util.parse_json_parameter("schema", schema)
+
+    if profile_config is not None:
+        _details['profileConfig'] = cli_util.parse_json_parameter("profile_config", profile_config)
+
+    if data_entity_entity_properties is not None:
+        _details['dataEntity']['entityProperties'] = cli_util.parse_json_parameter("data_entity_entity_properties", data_entity_entity_properties)
+
+    if data_entity_metadata is not None:
+        _details['dataEntity']['metadata'] = cli_util.parse_json_parameter("data_entity_metadata", data_entity_metadata)
+
+    if data_entity_key is not None:
+        _details['dataEntity']['key'] = data_entity_key
+
+    if data_entity_model_version is not None:
+        _details['dataEntity']['modelVersion'] = data_entity_model_version
+
+    if data_entity_parent_ref is not None:
+        _details['dataEntity']['parentRef'] = cli_util.parse_json_parameter("data_entity_parent_ref", data_entity_parent_ref)
+
+    if data_entity_object_version is not None:
+        _details['dataEntity']['objectVersion'] = data_entity_object_version
+
+    if data_entity_shape is not None:
+        _details['dataEntity']['shape'] = cli_util.parse_json_parameter("data_entity_shape", data_entity_shape)
+
+    if data_entity_shape_id is not None:
+        _details['dataEntity']['shapeId'] = data_entity_shape_id
+
+    if data_entity_object_status is not None:
+        _details['dataEntity']['objectStatus'] = data_entity_object_status
+
+    if data_entity_identifier is not None:
+        _details['dataEntity']['identifier'] = data_entity_identifier
+
+    if data_entity_ref_data_object is not None:
+        _details['dataEntity']['refDataObject'] = cli_util.parse_json_parameter("data_entity_ref_data_object", data_entity_ref_data_object)
+
+    if data_entity_mode is not None:
+        _details['dataEntity']['mode'] = data_entity_mode
+
+    if data_entity_derived_properties is not None:
+        _details['dataEntity']['derivedProperties'] = cli_util.parse_json_parameter("data_entity_derived_properties", data_entity_derived_properties)
+
+    _details['dataEntity']['modelType'] = 'DERIVED_ENTITY'
+
+    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
+    result = client.create_data_profile(
+        registry_id=registry_id,
+        create_data_profile_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@reference_info_group.command(name=cli_util.override('data_connectivity_management.create_de_reference_artifact.command_name', 'create-de-reference-artifact'), help=u"""Dereferenced a dcms artifact. \n[Command Reference](createDeReferenceArtifact)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--dcms-artifact-id', required=True, help=u"""The ID of a dcms artifact (DataAsset or Endpoint).""")
-@cli_util.option('--service-artifact-id', required=True, help=u"""unique id of service which is referencing data asset.""")
+@cli_util.option('--service-artifact-id', required=True, help=u"""The unique ID of the service that is referencing a data asset.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2329,10 +2601,10 @@ def create_de_reference_artifact(ctx, from_json, registry_id, dcms_artifact_id, 
     cli_util.render_response(result, ctx)
 
 
-@detach_data_asset_info_group.command(name=cli_util.override('data_connectivity_management.create_detach_data_asset.command_name', 'create-detach-data-asset'), help=u"""Detaches list of DataAssets to the given endpoint \n[Command Reference](createDetachDataAsset)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
-@cli_util.option('--data-assets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of DataAsset keys""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@detach_data_asset_info_group.command(name=cli_util.override('data_connectivity_management.create_detach_data_asset.command_name', 'create-detach-data-asset'), help=u"""Detaches a list of data assets to the given endpoint. \n[Command Reference](createDetachDataAsset)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
+@cli_util.option('--data-assets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of DataAsset keys.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({'data-assets': {'module': 'data_connectivity', 'class': 'list[DataAsset]'}})
 @cli_util.help_option
@@ -2365,18 +2637,18 @@ def create_detach_data_asset(ctx, from_json, registry_id, endpoint_id, data_asse
     cli_util.render_response(result, ctx)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.create_endpoint.command_name', 'create'), help=u"""Creates a new Data Connectivity Management Endpoint ready for performing data Connectivity. \n[Command Reference](createEndpoint)""")
-@cli_util.option('--display-name', required=True, help=u"""Data Connectivity Management Registry display name, registries can be renamed""")
-@cli_util.option('--vcn-id', help=u"""VCN Identifier where the subnet resides.""")
-@cli_util.option('--subnet-id', help=u"""Subnet Identifier for customer connected databases""")
-@cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of DNS zones to be used by the data assets to be harvested. Example: custpvtsubnet.oraclevcn.com for data asset: db.custpvtsubnet.oraclevcn.com""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.create_endpoint.command_name', 'create'), help=u"""Creates a new Data Connectivity Management endpoint ready to perform data connectivity. \n[Command Reference](createEndpoint)""")
+@cli_util.option('--display-name', required=True, help=u"""The Data Connectivity Management registry display name; registries can be renamed.""")
+@cli_util.option('--vcn-id', help=u"""VCN identifier where the subnet resides.""")
+@cli_util.option('--subnet-id', help=u"""Subnet identifier for the customer-connected databases.""")
+@cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS zones to be used by the data assets to be harvested. Example: custpvtsubnet.oraclevcn.com for data asset: db.custpvtsubnet.oraclevcn.com""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Data Connectivity Management Registry description""")
 @cli_util.option('--compartment-id', help=u"""Compartment Identifier""")
 @cli_util.option('--endpoint-size', type=click.INT, help=u"""Endpoint size for reverse connection capacity.""")
-@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of NSGs to which the Private Endpoint VNIC must be added.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NSGs to which the private endpoint VNIC must be added.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2454,19 +2726,19 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape.command_name', 'create-entity-shape'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIEW_ENTITY", "TABLE_ENTITY", "FILE_ENTITY", "DATA_STORE_ENTITY", "SQL_ENTITY"]), help=u"""The data entity type.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIEW_ENTITY", "TABLE_ENTITY", "FILE_ENTITY", "DATA_STORE_ENTITY", "SQL_ENTITY", "MESSAGE_ENTITY"]), help=u"""The data entity type.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--key', help=u"""The object key.""")
-@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-id', help=u"""The shape ID.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2476,12 +2748,12 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -2571,18 +2843,18 @@ def create_entity_shape(ctx, from_json, registry_id, connection_key, schema_reso
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_data_store.command_name', 'create-entity-shape-create-entity-shape-from-data-store'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--key', help=u"""The object key.""")
-@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-id', help=u"""The shape ID.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2592,12 +2864,12 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -2687,19 +2959,19 @@ def create_entity_shape_create_entity_shape_from_data_store(ctx, from_json, regi
     cli_util.render_response(result, ctx)
 
 
-@data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_table.command_name', 'create-entity-shape-create-entity-shape-from-table'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_message.command_name', 'create-entity-shape-create-entity-shape-from-message'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--key', help=u"""The object key.""")
-@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-id', help=u"""The shape ID.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2709,12 +2981,133 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}}, output_type={'module': 'data_connectivity', 'class': 'EntityShape'})
+@cli_util.wrap_exceptions
+def create_entity_shape_create_entity_shape_from_message(ctx, from_json, registry_id, connection_key, schema_resource_name, name, key, model_version, parent_ref, object_version, external_key, shape, shape_id, entity_type, other_type_label, unique_keys, foreign_keys, resource_name, object_status, identifier, types, entity_properties, data_format, if_match, authorization_mode, endpoint_id):
+
+    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
+        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+
+    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+        raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if authorization_mode is not None:
+        kwargs['authorization_mode'] = authorization_mode
+    if endpoint_id is not None:
+        kwargs['endpoint_id'] = endpoint_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if object_version is not None:
+        _details['objectVersion'] = object_version
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if shape is not None:
+        _details['shape'] = cli_util.parse_json_parameter("shape", shape)
+
+    if shape_id is not None:
+        _details['shapeId'] = shape_id
+
+    if entity_type is not None:
+        _details['entityType'] = entity_type
+
+    if other_type_label is not None:
+        _details['otherTypeLabel'] = other_type_label
+
+    if unique_keys is not None:
+        _details['uniqueKeys'] = cli_util.parse_json_parameter("unique_keys", unique_keys)
+
+    if foreign_keys is not None:
+        _details['foreignKeys'] = cli_util.parse_json_parameter("foreign_keys", foreign_keys)
+
+    if resource_name is not None:
+        _details['resourceName'] = resource_name
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if types is not None:
+        _details['types'] = cli_util.parse_json_parameter("types", types)
+
+    if entity_properties is not None:
+        _details['entityProperties'] = cli_util.parse_json_parameter("entity_properties", entity_properties)
+
+    if data_format is not None:
+        _details['dataFormat'] = cli_util.parse_json_parameter("data_format", data_format)
+
+    _details['modelType'] = 'MESSAGE_ENTITY'
+
+    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
+    result = client.create_entity_shape(
+        registry_id=registry_id,
+        connection_key=connection_key,
+        schema_resource_name=schema_resource_name,
+        create_entity_shape_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_table.command_name', 'create-entity-shape-create-entity-shape-from-table'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--key', help=u"""The object key.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
+@cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape-id', help=u"""The shape ID.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
+@cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
+@cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
+
+This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--foreign-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of foreign keys.
+
+This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-name', help=u"""The resource name.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -2805,18 +3198,18 @@ def create_entity_shape_create_entity_shape_from_table(ctx, from_json, registry_
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_sql.command_name', 'create-entity-shape-create-entity-shape-from-sql'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--key', help=u"""The object key.""")
-@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-id', help=u"""The shape ID.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2826,13 +3219,13 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-query', help=u"""sqlQuery""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -2926,18 +3319,18 @@ def create_entity_shape_create_entity_shape_from_sql(ctx, from_json, registry_id
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_file.command_name', 'create-entity-shape-create-entity-shape-from-file'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--key', help=u"""The object key.""")
-@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-id', help=u"""The shape ID.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -2947,13 +3340,13 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'data-format': {'module': 'data_connectivity', 'class': 'DataFormat'}})
 @cli_util.help_option
 @click.pass_context
@@ -3047,18 +3440,18 @@ def create_entity_shape_create_entity_shape_from_file(ctx, from_json, registry_i
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.create_entity_shape_create_entity_shape_from_view.command_name', 'create-entity-shape-create-entity-shape-from-view'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--key', help=u"""The object key.""")
-@cli_util.option('--model-version', help=u"""The object's model version.""")
+@cli_util.option('--model-version', help=u"""The model version of the object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
 @cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-id', help=u"""The shape ID.""")
-@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL"]), help=u"""The entity type.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "DATA_STORE", "MESSAGE"]), help=u"""The entity type.""")
 @cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
 @cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
 
@@ -3068,12 +3461,12 @@ This option is a JSON list with items of type UniqueKey.  For documentation on U
 This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-name', help=u"""The resource name.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--entity-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<String, String> for entity properties""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--authorization-mode', type=custom_types.CliCaseInsensitiveChoice(["OBO", "USER_PRINCIPAL", "RESOURCE_PRINCIPAL", "INSTANCE_PRINCIPAL", "UNDEFINED"]), help=u"""Authorization mode for communicating with another OCI service relevant for the API.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'shape': {'module': 'data_connectivity', 'class': 'Shape'}, 'unique-keys': {'module': 'data_connectivity', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_connectivity', 'class': 'list[ForeignKey]'}, 'types': {'module': 'data_connectivity', 'class': 'TypeLibrary'}, 'entity-properties': {'module': 'data_connectivity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -3164,15 +3557,15 @@ def create_entity_shape_create_entity_shape_from_view(ctx, from_json, registry_i
 
 
 @execute_operation_job_details_group.command(name=cli_util.override('data_connectivity_management.create_execute_operation_job.command_name', 'create-execute-operation-job'), help=u"""Call the operation to execute \n[Command Reference](createExecuteOperationJob)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
 @cli_util.option('--operation', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--call-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--input-records', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of input parameters supplied.
+@cli_util.option('--input-records', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of the input parameters supplied.
 
 This option is a JSON list with items of type OperationInputRecord.  For documentation on OperationInputRecord please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/OperationInputRecord.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'operation': {'module': 'data_connectivity', 'class': 'Operation'}, 'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}})
 @cli_util.help_option
 @click.pass_context
@@ -3217,14 +3610,15 @@ def create_execute_operation_job(ctx, from_json, registry_id, connection_key, sc
 
 
 @execute_operation_job_details_group.command(name=cli_util.override('data_connectivity_management.create_execute_operation_job_operation_from_procedure.command_name', 'create-execute-operation-job-operation-from-procedure'), help=u"""Call the operation to execute \n[Command Reference](createExecuteOperationJob)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
 @cli_util.option('--call-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--input-records', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of input parameters supplied.
+@cli_util.option('--input-records', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of the input parameters supplied.
 
 This option is a JSON list with items of type OperationInputRecord.  For documentation on OperationInputRecord please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/OperationInputRecord.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--operation-operation-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--operation-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--operation-key', help=u"""The object key.""")
 @cli_util.option('--operation-model-version', help=u"""The model version of the object.""")
@@ -3232,15 +3626,15 @@ This option is a JSON list with items of type OperationInputRecord.  For documen
 @cli_util.option('--operation-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--operation-name', help=u"""The operation name.""")
 @cli_util.option('--operation-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--operation-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--operation-external-key', help=u"""The external key of the object.""")
 @cli_util.option('--operation-resource-name', help=u"""The resource name.""")
 @cli_util.option('--operation-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow reference across objects, other values reserved.""")
-@json_skeleton_utils.get_cli_json_input_option({'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}})
+@json_skeleton_utils.get_cli_json_input_option({'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-operation-attributes': {'module': 'data_connectivity', 'class': 'AbstractOperationAttributes'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}}, output_type={'module': 'data_connectivity', 'class': 'ExecuteOperationJobDetails'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-operation-attributes': {'module': 'data_connectivity', 'class': 'AbstractOperationAttributes'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}}, output_type={'module': 'data_connectivity', 'class': 'ExecuteOperationJobDetails'})
 @cli_util.wrap_exceptions
-def create_execute_operation_job_operation_from_procedure(ctx, from_json, registry_id, connection_key, schema_resource_name, call_operation_config, input_records, endpoint_id, operation_metadata, operation_key, operation_model_version, operation_parent_ref, operation_shape, operation_name, operation_object_version, operation_external_key, operation_resource_name, operation_object_status):
+def create_execute_operation_job_operation_from_procedure(ctx, from_json, registry_id, connection_key, schema_resource_name, call_operation_config, input_records, endpoint_id, operation_operation_attributes, operation_metadata, operation_key, operation_model_version, operation_parent_ref, operation_shape, operation_name, operation_object_version, operation_external_key, operation_resource_name, operation_object_status):
 
     if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
         raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
@@ -3264,6 +3658,9 @@ def create_execute_operation_job_operation_from_procedure(ctx, from_json, regist
 
     if input_records is not None:
         _details['inputRecords'] = cli_util.parse_json_parameter("input_records", input_records)
+
+    if operation_operation_attributes is not None:
+        _details['operation']['operationAttributes'] = cli_util.parse_json_parameter("operation_operation_attributes", operation_operation_attributes)
 
     if operation_metadata is not None:
         _details['operation']['metadata'] = cli_util.parse_json_parameter("operation_metadata", operation_metadata)
@@ -3308,18 +3705,110 @@ def create_execute_operation_job_operation_from_procedure(ctx, from_json, regist
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_connectivity_management.create_folder.command_name', 'create'), help=u"""Creates a folder under a specefied registry. \n[Command Reference](createFolder)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@execute_operation_job_details_group.command(name=cli_util.override('data_connectivity_management.create_execute_operation_job_operation_from_api.command_name', 'create-execute-operation-job-operation-from-api'), help=u"""Call the operation to execute \n[Command Reference](createExecuteOperationJob)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
+@cli_util.option('--operation-name', required=True, help=u"""The operation name. This value is unique.""")
+@cli_util.option('--operation-resource-name', required=True, help=u"""The resource name.""")
+@cli_util.option('--call-operation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-records', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of the input parameters supplied.
+
+This option is a JSON list with items of type OperationInputRecord.  For documentation on OperationInputRecord please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/OperationInputRecord.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--operation-operation-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operation-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operation-key', help=u"""The object key.""")
+@cli_util.option('--operation-model-version', help=u"""The model version of the object.""")
+@cli_util.option('--operation-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operation-shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operation-object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--operation-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--operation-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow reference across objects, other values reserved.""")
+@json_skeleton_utils.get_cli_json_input_option({'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-operation-attributes': {'module': 'data_connectivity', 'class': 'AbstractOperationAttributes'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'call-operation-config': {'module': 'data_connectivity', 'class': 'CallOperationConfig'}, 'input-records': {'module': 'data_connectivity', 'class': 'list[OperationInputRecord]'}, 'operation-operation-attributes': {'module': 'data_connectivity', 'class': 'AbstractOperationAttributes'}, 'operation-metadata': {'module': 'data_connectivity', 'class': 'ObjectMetadata'}, 'operation-parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'operation-shape': {'module': 'data_connectivity', 'class': 'Shape'}}, output_type={'module': 'data_connectivity', 'class': 'ExecuteOperationJobDetails'})
+@cli_util.wrap_exceptions
+def create_execute_operation_job_operation_from_api(ctx, from_json, registry_id, connection_key, schema_resource_name, operation_name, operation_resource_name, call_operation_config, input_records, endpoint_id, operation_operation_attributes, operation_metadata, operation_key, operation_model_version, operation_parent_ref, operation_shape, operation_object_version, operation_external_key, operation_object_status):
+
+    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
+        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+
+    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+        raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if endpoint_id is not None:
+        kwargs['endpoint_id'] = endpoint_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['operation'] = {}
+    _details['operation']['name'] = operation_name
+    _details['operation']['resourceName'] = operation_resource_name
+
+    if call_operation_config is not None:
+        _details['callOperationConfig'] = cli_util.parse_json_parameter("call_operation_config", call_operation_config)
+
+    if input_records is not None:
+        _details['inputRecords'] = cli_util.parse_json_parameter("input_records", input_records)
+
+    if operation_operation_attributes is not None:
+        _details['operation']['operationAttributes'] = cli_util.parse_json_parameter("operation_operation_attributes", operation_operation_attributes)
+
+    if operation_metadata is not None:
+        _details['operation']['metadata'] = cli_util.parse_json_parameter("operation_metadata", operation_metadata)
+
+    if operation_key is not None:
+        _details['operation']['key'] = operation_key
+
+    if operation_model_version is not None:
+        _details['operation']['modelVersion'] = operation_model_version
+
+    if operation_parent_ref is not None:
+        _details['operation']['parentRef'] = cli_util.parse_json_parameter("operation_parent_ref", operation_parent_ref)
+
+    if operation_shape is not None:
+        _details['operation']['shape'] = cli_util.parse_json_parameter("operation_shape", operation_shape)
+
+    if operation_object_version is not None:
+        _details['operation']['objectVersion'] = operation_object_version
+
+    if operation_external_key is not None:
+        _details['operation']['externalKey'] = operation_external_key
+
+    if operation_object_status is not None:
+        _details['operation']['objectStatus'] = operation_object_status
+
+    _details['operation']['modelType'] = 'API'
+
+    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
+    result = client.create_execute_operation_job(
+        registry_id=registry_id,
+        connection_key=connection_key,
+        schema_resource_name=schema_resource_name,
+        create_execute_operation_job_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@folder_group.command(name=cli_util.override('data_connectivity_management.create_folder.command_name', 'create'), help=u"""Creates a folder under a specified registry. \n[Command Reference](createFolder)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--model-type', help=u"""The type of the folder.""")
-@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify folder. On scenarios where reference to the folder is needed, a value can be passed in create.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify the folder. In scenarios where reference to the folder is required, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""User-defined description for the folder.""")
+@cli_util.option('--description', help=u"""User-defined description of the folder.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-assets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of data assets which belongs to this folder
+@cli_util.option('--data-assets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of data assets that belong to the folder.
 
 This option is a JSON list with items of type DataAsset.  For documentation on DataAsset please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/DataAsset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_connectivity', 'class': 'ParentReference'}, 'data-assets': {'module': 'data_connectivity', 'class': 'list[DataAsset]'}})
@@ -3372,13 +3861,13 @@ def create_folder(ctx, from_json, registry_id, name, identifier, model_type, key
     cli_util.render_response(result, ctx)
 
 
-@full_push_down_task_response_group.command(name=cli_util.override('data_connectivity_management.create_full_push_down_task.command_name', 'create-full-push-down-task'), help=u"""This endpoint is used to create a connectivity task (like PushdownTask). \n[Command Reference](createFullPushDownTask)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--model-type', required=True, help=u"""The type of of FullPushDownTask.""")
+@full_push_down_task_response_group.command(name=cli_util.override('data_connectivity_management.create_full_push_down_task.command_name', 'create-full-push-down-task'), help=u"""This endpoint is used to create a connectivity task (such as PushdownTask). \n[Command Reference](createFullPushDownTask)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--model-type', required=True, help=u"""The type of FullPushDownTask.""")
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'data_connectivity', 'class': 'Source'}, 'target': {'module': 'data_connectivity', 'class': 'Target'}})
 @cli_util.help_option
 @click.pass_context
@@ -3415,9 +3904,9 @@ def create_full_push_down_task(ctx, from_json, registry_id, model_type, source, 
 
 
 @reference_info_group.command(name=cli_util.override('data_connectivity_management.create_reference_artifact.command_name', 'create-reference-artifact'), help=u"""Reference a data asset. \n[Command Reference](createReferenceArtifact)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--dcms-artifact-id', required=True, help=u"""The ID of a dcms artifact (DataAsset or Endpoint).""")
-@cli_util.option('--service-artifact-id', required=True, help=u"""unique id of service which is referencing data asset.""")
+@cli_util.option('--service-artifact-id', required=True, help=u"""The unique ID of the service that is referencing a data asset.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3450,9 +3939,9 @@ def create_reference_artifact(ctx, from_json, registry_id, dcms_artifact_id, ser
     cli_util.render_response(result, ctx)
 
 
-@registry_group.command(name=cli_util.override('data_connectivity_management.create_registry.command_name', 'create'), help=u"""Creates a new Data Connectivity Management Registry ready for performing data Connectivity Management. \n[Command Reference](createRegistry)""")
-@cli_util.option('--display-name', required=True, help=u"""Data Connectivity Management Registry display name, registries can be renamed""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@registry_group.command(name=cli_util.override('data_connectivity_management.create_registry.command_name', 'create'), help=u"""Creates a new Data Connectivity Management registry ready to perform data connectivity management. \n[Command Reference](createRegistry)""")
+@cli_util.option('--display-name', required=True, help=u"""The Data Connectivity Management Registry display name; registries can be renamed.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Data Connectivity Management Registry description""")
 @cli_util.option('--compartment-id', help=u"""Compartment Identifier""")
@@ -3515,10 +4004,10 @@ def create_registry(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@test_network_connectivity_group.command(name=cli_util.override('data_connectivity_management.create_test_network_connectivity.command_name', 'create'), help=u"""Execute network validation on selected data assets associated with the provided private endpoint \n[Command Reference](createTestNetworkConnectivity)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@test_network_connectivity_group.command(name=cli_util.override('data_connectivity_management.create_test_network_connectivity.command_name', 'create'), help=u"""Execute network validation on the selected data assets associated with the provided private endpoint. \n[Command Reference](createTestNetworkConnectivity)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Data Asset key""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3550,7 +4039,7 @@ def create_test_network_connectivity(ctx, from_json, registry_id, data_asset_key
 
 
 @connection_group.command(name=cli_util.override('data_connectivity_management.delete_connection.command_name', 'delete'), help=u"""Removes a connection using the specified identifier. \n[Command Reference](deleteConnection)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
@@ -3580,42 +4069,8 @@ def delete_connection(ctx, from_json, registry_id, connection_key, if_match):
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_connectivity_management.delete_connection_validation.command_name', 'delete'), help=u"""Deletes a connection validation. \n[Command Reference](deleteConnectionValidation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--connection-validation-key', required=True, help=u"""The key of the connection validation.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
-@cli_util.confirm_delete_option
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def delete_connection_validation(ctx, from_json, registry_id, connection_validation_key, if_match, endpoint_id):
-
-    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
-        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
-
-    if isinstance(connection_validation_key, six.string_types) and len(connection_validation_key.strip()) == 0:
-        raise click.UsageError('Parameter --connection-validation-key cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    if endpoint_id is not None:
-        kwargs['endpoint_id'] = endpoint_id
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
-    result = client.delete_connection_validation(
-        registry_id=registry_id,
-        connection_validation_key=connection_validation_key,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @data_asset_group.command(name=cli_util.override('data_connectivity_management.delete_data_asset.command_name', 'delete'), help=u"""Removes a data asset using the specified identifier. \n[Command Reference](deleteDataAsset)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
@@ -3645,9 +4100,9 @@ def delete_data_asset(ctx, from_json, registry_id, data_asset_key, if_match):
     cli_util.render_response(result, ctx)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.delete_endpoint.command_name', 'delete'), help=u"""Deletes a Data Connectivity Management Endpoint resource by identifier \n[Command Reference](deleteEndpoint)""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.delete_endpoint.command_name', 'delete'), help=u"""Deletes a Data Connectivity Management endpoint resource by its identifier. \n[Command Reference](deleteEndpoint)""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @cli_util.option('--is-force-operation', type=click.BOOL, help=u"""Try to delete forcefully after drain timeout.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
@@ -3704,7 +4159,7 @@ def delete_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @folder_group.command(name=cli_util.override('data_connectivity_management.delete_folder.command_name', 'delete'), help=u"""Removes a folder using the specified identifier. \n[Command Reference](deleteFolder)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--folder-key', required=True, help=u"""The folder ID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
@@ -3735,7 +4190,7 @@ def delete_folder(ctx, from_json, registry_id, folder_key, if_match):
 
 
 @test_network_connectivity_group.command(name=cli_util.override('data_connectivity_management.delete_network_connectivity_status.command_name', 'delete-network-connectivity-status'), help=u"""This api is used to delete a persisted NetworkValidationStatus by its key \n[Command Reference](deleteNetworkConnectivityStatus)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--network-validation-status-key', required=True, help=u"""NetworkValidationStatus key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
@@ -3765,8 +4220,8 @@ def delete_network_connectivity_status(ctx, from_json, registry_id, network_vali
     cli_util.render_response(result, ctx)
 
 
-@registry_group.command(name=cli_util.override('data_connectivity_management.delete_registry.command_name', 'delete'), help=u"""Deletes a Data Connectivity Management Registry resource by identifier \n[Command Reference](deleteRegistry)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@registry_group.command(name=cli_util.override('data_connectivity_management.delete_registry.command_name', 'delete'), help=u"""Deletes a Data Connectivity Management registry resource by its identifier. \n[Command Reference](deleteRegistry)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--is-force-operation', type=click.BOOL, help=u"""Try to delete forcefully after drain timeout.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.confirm_delete_option
@@ -3820,8 +4275,36 @@ def delete_registry(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@derived_entity_group.command(name=cli_util.override('data_connectivity_management.derive_entities.command_name', 'derive-entities'), help=u"""Get the Derived Entities from the EntityFlowMode and reference key of DataObject \n[Command Reference](deriveEntities)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of DeriveEntitiesRequestItem""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_connectivity', 'class': 'list[DeriveEntitiesItem]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_connectivity', 'class': 'list[DeriveEntitiesItem]'}}, output_type={'module': 'data_connectivity', 'class': 'DeriveEntities'})
+@cli_util.wrap_exceptions
+def derive_entities(ctx, from_json, registry_id, items):
+
+    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
+        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
+    result = client.derive_entities(
+        registry_id=registry_id,
+        derive_entities_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('data_connectivity_management.get_connection.command_name', 'get'), help=u"""Retrieves the connection details using the specified identifier. \n[Command Reference](getConnection)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3847,38 +4330,8 @@ def get_connection(ctx, from_json, registry_id, connection_key):
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_connectivity_management.get_connection_validation.command_name', 'get'), help=u"""Retrieves a connection validation using the specified identifier. \n[Command Reference](getConnectionValidation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--connection-validation-key', required=True, help=u"""The key of the connection validation.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_connectivity', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def get_connection_validation(ctx, from_json, registry_id, connection_validation_key, endpoint_id):
-
-    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
-        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
-
-    if isinstance(connection_validation_key, six.string_types) and len(connection_validation_key.strip()) == 0:
-        raise click.UsageError('Parameter --connection-validation-key cannot be whitespace or empty string')
-
-    kwargs = {}
-    if endpoint_id is not None:
-        kwargs['endpoint_id'] = endpoint_id
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
-    result = client.get_connection_validation(
-        registry_id=registry_id,
-        connection_validation_key=connection_validation_key,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @data_asset_group.command(name=cli_util.override('data_connectivity_management.get_data_asset.command_name', 'get'), help=u"""Retrieves details of a data asset using the specified identifier. \n[Command Reference](getDataAsset)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3905,11 +4358,11 @@ def get_data_asset(ctx, from_json, registry_id, data_asset_key):
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.get_data_entity.command_name', 'get'), help=u"""Retrieves the data entity details with the given name from live schema. \n[Command Reference](getDataEntity)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
 @cli_util.option('--data-entity-key', required=True, help=u"""The key of the data entity.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3944,9 +4397,9 @@ def get_data_entity(ctx, from_json, registry_id, connection_key, schema_resource
     cli_util.render_response(result, ctx)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.get_endpoint.command_name', 'get'), help=u"""Gets a Data Connectivity Management Endpoint by identifier \n[Command Reference](getEndpoint)""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.get_endpoint.command_name', 'get'), help=u"""Gets a Data Connectivity Management endpoint by its identifier. \n[Command Reference](getEndpoint)""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3969,12 +4422,42 @@ def get_endpoint(ctx, from_json, endpoint_id, registry_id):
     cli_util.render_response(result, ctx)
 
 
-@execute_operation_job_group.command(name=cli_util.override('data_connectivity_management.get_execute_operation_job.command_name', 'get'), help=u"""Get the operation status or operation execution result \n[Command Reference](getExecuteOperationJob)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@config_details_group.command(name=cli_util.override('data_connectivity_management.get_engine_configurations.command_name', 'get-engine-configurations'), help=u"""This endpoint is used to fetch connector-specific engine configurations. \n[Command Reference](getEngineConfigurations)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--engine-type-query-param', type=custom_types.CliCaseInsensitiveChoice(["SPARK"]), help=u"""Specifies the runtime engine for the bulk read/write operation. Default is SPARK.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_connectivity', 'class': 'ConfigDetails'})
+@cli_util.wrap_exceptions
+def get_engine_configurations(ctx, from_json, registry_id, connection_key, engine_type_query_param):
+
+    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
+        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if engine_type_query_param is not None:
+        kwargs['engine_type_query_param'] = engine_type_query_param
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
+    result = client.get_engine_configurations(
+        registry_id=registry_id,
+        connection_key=connection_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@execute_operation_job_group.command(name=cli_util.override('data_connectivity_management.get_execute_operation_job.command_name', 'get'), help=u"""Get the status or the result of the execution. \n[Command Reference](getExecuteOperationJob)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--execute-operation-job-key', required=True, help=u"""Job id returned by execute operation job api""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--execute-operation-job-key', required=True, help=u"""Job ID returned by the execute operation job API.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4010,7 +4493,7 @@ def get_execute_operation_job(ctx, from_json, registry_id, connection_key, schem
 
 
 @folder_group.command(name=cli_util.override('data_connectivity_management.get_folder.command_name', 'get'), help=u"""Retrieves the folder details using the specified identifier. \n[Command Reference](getFolder)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--folder-key', required=True, help=u"""The folder ID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4036,10 +4519,10 @@ def get_folder(ctx, from_json, registry_id, folder_key):
     cli_util.render_response(result, ctx)
 
 
-@test_network_connectivity_group.command(name=cli_util.override('data_connectivity_management.get_network_connectivity_status.command_name', 'get-network-connectivity-status'), help=u"""Get Status of network reachability check, with the timestamp when the status was last checked, for a given PrivateEndpoint-DataAsset pair \n[Command Reference](getNetworkConnectivityStatus)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@test_network_connectivity_group.command(name=cli_util.override('data_connectivity_management.get_network_connectivity_status.command_name', 'get-network-connectivity-status'), help=u"""Get the status of network reachability check, with the timestamp of when the status was last checked, for a given PrivateEndpoint-DataAsset pair. \n[Command Reference](getNetworkConnectivityStatus)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4069,12 +4552,12 @@ def get_network_connectivity_status(ctx, from_json, registry_id, data_asset_key,
     cli_util.render_response(result, ctx)
 
 
-@operation_group.command(name=cli_util.override('data_connectivity_management.get_operation.command_name', 'get'), help=u"""Retrieves the details of operation with given resource name. \n[Command Reference](getOperation)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@operation_group.command(name=cli_util.override('data_connectivity_management.get_operation.command_name', 'get'), help=u"""Retrieves the details of operation with the given resource name. \n[Command Reference](getOperation)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--operation-resource-name', required=True, help=u"""The opeartion resource name used for retrieving the details of operation.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--operation-resource-name', required=True, help=u"""The operation resource name used for retrieving the details of operation.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4109,8 +4592,8 @@ def get_operation(ctx, from_json, registry_id, connection_key, schema_resource_n
     cli_util.render_response(result, ctx)
 
 
-@registry_group.command(name=cli_util.override('data_connectivity_management.get_registry.command_name', 'get'), help=u"""Gets a Data Connectivity Management Registry by identifier \n[Command Reference](getRegistry)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@registry_group.command(name=cli_util.override('data_connectivity_management.get_registry.command_name', 'get'), help=u"""Retrieves a Data Connectivity Management registry using the specified identifier. \n[Command Reference](getRegistry)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4132,10 +4615,10 @@ def get_registry(ctx, from_json, registry_id):
 
 
 @schema_group.command(name=cli_util.override('data_connectivity_management.get_schema.command_name', 'get'), help=u"""Retrieves a schema that can be accessed using the specified connection. \n[Command Reference](getSchema)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4166,9 +4649,9 @@ def get_schema(ctx, from_json, registry_id, connection_key, schema_resource_name
     cli_util.render_response(result, ctx)
 
 
-@type_group.command(name=cli_util.override('data_connectivity_management.get_type.command_name', 'get'), help=u"""This endpoint retrieves dataAsset and connection attributes from DataAssetRegistry \n[Command Reference](getType)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--type-key', required=True, help=u"""key of the a specefic Type.""")
+@type_group.command(name=cli_util.override('data_connectivity_management.get_type.command_name', 'get'), help=u"""This endpoint retrieves dataAsset and connection attributes from DataAssetRegistry. \n[Command Reference](getType)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--type-key', required=True, help=u"""Key of the a specific type.""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}})
 @cli_util.help_option
@@ -4218,87 +4701,15 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_connectivity_management.list_connection_validations.command_name', 'list'), help=u"""Retrieves a list of connection validations within the specified registry. \n[Command Reference](listConnectionValidations)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--key', help=u"""Used to filter by the key of the object.""")
-@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
-@cli_util.option('--identifier', help=u"""Used to filter by the identifier of the object.""")
-@cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
-@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'ConnectionValidationSummaryCollection'})
-@cli_util.wrap_exceptions
-def list_connection_validations(ctx, from_json, all_pages, page_size, registry_id, key, name, identifier, fields, page, limit, sort_by, sort_order, endpoint_id):
-
-    if all_pages and limit:
-        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
-    if isinstance(registry_id, six.string_types) and len(registry_id.strip()) == 0:
-        raise click.UsageError('Parameter --registry-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if key is not None:
-        kwargs['key'] = key
-    if name is not None:
-        kwargs['name'] = name
-    if identifier is not None:
-        kwargs['identifier'] = identifier
-    if fields is not None and len(fields) > 0:
-        kwargs['fields'] = fields
-    if page is not None:
-        kwargs['page'] = page
-    if limit is not None:
-        kwargs['limit'] = limit
-    if sort_by is not None:
-        kwargs['sort_by'] = sort_by
-    if sort_order is not None:
-        kwargs['sort_order'] = sort_order
-    if endpoint_id is not None:
-        kwargs['endpoint_id'] = endpoint_id
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
-    if all_pages:
-        if page_size:
-            kwargs['limit'] = page_size
-
-        result = cli_util.list_call_get_all_results(
-            client.list_connection_validations,
-            registry_id=registry_id,
-            **kwargs
-        )
-    elif limit is not None:
-        result = cli_util.list_call_get_up_to_limit(
-            client.list_connection_validations,
-            limit,
-            page_size,
-            registry_id=registry_id,
-            **kwargs
-        )
-    else:
-        result = client.list_connection_validations(
-            registry_id=registry_id,
-            **kwargs
-        )
-    cli_util.render_response(result, ctx)
-
-
 @connection_group.command(name=cli_util.override('data_connectivity_management.list_connections.command_name', 'list'), help=u"""Retrieves a list of all connections. \n[Command Reference](listConnections)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Used to filter by the data asset key of the object.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--type', help=u"""Type of the object to filter the results with.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--favorites-query-param', type=custom_types.CliCaseInsensitiveChoice(["FAVORITES_ONLY", "NON_FAVORITES_ONLY", "ALL"]), help=u"""If value is FAVORITES_ONLY, then only objects marked as favorite by the requesting user will be included in result. If value is NON_FAVORITES_ONLY, then objects marked as favorites by the requesting user will be skipped. If value is ALL or if not specified, all objects, irrespective of favorites or not will be returned. Default is ALL.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4364,19 +4775,19 @@ def list_connections(ctx, from_json, all_pages, page_size, registry_id, data_ass
 
 
 @data_asset_group.command(name=cli_util.override('data_connectivity_management.list_data_assets.command_name', 'list'), help=u"""Retrieves a list of all data asset summaries. \n[Command Reference](listDataAssets)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
-@cli_util.option('--include-types', multiple=True, help=u"""DataAsset type which needs to be listed while listing dataAssets""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--include-types', multiple=True, help=u"""Artifact type which needs to be listed while listing Artifacts.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
-@cli_util.option('--exclude-types', multiple=True, help=u"""Types which wont be listed while listing dataAsset/Connection""")
+@cli_util.option('--exclude-types', multiple=True, help=u"""The types that will be excluded from the list of data assets/connections.""")
 @cli_util.option('--favorites-query-param', type=custom_types.CliCaseInsensitiveChoice(["FAVORITES_ONLY", "NON_FAVORITES_ONLY", "ALL"]), help=u"""If value is FAVORITES_ONLY, then only objects marked as favorite by the requesting user will be included in result. If value is NON_FAVORITES_ONLY, then objects marked as favorites by the requesting user will be skipped. If value is ALL or if not specified, all objects, irrespective of favorites or not will be returned. Default is ALL.""")
 @cli_util.option('--folder-id', help=u"""Unique key of the folder.""")
-@cli_util.option('--endpoint-ids', multiple=True, help=u"""Endpoint Ids used for data-plane APIs to filter or prefer specific endpoint.""")
-@cli_util.option('--exclude-endpoint-ids', multiple=True, help=u"""Endpoints which will be excluded while listing dataAssets""")
+@cli_util.option('--endpoint-ids', multiple=True, help=u"""Endpoint IDs used for data-plane APIs to filter or prefer specific endpoint.""")
+@cli_util.option('--exclude-endpoint-ids', multiple=True, help=u"""Endpoints which will be excluded while listing data assets.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'include-types': {'module': 'data_connectivity', 'class': 'list[string]'}, 'exclude-types': {'module': 'data_connectivity', 'class': 'list[string]'}, 'endpoint-ids': {'module': 'data_connectivity', 'class': 'list[string]'}, 'exclude-endpoint-ids': {'module': 'data_connectivity', 'class': 'list[string]'}})
@@ -4445,7 +4856,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, registry_id, page, li
 
 
 @data_entity_group.command(name=cli_util.override('data_connectivity_management.list_data_entities.command_name', 'list'), help=u"""Lists a summary of data entities from the data asset using the specified connection. \n[Command Reference](listDataEntities)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
@@ -4453,20 +4864,21 @@ def list_data_assets(ctx, from_json, all_pages, page_size, registry_id, page, li
 @cli_util.option('--type', help=u"""Type of the object to filter the results with.""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--api-mode', type=custom_types.CliCaseInsensitiveChoice(["PREVIEW", "ALL"]), help=u"""This parameter can be used to set the api response type to preview.""")
 @cli_util.option('--name-list', multiple=True, help=u"""Used to filter by the name of the object.""")
-@cli_util.option('--is-pattern', type=click.BOOL, help=u"""This parameter can be used to specify whether entity search type is pattern search or not.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--is-pattern', type=click.BOOL, help=u"""This parameter can be used to specify whether entity search type is a pattern search.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--include-types', multiple=True, help=u"""Artifact type which needs to be listed while listing Artifacts.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}, 'include-types': {'module': 'data_connectivity', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'DataEntitySummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}, 'include-types': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'DataEntitySummaryCollection'})
 @cli_util.wrap_exceptions
-def list_data_entities(ctx, from_json, all_pages, page_size, registry_id, connection_key, schema_resource_name, name, page, type, limit, fields, sort_by, sort_order, api_mode, name_list, is_pattern, endpoint_id):
+def list_data_entities(ctx, from_json, all_pages, page_size, registry_id, connection_key, schema_resource_name, name, page, type, limit, fields, sort_by, sort_order, api_mode, name_list, is_pattern, endpoint_id, include_types):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4503,6 +4915,8 @@ def list_data_entities(ctx, from_json, all_pages, page_size, registry_id, connec
         kwargs['is_pattern'] = is_pattern
     if endpoint_id is not None:
         kwargs['endpoint_id'] = endpoint_id
+    if include_types is not None and len(include_types) > 0:
+        kwargs['include_types'] = include_types
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
     if all_pages:
@@ -4536,15 +4950,15 @@ def list_data_entities(ctx, from_json, all_pages, page_size, registry_id, connec
     cli_util.render_response(result, ctx)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.list_endpoints.command_name', 'list'), help=u"""Returns a list of Data Connectivity Management Endpoints. \n[Command Reference](listEndpoints)""")
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.list_endpoints.command_name', 'list'), help=u"""Returns a list of Data Connectivity Management endpoints. \n[Command Reference](listEndpoints)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resources you want to list.""")
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "STARTING", "STOPPING", "STOPPED"]), help=u"""Lifecycle state of the resource.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "TIMEUPDATED"]), help=u"""This parameter allows users to specify a sort field.  Default sort order is the descending order of `timeCreated` (most recently created objects at the top).  Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "TIMEUPDATED"]), help=u"""This parameter allows users to specify a sort field. Default sort order is the descending order of `timeCreated` (most recently created objects at the top). Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4599,14 +5013,14 @@ def list_endpoints(ctx, from_json, all_pages, page_size, compartment_id, registr
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_connectivity_management.list_folders.command_name', 'list'), help=u"""Retrieves a list of all folders. \n[Command Reference](listFolders)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@folder_group.command(name=cli_util.override('data_connectivity_management.list_folders.command_name', 'list'), help=u"""Retrieves a list of all the folders. \n[Command Reference](listFolders)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--type', help=u"""Type of the object to filter the results with.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--favorites-query-param', type=custom_types.CliCaseInsensitiveChoice(["FAVORITES_ONLY", "NON_FAVORITES_ONLY", "ALL"]), help=u"""If value is FAVORITES_ONLY, then only objects marked as favorite by the requesting user will be included in result. If value is NON_FAVORITES_ONLY, then objects marked as favorites by the requesting user will be skipped. If value is ALL or if not specified, all objects, irrespective of favorites or not will be returned. Default is ALL.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4668,16 +5082,16 @@ def list_folders(ctx, from_json, all_pages, page_size, registry_id, name, page, 
     cli_util.render_response(result, ctx)
 
 
-@operation_summary_collection_group.command(name=cli_util.override('data_connectivity_management.list_operations.command_name', 'list-operations'), help=u"""Lists the summary of operations present in the schema identified by schema name. \n[Command Reference](listOperations)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@operation_summary_collection_group.command(name=cli_util.override('data_connectivity_management.list_operations.command_name', 'list-operations'), help=u"""Lists the summary of operations that are present in the schema, identified by the schema name. \n[Command Reference](listOperations)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4746,16 +5160,16 @@ def list_operations(ctx, from_json, all_pages, page_size, registry_id, connectio
 
 
 @reference_artifact_summary_collection_group.command(name=cli_util.override('data_connectivity_management.list_reference_artifacts.command_name', 'list-reference-artifacts'), help=u"""Retrieves a list of all reference info of a dcms artifact. \n[Command Reference](listReferenceArtifacts)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--dcms-artifact-id', required=True, help=u"""The ID of a dcms artifact (DataAsset or Endpoint).""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
 @cli_util.option('--type', help=u"""Type of the object to filter the results with.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
-@cli_util.option('--exclude-types', multiple=True, help=u"""Types which wont be listed while listing dataAsset/Connection""")
+@cli_util.option('--exclude-types', multiple=True, help=u"""The types that will be excluded from the list of data assets/connections.""")
 @cli_util.option('--favorites-query-param', type=custom_types.CliCaseInsensitiveChoice(["FAVORITES_ONLY", "NON_FAVORITES_ONLY", "ALL"]), help=u"""If value is FAVORITES_ONLY, then only objects marked as favorite by the requesting user will be included in result. If value is NON_FAVORITES_ONLY, then objects marked as favorites by the requesting user will be skipped. If value is ALL or if not specified, all objects, irrespective of favorites or not will be returned. Default is ALL.""")
 @cli_util.option('--service-artifact-id', help=u"""Unique key of the service.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4827,12 +5241,12 @@ def list_reference_artifacts(ctx, from_json, all_pages, page_size, registry_id, 
     cli_util.render_response(result, ctx)
 
 
-@registry_group.command(name=cli_util.override('data_connectivity_management.list_registries.command_name', 'list'), help=u"""Returns a list of Data Connectivity Management Registries. \n[Command Reference](listRegistries)""")
+@registry_group.command(name=cli_util.override('data_connectivity_management.list_registries.command_name', 'list'), help=u"""Retrieves a list of Data Connectivity Management registries. \n[Command Reference](listRegistries)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resources you want to list.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
-@cli_util.option('--is-deep-lookup', type=click.BOOL, help=u"""This parameter allows list registries to deep look at whole tenancy.""")
+@cli_util.option('--is-deep-lookup', type=click.BOOL, help=u"""This parameter allows list registries to deep look at the whole tenancy.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "STARTING", "STOPPING", "STOPPED"]), help=u"""Lifecycle state of the resource.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4885,25 +5299,26 @@ def list_registries(ctx, from_json, all_pages, page_size, compartment_id, name, 
 
 
 @schema_group.command(name=cli_util.override('data_connectivity_management.list_schemas.command_name', 'list'), help=u"""Retrieves a list of all the schemas that can be accessed using the specified connection. \n[Command Reference](listSchemas)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--schema-resource-key', help=u"""Schema resource name used for retrieving schemas.""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--name-list', multiple=True, help=u"""Used to filter by the name of the object.""")
-@cli_util.option('--endpoint-id', help=u"""Endpoint Id used for getDataAssetFullDetails.""")
+@cli_util.option('--endpoint-id', help=u"""Endpoint ID used for getDataAssetFullDetails.""")
+@cli_util.option('--include-types', multiple=True, help=u"""Artifact type which needs to be listed while listing Artifacts.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}, 'include-types': {'module': 'data_connectivity', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'SchemaSummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_connectivity', 'class': 'list[string]'}, 'name-list': {'module': 'data_connectivity', 'class': 'list[string]'}, 'include-types': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'SchemaSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_schemas(ctx, from_json, all_pages, page_size, registry_id, connection_key, page, limit, fields, sort_by, sort_order, schema_resource_key, name, name_list, endpoint_id):
+def list_schemas(ctx, from_json, all_pages, page_size, registry_id, connection_key, page, limit, fields, sort_by, sort_order, schema_resource_key, name, name_list, endpoint_id, include_types):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4933,6 +5348,8 @@ def list_schemas(ctx, from_json, all_pages, page_size, registry_id, connection_k
         kwargs['name_list'] = name_list
     if endpoint_id is not None:
         kwargs['endpoint_id'] = endpoint_id
+    if include_types is not None and len(include_types) > 0:
+        kwargs['include_types'] = include_types
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
     if all_pages:
@@ -4963,12 +5380,12 @@ def list_schemas(ctx, from_json, all_pages, page_size, registry_id, connection_k
     cli_util.render_response(result, ctx)
 
 
-@types_summary_collection_group.command(name=cli_util.override('data_connectivity_management.list_types.command_name', 'list-types'), help=u"""This endpoint retrieves list of all the supported connector types \n[Command Reference](listTypes)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@types_summary_collection_group.command(name=cli_util.override('data_connectivity_management.list_types.command_name', 'list-types'), help=u"""This endpoint retrieves a list of all the supported connector types. \n[Command Reference](listTypes)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--type', help=u"""Type of the object to filter the results with.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order are by relevance score in descending order).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -5026,7 +5443,7 @@ def list_types(ctx, from_json, all_pages, page_size, registry_id, page, limit, t
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('data_connectivity_management.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('data_connectivity_management.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
@@ -5077,7 +5494,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_group.command(name=cli_util.override('data_connectivity_management.list_work_request_logs.command_name', 'list'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_group.command(name=cli_util.override('data_connectivity_management.list_work_request_logs.command_name', 'list'), help=u"""Returns a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
@@ -5130,8 +5547,8 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 @work_request_group.command(name=cli_util.override('data_connectivity_management.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resources you want to list.""")
-@cli_util.option('--resource-id', help=u"""DCMS registry or endpoint id""")
-@cli_util.option('--work-request-status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""Work Request status.""")
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
+@cli_util.option('--work-request-status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""Work request status.""")
 @cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -5141,14 +5558,14 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_connectivity', 'class': 'WorkRequestSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, resource_id, work_request_status, page, limit):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, registry_id, work_request_status, page, limit):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if resource_id is not None:
-        kwargs['resource_id'] = resource_id
+    if registry_id is not None:
+        kwargs['registry_id'] = registry_id
     if work_request_status is not None:
         kwargs['work_request_status'] = work_request_status
     if page is not None:
@@ -5183,22 +5600,22 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 
 
 @connection_group.command(name=cli_util.override('data_connectivity_management.update_connection.command_name', 'update'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties for the connection in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties of the connection in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', required=True, help=u"""Specific Connection Type""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--model-type', help=u"""The type of the object.""")
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""User-defined description for the connection.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--primary-schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties of the connection.
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-default', type=click.BOOL, help=u"""The default property for the connection.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""The default property of the connection.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -5276,19 +5693,19 @@ def update_connection(ctx, from_json, force, registry_id, connection_key, proper
 
 
 @data_asset_group.command(name=cli_util.override('data_connectivity_management.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties for the data asset in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""All the properties of the data asset in a key-value map format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', required=True, help=u"""Specific DataAsset Type""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--model-type', help=u"""The type of the object.""")
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""User-defined description of the data asset.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
 @cli_util.option('--object-version', type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key of the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties of the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--native-type-system', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5376,32 +5793,33 @@ def update_data_asset(ctx, from_json, force, registry_id, data_asset_key, proper
     cli_util.render_response(result, ctx)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.update_endpoint.command_name', 'update'), help=u"""Updates the Data Connectivity Management Endpoint \n[Command Reference](updateEndpoint)""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.update_endpoint.command_name', 'update'), help=u"""Updates the Data Connectivity Management endpoint. \n[Command Reference](updateEndpoint)""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists only for cross-compatibility. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Data Connectivity Management Registry description""")
-@cli_util.option('--display-name', help=u"""Data Connectivity Management Registry display name, registries can be renamed""")
-@cli_util.option('--endpoint-size', type=click.INT, help=u"""Update Endpoint size for reverse connection capacity.""")
-@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of NSGs to which the Private Endpoint VNIC must be added.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@cli_util.option('--display-name', help=u"""The Data Connectivity Management registry display name; registries can be renamed.""")
+@cli_util.option('--endpoint-size', type=click.INT, help=u"""Update endpoint size for reverse connection capacity.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NSGs to which the Private Endpoint VNIC must be added.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of DNS zones to be used by the data assets. Example: custpvtsubnet.oraclevcn.com for data asset: db.custpvtsubnet.oraclevcn.com""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_connectivity', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_connectivity', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_connectivity', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_connectivity', 'class': 'list[string]'}, 'dns-zones': {'module': 'data_connectivity', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_connectivity', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'Endpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_connectivity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_connectivity', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_connectivity', 'class': 'list[string]'}, 'dns-zones': {'module': 'data_connectivity', 'class': 'list[string]'}}, output_type={'module': 'data_connectivity', 'class': 'Endpoint'})
 @cli_util.wrap_exceptions
-def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, freeform_tags, defined_tags, description, display_name, endpoint_size, nsg_ids, registry_id, if_match):
+def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, freeform_tags, defined_tags, description, display_name, endpoint_size, nsg_ids, dns_zones, registry_id, if_match):
 
     if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or nsg_ids:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or nsg_ids or dns_zones:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and dns-zones will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5430,6 +5848,9 @@ def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if dns_zones is not None:
+        _details['dnsZones'] = cli_util.parse_json_parameter("dns_zones", dns_zones)
 
     client = cli_util.build_client('data_connectivity', 'data_connectivity_management', ctx)
     result = client.update_endpoint(
@@ -5463,19 +5884,19 @@ def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_connectivity_management.update_folder.command_name', 'update'), help=u"""Updates a folder under a specefied registry. \n[Command Reference](updateFolder)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
+@folder_group.command(name=cli_util.override('data_connectivity_management.update_folder.command_name', 'update'), help=u"""Updates a folder under a specified registry. \n[Command Reference](updateFolder)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
 @cli_util.option('--folder-key', required=True, help=u"""The folder ID.""")
 @cli_util.option('--model-type', required=True, help=u"""The type of the folder.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify folder. On scenarios where reference to the folder is needed, a value can be passed in create.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify the folder. In scenarios where reference to the folder is required, a value can be passed in create.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""User-defined description for the folder.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on the permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description of the folder.""")
 @cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-assets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of data assets which belongs to this folder
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with an upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-assets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of data assets that belong to the folder.
 
 This option is a JSON list with items of type DataAsset.  For documentation on DataAsset please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataconnectivitymanagement/20210217/datatypes/DataAsset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -5538,12 +5959,12 @@ def update_folder(ctx, from_json, force, registry_id, folder_key, model_type, ke
     cli_util.render_response(result, ctx)
 
 
-@registry_group.command(name=cli_util.override('data_connectivity_management.update_registry.command_name', 'update'), help=u"""Updates the Data Connectivity Management Registry \n[Command Reference](updateRegistry)""")
-@cli_util.option('--registry-id', required=True, help=u"""The registry Ocid.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""Data Connectivity Management Registry description""")
-@cli_util.option('--display-name', help=u"""Data Connectivity Management Registry display name, registries can be renamed""")
+@registry_group.command(name=cli_util.override('data_connectivity_management.update_registry.command_name', 'update'), help=u"""Updates the Data Connectivity Management Registry. \n[Command Reference](updateRegistry)""")
+@cli_util.option('--registry-id', required=True, help=u"""The registry OCID.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or registry. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a registry. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Data Connectivity Management Registry description.""")
+@cli_util.option('--display-name', help=u"""Data Connectivity Management Registry display name, registries can be renamed.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5614,10 +6035,10 @@ def update_registry(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@endpoint_group.command(name=cli_util.override('data_connectivity_management.validate_data_asset_network_reachablity.command_name', 'validate-data-asset-network-reachablity'), help=u"""Validates the dataAsset network Reachability. \n[Command Reference](validateDataAssetNetworkReachablity)""")
-@cli_util.option('--endpoint-id', required=True, help=u"""DCMS Endpoint id""")
+@endpoint_group.command(name=cli_util.override('data_connectivity_management.validate_data_asset_network_reachablity.command_name', 'validate-data-asset-network-reachablity'), help=u"""Validates the dataAsset network reachability. \n[Command Reference](validateDataAssetNetworkReachablity)""")
+@cli_util.option('--endpoint-id', required=True, help=u"""DCMS endpoint ID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--registry-id', help=u"""DCMS registry id""")
+@cli_util.option('--registry-id', help=u"""DCMS registry ID""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
