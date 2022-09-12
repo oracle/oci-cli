@@ -200,7 +200,7 @@ def test_sync_src_include_dry_run(debug):
                                     sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--include',
                                     file_name_to_sync, '--dry-run'], debug=debug)
     deleted_set, uploaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
-    assert uploaded_set == {os.path.join(sync_upload_test_dir, file_name_to_sync)}
+    assert uploaded_set == {(os.path.join(sync_upload_test_dir, file_name_to_sync)).replace(os.sep, '/')}
     assert deleted_set == set()
     assert skipped_set == set()
 
@@ -463,7 +463,7 @@ def test_sync_src_with_delete_and_include(object_storage_client):
                                     '--include', '*.pdf', '--include', '*.doc'], debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['upload-failures'] == {}
-    assert set(parsed_result['uploaded-objects']) == set([f[len(sync_upload_test_dir):].strip('/') for f in l_file_set_1.union(l_file_set_2)])
+    assert set(parsed_result['uploaded-objects']) == set([(f[len(sync_upload_test_dir):].replace(os.sep, '/')).strip('/') for f in l_file_set_1.union(l_file_set_2)])
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_1
 
@@ -645,7 +645,7 @@ def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug):
                                    debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['upload-failures'] == {}
-    assert set(parsed_result['uploaded-objects']) == set([os.path.join(_prefix, f[len(sync_upload_test_dir):].strip('/')) for f in l_file_set_1.union(l_file_set_2)])
+    assert set(parsed_result['uploaded-objects']) == set([(os.path.join(_prefix, f[len(sync_upload_test_dir):].replace(os.sep, '/').strip('/'))) for f in l_file_set_1.union(l_file_set_2)])
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_1
     cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
@@ -709,7 +709,7 @@ def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug):
                                    debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['upload-failures'] == {}
-    assert set(parsed_result['uploaded-objects']) == set([os.path.join(_prefix, o) for o in sync_local_object_content.keys()])
+    assert set(parsed_result['uploaded-objects']) == set([(os.path.join(_prefix, o).replace(os.sep, '/')) for o in sync_local_object_content.keys()])
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_2
     cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
@@ -764,6 +764,8 @@ def test_sync_src_with_no_follow_symlinks_file(debug):
 
     # create the symlink
     create_symlink(file_to_create_a_symlink_of, symlink_fp)
+    symlink_fp = symlink_fp.replace(os.sep, '/')
+    symlink_pref = symlink_pref.replace(os.sep, '/')
 
     # validate the output from dry-run first
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
@@ -798,6 +800,8 @@ def test_sync_src_with_no_follow_symlinks_dir(debug):
 
     # create the symlink
     create_symlink(dir_to_create_a_symlink_of, symlink_fp, is_directory=True)
+    symlink_fp = symlink_fp.replace(os.sep, '/')
+    symlink_pref = symlink_pref.replace(os.sep, '/')
 
     # validate the output from dry-run first
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
@@ -831,7 +835,8 @@ def test_sync_src_with_follow_symlinks_file(object_storage_client, debug):
     symlink_fp = os.path.join(sync_upload_test_dir, symlink_pref)
 
     create_symlink(file_to_create_a_symlink_of, symlink_fp)
-
+    symlink_fp = symlink_fp.replace(os.sep, '/')
+    symlink_pref = symlink_pref.replace(os.sep, '/')
     # validate the output from dry-run first
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
                                     sync_upload_bucket_name, '--src-dir', sync_upload_test_dir,
@@ -870,6 +875,9 @@ def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
 
     # create the symlink
     create_symlink(dir_to_create_a_symlink_of, symlink_fp, is_directory=True)
+    symlink_fp = symlink_fp.replace(os.sep, '/')
+    symlink_pref = symlink_pref.replace(os.sep, '/')
+    dir_to_create_a_symlink_of = dir_to_create_a_symlink_of.replace(os.sep, '/')
 
     # validate the output from dry-run first
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
@@ -895,7 +903,7 @@ def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
             assert o[len(symlink_pref):].strip('/') in dir_content_with_symlink
     assert parsed_result['skipped-objects'] == []
     compare_file_content_to_remote(object_storage_client,
-                                   {os.path.join(symlink_pref, k): v for k, v in dir_content_with_symlink.items()},
+                                   {(os.path.join(symlink_pref, k)).replace(os.sep, '/'): v for k, v in dir_content_with_symlink.items()},
                                    prefix_to_test=symlink_pref)
     os.unlink(symlink_fp)
 
@@ -926,10 +934,10 @@ def create_symlink(src_path_abs, symlink_fp, is_directory=False):
     # If the path doesn't match the link would be broken
     os.symlink(
         os.path.relpath(
-            src_path_abs,
+            src_path_abs.replace('/', os.sep),
             os.path.dirname(symlink_fp)
-        ),
-        symlink_fp,
+        ).replace('/', os.sep),
+        symlink_fp.replace('/', os.sep),
         target_is_directory=is_directory)
 
 

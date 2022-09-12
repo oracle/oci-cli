@@ -165,16 +165,15 @@ def customer_key(request):
 
 
 @util.skip_while_rerecording
-@pytest.mark.skip('object storage tests are failing. skipping for now')
 def test_normalize_object_name_path():
-    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path')
-    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path', '/')
-    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this\\is\\a\\path', '\\')
-    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this/is/a\\path', '\\')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('/this/is/a/path')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('/this/is/a/path', '/')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('\\this\\is\\a\\path', '\\')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('\\this/is/a\\path', '\\')
 
-    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath')
-    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '/')
-    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '\\')
+    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('thisisapath')
+    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('thisisapath', '/')
+    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('thisisapath', '\\')
 
 
 @util.skip_while_rerecording
@@ -186,8 +185,10 @@ def test_get_all_objects_in_bucket(vcr_fixture):
 
     # Ensure that content matches
     for object_name in bulk_get_object_to_content:
-        if object_name[0] == '/' or object_name[0] == '\\':
+        if object_name[0] == '/':
             file_path = os.path.join(download_folder, object_name[1:])
+        elif object_name[0:2] == '\\':
+            file_path = os.path.join(download_folder, object_name[2:])
         else:
             file_path = os.path.join(download_folder, object_name)
 

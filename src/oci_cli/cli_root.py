@@ -44,6 +44,61 @@ logging.basicConfig(level=logging.WARN)
 
 OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
 
+GENERATE_PARAM_JSON_HELP = """Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.
+Example::
+    oci compute instance launch --generate_param_json_input_r agent-config > example.json
+
+    cat example.json
+Output::
+
+    {
+      "areAllPluginsDisabled": true,
+      "isManagementDisabled": true,
+      "isMonitoringDisabled": true,
+      "pluginsConfig": [
+        {
+          "desiredState": "string",
+          "name": "string"
+        },
+        {
+          "desiredState": "string",
+          "name": "string"
+        }
+      ]
+    }
+
+Edit the example.json file with correct values and use it as below ::
+
+    oci compute instance launch --agent-config file://example.json
+
+"""
+GENERATE_FULL_COMMAND_JSON_HELP = """Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.
+Example::
+    oci os bucket get --generate_full_command_json_input_r  > example.json
+    cat example.json
+Output::
+
+    {
+      "bucketName": "string",
+      "fields": [
+        "approximateCount|approximateSize|autoTiering"
+      ],
+      "ifMatch": "string",
+      "ifNoneMatch": "string",
+      "name": "string",
+      "namespace": "string",
+      "namespaceName": "string"
+    }
+
+Edit the example.json file with correct values and use it as below ::
+
+    oci os bucket get --from-json file://example.json
+"""
+
 
 def eager_load_cli_rc_file(ctx, param, value):
     expanded_rc_default_location = os.path.expandvars(os.path.expanduser(cli_constants.CLI_RC_DEFAULT_LOCATION))
@@ -326,12 +381,8 @@ Queries can be entered directly on the command line or referenced from the [OCI_
 @click.option('--raw-output', is_flag=True, help='If the output of a given query is a single string value, this will return the string without surrounding quotes')
 @click.option('--auth', type=click.Choice(choices=OCI_CLI_AUTH_CHOICES), help='The type of auth to use for the API request. By default the API key in your config file will be used.  This value can also be provided in the {auth_env_var} environment variable.'.format(auth_env_var=cli_constants.OCI_CLI_AUTH_ENV_VAR))
 @click.option('--auth-purpose', help='The The auth purpose which can be used in conjunction with --auth.')
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help=GENERATE_FULL_COMMAND_JSON_HELP)
+@click.option('--generate-param-json-input', is_eager=True, help=GENERATE_PARAM_JSON_HELP)
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')

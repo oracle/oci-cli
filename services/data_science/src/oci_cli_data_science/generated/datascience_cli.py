@@ -1106,12 +1106,13 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--model-artifact', required=True, help=u"""The model artifact to upload.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
 @cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_model_artifact(ctx, from_json, model_id, model_artifact, content_length, content_disposition):
+def create_model_artifact(ctx, from_json, model_id, model_artifact, content_length, content_disposition, if_match):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -1121,6 +1122,8 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
         kwargs['content_length'] = content_length
     if content_disposition is not None:
         kwargs['content_disposition'] = content_disposition
+    if if_match is not None:
+        kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
@@ -1966,6 +1969,137 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@model_group.command(name=cli_util.override('data_science.export_model_artifact.command_name', 'export-model-artifact'), help=u"""Export model artifact from source to the service bucket \n[Command Reference](exportModelArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-export-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'artifact-export-details': {'module': 'data_science', 'class': 'ArtifactExportDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-export-details': {'module': 'data_science', 'class': 'ArtifactExportDetails'}})
+@cli_util.wrap_exceptions
+def export_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, artifact_export_details, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactExportDetails'] = cli_util.parse_json_parameter("artifact_export_details", artifact_export_details)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.export_model_artifact(
+        model_id=model_id,
+        export_model_artifact_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.export_model_artifact_artifact_export_details_object_storage.command_name', 'export-model-artifact-artifact-export-details-object-storage'), help=u"""Export model artifact from source to the service bucket \n[Command Reference](exportModelArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--artifact-export-details-namespace', help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--artifact-export-details-source-bucket', help=u"""The name of the bucket. Avoid entering confidential information.""")
+@cli_util.option('--artifact-export-details-source-object-name', help=u"""The name of the object resulting from the copy operation.""")
+@cli_util.option('--artifact-export-details-source-region', help=u"""Region in which OSS bucket is present""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def export_model_artifact_artifact_export_details_object_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match, artifact_export_details_namespace, artifact_export_details_source_bucket, artifact_export_details_source_object_name, artifact_export_details_source_region):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactExportDetails'] = {}
+
+    if artifact_export_details_namespace is not None:
+        _details['artifactExportDetails']['namespace'] = artifact_export_details_namespace
+
+    if artifact_export_details_source_bucket is not None:
+        _details['artifactExportDetails']['sourceBucket'] = artifact_export_details_source_bucket
+
+    if artifact_export_details_source_object_name is not None:
+        _details['artifactExportDetails']['sourceObjectName'] = artifact_export_details_source_object_name
+
+    if artifact_export_details_source_region is not None:
+        _details['artifactExportDetails']['sourceRegion'] = artifact_export_details_source_region
+
+    _details['artifactExportDetails']['artifactSourceType'] = 'ORACLE_OBJECT_STORAGE'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.export_model_artifact(
+        model_id=model_id,
+        export_model_artifact_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('data_science.get_job.command_name', 'get'), help=u"""Gets a job. \n[Command Reference](getJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2279,6 +2413,137 @@ def head_model_artifact(ctx, from_json, model_id):
         model_id=model_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.import_model_artifact.command_name', 'import-model-artifact'), help=u"""Import model artifact from service bucket \n[Command Reference](importModelArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-import-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'artifact-import-details': {'module': 'data_science', 'class': 'ArtifactImportDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-import-details': {'module': 'data_science', 'class': 'ArtifactImportDetails'}})
+@cli_util.wrap_exceptions
+def import_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, artifact_import_details, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactImportDetails'] = cli_util.parse_json_parameter("artifact_import_details", artifact_import_details)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.import_model_artifact(
+        model_id=model_id,
+        import_model_artifact_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.import_model_artifact_artifact_import_details_object_storage.command_name', 'import-model-artifact-artifact-import-details-object-storage'), help=u"""Import model artifact from service bucket \n[Command Reference](importModelArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--artifact-import-details-namespace', help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--artifact-import-details-destination-bucket', help=u"""The name of the bucket. Avoid entering confidential information.""")
+@cli_util.option('--artifact-import-details-destination-object-name', help=u"""The name of the object resulting from the copy operation.""")
+@cli_util.option('--artifact-import-details-destination-region', help=u"""Region in which OSS bucket is present""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def import_model_artifact_artifact_import_details_object_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match, artifact_import_details_namespace, artifact_import_details_destination_bucket, artifact_import_details_destination_object_name, artifact_import_details_destination_region):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactImportDetails'] = {}
+
+    if artifact_import_details_namespace is not None:
+        _details['artifactImportDetails']['namespace'] = artifact_import_details_namespace
+
+    if artifact_import_details_destination_bucket is not None:
+        _details['artifactImportDetails']['destinationBucket'] = artifact_import_details_destination_bucket
+
+    if artifact_import_details_destination_object_name is not None:
+        _details['artifactImportDetails']['destinationObjectName'] = artifact_import_details_destination_object_name
+
+    if artifact_import_details_destination_region is not None:
+        _details['artifactImportDetails']['destinationRegion'] = artifact_import_details_destination_region
+
+    _details['artifactImportDetails']['artifactSourceType'] = 'ORACLE_OBJECT_STORAGE'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.import_model_artifact(
+        model_id=model_id,
+        import_model_artifact_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2974,7 +3239,7 @@ def list_work_request_logs(ctx, from_json, all_pages, work_request_id):
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
 

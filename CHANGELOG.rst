@@ -6,6 +6,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.16.1 - 2022-09-13
+--------------------
+
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the Madrid region (``--region eu-madrid-1``)
+
+* Data Science service
+
+  * Support for new optional parameter
+
+    * ``oci data-science model create-model-artifact --if-match``
+
+  * Support for new commands
+
+    * ``oci data-science model export-model-artifact``
+    * ``oci data-science model export-model-artifact-artifact-export-details-object-storage``
+    * ``oci data-science model import-model-artifact``
+    * ``oci data-science model import-model-artifact-artifact-import-details-object-storage``
+
 3.16.0 - 2022-09-06
 --------------------
 

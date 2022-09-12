@@ -461,14 +461,22 @@ def test_create_replication_policy(vcr_fixture, runner, config_file, config_prof
     # bucket create
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', dest_bucket, '--public-access-type', 'ObjectRead'])
     validate_response(result)
-    # create policy
-    result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', util.OS_REPLICATION_DESTINATION_REGION])
-    validate_response(result)
-    response = json.loads(result.output)
-    replication_id = response['data']['id']
-    # delete policy
-    result = invoke(runner, config_file, config_profile, ['replication', 'delete-replication-policy', '-ns', util.NAMESPACE, '--replication-id', replication_id, '--bucket-name', source_bucket, '--force'])
-    validate_response(result)
+
+    try:
+        # create policy
+        result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', util.OS_REPLICATION_DESTINATION_REGION])
+        validate_response(result)
+        response = json.loads(result.output)
+        replication_id = response['data']['id']
+        # delete policy
+        result = invoke(runner, config_file, config_profile, ['replication', 'delete-replication-policy', '-ns', util.NAMESPACE, '--replication-id', replication_id, '--bucket-name', source_bucket, '--force'])
+        validate_response(result)
+    except Exception as ex:
+        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', source_bucket, '--force'])
+        validate_response(result)
+        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', dest_bucket, '--force'])
+        validate_response(result)
+
     # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', source_bucket, '--force'])
     validate_response(result)
