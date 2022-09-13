@@ -810,8 +810,10 @@ def compare_file_content_to_local(file_content_map, path_to_test, files_in_scope
         if files_in_scope and object_name not in files_in_scope:
             continue
 
-        if object_name[0] == '/' or object_name[0] == '\\':
+        if object_name[0] == '/':
             file_path = os.path.join(path_to_test, object_name[1:])
+        elif object_name[0:2] == "\\":
+            file_path = os.path.join(path_to_test, object_name[2:])
         else:
             file_path = os.path.join(path_to_test, object_name)
 
@@ -832,7 +834,7 @@ def create_new_files_local(path, no_of_files_to_create, with_content=False, exte
         with open(new_file_path, 'w') as fh:
             if with_content:
                 fh.write(bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH))
-        new_local_file_set.add(new_file_path)
+        new_local_file_set.add(new_file_path.replace(os.sep, '/'))
     return new_local_file_set
 
 
@@ -851,6 +853,7 @@ def create_new_objects_remote(client, bucket_name, no_of_files_to_create, with_c
             object_name = 'new_obj_{}.{}'.format(i, extension)
         if prefix:
             object_name = os.path.join(prefix, object_name)
+        object_name = object_name.replace(os.sep, '/')
         content = bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH)
         client.put_object(util.NAMESPACE, bucket_name, object_name, content if with_content else '')
         new_remote_obj_set.add(object_name)

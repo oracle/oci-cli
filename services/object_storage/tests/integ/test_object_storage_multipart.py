@@ -79,7 +79,7 @@ def temp_bucket(runner, config_file, config_profile, object_storage_client):
 
     try:
         print("Deleting bucket")
-        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
+        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force', '--empty'])
         validate_response(result)
     except Exception as error:
         util.print_latest_exception(error)
