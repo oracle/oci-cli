@@ -883,3 +883,23 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
         result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--is-auto-association-override'])
         assert 'Error: no such option: --is-auto-association-override' in result.output
+
+    # Ingest time Rule test removed create command
+    def test_ingest_time_rule_removed_create_command(self):
+        # removed create
+        result = util.invoke_command(['log-analytics', 'ingest-time-rule', 'create-ingest-time-rule-ingest-time-rule-field-condition'])
+        assert 'No such command' in result.output
+
+    # Ingest time Rule test removed update command
+    def test_ingest_time_rule_removed_update_command(self):
+        # removed update
+        result = util.invoke_command(['log-analytics', 'ingest-time-rule', 'update-ingest-time-rule-ingest-time-rule-field-condition'])
+        assert 'No such command' in result.output
+
+    # Recall archived data test renamed param
+    def test_recall_archived_data_renamed_params(self):
+        result = util.invoke_command(['log-analytics', 'storage', 'recall-archived-data', '--query-parameterconflict'])
+        assert 'Error: no such option: --query-parameterconflict' in result.output
+
+        result = util.invoke_command(['log-analytics', 'storage', 'recall-archived-data', '--query-string'])
+        assert 'Error: --query-string option requires an argument' in result.output

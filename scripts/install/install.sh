@@ -30,6 +30,8 @@ The following options are available:
     --offline-install
         When specified, the script installs CLI without the need to go to the internet.
         This can run only as part of offline installation.
+    --dependency-dir
+        When input is specified, CLI install will process dependencies from input relative path
     --python-install-location
         Optionally specifies where to install python on systems where it is
         not present. This must be an absolute path and it will be created if
@@ -108,6 +110,12 @@ case $key in
     OFFLINE_INSTALL=true
     install_args="$install_args --offline-install"
     shift # past argument
+    ;;
+    --dependency-dir)
+    DEPENDENCY_DIR="$2"
+    install_args="$install_args --dependency-dir $DEPENDENCY_DIR"
+    shift # past argument
+    shift # past value
     ;;
     --install-dir)
     CLI_INSTALL_DIR="$2"

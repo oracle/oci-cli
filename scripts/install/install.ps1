@@ -8,6 +8,8 @@
     Run the script accepting all default options. This will suppress all prompts for user input.
 .PARAMETER OfflineInstall
     Install CLI in the offline mode. This should be part of CLI Offline package.
+.PARAMETER DependencyDir
+    When input is specified, CLI install will process dependencies from input relative path
 .PARAMETER PythonInstallLocation
     Optionally specifies where to install python on systems where it is not present. This must be an absolute path and
     it will be created if it does not exist.
@@ -26,9 +28,8 @@
     completion of CLI commands is enabled.
 .PARAMETER OciCliVersion
     The version of CLI to install, e.g. 2.5.12. The default is the latest from pypi.
-
 .PARAMETER VerifyCheckSum
-        This input parameter verifies the checksum for install.py script. the checksum should be provided as a value of this parameter.
+    This input parameter verifies the checksum for install.py script. the checksum should be provided as a value of this parameter.
 
 .NOTES
     The order of precedence in which this scripts applies input parameters is as follows:
@@ -46,6 +47,7 @@
 Param(
     [Parameter(Mandatory=$false)][switch]$AcceptAllDefaults,
     [Parameter(Mandatory=$false)][switch]$OfflineInstall,
+    [Parameter(Mandatory=$false)][string]$DependencyDir,
     [Parameter(Mandatory=$false)][string]$PythonInstallLocation,
     [Parameter(Mandatory=$false)][string]$OptionalFeatures,
     [Parameter(Mandatory=$false)][string]$InstallDir,
@@ -422,6 +424,9 @@ Try {
     if ($OfflineInstall) {
         $ArgumentList = "$ArgumentList --offline-install"
     }
+    if ($DependencyDir) {
+        $ArgumentList = "$ArgumentList --dependency-dir $DependencyDir"
+    }
     if ($InstallDir) {
         $ArgumentList = "$ArgumentList --install-dir $InstallDir"
     }
@@ -440,7 +445,7 @@ Try {
     if ($OciCliVersion) {
         $ArgumentList = "$ArgumentList --oci-cli-version $OciCliVersion"
     }
-    LogOutput "$PythonInstallLocation $AcceptAllDefaults $InstallDir $ExecDir $ScriptDir $UpdatePathAndEnableTabCompletion"
+    LogOutput "$PythonInstallLocation $AcceptAllDefaults $DependencyDir $InstallDir $ExecDir $ScriptDir $UpdatePathAndEnableTabCompletion"
     LogOutput "Using Python executable: $PythonExecutable to run install script..."
     LogOutput "Arguments to python script: $ArgumentList"
 

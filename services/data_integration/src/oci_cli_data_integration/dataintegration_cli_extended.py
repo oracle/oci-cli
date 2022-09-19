@@ -13,6 +13,9 @@ dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_con
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_atp.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_adwc.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_lakehouse.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_rest_basic_auth.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_rest_no_auth.name)
 
 create_connection_args = [
     'workspace_id',
@@ -103,12 +106,45 @@ def create_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.create_connection_create_connection_from_jdbc, **generic_jdbc_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_LAKEHOUSE_CONNECTION':
+        oracle_lakehouse_args = {}
+        oracle_lakehouse_args.update(common_args)
+        oracle_lakehouse_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_lakehouse, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_REST_BASIC_AUTH_CONNECTION':
+        oracle_rest_auth_args = {}
+        oracle_rest_auth_args.update(common_args)
+        oracle_rest_auth_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_rest_basic_auth, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_REST_NO_AUTH_CONNECTION':
+        oracle_rest_no_auth_args = {}
+        oracle_rest_no_auth_args.update(common_args)
+        oracle_rest_no_auth_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_rest_no_auth, **oracle_db_args)
 
 
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_object_storage.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_atp.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_adwc.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_lakehouse.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_rest_basic_auth.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_rest_no_auth.name)
 
 update_connection_args = [
     'workspace_id',
@@ -203,6 +239,36 @@ def update_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.update_connection_update_connection_from_jdbc, **generic_jdbc_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_LAKEHOUSE_CONNECTION':
+        oracle_lakehouse_args = {}
+        oracle_lakehouse_args.update(common_args)
+        oracle_lakehouse_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_lakehouse, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_REST_BASIC_AUTH_CONNECTION':
+        oracle_rest_auth_args = {}
+        oracle_rest_auth_args.update(common_args)
+        oracle_rest_auth_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_rest_basic_auth, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_REST_NO_AUTH_CONNECTION':
+        oracle_rest_no_auth_args = {}
+        oracle_rest_no_auth_args.update(common_args)
+        oracle_rest_no_auth_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_rest_no_auth, **oracle_db_args)
 
 
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_object_storage.name)
@@ -1025,12 +1091,17 @@ dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_adwc.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_atp.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_object_storage.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_lakehouse.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_rest.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_atp.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_adwc.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_object_storage.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_my_sql.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_jdbc.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_lakehouse.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_rest_basic_auth.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_rest_no_auth.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_my_sql.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_jdbc.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_jdbc.name)
@@ -1039,8 +1110,12 @@ dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_con
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_my_sql.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_jdbc.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_my_sql.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_lakehouse.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_rest.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_jdbc.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_my_sql.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_lakehouse.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_rest.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_amazon_s3.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_amazon_s3.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_bicc.name)
@@ -1056,3 +1131,57 @@ dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_dat
 
 cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.create_task_create_task_from_oci_dataflow_task, "create-task-from-dataflow-task")
 cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_group, dataintegration_cli.update_task_update_task_from_oci_dataflow_task, "update-task-from-dataflow-task")
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.data_integration_root_group, dataintegration_cli.runtime_pipeline_summary_collection_group, "runtime-pipelines")
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.data_integration_root_group, dataintegration_cli.runtime_operator_summary_collection_group, "runtime-operators")
+
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.data_integration_root_group, dataintegration_cli.task_run_lineage_summary_collection_group, "task-run-lineage")
+cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_run_lineage_summary_collection_group, dataintegration_cli.list_dis_application_task_run_lineages, "list_taskrun_lineages")
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.list_dis_application_task_run_lineages, params_to_exclude=['time_upated_less_than_or_equal_to', 'time_updated_greater_than', 'time_updated_greater_than_or_equal_to'])
+@cli_util.option('--time-upated-lte', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated before and at a certain time. The format of timeUpatedLessThanOrEqualTo is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated-gt', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated after a certain time. The format of timeUpdatedGreaterThan is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated-gte', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated after and at a certain time. The format of timeUpdatedGreaterThanOrEqualTo is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@dataintegration_cli.task_run_lineage_summary_collection_group.command(name=cli_util.override('data_integration.list_dis_application_task_run_lineages.command_name', 'list-dis-application-task-run-lineages'), help=u"""This endpoint can be used to list Task Run Lineages within a given time window. \n[Command Reference](listDisApplicationTaskRunLineages)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def list_dis_application_task_run_lineages_extended(ctx, **kwargs):
+    if 'time_upated_lte' in kwargs:
+        kwargs['time_upated_less_than_or_equal_to'] = kwargs['time_upated_lte']
+        kwargs.pop('time_upated_lte')
+
+    if 'time_updated_gt' in kwargs:
+        kwargs['time_updated_greater_than'] = kwargs['time_updated_gt']
+        kwargs.pop('time_updated_gt')
+
+    if 'time_updated_gte' in kwargs:
+        kwargs['time_updated_greater_than_or_equal_to'] = kwargs['time_updated_gte']
+        kwargs.pop('time_updated_gte')
+
+    ctx.invoke(dataintegration_cli.list_dis_application_task_run_lineages, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dataintegration_cli.list_task_run_lineages, params_to_exclude=['time_upated_less_than_or_equal_to', 'time_updated_greater_than', 'time_updated_greater_than_or_equal_to'])
+@cli_util.option('--time-upated-lte', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated before and at a certain time. The format of timeUpatedLessThanOrEqualTo is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated-gt', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated after a certain time. The format of timeUpdatedGreaterThan is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated-gte', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated after and at a certain time. The format of timeUpdatedGreaterThanOrEqualTo is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@dataintegration_cli.task_run_lineage_summary_collection_group.command(name=cli_util.override('data_integration.list_task_run_lineages.command_name', 'list-task-run-lineages'), help=u"""This endpoint can be used to list Task Run Lineages within a given time window. \n[Command Reference](listTaskRunLineages)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def list_task_run_lineages_extended(ctx, **kwargs):
+    if 'time_upated_lte' in kwargs:
+        kwargs['time_upated_less_than_or_equal_to'] = kwargs['time_upated_lte']
+        kwargs.pop('time_upated_lte')
+
+    if 'time_updated_gt' in kwargs:
+        kwargs['time_updated_greater_than'] = kwargs['time_updated_gt']
+        kwargs.pop('time_updated_gt')
+
+    if 'time_updated_gte' in kwargs:
+        kwargs['time_updated_greater_than_or_equal_to'] = kwargs['time_updated_gte']
+        kwargs.pop('time_updated_gte')
+
+    ctx.invoke(dataintegration_cli.list_task_run_lineages, **kwargs)

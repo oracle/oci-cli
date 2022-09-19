@@ -80,7 +80,6 @@ VIRTUALENV_ARCHIVE = 'virtualenv-{}.pyz'.format(VIRTUALENV_VERSION)
 VIRTUALENV_DOWNLOAD_URL = 'https://github.com/pypa/get-virtualenv/blob/{}/public/virtualenv.pyz?raw=true'.format(VIRTUALENV_VERSION)
 VIRTUALENV_ARCHIVE_SHA256 = 'a5d9b1f27bc790423f7910876c0e46cf476044f4ebd76d29dc6c06a3ab019e93'
 
-
 DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
 DEFAULT_EXEC_DIR = os.path.expanduser(os.path.join('~', 'bin'))
 DEFAULT_SCRIPT_DIR = os.path.expanduser(os.path.join('~', 'bin', 'oci-cli-scripts'))
@@ -94,13 +93,18 @@ RELATIVE_PATH_TO_AUTOCOMPLETE_SCRIPT = os.path.join('oci_cli', 'bin', 'oci_autoc
 RELATIVE_PATH_TO_POWERSHELL_AUTOCOMPLETE_SCRIPT = os.path.join('oci_cli', 'bin', 'OciTabExpansion.ps1')
 DEFAULT_OPTIONAL_FEATURES = ''  # Default is to not install any optional features during OCI CLI installation
 
+DEFAULT_DEPENDENCY_DIR = 'cli-deps'
+
 
 class CLIInstallError(Exception):
     pass
 
 
-def print_status(msg=''):
-    print('-- ' + msg)
+def print_status(msg='', extra_new_line=False):
+    if not extra_new_line:
+        print('-- ' + msg)
+    else:
+        print('\n-- ' + msg)
 
 
 def prompt_input(msg):
@@ -211,33 +215,31 @@ def install_python3_venv():
         exec_command(cmd)
 
 
-def upgrade_pip_wheel(tmp_dir, install_dir):
+def upgrade_pip_wheel(tmp_dir, install_dir, dependency_dir=DEFAULT_DEPENDENCY_DIR):
     if is_windows():
         path_to_python = os.path.join(install_dir, 'Scripts', 'python.exe')
-
-        cmd = [path_to_python, '-m', 'pip', 'install', '--upgrade', 'pip']
-        if DRY_RUN:
-            print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
-        else:
-            exec_command(cmd)
-
         path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
-
-        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
-        if DRY_RUN:
-            print_status('dry-run: Skipping wheel upgrade, cmd=' + str(cmd))
-        else:
-            exec_command(cmd)
-
     else:
         path_to_pip = os.path.join(install_dir, 'bin', 'pip')
 
-        cmd = [path_to_pip, 'install', '--upgrade', 'pip']
-        if DRY_RUN:
-            print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
+    if not OFFLINE_INSTALL:
+        if is_windows():
+            cmd = [path_to_python, '-m', 'pip', 'install', '--upgrade', 'pip']
         else:
-            exec_command(cmd)
+            cmd = [path_to_pip, 'install', '--upgrade', 'pip']
+    else:
+        # Upgrade pip wtih internal wheel file
+        if not is_windows():
+            cmd = [path_to_pip, 'install', 'pip', '--upgrade', '--find-links', dependency_dir, '--no-index']
+        else:
+            cmd = [path_to_python, '-m', 'pip', 'install', 'pip', '--upgrade', '--find-links', dependency_dir, '--no-index']
 
+    if DRY_RUN:
+        print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
+    else:
+        exec_command(cmd)
+
+    if not OFFLINE_INSTALL:
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
         if DRY_RUN:
             print_status('dry-run: Skipping wheel upgrade, cmd=' + str(cmd))
@@ -245,7 +247,7 @@ def upgrade_pip_wheel(tmp_dir, install_dir):
             exec_command(cmd)
 
 
-def create_virtualenv(tmp_dir, install_dir):
+def create_virtualenv(tmp_dir, install_dir, dependency_dir):
     # Try to create virtaulenv using python3 venv, if venv is not installed or is having any issue, call download_and_create_virtualenv
     if DRY_RUN:
         print_status('dry-run: Skipping virtualenv setup')
@@ -260,8 +262,7 @@ def create_virtualenv(tmp_dir, install_dir):
         cmd = [sys.executable, '-m', 'venv', install_dir]
         exec_command(cmd)
 
-        if not OFFLINE_INSTALL:
-            upgrade_pip_wheel(tmp_dir, install_dir)
+        upgrade_pip_wheel(tmp_dir, install_dir, dependency_dir)
     except Exception:
         if OFFLINE_INSTALL:
             print_status('System was unable to use venv, Please make sure Python3 venv is installed.')
@@ -271,7 +272,15 @@ def create_virtualenv(tmp_dir, install_dir):
             download_and_create_virtualenv(tmp_dir, install_dir)
 
 
-def install_cli(install_dir, tmp_dir, version, optional_features):
+def install_cli(install_dir, tmp_dir, version, optional_features, dependency_dir=DEFAULT_DEPENDENCY_DIR):
+    """
+    The python installer handles 3 cases:
+    1) full install zip bundles -- originally for distributing preview builds
+       --oci-cli-version can be used to pick the version of the local whl package
+    2) installation from pypi
+       --oci-cli-version can be used to pick the version of oci-cli from pypi
+    3) offline installation (this is for regions or instances which don't have internet access)
+    """
     if is_windows():
         path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
     else:
@@ -284,13 +293,6 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
     if '__PYVENV_LAUNCHER__' in os.environ:
         env.pop('__PYVENV_LAUNCHER__')
 
-    # The python installer handles 3 cases:
-    # 1) full install zip bundles -- originally for distributing preview builds
-    #    --oci-cli-version can be used to pick the version of the local whl package
-    # 2) installation from pypi
-    #    --oci-cli-version can be used to pick the version of oci-cli from pypi
-    # 3) offline installation (this is for regions or instances which don't have internet access)
-
     match_wheel = "oci_cli*.whl"
     cli_package_name = 'oci_cli'
     if (optional_features):
@@ -301,15 +303,15 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
 
     # Check if we should install a local full-install bundle.
     oci_cli_whl_files = glob.glob(match_wheel)
-    if os.path.exists('./cli-deps') and len(oci_cli_whl_files) > 0:
+    if os.path.exists('./' + dependency_dir) and len(oci_cli_whl_files) > 0:
         print_status("Installing {} from local resources.".format(oci_cli_whl_files[0]))
-        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, oci_cli_whl_files[0], '--upgrade', '--find-links', 'cli-deps']
+        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, oci_cli_whl_files[0], '--upgrade', '--find-links', dependency_dir]
 
     elif OFFLINE_INSTALL:
-        # Since cffi is a 4th party library which cryptography uses, it needs to be installed first in the offline installation
-        cmd = [path_to_pip, 'install', 'cffi', '--find-links', 'cli-deps', '--no-index']
-        exec_command(cmd, env=env)
-        cmd = [path_to_pip, 'install', cli_package_name, '--find-links', 'cli-deps', '--no-index']
+        # # Since cffi is a 4th party library which cryptography uses, it needs to be installed first in the offline installation
+        # cmd = [path_to_pip, 'install', 'cffi', '--find-links', dependency_dir, '--no-index']
+        # exec_command(cmd, env=env)
+        cmd = [path_to_pip, 'install', cli_package_name, '--find-links', dependency_dir, '--no-index', '--ignore-requires-python']
     else:
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
 
@@ -474,8 +476,7 @@ def warn_other_oci_on_path(exec_dir, exec_filepath):
                 if os.path.isfile(p_to_oci):
                     conflicting_paths.append(p_to_oci)
     if conflicting_paths:
-        print_status()
-        print_status("** WARNING: Other '{}' executables are on your $PATH. **".format(OCI_EXECUTABLE_NAME))
+        print_status("** WARNING: Other '{}' executables are on your $PATH. **".format(OCI_EXECUTABLE_NAME), extra_new_line=True)
         print_status("Conflicting paths: {}".format(', '.join(conflicting_paths)))
         print_status("You can run this installation of the CLI with '{}'.".format(exec_filepath))
 
@@ -523,10 +524,8 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
             # makes the assumption that powershell is on the PATH already
             command = "powershell -Command \"[Environment]::SetEnvironmentVariable(\\\"PATH\\\", \\\"{};\\\" + (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).Path, \\\"User\\\")".format(exec_dir)  # noqa: W605
             subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
-            print_status()
-            print_status('** Close and re-open PowerShell to reload changes to your PATH **')
-            print_status('In order to run the autocomplete script, you may also need to set your PowerShell execution policy to allow for running local scripts (as an Administrator run Set-ExecutionPolicy RemoteSigned in a PowerShell prompt)')
-            print_status()
+            print_status('** Close and re-open PowerShell to reload changes to your PATH **', extra_new_line=True)
+            print_status('In order to run the autocomplete script, you may also need to set your PowerShell execution policy to allow for running local scripts (as an Administrator run Set-ExecutionPolicy RemoteSigned in a PowerShell prompt)\n')
         else:
             print_status("If you change your mind, dot source {} in your PowerShell profile and restart your shell to enable tab completion.".format(completion_file_path))
             print_status("You can run the CLI with '{}'.".format(exec_filepath))
@@ -548,9 +547,7 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
             print_status('Tab completion set up complete.')
             print_status("If tab completion is not activated, verify that '{}' is sourced by your shell.".format(rc_file_path))
             warn_other_oci_on_path(exec_dir, exec_filepath)
-            print_status()
-            print_status('** Run `exec -l $SHELL` to restart your shell. **')
-            print_status()
+            print_status('** Run `exec -l $SHELL` to restart your shell. **\n', extra_new_line=True)
         else:
             print_status("If you change your mind, add 'source {}' to your rc file and restart your shell to enable tab completion.".format(completion_file_path))
             print_status("You can run the CLI with '{}'.".format(exec_filepath))
@@ -571,10 +568,6 @@ def verify_python_version():
 def verify_install_dir_exec_path_conflict(install_dir, exec_path):
     if install_dir == exec_path:
         raise CLIInstallError("The executable file '{}' would clash with the install directory of '{}'. Choose either a different install directory or directory to place the executable.".format(exec_path, install_dir))
-
-
-# installed python3-dev as oci_cli[db] was failing on ubuntu 20.4
-# failing command: ./install.sh ... --optional-features db
 
 
 def install_native_dependencies_for_ubuntu():
@@ -600,6 +593,8 @@ def main():
     parser.add_argument('--offline-install', action='store_true',
                         help='When specified, the script installs CLI without going to the internet.'
                              'This can run only as part of offline installation.')
+    parser.add_argument('--dependency-dir',
+                        help='When input is specified, CLI install will process dependencies from input relative path')
     parser.add_argument('--optional-features', help="""This input param is used to specify any optional
                          features that need to be installed as part of OCI CLI install .e.g. to run dbaas script
                          'create_backup_from_onprem', users need to install optional "db" feature which will install
@@ -623,11 +618,18 @@ def main():
                                                'the --update-path-and-enable-tab-completion option')
     parser.add_argument('--oci-cli-version', help='The pip version of CLI to install.')
     parser.add_argument('--dry-run', action='store_true', help='Do not install virtualenv or CLI but go through the motions.')
+
+    # Get Arguments
     args = parser.parse_args()
     global ACCEPT_ALL_DEFAULTS
     ACCEPT_ALL_DEFAULTS = args.accept_all_defaults
     global OFFLINE_INSTALL
     OFFLINE_INSTALL = args.offline_install
+    dependency_dir = args.dependency_dir
+    if dependency_dir is None and OFFLINE_INSTALL:
+        dependency_dir = DEFAULT_DEPENDENCY_DIR + '/python{}{}'.format(sys.version_info.major, sys.version_info.minor)
+    elif dependency_dir is None:
+        dependency_dir = DEFAULT_DEPENDENCY_DIR
     global DRY_RUN
     DRY_RUN = args.dry_run
     OPTIONAL_FEATURES = args.optional_features
@@ -639,7 +641,12 @@ def main():
     install_dir = args.install_dir
     exec_dir = args.exec_dir
     script_dir = args.script_dir
+    cli_version = args.oci_cli_version
+
+    # Check Python Version
     verify_python_version()
+
+    # Create required directories
     tmp_dir = create_tmp_dir()
     allow_spaces = False    # on *nix systems, virtualenv pip does not work properly when there are spaces in the dir.
     if is_windows():
@@ -662,20 +669,26 @@ def main():
     if OPTIONAL_FEATURES is None and not OFFLINE_INSTALL:
         OPTIONAL_FEATURES = get_optional_features()
 
+    # Create Path
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
     dbaas_exec_path = os.path.join(script_dir, DBAAS_SCRIPT_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)
-    create_virtualenv(tmp_dir, install_dir)
+
+    # Create Virtual Environment
+    create_virtualenv(tmp_dir, install_dir, dependency_dir)
     if OPTIONAL_FEATURES:
         install_native_dependencies_for_ubuntu()
     cli_version = args.oci_cli_version
+
+    # Install OCI CLI
     if cli_version and OFFLINE_INSTALL:
         ans = prompt_y_n("CLI version can't be specified with the Offline installation, do you want to continue?", "y")
         if not ans:
             exit(1)
         cli_version = None
-    install_cli(install_dir, tmp_dir, cli_version, OPTIONAL_FEATURES)
+    install_cli(install_dir, tmp_dir, cli_version, OPTIONAL_FEATURES, dependency_dir)
 
+    # Copying Files to executing directories
     if DRY_RUN:
         print_status("dry-run: Skipping copying files to Scripts/bin directories.")
         print_status("dry-run: exec_dir=" + exec_dir)

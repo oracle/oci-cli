@@ -57,6 +57,12 @@ def log_analytics_em_bridge_group():
     pass
 
 
+@click.command(cli_util.override('log_analytics.rule_group.command_name', 'rule'), cls=CommandGroupWithAlias, help="""A generic rule object - represents an ingest time rule or a scheduled task.""")
+@cli_util.help_option_group
+def rule_group():
+    pass
+
+
 @click.command(cli_util.override('log_analytics.storage_group.command_name', 'storage'), cls=CommandGroupWithAlias, help="""This is the storage configuration and status of a tenancy in Logan Analytics application""")
 @cli_util.help_option_group
 def storage_group():
@@ -135,6 +141,12 @@ def log_analytics_object_collection_rule_group():
     pass
 
 
+@click.command(cli_util.override('log_analytics.ingest_time_rule_group.command_name', 'ingest-time-rule'), cls=CommandGroupWithAlias, help="""An ingest time rule object.""")
+@cli_util.help_option_group
+def ingest_time_rule_group():
+    pass
+
+
 @click.command(cli_util.override('log_analytics.log_analytics_entity_group.command_name', 'log-analytics-entity'), cls=CommandGroupWithAlias, help="""Description of a log analytics entity.""")
 @cli_util.help_option_group
 def log_analytics_entity_group():
@@ -201,6 +213,7 @@ log_analytics_root_group.add_command(upload_group)
 log_analytics_root_group.add_command(log_analytics_import_custom_content_group)
 log_analytics_root_group.add_command(log_analytics_field_group)
 log_analytics_root_group.add_command(log_analytics_em_bridge_group)
+log_analytics_root_group.add_command(rule_group)
 log_analytics_root_group.add_command(storage_group)
 log_analytics_root_group.add_command(work_request_group)
 log_analytics_root_group.add_command(log_analytics_lookup_group)
@@ -214,6 +227,7 @@ log_analytics_root_group.add_command(query_work_request_group)
 log_analytics_root_group.add_command(log_analytics_category_group)
 log_analytics_root_group.add_command(log_analytics_entity_type_group)
 log_analytics_root_group.add_command(log_analytics_object_collection_rule_group)
+log_analytics_root_group.add_command(ingest_time_rule_group)
 log_analytics_root_group.add_command(log_analytics_entity_group)
 log_analytics_root_group.add_command(log_analytics_entity_summary_group)
 log_analytics_root_group.add_command(namespace_group)
@@ -440,6 +454,42 @@ def cancel_query_work_request(ctx, from_json, namespace_name, work_request_id, i
     result = client.cancel_query_work_request(
         namespace_name=namespace_name,
         work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.change_ingest_time_rule_compartment.command_name', 'change-compartment'), help=u"""Moves the specified ingest time rule to a different compartment. \n[Command Reference](changeIngestTimeRuleCompartment)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the log analytics entity should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_ingest_time_rule_compartment(ctx, from_json, namespace_name, ingest_time_rule_id, compartment_id, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.change_ingest_time_rule_compartment(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
+        change_ingest_time_rule_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -689,6 +739,163 @@ def compare_content(ctx, from_json, namespace_name, content1, content2):
         compare_content_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.create_ingest_time_rule.command_name', 'create'), help=u"""Creates a new ingest time rule in the specified compartment. You may also specify optional information such as description, defined tags, and free-form tags. \n[Command Reference](createIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
+@cli_util.option('--display-name', required=True, help=u"""The ingest time rule display name.""")
+@cli_util.option('--conditions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The action(s) to be performed if the ingest time rule condition(s) are satisfied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Description for this resource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'conditions': {'module': 'log_analytics', 'class': 'IngestTimeRuleCondition'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'conditions': {'module': 'log_analytics', 'class': 'IngestTimeRuleCondition'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}}, output_type={'module': 'log_analytics', 'class': 'IngestTimeRule'})
+@cli_util.wrap_exceptions
+def create_ingest_time_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, display_name, conditions, actions, description, freeform_tags, defined_tags):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['conditions'] = cli_util.parse_json_parameter("conditions", conditions)
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.create_ingest_time_rule(
+        namespace_name=namespace_name,
+        create_ingest_time_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_ingest_time_rule') and callable(getattr(client, 'get_ingest_time_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ingest_time_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.create_ingest_time_rule_ingest_time_rule_field_condition.command_name', 'create-ingest-time-rule-ingest-time-rule-field-condition'), help=u"""Creates a new ingest time rule in the specified compartment. You may also specify optional information such as description, defined tags, and free-form tags. \n[Command Reference](createIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
+@cli_util.option('--display-name', required=True, help=u"""The ingest time rule display name.""")
+@cli_util.option('--actions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The action(s) to be performed if the ingest time rule condition(s) are satisfied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--conditions-field-name', required=True, help=u"""The field name to be evaluated.""")
+@cli_util.option('--conditions-field-operator', required=True, type=custom_types.CliCaseInsensitiveChoice(["EQUAL"]), help=u"""The operator to be used for evaluating the field.""")
+@cli_util.option('--conditions-field-value', required=True, help=u"""The field value to be evaluated.""")
+@cli_util.option('--description', help=u"""Description for this resource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--conditions-additional-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional additional condition(s) to be evaluated.
+
+This option is a JSON list with items of type IngestTimeRuleAdditionalFieldCondition.  For documentation on IngestTimeRuleAdditionalFieldCondition please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/IngestTimeRuleAdditionalFieldCondition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}, 'conditions-additional-conditions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAdditionalFieldCondition]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}, 'conditions-additional-conditions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAdditionalFieldCondition]'}}, output_type={'module': 'log_analytics', 'class': 'IngestTimeRule'})
+@cli_util.wrap_exceptions
+def create_ingest_time_rule_ingest_time_rule_field_condition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, display_name, actions, conditions_field_name, conditions_field_operator, conditions_field_value, description, freeform_tags, defined_tags, conditions_additional_conditions):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['conditions'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+    _details['conditions']['fieldName'] = conditions_field_name
+    _details['conditions']['fieldOperator'] = conditions_field_operator
+    _details['conditions']['fieldValue'] = conditions_field_value
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if conditions_additional_conditions is not None:
+        _details['conditions']['additionalConditions'] = cli_util.parse_json_parameter("conditions_additional_conditions", conditions_additional_conditions)
+
+    _details['conditions']['kind'] = 'FIELD'
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.create_ingest_time_rule(
+        namespace_name=namespace_name,
+        create_ingest_time_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_ingest_time_rule') and callable(getattr(client, 'get_ingest_time_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ingest_time_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -949,6 +1156,10 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
 @cli_util.option('--entity-id', help=u"""Logging Analytics entity OCID. Associates the processed logs with the given entity (optional).""")
 @cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8859_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether or not this rule is currently enabled.""")
+@cli_util.option('--timezone', help=u"""Timezone to be used when processing log entries whose timestamps do not include an explicit timezone. When this property is not specified, the timezone of the entity specified is used. If the entity is also not specified or do not have a valid timezone then UTC is used.""")
+@cli_util.option('--log-set', help=u"""The logSet to be associated with the processed logs. The logSet feature can be used by customers with high volume of data and this feature has to be enabled for a given tenancy prior to its usage. When logSetExtRegex value is provided, it will take precedence over this logSet value and logSet will be computed dynamically using logSetKey and logSetExtRegex.""")
+@cli_util.option('--log-set-key', type=custom_types.CliCaseInsensitiveChoice(["OBJECT_PATH"]), help=u"""An optional parameter to indicate from where the logSet to be extracted using logSetExtRegex. Default value is OBJECT_PATH (e.g. /n/<namespace>/b/<bucketname>/o/<objectname>).""")
+@cli_util.option('--log-set-ext-regex', help=u"""The regex to be applied against given logSetKey. Regex has to be in string escaped format.""")
 @cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The override is used to modify some important configuration properties for objects matching a specific pattern inside the bucket. Supported propeties for override are: logSourceName, charEncoding, entityId. Supported matchType for override are \"contains\".""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-name-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""When the filters are provided, only the objects matching the filters are picked up for processing. The matchType supported is exact match and accommodates wildcard \"*\". For more information on filters, see [Event Filters].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -961,7 +1172,7 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
-def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, log_source_name, description, collection_type, poll_since, poll_till, entity_id, char_encoding, is_enabled, overrides, object_name_filters, defined_tags, freeform_tags):
+def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, log_source_name, description, collection_type, poll_since, poll_till, entity_id, char_encoding, is_enabled, timezone, log_set, log_set_key, log_set_ext_regex, overrides, object_name_filters, defined_tags, freeform_tags):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -997,6 +1208,18 @@ def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, 
 
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if log_set is not None:
+        _details['logSet'] = log_set
+
+    if log_set_key is not None:
+        _details['logSetKey'] = log_set_key
+
+    if log_set_ext_regex is not None:
+        _details['logSetExtRegex'] = log_set_ext_regex
 
     if overrides is not None:
         _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
@@ -1342,6 +1565,37 @@ def delete_field(ctx, from_json, namespace_name, field_name, if_match):
     result = client.delete_field(
         namespace_name=namespace_name,
         field_name=field_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.delete_ingest_time_rule.command_name', 'delete'), help=u"""Deletes the specified ingest time rule. \n[Command Reference](deleteIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_ingest_time_rule(ctx, from_json, namespace_name, ingest_time_rule_id, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.delete_ingest_time_rule(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1871,6 +2125,62 @@ def disable_auto_association(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.disable_ingest_time_rule.command_name', 'disable'), help=u"""Disables the specified ingest time rule. \n[Command Reference](disableIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_ingest_time_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.disable_ingest_time_rule(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config_work_request') and callable(getattr(client, 'get_config_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_source_group.command(name=cli_util.override('log_analytics.disable_source_event_types.command_name', 'disable-source-event-types'), help=u"""Disable one or more event types in a source. \n[Command Reference](disableSourceEventTypes)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""The source name.""")
@@ -1982,6 +2292,62 @@ def enable_auto_association(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.enable_ingest_time_rule.command_name', 'enable'), help=u"""Enables the specified ingest time rule. \n[Command Reference](enableIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_ingest_time_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.enable_ingest_time_rule(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config_work_request') and callable(getattr(client, 'get_config_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2823,6 +3189,33 @@ def get_fields_summary(ctx, from_json, namespace_name, is_show_detail):
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.get_fields_summary(
         namespace_name=namespace_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.get_ingest_time_rule.command_name', 'get'), help=u"""Gets detailed information about the specified ingest time rule such as description, defined tags, and free-form tags. \n[Command Reference](getIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'IngestTimeRule'})
+@cli_util.wrap_exceptions
+def get_ingest_time_rule(ctx, from_json, namespace_name, ingest_time_rule_id):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.get_ingest_time_rule(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4143,6 +4536,82 @@ def list_fields(ctx, from_json, all_pages, page_size, namespace_name, is_match_a
     cli_util.render_response(result, ctx)
 
 
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.list_ingest_time_rules.command_name', 'list'), help=u"""Returns a list of ingest time rules in a compartment. You may limit the number of rules, provide sorting options, and filter the results. \n[Command Reference](listIngestTimeRules)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return rules whose displayName matches in whole or in part the specified value. The match is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The rule lifecycle state used for filtering. Currently supported values are ACTIVE and DELETED.""")
+@cli_util.option('--condition-kind', type=custom_types.CliCaseInsensitiveChoice(["FIELD"]), help=u"""The ingest time rule condition kind used for filtering. Only rules with conditions of the specified kind will be returned.""")
+@cli_util.option('--field-name', help=u"""The field name used for filtering. Only rules using the specified field name will be returned.""")
+@cli_util.option('--field-value', help=u"""The field value used for filtering. Only rules using the specified field value will be returned.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'IngestTimeRuleSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_ingest_time_rules(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, display_name, lifecycle_state, condition_kind, field_name, field_value, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if condition_kind is not None:
+        kwargs['condition_kind'] = condition_kind
+    if field_name is not None:
+        kwargs['field_name'] = field_name
+    if field_value is not None:
+        kwargs['field_value'] = field_value
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_ingest_time_rules,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_ingest_time_rules,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_ingest_time_rules(
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_label_group.command(name=cli_util.override('log_analytics.list_label_priorities.command_name', 'list-label-priorities'), help=u"""Lists the available problem priorities that could be associated with a label. \n[Command Reference](listLabelPriorities)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4415,7 +4884,7 @@ def list_log_analytics_em_bridges(ctx, from_json, all_pages, page_size, namespac
 @cli_util.option('--hostname', help=u"""A filter to return only log analytics entities whose hostname matches the entire hostname given.""")
 @cli_util.option('--hostname-contains', help=u"""A filter to return only log analytics entities whose hostname contains the substring given. The match is case-insensitive.""")
 @cli_util.option('--source-id', help=u"""A filter to return only log analytics entities whose sourceId matches the sourceId given.""")
-@cli_util.option('--creation-source-type', type=custom_types.CliCaseInsensitiveChoice(["EM_BRIDGE", "SERVICE_CONNECTOR_HUB", "NONE"]), multiple=True, help=u"""A filter to return only those log analytics entities with the specified auto-creation source.""")
+@cli_util.option('--creation-source-type', type=custom_types.CliCaseInsensitiveChoice(["EM_BRIDGE", "SERVICE_CONNECTOR_HUB", "DISCOVERY", "NONE"]), multiple=True, help=u"""A filter to return only those log analytics entities with the specified auto-creation source.""")
 @cli_util.option('--creation-source-details', help=u"""A filter to return only log analytics entities whose auto-creation source details contains the specified string.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5359,6 +5828,76 @@ def list_resource_categories(ctx, from_json, all_pages, page_size, namespace_nam
     else:
         result = client.list_resource_categories(
             namespace_name=namespace_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('log_analytics.list_rules.command_name', 'list'), help=u"""Returns a list of ingest time rules and scheduled tasks in a compartment. You may limit the number of items returned, provide sorting options, and filter the results. \n[Command Reference](listRules)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return rules whose displayName matches in whole or in part the specified value. The match is case-insensitive.""")
+@cli_util.option('--kind', type=custom_types.CliCaseInsensitiveChoice(["INGEST_TIME", "SAVED_SEARCH", "ALL"]), help=u"""The rule kind used for filtering. Only rules of the specified kind will be returned.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The rule lifecycle state used for filtering. Currently supported values are ACTIVE and DELETED.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'RuleSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_rules(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, display_name, kind, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if kind is not None:
+        kwargs['kind'] = kind
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_rules,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_rules,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_rules(
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -7020,6 +7559,8 @@ def query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_second
 @cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""This is the end of the time interval""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-data-started', required=True, type=custom_types.CLI_DATETIME, help=u"""This is the start of the time interval""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--data-type', type=custom_types.CliCaseInsensitiveChoice(["LOG", "LOOKUP"]), help=u"""This is the type of the log data to be recalled""")
+@cli_util.option('--log-sets', help=u"""This is a list of comma-separated log sets that recalled data belongs to.""")
+@cli_util.option('--query-parameterconflict', help=u"""This is the query that identifies the recalled data.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7029,7 +7570,7 @@ def query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_second
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, time_data_ended, time_data_started, data_type, if_match):
+def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, time_data_ended, time_data_started, data_type, log_sets, query_parameterconflict, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -7046,6 +7587,12 @@ def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if data_type is not None:
         _details['dataType'] = data_type
+
+    if log_sets is not None:
+        _details['logSets'] = log_sets
+
+    if query_parameterconflict is not None:
+        _details['query'] = query_parameterconflict
 
     client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
     result = client.recall_archived_data(
@@ -7686,6 +8233,235 @@ def unsuppress_warning(ctx, from_json, namespace_name, compartment_id, warning_r
     cli_util.render_response(result, ctx)
 
 
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.update_ingest_time_rule.command_name', 'update'), help=u"""Updates the specified ingest time rule's description, defined tags, and free-form tags. \n[Command Reference](updateIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@cli_util.option('--id', required=True, help=u"""The log analytics entity OCID. This ID is a reference used by log analytics features and it represents a resource that is provisioned and managed by the customer on their premises or on the cloud.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
+@cli_util.option('--display-name', required=True, help=u"""The ingest time rule display name.""")
+@cli_util.option('--description', help=u"""Description for this resource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""The date and time the resource was created, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""The date and time the resource was last updated, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The current state of the ingest time rule.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""A flag indicating whether or not the ingest time rule is enabled.""")
+@cli_util.option('--conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The action(s) to be performed if the ingest time rule condition(s) are satisfied.
+
+This option is a JSON list with items of type IngestTimeRuleAction.  For documentation on IngestTimeRuleAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/IngestTimeRuleAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'conditions': {'module': 'log_analytics', 'class': 'IngestTimeRuleCondition'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'conditions': {'module': 'log_analytics', 'class': 'IngestTimeRuleCondition'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}}, output_type={'module': 'log_analytics', 'class': 'IngestTimeRule'})
+@cli_util.wrap_exceptions
+def update_ingest_time_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, id, compartment_id, display_name, description, freeform_tags, defined_tags, time_created, time_updated, lifecycle_state, is_enabled, conditions, actions, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or conditions or actions:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and conditions and actions will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['id'] = id
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    if time_updated is not None:
+        _details['timeUpdated'] = time_updated
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if conditions is not None:
+        _details['conditions'] = cli_util.parse_json_parameter("conditions", conditions)
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_ingest_time_rule(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
+        update_ingest_time_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_ingest_time_rule') and callable(getattr(client, 'get_ingest_time_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ingest_time_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ingest_time_rule_group.command(name=cli_util.override('log_analytics.update_ingest_time_rule_ingest_time_rule_field_condition.command_name', 'update-ingest-time-rule-ingest-time-rule-field-condition'), help=u"""Updates the specified ingest time rule's description, defined tags, and free-form tags. \n[Command Reference](updateIngestTimeRule)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--ingest-time-rule-id', required=True, help=u"""Unique ocid of the ingest time rule.""")
+@cli_util.option('--id', required=True, help=u"""The log analytics entity OCID. This ID is a reference used by log analytics features and it represents a resource that is provisioned and managed by the customer on their premises or on the cloud.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
+@cli_util.option('--display-name', required=True, help=u"""The ingest time rule display name.""")
+@cli_util.option('--conditions-field-name', required=True, help=u"""The field name to be evaluated.""")
+@cli_util.option('--conditions-field-operator', required=True, type=custom_types.CliCaseInsensitiveChoice(["EQUAL"]), help=u"""The operator to be used for evaluating the field.""")
+@cli_util.option('--conditions-field-value', required=True, help=u"""The field value to be evaluated.""")
+@cli_util.option('--description', help=u"""Description for this resource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""The date and time the resource was created, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""The date and time the resource was last updated, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The current state of the ingest time rule.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""A flag indicating whether or not the ingest time rule is enabled.""")
+@cli_util.option('--actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The action(s) to be performed if the ingest time rule condition(s) are satisfied.
+
+This option is a JSON list with items of type IngestTimeRuleAction.  For documentation on IngestTimeRuleAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/IngestTimeRuleAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--conditions-additional-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional additional condition(s) to be evaluated.
+
+This option is a JSON list with items of type IngestTimeRuleAdditionalFieldCondition.  For documentation on IngestTimeRuleAdditionalFieldCondition please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/IngestTimeRuleAdditionalFieldCondition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}, 'conditions-additional-conditions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAdditionalFieldCondition]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'actions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAction]'}, 'conditions-additional-conditions': {'module': 'log_analytics', 'class': 'list[IngestTimeRuleAdditionalFieldCondition]'}}, output_type={'module': 'log_analytics', 'class': 'IngestTimeRule'})
+@cli_util.wrap_exceptions
+def update_ingest_time_rule_ingest_time_rule_field_condition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, id, compartment_id, display_name, conditions_field_name, conditions_field_operator, conditions_field_value, description, freeform_tags, defined_tags, time_created, time_updated, lifecycle_state, is_enabled, actions, if_match, conditions_additional_conditions):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or actions:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and actions will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['conditions'] = {}
+    _details['id'] = id
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['conditions']['fieldName'] = conditions_field_name
+    _details['conditions']['fieldOperator'] = conditions_field_operator
+    _details['conditions']['fieldValue'] = conditions_field_value
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    if time_updated is not None:
+        _details['timeUpdated'] = time_updated
+
+    if lifecycle_state is not None:
+        _details['lifecycleState'] = lifecycle_state
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if actions is not None:
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
+
+    if conditions_additional_conditions is not None:
+        _details['conditions']['additionalConditions'] = cli_util.parse_json_parameter("conditions_additional_conditions", conditions_additional_conditions)
+
+    _details['conditions']['kind'] = 'FIELD'
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.update_ingest_time_rule(
+        namespace_name=namespace_name,
+        ingest_time_rule_id=ingest_time_rule_id,
+        update_ingest_time_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_ingest_time_rule') and callable(getattr(client, 'get_ingest_time_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ingest_time_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @log_analytics_em_bridge_group.command(name=cli_util.override('log_analytics.update_log_analytics_em_bridge.command_name', 'update'), help=u"""Update log analytics enterprise manager bridge with the given id. \n[Command Reference](updateLogAnalyticsEmBridge)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-em-bridge-id', required=True, help=u"""The log analytics enterprise manager bridge OCID.""")
@@ -7977,6 +8753,10 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
 @cli_util.option('--entity-id', help=u"""Logging Analytics entity OCID. Associates the processed logs with the given entity (optional).""")
 @cli_util.option('--char-encoding', help=u"""An optional character encoding to aid in detecting the character encoding of the contents of the objects while processing. It is recommended to set this value as ISO_8859_1 when configuring content of the objects having more numeric characters, and very few alphabets. For e.g. this applies when configuring VCN Flow Logs.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether or not this rule is currently enabled.""")
+@cli_util.option('--timezone', help=u"""Timezone to be used when processing log entries whose timestamps do not include an explicit timezone. When this property is not specified, the timezone of the entity specified is used. If the entity is also not specified or do not have a valid timezone then UTC is used.""")
+@cli_util.option('--log-set', help=u"""The logSet to be associated with the processed logs. The logSet feature can be used by customers with high volume of data and this feature has to be enabled for a given tenancy prior to its usage. When logSetExtRegex value is provided, it will take precedence over this logSet value and logSet will be computed dynamically using logSetKey and logSetExtRegex.""")
+@cli_util.option('--log-set-key', type=custom_types.CliCaseInsensitiveChoice(["OBJECT_PATH"]), help=u"""An optional parameter to indicate from where the logSet to be extracted using logSetExtRegex. Default value is OBJECT_PATH (e.g. /n/<namespace>/b/<bucketname>/o/<objectname>).""")
+@cli_util.option('--log-set-ext-regex', help=u"""The regex to be applied against given logSetKey. Regex has to be in string escaped format.""")
 @cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Use this to override some property values which are defined at bucket level to the scope of object. Supported propeties for override are: logSourceName, charEncoding, entityId. Supported matchType for override are \"contains\".""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--object-name-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""When the filters are provided, only the objects matching the filters are picked up for processing. The matchType supported is exact match and accommodates wildcard \"*\". For more information on filters, see [Event Filters].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7991,7 +8771,7 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'overrides': {'module': 'log_analytics', 'class': 'dict(str, list[PropertyOverride])'}, 'object-name-filters': {'module': 'log_analytics', 'class': 'list[string]'}, 'defined-tags': {'module': 'log_analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'log_analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsObjectCollectionRule'})
 @cli_util.wrap_exceptions
-def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, is_enabled, overrides, object_name_filters, defined_tags, freeform_tags, if_match):
+def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, is_enabled, timezone, log_set, log_set_key, log_set_ext_regex, overrides, object_name_filters, defined_tags, freeform_tags, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -8027,6 +8807,18 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
 
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if log_set is not None:
+        _details['logSet'] = log_set
+
+    if log_set_key is not None:
+        _details['logSetKey'] = log_set_key
+
+    if log_set_ext_regex is not None:
+        _details['logSetExtRegex'] = log_set_ext_regex
 
     if overrides is not None:
         _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)

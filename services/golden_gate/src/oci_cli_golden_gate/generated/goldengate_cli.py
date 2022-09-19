@@ -39,6 +39,18 @@ def deployment_backup_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.trail_file_summary_group.command_name', 'trail-file-summary'), cls=CommandGroupWithAlias, help="""Summary of the TrailFiles.""")
+@cli_util.help_option_group
+def trail_file_summary_group():
+    pass
+
+
+@click.command(cli_util.override('goldengate.trail_sequence_summary_group.command_name', 'trail-sequence-summary'), cls=CommandGroupWithAlias, help="""Summary of the TrailSequences.""")
+@cli_util.help_option_group
+def trail_sequence_summary_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
@@ -57,6 +69,12 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.message_summary_group.command_name', 'message-summary'), cls=CommandGroupWithAlias, help="""Deployment message Summary.""")
+@cli_util.help_option_group
+def message_summary_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.deployment_group.command_name', 'deployment'), cls=CommandGroupWithAlias, help="""A container for your OCI GoldenGate resources, such as the OCI GoldenGate deployment console.""")
 @cli_util.help_option_group
 def deployment_group():
@@ -66,9 +84,12 @@ def deployment_group():
 goldengate_root_group.add_command(database_registration_group)
 goldengate_root_group.add_command(deployment_upgrade_group)
 goldengate_root_group.add_command(deployment_backup_group)
+goldengate_root_group.add_command(trail_file_summary_group)
+goldengate_root_group.add_command(trail_sequence_summary_group)
 goldengate_root_group.add_command(work_request_error_group)
 goldengate_root_group.add_command(work_request_log_entry_group)
 goldengate_root_group.add_command(work_request_group)
+goldengate_root_group.add_command(message_summary_group)
 goldengate_root_group.add_command(deployment_group)
 
 
@@ -445,7 +466,7 @@ def create_database_registration(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet being referenced.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
 @cli_util.option('--is-auto-scaling-enabled', required=True, type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
-@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OGG"]), help=u"""The deployment type.""")
+@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OGG"]), help=u"""The type of deployment, the value determines the exact 'type' of service executed in the Deployment. NOTE: Use of the value OGG is maintained for backward compatibility purposes.  Its use is discouraged       in favor of the equivalent DATABASE_ORACLE value.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1111,6 +1132,178 @@ def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, lifec
     else:
         result = client.list_deployments(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@message_summary_group.command(name=cli_util.override('goldengate.list_messages.command_name', 'list-messages'), help=u"""Lists the DeploymentMessages for a deployment. The sorting order is not important. By default first will be Upgrade message, next Exception message and then Storage Utilization message. \n[Command Reference](listMessages)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'DeploymentMessageCollection'})
+@cli_util.wrap_exceptions
+def list_messages(ctx, from_json, all_pages, page_size, deployment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_messages,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_messages,
+            limit,
+            page_size,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_messages(
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@trail_file_summary_group.command(name=cli_util.override('goldengate.list_trail_files.command_name', 'list-trail-files'), help=u"""Lists the TrailFiles for a deployment. \n[Command Reference](listTrailFiles)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--trail-file-id', help=u"""A Trail File identifier""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeLastUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeLastUpdated' is descending.  Default order for 'displayName' is ascending. If no value is specified displayName is the default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'TrailFileCollection'})
+@cli_util.wrap_exceptions
+def list_trail_files(ctx, from_json, all_pages, page_size, deployment_id, display_name, trail_file_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if trail_file_id is not None:
+        kwargs['trail_file_id'] = trail_file_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_trail_files,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_trail_files,
+            limit,
+            page_size,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_trail_files(
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@trail_sequence_summary_group.command(name=cli_util.override('goldengate.list_trail_sequences.command_name', 'list-trail-sequences'), help=u"""Lists the Trail Sequences for a TrailFile in a given deployment. \n[Command Reference](listTrailSequences)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--trail-file-id', required=True, help=u"""A Trail File identifier""")
+@cli_util.option('--trail-sequence-id', help=u"""A Trail Sequence identifier""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeLastUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeLastUpdated' is descending.  Default order for 'displayName' is ascending. If no value is specified displayName is the default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'TrailSequenceCollection'})
+@cli_util.wrap_exceptions
+def list_trail_sequences(ctx, from_json, all_pages, page_size, deployment_id, trail_file_id, trail_sequence_id, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if trail_sequence_id is not None:
+        kwargs['trail_sequence_id'] = trail_sequence_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_trail_sequences,
+            deployment_id=deployment_id,
+            trail_file_id=trail_file_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_trail_sequences,
+            limit,
+            page_size,
+            deployment_id=deployment_id,
+            trail_file_id=trail_file_id,
+            **kwargs
+        )
+    else:
+        result = client.list_trail_sequences(
+            deployment_id=deployment_id,
+            trail_file_id=trail_file_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
