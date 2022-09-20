@@ -118,12 +118,15 @@ def create_query(ctx, from_json, compartment_id, query_definition):
 
 
 @schedule_group.command(name=cli_util.override('usage_api.create_schedule.command_name', 'create'), help=u"""Returns the created schedule. \n[Command Reference](createSchedule)""")
-@cli_util.option('--name', required=True, help=u"""The unique name of the schedule created by the user""")
-@cli_util.option('--compartment-id', required=True, help=u"""The tenancy of the customer""")
+@cli_util.option('--name', required=True, help=u"""The unique name of the user-created schedule.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The customer tenancy.""")
 @cli_util.option('--result-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--schedule-recurrences', required=True, help=u"""In x-obmcs-recurring-time format shown here: https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10 Describes the frequency of when the schedule will be run""")
-@cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time of the first time job execution""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--query-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule-recurrences', required=True, help=u"""Specifies the frequency according to when the schedule will be run, in the x-obmcs-recurring-time format described in [RFC 5545 section 3.3.10]. Supported values are : ONE_TIME, DAILY, WEEKLY and MONTHLY.""")
+@cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time of the first time job execution.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--description', help=u"""The description of the schedule.""")
+@cli_util.option('--output-file-format', type=custom_types.CliCaseInsensitiveChoice(["CSV", "PDF"]), help=u"""Specifies supported output file format.""")
+@cli_util.option('--saved-report-id', help=u"""The saved report id which can also be used to generate query.""")
+@cli_util.option('--query-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -134,7 +137,7 @@ def create_query(ctx, from_json, compartment_id, query_definition):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'usage_api', 'class': 'ResultLocation'}, 'query-properties': {'module': 'usage_api', 'class': 'QueryProperties'}, 'freeform-tags': {'module': 'usage_api', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'usage_api', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'usage_api', 'class': 'Schedule'})
 @cli_util.wrap_exceptions
-def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, result_location, schedule_recurrences, time_scheduled, query_properties, freeform_tags, defined_tags):
+def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, result_location, schedule_recurrences, time_scheduled, description, output_file_format, saved_report_id, query_properties, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -145,7 +148,18 @@ def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     _details['resultLocation'] = cli_util.parse_json_parameter("result_location", result_location)
     _details['scheduleRecurrences'] = schedule_recurrences
     _details['timeScheduled'] = time_scheduled
-    _details['queryProperties'] = cli_util.parse_json_parameter("query_properties", query_properties)
+
+    if description is not None:
+        _details['description'] = description
+
+    if output_file_format is not None:
+        _details['outputFileFormat'] = output_file_format
+
+    if saved_report_id is not None:
+        _details['savedReportId'] = saved_report_id
+
+    if query_properties is not None:
+        _details['queryProperties'] = cli_util.parse_json_parameter("query_properties", query_properties)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -185,14 +199,17 @@ def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @schedule_group.command(name=cli_util.override('usage_api.create_schedule_object_storage_location.command_name', 'create-schedule-object-storage-location'), help=u"""Returns the created schedule. \n[Command Reference](createSchedule)""")
-@cli_util.option('--name', required=True, help=u"""The unique name of the schedule created by the user""")
-@cli_util.option('--compartment-id', required=True, help=u"""The tenancy of the customer""")
-@cli_util.option('--schedule-recurrences', required=True, help=u"""In x-obmcs-recurring-time format shown here: https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10 Describes the frequency of when the schedule will be run""")
-@cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time of the first time job execution""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--query-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--result-location-region', required=True, help=u"""The destination Object Store Region specified by customer""")
-@cli_util.option('--result-location-namespace', required=True, help=u"""The namespace needed to determine object storage bucket.""")
-@cli_util.option('--result-location-bucket-name', required=True, help=u"""The bucket name where usage/cost CSVs will be uploaded""")
+@cli_util.option('--name', required=True, help=u"""The unique name of the user-created schedule.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The customer tenancy.""")
+@cli_util.option('--schedule-recurrences', required=True, help=u"""Specifies the frequency according to when the schedule will be run, in the x-obmcs-recurring-time format described in [RFC 5545 section 3.3.10]. Supported values are : ONE_TIME, DAILY, WEEKLY and MONTHLY.""")
+@cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time of the first time job execution.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--result-location-region', required=True, help=u"""The destination Object Store Region specified by the customer.""")
+@cli_util.option('--result-location-namespace', required=True, help=u"""The namespace needed to determine the object storage bucket.""")
+@cli_util.option('--result-location-bucket-name', required=True, help=u"""The bucket name where usage or cost CSVs will be uploaded.""")
+@cli_util.option('--description', help=u"""The description of the schedule.""")
+@cli_util.option('--output-file-format', type=custom_types.CliCaseInsensitiveChoice(["CSV", "PDF"]), help=u"""Specifies supported output file format.""")
+@cli_util.option('--saved-report-id', help=u"""The saved report id which can also be used to generate query.""")
+@cli_util.option('--query-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -203,7 +220,7 @@ def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-properties': {'module': 'usage_api', 'class': 'QueryProperties'}, 'freeform-tags': {'module': 'usage_api', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'usage_api', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'usage_api', 'class': 'Schedule'})
 @cli_util.wrap_exceptions
-def create_schedule_object_storage_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_recurrences, time_scheduled, query_properties, result_location_region, result_location_namespace, result_location_bucket_name, freeform_tags, defined_tags):
+def create_schedule_object_storage_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_recurrences, time_scheduled, result_location_region, result_location_namespace, result_location_bucket_name, description, output_file_format, saved_report_id, query_properties, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -214,10 +231,21 @@ def create_schedule_object_storage_location(ctx, from_json, wait_for_state, max_
     _details['compartmentId'] = compartment_id
     _details['scheduleRecurrences'] = schedule_recurrences
     _details['timeScheduled'] = time_scheduled
-    _details['queryProperties'] = cli_util.parse_json_parameter("query_properties", query_properties)
     _details['resultLocation']['region'] = result_location_region
     _details['resultLocation']['namespace'] = result_location_namespace
     _details['resultLocation']['bucketName'] = result_location_bucket_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if output_file_format is not None:
+        _details['outputFileFormat'] = output_file_format
+
+    if saved_report_id is not None:
+        _details['savedReportId'] = saved_report_id
+
+    if query_properties is not None:
+        _details['queryProperties'] = cli_util.parse_json_parameter("query_properties", query_properties)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -843,6 +871,91 @@ def update_query(ctx, from_json, force, query_definition, query_id, if_match):
 
 @schedule_group.command(name=cli_util.override('usage_api.update_schedule.command_name', 'update'), help=u"""Update a saved schedule \n[Command Reference](updateSchedule)""")
 @cli_util.option('--schedule-id', required=True, help=u"""The schedule unique OCID.""")
+@cli_util.option('--description', help=u"""The description of the schedule.""")
+@cli_util.option('--output-file-format', type=custom_types.CliCaseInsensitiveChoice(["CSV", "PDF"]), help=u"""Specifies supported output file format.""")
+@cli_util.option('--result-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'usage_api', 'class': 'ResultLocation'}, 'freeform-tags': {'module': 'usage_api', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'usage_api', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'usage_api', 'class': 'ResultLocation'}, 'freeform-tags': {'module': 'usage_api', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'usage_api', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'usage_api', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, description, output_file_format, result_location, freeform_tags, defined_tags, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+    if not force:
+        if result_location or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to result-location and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if output_file_format is not None:
+        _details['outputFileFormat'] = output_file_format
+
+    if result_location is not None:
+        _details['resultLocation'] = cli_util.parse_json_parameter("result_location", result_location)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('usage_api', 'usageapi', ctx)
+    result = client.update_schedule(
+        schedule_id=schedule_id,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_schedule') and callable(getattr(client, 'get_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('usage_api.update_schedule_object_storage_location.command_name', 'update-schedule-object-storage-location'), help=u"""Update a saved schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""The schedule unique OCID.""")
+@cli_util.option('--result-location-region', required=True, help=u"""The destination Object Store Region specified by the customer.""")
+@cli_util.option('--result-location-namespace', required=True, help=u"""The namespace needed to determine the object storage bucket.""")
+@cli_util.option('--result-location-bucket-name', required=True, help=u"""The bucket name where usage or cost CSVs will be uploaded.""")
+@cli_util.option('--description', help=u"""The description of the schedule.""")
+@cli_util.option('--output-file-format', type=custom_types.CliCaseInsensitiveChoice(["CSV", "PDF"]), help=u"""Specifies supported output file format.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
@@ -855,7 +968,7 @@ def update_query(ctx, from_json, force, query_definition, query_id, if_match):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'usage_api', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'usage_api', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'usage_api', 'class': 'Schedule'})
 @cli_util.wrap_exceptions
-def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, freeform_tags, defined_tags, if_match):
+def update_schedule_object_storage_location(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, result_location_region, result_location_namespace, result_location_bucket_name, description, output_file_format, freeform_tags, defined_tags, if_match):
 
     if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
@@ -870,12 +983,24 @@ def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['resultLocation'] = {}
+    _details['resultLocation']['region'] = result_location_region
+    _details['resultLocation']['namespace'] = result_location_namespace
+    _details['resultLocation']['bucketName'] = result_location_bucket_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if output_file_format is not None:
+        _details['outputFileFormat'] = output_file_format
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['resultLocation']['locationType'] = 'OBJECT_STORAGE'
 
     client = cli_util.build_client('usage_api', 'usageapi', ctx)
     result = client.update_schedule(

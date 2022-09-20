@@ -34,6 +34,8 @@ def vcr_fixture(request):
 
 @pytest.fixture
 def content_input_file():
+    if not os.path.exists(GENERATED_CONTENT_INPUT_FILE):
+        util.create_large_file(GENERATED_CONTENT_INPUT_FILE, LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     return GENERATED_CONTENT_INPUT_FILE
 
 
@@ -102,15 +104,12 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     validate_response(result, includes_debug_data=debug)
 
     # bucket update
-    result = invoke(runner, config_file, config_profile, ['bucket', 'update', '-ns', util.NAMESPACE, '--name', bucket_name, '--metadata', '{"foo1":"bar1","key_with_underscore":"value_with_underscore"}', '--public-access-type', 'ObjectRead'], debug=debug)
+    result = invoke(runner, config_file, config_profile, ['bucket', 'update', '-ns', util.NAMESPACE, '--name', bucket_name, '--metadata', '{"foo1":"bar1","key_with_underscore":"value_with_underscore"}'], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
     assert 'foo1' in result.output
     assert 'key_with_underscore' in result.output
     assert 'value_with_underscore' in result.output
-    if not debug:
-        response = json.loads(result.output)
-        assert response['data']['public-access-type'] == 'ObjectRead'
 
     # remove foo1, keep key_with_underscore
     result = invoke(runner, config_file, config_profile, ['bucket', 'update', '-ns', util.NAMESPACE, '--name', bucket_name, '--metadata', '{"foo1":null}'], debug=debug)
@@ -484,7 +483,6 @@ def test_create_replication_policy(vcr_fixture, runner, config_file, config_prof
     validate_response(result)
 
 
-@pytest.mark.skip('DEX-14141')
 @util.skip_while_rerecording
 def test_object_put_confirmation_prompt(runner, config_file, config_profile, content_input_file, test_id, multipart):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
@@ -595,7 +593,6 @@ def test_object_put_confirmation_prompt(runner, config_file, config_profile, con
     validate_response(result)
 
 
-@pytest.mark.skip('DEX-14141')
 @util.skip_while_rerecording
 def test_object_options(runner, config_file, config_profile, test_id, content_input_file, multipart):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
@@ -899,7 +896,6 @@ def test_object_put_from_stdin_requires_object_name(runner, config_file, config_
     assert 'UsageError' in put_result.output
 
 
-@pytest.mark.skip('DEX-14146')
 @pytest.mark.parametrize('content_type,content_language,content_encoding', [{'image/gif', 'en', 'gzip'}, {'notarealtype', 'notareallanguage', 'notarealencoding'}, {'text/html; charset=ISO-8859-4', 'mi, en', 'compress'}])
 @util.skip_while_rerecording
 def test_object_content_headers(runner, config_file, config_profile, content_type, content_language, content_encoding, content_input_file, test_id, multipart):

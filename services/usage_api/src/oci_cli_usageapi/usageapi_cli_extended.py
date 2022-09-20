@@ -12,3 +12,7 @@ from oci_cli import json_skeleton_utils  # noqa: F401
 
 # Remove create-schedule-object-storage-location from oci usage-api schedule
 usageapi_cli.schedule_group.commands.pop(usageapi_cli.create_schedule_object_storage_location.name)
+
+
+# Remove update-schedule-object-storage-location from oci usage-api schedule
+usageapi_cli.schedule_group.commands.pop(usageapi_cli.update_schedule_object_storage_location.name)

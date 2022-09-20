@@ -99,9 +99,17 @@ service_mapping = {
         "certificates_management",
         "Certificates Service Management"
     ],
+    "cloud-bridge": [
+        "cloud_bridge",
+        "Oracle Cloud Bridge"
+    ],
     "cloud-guard": [
         "cloud_guard",
         "Cloud Guard and Security Zones"
+    ],
+    "cloud-migrations": [
+        "cloud_migrations",
+        "Oracle Cloud Migrations"
     ],
     "compute": [
         "core",

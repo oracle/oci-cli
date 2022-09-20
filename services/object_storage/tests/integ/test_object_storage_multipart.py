@@ -14,9 +14,9 @@ from tests import test_config_container
 from oci.object_storage import MultipartObjectAssembler
 import random
 
-CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
+CONTENT_OUTPUT_FILE = 'tests/resources/content_output_multipart.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 100
-DEFAULT_TEST_PART_SIZE = 1
+DEFAULT_TEST_PART_SIZE = 10
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key.txt'
 
@@ -102,7 +102,6 @@ def setup_function():
         os.remove(CONTENT_OUTPUT_FILE)
 
 
-@pytest.mark.skip('DEX-14141')
 def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a'
 
@@ -150,7 +149,6 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
-@pytest.mark.skip('DEX-14141')
 def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a-ia'
 
@@ -198,7 +196,6 @@ def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucke
     validate_response(result, json_response_expected=False)
 
 
-@pytest.mark.skip('DEX-14146')
 def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client):
     object_name = 'a'
 
@@ -256,7 +253,6 @@ def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket
     assert result.output == ''
 
 
-@pytest.mark.skip('DEX-14146')
 def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a_metadata'
 

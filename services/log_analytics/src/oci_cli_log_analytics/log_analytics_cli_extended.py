@@ -992,3 +992,26 @@ def validate_source_extended_field_details_extended(ctx, **kwargs):
 # ######################
 # Param Changes - End
 # ######################
+
+
+# Remove create-ingest-time-rule-ingest-time-rule-field-condition from oci log-analytics ingest-time-rule
+loganalytics_cli.ingest_time_rule_group.commands.pop(loganalytics_cli.create_ingest_time_rule_ingest_time_rule_field_condition.name)
+
+
+# Remove update-ingest-time-rule-ingest-time-rule-field-condition from oci log-analytics ingest-time-rule
+loganalytics_cli.ingest_time_rule_group.commands.pop(loganalytics_cli.update_ingest_time_rule_ingest_time_rule_field_condition.name)
+
+
+@cli_util.copy_params_from_generated_command(loganalytics_cli.recall_archived_data, params_to_exclude=['query_parameterconflict'])
+@loganalytics_cli.storage_group.command(name=loganalytics_cli.recall_archived_data.name, help=loganalytics_cli.recall_archived_data.help)
+@cli_util.option('--query-string', help=u"""This is the query that identifies the recalled data.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def recall_archived_data_extended(ctx, **kwargs):
+
+    if 'query_string' in kwargs:
+        kwargs['query_parameterconflict'] = kwargs['query_string']
+        kwargs.pop('query_string')
+
+    ctx.invoke(loganalytics_cli.recall_archived_data, **kwargs)

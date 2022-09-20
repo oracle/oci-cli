@@ -14,10 +14,350 @@ from oci_cli import json_skeleton_utils  # noqa: F401
 cli_util.rename_command(threatintel_cli, threatintel_cli.threat_intelligence_root_group, threatintel_cli.indicator_summary_collection_group, "indicator-summaries")
 
 
-@cli_util.copy_params_from_generated_command(threatintel_cli.list_indicators, params_to_exclude=['confidence_greater_than_or_equal_to', 'time_updated_greater_than_or_equal_to'])
+@cli_util.copy_params_from_generated_command(threatintel_cli.list_indicators, params_to_exclude=['confidence_greater_than_or_equal_to', 'time_updated_greater_than_or_equal_to', 'time_created_greater_than_or_equal_to', 'time_created_less_than', 'time_last_seen_greater_than_or_equal_to', 'time_last_seen_less_than', 'time_updated_less_than'])
 @threatintel_cli.indicator_summary_collection_group.command(name=threatintel_cli.list_indicators.name, help=threatintel_cli.list_indicators.help)
 @cli_util.option('--confidence-above', type=click.INT, help=u"""The minimum confidence score of entities to be returned.""")
 @cli_util.option('--time-updated-after', type=custom_types.CLI_DATETIME, help=u"""The oldest update time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-created-after', type=custom_types.CLI_DATETIME, help=u"""The oldest creation time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-created-before', type=custom_types.CLI_DATETIME, help=u"""The newest creation time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-last-seen-after', type=custom_types.CLI_DATETIME, help=u"""The oldest last seen time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-last-seen-before', type=custom_types.CLI_DATETIME, help=u"""The newest last seen time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-updated-before', type=custom_types.CLI_DATETIME, help=u"""The newest update time of entities to be returned.
 
 The following datetime formats are supported:
 
@@ -97,8 +437,475 @@ def list_indicators_extended(ctx, **kwargs):
         kwargs['time_updated_greater_than_or_equal_to'] = kwargs['time_updated_after']
         kwargs.pop('time_updated_after')
 
+    if 'time_created_after' in kwargs:
+        kwargs['time_created_greater_than_or_equal_to'] = kwargs['time_created_after']
+        kwargs.pop('time_created_after')
+
+    if 'time_created_before' in kwargs:
+        kwargs['time_created_less_than'] = kwargs['time_created_before']
+        kwargs.pop('time_created_before')
+
+    if 'time_last_seen_after' in kwargs:
+        kwargs['time_last_seen_greater_than_or_equal_to'] = kwargs['time_last_seen_after']
+        kwargs.pop('time_last_seen_after')
+
+    if 'time_last_seen_before' in kwargs:
+        kwargs['time_last_seen_less_than'] = kwargs['time_last_seen_before']
+        kwargs.pop('time_last_seen_before')
+
+    if 'time_updated_before' in kwargs:
+        kwargs['time_updated_less_than'] = kwargs['time_updated_before']
+        kwargs.pop('time_updated_before')
+
     ctx.invoke(threatintel_cli.list_indicators, **kwargs)
 
 
 # oci threat-intelligence indicator-count-collection -> oci threat-intelligence indicator-counts
 cli_util.rename_command(threatintel_cli, threatintel_cli.threat_intelligence_root_group, threatintel_cli.indicator_count_collection_group, "indicator-counts")
+
+
+@cli_util.copy_params_from_generated_command(threatintel_cli.summarize_indicators, params_to_exclude=['confidence_greater_than_or_equal_to', 'time_created_greater_than_or_equal_to', 'time_created_less_than', 'time_last_seen_greater_than_or_equal_to', 'time_last_seen_less_than', 'time_updated_greater_than_or_equal_to', 'time_updated_less_than'])
+@threatintel_cli.indicator_group.command(name=threatintel_cli.summarize_indicators.name, help=threatintel_cli.summarize_indicators.help)
+@cli_util.option('--confidence-above', type=click.INT, help=u"""The minimum level of confidence to return""")
+@cli_util.option('--time-created-after', type=custom_types.CLI_DATETIME, help=u"""The oldest creation time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-created-before', type=custom_types.CLI_DATETIME, help=u"""The newest creation time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-last-seen-after', type=custom_types.CLI_DATETIME, help=u"""The oldest last seen time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-last-seen-before', type=custom_types.CLI_DATETIME, help=u"""The newest last seen time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-updated-after', type=custom_types.CLI_DATETIME, help=u"""The oldest update time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-updated-before', type=custom_types.CLI_DATETIME, help=u"""The newest update time of entities to be returned.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'threat-types': {'module': 'threat_intelligence', 'class': 'list[string]'}}, output_type={'module': 'threat_intelligence', 'class': 'IndicatorSummaryCollection'})
+@cli_util.wrap_exceptions
+def summarize_indicators_extended(ctx, **kwargs):
+
+    if 'confidence_above' in kwargs:
+        kwargs['confidence_greater_than_or_equal_to'] = kwargs['confidence_above']
+        kwargs.pop('confidence_above')
+
+    if 'time_created_after' in kwargs:
+        kwargs['time_created_greater_than_or_equal_to'] = kwargs['time_created_after']
+        kwargs.pop('time_created_after')
+
+    if 'time_created_before' in kwargs:
+        kwargs['time_created_less_than'] = kwargs['time_created_before']
+        kwargs.pop('time_created_before')
+
+    if 'time_last_seen_after' in kwargs:
+        kwargs['time_last_seen_greater_than_or_equal_to'] = kwargs['time_last_seen_after']
+        kwargs.pop('time_last_seen_after')
+
+    if 'time_last_seen_before' in kwargs:
+        kwargs['time_last_seen_less_than'] = kwargs['time_last_seen_before']
+        kwargs.pop('time_last_seen_before')
+
+    if 'time_updated_after' in kwargs:
+        kwargs['time_updated_greater_than_or_equal_to'] = kwargs['time_updated_after']
+        kwargs.pop('time_updated_after')
+
+    if 'time_updated_before' in kwargs:
+        kwargs['time_updated_less_than'] = kwargs['time_updated_before']
+        kwargs.pop('time_updated_before')
+
+    ctx.invoke(threatintel_cli.summarize_indicators, **kwargs)

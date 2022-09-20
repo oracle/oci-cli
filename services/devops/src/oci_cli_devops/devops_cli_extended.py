@@ -935,3 +935,19 @@ devops_cli.repository_group.add_command(devops_cli.list_commits)
 def delete_ref_extended(ctx, **kwargs):
 
     ctx.invoke(devops_cli.delete_ref, **kwargs)
+
+
+# oci devops connection create-connection-create-vbs-access-token-connection-details -> oci devops connection create-vbs-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.create_connection_create_vbs_access_token_connection_details, "create-vbs-connection")
+
+
+# oci devops connection update-connection-update-vbs-access-token-connection-details -> oci devops connection update-vbs-connection
+cli_util.rename_command(devops_cli, devops_cli.connection_group, devops_cli.update_connection_update_vbs_access_token_connection_details, "update-vbs-connection")
+
+
+# oci devops trigger create-trigger-create-vbs-trigger-details -> oci devops trigger create-vbs-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.create_trigger_create_vbs_trigger_details, "create-vbs-trigger")
+
+
+# oci devops trigger update-trigger-update-vbs-trigger-details -> oci devops trigger update-vbs-trigger
+cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.update_trigger_update_vbs_trigger_details, "update-vbs-trigger")

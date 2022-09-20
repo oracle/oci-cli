@@ -6,6 +6,94 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.17.0 - 2022-09-20
+--------------------
+
+Added
+~~~~~
+
+* Support for the Cloud Migrations service
+
+  * ``oci cloud-migrations``
+
+* Support for the Cloud Bridge service
+
+  * ``oci cloud-bridge``
+
+* Support for listing summary messages, trail files, and trail file sequences for a deployment in the Golden Gate service
+
+  * ``oci goldengate message-summary list-messages``
+  * ``oci goldengate trail-file-summary list-trail-files``
+  * ``oci goldengate trail-sequence-summary list-trail-sequences``
+
+* Threat Intelligence service
+
+  * Support for new command
+
+    * ``oci threat-intelligence indicator summarize``
+
+  * Support for new optional parameters
+
+    * ``oci threat-intelligence indicator-summaries list-indicators --time-created-after --time-created-before --time-last-seen-after --time-last-seen-before --time-updated-before``
+
+* Log Analytics service
+
+  * Support for new commands
+
+    * ``oci log-analytics ingest-time-rule``
+    * ``oci log-analytics rule list``
+
+  * Support for new optional parameters
+
+    * ``oci log-analytics object-collection-rule create --log-set --log-set-ext-regex --log-set-key --timezone``
+    * ``oci log-analytics object-collection-rule update --log-set --log-set-ext-regex --log-set-key --timezone``
+    * ``oci log-analytics storage recall-archived-data --log-sets --query-string``
+
+* Support for new commands in the DevOps service
+
+  * ``oci devops connection create-vbs-connection``
+  * ``oci devops connection update-vbs-connection``
+  * ``oci devops trigger create-vbs-trigger``
+  * ``oci devops trigger update-vbs-trigger``
+
+* Support for new optional parameters in the Usage service
+
+  * ``oci usage-api schedule create --output-file-format --saved-report-id --description``
+  * ``oci usage-api schedule update --output-file-format --result-location --description``
+
+* Data integration service
+
+  * Support for new commands
+
+    * ``oci data-integration runtime-operator get``
+    * ``oci data-integration runtime-operators list-runtime-operators``
+    * ``oci data-integration runtime-pipeline get``
+    * ``oci data-integration runtime-pipelines list-runtime-pipelines``
+    * ``oci data-integration task-run-lineage list-task-run-lineages``
+    * ``oci data-integration task-run-lineage list_taskrun_lineages``
+
+  * Support for new optional parameters
+
+    * ``oci data-integration data-entity list --include-types``
+    * ``oci data-integration data-flow-validation create --target-field-map-summary --typed-object-map``
+    * ``oci data-integration dis-application create --compartment-id``
+    * ``oci data-integration schema list --include-types``
+    * ``oci data-integration workspace create --endpoint-compartment-id --endpoint-id --endpoint-name --registry-compartment-id --registry-id --registry-name``
+
+Changed
+~~~~~~~
+* [BREAKING] oci governance-rules-control-plane work-request work-request-log list renamed in the Governance Rules Control Plane service
+
+  * ``oci governance-rules-control-plane work-request work-request-log-entry list-work-request-logs``
+
+* [BREAKING] --previous-deployment-id is now a required parameter in the DevOps service
+
+  * ``oci devops deployment create-pipeline-redeployment --previous-deployment-id``
+
+* The parameter --query-properties is now optional in the Usage service
+
+  * ``oci usage-api schedule create``
+
 3.16.1 - 2022-09-13
 --------------------
 
