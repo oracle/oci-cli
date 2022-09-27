@@ -20,11 +20,9 @@ ocbagentsvc_cli.ocb_agent_svc_root_group.commands.pop(ocbagentsvc_cli.agent_depe
 ocbagentsvc_cli.agent_dependency_group.add_command(ocbagentsvc_cli.list_agent_dependencies)
 cli_util.rename_command(ocbagentsvc_cli, ocbagentsvc_cli.agent_dependency_group, ocbagentsvc_cli.list_agent_dependencies, "list")
 
-cli_util.rename_command(ocbagentsvc_cli, ocbagentsvc_cli.agent_dependency_collection_group, ocbagentsvc_cli.list_agent_dependencies, "list")
-
-# oci cloud-bridge ocb-agent-svc environment-collection list-environments -> oci cloud-bridge ocb-agent-svc environment-collection list
-cli_util.rename_command(ocbagentsvc_cli, ocbagentsvc_cli.environment_collection_group, ocbagentsvc_cli.list_environments, "list")
-
-cli_util.rename_command(ocbagentsvc_cli, ocbagentsvc_cli.ocb_agent_svc_root_group, ocbagentsvc_cli.environment_collection_group, "environment")
+# oci cloud-bridge ocb-agent-svc environment-collection list-environments -> oci cloud-bridge ocb-agent-svc environment list
+ocbagentsvc_cli.ocb_agent_svc_root_group.commands.pop(ocbagentsvc_cli.environment_collection_group.name)
+ocbagentsvc_cli.environment_group.add_command(ocbagentsvc_cli.list_environments)
+cli_util.rename_command(ocbagentsvc_cli, ocbagentsvc_cli.environment_group, ocbagentsvc_cli.list_environments, "list")
 
 cli_util.rename_command(ocbagentsvc_cli, ocbagentsvc_cli.ocb_agent_svc_root_group, ocbagentsvc_cli.appliance_image_collection_group, "appliance-image")

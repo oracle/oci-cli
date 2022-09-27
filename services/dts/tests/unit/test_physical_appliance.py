@@ -18,7 +18,7 @@ from services.dts.src.oci_cli_dts.appliance_auth_manager import ApplianceAuthMan
 from services.dts.src.oci_cli_dts.appliance_cert_manager import ApplianceCertManager
 from services.dts.src.oci_cli_dts.appliance_config_manager import ApplianceConfigManager
 from services.dts.src.oci_cli_dts.appliance_config_spec import ApplianceConfigSpec
-from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CERT_FILE_NAME
+from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CERT_COMMON_NAME, APPLIANCE_CERT_FILE_NAME
 from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import validate_upload_user_credentials
 from oci import exceptions, Response, Request
 
@@ -154,7 +154,7 @@ class PhysicalApplianceTest(unittest.TestCase):
         self._test_init_auth(auth_spec_with_different_serial_id, False)
 
     @staticmethod
-    def _create_and_write_cert(cert_file):
+    def _create_and_write_cert(cert_file, cert_common_name):
         k = crypto.PKey()
         k.generate_key(crypto.TYPE_RSA, 1024)
         cert = crypto.X509()
@@ -162,7 +162,7 @@ class PhysicalApplianceTest(unittest.TestCase):
         cert.get_subject().ST = "CA"
         cert.get_subject().L = "Dummy"
         cert.get_subject().OU = "Dummy"
-        cert.get_subject().CN = "Dummy"
+        cert.get_subject().CN = cert_common_name
         cert.set_serial_number(1000)
         cert.gmtime_adj_notBefore(0)
         cert.gmtime_adj_notAfter(10 * 365 * 24 * 60 * 60)
@@ -174,31 +174,34 @@ class PhysicalApplianceTest(unittest.TestCase):
             f.write(ssl_cert)
         return cert.digest("md5")
 
-    @unittest.skip("skipped to prevent comment on tickets")
-    def test_init_auth_valid_cert_fingerprint(self):
+    def _init_auth_spec_and_cert_manager(self):
         # Mock only the fetch_cert() method of the cert_manager
         auth_spec = self._get_test_auth_spec(self._get_config_manager(), "1.2.3.4", 443)
         endpoint = auth_spec.appliance_config_spec.get_endpoint()
         # Override the mock cert manager
         self.cert_manager = ApplianceCertManager(endpoint)
         self.cert_manager.fetch_cert = mock.MagicMock()
-        # Create a certificate and write to the cert file
-        cert_fingerprint = self._create_and_write_cert(self._generate_cert_file(auth_spec))
-        self._test_init_auth(auth_spec, validate_cert_manager_calls=False, cert_fingerprint=cert_fingerprint)
-        self._validate_init_auth(auth_spec)
+        return auth_spec
 
-    @unittest.skip("skipped to prevent comment on tickets")
-    def test_init_auth_invalid_cert_fingerprint(self):
+    def test_init_auth_valid_cert_common_name_and_valid_cert_fingerprint(self):
+        auth_spec = self._init_auth_spec_and_cert_manager()
+        # Create a certificate and write to the cert file
+        cert_fingerprint = self._create_and_write_cert(self._generate_cert_file(auth_spec), APPLIANCE_CERT_COMMON_NAME)
+        self._test_init_auth(auth_spec, validate_cert_manager_calls=False, cert_fingerprint=cert_fingerprint)
+
+    def test_init_auth_valid_cert_common_name_and_invalid_cert_fingerprint(self):
         with self.assertRaises(exceptions.RequestException):
-            # Mock only the fetch_cert() method of the cert_manager
-            auth_spec = self._get_test_auth_spec(self._get_config_manager(), "1.2.3.4", 443)
-            endpoint = auth_spec.appliance_config_spec.get_endpoint()
-            # Override the mock cert manager
-            self.cert_manager = ApplianceCertManager(endpoint)
-            self.cert_manager.fetch_cert = mock.MagicMock()
+            auth_spec = self._init_auth_spec_and_cert_manager()
             # Create a certificate and write to the cert file
-            self._create_and_write_cert(self._generate_cert_file(auth_spec))
+            self._create_and_write_cert(self._generate_cert_file(auth_spec), APPLIANCE_CERT_COMMON_NAME)
             self._test_init_auth(auth_spec, validate_cert_manager_calls=False, cert_fingerprint="AB:CD:EF:GH")
+
+    def test_init_auth_invalid_cert_common_name_and_valid_cert_fingerprint(self):
+        with self.assertRaises(exceptions.RequestException):
+            auth_spec = self._init_auth_spec_and_cert_manager()
+            # Create a certificate and write to the cert file
+            cert_fingerprint = self._create_and_write_cert(self._generate_cert_file(auth_spec), "Invalid Common Name")
+            self._test_init_auth(auth_spec, validate_cert_manager_calls=False, cert_fingerprint=cert_fingerprint)
 
     def test_get_config_without_init_auth(self):
         with self.assertRaises(exceptions.InvalidConfig):

@@ -7,6 +7,7 @@ import OpenSSL
 import ssl
 
 from oci import exceptions
+from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CERT_COMMON_NAME
 
 
 class ApplianceCertManager:
@@ -38,6 +39,10 @@ class ApplianceCertManager:
         """
         ssl_cert = open(cert_file, 'rt').read()
         x509_cert = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, ssl_cert)
+        cert_common_name = x509_cert.get_subject().commonName
+        if cert_common_name != APPLIANCE_CERT_COMMON_NAME:
+            raise exceptions.RequestException(
+                f"Expected common name '{APPLIANCE_CERT_COMMON_NAME}' but received certificate with common name '{cert_common_name}'")
         server_fingerprint = x509_cert.digest("md5")
         if type(expected_cert_fingerprint) == bytes:
             expected_cert_fingerprint = expected_cert_fingerprint.decode("utf-8")

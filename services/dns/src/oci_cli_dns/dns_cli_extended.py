@@ -60,9 +60,6 @@ def migrate_zone_from_dynect(ctx, **kwargs):
     ctx.invoke(dns_cli.create_zone_create_migrated_dynect_zone_details, **kwargs)
 
 
-dns_cli.resolver_endpoint_group.commands.pop(dns_cli.create_resolver_endpoint_create_resolver_vnic_endpoint_details.name)
-dns_cli.resolver_endpoint_group.commands.pop(dns_cli.update_resolver_endpoint_update_resolver_vnic_endpoint_details.name)
-
 dns_cli.zone_group.commands.pop(dns_cli.create_zone.name)
 dns_cli.zone_group.commands.pop(dns_cli.create_zone_create_migrated_dynect_zone_details.name)
 dns_cli.zone_group.commands.pop(dns_cli.create_zone_create_zone_details.name)
@@ -91,3 +88,19 @@ cli_util.rename_command(dns_cli, rrset, dns_cli.update_rr_set, "update")
 rrset.add_command(dns_cli.get_rr_set)
 rrset.add_command(dns_cli.patch_rr_set)
 rrset.add_command(dns_cli.delete_rr_set)
+
+
+# Remove create from oci dns resolver-endpoint
+dns_cli.resolver_endpoint_group.commands.pop(dns_cli.create_resolver_endpoint.name)
+
+
+# Remove update from oci dns resolver-endpoint
+dns_cli.resolver_endpoint_group.commands.pop(dns_cli.update_resolver_endpoint.name)
+
+
+# oci dns resolver-endpoint create-resolver-endpoint-create-resolver-vnic-endpoint-details -> oci dns resolver-endpoint create
+cli_util.rename_command(dns_cli, dns_cli.resolver_endpoint_group, dns_cli.create_resolver_endpoint_create_resolver_vnic_endpoint_details, "create")
+
+
+# oci dns resolver-endpoint update-resolver-endpoint-update-resolver-vnic-endpoint-details -> oci dns resolver-endpoint update
+cli_util.rename_command(dns_cli, dns_cli.resolver_endpoint_group, dns_cli.update_resolver_endpoint_update_resolver_vnic_endpoint_details, "update")
