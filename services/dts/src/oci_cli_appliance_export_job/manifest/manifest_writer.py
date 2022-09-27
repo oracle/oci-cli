@@ -46,8 +46,7 @@ class ManifestWriter:
                 self._stats.set_next_start_with(line_item.path)
                 break
 
-            if not ManifestWriter._is_object_valid(line_item.path):
-                raise Exception("Object validation failed for object {}".format(str(line_item)))
+            self._validate_object(line_item)
 
             if not self._do_buffer_capacity_check(len(str(line_item))):
                 self.log.debug("Reached max buffer size, flushing buffer for next items ... ")
@@ -101,12 +100,18 @@ class ManifestWriter:
         return self._buffer is None or len(self._buffer) + requested_size <= self._max_part_size
 
     @staticmethod
-    def _is_object_valid(o):
-        o1 = o
+    def _validate_object(o):
+        o1 = o.path
         if o1:
+            if o1[0] == "/":
+                ManifestWriter._raise_object_validation_exception(o, "Object's path starts with a slash")
+
             path_arr = o1.split('/')
             for path in path_arr:
                 if len(path) > OBJECT_NAME_MAX_PATH_LENGTH:
-                    return False
+                    ManifestWriter._raise_object_validation_exception(
+                        o, "'{}' is longer than {} characters".format(path, OBJECT_NAME_MAX_PATH_LENGTH))
 
-            return True
+    @staticmethod
+    def _raise_object_validation_exception(line_item, msg):
+        raise Exception("Object validation failed for object {}. {}.".format(str(line_item).strip(), msg))

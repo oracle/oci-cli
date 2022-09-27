@@ -15,33 +15,40 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('fs.fs_root_group.command_name', 'fs'), cls=CommandGroupWithAlias, help=cli_util.override('fs.fs_root_group.help', """API for the File Storage service. Use this API to manage file systems, mount targets, and snapshots. For more information, see [Overview of File Storage]."""), short_help=cli_util.override('fs.fs_root_group.short_help', """File Storage API"""))
+@cli.command(cli_util.override('fs.fs_root_group.command_name', 'fs'), cls=CommandGroupWithAlias, help=cli_util.override('fs.fs_root_group.help', """Use the File Storage service API to manage file systems, mount targets, and snapshots.
+For more information, see [Overview of File Storage]."""), short_help=cli_util.override('fs.fs_root_group.short_help', """File Storage API"""))
 @cli_util.help_option_group
 def fs_root_group():
     pass
 
 
+@click.command(cli_util.override('fs.replication_group.command_name', 'replication'), cls=CommandGroupWithAlias, help="""Replications are the primary resource that governs the policy of cross-region replication between source and target file systems. Replications are associated with a secondary resource called a [`ReplicationTarget`] located in another availability domain in the same or different region. The replication retrieves the delta of data between two snapshots of a source file system and sends it to the associated `ReplicationTarget`, which applies it to the target file system. For more information, see [File System Replication].""")
+@cli_util.help_option_group
+def replication_group():
+    pass
+
+
 @click.command(cli_util.override('fs.file_system_group.command_name', 'file-system'), cls=CommandGroupWithAlias, help="""An NFS file system. To allow access to a file system, add it to an export set and associate the export set with a mount target. The same file system can be in multiple export sets and associated with multiple mount targets.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def file_system_group():
     pass
 
 
-@click.command(cli_util.override('fs.export_set_group.command_name', 'export-set'), cls=CommandGroupWithAlias, help="""A set of file systems to export through one or more mount targets. Composed of zero or more export resources.
+@click.command(cli_util.override('fs.replication_target_group.command_name', 'replication-target'), cls=CommandGroupWithAlias, help="""Replication targets are associated with a primary resource called a [`Replication`] located in another availability domain in the same or different region. The replication retrieves the delta of data between two snapshots of a source file system and sends it to the associated `ReplicationTarget`,  which applies it to the target file system. All operations (except `DELETE`) must be done using the associated replication resource. Deleting a `ReplicationTarget` allows the target file system to be exported. Deleting a `ReplicationTarget` does not delete the associated `Replication` resource, but places it in a `FAILED` state. For more information, see [File System Replication].""")
+@cli_util.help_option_group
+def replication_target_group():
+    pass
 
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+
+@click.command(cli_util.override('fs.export_set_group.command_name', 'export-set'), cls=CommandGroupWithAlias, help="""A set of file systems to export through one or more mount targets. Composed of zero or more export resources.""")
 @cli_util.help_option_group
 def export_set_group():
     pass
 
 
-@click.command(cli_util.override('fs.mount_target_group.command_name', 'mount-target'), cls=CommandGroupWithAlias, help="""Provides access to a collection of file systems through one or more VNICs on a specified subnet. The set of file systems is controlled through the referenced export set.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('fs.mount_target_group.command_name', 'mount-target'), cls=CommandGroupWithAlias, help="""Provides access to a collection of file systems through one or more VNICs on a specified subnet. The set of file systems is controlled through the referenced export set.""")
 @cli_util.help_option_group
 def mount_target_group():
     pass
@@ -63,23 +70,21 @@ Paths may not end in a slash (/). No path element can be a period (.) or two per
 
 No two non-'DELETED' export resources in the same export set can reference the same file system.
 
-Use `exportOptions` to control access to an export. For more information, see [Export Options].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+Use `exportOptions` to control access to an export. For more information, see [Export Options].""")
 @cli_util.help_option_group
 def export_group():
     pass
 
 
-@click.command(cli_util.override('fs.snapshot_group.command_name', 'snapshot'), cls=CommandGroupWithAlias, help="""A point-in-time snapshot of a specified file system.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('fs.snapshot_group.command_name', 'snapshot'), cls=CommandGroupWithAlias, help="""A point-in-time snapshot of a specified file system.""")
 @cli_util.help_option_group
 def snapshot_group():
     pass
 
 
+fs_root_group.add_command(replication_group)
 fs_root_group.add_command(file_system_group)
+fs_root_group.add_command(replication_target_group)
 fs_root_group.add_command(export_set_group)
 fs_root_group.add_command(mount_target_group)
 fs_root_group.add_command(export_group)
@@ -143,6 +148,37 @@ def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment
     result = client.change_mount_target_compartment(
         mount_target_id=mount_target_id,
         change_mount_target_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@replication_group.command(name=cli_util.override('fs.change_replication_compartment.command_name', 'change-compartment'), help=u"""Moves a replication and its replication target into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeReplicationCompartment)""")
+@cli_util.option('--replication-id', required=True, help=u"""The [OCID] of the replication.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the replication to. Also changes the replication target's compartment in the target region.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_replication_compartment(ctx, from_json, replication_id, compartment_id, if_match):
+
+    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.change_replication_compartment(
+        replication_id=replication_id,
+        change_replication_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -241,7 +277,7 @@ Example: `My file system`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
 @cli_util.option('--source-snapshot-id', help=u"""The [OCID] of the snapshot used to create a cloned file system. See [Cloning a File System].""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
@@ -323,10 +359,14 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `My mount target`""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the mount target's IP address, used for DNS resolution. The value is the hostname portion of the private IP address's fully qualified domain name (FQDN). For example, `files-1` in the FQDN `files-1.subnet123.vcn1.oraclevcn.com`. Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
+Note: This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value.
+
 For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `files-1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
+
+Note: This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `ipAddress`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `ipAddress` value.
 
 Example: `10.0.3.3`""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this mount target. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the mount target from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -385,6 +425,81 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@replication_group.command(name=cli_util.override('fs.create_replication.command_name', 'create'), help=u"""Creates a new replication in the specified compartment. Replications are the primary resource that governs the policy of cross-region replication between source and target file systems. Replications are associated with a secondary resource called a [`ReplicationTarget`] located in another availability domain. The associated replication target resource is automatically created along with the replication resource. The replication retrieves the delta of data between two snapshots of a source file system and sends it to the associated `ReplicationTarget`, which retrieves the delta and applies it to the target file system. Only unexported file systems can be used as target file systems. For more information, see [Using Replication].
+
+For information about access control and compartments, see [Overview of the IAM Service].
+
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+All Oracle Cloud Infrastructure Services resources, including replications, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier ([OCID]). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. \n[Command Reference](createReplication)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the replication.""")
+@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source file system.""")
+@cli_util.option('--target-id', required=True, help=u"""The [OCID] of the target file system.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information. An associated replication target will also created with the same `displayName`. Example: `My replication`""")
+@cli_util.option('--replication-interval', type=click.INT, help=u"""Duration in minutes between replication snapshots.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Replication'})
+@cli_util.wrap_exceptions
+def create_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, target_id, display_name, replication_interval, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['targetId'] = target_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if replication_interval is not None:
+        _details['replicationInterval'] = replication_interval
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.create_replication(
+        create_replication_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_replication') and callable(getattr(client, 'get_replication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_replication(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -530,7 +645,7 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -654,6 +769,137 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@replication_group.command(name=cli_util.override('fs.delete_replication.command_name', 'delete'), help=u"""Deletes the specified replication and the the associated replication target. \n[Command Reference](deleteReplication)""")
+@cli_util.option('--replication-id', required=True, help=u"""The [OCID] of the replication.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--delete-mode', type=custom_types.CliCaseInsensitiveChoice(["FINISH_CYCLE_IF_CAPTURING_OR_APPLYING", "ONE_MORE_CYCLE", "FINISH_CYCLE_IF_APPLYING"]), help=u"""You can choose a mode for deleting the replication resource. - `FINISH_CYCLE_IF_CAPTURING_OR_APPLYING` Before deleting, complete the current delta cycle. If cycle is idle, delete immediately. Safest option. - `ONE_MORE_CYCLE` Before deleting, complete the current delta cycle, and initiate one more cycle. If cycle is idle, initiate one more cycle. Use for lossless failover. - `FINISH_CYCLE_IF_APPLYING` Before deleting, finish applying. If cycle is idle or capturing, delete immediately. Fastest option.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_id, if_match, delete_mode):
+
+    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if delete_mode is not None:
+        kwargs['delete_mode'] = delete_mode
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.delete_replication(
+        replication_id=replication_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_replication') and callable(getattr(client, 'get_replication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_replication(replication_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@replication_target_group.command(name=cli_util.override('fs.delete_replication_target.command_name', 'delete'), help=u"""Deletes the specified replication target. This operation causes the immediate release of the target file system if there are currently no delta application operations. If there is any current delta being applied the delete operation is blocked until the current delta has been completely applied. \n[Command Reference](deleteReplicationTarget)""")
+@cli_util.option('--replication-target-id', required=True, help=u"""The [OCID] of the replication target.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_replication_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_target_id, if_match):
+
+    if isinstance(replication_target_id, six.string_types) and len(replication_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.delete_replication_target(
+        replication_target_id=replication_target_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_replication_target') and callable(getattr(client, 'get_replication_target')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_replication_target(replication_target_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @snapshot_group.command(name=cli_util.override('fs.delete_snapshot.command_name', 'delete'), help=u"""Deletes the specified snapshot. \n[Command Reference](deleteSnapshot)""")
 @cli_util.option('--snapshot-id', required=True, help=u"""The [OCID] of the snapshot.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -715,6 +961,34 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@file_system_group.command(name=cli_util.override('fs.estimate_replication.command_name', 'estimate-replication'), help=u"""Provides estimates for replication created using specific file system. \n[Command Reference](estimateReplication)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--change-rate-in-m-bps', type=click.INT, help=u"""The rate of change of data on source file system in MegaBytes per second.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'ReplicationEstimate'})
+@cli_util.wrap_exceptions
+def estimate_replication(ctx, from_json, file_system_id, if_match, change_rate_in_m_bps):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if change_rate_in_m_bps is not None:
+        kwargs['change_rate_in_m_bps'] = change_rate_in_m_bps
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.estimate_replication(
+        file_system_id=file_system_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -801,6 +1075,50 @@ def get_mount_target(ctx, from_json, mount_target_id):
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_mount_target(
         mount_target_id=mount_target_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@replication_group.command(name=cli_util.override('fs.get_replication.command_name', 'get'), help=u"""Gets the specified replication's information. \n[Command Reference](getReplication)""")
+@cli_util.option('--replication-id', required=True, help=u"""The [OCID] of the replication.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'Replication'})
+@cli_util.wrap_exceptions
+def get_replication(ctx, from_json, replication_id):
+
+    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.get_replication(
+        replication_id=replication_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@replication_target_group.command(name=cli_util.override('fs.get_replication_target.command_name', 'get'), help=u"""Gets the specified replication target's information. \n[Command Reference](getReplicationTarget)""")
+@cli_util.option('--replication-target-id', required=True, help=u"""The [OCID] of the replication target.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'ReplicationTarget'})
+@cli_util.wrap_exceptions
+def get_replication_target(ctx, from_json, replication_target_id):
+
+    if isinstance(replication_target_id, six.string_types) and len(replication_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.get_replication_target(
+        replication_target_id=replication_target_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1145,6 +1463,167 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
     cli_util.render_response(result, ctx)
 
 
+@replication_target_group.command(name=cli_util.override('fs.list_replication_targets.command_name', 'list'), help=u"""Lists the replication target resources in the specified compartment. \n[Command Reference](listReplicationTargets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
+
+Example: `My resource`""")
+@cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can choose either value, but not both. By default, when you sort by `timeCreated`, results are shown in descending order. When you sort by `displayName`, results are shown in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[ReplicationTargetSummary]'})
+@cli_util.wrap_exceptions
+def list_replication_targets(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, lifecycle_state, display_name, id, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_replication_targets,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_replication_targets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    else:
+        result = client.list_replication_targets(
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@replication_group.command(name=cli_util.override('fs.list_replications.command_name', 'list'), help=u"""Lists the replication resources in the specified compartment. \n[Command Reference](listReplications)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
+
+Example: `My resource`""")
+@cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can choose either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
+@cli_util.option('--file-system-id', help=u"""The [OCID] of the source file system.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[ReplicationSummary]'})
+@cli_util.wrap_exceptions
+def list_replications(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, lifecycle_state, display_name, id, sort_by, sort_order, file_system_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if file_system_id is not None:
+        kwargs['file_system_id'] = file_system_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_replications,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_replications,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    else:
+        result = client.list_replications(
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system. \n[Command Reference](listSnapshots)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum.
@@ -1359,7 +1838,7 @@ Example: `My file system`""")
 If updating to a new Key Management key, the old key must remain enabled so that files previously encrypted continue to be accessible. For more information, see [Overview of Key Management].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
@@ -1491,6 +1970,82 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@replication_group.command(name=cli_util.override('fs.update_replication.command_name', 'update'), help=u"""Updates the information for the specified replication and its associated replication target. \n[Command Reference](updateReplication)""")
+@cli_util.option('--replication-id', required=True, help=u"""The [OCID] of the replication.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information. A replication target will also updated with the same `displayName`. Example: `My replication`""")
+@cli_util.option('--replication-interval', type=click.INT, help=u"""Duration in minutes between replication snapshots.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Replication'})
+@cli_util.wrap_exceptions
+def update_replication(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_id, display_name, replication_interval, freeform_tags, defined_tags, if_match):
+
+    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+        raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if replication_interval is not None:
+        _details['replicationInterval'] = replication_interval
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.update_replication(
+        replication_id=replication_id,
+        update_replication_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_replication') and callable(getattr(client, 'get_replication')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_replication(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

@@ -6,6 +6,65 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.18.0 - 2022-09-27
+--------------------
+
+Added
+~~~~~~~~
+
+* Support for previous pagination in Resource Search service
+
+  * ``oci search resource structured-search --page $opc-previous-token``
+
+* Support for Elastic Compute feature as part of database service
+
+  * ``oci db exadata-infrastructure generate-recommended-vm-cluster-network --db-servers``
+  * ``oci db exadata-infrastructure update --additional-compute-count, --additional-compute-system-model``
+  * ``oci db vm-cluster-network resize --action, --exadata-infrastructure-id, --vm-cluster-network-id, --vm-networks``
+
+* Stack Monitoring service
+
+  * Support for new command
+
+    * ``oci stack-monitoring resource search-associated-resources``
+
+  * Support for new optional parameter
+
+    * ``oci stack-monitoring resource search --external-id``
+    * ``oci stack-monitoring resource create --external-id``
+    * ``oci stack-monitoring resource delete --is-delete-members``
+
+* NoSQL service
+
+  * ``oci nosql query prepare``
+
+    * Added a new optional argument ``--is-get-query-plan``
+    * Added the optional ``queryPlan`` property in the JSON response
+
+  * ``oci nosql table get``
+
+    * Added the properties ``isAsUuid`` and ``isGenerated`` to the ``Column`` JSON object that is included in the JSON response
+    * Added the ``identity`` JSON object that is included in the the JSON response
+
+  * ``oci nosql table list-table-usage``
+
+    * Added the property ``maxShardSizeUsageInPercent`` in the JSON response
+
+Changed
+~~~~~~~
+* [BREAKING]  DNS service
+
+  *  ``oci dns resolver-endpoint create --subnet-id --nsg-ids``
+
+    * Required parameter ``--subnet-id`` was added
+    * Optional paramater ``--nsg-ids`` was added
+    * Optional paramater ``--endpoint-type`` was removed
+
+
+  * ``oci dns resolver-endpoint update``
+
+    * The optional paramater ``--nsg-ids`` was added
+
 3.17.0 - 2022-09-20
 --------------------
 

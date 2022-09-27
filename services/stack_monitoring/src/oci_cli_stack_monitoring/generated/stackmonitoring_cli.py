@@ -241,6 +241,7 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
@@ -258,7 +259,7 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, management_agent_id, resource_time_zone, properties, database_connection_details, credentials, aliases, external_resource_id):
+def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, credentials, aliases, external_resource_id):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -275,6 +276,9 @@ def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if host_name is not None:
         _details['hostName'] = host_name
+
+    if external_id is not None:
+        _details['externalId'] = external_id
 
     if management_agent_id is not None:
         _details['managementAgentId'] = management_agent_id
@@ -331,6 +335,7 @@ def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
@@ -351,7 +356,7 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
+def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -369,6 +374,9 @@ def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_
 
     if host_name is not None:
         _details['hostName'] = host_name
+
+    if external_id is not None:
+        _details['externalId'] = external_id
 
     if management_agent_id is not None:
         _details['managementAgentId'] = management_agent_id
@@ -438,6 +446,7 @@ def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_
 @cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be encrypted format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
@@ -458,7 +467,7 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_key_id, credentials_properties, display_name, host_name, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
+def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_key_id, credentials_properties, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -478,6 +487,9 @@ def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_sta
 
     if host_name is not None:
         _details['hostName'] = host_name
+
+    if external_id is not None:
+        _details['externalId'] = external_id
 
     if management_agent_id is not None:
         _details['managementAgentId'] = management_agent_id
@@ -546,6 +558,7 @@ def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_sta
 @cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be either in plain text format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
 @cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
@@ -566,7 +579,7 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_properties, display_name, host_name, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
+def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_properties, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -585,6 +598,9 @@ def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_st
 
     if host_name is not None:
         _details['hostName'] = host_name
+
+    if external_id is not None:
+        _details['externalId'] = external_id
 
     if management_agent_id is not None:
         _details['managementAgentId'] = management_agent_id
@@ -713,6 +729,7 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.delete_monitored_resource.command_name', 'delete'), help=u"""Deletes a monitored resource by identifier \n[Command Reference](deleteMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-delete-members', type=click.BOOL, help=u"""A filter to delete the associated children or not for given resource.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -722,7 +739,7 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, if_match):
+def delete_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, if_match, is_delete_members):
 
     if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
@@ -730,6 +747,8 @@ def delete_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_delete_members is not None:
+        kwargs['is_delete_members'] = is_delete_members
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.delete_monitored_resource(
@@ -1211,6 +1230,60 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_associated_resources.command_name', 'search-associated-resources'), help=u"""List associated monitored resources. \n[Command Reference](searchAssociatedResources)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--resource-type', help=u"""A filter to return associated resources that match resources of type. Either resourceId or resourceType should be provided.""")
+@cli_util.option('--resource-id', help=u"""Monitored resource identifier for which the associated resources should be fetched. Either resourceId or resourceType should be provided.""")
+@cli_util.option('--limit-level', type=click.INT, help=u"""The field which determines the depth of hierarchy while searching for associated resources. Possible values - 0 for all levels. And positive number to indicate different levels. Default value is 1, which indicates 1st level associations.""")
+@cli_util.option('--association-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of association types to be searched for finding associated resources""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. In this mechanism, the client sends the required field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to return and should be a query string parameter called \"fields\" of an array type, provide the values as enums, and use collectionFormat.""")
+@cli_util.option('--exclude-fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return all the information except the fields requested to be excluded (excludeFields) by the client. In this mechanism, the client sends the exclude field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to exlude and to return and should be a query string parameter called \"excludeFields\" of an array type, provide the values as enums, and use collectionFormat.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({'association-types': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'association-types': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'AssociatedResourcesCollection'})
+@cli_util.wrap_exceptions
+def search_associated_resources(ctx, from_json, compartment_id, resource_type, resource_id, limit_level, association_types, fields, exclude_fields, if_match, limit, page):
+
+    kwargs = {}
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if exclude_fields is not None and len(exclude_fields) > 0:
+        kwargs['exclude_fields'] = exclude_fields
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if resource_type is not None:
+        _details['resourceType'] = resource_type
+
+    if resource_id is not None:
+        _details['resourceId'] = resource_id
+
+    if limit_level is not None:
+        _details['limitLevel'] = limit_level
+
+    if association_types is not None:
+        _details['associationTypes'] = cli_util.parse_json_parameter("association_types", association_types)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.search_associated_resources(
+        search_associated_resources_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resource_associations.command_name', 'search-monitored-resource-associations'), help=u"""Returns a list of monitored resource associations. \n[Command Reference](searchMonitoredResourceAssociations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
 @cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID]""")
@@ -1334,6 +1407,7 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 @cli_util.option('--name-contains', help=u"""A filter to return resources that match resource name pattern given. The match is not case sensitive.""")
 @cli_util.option('--type', help=u"""A filter to return resources that match resource type""")
 @cli_util.option('--host-name', help=u"""A filter to return resources with host name match""")
+@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only following resource type identifiers - externalcontainerdatabase, externalnoncontainerdatabase, externalpluggabledatabase and OCI compute instance.""")
 @cli_util.option('--host-name-contains', help=u"""A filter to return resources with host name pattern""")
 @cli_util.option('--management-agent-id', help=u"""A filter to return resources with matching management agent id.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return resources with matching lifecycle state.""")
@@ -1355,19 +1429,25 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 @cli_util.option('--property-equals', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Criteria based on resource property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. In this mechanism, the client sends the required field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to return and should be a query string parameter called \"fields\" of an array type, provide the values as enums, and use collectionFormat.""")
+@cli_util.option('--exclude-fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return all the information except the fields requested to be excluded (excludeFields) by the client. In this mechanism, the client sends the exclude field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to exlude and to return and should be a query string parameter called \"excludeFields\" of an array type, provide the values as enums, and use collectionFormat.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceCollection'})
 @cli_util.wrap_exceptions
-def search_monitored_resources(ctx, from_json, compartment_id, name, name_contains, type, host_name, host_name_contains, management_agent_id, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than, resource_time_zone, sort_order, sort_by, property_equals, limit, page, if_match):
+def search_monitored_resources(ctx, from_json, compartment_id, name, name_contains, type, host_name, external_id, host_name_contains, management_agent_id, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than, resource_time_zone, sort_order, sort_by, property_equals, limit, page, fields, exclude_fields, if_match):
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if exclude_fields is not None and len(exclude_fields) > 0:
+        kwargs['exclude_fields'] = exclude_fields
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1386,6 +1466,9 @@ def search_monitored_resources(ctx, from_json, compartment_id, name, name_contai
 
     if host_name is not None:
         _details['hostName'] = host_name
+
+    if external_id is not None:
+        _details['externalId'] = external_id
 
     if host_name_contains is not None:
         _details['hostNameContains'] = host_name_contains

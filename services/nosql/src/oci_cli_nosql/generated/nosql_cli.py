@@ -914,14 +914,17 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @query_result_collection_group.command(name=cli_util.override('nosql.prepare_statement.command_name', 'prepare-statement'), help=u"""Prepare a SQL statement for use in a query with variable substitution. \n[Command Reference](prepareStatement)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL statement.""")
+@cli_util.option('--is-get-query-plan', type=click.BOOL, help=u"""Include a query execution plan in the result.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'nosql', 'class': 'PreparedStatement'})
 @cli_util.wrap_exceptions
-def prepare_statement(ctx, from_json, compartment_id, statement):
+def prepare_statement(ctx, from_json, compartment_id, statement, is_get_query_plan):
 
     kwargs = {}
+    if is_get_query_plan is not None:
+        kwargs['is_get_query_plan'] = is_get_query_plan
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.prepare_statement(

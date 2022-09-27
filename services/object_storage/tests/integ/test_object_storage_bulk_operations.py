@@ -47,6 +47,9 @@ bulk_put_mid_sized_files = set()
 root_bulk_put_folder = None
 bulk_put_bucket_name = None
 
+created_buckets = 'created_buckets'
+test_success = 'test_success'
+
 
 def is_python2():
     return sys.version_info[0] < 3
@@ -63,11 +66,21 @@ def debug(request):
     return request.param
 
 
+@pytest.fixture(scope='function')
+def on_error_fixture():
+    data = {created_buckets: [], test_success: False}
+    yield data
+    if not data[test_success]:
+        for bucket_name in data[created_buckets]:
+            delete_test_bucket_on_failure(bucket_name)
+
 # Generate test data for different operations:
 #
 #    Bulk Get: create a new bucket and populate it with some objects, then tear it all down afterwards
 #    Bulk Put: create a folder structure containing small and large files, then tear it all down afterwards
 #    Bulk Delete: uses the folders and files generated for bulk put
+
+
 @pytest.fixture(scope='module', autouse=True)
 def generate_test_data(object_storage_client, test_id):
     global bulk_get_object_to_content, bulk_get_bucket_name, root_bulk_put_folder, bulk_put_large_files, bulk_put_mid_sized_files, bulk_put_bucket_name
@@ -502,6 +515,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
+    # storage-tier check
     result = invoke([
         'os', 'object', 'bulk-upload',
         '--namespace', util.NAMESPACE,
@@ -522,6 +536,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         for obj in objects:
             assert 'InfrequentAccess' == obj['storage-tier']
 
+    # no-multipart check
     result = invoke([
         'os', 'object', 'bulk-upload',
         '--namespace', util.NAMESPACE,
@@ -543,6 +558,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         for obj in objects:
             assert 'InfrequentAccess' == obj['storage-tier']
 
+    # verify checksum check
     result = invoke([
         'os', 'object', 'bulk-upload',
         '--namespace', util.NAMESPACE,
@@ -556,6 +572,34 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
     for uploaded_object_name in parsed_result['uploaded-objects']:
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
+
+    delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+
+
+def test_content_type_with_no_multipart(object_storage_client, test_id):
+    create_bucket_request = oci.object_storage.models.CreateBucketDetails()
+    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(test_id)
+    create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
+    object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    content_type = "plaint/text"
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', root_bulk_put_folder,
+        '--no-multipart',
+        '--overwrite',
+        '--content-type', content_type
+    ])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    get_object_result = object_storage_client.get_object(namespace_name=util.NAMESPACE, bucket_name=create_bucket_request.name, object_name="object_1")
+    assert get_object_result.headers["content-type"] == content_type
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
 
@@ -1539,22 +1583,22 @@ def test_bulk_delete_pagination(object_storage_client, debug, test_id):
 
 
 @util.skip_while_rerecording
-def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id):
+def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id, on_error_fixture):
     bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id)
-    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id)
+    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, on_error_fixture)
 
 
 @util.skip_while_rerecording
-def test_delete_bucket_empty_dry_run_versioned(object_storage_client, debug, test_id):
+def test_delete_bucket_empty_dry_run_versioned(object_storage_client, debug, test_id, on_error_fixture):
     bucket_name = 'ObjectStorageBucketDelete_Versioned_{}'.format(test_id)
-    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, is_versioned=True)
+    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, on_error_fixture, is_versioned=True)
 
 
-def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, test_id, is_versioned=False):
+def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, test_id, on_error_fixture, is_versioned=False):
     # this is a test helper for bucket delete command. It tests and validates the output from --dry-run as well
     # as --empty along with the prompts
     clear_and_create_new_bucket(object_storage_client, source_bucket_name, debug, is_versioned)
-
+    on_error_fixture[created_buckets].append(source_bucket_name)
     # create a bucket in a different region
     dest_bucket_name = 'ObjectStorageBucketDelete_Rep_{}'.format(test_id)
     if is_versioned:
@@ -1563,9 +1607,9 @@ def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, 
 
     # create replication bucket
     create_replication_bucket(dest_bucket_name, debug)
+    on_error_fixture[created_buckets].append(dest_bucket_name)
     generate_all_data_in_bucket(object_storage_client, source_bucket_name, debug, dest_bucket_name, n_pars, n_uploads,
                                 True, is_versioned)
-
     if is_versioned:
         n_objects = get_number_of_versions_in_bucket(object_storage_client, source_bucket_name, None)
     else:
@@ -1591,8 +1635,10 @@ def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, 
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     verify_bucket_delete_output(parsed_result, n_objects, n_pars, n_uploads)
     assert_that_bucket_is_deleted(source_bucket_name, debug)
+    on_error_fixture[created_buckets].remove(source_bucket_name)
 
     clean_up_replication_bucket(dest_bucket_name, debug)
+    on_error_fixture[test_success] = True
 
 
 @util.skip_while_rerecording
@@ -1610,12 +1656,15 @@ def test_delete_bucket_without_objects(object_storage_client, debug, test_id):
 
 
 @util.skip_while_rerecording
-def test_delete_bucket_with_par_rep_policy_uploads_but_no_objects(object_storage_client, debug, test_id):
+def test_delete_bucket_with_par_rep_policy_uploads_but_no_objects(object_storage_client, debug, test_id, on_error_fixture):
     bucket_name = 'ObjectStorageBucketDelete_WithoutObject_WithParUploadRepPolicy_{}'.format(test_id)
+
     clear_and_create_new_bucket(object_storage_client, bucket_name, debug)
+    on_error_fixture[created_buckets].append(bucket_name)
 
     rep_policy_dest_bucket = 'ObjectStorageBucketDelete_WithoutObjects_WithParUploadRepPolicy_Rep_{}'.format(test_id)
     create_replication_bucket(rep_policy_dest_bucket, debug)
+    on_error_fixture[created_buckets].append(rep_policy_dest_bucket)
     generate_all_data_in_bucket(object_storage_client, bucket_name, debug, rep_policy_dest_bucket, 10, 10, False, False)
 
     # delete bucket after --dry-run test, use --empty with force for actual deletion without prompt
@@ -1624,9 +1673,11 @@ def test_delete_bucket_with_par_rep_policy_uploads_but_no_objects(object_storage
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     verify_bucket_delete_output(parsed_result, 0, 10, 10)
     assert_that_bucket_is_deleted(bucket_name, debug)
+    on_error_fixture[created_buckets].remove(bucket_name)
 
     # clean up the replication bucket
     clean_up_replication_bucket(rep_policy_dest_bucket, debug)
+    on_error_fixture[test_success] = True
 
 
 @util.skip_while_rerecording
@@ -1780,6 +1831,10 @@ def clear_and_create_new_bucket(object_storage_client, bucket_name, debug, is_ve
         command.extend(['--versioning', 'Enabled'])
     result = invoke(command, debug=debug)
     validate_response(result, includes_debug_data=debug)
+
+
+def delete_test_bucket_on_failure(bucket_name):
+    invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty', '--force'])
 
 
 def clean_up_replication_bucket(rep_bucket_name, debug):
