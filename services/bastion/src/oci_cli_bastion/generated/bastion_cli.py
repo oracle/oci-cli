@@ -98,6 +98,7 @@ def change_bastion_compartment(ctx, from_json, bastion_id, compartment_id, if_ma
 @cli_util.option('--static-jump-host-ip-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP addresses of the hosts that the bastion has access to. Not applicable to `standard` bastions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--client-cidr-block-allow-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of address ranges in CIDR notation that you want to allow to connect to sessions hosted by this bastion.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--max-session-ttl-in-seconds', type=click.INT, help=u"""The maximum amount of time that any session on the bastion can remain active.""")
+@cli_util.option('--dns-proxy-status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED"]), help=u"""The desired dns proxy status of the bastion.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -108,7 +109,7 @@ def change_bastion_compartment(ctx, from_json, bastion_id, compartment_id, if_ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'static-jump-host-ip-addresses': {'module': 'bastion', 'class': 'list[string]'}, 'client-cidr-block-allow-list': {'module': 'bastion', 'class': 'list[string]'}, 'freeform-tags': {'module': 'bastion', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'bastion', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'bastion', 'class': 'Bastion'})
 @cli_util.wrap_exceptions
-def create_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_type, compartment_id, target_subnet_id, name, phone_book_entry, static_jump_host_ip_addresses, client_cidr_block_allow_list, max_session_ttl_in_seconds, freeform_tags, defined_tags):
+def create_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_type, compartment_id, target_subnet_id, name, phone_book_entry, static_jump_host_ip_addresses, client_cidr_block_allow_list, max_session_ttl_in_seconds, dns_proxy_status, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -132,6 +133,9 @@ def create_bastion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if max_session_ttl_in_seconds is not None:
         _details['maxSessionTtlInSeconds'] = max_session_ttl_in_seconds
+
+    if dns_proxy_status is not None:
+        _details['dnsProxyStatus'] = dns_proxy_status
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -243,8 +247,8 @@ def create_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--display-name', help=u"""The name of the session.""")
 @cli_util.option('--key-type', type=custom_types.CliCaseInsensitiveChoice(["PUB"]), help=u"""The type of the key used to connect to the session. PUB is a standard public key in OpenSSH format.""")
 @cli_util.option('--session-ttl-in-seconds', type=click.INT, help=u"""The amount of time the session can remain active.""")
-@cli_util.option('--target-resource-details-target-resource-port', type=click.INT, help=u"""The port number to connect to on the target resource.""")
 @cli_util.option('--target-resource-details-target-resource-private-ip-address', help=u"""The private IP address of the target resource that the session connects to.""")
+@cli_util.option('--target-resource-details-target-resource-port', type=click.INT, help=u"""The port number to connect to on the target resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -253,7 +257,7 @@ def create_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key-details': {'module': 'bastion', 'class': 'PublicKeyDetails'}}, output_type={'module': 'bastion', 'class': 'Session'})
 @cli_util.wrap_exceptions
-def create_session_create_managed_ssh_session_target_resource_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, key_details, target_resource_details_target_resource_operating_system_user_name, target_resource_details_target_resource_id, display_name, key_type, session_ttl_in_seconds, target_resource_details_target_resource_port, target_resource_details_target_resource_private_ip_address):
+def create_session_create_managed_ssh_session_target_resource_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, key_details, target_resource_details_target_resource_operating_system_user_name, target_resource_details_target_resource_id, display_name, key_type, session_ttl_in_seconds, target_resource_details_target_resource_private_ip_address, target_resource_details_target_resource_port):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -274,13 +278,79 @@ def create_session_create_managed_ssh_session_target_resource_details(ctx, from_
     if session_ttl_in_seconds is not None:
         _details['sessionTtlInSeconds'] = session_ttl_in_seconds
 
-    if target_resource_details_target_resource_port is not None:
-        _details['targetResourceDetails']['targetResourcePort'] = target_resource_details_target_resource_port
-
     if target_resource_details_target_resource_private_ip_address is not None:
         _details['targetResourceDetails']['targetResourcePrivateIpAddress'] = target_resource_details_target_resource_private_ip_address
 
+    if target_resource_details_target_resource_port is not None:
+        _details['targetResourceDetails']['targetResourcePort'] = target_resource_details_target_resource_port
+
     _details['targetResourceDetails']['sessionType'] = 'MANAGED_SSH'
+
+    client = cli_util.build_client('bastion', 'bastion', ctx)
+    result = client.create_session(
+        create_session_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@session_group.command(name=cli_util.override('bastion.create_session_create_dynamic_port_forwarding_session_target_resource_details.command_name', 'create-session-create-dynamic-port-forwarding-session-target-resource-details'), help=u"""Creates a new session in a bastion. A bastion session lets authorized users connect to a target resource for a predetermined amount of time. The Bastion service recognizes two types of sessions, managed SSH sessions and SSH port forwarding sessions. Managed SSH sessions require that the target resource has an OpenSSH server and the Oracle Cloud Agent both running. \n[Command Reference](createSession)""")
+@cli_util.option('--bastion-id', required=True, help=u"""The unique identifier (OCID) of the bastion on which to create this session.""")
+@cli_util.option('--key-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The name of the session.""")
+@cli_util.option('--key-type', type=custom_types.CliCaseInsensitiveChoice(["PUB"]), help=u"""The type of the key used to connect to the session. PUB is a standard public key in OpenSSH format.""")
+@cli_util.option('--session-ttl-in-seconds', type=click.INT, help=u"""The amount of time the session can remain active.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'key-details': {'module': 'bastion', 'class': 'PublicKeyDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key-details': {'module': 'bastion', 'class': 'PublicKeyDetails'}}, output_type={'module': 'bastion', 'class': 'Session'})
+@cli_util.wrap_exceptions
+def create_session_create_dynamic_port_forwarding_session_target_resource_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, key_details, display_name, key_type, session_ttl_in_seconds):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetResourceDetails'] = {}
+    _details['bastionId'] = bastion_id
+    _details['keyDetails'] = cli_util.parse_json_parameter("key_details", key_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if key_type is not None:
+        _details['keyType'] = key_type
+
+    if session_ttl_in_seconds is not None:
+        _details['sessionTtlInSeconds'] = session_ttl_in_seconds
+
+    _details['targetResourceDetails']['sessionType'] = 'DYNAMIC_PORT_FORWARDING'
 
     client = cli_util.build_client('bastion', 'bastion', ctx)
     result = client.create_session(
@@ -319,9 +389,10 @@ def create_session_create_managed_ssh_session_target_resource_details(ctx, from_
 @cli_util.option('--display-name', help=u"""The name of the session.""")
 @cli_util.option('--key-type', type=custom_types.CliCaseInsensitiveChoice(["PUB"]), help=u"""The type of the key used to connect to the session. PUB is a standard public key in OpenSSH format.""")
 @cli_util.option('--session-ttl-in-seconds', type=click.INT, help=u"""The amount of time the session can remain active.""")
-@cli_util.option('--target-resource-details-target-resource-port', type=click.INT, help=u"""The port number to connect to on the target resource.""")
 @cli_util.option('--target-resource-details-target-resource-id', help=u"""The unique identifier (OCID) of the target resource (a Compute instance, for example) that the session connects to.""")
 @cli_util.option('--target-resource-details-target-resource-private-ip-address', help=u"""The private IP address of the target resource that the session connects to.""")
+@cli_util.option('--target-resource-details-target-resource-fqdn', help=u"""The Fully Qualified Domain Name of the target resource that the session connects to.""")
+@cli_util.option('--target-resource-details-target-resource-port', type=click.INT, help=u"""The port number to connect to on the target resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -330,7 +401,7 @@ def create_session_create_managed_ssh_session_target_resource_details(ctx, from_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key-details': {'module': 'bastion', 'class': 'PublicKeyDetails'}}, output_type={'module': 'bastion', 'class': 'Session'})
 @cli_util.wrap_exceptions
-def create_session_create_port_forwarding_session_target_resource_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, key_details, display_name, key_type, session_ttl_in_seconds, target_resource_details_target_resource_port, target_resource_details_target_resource_id, target_resource_details_target_resource_private_ip_address):
+def create_session_create_port_forwarding_session_target_resource_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bastion_id, key_details, display_name, key_type, session_ttl_in_seconds, target_resource_details_target_resource_id, target_resource_details_target_resource_private_ip_address, target_resource_details_target_resource_fqdn, target_resource_details_target_resource_port):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -349,14 +420,17 @@ def create_session_create_port_forwarding_session_target_resource_details(ctx, f
     if session_ttl_in_seconds is not None:
         _details['sessionTtlInSeconds'] = session_ttl_in_seconds
 
-    if target_resource_details_target_resource_port is not None:
-        _details['targetResourceDetails']['targetResourcePort'] = target_resource_details_target_resource_port
-
     if target_resource_details_target_resource_id is not None:
         _details['targetResourceDetails']['targetResourceId'] = target_resource_details_target_resource_id
 
     if target_resource_details_target_resource_private_ip_address is not None:
         _details['targetResourceDetails']['targetResourcePrivateIpAddress'] = target_resource_details_target_resource_private_ip_address
+
+    if target_resource_details_target_resource_fqdn is not None:
+        _details['targetResourceDetails']['targetResourceFqdn'] = target_resource_details_target_resource_fqdn
+
+    if target_resource_details_target_resource_port is not None:
+        _details['targetResourceDetails']['targetResourcePort'] = target_resource_details_target_resource_port
 
     _details['targetResourceDetails']['sessionType'] = 'PORT_FORWARDING'
 

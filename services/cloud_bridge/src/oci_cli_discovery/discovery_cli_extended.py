@@ -87,6 +87,10 @@ def create_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if system_tags is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
 
+    if type.lower() == 'vmware':
+        if discovery_credentials is None or vcenter_endpoint is None:
+            raise click.UsageError('If parameter --type is VMWARE, then parameters --discovery-credentials and --vcenter-endpoint must be provided')
+
     client = cli_util.build_client('cloud_bridge', 'discovery', ctx)
     result = client.create_asset_source(
         create_asset_source_details=_details,
