@@ -102,6 +102,22 @@ TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING = "WARNING: The active profile conta
 
 OCI_CLI_IN_INTERACTIVE_MODE = "OCI_CLI_IN_INTERACTIVE_MODE"
 
+OCI_CLI_CLOUD_SHELL = "OCI_CLI_CLOUD_SHELL"
+
+OCI_CLI_CONTAINER_IMAGE = "IMAGE_VERSION"
+
+ADDITIONAL_USER_AGENT = "additional_user_agent"
+
+ORACLE_PYTHON_VER = "Oracle-PythonCLI/{}"
+
+OCI_CLI_INTERACTIVE_USER_AGENT = " Oracle-Interactive "
+
+OCI_CLI_INTERACTIVE_CLOUDSHELL_USER_AGENT = " Oracle-Interactive-CloudShell "
+
+OCI_CLI_CONTAINER_IMAGE_USER_AGENT = " Oracle-Container-Image "
+
+OCI_CLI_INTERACTIVE_CONTAINER_IMAGE_USER_AGENT = " Oracle-Interactive-Container-Image "
+
 logger = logging.getLogger("{}".format(__name__))
 logger.addHandler(logging.NullHandler())
 logger.setLevel(logging.DEBUG)
@@ -366,9 +382,19 @@ def create_config_and_signer_based_on_click_context(ctx):
                 sys.exit(0)
             else:
                 sys.exit(1)
-        client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
+        client_config[ADDITIONAL_USER_AGENT] = ORACLE_PYTHON_VER.format(__version__)
         if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
-            client_config["additional_user_agent"] += " Oracle-Interactive "
+            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_USER_AGENT
+
+            if OCI_CLI_CLOUD_SHELL in os.environ:
+                client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CLOUDSHELL_USER_AGENT
+
+            if OCI_CLI_CONTAINER_IMAGE in os.environ:
+                client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CONTAINER_IMAGE_USER_AGENT
+
+        if OCI_CLI_CONTAINER_IMAGE in os.environ:
+            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_CONTAINER_IMAGE_USER_AGENT
+
         if ctx.obj['debug']:
             client_config["log_requests"] = True
 
@@ -467,7 +493,7 @@ def build_raw_requests_session(ctx):
         session = requests.Session()
         session.auth = signer
         session.headers['opc-request-id'] = ctx.obj['request_id']
-        session.headers['user-agent'] = oci.base_client.build_user_agent(extra=client_config['additional_user_agent'])
+        session.headers['user-agent'] = oci.base_client.build_user_agent(extra=client_config[ADDITIONAL_USER_AGENT])
         set_request_session_properties_from_context(session, ctx)
 
         return session
@@ -594,9 +620,18 @@ def build_config(command_args):
             if command_args['debug']:
                 logger.debug("%s: Environment Variable", cli_constants.OCI_CONFIG_ENV_VARS[env])
 
-    client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
+    client_config[ADDITIONAL_USER_AGENT] = ORACLE_PYTHON_VER.format(__version__)
     if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
-        client_config["additional_user_agent"] += " Oracle-Interactive "
+        client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_USER_AGENT
+
+        if OCI_CLI_CLOUD_SHELL in os.environ:
+            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CLOUDSHELL_USER_AGENT
+
+        if OCI_CLI_CONTAINER_IMAGE in os.environ:
+            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CONTAINER_IMAGE_USER_AGENT
+
+    if OCI_CLI_CONTAINER_IMAGE in os.environ:
+        client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_CONTAINER_IMAGE_USER_AGENT
 
     if command_args['region']:
         client_config["region"] = command_args['region']

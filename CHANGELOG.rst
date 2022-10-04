@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.18.1 - 2022-10-04
+--------------------
+Added
+~~~~~~~~
+
+* Bastion support for target host identification and enabled SOCKS support for dynamic port forwarding sessions
+
+  * ``oci bastion``
+
+* Operations Insights service
+
+  * Support for creating Enterprise Manager-based Windows host targets for ``--platform-type``
+
+    * ``oci opsi host-insights list --platform-type``
+
+  * Support for creating Management Agent Cloud Service-based Windows and Solaris hosts targets for ``--platform-type``
+
+    * ``oci opsi host-insights list --platform-type``
+
+  * Support for Host Top Process allowing users to locate top processes running at a particular point in time
+
+    * ``oci opsi host-insights summarize-top-processes-usage --compartment-id --id --resource-metric --timestamp --analysis-time-interval``
+
+  * Support for Host Top Process allowing users to filter by a single process in order to trend this process over time
+
+    * ``oci opsi host-insights summarize-top-processes-usage --compartment-id --id --resource-metric --timestamp --analysis-time-interval``
+    
+* Cloud-Bridge Service
+
+  * Support for check to require ``--vcenter-endpoint`` and ``--discovery-credentials`` parameters if asset source is VMWARE for ``--type``
+
+    * ``oci cloud-bridge discovery asset-source create --type VMWARE``
+
 3.18.0 - 2022-09-27
 --------------------
 

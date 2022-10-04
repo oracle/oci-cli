@@ -3,6 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import unittest
+from click.testing import CliRunner
 from interactive.oci_shell_completer import OciShellCompleter
 from oci_cli.cli_root import cli
 from . import utils
@@ -11,6 +12,19 @@ from prompt_toolkit.completion import CompleteEvent
 
 
 class TestAutoPrompt(unittest.TestCase):
+
+    def test_cli_interactive_import(self):
+        # This funciton tests importing interactive mode
+        from interactive.cli_interactive import start_interactive_shell
+        _ = start_interactive_shell
+
+    def test_cli_interactive_call(self):
+        # This funciton tests calling interactive mode
+        try:
+            runner = CliRunner()
+            result = runner.invoke(cli, ['-i'])
+        except Exception:
+            self.fail('Failed to run cli with interactive parameters')
 
     def test_root_command_suggestion(self):
         # This function is to test the commands suggestions on the root level
