@@ -5,6 +5,7 @@ import base64
 import datetime
 import filecmp
 import json
+import logging
 import os
 import random
 import shutil
@@ -28,7 +29,7 @@ CONTENT_STRING_LENGTH = 5000
 CONTENT_STRING_LENGTH_SHORT = 50
 MID_SIZED_FILE_IN_MEBIBTYES = 20
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 150  # Default multipart is 128MiB
-GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key.txt'
+GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key_bulk.txt'
 
 
 # Holds the objects we create and their content so that we can verify results
@@ -41,6 +42,7 @@ bulk_get_prefix_to_object = {
     '': []
 }
 bulk_get_bucket_name = None
+bulk_get_bucket_name_recorded = None
 
 bulk_put_large_files = set()
 bulk_put_mid_sized_files = set()
@@ -73,6 +75,26 @@ def on_error_fixture():
     if not data[test_success]:
         for bucket_name in data[created_buckets]:
             delete_test_bucket_on_failure(bucket_name)
+
+
+@pytest.fixture(scope='function')
+def delete_pending_buckets():
+    data = {created_buckets: []}
+    yield data
+    logging.debug("--------Deleting Created Buckets-----------")
+    for bucket_name in data[created_buckets]:
+        delete_bucket(bucket_name)
+
+
+def delete_bucket(bucket_name):
+    invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty', '--force'])
+
+
+def create_empty_dir_at_path(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
+
 
 # Generate test data for different operations:
 #
@@ -159,10 +181,12 @@ def generate_test_data(object_storage_client, test_id):
         f.write(enc_key_str)
 
     yield
-
+    # deleting buckets directly here only to prevent changes in util.py file
+    invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--empty', '--force'])
+    invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--empty', '--force'])
     # Tear down stuff by deleting all the things and then deleting the buckets
-    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bulk_get_bucket_name)
-    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bulk_put_bucket_name)
+    # util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bulk_get_bucket_name)
+    # util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bulk_put_bucket_name)
 
     # remove the SSE-C key file
     if os.path.exists(GENERATED_ENC_KEY_FILE):
@@ -189,12 +213,18 @@ def test_normalize_object_name_path():
     assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('thisisapath', '\\')
 
 
-@util.skip_while_rerecording
+@pytest.fixture(scope='module', autouse=True)
+def set_recorded_variable(test_id_recorded):
+    global bulk_get_bucket_name_recorded
+    bulk_get_bucket_name_recorded = f'ObjectStorageBulkGetTest_{test_id_recorded}'
+
+
 def test_get_all_objects_in_bucket(vcr_fixture):
-    download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name)
-    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--dry-run'])
+    download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name_recorded)
+
+    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--download-dir', download_folder, '--dry-run'])
     assert len(os.listdir(download_folder)) == 0
-    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
+    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--download-dir', download_folder])
 
     # Ensure that content matches
     for object_name in bulk_get_object_to_content:
@@ -214,12 +244,11 @@ def test_get_all_objects_in_bucket(vcr_fixture):
     shutil.rmtree(download_folder)
 
 
-@util.skip_while_rerecording
 def test_get_directory_and_subdirectories(vcr_fixture):
-    download_folder = 'tests/temp/get_directory_and_subdirectories_{}'.format(bulk_get_bucket_name)
+    download_folder = 'tests/temp/get_directory_and_subdirectories_{}'.format(bulk_get_bucket_name_recorded)
 
     # This should get us a/b/<object>, a/b/c/<object> and a/b/c/d/<object>
-    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'a/b'])
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--download-dir', download_folder, '--prefix', 'a/b'])
 
     for object_name in bulk_get_prefix_to_object['a/b']:
         file_path = os.path.join(download_folder, object_name)
@@ -244,10 +273,9 @@ def test_get_directory_and_subdirectories(vcr_fixture):
     shutil.rmtree(download_folder)
 
 
-@util.skip_while_rerecording
 def test_get_directory_no_subdirectory(vcr_fixture):
-    download_folder = 'tests/temp/get_directory_only_{}'.format(bulk_get_bucket_name)
-    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'a/b/c/', '--delimiter', '/'])
+    download_folder = 'tests/temp/get_directory_only_{}'.format(bulk_get_bucket_name_recorded)
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--download-dir', download_folder, '--prefix', 'a/b/c/', '--delimiter', '/'])
 
     for object_name in bulk_get_prefix_to_object['a/b/c']:
         file_path = os.path.join(download_folder, object_name)
@@ -288,7 +316,6 @@ def test_get_files_skipped():
     shutil.rmtree(download_folder)
 
 
-@util.skip_while_rerecording
 def test_get_no_objects(vcr_fixture):
     download_folder = 'tests/temp/no_objects_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'batman'])
@@ -299,24 +326,23 @@ def test_get_no_objects(vcr_fixture):
 
 
 @util.skip_while_rerecording
-def test_get_multipart(object_storage_client, test_id):
+def test_get_multipart(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
 
     large_file_root_dir = os.path.join('tests', 'temp', 'multipart_get_large_files')
-    if not os.path.exists(large_file_root_dir):
-        os.makedirs(large_file_root_dir)
+    create_empty_dir_at_path(large_file_root_dir)
+
     util.create_large_file(os.path.join(large_file_root_dir, '1.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '2.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '3.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '4.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '5.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '6.bin'), 1)  # Creates a 1 MiB file for variety
-    util.create_large_file(os.path.join(large_file_root_dir, '한글'), 1)  # Creates a 1 MiB file for variety
-
     # check --dry-run with bulk-upload
     invoke([
         'os', 'object', 'bulk-upload',
@@ -327,56 +353,53 @@ def test_get_multipart(object_storage_client, test_id):
         '--dry-run'
     ])
     large_file_verify_dir = os.path.join('tests', 'temp', 'multipart_get_large_files_verify')
+    create_empty_dir_at_path(large_file_verify_dir)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name,
             '--download-dir', large_file_verify_dir])
     assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 0
     shutil.rmtree(large_file_verify_dir)
     # --dry-run bulk-upload check ends
+    large_file_verify_dir = os.path.join('tests', 'temp', 'multipart_get_large_files_verify')
     invoke([
         'os', 'object', 'bulk-upload',
         '--namespace', util.NAMESPACE,
         '--bucket-name', create_bucket_request.name,
         '--src-dir', large_file_root_dir
     ])
-
-    large_file_verify_dir = os.path.join('tests', 'temp', 'multipart_get_large_files_verify')
-
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--download-dir', large_file_verify_dir, '--multipart-download-threshold', '128'])
-
-    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 7
+    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 6
     assert filecmp.cmp(os.path.join(large_file_root_dir, '1.bin'), os.path.join(large_file_verify_dir, '1.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '2.bin'), os.path.join(large_file_verify_dir, '2.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '3.bin'), os.path.join(large_file_verify_dir, '3.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '4.bin'), os.path.join(large_file_verify_dir, '4.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '5.bin'), os.path.join(large_file_verify_dir, '5.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '6.bin'), os.path.join(large_file_verify_dir, '6.bin'))
-    assert filecmp.cmp(os.path.join(large_file_root_dir, '한글'), os.path.join(large_file_verify_dir, '한글'))
 
     shutil.rmtree(large_file_root_dir)
     shutil.rmtree(large_file_verify_dir)
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
 # Since we've created a reasonable number of objects in this test suite, it's a good opportunity to test using the --all and --limit parameters
-@util.skip_while_rerecording
 def test_list_all_objects_operations(vcr_fixture):
-    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--all'])
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--all'])
     parsed_result = json.loads(result.output)
     assert len(parsed_result['data']) == OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET
     assert 'next-start-with' not in result.output
 
-    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--all', '--page-size', '20'])
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--all', '--page-size', '20'])
     parsed_result = json.loads(result.output)
     assert len(parsed_result['data']) == OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET
     assert 'next-start-with' not in result.output
 
-    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--limit', '47'])
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--limit', '47'])
     parsed_result = json.loads(result.output)
     assert len(parsed_result['data']) == 47
     assert 'next-start-with' in result.output
 
-    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--limit', '33', '--page-size', '3'])
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--limit', '33', '--page-size', '3'])
     parsed_result = json.loads(result.output)
     assert len(parsed_result['data']) == 33
     assert 'next-start-with' in result.output
@@ -508,12 +531,13 @@ def test_bulk_put_auto_content_type():
 #   - Try to upload with a part size of 10MiB (this will force the large and mid-sized files to be multipart uploaded)
 #   - Try to upload with multipart disabled
 @util.skip_while_rerecording
-def test_bulk_put_with_multipart_params(object_storage_client, test_id):
+def test_bulk_put_with_multipart_params(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
 
     # storage-tier check
     result = invoke([
@@ -574,14 +598,17 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id):
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-def test_content_type_with_no_multipart(object_storage_client, test_id):
+@util.skip_while_rerecording
+def test_content_type_with_no_multipart(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
     content_type = "plaint/text"
 
     result = invoke([
@@ -602,6 +629,7 @@ def test_content_type_with_no_multipart(object_storage_client, test_id):
     assert get_object_result.headers["content-type"] == content_type
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
 @util.skip_while_rerecording
@@ -942,6 +970,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     shutil.rmtree(exclusion_test_folder)
 
 
+@util.skip_while_rerecording
 def test_bulk_get_when_bucket_name_is_invalid(debug):
     """
     Run the bulk-download command using an invalid bucket name and validate that it throws a ServiceError
@@ -963,6 +992,7 @@ def test_bulk_get_when_bucket_name_is_invalid(debug):
     assert parsed_result['code'] == 'BucketNotFound'
 
 
+@util.skip_while_rerecording
 def test_bulk_put_when_bucket_name_is_invalid(debug):
     """
     Run the bulk-upload command using an invalid bucket name and validate that it throws a ServiceError
@@ -984,45 +1014,45 @@ def test_bulk_put_when_bucket_name_is_invalid(debug):
     assert parsed_result['code'] == 'BucketNotFound'
 
 
-@util.skip_while_rerecording
-def test_delete_when_no_objects_in_bucket(vcr_fixture, object_storage_client, test_id):
+def test_delete_when_no_objects_in_bucket(vcr_fixture, object_storage_client, test_id_recorded, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(test_id)
+    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(test_id_recorded)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
 
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name])
     assert 'There are no objects to delete in {}'.format(create_bucket_request.name) in result.output
-
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-@util.skip_while_rerecording
 def test_delete_dry_run(vcr_fixture):
     # Dry-run against entire bucket
-    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run'])
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--dry-run'])
     parsed_result = json.loads(result.output)
     assert set(parsed_result['deleted-objects']) == set(bulk_get_object_to_content.keys())
 
     # Dry-run against a folder and all subfolders
-    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--prefix', 'a/b/', '--dry-run'])
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--prefix', 'a/b/', '--dry-run'])
     parsed_result = json.loads(result.output)
     expected_objects = set().union(bulk_get_prefix_to_object['a/b'], bulk_get_prefix_to_object['a/b/c'], bulk_get_prefix_to_object['a/b/c/d'])
     assert set(parsed_result['deleted-objects']) == expected_objects
 
     # Dry-run against a folder and no subfolders
-    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--prefix', 'a/b/', '--delimiter', '/', '--dry-run'])
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name_recorded, '--prefix', 'a/b/', '--delimiter', '/', '--dry-run'])
     parsed_result = json.loads(result.output)
     assert set(parsed_result['deleted-objects']) == set(bulk_get_prefix_to_object['a/b'])
 
 
 @util.skip_while_rerecording
-def test_delete(object_storage_client):
+def test_delete(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
 
     invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder])
     num_objects_to_delete = get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
@@ -1045,15 +1075,17 @@ def test_delete(object_storage_client):
     assert get_number_of_objects_in_bucket(object_storage_client, create_bucket_request.name) == 0
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
 @util.skip_while_rerecording
-def test_bulk_operation_table_output_query(object_storage_client, test_id):
+def test_bulk_operation_table_output_query(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
 
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder, '--output', 'table', '--query', "[?action=='Uploaded'].{file: name, \"opc-content-md5\": \"opc-content-md5\"}"])
     assert 'file' in result.output
@@ -1081,7 +1113,7 @@ def test_bulk_operation_table_output_query(object_storage_client, test_id):
     ])
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
-
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
     shutil.rmtree(target_download_folder)
 
 
@@ -1111,9 +1143,8 @@ def generate_data_bulk_delete_object(object_storage_client, bucket_name,
         object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name, object_content)
 
 
-@util.skip_while_rerecording
-def test_bulk_delete_versions_when_no_objects_in_bucket(vcr_fixture, object_storage_client, debug, test_id):
-    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+def test_bulk_delete_versions_when_no_objects_in_bucket(vcr_fixture, object_storage_client, debug, test_id_recorded):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id_recorded)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
     # bucket create with versioning enabled
@@ -1127,9 +1158,8 @@ def test_bulk_delete_versions_when_no_objects_in_bucket(vcr_fixture, object_stor
     object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
 
 
-@util.skip_while_rerecording
-def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug, test_id):
-    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug, test_id_recorded):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id_recorded)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
     # bucket create with versioning enabled
@@ -1257,7 +1287,7 @@ def test_basic_bulk_delete_versions_object_name(object_storage_client, debug, te
 # Try to delete with random object-name not present in bucket such that it hits pagination and loop terminates successfully
 # Delete objects placed in different pages, object versions ranging over multiple pages
 @util.skip_while_rerecording
-def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
+def test_bulk_delete_versions_pagination_him(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBulkDeleteVersionsPagination_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
@@ -1623,11 +1653,11 @@ def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, 
     assert 'UsageError' in result.output
     assert '--empty' in result.output
 
-    # # Dry-run for the whole bucket
-    # result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', source_bucket_name,
-    #                  '--empty', '--dry-run'])
-    # parsed_result = util.parse_json_response_from_mixed_output(result.output)
-    # verify_bucket_delete_output(parsed_result, n_objects, n_pars, n_uploads)
+    # Dry-run for the whole bucket
+    result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', source_bucket_name,
+                     '--empty', '--dry-run'])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    verify_bucket_delete_output(parsed_result, n_objects, n_pars, n_uploads)
 
     # delete bucket after --dry-run test, use --empty with force for actual deletion without prompt
     result = invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', source_bucket_name,
@@ -1732,7 +1762,7 @@ def test_delete_bucket_with_object_versions_paging(object_storage_client, debug,
 
 @util.skip_while_rerecording
 def test_clear_test_data_util_with_same_prefix(object_storage_client, debug, test_id):
-    bucket_prefix = "ObjectStorageClearTest"
+    bucket_prefix = f'ObjectStorageClearTest{test_id}'
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_prefix)
 
     # create a non versioned bucket
@@ -1760,7 +1790,7 @@ def test_clear_test_data_util_with_same_prefix(object_storage_client, debug, tes
 
 @util.skip_while_rerecording
 def test_clear_test_data_util_with_different_prefix(object_storage_client, debug, test_id):
-    common_prefix = "ObjectStorageClearTest"
+    common_prefix = f'ObjectStorageClearTest{test_id}'
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, common_prefix)
 
     # try to create a random bucket with prefix and versioning
@@ -1950,23 +1980,7 @@ def get_object_name_from_path(path_root, full_path):
 
 
 def delete_bucket_and_all_items(object_storage_client, bucket_name):
-    list_object_responses = oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects(
-        client=object_storage_client,
-        request_id=None,
-        namespace=util.NAMESPACE,
-        bucket_name=bucket_name,
-        prefix=None,
-        start=None,
-        end=None,
-        limit=1000,
-        delimiter=None,
-        fields='name',
-        retrieve_all=True
-    )
-    for response in list_object_responses:
-        for obj in response.data.objects:
-            object_storage_client.delete_object(util.NAMESPACE, bucket_name, obj.name.encode("utf-8") if is_python2() else obj.name)
-    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+    util.invoke_command(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty', '--force'])
 
 
 def get_number_of_objects_in_bucket(object_storage_client, bucket_name):

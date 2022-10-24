@@ -114,7 +114,7 @@ operationsinsights_cli.host_insights_group.commands.pop(operationsinsights_cli.e
 @operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.list_database_configurations.name, help=operationsinsights_cli.list_database_configurations.help)
 @cli_util.option('--em-bridge-id', help=u"""OPSI Enterprise Manager Bridge OCID""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'operationsinsights', 'class': 'list[string]'}, 'database-id': {'module': 'operationsinsights', 'class': 'list[string]'}, 'host-name': {'module': 'operationsinsights', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'DatabaseConfigurationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'cdb-name': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'DatabaseConfigurationCollection'})
 @cli_util.wrap_exceptions
 def list_database_configurations_extended(ctx, **kwargs):
     if 'em_bridge_id' in kwargs:
@@ -358,7 +358,7 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.operation
 @operationsinsights_cli.host_insights_group.command(name=operationsinsights_cli.list_host_configurations.name, help=operationsinsights_cli.list_host_configurations.help)
 @cli_util.option('--em-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'operationsinsights', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'operationsinsights', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'operationsinsights', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'operationsinsights', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'operationsinsights', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'operationsinsights', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'HostConfigurationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'HostConfigurationCollection'})
 @cli_util.wrap_exceptions
 def list_host_configurations_extended(ctx, **kwargs):
     if 'em_bridge_id' in kwargs:

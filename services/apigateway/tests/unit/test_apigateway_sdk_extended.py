@@ -26,41 +26,41 @@ class TestApiGatewaySdk(unittest.TestCase):
         assert '--target-language' in result.output
         assert '--api-id' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'create', '--target-language'])
-        assert 'Error: --target-language option requires an argument' in result.output
+        assert 'Error: Option \'--target-language\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'create', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'create', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'create', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_sdk_update(self):
         result = util.invoke_command(['api-gateway', 'sdk', 'update'])
         assert 'Error: Missing option(s)' in result.output
         assert '--sdk-id' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'update', '--sdk-id'])
-        assert 'Error: --sdk-id option requires an argument' in result.output
+        assert 'Error: Option \'--sdk-id\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'update', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'update', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'update', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'update', '--if-match'])
-        assert 'Error: --if-match option requires an argument' in result.output
+        assert 'Error: Option \'--if-match\' requires an argument' in result.output
 
     def test_sdk_delete(self):
         result = util.invoke_command(['api-gateway', 'sdk', 'delete'])
         assert 'Error: Missing option(s)' in result.output
         assert '--sdk-id' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'delete', '--sdk-id'])
-        assert 'Error: --sdk-id option requires an argument' in result.output
+        assert 'Error: Option \'--sdk-id\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'sdk', 'delete', '--if-match'])
-        assert 'Error: --if-match option requires an argument' in result.output
+        assert 'Error: Option \'--if-match\' requires an argument' in result.output
 
     def test_sdk_list(self):
         result = util.invoke_command(['api-gateway', 'sdk', 'list', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
 
     def test_sdk_get(self):
         result = util.invoke_command(['api-gateway', 'sdk', 'get'])

@@ -27,6 +27,12 @@ def work_request_log_group():
     pass
 
 
+@click.command(cli_util.override('data_flow.statement_collection_group.command_name', 'statement-collection'), cls=CommandGroupWithAlias, help="""The results of a query for a list of statements of a Session Run. It contains StatementSummary items.""")
+@cli_util.help_option_group
+def statement_collection_group():
+    pass
+
+
 @click.command(cli_util.override('data_flow.application_group.command_name', 'application'), cls=CommandGroupWithAlias, help="""A Data Flow application object.""")
 @cli_util.help_option_group
 def application_group():
@@ -42,6 +48,12 @@ def work_request_error_group():
 @click.command(cli_util.override('data_flow.private_endpoint_group.command_name', 'private-endpoint'), cls=CommandGroupWithAlias, help="""A Data Flow private endpoint object.""")
 @cli_util.help_option_group
 def private_endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('data_flow.statement_group.command_name', 'statement'), cls=CommandGroupWithAlias, help="""A statement object.""")
+@cli_util.help_option_group
+def statement_group():
     pass
 
 
@@ -64,9 +76,11 @@ def work_request_group():
 
 
 data_flow_root_group.add_command(work_request_log_group)
+data_flow_root_group.add_command(statement_collection_group)
 data_flow_root_group.add_command(application_group)
 data_flow_root_group.add_command(work_request_error_group)
 data_flow_root_group.add_command(private_endpoint_group)
+data_flow_root_group.add_command(statement_group)
 data_flow_root_group.add_command(run_log_summary_group)
 data_flow_root_group.add_command(run_group)
 data_flow_root_group.add_command(work_request_group)
@@ -196,11 +210,10 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--driver-shape', required=True, help=u"""The VM shape for the driver. Sets the driver cores and memory.""")
 @cli_util.option('--executor-shape', required=True, help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
-@cli_util.option('--file-uri', required=True, help=u"""An Oracle Cloud Infrastructure URI of the file containing the application to execute. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--language', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCALA", "JAVA", "PYTHON", "SQL"]), help=u"""The Spark language.""")
 @cli_util.option('--num-executors', required=True, type=click.INT, help=u"""The number of executor VMs requested.""")
 @cli_util.option('--spark-version', required=True, help=u"""The Spark version utilized to run the application.""")
-@cli_util.option('--archive-uri', help=u"""An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--archive-uri', help=u"""A comma separated list of one or more archive files as Oracle Cloud Infrastructure URIs. For example, ``oci://path/to/a.zip,oci://path/to/b.zip``. An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution of a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The arguments passed to the running application as command line arguments.  An argument is either a plain text or a placeholder. Placeholders are replaced using values from the parameters map.  Each placeholder specified must be represented in the parameters map else the request (POST or PUT) will fail with a HTTP 400 status code.  Placeholders are specified as `Service Api Spec`, where `name` is the name of the parameter. Example:  `[ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]` If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--application-log-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--class-name', help=u"""The class for the application.""")
@@ -210,6 +223,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 @cli_util.option('--driver-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--execute', help=u"""The input used for spark-submit command. For more details see https://spark.apache.org/docs/latest/submitting-applications.html#launching-applications-with-spark-submit. Supported options include ``--class``, ``--file``, ``--jars``, ``--conf``, ``--py-files``, and main application file with arguments. Example: ``--jars oci://path/to/a.jar,oci://path/to/b.jar --files oci://path/to/a.json,oci://path/to/b.csv --py-files oci://path/to/a.py,oci://path/to/b.py --conf spark.sql.crossJoin.enabled=true --class org.apache.spark.examples.SparkPi oci://path/to/main.jar 10`` Note: If execute is specified together with applicationId, className, configuration, fileUri, language, arguments, parameters during application create/update, or run create/submit, Data Flow service will use derived information from execute input only.""")
 @cli_util.option('--executor-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--file-uri', help=u"""An Oracle Cloud Infrastructure URI of the file containing the application to execute. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--logs-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket where the Spark job logs are to be uploaded. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--metastore-id', help=u"""The OCID of OCI Hive Metastore.""")
@@ -217,8 +231,10 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-id', help=u"""The OCID of a private endpoint.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["BATCH", "STREAMING"]), help=u"""The Spark application processing type.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["BATCH", "STREAMING", "SESSION"]), help=u"""The Spark application processing type.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--max-duration-in-minutes', type=click.INT, help=u"""The maximum duration in minutes for which an Application should run. Data Flow Run would be terminated once it reaches this duration from the time it transitions to `IN_PROGRESS` state.""")
+@cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""The timeout value in minutes used to manage Runs. A Run would be stopped after inactivity for this amount of time period. Note: This parameter is currently only applicable for Runs of type `SESSION`. Default value is 2880 minutes (2 days)""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -227,7 +243,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, file_uri, language, num_executors, spark_version, archive_uri, arguments, application_log_config, class_name, configuration, defined_tags, description, driver_shape_config, execute, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, parameters, private_endpoint_id, type, warehouse_bucket_uri):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, language, num_executors, spark_version, archive_uri, arguments, application_log_config, class_name, configuration, defined_tags, description, driver_shape_config, execute, executor_shape_config, file_uri, freeform_tags, logs_bucket_uri, metastore_id, parameters, private_endpoint_id, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -237,7 +253,6 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     _details['displayName'] = display_name
     _details['driverShape'] = driver_shape
     _details['executorShape'] = executor_shape
-    _details['fileUri'] = file_uri
     _details['language'] = language
     _details['numExecutors'] = num_executors
     _details['sparkVersion'] = spark_version
@@ -272,6 +287,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if executor_shape_config is not None:
         _details['executorShapeConfig'] = cli_util.parse_json_parameter("executor_shape_config", executor_shape_config)
 
+    if file_uri is not None:
+        _details['fileUri'] = file_uri
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -292,6 +310,12 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if warehouse_bucket_uri is not None:
         _details['warehouseBucketUri'] = warehouse_bucket_uri
+
+    if max_duration_in_minutes is not None:
+        _details['maxDurationInMinutes'] = max_duration_in_minutes
+
+    if idle_timeout_in_minutes is not None:
+        _details['idleTimeoutInMinutes'] = idle_timeout_in_minutes
 
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.create_application(
@@ -405,7 +429,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--application-log-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--application-id', help=u"""The OCID of the associated application. If this value is set, then no value for the execute parameter is required. If this value is not set, then a value for the execute parameter is required, and a new application is created and associated with the new run.""")
-@cli_util.option('--archive-uri', help=u"""An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--archive-uri', help=u"""A comma separated list of one or more archive files as Oracle Cloud Infrastructure URIs. For example, ``oci://path/to/a.zip,oci://path/to/b.zip``. An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution of a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The arguments passed to the running application as command line arguments.  An argument is either a plain text or a placeholder. Placeholders are replaced using values from the parameters map.  Each placeholder specified must be represented in the parameters map else the request (POST or PUT) will fail with a HTTP 400 status code.  Placeholders are specified as `Service Api Spec`, where `name` is the name of the parameter. Example:  `[ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]` If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties. Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -423,8 +447,10 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--spark-version', help=u"""The Spark version utilized to run the application. This value may be set if applicationId is not since the Spark version will be taken from the associated application.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["BATCH", "STREAMING"]), help=u"""The Spark application processing type.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["BATCH", "STREAMING", "SESSION"]), help=u"""The Spark application processing type.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--max-duration-in-minutes', type=click.INT, help=u"""The maximum duration in minutes for which an Application should run. Data Flow Run would be terminated once it reaches this duration from the time it transitions to `IN_PROGRESS` state.""")
+@cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""The timeout value in minutes used to manage Runs. A Run would be stopped after inactivity for this amount of time period. Note: This parameter is currently only applicable for Runs of type `SESSION`. Default value is 2880 minutes (2 days)""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "CANCELING", "CANCELED", "FAILED", "SUCCEEDED", "STOPPING", "STOPPED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -433,7 +459,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
 @cli_util.wrap_exceptions
-def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_log_config, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, spark_version, type, warehouse_bucket_uri):
+def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_log_config, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, spark_version, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -501,6 +527,12 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     if warehouse_bucket_uri is not None:
         _details['warehouseBucketUri'] = warehouse_bucket_uri
 
+    if max_duration_in_minutes is not None:
+        _details['maxDurationInMinutes'] = max_duration_in_minutes
+
+    if idle_timeout_in_minutes is not None:
+        _details['idleTimeoutInMinutes'] = idle_timeout_in_minutes
+
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.create_run(
         create_run_details=_details,
@@ -518,6 +550,60 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@statement_group.command(name=cli_util.override('data_flow.create_statement.command_name', 'create'), help=u"""Executes a statement for a Session run. \n[Command Reference](createStatement)""")
+@cli_util.option('--code', required=True, help=u"""The statement code to execute. Example: `println(sc.version)`""")
+@cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLING", "CANCELLED", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'Statement'})
+@cli_util.wrap_exceptions
+def create_statement(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, code, run_id):
+
+    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+        raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['code'] = code
+
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.create_statement(
+        run_id=run_id,
+        create_statement_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_statement') and callable(getattr(client, 'get_statement')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_statement(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -712,6 +798,37 @@ def delete_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
+@statement_group.command(name=cli_util.override('data_flow.delete_statement.command_name', 'delete'), help=u"""Cancels the specified statement for a Session run. \n[Command Reference](deleteStatement)""")
+@cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
+@cli_util.option('--statement-id', required=True, help=u"""The unique ID for the statement.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_statement(ctx, from_json, run_id, statement_id, if_match):
+
+    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+        raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
+
+    if isinstance(statement_id, six.string_types) and len(statement_id.strip()) == 0:
+        raise click.UsageError('Parameter --statement-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.delete_statement(
+        run_id=run_id,
+        statement_id=statement_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('data_flow.get_application.command_name', 'get'), help=u"""Retrieves an application using an `applicationId`. \n[Command Reference](getApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -826,6 +943,33 @@ def get_run_log(ctx, from_json, file, run_id, name):
         if bar:
             bar.render_finish()
         file.close()
+
+
+@statement_group.command(name=cli_util.override('data_flow.get_statement.command_name', 'get'), help=u"""Retrieves the statement corresponding to the `statementId` for a Session run specified by `runId`. \n[Command Reference](getStatement)""")
+@cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
+@cli_util.option('--statement-id', required=True, help=u"""The unique ID for the statement.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'Statement'})
+@cli_util.wrap_exceptions
+def get_statement(ctx, from_json, run_id, statement_id):
+
+    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+        raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
+
+    if isinstance(statement_id, six.string_types) and len(statement_id.strip()) == 0:
+        raise click.UsageError('Parameter --statement-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.get_statement(
+        run_id=run_id,
+        statement_id=statement_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @work_request_group.command(name=cli_util.override('data_flow.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given OCID. \n[Command Reference](getWorkRequest)""")
@@ -1105,6 +1249,66 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
     cli_util.render_response(result, ctx)
 
 
+@statement_collection_group.command(name=cli_util.override('data_flow.list_statements.command_name', 'list-statements'), help=u"""Lists all statements for a Session run. \n[Command Reference](listStatements)""")
+@cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLING", "CANCELLED", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), help=u"""The LifecycleState of the statement.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field used to sort the results. Multiple fields are not supported.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The ordering of results in ascending or descending order.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'StatementCollection'})
+@cli_util.wrap_exceptions
+def list_statements(ctx, from_json, all_pages, page_size, run_id, lifecycle_state, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+        raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_statements,
+            run_id=run_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_statements,
+            limit,
+            page_size,
+            run_id=run_id,
+            **kwargs
+        )
+    else:
+        result = client.list_statements(
+            run_id=run_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_error_group.command(name=cli_util.override('data_flow.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The unique ID for a work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
@@ -1262,7 +1466,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 @cli_util.option('--spark-version', help=u"""The Spark version utilized to run the application.""")
 @cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["SCALA", "JAVA", "PYTHON", "SQL"]), help=u"""The Spark language.""")
 @cli_util.option('--application-log-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--archive-uri', help=u"""An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--archive-uri', help=u"""A comma separated list of one or more archive files as Oracle Cloud Infrastructure URIs. For example, ``oci://path/to/a.zip,oci://path/to/b.zip``. An Oracle Cloud Infrastructure URI of an archive.zip file containing custom dependencies that may be used to support the execution of a Python, Java, or Scala application. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The arguments passed to the running application as command line arguments.  An argument is either a plain text or a placeholder. Placeholders are replaced using values from the parameters map.  Each placeholder specified must be represented in the parameters map else the request (POST or PUT) will fail with a HTTP 400 status code.  Placeholders are specified as `Service Api Spec`, where `name` is the name of the parameter. Example:  `[ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]` If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties. Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1282,6 +1486,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-id', help=u"""The OCID of a private endpoint.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
+@cli_util.option('--max-duration-in-minutes', type=click.INT, help=u"""The maximum duration in minutes for which an Application should run. Data Flow Run would be terminated once it reaches this duration from the time it transitions to `IN_PROGRESS` state.""")
+@cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""The timeout value in minutes used to manage Runs. A Run would be stopped after inactivity for this amount of time period. Note: This parameter is currently only applicable for Runs of type `SESSION`. Default value is 2880 minutes (2 days)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1292,7 +1498,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, application_log_config, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, application_log_config, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
@@ -1376,6 +1582,12 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if warehouse_bucket_uri is not None:
         _details['warehouseBucketUri'] = warehouse_bucket_uri
+
+    if max_duration_in_minutes is not None:
+        _details['maxDurationInMinutes'] = max_duration_in_minutes
+
+    if idle_timeout_in_minutes is not None:
+        _details['idleTimeoutInMinutes'] = idle_timeout_in_minutes
 
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.update_application(
@@ -1501,6 +1713,8 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--max-duration-in-minutes', type=click.INT, help=u"""The maximum duration in minutes for which an Application should run. Data Flow Run would be terminated once it reaches this duration from the time it transitions to `IN_PROGRESS` state.""")
+@cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""The timeout value in minutes used to manage Runs. A Run would be stopped after inactivity for this amount of time period. Note: This parameter is currently only applicable for Runs of type `SESSION`. Default value is 2880 minutes (2 days)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "CANCELING", "CANCELED", "FAILED", "SUCCEEDED", "STOPPING", "STOPPED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1511,7 +1725,7 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}}, output_type={'module': 'data_flow', 'class': 'Run'})
 @cli_util.wrap_exceptions
-def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, run_id, defined_tags, freeform_tags, if_match):
+def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, run_id, defined_tags, freeform_tags, max_duration_in_minutes, idle_timeout_in_minutes, if_match):
 
     if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
@@ -1532,6 +1746,12 @@ def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if max_duration_in_minutes is not None:
+        _details['maxDurationInMinutes'] = max_duration_in_minutes
+
+    if idle_timeout_in_minutes is not None:
+        _details['idleTimeoutInMinutes'] = idle_timeout_in_minutes
 
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.update_run(

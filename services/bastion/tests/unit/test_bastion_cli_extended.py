@@ -31,124 +31,124 @@ class TestBastionCliExtended(unittest.TestCase):
     # key_details flattened params
     def test_key_details_flattened_params(self):
         result = util.invoke_command(['bastion', 'session', 'create', '--key-details'])
-        assert 'Error: no such option: --key-details' in result.output
+        assert 'Error: No such option: --key-details' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--key-details'])
-        assert 'Error: no such option: --key-details' in result.output
+        assert 'Error: No such option: --key-details' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--key-details'])
-        assert 'Error: no such option: --key-details' in result.output
+        assert 'Error: No such option: --key-details' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create', '--ssh-public-key-file'])
-        assert 'Error: --ssh-public-key-file option requires an argument' in result.output
+        assert 'Error: Option \'--ssh-public-key-file\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--ssh-public-key-file'])
-        assert 'Error: --ssh-public-key-file option requires an argument' in result.output
+        assert 'Error: Option \'--ssh-public-key-file\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--ssh-public-key-file'])
-        assert 'Error: --ssh-public-key-file option requires an argument' in result.output
+        assert 'Error: Option \'--ssh-public-key-file\' requires an argument' in result.output
 
     # renamed params in create bastion
     def test_create_bastion_renamed_params(self):
         result = util.invoke_command(['bastion', 'bastion', 'create', '--max-session-ttl-in-seconds'])
-        assert 'Error: no such option: --max-session-ttl-in-seconds' in result.output
+        assert 'Error: No such option: --max-session-ttl-in-seconds' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'create', '--static-jump-host-ip-addresses'])
-        assert 'Error: no such option: --static-jump-host-ip-addresses' in result.output
+        assert 'Error: No such option: --static-jump-host-ip-addresses' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'create', '--client-cidr-block-allow-list'])
-        assert 'Error: no such option: --client-cidr-block-allow-list' in result.output
+        assert 'Error: No such option: --client-cidr-block-allow-list' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'create', '--max-session-ttl'])
-        assert 'Error: --max-session-ttl option requires an argument' in result.output
+        assert 'Error: Option \'--max-session-ttl\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'create', '--jump-host-ips'])
-        assert 'Error: --jump-host-ips option requires an argument' in result.output
+        assert 'Error: Option \'--jump-host-ips\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'create', '--client-cidr-list'])
-        assert 'Error: --client-cidr-list option requires an argument' in result.output
+        assert 'Error: Option \'--client-cidr-list\' requires an argument' in result.output
 
     # renamed params in update bastion
     def test_update_bastion_renamed_params(self):
         result = util.invoke_command(['bastion', 'bastion', 'update', '--max-session-ttl-in-seconds'])
-        assert 'Error: no such option: --max-session-ttl-in-seconds' in result.output
+        assert 'Error: No such option: --max-session-ttl-in-seconds' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'update', '--static-jump-host-ip-addresses'])
-        assert 'Error: no such option: --static-jump-host-ip-addresses' in result.output
+        assert 'Error: No such option: --static-jump-host-ip-addresses' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'update', '--client-cidr-block-allow-list'])
-        assert 'Error: no such option: --client-cidr-block-allow-list' in result.output
+        assert 'Error: No such option: --client-cidr-block-allow-list' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'update', '--max-session-ttl'])
-        assert 'Error: --max-session-ttl option requires an argument' in result.output
+        assert 'Error: Option \'--max-session-ttl\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'update', '--jump-host-ips'])
-        assert 'Error: --jump-host-ips option requires an argument' in result.output
+        assert 'Error: Option \'--jump-host-ips\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'bastion', 'update', '--client-cidr-list'])
-        assert 'Error: --client-cidr-list option requires an argument' in result.output
+        assert 'Error: Option \'--client-cidr-list\' requires an argument' in result.output
 
     # renamed params in create-managed-ssh session
     def test_create_managed_ssh_session_renamed_params(self):
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--session-ttl-in-seconds'])
-        assert 'Error: no such option: --session-ttl-in-seconds' in result.output
+        assert 'Error: No such option: --session-ttl-in-seconds' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--session-ttl'])
-        assert 'Error: --session-ttl option requires an argument' in result.output
+        assert 'Error: Option \'--session-ttl\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh',
                                       '--target-resource-details-target-resource-id'])
-        assert 'Error: no such option: --target-resource-details-target-resource-id' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-id' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--target-resource-id'])
-        assert 'Error: --target-resource-id option requires an argument' in result.output
+        assert 'Error: Option \'--target-resource-id\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh',
                                       '--target-resource-details-target-resource-operating-system-user-name'])
-        assert 'Error: no such option: --target-resource-details-target-resource-operating-system-user-name' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-operating-system-user-name' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--target-os-username'])
-        assert 'Error: --target-os-username option requires an argument' in result.output
+        assert 'Error: Option \'--target-os-username\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh',
                                       '--target-resource-details-target-resource-port'])
-        assert 'Error: no such option: --target-resource-details-target-resource-port' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-port' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--target-port'])
-        assert 'Error: --target-port option requires an argument' in result.output
+        assert 'Error: Option \'--target-port\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh',
                                       '--target-resource-details-target-resource-private-ip-address'])
-        assert 'Error: no such option: --target-resource-details-target-resource-private-ip-address' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-private-ip-address' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-managed-ssh', '--target-private-ip'])
-        assert 'Error: --target-private-ip option requires an argument' in result.output
+        assert 'Error: Option \'--target-private-ip\' requires an argument' in result.output
 
     # renamed params in create-port-forwarding session
     def test_create_port_forwarding_session_renamed_params(self):
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--session-ttl-in-seconds'])
-        assert 'Error: no such option: --session-ttl-in-seconds' in result.output
+        assert 'Error: No such option: --session-ttl-in-seconds' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--session-ttl'])
-        assert 'Error: --session-ttl option requires an argument' in result.output
+        assert 'Error: Option \'--session-ttl\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding',
                                       '--target-resource-details-target-resource-id'])
-        assert 'Error: no such option: --target-resource-details-target-resource-id' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-id' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--target-resource-id'])
-        assert 'Error: --target-resource-id option requires an argument' in result.output
+        assert 'Error: Option \'--target-resource-id\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding',
                                       '--target-resource-details-target-resource-port'])
-        assert 'Error: no such option: --target-resource-details-target-resource-port' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-port' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--target-port'])
-        assert 'Error: --target-port option requires an argument' in result.output
+        assert 'Error: Option \'--target-port\' requires an argument' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding',
                                       '--target-resource-details-target-resource-private-ip-address'])
-        assert 'Error: no such option: --target-resource-details-target-resource-private-ip-address' in result.output
+        assert 'Error: No such option: --target-resource-details-target-resource-private-ip-address' in result.output
 
         result = util.invoke_command(['bastion', 'session', 'create-port-forwarding', '--target-private-ip'])
-        assert 'Error: --target-private-ip option requires an argument' in result.output
+        assert 'Error: Option \'--target-private-ip\' requires an argument' in result.output

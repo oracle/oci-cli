@@ -175,6 +175,10 @@ service_mapping = {
         "devops",
         "DevOps"
     ],
+    "disaster-recovery": [
+        "disaster_recovery",
+        "Full Stack Disaster Recovery"
+    ],
     "dns": [
         "dns",
         "DNS"

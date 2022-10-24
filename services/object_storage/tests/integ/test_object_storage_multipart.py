@@ -6,43 +6,71 @@ import base64
 import hashlib
 import json
 import os
+
 import pytest
 import time
 import oci_cli
-from tests import util
-from tests import test_config_container
+from tests import util, test_config_container
 from oci.object_storage import MultipartObjectAssembler
-import random
 
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output_multipart.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 100
 DEFAULT_TEST_PART_SIZE = 10
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
-GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key.txt'
+GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key_multipart.txt'
+
+temp_bucket_recorded = None
 
 
-@pytest.fixture
-def vcr_fixture(request):
-    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('object_storage_multipart_{name}.yml'.format(name=request.function.__name__)):
-        yield
-
-
-@pytest.fixture(scope='function')
-def content_input_file():
-    filename = 'tests/temp/multipart_content_input.txt'
-
-    # generate large file for multipart testing
-    util.create_large_file(filename, LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
-
-    yield filename
-
+def remove_file_at_loction(filename):
     if os.path.exists(filename):
         os.remove(filename)
 
 
-@pytest.fixture(scope='module')
-def temp_bucket(runner, config_file, config_profile, object_storage_client):
-    bucket_name = 'cli_temp_multipart_bucket_' + str(random.randint(0, 1000000))
+@pytest.fixture
+def vcr_fixture(request):
+    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
+            'object_storage_multipart_{name}.yml'.format(name=request.function.__name__)):
+        yield
+
+
+@pytest.fixture(scope='module', autouse=True)
+def set_recorded_variables(test_id_recorded):
+    global temp_bucket_recorded
+    temp_bucket_recorded = f'cli_temp_multipart_bucket_{test_id_recorded}'
+
+
+@pytest.fixture(scope='function')
+def content_input_file(test_id):
+    filename = f'tests/temp/multipart_content_input_{test_id}.txt'
+
+    # generate large file for multipart testing
+    util.create_large_file(filename, LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    yield filename
+    remove_file_at_loction(filename)
+
+
+@pytest.fixture(scope='function')
+def content_input_file_recorded(test_id_recorded):
+    filename = f'tests/temp/multipart_content_input_{test_id_recorded}.txt'
+
+    # generate large file for multipart testing
+    util.create_large_file(filename, LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    yield filename
+    remove_file_at_loction(filename)
+
+
+@pytest.fixture(scope='function')
+def content_output_file(test_id):
+    filename = f'tests/temp/multipart_content_output_{test_id}.txt'
+    remove_file_at_loction(filename)
+    yield filename
+    remove_file_at_loction(filename)
+
+
+@pytest.fixture(scope='module', autouse=True)
+def temp_bucket(runner, config_file, config_profile, object_storage_client, test_id):
+    bucket_name = 'cli_temp_multipart_bucket_' + test_id
     print("Bucket Name: ", bucket_name)
 
     # ns get
@@ -88,8 +116,7 @@ def temp_bucket(runner, config_file, config_profile, object_storage_client):
     assert 0 == error_count
 
     # remove the SSE-C key file
-    if os.path.exists(GENERATED_ENC_KEY_FILE):
-        os.remove(GENERATED_ENC_KEY_FILE)
+    remove_file_at_loction(GENERATED_ENC_KEY_FILE)
 
 
 @pytest.fixture(params=[False, True])
@@ -97,14 +124,9 @@ def customer_key(request):
     return request.param
 
 
-def setup_function():
-    if os.path.exists(CONTENT_OUTPUT_FILE):
-        os.remove(CONTENT_OUTPUT_FILE)
-
-
-def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
+@util.skip_while_rerecording
+def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
     object_name = 'a'
-
     ssec_params = []
     if customer_key:
         ssec_params = ['--encryption-key-file', GENERATED_ENC_KEY_FILE]
@@ -128,11 +150,11 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     # object get (confirm object exists)
     result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket,
                                                           '--name', object_name,
-                                                          '--file', CONTENT_OUTPUT_FILE] + ssec_params)
+                                                          '--file', content_output_file] + ssec_params)
     validate_response(result, json_response_expected=False)
 
-    assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
-    assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
+    assert checksum_md5(content_input_file) == checksum_md5(content_output_file)
+    assert os.stat(content_input_file).st_size == os.stat(content_output_file).st_size
 
     # object put (large file so multipart is used)
     result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
@@ -149,7 +171,8 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
-def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
+@util.skip_while_rerecording
+def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
     object_name = 'a-ia'
 
     ssec_params = []
@@ -176,11 +199,11 @@ def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucke
     # object get (confirm object exists)
     result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket,
                                                           '--name', object_name,
-                                                          '--file', CONTENT_OUTPUT_FILE] + ssec_params)
+                                                          '--file', content_output_file] + ssec_params)
     validate_response(result, json_response_expected=False)
 
-    assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
-    assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
+    assert checksum_md5(content_input_file) == checksum_md5(content_output_file)
+    assert os.stat(content_input_file).st_size == os.stat(content_output_file).st_size
 
     # object head (confirm storage-tier)
     result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket,
@@ -196,7 +219,8 @@ def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucke
     validate_response(result, json_response_expected=False)
 
 
-def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client):
+@util.skip_while_rerecording
+def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client, content_output_file):
     object_name = 'a'
 
     upload_id = setup_resume_abort_multipart_upload(content_input_file, object_storage_client, util.NAMESPACE, temp_bucket, object_name)
@@ -212,11 +236,11 @@ def test_resume_multipart_upload(runner, config_file, config_profile, content_in
 
     # object get (confirm object exists and is the same as input content)
     result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE,
-                    '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
+                    '-bn', temp_bucket, '--name', object_name, '--file', content_output_file])
     validate_response(result, json_response_expected=False)
 
-    assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
-    assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
+    assert checksum_md5(content_input_file) == checksum_md5(content_output_file)
+    assert os.stat(content_input_file).st_size == os.stat(content_output_file).st_size
 
     # object delete
     result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--force'])
@@ -238,6 +262,7 @@ def setup_resume_abort_multipart_upload(content_input_file, object_storage_clien
     return upload_id
 
 
+@util.skip_while_rerecording
 def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket, content_input_file, object_storage_client):
     object_name = 'a_abort'
 
@@ -253,7 +278,8 @@ def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket
     assert result.output == ''
 
 
-def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
+@util.skip_while_rerecording
+def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
     object_name = 'a_metadata'
 
     ssec_params = []
@@ -278,11 +304,11 @@ def test_multipart_upload_with_metadata(runner, config_file, config_profile, tem
     # object get (confirm object exists)
     result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket,
                                                           '--name', object_name,
-                                                          '--file', CONTENT_OUTPUT_FILE] + ssec_params)
+                                                          '--file', content_output_file] + ssec_params)
     validate_response(result, json_response_expected=False)
 
-    assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
-    assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
+    assert checksum_md5(content_input_file) == checksum_md5(content_output_file)
+    assert os.stat(content_input_file).st_size == os.stat(content_output_file).st_size
 
     # object head to confirm metadata
     result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket,
@@ -296,16 +322,15 @@ def test_multipart_upload_with_metadata(runner, config_file, config_profile, tem
     validate_response(result, json_response_expected=False)
 
 
-@util.skip_while_rerecording
-def test_resume_with_unknown_upload_id(vcr_fixture, runner, config_file, config_profile, content_input_file, test_id):
+def test_resume_with_unknown_upload_id(vcr_fixture, runner, config_file, config_profile, content_input_file_recorded):
     object_name = 'a'
     upload_id = 'UNKNOWN_UPLOAD_ID'
-
-    # resume multipart upload
-    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', "cli_temp_multipart_bucket_" + test_id, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id])
+    # resume the multipart upload
+    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket_recorded, '--name', object_name, '--file', content_input_file_recorded, '--upload-id', upload_id])
     util.validate_service_error(result, error_message='No such upload')
 
 
+@util.skip_while_rerecording
 def test_put_object_multipart_and_parallel_options(runner, config_file, config_profile, content_input_file):
     object_name = 'a'
 

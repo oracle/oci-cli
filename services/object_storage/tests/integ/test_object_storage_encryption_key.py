@@ -10,8 +10,7 @@ import pytest
 import re
 import oci_cli
 from tests import util
-from tests import test_config_container
-import random
+
 
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
@@ -24,17 +23,44 @@ LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 5
 DEFAULT_TEST_PART_SIZE = 2
 MOVE_BUCKET_TO_COMPARTMENT_ID = os.environ.get('OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
 
+created_buckets = 'created_buckets'
 
-@pytest.fixture
-def vcr_fixture(request):
-    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
-            'object_storage_encryption_key_{name}.yml'.format(name=request.function.__name__)):
-        yield
+
+def remove_file_at_loction(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+
+
+@pytest.fixture(scope='function')
+def delete_pending_buckets():
+    data = {created_buckets: []}
+    yield data
+    for bucket_name in data[created_buckets]:
+        delete_bucket(bucket_name)
+
+
+def delete_bucket(bucket_name):
+    invoke_new(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty', '--force'])
+
+
+def invoke_new(commands, debug=False, ** args):
+    if debug is True:
+        commands = ['--debug'] + commands
+    return util.invoke_command(commands, ** args)
 
 
 @pytest.fixture
 def content_input_file():
-    return GENERATED_CONTENT_INPUT_FILE
+    yield GENERATED_CONTENT_INPUT_FILE
+    remove_file_at_loction(GENERATED_CONTENT_INPUT_FILE)
+
+
+@pytest.fixture(scope='function')
+def content_output_file(test_id):
+    content_output_file_location = f'tests/resources/content_output_encryption_{test_id}.txt'
+    remove_file_at_loction(content_output_file_location)
+    yield content_output_file_location
+    remove_file_at_loction(content_output_file_location)
 
 
 @pytest.fixture(params=[True, False])
@@ -47,21 +73,9 @@ def debug(request):
     return request.param
 
 
-@pytest.fixture(scope='module', autouse=True)
-def test_data(object_storage_client):
-    # Setup test data
-    util.ensure_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID,
-                          util.bucket_regional_prefix() + 'Cli')
-
-
 def generate_aes256_key_str():
     key = os.urandom(32)
     return base64.b64encode(key).decode('utf-8')
-
-
-def setup_function():
-    if os.path.exists(CONTENT_OUTPUT_FILE):
-        os.remove(CONTENT_OUTPUT_FILE)
 
 
 def setup_module():
@@ -83,20 +97,13 @@ def setup_module():
 
 
 def teardown_module():
-    if os.path.exists(CONTENT_OUTPUT_FILE):
-        os.remove(CONTENT_OUTPUT_FILE)
-
-    if os.path.exists(GENERATED_CONTENT_INPUT_FILE):
-        os.remove(GENERATED_CONTENT_INPUT_FILE)
-
     for fname in [GENERATED_ENC_KEY1_FILE, GENERATED_ENC_KEY2_FILE]:
-        if os.path.exists(fname):
-            os.remove(fname)
+        remove_file_at_loction(fname)
 
 
-def test_run_all_operations(runner, config_file, config_profile, debug):
+def test_run_all_operations(runner, config_file, config_profile, debug, delete_pending_buckets, content_output_file, test_id):
     """Successfully calls every operation with required arguments only."""
-    bucket_name = 'cli_temp_bucket_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
+    bucket_name = 'cli_temp_bucket_' + test_id + ('_debug' if debug else '_no_debug')
     object_name = 'a'
 
     # check if GENERATED_ENC_KEY1_FILE is equal to the stripped version of GENERATED_ENC_KEY1_FILE_WITH_NEWLINE
@@ -114,6 +121,7 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     result = invoke(runner, config_file, config_profile,
                     ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
                      bucket_name], debug=debug)
+    delete_pending_buckets[created_buckets].append(bucket_name)
     validate_response(result, includes_debug_data=debug)
 
     # object put
@@ -125,22 +133,22 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     # object get without SSE-C headers should result in a 400
     result = invoke(runner, config_file, config_profile,
                     ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file',
-                     CONTENT_OUTPUT_FILE], debug=debug)
+                     content_output_file], debug=debug)
     util.validate_service_error(result, 'The service returned error code 400', debug)
 
     # object get with the wrong SSE-C key should result in a 403
     result = invoke(runner, config_file, config_profile,
                     ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file',
-                     CONTENT_OUTPUT_FILE, '--encryption-key-file', GENERATED_ENC_KEY2_FILE], debug=debug)
+                     content_output_file, '--encryption-key-file', GENERATED_ENC_KEY2_FILE], debug=debug)
     util.validate_service_error(result, 'The service returned error code 403', debug)
 
     # object get with the correct SSE-C key.
     # checking the integrity of this test with newline added to the enc key.
     result = invoke(runner, config_file, config_profile,
                     ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file',
-                     CONTENT_OUTPUT_FILE, '--encryption-key-file', GENERATED_ENC_KEY1_FILE_WITH_NEWLINE], debug=debug)
+                     content_output_file, '--encryption-key-file', GENERATED_ENC_KEY1_FILE_WITH_NEWLINE], debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
-    assertEqual(get_file_content(CONTENT_INPUT_FILE), get_file_content(CONTENT_OUTPUT_FILE))
+    assertEqual(get_file_content(CONTENT_INPUT_FILE), get_file_content(content_output_file))
 
     # object head without any SSE-C data should fail with 400
     result = invoke(runner, config_file, config_profile,
@@ -247,6 +255,7 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     result = invoke(runner, config_file, config_profile,
                     ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
     validate_response(result, includes_debug_data=debug)
+    delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True,
@@ -270,8 +279,8 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception,
-                                          result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code,
+                                          result.exception, result.exc_info)
 
     # multipart uploads print out an upload ID and information when each part is uploaded successfully
     # for doing validation we need to strip this out
@@ -282,8 +291,8 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception,
-                                          result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code,
+                                          result.exception, result.exc_info)
 
     return result
 

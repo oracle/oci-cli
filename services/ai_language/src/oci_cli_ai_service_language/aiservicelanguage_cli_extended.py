@@ -29,9 +29,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 def language_group():
     pass
 
+
 # Batch APIs
-
-
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_dominant_language_group, aiservicelanguage_cli.batch_detect_dominant_language, "batch-detect-language")
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_language_entities_group, aiservicelanguage_cli.batch_detect_language_entities, "batch-detect-entities")
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_language_key_phrases_group, aiservicelanguage_cli.batch_detect_language_key_phrases, "batch-detect-key-phrases")
@@ -74,3 +73,41 @@ language_group.add_command(aiservicelanguage_cli.detect_language_entities)
 language_group.add_command(aiservicelanguage_cli.detect_language_key_phrases)
 language_group.add_command(aiservicelanguage_cli.detect_language_sentiments)
 language_group.add_command(aiservicelanguage_cli.detect_language_text_classification)
+
+# Remove polymorphic model commands
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_data_science_labeling_dataset.name)
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_object_storage_dataset.name)
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_named_entity_recognition_model_details.name)
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_text_classification_model_details.name)
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_test_and_validation_dataset_strategy.name)
+
+# Rename evaluation result command
+cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.evaluation_result_collection_group, aiservicelanguage_cli.list_evaluation_results, "list")
+cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.ai_root_group, aiservicelanguage_cli.evaluation_result_collection_group, "evaluation-result")
+
+# Rename work-requst error and log
+cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.ai_root_group, aiservicelanguage_cli.work_request_error_group, "error")
+cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.ai_root_group, aiservicelanguage_cli.work_request_log_group, "log")
+
+# Remove project, model, endpoint, language_translation, work_request_long and work_request_error from root
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.project_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.model_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.endpoint_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.work_request_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.batch_language_translation_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.work_request_error_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.work_request_log_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.evaluation_result_collection_group.name)
+
+# Add project, model, endpoint, language_translation group to language_group
+language_group.add_command(aiservicelanguage_cli.project_group)
+language_group.add_command(aiservicelanguage_cli.model_group)
+language_group.add_command(aiservicelanguage_cli.endpoint_group)
+language_group.add_command(aiservicelanguage_cli.work_request_group)
+language_group.add_command(aiservicelanguage_cli.batch_language_translation)
+language_group.add_command(aiservicelanguage_cli.evaluation_result_collection_group)
+
+# Add work-request error and logs messages to work-request group
+aiservicelanguage_cli.work_request_group.add_command(aiservicelanguage_cli.work_request_error_group)
+aiservicelanguage_cli.work_request_group.add_command(aiservicelanguage_cli.work_request_log_group)
+

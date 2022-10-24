@@ -1,7 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
-
+import logging
 import arrow
 import click
 import filecmp
@@ -24,6 +24,8 @@ CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 5
 DEFAULT_TEST_PART_SIZE = 2
 MOVE_BUCKET_TO_COMPARTMENT_ID = os.environ.get('OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
+
+created_buckets = 'created_buckets'
 
 
 @pytest.fixture
@@ -50,9 +52,29 @@ def debug(request):
 
 
 @pytest.fixture(scope='module', autouse=True)
-def test_data(object_storage_client):
-    # Setup test data
-    util.ensure_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, util.bucket_regional_prefix() + 'Cli')
+def test_data(object_storage_client, test_id):
+    # Setup the test data
+    util.ensure_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, util.bucket_regional_prefix() + 'Cli' + test_id)
+    yield
+    try:
+        util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, util.bucket_regional_prefix() + 'Cli' + test_id)
+    except Exception as ex:
+        pass
+    bucket_name = util.bucket_regional_prefix() + 'Cli' + test_id + '_test_metadata'
+    invoke_new(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty', '--force'])
+
+
+@pytest.fixture(scope='function')
+def delete_pending_buckets():
+    data = {created_buckets: []}
+    yield data
+    logging.debug("--------Deleting Created Buckets-----------")
+    for bucket_name in data[created_buckets]:
+        delete_bucket(bucket_name)
+
+
+def delete_bucket(bucket_name):
+    invoke_new(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--empty', '--force'])
 
 
 def is_none(value):
@@ -81,7 +103,7 @@ def teardown_module():
 
 
 @util.skip_while_rerecording
-def test_run_all_operations(runner, config_file, config_profile, debug):
+def test_run_all_operations(runner, config_file, config_profile, debug, delete_pending_buckets):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
     object_name = 'a'
@@ -93,6 +115,7 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
 
     # bucket create
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name], debug=debug)
+    delete_pending_buckets[created_buckets].append(bucket_name)
     validate_response(result, includes_debug_data=debug)
 
     # bucket get with namespace
@@ -176,10 +199,11 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
     validate_response(result, includes_debug_data=debug)
+    delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
 @util.skip_while_rerecording
-def test_run_all_ia_operations(runner, config_file, config_profile, debug):
+def test_run_all_ia_operations(runner, config_file, config_profile, debug, delete_pending_buckets):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_ia_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
     object_name = 'a'
@@ -188,6 +212,7 @@ def test_run_all_ia_operations(runner, config_file, config_profile, debug):
 
     # bucket create
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name], debug=debug)
+    delete_pending_buckets[created_buckets].append(bucket_name)
     validate_response(result, includes_debug_data=debug)
 
     # object put
@@ -249,8 +274,12 @@ def test_run_all_ia_operations(runner, config_file, config_profile, debug):
     if not test_config_container.using_vcr_with_mock_responses():
         # Copy object
         # -- create destination bucket
-        copy_bucket_name = 'cli_temp_bucket_ia_copy_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
-        result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', copy_bucket_name], debug=debug)
+        copy_bucket_name = 'cli_temp_bucket_ia_copy_' + str(random.randint(0, 1000000)) + (
+            '_debug' if debug else '_no_debug')
+        result = invoke(runner, config_file, config_profile,
+                        ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                         copy_bucket_name], debug=debug)
+        delete_pending_buckets[created_buckets].append(copy_bucket_name)
         validate_response(result, includes_debug_data=debug)
         # -- copy object to the destination bucket
         copy_object_name = 'a-object-copy'
@@ -259,7 +288,10 @@ def test_run_all_ia_operations(runner, config_file, config_profile, debug):
                          '--destination-bucket', copy_bucket_name, '--destination-object-name', copy_object_name,
                          '--destination-object-storage-tier', 'InfrequentAccess',
                          '--wait-for-state', 'COMPLETED', '--wait-for-state', 'FAILED'], debug=debug)
-        validate_response(result, includes_debug_data=debug)
+        # text+JSON is present, removing text to parse JSON
+        # TODO: find a better solution
+        filtered_output = result.output("Action completed. Waiting until the work request has entered state: ('COMPLETED', 'FAILED')", "")
+        validate_response(filtered_output, includes_debug_data=debug)
         # -- verify storage tier of the copied object
         result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', copy_bucket_name, '--name', copy_object_name])
         validate_response(result)
@@ -268,31 +300,44 @@ def test_run_all_ia_operations(runner, config_file, config_profile, debug):
         assertEquals('InfrequentAccess', head_output['storage-tier'])
 
     # object delete
-    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y', debug=debug)
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y',
+                    debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
-    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_std], input='y', debug=debug)
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_std],
+                    input='y', debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
-    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_ia], input='y', debug=debug)
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name_ia],
+                    input='y', debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
     if copy_object_name is not None:
-        result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', copy_bucket_name, '--name', copy_object_name], input='y', debug=debug)
+        result = invoke(runner, config_file, config_profile,
+                        ['object', 'delete', '-ns', util.NAMESPACE, '-bn', copy_bucket_name, '--name',
+                         copy_object_name], input='y', debug=debug)
         validate_response(result, json_response_expected=False, includes_debug_data=debug)
 
     # bucket delete
-    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
+    result = invoke(runner, config_file, config_profile,
+                    ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
     validate_response(result, includes_debug_data=debug)
+    delete_pending_buckets[created_buckets].remove(bucket_name)
     if copy_bucket_name is not None:
-        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', copy_bucket_name, '--force'], debug=debug)
+        result = invoke(runner, config_file, config_profile,
+                        ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', copy_bucket_name, '--force'], debug=debug)
         validate_response(result, includes_debug_data=debug)
+        delete_pending_buckets[created_buckets].remove(copy_bucket_name)
 
 
 @util.skip_while_rerecording
-def test_archive_bucket(runner, config_file, config_profile):
+def test_archive_bucket(runner, config_file, config_profile, delete_pending_buckets):
     bucket_name = 'cli_temp_archive_bucket_' + str(random.randint(0, 1000000)) + '_no_debug'
     object_name = 'a'
 
     # bucket create archive
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name, '--storage-tier', 'Archive'])
+    delete_pending_buckets[created_buckets].append(bucket_name)
     validate_response(result)
 
     # object put
@@ -349,17 +394,18 @@ def test_archive_bucket(runner, config_file, config_profile):
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
     validate_response(result)
+    delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
-@util.skip_while_rerecording
-def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, runner, config_file, config_profile, test_id):
+def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, runner, config_file, config_profile, test_id_recorded, delete_pending_buckets):
     if not MOVE_BUCKET_TO_COMPARTMENT_ID:
         pytest.skip('Skipping as no value was provided for the environment variable OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
 
-    bucket_name = 'cli_move_bucket_compartment_{}'.format(test_id)
+    bucket_name = 'cli_move_bucket_compartment_{}'.format(test_id_recorded)
 
     # Create a bucket in the first compartment (given by util.COMPARTMENT_ID)
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
+    delete_pending_buckets[created_buckets].append(bucket_name)
     validate_response(result)
 
     # Make sure that the bucket appears in the first compartment
@@ -398,6 +444,7 @@ def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, 
     # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
     validate_response(result)
+    delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
 def test_namespace_metadata(vcr_fixture, runner, config_file, config_profile):
@@ -418,20 +465,18 @@ def test_set_client_request_id(runner, config_file, config_profile):
     assert input_id in result.output
 
 
-def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_id):
-    bucket = 'cli_test_bucket_options_' + test_id
+def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_id_recorded, delete_pending_buckets):
+    bucket = 'cli_test_bucket_options_' + test_id_recorded
 
     # bucket create
-    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket, '--public-access-type', 'ObjectRead'])
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket])
+    delete_pending_buckets[created_buckets].append(bucket)
     validate_response(result)
 
     # bucket get
     result = invoke(runner, config_file, config_profile, ['bucket', 'get', '-ns', util.NAMESPACE, '--name', bucket])
     response = json.loads(result.output)
     etag = response['etag']
-
-    # validate public bucket setting
-    assert response['data']['public-access-type'] == 'ObjectRead'
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'get', '-ns', util.NAMESPACE, '--name', bucket, '--if-match', etag])
     validate_response(result)
@@ -448,44 +493,46 @@ def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_i
     util.validate_service_error(result)
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket, '--if-match', etag, '--force'])
     validate_response(result)
+    delete_pending_buckets[created_buckets].remove(bucket)
 
 
-def test_create_replication_policy(vcr_fixture, runner, config_file, config_profile, test_id):
+# removing cassette as duplicate call being made, changes replication id
+@util.skip_while_rerecording
+def test_create_replication_policy(runner, config_file, config_profile, test_id, delete_pending_buckets):
     source_bucket = 'cli_test_create_replication_policy_source_' + test_id
     dest_bucket = 'cli_test_create_replication_policy_dest_' + test_id
 
     # bucket create
-    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', source_bucket, '--public-access-type', 'ObjectRead'])
-    validate_response(result)
-    # bucket create
-    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', dest_bucket, '--public-access-type', 'ObjectRead'])
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', source_bucket])
+    delete_pending_buckets[created_buckets].append(source_bucket)
     validate_response(result)
 
-    try:
-        # create policy
-        result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', util.OS_REPLICATION_DESTINATION_REGION])
-        validate_response(result)
-        response = json.loads(result.output)
-        replication_id = response['data']['id']
-        # delete policy
-        result = invoke(runner, config_file, config_profile, ['replication', 'delete-replication-policy', '-ns', util.NAMESPACE, '--replication-id', replication_id, '--bucket-name', source_bucket, '--force'])
-        validate_response(result)
-    except Exception as ex:
-        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', source_bucket, '--force'])
-        validate_response(result)
-        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', dest_bucket, '--force'])
-        validate_response(result)
+    # bucket create for replication
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', dest_bucket])
+    delete_pending_buckets[created_buckets].append(dest_bucket)
+    validate_response(result)
+
+    # create policy
+    result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', util.OS_REPLICATION_DESTINATION_REGION])
+    validate_response(result)
+    response = json.loads(result.output)
+    replication_id = response['data']['id']
+    # delete policy
+    result = invoke(runner, config_file, config_profile, ['replication', 'delete-replication-policy', '-ns', util.NAMESPACE, '--replication-id', replication_id, '--bucket-name', source_bucket, '--force'])
+    validate_response(result)
 
     # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', source_bucket, '--force'])
     validate_response(result)
+    delete_pending_buckets[created_buckets].remove(source_bucket)
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', dest_bucket, '--force'])
     validate_response(result)
+    delete_pending_buckets[created_buckets].remove(dest_bucket)
 
 
 @util.skip_while_rerecording
 def test_object_put_confirmation_prompt(runner, config_file, config_profile, content_input_file, test_id, multipart):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_confirmation_prompt_' + test_id
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', content_input_file]
 
@@ -595,7 +642,7 @@ def test_object_put_confirmation_prompt(runner, config_file, config_profile, con
 
 @util.skip_while_rerecording
 def test_object_options(runner, config_file, config_profile, test_id, content_input_file, multipart):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_options_' + test_id
     required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', content_input_file, '--force']
 
@@ -706,8 +753,8 @@ def test_object_options(runner, config_file, config_profile, test_id, content_in
     validate_response(result)
 
 
-def subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket8'
+def subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket8'
 
     # object list
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--delimiter', '/', '--limit', '3'])
@@ -719,8 +766,8 @@ def subtest_object_list_preserves_prefixes_order(runner, config_file, config_pro
     assertListEqual(prefixes, ["a/", "b/", "f/", "s/"])
 
 
-def subtest_object_list_versions_preserves_prefixes_order(runner, config_file, config_profile):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket8'
+def subtest_object_list_versions_preserves_prefixes_order(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket8'
 
     # object list
     result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--delimiter', '/', '--limit', '3'])
@@ -734,7 +781,7 @@ def subtest_object_list_versions_preserves_prefixes_order(runner, config_file, c
 
 @util.skip_while_rerecording
 def test_object_put_default_name(runner, config_file, config_profile, test_id):
-    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id
     filename = os.path.join("tests/temp", object_name)
 
@@ -761,7 +808,7 @@ def test_object_put_default_name(runner, config_file, config_profile, test_id):
 
 @util.skip_while_rerecording
 def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
-    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id
     filename = os.path.join("tests/temp", object_name)
 
@@ -791,7 +838,7 @@ def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
 
 @util.skip_while_rerecording
 def test_object_put_from_stdin_with_auto_content_type(runner, config_file, config_profile, test_id):
-    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".txt"
     filename = os.path.join("tests/temp", object_name)
 
@@ -824,7 +871,7 @@ def test_object_put_from_stdin_with_auto_content_type(runner, config_file, confi
 # Tests for guess_type returns None for object_name.
 @util.skip_while_rerecording
 def test_object_put_from_stdin_with_invalid_object_name_extension_one(runner, config_file, config_profile, test_id):
-    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".zzzzz"
     filename = os.path.join("tests/temp", object_name)
 
@@ -857,7 +904,7 @@ def test_object_put_from_stdin_with_invalid_object_name_extension_one(runner, co
 # Object Name extension mismatches with the input contents.
 @util.skip_while_rerecording
 def test_object_put_from_stdin_with_invalid_object_name_extension_two(runner, config_file, config_profile, test_id):
-    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".txt"
     filename = os.path.join("tests/temp", object_name)
 
@@ -888,8 +935,8 @@ def test_object_put_from_stdin_with_invalid_object_name_extension_two(runner, co
 
 
 @util.skip_while_rerecording
-def test_object_put_from_stdin_requires_object_name(runner, config_file, config_profile):
-    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+def test_object_put_from_stdin_requires_object_name(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--file', '-', '--force']
     put_result = invoke(runner, config_file, config_profile, put_required_args)
 
@@ -899,7 +946,7 @@ def test_object_put_from_stdin_requires_object_name(runner, config_file, config_
 @pytest.mark.parametrize('content_type,content_language,content_encoding', [{'image/gif', 'en', 'gzip'}, {'notarealtype', 'notareallanguage', 'notarealencoding'}, {'text/html; charset=ISO-8859-4', 'mi, en', 'compress'}])
 @util.skip_while_rerecording
 def test_object_content_headers(runner, config_file, config_profile, content_type, content_language, content_encoding, content_input_file, test_id, multipart):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_options_' + test_id
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file',
                          content_input_file, '--force']
@@ -931,14 +978,14 @@ def test_object_content_headers(runner, config_file, config_profile, content_typ
     validate_response(result)
 
 
-def test_list_options(vcr_fixture, runner, config_file, config_profile, object_storage_client):
+def test_list_options(vcr_fixture, runner, config_file, config_profile, object_storage_client, test_id_recorded):
     subtest_bucket_list(runner, config_file, config_profile)
-    subtest_object_list(runner, config_file, config_profile)
-    subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile)
-    subtest_object_list_paging(runner, config_file, config_profile)
-    subtest_object_list_versions(runner, config_file, config_profile)
-    subtest_object_list_versions_preserves_prefixes_order(runner, config_file, config_profile)
-    subtest_object_list_versions_paging(runner, config_file, config_profile)
+    subtest_object_list(runner, config_file, config_profile, test_id_recorded)
+    subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile, test_id_recorded)
+    subtest_object_list_paging(runner, config_file, config_profile, test_id_recorded)
+    subtest_object_list_versions(runner, config_file, config_profile, test_id_recorded)
+    subtest_object_list_versions_preserves_prefixes_order(runner, config_file, config_profile, test_id_recorded)
+    subtest_object_list_versions_paging(runner, config_file, config_profile, test_id_recorded)
 
 
 def test_bucket_list_with_tags(vcr_fixture, runner, config_file, config_profile):
@@ -957,6 +1004,7 @@ def test_bucket_list_with_tags(vcr_fixture, runner, config_file, config_profile)
         assert bucket_summary['freeform-tags'] is not None
 
 
+@util.skip_while_rerecording
 def test_copy_object(runner, config_file, config_profile, test_id):
     result = invoke(runner, config_file, config_profile, ['object', 'copy'])
     assert "Error: Missing option" in result.output
@@ -976,7 +1024,7 @@ def subtest_bucket_list(runner, config_file, config_profile):
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '1000'])
     validate_response(result)
-    assert result.output.count('"namespace"') > 30
+    assert result.output.count('"namespace"') > 5
     assert result.output.count('"namespace"') <= 1000
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '20'])
@@ -1003,9 +1051,9 @@ def subtest_bucket_list(runner, config_file, config_profile):
         assert output["data"][0]["name"] == bucketName
 
 
-def subtest_object_list(runner, config_file, config_profile):
+def subtest_object_list(runner, config_file, config_profile, test_id):
     """Tests all optional parameters for oci object list."""
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket6'
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1'])
     validate_response(result)
     assertEqual(1, result.output.count('"name"'))
@@ -1056,7 +1104,7 @@ def subtest_object_list(runner, config_file, config_profile):
     assertEqual(1, result.output.count('"name"'))
     assert 'next-start-with' in result.output
 
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket2'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket2'
     # Should return objects "a/b/object4", "a/b/object5", and prefixe "a/b/c/".
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--delimiter', '/', '--prefix', 'a/b/'])
     validate_response(result)
@@ -1077,9 +1125,9 @@ def subtest_object_list(runner, config_file, config_profile):
     assert '"time-created": null' not in result.output
 
 
-def subtest_object_list_versions(runner, config_file, config_profile):
+def subtest_object_list_versions(runner, config_file, config_profile, test_id):
     """Tests all optional parameters for oci object list-object-versions."""
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket6'
     result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--fields', 'name,size,md5,storageTier', '--limit', '1'])
     validate_response(result)
     assertEqual(1, result.output.count('"name"'))
@@ -1132,7 +1180,7 @@ def subtest_object_list_versions(runner, config_file, config_profile):
     assertEqual(1, result.output.count('"name"'))
     assert 'opc-next-page' in result.output
 
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket2'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket2'
     # Should return objects "a/b/object4", "a/b/object5", and prefixe "a/b/c/".
     result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--delimiter', '/', '--prefix', 'a/b/'])
     validate_response(result)
@@ -1153,8 +1201,8 @@ def subtest_object_list_versions(runner, config_file, config_profile):
     assert '"time-created": null' not in result.output
 
 
-def subtest_object_list_paging(runner, config_file, config_profile):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+def subtest_object_list_paging(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket6'
 
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '10000'])
     validate_response(result)
@@ -1185,8 +1233,8 @@ def subtest_object_list_paging(runner, config_file, config_profile):
     assert (pages == math.ceil(float(list_size) / page_size))
 
 
-def subtest_object_list_versions_paging(runner, config_file, config_profile):
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+def subtest_object_list_versions_paging(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket6'
 
     result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '10000'])
     validate_response(result)
@@ -1217,10 +1265,10 @@ def subtest_object_list_versions_paging(runner, config_file, config_profile):
     assert (pages == math.ceil(float(list_size) / page_size))
 
 
-def test_preauthenticated_requests(vcr_fixture, runner, config_file, config_profile):
+def test_preauthenticated_requests(vcr_fixture, runner, config_file, config_profile, test_id_recorded):
     preauthenticated_request_name_1 = util.random_name('cli_preauth_request_1')
     preauthenticated_request_name_2 = util.random_name('cli_preauth_request_2')
-    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id_recorded}ReadOnlyTestBucket6'
 
     target_year = 2100
     target_date_for_epoch_timestamp = arrow.now().replace(year=target_year)
@@ -1266,6 +1314,13 @@ def test_preauthenticated_requests(vcr_fixture, runner, config_file, config_prof
         validate_response(result)
 
 
+# Function to invoke commands in a newer manner
+def invoke_new(commands, debug=False, ** args):
+    if debug is True:
+        commands = ['--debug'] + commands
+    return util.invoke_command(commands, ** args)
+
+
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
     root_params = root_params or []
     if debug is True:
@@ -1282,7 +1337,7 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
 
     # multipart uploads print out an upload ID and information when each part is uploaded successfully
     # for doing validation we need to strip this out
@@ -1293,13 +1348,12 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
-
+            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
     return result
 
 
 @util.skip_while_rerecording
-def test_get_object_multipart_download(runner, config_file, config_profile, test_id, object_storage_client):
+def test_get_object_multipart_download(runner, config_file, config_profile, test_id, object_storage_client, delete_pending_buckets):
     test_file_path = os.path.join('tests', 'temp', 'for_multipart_download_{}.bin'.format(test_id))
     util.create_large_file(test_file_path, 400)
 
@@ -1309,8 +1363,8 @@ def test_get_object_multipart_download(runner, config_file, config_profile, test
 
     # bucket create
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
+    delete_pending_buckets[created_buckets].append(bucket_name)
     validate_response(result)
-
     # put the test object in the bucket
     result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', test_file_path])
     validate_response(result)
@@ -1339,6 +1393,7 @@ def test_get_object_multipart_download(runner, config_file, config_profile, test
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
     validate_response(result, json_response_expected=False)
+    delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
 def get_file_content(filename):

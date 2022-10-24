@@ -27,7 +27,7 @@ class TestComputeInstanceAgent(unittest.TestCase):
 
     def test_instance_agent_command_create_invoke(self):
         result = util.invoke_command(['instance-agent', 'command', 'create', '--timeout-in-seconds'])
-        assert 'Error: --timeout-in-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--timeout-in-seconds\' requires an argument' in result.output
 
     def test_instance_agent_command_exec_get_invoke(self):
         result = util.invoke_command(['instance-agent', 'command-execution', 'get'])

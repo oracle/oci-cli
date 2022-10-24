@@ -13,7 +13,7 @@ class TestWaas(unittest.TestCase):
     def test_update_setting_option(self):
 
         result = util.invoke_command(['waas', 'custom-protection-rule', 'update-setting', '--update-custom-protection-rules-details'])
-        assert 'Error: no such option:' in result.output
+        assert 'Error: No such option:' in result.output
         assert 'update-custom-protection-rules-details' in result.output
 
         result = util.invoke_command(['waas', 'custom-protection-rule', 'update-setting', '--custom-protection-rules-details', '{}'])
@@ -38,13 +38,13 @@ class TestWaas(unittest.TestCase):
         assert 'waas-policy-id' in result.output
 
         result = util.invoke_command(['waas', 'policy-config', 'update', '--load-balancing-method'])
-        assert 'option requires an argument' in result.output
+        assert 'Option \'--load-balancing-method\' requires an argument' in result.output
 
         result = util.invoke_command(['waas', 'policy-config', 'update', '--websocket-path-prefixes'])
-        assert 'option requires an argument' in result.output
+        assert 'Option \'--websocket-path-prefixes\' requires an argument' in result.output
 
         result = util.invoke_command(['waas', 'policy-config', 'update', '--health-checks'])
-        assert 'option requires an argument' in result.output
+        assert 'Option \'--health-checks\' requires an argument' in result.output
 
         result = util.invoke_command(
             ['waas', 'policy-config', 'update', '--waas-policy-id', 'dummy', '--tls-protocols', 'TLS_V1_3'])

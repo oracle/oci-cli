@@ -220,3 +220,12 @@ def submit_run(ctx, **kwargs):
 def create_run_extended(ctx, **kwargs):
     updateKwargs(kwargs)
     ctx.invoke(dataflow_cli.create_run, **kwargs)
+
+
+# oci data-flow statement-collection list-statements -> oci data-flow statement-collection list
+cli_util.rename_command(dataflow_cli, dataflow_cli.statement_collection_group, dataflow_cli.list_statements, "list")
+
+
+# oci data-flow statement-collection -> oci data-flow statement
+dataflow_cli.data_flow_root_group.commands.pop(dataflow_cli.statement_collection_group.name)
+dataflow_cli.statement_group.add_command(dataflow_cli.list_statements)

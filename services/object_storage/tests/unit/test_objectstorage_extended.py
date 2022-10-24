@@ -108,20 +108,6 @@ class TestObjectStorage(unittest.TestCase):
         assert sorted(list(encryption_key_file_results.keys())) == encryption_key_file_cmd_list
         assert sorted(list(source_encryption_key_file_results.keys())) == source_encryption_key_file_cmd_list
 
-    def test_object_get(self):
-        result = util.invoke_command(['os', 'object', 'get', '--version-id'])
-        assert "requires an argument" in result.output
-
-    def test_object_head(self):
-        result = util.invoke_command(['os', 'object', 'head', '--version-id'])
-        assert "requires an argument" in result.output
-
-    def test_object_put(self):
-        result = util.invoke_command(['os', 'object', 'put', '--content-disposition', 'dummy-value', '--cache-control', 'dummy-value'])
-
-        print(result.output)
-        assert "Missing option(s)" in result.output
-
     def test_verify_ssec_kms_params(self):
         """ Checks whether the opc-sse-kms-key-id params are present for the relevant object commands """
         # Sorted lists of commands that should support --opc-sse-kms-key-id
@@ -265,3 +251,294 @@ class TestObjectStorage(unittest.TestCase):
         result = util.invoke_command(['os', 'retention-rule', 'update', '--bucket-name', 'b001', '--namespace-name', 'n001', '--retention-rule-id', 'r001', '--time-rule-locked', 'abc'])
         assert "BadParameter:" in result.output
         assert "is not in a supported datetime format" in result.output
+
+    def test_bucket_create(self):
+        result = util.invoke_command(['os', 'bucket', 'create'])
+        assert "Error: Missing option(s) --name, --compartment-id" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'create', '--name', 'b001', '--compartment-id', 'c001', '--defined-tags', '{"Operations": {"CostCenter": 2*3}}'])
+        assert "Parameter 'defined_tags' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'create', '--name', 'b001', '--compartment-id', 'c001', '--freeform-tags', '{"Operations": {"CostCenter": 2*3}}'])
+        assert "Parameter 'freeform_tags' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'create', '--name', 'b001', '--compartment-id', 'c001', '--metadata', '{"Key": 2*3}'])
+        assert "Parameter 'metadata' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'create', '--name', 'b001', '--compartment-id', 'c001', '--public-access-type', 'new-access-type'])
+        assert "Error: Invalid value for '--public-access-type': invalid choice: new-access-type. (choose from NoPublicAccess, ObjectRead, ObjectReadWithoutList)" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'create', '--name', 'b001', '--compartment-id', 'c001', '--storage-tier', 'new-tier'])
+        assert "Error: Invalid value for '--storage-tier': invalid choice: new-tier. (choose from Standard, Archive)" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'create', '--name', 'b001', '--compartment-id', 'c001', '--versioning', 'new-version'])
+        assert "Error: Invalid value for '--versioning': invalid choice: new-version. (choose from Enabled, Disabled)" in result.output
+
+    def test_bucket_delete(self):
+        result = util.invoke_command(['os', 'bucket', 'delete'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+    def test_bucket_get(self):
+        result = util.invoke_command(['os', 'bucket', 'get'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'get', '--bucket-name', 'b001', '--fields', 'approximateCount', '--fields', 'apprxSize'])
+        assert "Error: Invalid value for '--fields': invalid choice: apprxSize. (choose from approximateCount, approximateSize, autoTiering)" in result.output
+
+    def test_bucket_list(self):
+        result = util.invoke_command(['os', 'bucket', 'list'])
+        assert "Error: Missing option(s) --compartment-id" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'list', '--compartment-id', 'c001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'list', '--compartment-id', 'c001', '--fields', 'new-field'])
+        assert "Error: Invalid value for '--fields': invalid choice: new-field. (choose from tags)" in result.output
+
+    def test_bucket_reencrypt(self):
+        result = util.invoke_command(['os', 'bucket', 'reencrypt'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'reencrypt', '--bucket-name', 'b001', '--wait-for-state', 'new-state'])
+        assert "Error: Invalid value for '--wait-for-state': invalid choice: new-state. (choose from ACCEPTED, IN_PROGRESS, FAILED, COMPLETED, CANCELING, CANCELED)" in result.output
+
+    def test_bucket_update(self):
+        result = util.invoke_command(['os', 'bucket', 'update'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'update', '--name', 'b001', '--defined-tags', '{"Operations": {"CostCenter": 2*3}}'])
+        assert "Parameter 'defined_tags' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'update', '--name', 'b001', '--freeform-tags', '{"Operations": {"CostCenter": 2*3}}'])
+        assert "Parameter 'freeform_tags' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'update', '--name', 'b001', '--metadata', '{"Key": 2*3}'])
+        assert "Parameter 'metadata' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'update', '--name', 'b001', '--public-access-type', 'new-access-type'])
+        assert "Error: Invalid value for '--public-access-type': invalid choice: new-access-type. (choose from NoPublicAccess, ObjectRead, ObjectReadWithoutList)" in result.output
+
+        result = util.invoke_command(['os', 'bucket', 'update', '--name', 'b001', '--versioning', 'new-version'])
+        assert "Error: Invalid value for '--versioning': invalid choice: new-version. (choose from Enabled, Suspended)" in result.output
+
+    def test_multipart_abort(self):
+        result = util.invoke_command(['os', 'multipart', 'abort'])
+        assert "Error: Missing option(s) --bucket-name, --object-name, --upload-id." in result.output
+
+    def test_multipart_list(self):
+        result = util.invoke_command(['os', 'multipart', 'list'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+        result = util.invoke_command(['os', 'multipart', 'list', '--bucket-name', 'b001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_object_bulk_delete(self):
+        result = util.invoke_command(['os', 'object', 'bulk-delete'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+    def test_object_bulk_delete_versions(self):
+        result = util.invoke_command(['os', 'object', 'bulk-delete-versions'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+    def test_object_bulk_download(self):
+        result = util.invoke_command(['os', 'object', 'bulk-download'])
+        assert "Error: Missing option(s) --bucket-name, --download-dir." in result.output
+
+    def test_object_copy(self):
+        result = util.invoke_command(['os', 'object', 'copy'])
+        assert "Error: Missing option(s) --bucket-name, --source-object-name, --destination-bucket." in result.output
+
+        result = util.invoke_command(['os', 'object', 'copy', '--bucket-name', 'b001', '--destination-bucket', 'b002', '--source-object-name', 'o001', '--destination-object-metadata', '{"Key": 2*3}'])
+        assert "Parameter 'destination_object_metadata' must be in JSON format" in result.output
+
+        result = util.invoke_command(['os', 'object', 'copy', '--bucket-name', 'b001', '--destination-bucket', 'b002', '--source-object-name', 'o001', '--destination-object-storage-tier', 'new-tier'])
+        assert "Error: Invalid value for '--destination-object-storage-tier': invalid choice: new-tier. (choose from Standard, InfrequentAccess, Archive)" in result.output
+
+    def test_object_delete(self):
+        result = util.invoke_command(['os', 'object', 'delete'])
+        assert "Error: Missing option(s) --bucket-name, --object-name." in result.output
+
+    def test_object_get(self):
+        result = util.invoke_command(['os', 'object', 'get'])
+        assert "Error: Missing option(s) --bucket-name, --name, --file." in result.output
+
+    def test_object_head(self):
+        result = util.invoke_command(['os', 'object', 'head'])
+        assert "Error: Missing option(s) --bucket-name, --name." in result.output
+
+    def test_object_list(self):
+        result = util.invoke_command(['os', 'object', 'list'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+        result = util.invoke_command(['os', 'object', 'list', '--bucket-name', 'b001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_object_list_object_versions(self):
+        result = util.invoke_command(['os', 'object', 'list-object-versions'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+        result = util.invoke_command(['os', 'object', 'list-object-versions', '--bucket-name', 'b001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_object_put(self):
+        result = util.invoke_command(['os', 'object', 'put'])
+        assert "Error: Missing option(s) --bucket-name, --file." in result.output
+
+        put_file_path = 'tests/resources/content_input.txt'
+        result = util.invoke_command(['os', 'object', 'put', '--bucket-name', 'b001', '--file', put_file_path, '--metadata', '{"Key": 2*3}'])
+        assert "Parameter 'metadata' must be in JSON format." in result.output
+
+        result = util.invoke_command(['os', 'object', 'put', '--bucket-name', 'b001', '--file', put_file_path, '--storage-tier', 'new-tier'])
+        assert "Error: Invalid value for '--storage-tier': invalid choice: new-tier. (choose from Standard, InfrequentAccess, Archive)" in result.output
+
+    def test_object_reencrypt(self):
+        result = util.invoke_command(['os', 'object', 'reencrypt'])
+        assert "Error: Missing option(s) --bucket-name, --object-name." in result.output
+
+    def test_object_rename(self):
+        result = util.invoke_command(['os', 'object', 'rename'])
+        assert "Error: Missing option(s) --bucket-name, --source-name, --new-name." in result.output
+
+    def test_object_restore(self):
+        result = util.invoke_command(['os', 'object', 'restore'])
+        assert "Error: Missing option(s) --bucket-name, --name." in result.output
+
+    def test_object_restore_status(self):
+        result = util.invoke_command(['os', 'object', 'restore-status'])
+        assert "Error: Missing option(s) --bucket-name, --name." in result.output
+
+    def test_object_resume_put(self):
+        result = util.invoke_command(['os', 'object', 'resume-put'])
+        assert "Error: Missing option(s) --bucket-name, --file, --upload-id." in result.output
+
+    def test_object_sync(self):
+        result = util.invoke_command(['os', 'object', 'sync'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+        result = util.invoke_command(['os', 'object', 'sync', '--bucket-name', 'b001', '--src-dir', 'd001', '--metadata', '{"Key": "Value"}'])
+        assert "UsageError: The specified --src-dir d001 (expanded to: d001) does not exist" in result.output
+
+        result = util.invoke_command(['os', 'object', 'sync', '--bucket-name', 'b001', '--dest-dir', 'd001', '--metadata', '{"Key": "Value"}'])
+        assert "UsageError: Option --metadata cannot be specified with --dest-dir" in result.output
+
+        result = util.invoke_command(['os', 'object', 'sync', '--bucket-name', 'b001', '--metadata', '{"Key": "Value"}'])
+        assert "UsageError: Either --src-dir or --dest-dir options must be specified" in result.output
+
+        result = util.invoke_command(['os', 'object', 'sync', '--bucket-name', 'b001', '--storage-tier', 'new-tier'])
+        assert "Error: Invalid value for '--storage-tier': invalid choice: new-tier. (choose from Standard, InfrequentAccess, Archive)" in result.output
+
+    def test_object_update_storage_tier(self):
+        result = util.invoke_command(['os', 'object', 'update-storage-tier'])
+        assert "Error: Missing option(s) --bucket-name, --object-name, --storage-tier." in result.output
+
+        result = util.invoke_command(['os', 'object', 'update-storage-tier', '--bucket-name', 'b001', '--object-name', 'o001', '--storage-tier', 'new-tier'])
+        assert "Error: Invalid value for '--storage-tier': invalid choice: new-tier. (choose from Standard, InfrequentAccess, Archive)" in result.output
+
+    def test_object_lifecycle_policy_delete(self):
+        result = util.invoke_command(['os', 'object-lifecycle-policy', 'delete'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+    def test_object_lifecycle_policy_get(self):
+        result = util.invoke_command(['os', 'object-lifecycle-policy', 'get'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+    def test_object_lifecycle_policy_put(self):
+        result = util.invoke_command(['os', 'object-lifecycle-policy', 'put'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+        result = util.invoke_command(['os', 'object-lifecycle-policy', 'put', '--bucket-name', 'b001', '--items', '{"key": 2*3}', '--force'])
+        assert "Parameter 'items' must be in JSON format." in result.output
+
+    def test_preauth_request_create(self):
+        result = util.invoke_command(['os', 'preauth-request', 'create'])
+        assert "Error: Missing option(s) --bucket-name, --name, --access-type, --time-expires." in result.output
+
+        result = util.invoke_command(['os', 'preauth-request', 'create', '--bucket-name', 'b001', '--name', 'par', '--access-type', 'new-access', '--time-expires', '2017-09-15T20:30:00.123456Z'])
+        assert "Error: Invalid value for '--access-type': invalid choice: new-access. (choose from ObjectRead, ObjectWrite, ObjectReadWrite, AnyObjectWrite, AnyObjectRead, AnyObjectReadWrite)" in result.output
+
+    def test_preauth_request_delete(self):
+        result = util.invoke_command(['os', 'preauth-request', 'delete'])
+        assert "Error: Missing option(s) --bucket-name, --par-id." in result.output
+
+    def test_preauth_request_get(self):
+        result = util.invoke_command(['os', 'preauth-request', 'get'])
+        assert "Error: Missing option(s) --bucket-name, --par-id." in result.output
+
+    def test_preauth_request_list(self):
+        result = util.invoke_command(['os', 'preauth-request', 'list'])
+        assert "Error: Missing option(s) --bucket-name." in result.output
+
+        result = util.invoke_command(['os', 'preauth-request', 'list', '--bucket-name', 'b001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_replication_create_replication_policy(self):
+        result = util.invoke_command(['os', 'replication', 'create-replication-policy'])
+        assert "Error: Missing option(s) --bucket-name, --name, --destination-region, --destination-bucket." in result.output
+
+    def test_replication_delete_replication_policy(self):
+        result = util.invoke_command(['os', 'replication', 'delete-replication-policy'])
+        assert "Error: Missing option(s) --bucket-name, --replication-id" in result.output
+
+    def test_replication_get_replication_policy(self):
+        result = util.invoke_command(['os', 'replication', 'get-replication-policy'])
+        assert "Error: Missing option(s) --bucket-name, --replication-id" in result.output
+
+    def test_replication_list_replication_policy(self):
+        result = util.invoke_command(['os', 'replication', 'list-replication-sources'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+        result = util.invoke_command(['os', 'replication', 'list-replication-sources', '--bucket-name', 'b001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_replication_make_bucket_writable(self):
+        result = util.invoke_command(['os', 'replication', 'make-bucket-writable'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+    def test_retention_rule_create(self):
+        result = util.invoke_command(['os', 'retention-rule', 'create'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+    def test_retention_rule_delete(self):
+        result = util.invoke_command(['os', 'retention-rule', 'delete'])
+        assert "Error: Missing option(s) --bucket-name, --retention-rule-id" in result.output
+
+    def test_retention_rule_get(self):
+        result = util.invoke_command(['os', 'retention-rule', 'get'])
+        assert "Error: Missing option(s) --bucket-name, --retention-rule-id" in result.output
+
+    def test_retention_rule_list(self):
+        result = util.invoke_command(['os', 'retention-rule', 'list'])
+        assert "Error: Missing option(s) --bucket-name" in result.output
+
+    def test_retention_rule_update(self):
+        result = util.invoke_command(['os', 'retention-rule', 'update'])
+        assert "Error: Missing option(s) --bucket-name, --retention-rule-id" in result.output
+
+    def test_work_request_cancel(self):
+        result = util.invoke_command(['os', 'work-request', 'cancel'])
+        assert "Error: Missing option(s) --work-request-id" in result.output
+
+    def test_work_request_get(self):
+        result = util.invoke_command(['os', 'work-request', 'get'])
+        assert "Error: Missing option(s) --work-request-id" in result.output
+
+    def test_work_request_list(self):
+        result = util.invoke_command(['os', 'work-request', 'list'])
+        assert "Error: Missing option(s) --compartment-id" in result.output
+
+        result = util.invoke_command(['os', 'work-request', 'list', '--compartment-id', 'c001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_work_request_error_list(self):
+        result = util.invoke_command(['os', 'work-request-error', 'list'])
+        assert "Error: Missing option(s) --work-request-id" in result.output
+
+        result = util.invoke_command(['os', 'work-request-error', 'list', '--work-request-id', 'wri001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output
+
+    def test_work_request_log_entry_list(self):
+        result = util.invoke_command(['os', 'work-request-log-entry', 'list'])
+        assert "Error: Missing option(s) --work-request-id" in result.output
+
+        result = util.invoke_command(['os', 'work-request-log-entry', 'list', '--work-request-id', 'wr001', '--all', '--limit', '4'])
+        assert "UsageError: If you provide the --all option you cannot provide the --limit option" in result.output

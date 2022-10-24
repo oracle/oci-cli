@@ -32,7 +32,7 @@ class TestFunctions(unittest.TestCase):
         assert '--compartment-id' in result.output
         assert '--subnet-ids' in result.output
         result = util.invoke_command(['fn', 'application', 'create', '--config'])
-        assert 'Error: --config option requires an argument' in result.output
+        assert 'Error: Option \'--config\' requires an argument' in result.output
 
     def test_application_delete(self):
         result = util.invoke_command(['fn', 'application', 'delete'])
@@ -44,7 +44,7 @@ class TestFunctions(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--application-id' in result.output
         result = util.invoke_command(['fn', 'application', 'update', '--config'])
-        assert 'Error: --config option requires an argument' in result.output
+        assert 'Error: Option \'--config\' requires an argument' in result.output
 
     def test_application_list(self):
         result = util.invoke_command(['fn', 'application', 'list'])
@@ -79,9 +79,9 @@ class TestFunctions(unittest.TestCase):
         assert '--image' in result.output
         assert '--memory-in-mbs' in result.output
         result = util.invoke_command(['fn', 'function', 'create', '--memory-in-mbs', 'x'])
-        assert "Error: Invalid value for '--memory-in-mbs': x is not a valid integer" in result.output
+        assert "Error: Invalid value for '--memory-in-mbs': \'x\' is not a valid integer" in result.output
         result = util.invoke_command(['fn', 'function', 'create', '--config'])
-        assert 'Error: --config option requires an argument' in result.output
+        assert 'Error: Option \'--config\' requires an argument' in result.output
 
     def test_function_delete(self):
         result = util.invoke_command(['fn', 'function', 'delete'])
@@ -93,11 +93,11 @@ class TestFunctions(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--function-id' in result.output
         result = util.invoke_command(['fn', 'function', 'update', '--memory-in-mbs', 'x'])
-        assert "Error: Invalid value for '--memory-in-mbs': x is not a valid integer" in result.output
+        assert "Error: Invalid value for '--memory-in-mbs': \'x\' is not a valid integer" in result.output
         result = util.invoke_command(['fn', 'function', 'update', '--image'])
-        assert 'Error: --image option requires an argument' in result.output
+        assert 'Error: Option \'--image\' requires an argument' in result.output
         result = util.invoke_command(['fn', 'function', 'update', '--config'])
-        assert 'Error: --config option requires an argument' in result.output
+        assert 'Error: Option \'--config\' requires an argument' in result.output
 
     def test_function_list(self):
         result = util.invoke_command(['fn', 'function', 'list'])
