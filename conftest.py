@@ -174,7 +174,7 @@ def runner():
             except TypeError:
                 new_output_bytes = cleaned_output
             finally:
-                result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+                result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
 
         return result
 
@@ -183,11 +183,19 @@ def runner():
 
 
 @pytest.fixture(scope='session')
-def test_id():
+def test_id(request):
+    is_recording_test = request.config.getoption("--run-recordable-tests-only")
+    if is_recording_test:
+        return '1000000'
+    return str(random.randint(0, 1000000))
+
+
+@pytest.fixture(scope='session')
+def test_id_recorded(test_id):
     if test_config_container.using_vcr_with_mock_responses():
         return '1000000'
     else:
-        return str(random.randint(0, 1000000))
+        return test_id
 
 
 @pytest.fixture(scope='session')
@@ -417,11 +425,11 @@ def vcn_and_subnets(network_client):
 
 
 @pytest.fixture(scope='session')
-def tag_namespace_and_tags(identity_client, test_id):
+def tag_namespace_and_tags(identity_client, test_id_recorded):
     with test_config_container.create_vcr().use_cassette('_conftest_fixture_tag_namespace_and_tags.yml',
                                                          match_on=['method', 'scheme', 'host', 'port', 'vcr_query_matcher']):
         if not os.environ.get('OCI_CLI_TAG_NAMESPACE_ID'):
-            tag_namespace_name = 'cli_tag_ns_{}'.format(test_id)
+            tag_namespace_name = 'cli_tag_ns_{}'.format(test_id_recorded)
             create_tag_namespace_response = identity_client.create_tag_namespace(
                 oci.identity.models.CreateTagNamespaceDetails(
                     compartment_id=os.environ['OCI_CLI_COMPARTMENT_ID'],
@@ -446,7 +454,7 @@ def tag_namespace_and_tags(identity_client, test_id):
 
         tags = []
         if not os.environ.get('OCI_CLI_TAG_ONE_NAME'):
-            tag_one_name = 'cli_tag_{}'.format(test_id)
+            tag_one_name = 'cli_tag_{}'.format(test_id_recorded)
             create_tag_response = identity_client.create_tag(
                 tag_namespace.id,
                 oci.identity.models.CreateTagDetails(name=tag_one_name, description='CLI integration test tag')
@@ -457,7 +465,7 @@ def tag_namespace_and_tags(identity_client, test_id):
             tags.append(get_and_reactivate_tag(identity_client, tag_namespace, os.environ.get('OCI_CLI_TAG_ONE_NAME')))
 
         if not os.environ.get('OCI_CLI_TAG_TWO_NAME'):
-            tag_two_name = 'cli_tag2_{}'.format(test_id)
+            tag_two_name = 'cli_tag2_{}'.format(test_id_recorded)
             create_tag_response = identity_client.create_tag(
                 tag_namespace.id,
                 oci.identity.models.CreateTagDetails(name=tag_two_name, description='CLI integration test tag')

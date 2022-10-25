@@ -42,7 +42,7 @@ cli_util.rename_command(optimizer_cli, optimizer_cli.resource_action_summary_gro
 @optimizer_cli.resource_action_summary_group.command(name=optimizer_cli.filter_resource_actions.name, help=optimizer_cli.filter_resource_actions.help)
 @cli_util.option('--filter-query', help=u"""The query describing which resources to search for. For more information, see [Query Language Syntax].""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
 @cli_util.wrap_exceptions
 def filter_resource_actions_extended(ctx, **kwargs):
     if 'filter_query' in kwargs:

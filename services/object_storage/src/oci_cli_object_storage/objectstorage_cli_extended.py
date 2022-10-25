@@ -44,6 +44,8 @@ from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_
     WorkPoolTaskCallbacksContainer
 from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager.delete_tasks import \
     DeleteUploadTask, DeleteReplicationPolicyTask, DeletePreAuthenticatedRequestTask, DeleteObjectTask
+from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager.wrapped_semaphore import \
+    WrappedSemaphore
 
 
 def is_python2():
@@ -1586,9 +1588,9 @@ def update_local_file_mtime(files_to_process):
                  help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--src-dir',
-                 help='The directory from which the files will be synced to a bucket as objects. A local file will require uploading if the size of the local file is different than the size of the object, the last modified time of the local file is newer than the last modified time of the object, or the local file does not exist under the specified bucket and prefix.')
+                 help='Required when not specifying --dest-dir. The directory from which the files will be synced to a bucket as objects. A local file will require uploading if the size of the local file is different than the size of the object, the last modified time of the local file is newer than the last modified time of the object, or the local file does not exist under the specified bucket and prefix.')
 @cli_util.option('--dest-dir',
-                 help='The directory into which objects in a bucket will be synced as files. This directory will be created if it does not exist. An object will require downloading if it does not exist in the local directory or if it exists, either the size of the object differs from the size of the local file or the last modified time of the object is newer than the last modified time of the local file. Objects in Archive tier which have not been restored will not be downloaded.')
+                 help='Required when not specifying --src-dir. The directory into which objects in a bucket will be synced as files. This directory will be created if it does not exist. An object will require downloading if it does not exist in the local directory or if it exists, either the size of the object differs from the size of the local file or the last modified time of the object is newer than the last modified time of the local file. Objects in Archive tier which have not been restored will not be downloaded.')
 @cli_util.option('--cache-control', help=cache_control_option_help_text)
 @cli_util.option('--content-disposition', help=content_disposition_option_help_text)
 @cli_util.option('--content-encoding', help=content_encoding_option_help_text)
@@ -3184,6 +3186,8 @@ class ProgressBar:
         self._last_progress = 0
         self._progressbar = click.progressbar(length=ProgressBar.PROGRESS_BAR_GRANULARITY,
                                               label=label, file=sys.stderr)
+        # To synchronize as same progressbar is being shared between the threads
+        self._semaphore = WrappedSemaphore(1)
 
     def __enter__(self):
         self._progressbar.__enter__()
@@ -3209,6 +3213,7 @@ class ProgressBar:
         self.update(bytes_read)
 
     def reset_progress(self, total_bytes, new_label):
+        self._semaphore.acquire()
         self._progressbar.label = new_label
         self._progressbar.pos = 0
         self._progressbar.avg = []
@@ -3217,12 +3222,15 @@ class ProgressBar:
         self._total_bytes = total_bytes
         self._last_progress = 0
         self._total_progress_bytes = 0
+        self._semaphore.release()
 
     def update_label_to_end(self, new_label):
+        self._semaphore.acquire()
         self._progressbar.label = new_label
         self._progressbar.finished = True
         self._progressbar.render_progress()
         print()
+        self._semaphore.release()
 
     def render_finish(self):
         self._progressbar.render_finish()

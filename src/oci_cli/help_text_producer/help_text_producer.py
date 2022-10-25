@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, run
 
 import contextlib
 import os
@@ -19,7 +19,7 @@ def render_help_text(ctx, command_chain=[]):
         _render_help_windows(ctx, command_chain)
 
     # We need groff to format our man page text, so if it doesn't exist then fall back to click help
-    if _exists_on_path('groff'):
+    if _exists_on_path('man'):
         _render_help_posix_with_groff(ctx, command_chain)
 
 
@@ -48,19 +48,8 @@ def _render_help_posix_with_groff(ctx, command_chain):
     target_man_page = os.path.join(man_page_folder, '{}.1'.format('_'.join(command_chain)))
 
     if os.path.exists(target_man_page):
-        groff_converter_cmd = ['groff', '-m', 'man', '-T', 'ascii', '-rHY=0']
-
-        p3 = Popen(groff_converter_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        with open(target_man_page, 'rb') as f:
-            groff_output = p3.communicate(input=f.read())[0]
-
-        if not _exists_on_path('less'):
-            ctx.echo(groff_output)
-        else:
-            # We need to ignore the keyboard interrupt so we don't kill less and render the user's terminal unusable
-            with _ignore_ctrl_c():
-                p = Popen(['less', '-R'], stdin=PIPE)
-                p.communicate(input=groff_output)
+        man_formatting_cmd = ['man', target_man_page]
+        run(man_formatting_cmd)
 
         sys.exit()
 

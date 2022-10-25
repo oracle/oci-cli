@@ -10,7 +10,6 @@ import random
 import pytest
 
 import test_object_storage_bulk_operations as bulk_operation
-from tests import test_config_container
 from tests import util
 
 OBJECTS_TO_CREATE_IN_REMOTE_FOR_SYNC = 20
@@ -27,13 +26,6 @@ sync_remote_prefixes = {
     'a': [],
     '': []
 }
-
-
-@pytest.fixture
-def vcr_fixture(request):
-    with test_config_container.create_vcr(cassette_library_dir='services/object_storage/tests/cassettes').use_cassette(
-            'object_storage_sync_{name}.yml'.format(name=request.function.__name__)):
-        yield
 
 
 @pytest.fixture(params=[False])
@@ -89,6 +81,7 @@ def teardown(debug):
         shutil.rmtree(sync_download_test_dir)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_dry_run(debug):
     """
     1. Check for UsageError for incorrect params
@@ -124,6 +117,7 @@ def test_sync_dest_dry_run(debug):
     assert skipped_set == set()
 
 
+@util.skip_while_rerecording
 def test_sync_dest():
     """
     1. Download the files to local and validate the output and file contents
@@ -135,6 +129,7 @@ def test_sync_dest():
         sync_download_test_dir)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_updated_objects(object_storage_client):
     """
     1. Download all the objects to destination directory
@@ -169,6 +164,7 @@ def test_sync_dest_updated_objects(object_storage_client):
                                   files_in_scope=[f_diff_content, f_same_content])
 
 
+@util.skip_while_rerecording
 def test_sync_dest_new_objects(object_storage_client):
     """
     1. Download the files to local and validate the output and file contents
@@ -196,6 +192,7 @@ def test_sync_dest_new_objects(object_storage_client):
         object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, new_object_name)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_include_dry_run(debug):
     """
     1. Select one object from remote and perform a --dry-run by specifying the same file name in --include.
@@ -211,6 +208,7 @@ def test_sync_dest_include_dry_run(debug):
     assert downloaded_set == {file_name_to_sync}
 
 
+@util.skip_while_rerecording
 def test_sync_dest_include(debug):
     """
     1. Select one object from remote and download that by passing that parameter to --include
@@ -241,6 +239,7 @@ def test_sync_dest_include(debug):
     assert file_name_to_include in parsed_result['skipped-objects']
 
 
+@util.skip_while_rerecording
 def test_sync_dest_exclude_dry_run(debug):
     """
     1. Select one object from local and perform a --dry-run by specifying it in --exclude
@@ -256,6 +255,7 @@ def test_sync_dest_exclude_dry_run(debug):
     assert file_name_to_exclude not in downloaded_set
 
 
+@util.skip_while_rerecording
 def test_sync_dest_exclude(debug):
     """
     1. Select one object from remote and sync against local by specifying it in --exclude
@@ -276,6 +276,7 @@ def test_sync_dest_exclude(debug):
                                   sync_download_test_dir)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_dir_prefix(debug):
     """
     1. Set a prefix to apply to all the transactions during sync
@@ -321,6 +322,7 @@ def test_sync_dest_dir_prefix(debug):
     compare_file_content_to_local(new_object_content_map, sync_download_test_dir)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_with_delete(debug):
     """
     1. Perform a --dry-run against a blank local by specifying --delete option.
@@ -368,6 +370,69 @@ def test_sync_dest_with_delete(debug):
     assert set(parsed_result['deleted-files']) == new_local_file_set
 
 
+@util.skip_while_rerecording
+def test_sync_dest_with_delete_empty_folders(debug):
+    """
+    1. Perform a --dry-run against a blank local by specifying --delete option.
+    2. Verify that all objects gets transferred and nothing gets deleted because there are no extra objects in local.
+    3. Download all the objects from remote to local and note the count of folders in local
+    4. Create new empty folders in local
+    5. Perform a --dry-run against the updated local with the same parameter as before.
+    6. This time all the remote objects should be present in local as we downloaded them earlier so we expect them
+        to get skipped
+    7. Validate that none of the folders from local are deleted in the dry-run and no. of folders in our local is equal
+        to what we created + what we downloaded from remote
+    8. Now perform an actual sync with --dest-dir and --delete option
+    7. Validate that all the empty folders created locally get deleted and folders downloaded from remote remains
+    """
+
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    '--dry-run'], debug=debug)
+
+    deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
+
+    assert len(deleted_set) == 0
+    assert len(downloaded_set) == len(sync_remote_object_content.keys())
+    assert len(skipped_set) == 0
+
+    download_and_validate_all_objects()
+
+    local_folders_from_remote = next(os.walk(sync_download_test_dir))[1]  # local folders created due to sync from remote
+
+    new_local_empty_folder_set = create_empty_folders_local(sync_download_test_dir, 10)
+
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    '--dry-run'], debug=debug)
+
+    deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
+
+    assert len(downloaded_set) == 0
+    assert len(skipped_set) == len(sync_remote_object_content.keys())
+    assert len(deleted_set) == 0  # As no files are present in dest-dir, only empty folders
+
+    # Validate that no. of folders in dest-dir is equal to the no. of folders created from remote sync + empty folders created locally
+    assert len(new_local_empty_folder_set) + len(local_folders_from_remote) == len(
+        next(os.walk(sync_download_test_dir))[1])
+
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete'],
+                                   debug=debug)
+
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['download-failures'] == {}
+    assert parsed_result['downloaded-objects'] == []
+    assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
+    assert len(parsed_result['deleted-files']) == 0  # As no files are present in dest-dir, only empty folders
+
+    # Validate that no. of folders in dest-dir are only in remote bucket as there cannot
+    # be any empty folder in remote source bucket and
+    # sync command was executed with --delete option so all the empty folders in dest-dir should be deleted
+    assert len(next(os.walk(sync_download_test_dir))[1]) == len(local_folders_from_remote)
+
+
+@util.skip_while_rerecording
 def test_sync_dest_with_delete_and_include(object_storage_client):
     """
     1. Create new set of objects in remote with .pdf and .doc extensions.
@@ -425,6 +490,7 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_dest_with_delete_and_exclude(object_storage_client):
     """
     1. Create new set of objects in remote with .pdf and .doc extensions.
@@ -482,6 +548,7 @@ def test_sync_dest_with_delete_and_exclude(object_storage_client):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_dest_with_delete_and_prefix(debug):
     """
     1. Create an empty directory for prefix test.
@@ -529,6 +596,7 @@ def test_sync_dest_with_delete_and_prefix(debug):
                                    if k.startswith(prefix_to_sync)}, prefix_test_path)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     """
     Assert that scope of file transfer and delete is only limited to --include pattern
@@ -598,6 +666,7 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2).union(r_obj_set_3))
 
 
+@util.skip_while_rerecording
 def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
     """
     Assert that scope of file transfer and delete is only limited to --exclude pattern
@@ -663,6 +732,7 @@ def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_between_src_and_dest(debug):
     """
     1. Download and validate all objects from the remote
@@ -714,6 +784,7 @@ def test_sync_between_src_and_dest(debug):
     assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
 
 
+@util.skip_while_rerecording
 def test_sync_dest_validate_unsupported_params(debug):
     """
     Validate that the following parameters can not be specified with --dest-dir:
@@ -747,6 +818,7 @@ def test_sync_dest_validate_unsupported_params(debug):
         assert '--dest-dir' in result.output
 
 
+@util.skip_while_rerecording
 def test_sync_dest_skip_archived_objects(object_storage_client, debug):
     """
     1. Upload an archived tier object to the remote using the os client.
@@ -773,6 +845,7 @@ def test_sync_dest_skip_archived_objects(object_storage_client, debug):
     object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, archived_object)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_when_bucket_name_is_invalid(debug):
     """
     Run the sync command specifying --dest-dir using an invalid bucket name and validate that it throws a ServiceError
@@ -836,6 +909,16 @@ def create_new_files_local(path, no_of_files_to_create, with_content=False, exte
                 fh.write(bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH))
         new_local_file_set.add(new_file_path.replace(os.sep, '/'))
     return new_local_file_set
+
+
+def create_empty_folders_local(path, no_of_folders_to_create):
+    # create new folders in local
+    new_local_folder_set = set()
+    for i in range(no_of_folders_to_create):
+        new_folder_path = os.path.join(path, 'new_folder_{}/'.format(i))
+        Path(os.path.dirname(new_folder_path)).mkdir(parents=True, exist_ok=True)
+        new_local_folder_set.add(new_folder_path)
+    return new_local_folder_set
 
 
 def cleanup_files_from_local(file_set):

@@ -6,6 +6,74 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.19.0 - 2022-10-25
+--------------------
+Added
+~~~~~~~~
+
+* Support for Full Stack Disaster Recovery service
+
+  * ``oci disaster-recovery``
+
+* The AI Language service
+
+  * Support for the Language custom models
+
+    * ``oci ai language project``
+    * ``oci ai language model``
+    * ``oci ai language endpoint``
+
+  * Support for the language translation
+
+    * ``oci ai language batch-language-translation``
+
+  * Support for new optional parameters in the batch service
+
+    * ``oci ai language batch-detect-entities --compartment-id --endpoint-id``
+    * ``oci ai language batch-detect-key-phrases --compartment-id``
+    * ``oci ai language batch-detect-language --compartment-id``
+    * ``oci ai language batch-detect-sentiments --compartment-id``
+    * ``oci ai language batch-detect-text-classification --compartment-id --endpoint-id``
+
+* Data Flow Service
+
+  * Support for running code interactively with Session Applications using Statement resource
+
+    * ``oci data-flow statement create --code --run-id``
+    * ``oci data-flow statement delete --run-id --statement-id``
+    * ``oci data-flow statement get --run-id --statement-id``
+    * ``ooci data-flow statement list --run-id``
+
+  * Support for new optional parameters
+
+    * ``oci data-flow application create --idle-timeout-in-minutes --max-duration-in-minutes``
+    * ``oci data-flow application update --idle-timeout-in-minutes --max-duration-in-minutes``
+    * ``oci data-flow run create --idle-timeout-in-minutes --max-duration-in-minutes``
+    * ``oci data-flow run submit --idle-timeout-in-minutes --max-duration-in-minutes``
+    * ``oci data-flow run update --idle-timeout-in-minutes --max-duration-in-minutes``
+
+* Support for using combination of environment variable and other required parameter in commands ,if config file is not present 
+
+Fixed
+~~~~~
+
+* Fixed mismatched help text format when using ``--help``
+
+Changed
+~~~~~~~
+
+* Dependency on click is upgraded to 8.0.4
+
+* Data Flow Service
+
+  * [BREAKING] The parameter --file-url has been removed from the below command
+
+    * ``oci data-flow application create``
+
+  * [BREAKING] The parameters --defined-tags, --force, --freeform-tags, --if-match, --max-wait-seconds, --wait-for-state, --wait-interval-seconds have been deleted from the below command
+
+    * ``oci data-flow statement list``
+
 3.18.1 - 2022-10-04
 --------------------
 Added

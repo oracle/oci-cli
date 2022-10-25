@@ -1145,7 +1145,7 @@ cli_util.rename_command(dataintegration_cli, dataintegration_cli.task_run_lineag
 @cli_util.option('--time-updated-gte', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated after and at a certain time. The format of timeUpdatedGreaterThanOrEqualTo is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @dataintegration_cli.task_run_lineage_summary_collection_group.command(name=cli_util.override('data_integration.list_dis_application_task_run_lineages.command_name', 'list-dis-application-task-run-lineages'), help=u"""This endpoint can be used to list Task Run Lineages within a given time window. \n[Command Reference](listDisApplicationTaskRunLineages)""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'filter': {'module': 'data_integration', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def list_dis_application_task_run_lineages_extended(ctx, **kwargs):
     if 'time_upated_lte' in kwargs:
@@ -1169,7 +1169,7 @@ def list_dis_application_task_run_lineages_extended(ctx, **kwargs):
 @cli_util.option('--time-updated-gte', type=custom_types.CLI_DATETIME, help=u"""This parameter allows users to get objects which were updated after and at a certain time. The format of timeUpdatedGreaterThanOrEqualTo is \"YYYY-MM-dd'T'HH:mm:ss.SSS'Z'\"""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @dataintegration_cli.task_run_lineage_summary_collection_group.command(name=cli_util.override('data_integration.list_task_run_lineages.command_name', 'list-task-run-lineages'), help=u"""This endpoint can be used to list Task Run Lineages within a given time window. \n[Command Reference](listTaskRunLineages)""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'filter': {'module': 'data_integration', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def list_task_run_lineages_extended(ctx, **kwargs):
     if 'time_upated_lte' in kwargs:

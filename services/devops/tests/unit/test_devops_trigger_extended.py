@@ -29,73 +29,73 @@ class TestDevopsBuildApi(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--project-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--project-id'])
-        assert 'Error: --project-id option requires an argument' in result.output
+        assert 'Error: Option \'--project-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--description'])
-        assert 'Error: --description option requires an argument' in result.output
+        assert 'Error: Option \'--description\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--actions'])
-        assert 'Error: --actions option requires an argument' in result.output
+        assert 'Error: Option \'--actions\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--repository-id'])
-        assert 'Error: --repository-id option requires an argument' in result.output
+        assert 'Error: Option \'--repository-id\' requires an argument' in result.output
         result = util.invoke_command(
             ['devops', 'trigger', 'create-devops-code-repo-trigger', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(
             ['devops', 'trigger', 'create-devops-code-repo-trigger', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-devops-code-repo-trigger', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_github_trigger_create(self):
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger'])
         assert 'Error: Missing option(s)' in result.output
         assert '--project-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--project-id'])
-        assert 'Error: --project-id option requires an argument' in result.output
+        assert 'Error: Option \'--project-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--description'])
-        assert 'Error: --description option requires an argument' in result.output
+        assert 'Error: Option \'--description\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--actions'])
-        assert 'Error: --actions option requires an argument' in result.output
+        assert 'Error: Option \'--actions\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-github-trigger', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_gitlab_trigger_create(self):
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger'])
         assert 'Error: Missing option(s)' in result.output
         assert '--project-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--project-id'])
-        assert 'Error: --project-id option requires an argument' in result.output
+        assert 'Error: Option \'--project-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--description'])
-        assert 'Error: --description option requires an argument' in result.output
+        assert 'Error: Option \'--description\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--actions'])
-        assert 'Error: --actions option requires an argument' in result.output
+        assert 'Error: Option \'--actions\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'create-gitlab-trigger', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_trigger_get(self):
         result = util.invoke_command(['devops', 'trigger', 'get'])
@@ -107,109 +107,109 @@ class TestDevopsBuildApi(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--trigger-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--trigger-id'])
-        assert 'Error: --trigger-id option requires an argument' in result.output
+        assert 'Error: Option \'--trigger-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--description'])
-        assert 'Error: --description option requires an argument' in result.output
+        assert 'Error: Option \'--description\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--actions'])
-        assert 'Error: --actions option requires an argument' in result.output
+        assert 'Error: Option \'--actions\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--repository-id'])
-        assert 'Error: --repository-id option requires an argument' in result.output
+        assert 'Error: Option \'--repository-id\' requires an argument' in result.output
         result = util.invoke_command(
             ['devops', 'trigger', 'update-devops-code-repo-trigger', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(
             ['devops', 'trigger', 'update-devops-code-repo-trigger', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-devops-code-repo-trigger', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_github_trigger_update(self):
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger'])
         assert 'Error: Missing option(s)' in result.output
         assert '--trigger-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--trigger-id'])
-        assert 'Error: --trigger-id option requires an argument' in result.output
+        assert 'Error: Option \'--trigger-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--description'])
-        assert 'Error: --description option requires an argument' in result.output
+        assert 'Error: Option \'--description\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--actions'])
-        assert 'Error: --actions option requires an argument' in result.output
+        assert 'Error: Option \'--actions\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-github-trigger', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_gitlab_trigger_update(self):
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger'])
         assert 'Error: Missing option(s)' in result.output
         assert '--trigger-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--trigger-id'])
-        assert 'Error: --trigger-id option requires an argument' in result.output
+        assert 'Error: Option \'--trigger-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--description'])
-        assert 'Error: --description option requires an argument' in result.output
+        assert 'Error: Option \'--description\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--actions'])
-        assert 'Error: --actions option requires an argument' in result.output
+        assert 'Error: Option \'--actions\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--defined-tags'])
-        assert 'Error: --defined-tags option requires an argument' in result.output
+        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'update-gitlab-trigger', '--freeform-tags'])
-        assert 'Error: --freeform-tags option requires an argument' in result.output
+        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
 
     def test_trigger_delete(self):
         result = util.invoke_command(['devops', 'trigger', 'delete'])
         assert 'Error: Missing option(s)' in result.output
         assert '--trigger-id' in result.output
         result = util.invoke_command(['devops', 'trigger', 'delete', '--trigger-id'])
-        assert 'Error: --trigger-id option requires an argument' in result.output
+        assert 'Error: Option \'--trigger-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'delete', '--if-match'])
-        assert 'Error: --if-match option requires an argument' in result.output
+        assert 'Error: Option \'--if-match\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'delete', '--max-wait-seconds'])
-        assert 'Error: --max-wait-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'delete', '--wait-interval-seconds'])
-        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
+        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'delete', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output
 
     def test_trigger_list(self):
         result = util.invoke_command(['devops', 'trigger', 'list', '--id'])
-        assert 'Error: --id option requires an argument' in result.output
+        assert 'Error: Option \'--id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--project-id'])
-        assert 'Error: --project-id option requires an argument' in result.output
+        assert 'Error: Option \'--project-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--compartment-id'])
-        assert 'Error: --compartment-id option requires an argument' in result.output
+        assert 'Error: Option \'--compartment-id\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--lifecycle-state'])
-        assert 'Error: --lifecycle-state option requires an argument' in result.output
+        assert 'Error: Option \'--lifecycle-state\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--limit'])
-        assert 'Error: --limit option requires an argument' in result.output
+        assert 'Error: Option \'--limit\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--page'])
-        assert 'Error: --page option requires an argument' in result.output
+        assert 'Error: Option \'--page\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--page-size'])
-        assert 'Error: --page-size option requires an argument' in result.output
+        assert 'Error: Option \'--page-size\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--sort-order'])
-        assert 'Error: --sort-order option requires an argument' in result.output
+        assert 'Error: Option \'--sort-order\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--sort-by'])
-        assert 'Error: --sort-by option requires an argument' in result.output
+        assert 'Error: Option \'--sort-by\' requires an argument' in result.output
         result = util.invoke_command(['devops', 'trigger', 'list', '--from-json'])
-        assert 'Error: --from-json option requires an argument' in result.output
+        assert 'Error: Option \'--from-json\' requires an argument' in result.output

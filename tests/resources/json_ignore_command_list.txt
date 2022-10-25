@@ -22,15 +22,14 @@ rover, standalone-cluster, set-secrets
 rover, node, set-secrets
 rover, create-master-key-policy
 waas, protection-settings, update
+waas, certificate, list
+waas, custom-protection-rule, list
+waas, http-redirect, list
+waas, waas-policy, list
 db, external-non-cdb, enable-operations-insights
 db, external-pdb, enable-operations-insights
 network, virtual-circuit, create
 network, virtual-circuit, update
 db, database, create
-stack-monitoring, resource, create
-stack-monitoring, resource, updateopsi, host-insights, list
-stack-monitoring, resource, update
-service-mesh, debug, reportdata-connectivity, connection-validation, delete
-data-connectivity, connection-validation, get
-data-connectivity, connection-validation, list
-data-connectivity, work-request, list
+data-integration, data-asset, create
+data-integration, data-asset, update

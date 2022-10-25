@@ -86,6 +86,7 @@ def teardown(debug):
                            sync_upload_bucket_name, '--force'], debug=debug)
 
 
+@util.skip_while_rerecording
 def test_sync_src_dry_run(object_storage_client, debug):
     """
     1. Check for UsageError for incorrect params
@@ -103,6 +104,7 @@ def test_sync_src_dry_run(object_storage_client, debug):
     assert skipped_set == set()
 
 
+@util.skip_while_rerecording
 def test_sync_src(object_storage_client):
     """
     1. Upload the files to remote.
@@ -114,6 +116,7 @@ def test_sync_src(object_storage_client):
                                                                      sync_upload_bucket_name))
 
 
+@util.skip_while_rerecording
 def test_sync_src_updated_objects(object_storage_client):
     """
     1. Upload all the objects from src directory
@@ -158,6 +161,7 @@ def test_sync_src_updated_objects(object_storage_client):
         os.utime(fp_f_same_content, (original_mtime, original_mtime))
 
 
+@util.skip_while_rerecording
 def test_sync_src_new_objects(object_storage_client):
     """
     1. Upload the files to remote and validate the output and file contents
@@ -188,6 +192,7 @@ def test_sync_src_new_objects(object_storage_client):
         os.remove(new_file_path)
 
 
+@util.skip_while_rerecording
 def test_sync_src_include_dry_run(debug):
     """
     1. Randomly select one file from local and perform a --dry-run on the remote
@@ -205,6 +210,7 @@ def test_sync_src_include_dry_run(debug):
     assert skipped_set == set()
 
 
+@util.skip_while_rerecording
 def test_sync_src_include(object_storage_client, debug):
     """
     1. Randomly select one file from local and upload that by passing that parameter to --include
@@ -236,6 +242,7 @@ def test_sync_src_include(object_storage_client, debug):
     assert file_name_to_include in parsed_result['skipped-objects']
 
 
+@util.skip_while_rerecording
 def test_sync_src_exclude_dry_run(debug):
     """
     1. Randomly select one file from local and perform a --dry-run on the remote specifying it in --exclude
@@ -253,6 +260,7 @@ def test_sync_src_exclude_dry_run(debug):
     assert skipped_set == set()
 
 
+@util.skip_while_rerecording
 def test_sync_src_exclude(object_storage_client, debug):
     """
     1. Randomly select one file from local and sync against remote by specifying it in --exclude
@@ -276,6 +284,7 @@ def test_sync_src_exclude(object_storage_client, debug):
                                    objects_in_scope=objects_transferred)
 
 
+@util.skip_while_rerecording
 def test_sync_dest_dir_prefix(object_storage_client, debug):
     """
     1. Set a prefix to apply to all the transactions during sync
@@ -315,6 +324,7 @@ def test_sync_dest_dir_prefix(object_storage_client, debug):
     compare_file_content_to_remote(object_storage_client, new_object_content_map, prefix_to_test=prefix_to_sync)
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete(object_storage_client, debug):
     """
     1. Perform a --dry-run against a blank remote by specifying --delete option.
@@ -364,6 +374,7 @@ def test_sync_src_with_delete(object_storage_client, debug):
     assert set(parsed_result['deleted-objects']) == new_local_file_set
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete_paging(object_storage_client, debug):
     """
     1. Perform a --dry-run against a blank remote by specifying --delete option.
@@ -413,6 +424,7 @@ def test_sync_src_with_delete_paging(object_storage_client, debug):
     assert set(parsed_result['deleted-objects']) == new_local_file_set
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete_and_include(object_storage_client):
     """
     1. Create new set of objects in local with .pdf and .doc extensions.
@@ -470,6 +482,7 @@ def test_sync_src_with_delete_and_include(object_storage_client):
     cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete_and_exclude(object_storage_client, debug):
     """
     1. Create new set of objects in local with .pdf and .doc extensions.
@@ -527,6 +540,7 @@ def test_sync_src_with_delete_and_exclude(object_storage_client, debug):
     cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete_and_prefix(object_storage_client, debug):
     """
     1. Start with a fresh bucket
@@ -586,6 +600,7 @@ def test_sync_src_with_delete_and_prefix(object_storage_client, debug):
     compare_file_content_to_remote(object_storage_client, new_content_map, prefix_to_test=prefix_to_sync)
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug):
     """
     Assert that scope of file transfer and delete is only limited to --include pattern within the bucket prefix
@@ -651,6 +666,7 @@ def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug):
     cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug):
     """
     Assert that scope of file transfer and delete is only limited to --exclude pattern within the bucket prefix
@@ -715,6 +731,7 @@ def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug):
     cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_content_headers(object_storage_client, debug):
     """
     1. Perform a sync with all the content headers, metadata
@@ -750,6 +767,7 @@ def test_sync_src_with_content_headers(object_storage_client, debug):
             assert head_resp.headers['opc-meta-' + k] == metadata_headers[k]
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_no_follow_symlinks_file(debug):
     """
     1. Create a symlink to randomly point to a file within the tree
@@ -785,6 +803,7 @@ def test_sync_src_with_no_follow_symlinks_file(debug):
     os.unlink(symlink_fp)
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_no_follow_symlinks_dir(debug):
     """
     1. Create a symlink to randomly point to a dir
@@ -821,6 +840,7 @@ def test_sync_src_with_no_follow_symlinks_dir(debug):
     os.unlink(symlink_fp)
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_follow_symlinks_file(object_storage_client, debug):
     """
     1. Create a symlink to randomly point to a file within the tree
@@ -856,6 +876,7 @@ def test_sync_src_with_follow_symlinks_file(object_storage_client, debug):
     os.unlink(symlink_fp)
 
 
+@util.skip_while_rerecording
 def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
     """
     1. Create a symlink to randomly point to a dir within the tree
@@ -908,6 +929,7 @@ def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
     os.unlink(symlink_fp)
 
 
+@util.skip_while_rerecording
 def test_sync_src_when_bucket_name_is_invalid(debug):
     """
     Run the sync command specifying --src-dir using an invalid bucket name and validate that it throws a ServiceError

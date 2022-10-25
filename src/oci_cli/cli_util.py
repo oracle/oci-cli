@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 import arrow
+import ast
 import click
 import datetime
 import dateutil.parser
@@ -600,8 +601,11 @@ def build_config(command_args):
     # Adding it back for subsequent calls
     if "region" not in config.REQUIRED:
         config.REQUIRED.add("region")
+    # This variable will be used to check whether a file is needed or not for configuration
+    file_check = True
 
-    if is_config_valid_from_env():
+    if is_config_valid_from_env(command_args):
+        file_check = False
         client_config = build_empty_config()
     else:
         try:
@@ -610,7 +614,7 @@ def build_config(command_args):
                 logger.debug("Config File: %s", client_config.keys())
         except (exceptions.ProfileNotFound, exceptions.InvalidKeyFilePath) as e:
             sys.exit("ERROR: " + str(e))
-
+    if file_check:
         FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
 
     # READ config keys from env variables.
@@ -947,12 +951,16 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
         json_to_parse = parameter_value
 
     try:
-        if camelize_keys:
-            return make_dict_keys_camel_case(json.loads(json_to_parse), parameter_name)
-        else:
-            return json.loads(json_to_parse)
+        obj = json.loads(json_to_parse)
     except ValueError:
-        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
+        try:
+            obj = ast.literal_eval(json_to_parse)
+        except (ValueError, SyntaxError):
+            sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
+
+    if camelize_keys:
+        return make_dict_keys_camel_case(obj, parameter_name)
+    return obj
 
 
 # Takes a dictionary representing a JSON object and converts keys into their camelized form. This will do a deep conversion - for example if a value in the dictionary is a dictionary itself
@@ -2471,10 +2479,13 @@ def convert_time_elapsed(time_elapsed):
 
 
 # Checks that enough env variables have been set to mock a config
-def is_config_valid_from_env():
+def is_config_valid_from_env(command_args):
     for required_key in cli_constants.OCI_CONFIG_REQUIRED_VARS:
         if not cli_constants.OCI_CONFIG_REQUIRED_VARS[required_key] in os.environ:
+            if cli_constants.OCI_CONFIG_REQUIRED_VARS[required_key] == cli_constants.OCI_CLI_REGION_ENV_VAR and command_args['region']:
+                continue
             return False
+
     return cli_constants.OCI_CLI_KEY_FILE_ENV_VAR in os.environ or cli_constants.OCI_CLI_KEY_CONTENT_ENV_VAR in os.environ
 
 

@@ -703,7 +703,7 @@ This token is used to access Oracle cloud databases from database clients.  The 
 When running this command inside the Cloud Shell, it will by default use the delegation token for the IAM user to request the db-token. Outside of the cloud shell, this command will default to use the API-key in the default profile in the default OCI configuration.
 
 In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM. For more detail, please visit https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdk_authentication_methods.htm""")
-@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.
+@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token databases in one or more compartments.
 
 Example scope values:
 

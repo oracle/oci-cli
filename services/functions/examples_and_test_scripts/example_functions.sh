@@ -138,22 +138,9 @@ function updateFunction() {
 }
 
 function deleteFunction() {
-
     local fnID=$1
-
-    local fnResp=$(oci fn function delete \
-        --function-id ${fnID} \
-        --force
-        2>&1 \
-    )
-
-    if [[ ${fnResp} != "" ]]; then
-        echo "fnID=$fnID"
-        echo "Function deletion failed: " ${fnResp}
-        exit 1
-    fi
-
-     echo "function deleted"
+    oci fn function delete --function-id ${fnID} --force
+    echo "function ${fnID} deleted"
 }
 
 function createApplication() {
@@ -225,20 +212,9 @@ function updateApplication() {
 }
 
 function deleteApplication() {
-
     local appID=$1
-
-    local appResp=$(oci fn application delete \
-        --application-id ${appID} \
-        --force \
-        2>&1 \
-    )
-
-    if [[ ${appResp} != "" ]]; then
-        echo "Application deletion failed: " ${appResp}
-        exit 1
-    fi
-    echo "app deleted"
+    oci -d fn application delete --application-id ${appID} --force
+    echo "app ${appID} deleted"
 }
 
 function invokeFunction() {

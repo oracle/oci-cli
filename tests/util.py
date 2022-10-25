@@ -241,7 +241,7 @@ def remove_outer_quotes(text):
         return text
 
 
-def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False):
+def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False, progress_bar_expected=False):
     try:
         assert result.exit_code == 0 or result.exit_code is None
 
@@ -252,7 +252,10 @@ def validate_response(result, extra_validation=None, includes_debug_data=False, 
             assert 'user-agent' in result.output
             assert '200' in result.output or '204' in result.output
         elif json_response_expected:
-            validate_json_response(result.output)
+            if progress_bar_expected:
+                validate_json_response(result.output[result.output.find('{'):])
+            else:
+                validate_json_response(result.output)
 
         if expect_etag:
             assert "etag" in result.output
@@ -607,8 +610,8 @@ def ensure_test_data(api, namespace, compartment, bucket_prefix):
     for num in range(1, 213):
         create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket6', 'ob' + str(num))
 
-    for num in range(7, 209):
-        create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket' + str(num))
+    create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket7')
+    create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket8')
 
     create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket8', "a/b/c")
     create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket8', "b/c")
