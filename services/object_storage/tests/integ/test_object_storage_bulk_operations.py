@@ -970,22 +970,21 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     shutil.rmtree(exclusion_test_folder)
 
 
-@util.skip_while_rerecording
-def test_bulk_get_when_bucket_name_is_invalid(debug):
+def test_bulk_get_when_bucket_name_is_invalid(vcr_fixture, debug):
     """
     Run the bulk-download command using an invalid bucket name and validate that it throws a ServiceError
     """
 
     invalid_bucket_name = 'invalid_bucket'
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name',
-                     invalid_bucket_name, '--download-dir', bulk_get_bucket_name, '--dry-run'], debug=debug)
+                     invalid_bucket_name, '--download-dir', bulk_get_bucket_name_recorded, '--dry-run'], debug=debug)
     assert 'ServiceError:' in result.output
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['status'] == 404
     assert parsed_result['code'] == 'BucketNotFound'
 
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name',
-                     invalid_bucket_name, '--download-dir', bulk_get_bucket_name], debug=debug)
+                     invalid_bucket_name, '--download-dir', bulk_get_bucket_name_recorded], debug=debug)
     assert 'ServiceError:' in result.output
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['status'] == 404
@@ -1211,9 +1210,8 @@ def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug,
 
 
 # Test bulk-delete-versions full functionality
-@util.skip_while_rerecording
-def test_bulk_delete_versions(object_storage_client, debug, test_id):
-    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+def test_bulk_delete_versions(vcr_fixture, object_storage_client, debug, test_id_recorded):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id_recorded)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
     # bucket create with versioning enabled
@@ -1248,8 +1246,8 @@ def test_bulk_delete_versions(object_storage_client, debug, test_id):
     object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
 
 
-def test_basic_bulk_delete_versions_object_name(object_storage_client, debug, test_id):
-    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+def test_basic_bulk_delete_versions_object_name(vcr_fixture, object_storage_client, debug, test_id_recorded):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id_recorded)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
     result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
@@ -1612,10 +1610,9 @@ def test_bulk_delete_pagination(object_storage_client, debug, test_id):
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
 
-@util.skip_while_rerecording
-def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id, on_error_fixture):
-    bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id)
-    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, on_error_fixture)
+def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id_recorded, on_error_fixture):
+    bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id_recorded)
+    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id_recorded, on_error_fixture)
 
 
 @util.skip_while_rerecording

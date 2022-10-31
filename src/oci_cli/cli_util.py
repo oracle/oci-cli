@@ -383,18 +383,8 @@ def create_config_and_signer_based_on_click_context(ctx):
                 sys.exit(0)
             else:
                 sys.exit(1)
-        client_config[ADDITIONAL_USER_AGENT] = ORACLE_PYTHON_VER.format(__version__)
-        if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
-            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_USER_AGENT
 
-            if OCI_CLI_CLOUD_SHELL in os.environ:
-                client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CLOUDSHELL_USER_AGENT
-
-            if OCI_CLI_CONTAINER_IMAGE in os.environ:
-                client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CONTAINER_IMAGE_USER_AGENT
-
-        if OCI_CLI_CONTAINER_IMAGE in os.environ:
-            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_CONTAINER_IMAGE_USER_AGENT
+        add_additional_user_agents(client_config)
 
         if ctx.obj['debug']:
             client_config["log_requests"] = True
@@ -624,18 +614,7 @@ def build_config(command_args):
             if command_args['debug']:
                 logger.debug("%s: Environment Variable", cli_constants.OCI_CONFIG_ENV_VARS[env])
 
-    client_config[ADDITIONAL_USER_AGENT] = ORACLE_PYTHON_VER.format(__version__)
-    if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
-        client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_USER_AGENT
-
-        if OCI_CLI_CLOUD_SHELL in os.environ:
-            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CLOUDSHELL_USER_AGENT
-
-        if OCI_CLI_CONTAINER_IMAGE in os.environ:
-            client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_INTERACTIVE_CONTAINER_IMAGE_USER_AGENT
-
-    if OCI_CLI_CONTAINER_IMAGE in os.environ:
-        client_config[ADDITIONAL_USER_AGENT] += OCI_CLI_CONTAINER_IMAGE_USER_AGENT
+    add_additional_user_agents(client_config)
 
     if command_args['region']:
         client_config["region"] = command_args['region']
@@ -956,7 +935,14 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
         try:
             obj = ast.literal_eval(json_to_parse)
         except (ValueError, SyntaxError):
-            sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
+            if "file" in parameter_value:
+                if "file://" not in parameter_value:
+                    msg = 'The syntax used for giving JSON input is incorrect.\nSample example for MacOs/Linux/Unix -\noci os bucket create -ns mynamespace --name mybucket --compartment-id ocid1.compartment.oc1..aaaaaaaarhifmvrvuqtye5q66rck6copzqck3ukc5fldrwpp2jojdcypxfga --metadata file:///tmp/testfile.json\nSample example for Windows -\noci os bucket create -ns mynamespace --name mybucket --compartment-id ocid1.compartment.oc1..aaaaaaaarhifmvrvuqtye5q66rck6copzqck3ukc5fldrwpp2jojdcypxfga --metadata file://C:\\temp\\testfile.json\nFor more help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'
+                else:
+                    msg = 'File for {!r} must be in JSON format.You can get the correct JSON format for command options and commands : https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOptions\nFor more help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name)
+            else:
+                msg = 'Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.oracle.com/en-us/iaas/tools/oci-cli/latest/oci_cli_docs/oci.html#cmdoption-generate-full-command-json-input'.format(parameter_name)
+            sys.exit(msg)
 
     if camelize_keys:
         return make_dict_keys_camel_case(obj, parameter_name)
@@ -2512,6 +2498,26 @@ def get_config_setup_function():
     # this will only be reached if the user says no to the first prompt about browser login, or if they said yes to that prompt but webbrowser.get() couldn't locate a runnable browser
     from .cli_setup import generate_oci_config
     return generate_oci_config
+
+
+def add_additional_user_agents(client_config):
+    # add the client type: Oracle-PythonCLI/version
+    client_config[ADDITIONAL_USER_AGENT] = ORACLE_PYTHON_VER.format(__version__)
+
+    # add only 1 agent as a client subtype, e.g. Oracle-Container-Image
+    # any agent after the first will be ignored by the analytics team
+    agent = OCI_CLI_CONTAINER_IMAGE_USER_AGENT if OCI_CLI_CONTAINER_IMAGE in os.environ else ''
+
+    if OCI_CLI_IN_INTERACTIVE_MODE in os.environ:
+        agent = OCI_CLI_INTERACTIVE_USER_AGENT
+
+        if OCI_CLI_CLOUD_SHELL in os.environ:
+            agent = OCI_CLI_INTERACTIVE_CLOUDSHELL_USER_AGENT
+
+        elif OCI_CLI_CONTAINER_IMAGE in os.environ:
+            agent = OCI_CLI_INTERACTIVE_CONTAINER_IMAGE_USER_AGENT
+
+    client_config[ADDITIONAL_USER_AGENT] += agent
 
 
 def create_directory(dirname):

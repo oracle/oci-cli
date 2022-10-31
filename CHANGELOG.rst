@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.20.0 - 2022-11-01
+--------------------
+
+Added
+~~~~~
+
+* Database service
+
+  * Support for Clone from backup from last available timestamp
+
+    * ``oci db autonomous-database create-from-backup-timestamp --use-latest-available-backup-time-stamp ``
+
+  * The required parameter --timestamp is now optional in the below command
+
+    * ``oci db autonomous-database create-from-backup-timestamp``
+
+  * The required parameter --display-name is now optional in the below command
+
+    * ``oci db autonomous-database-backup create``
+
+* Support for agent settings parameter for specifying third-party Qualys scanner when creating or updating a host scan recipe in the Vulnerability Scanning service
+
+  * ``oci vulnerability-scanning host scan recipe create --agent-settings ``
+  * ``oci vulnerability-scanning host scan recipe update --agent-settings ``
+
+* Support for the below commands in the Logging Analytics service
+
+  * ``oci log-analytics storage list-encryption-key-info``
+  * ``oci log-analytics storage assign-encryption-key``
+
+* Golden Gate service
+
+  * Support for Connections for Database Resources
+
+    * ``oci golden-gate connection``
+
+  * Support for the below new command
+
+    * ``oci goldengate deployment-type-collection list-deployment-types``
+
+  * Support for the parameters --assignable-connection-id, --assigned-connection-id and --supported-connection-type in the below command
+
+    * ``oci goldengate deployment list``
+
+Changed
+~~~~~~~~
+
+* [BREAKING] The command oci organizations work-request-log-entry list has been changed to oci organizations work-request-log list in the Organization service
+
+* Improved CLI error message on incorrect JSON input
+
 3.19.0 - 2022-10-25
 --------------------
 Added
