@@ -110,4 +110,3 @@ language_group.add_command(aiservicelanguage_cli.evaluation_result_collection_gr
 # Add work-request error and logs messages to work-request group
 aiservicelanguage_cli.work_request_group.add_command(aiservicelanguage_cli.work_request_error_group)
 aiservicelanguage_cli.work_request_group.add_command(aiservicelanguage_cli.work_request_log_group)
-

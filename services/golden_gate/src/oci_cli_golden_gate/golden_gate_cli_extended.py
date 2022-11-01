@@ -173,3 +173,81 @@ goldengate_cli.deployment_backup_group.commands.pop(goldengate_cli.cancel_deploy
 
 # oci goldengate deployment-backup cancel-deployment-backup-default-cancel-deployment-backup-details -> oci goldengate deployment-backup cancel
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, goldengate_cli.cancel_deployment_backup_default_cancel_deployment_backup_details, "cancel")
+
+
+# oci goldengate connection create-connection-create-golden-gate-connection-details -> oci goldengate connection create-goldengate-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_golden_gate_connection_details, "create-goldengate-connection")
+
+
+# oci goldengate connection create-connection-create-kafka-connection-details -> oci goldengate connection create-kafka-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_kafka_connection_details, "create-kafka-connection")
+
+
+# oci goldengate connection create-connection-create-mysql-connection-details -> oci goldengate connection create-mysql-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_mysql_connection_details, "create-mysql-connection")
+
+
+# oci goldengate connection create-connection-create-oci-object-storage-connection-details -> oci goldengate connection create-object-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_oci_object_storage_connection_details, "create-object-storage-connection")
+
+
+# oci goldengate connection create-connection-create-oracle-connection-details -> oci goldengate connection create-oracle-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_oracle_connection_details, "create-oracle-connection")
+
+
+# oci goldengate connection update-connection-update-golden-gate-connection-details -> oci goldengate connection update-goldengate-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_golden_gate_connection_details, "update-goldengate-connection")
+
+
+# oci goldengate connection update-connection-update-kafka-connection-details -> oci goldengate connection update-kafka-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_kafka_connection_details, "update-kafka-connection")
+
+
+# oci goldengate connection update-connection-update-mysql-connection-details -> oci goldengate connection update-mysql-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_mysql_connection_details, "update-mysql-connection")
+
+
+# oci goldengate connection update-connection-update-oci-object-storage-connection-details -> oci goldengate connection update-object-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_oci_object_storage_connection_details, "update-object-storage-connection")
+
+
+# oci goldengate connection update-connection-update-oracle-connection-details -> oci goldengate connection update-oracle-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_oracle_connection_details, "update-oracle-connection")
+
+
+# Remove create from oci goldengate connection
+goldengate_cli.connection_group.commands.pop(goldengate_cli.create_connection.name)
+
+
+# Remove update from oci goldengate connection
+goldengate_cli.connection_group.commands.pop(goldengate_cli.update_connection.name)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_oci_object_storage_connection_details, params_to_exclude=['region_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_oci_object_storage_connection_details.name, help=goldengate_cli.create_connection_create_oci_object_storage_connection_details.help)
+@cli_util.option('--os-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_oci_object_storage_connection_details_extended(ctx, **kwargs):
+
+    if 'os_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['os_region']
+        kwargs.pop('os_region')
+
+    ctx.invoke(goldengate_cli.create_connection_create_oci_object_storage_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_oci_object_storage_connection_details, params_to_exclude=['region_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_oci_object_storage_connection_details.name, help=goldengate_cli.update_connection_update_oci_object_storage_connection_details.help)
+@cli_util.option('--os-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_connection_update_oci_object_storage_connection_details_extended(ctx, **kwargs):
+
+    if 'os_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['os_region']
+        kwargs.pop('os_region')
+
+    ctx.invoke(goldengate_cli.update_connection_update_oci_object_storage_connection_details, **kwargs)

@@ -5,17 +5,23 @@
 import json
 import oci_cli
 import pytest
-from tests import util
+from tests import util, test_config_container
 
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 BUCKET_NAME = None
 
 
+@pytest.fixture
+def vcr_fixture(request):
+    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('object_list_{name}.yml'.format(name=request.function.__name__)):
+        yield
+
+
 @pytest.fixture(scope='module', autouse=True)
-def test_data(object_storage_client, test_id):
+def test_data(object_storage_client, test_id_recorded):
     # Setup test data
     global BUCKET_NAME
-    BUCKET_NAME = f'ObjectListBucket{test_id}'
+    BUCKET_NAME = f'ObjectListBucket{test_id_recorded}'
     # Create the bucket with 2 objects
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, BUCKET_NAME)
     util.create_bucket(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID,
@@ -34,7 +40,7 @@ def invoke_new(commands, debug=False, ** args):
     return util.invoke_command(commands, ** args)
 
 
-def test_os_object_list(runner, config_file, config_profile):
+def test_os_object_list(vcr_fixture, runner, config_file, config_profile):
     params = [
         'os', 'object', 'list',
         '-bn', BUCKET_NAME,

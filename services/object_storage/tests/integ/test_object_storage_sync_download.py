@@ -10,8 +10,9 @@ import random
 import pytest
 
 import test_object_storage_bulk_operations as bulk_operation
-from tests import util
+from tests import util, test_config_container
 
+CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 OBJECTS_TO_CREATE_IN_REMOTE_FOR_SYNC = 20
 
 sync_remote_object_content = {}
@@ -19,6 +20,10 @@ sync_download_bucket_name = str()
 sync_download_test_dir = str()
 sync_upload_bucket_name = str()
 sync_upload_test_dir = str()
+
+sync_download_bucket_name_recorded = str()
+sync_download_test_dir_recorded = str()
+sync_upload_test_dir_recorded = str()
 
 sync_remote_prefixes = {
     'a/b/c': [],
@@ -28,9 +33,23 @@ sync_remote_prefixes = {
 }
 
 
+@pytest.fixture
+def vcr_fixture(request):
+    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('object_storage_sync_download_{name}.yml'.format(name=request.function.__name__)):
+        yield
+
+
 @pytest.fixture(params=[False])
 def debug(request):
     return request.param
+
+
+@pytest.fixture(scope='module', autouse=True)
+def set_recorded_variable(test_id_recorded):
+    global sync_download_bucket_name_recorded, sync_download_test_dir_recorded, sync_upload_test_dir_recorded
+    sync_download_bucket_name_recorded = 'ObjectStorageSyncDownloadTest_{}'.format(test_id_recorded)
+    sync_download_test_dir_recorded = 'tests/temp/sync_download_{}'.format(test_id_recorded)
+    sync_upload_test_dir_recorded = 'tests/temp/sync_upload_{}'.format(test_id_recorded)
 
 
 @pytest.fixture(scope='module', autouse=True)
@@ -81,8 +100,7 @@ def teardown(debug):
         shutil.rmtree(sync_download_test_dir)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_dry_run(debug):
+def test_sync_dest_dry_run(vcr_fixture, debug):
     """
     1. Check for UsageError for incorrect params
     2. Download the files to local and validate the output. Should get the list of all the objects to be downloaded.
@@ -91,7 +109,7 @@ def test_sync_dest_dry_run(debug):
 
     # test output when neither --src-dir nor --dest-dir is provided
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dry-run'], debug=debug)
+                                    sync_download_bucket_name_recorded, '--dry-run'], debug=debug)
     assert 'UsageError' in result.output
     assert 'Either' in result.output
     assert '--src-dir' in result.output
@@ -99,8 +117,8 @@ def test_sync_dest_dry_run(debug):
 
     # test output when both --src-dir and --dest-dir are provided
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dry-run', '--src-dir', sync_upload_test_dir,
-                                    '--dest-dir', sync_download_test_dir], debug=debug)
+                                    sync_download_bucket_name_recorded, '--dry-run', '--src-dir', sync_upload_test_dir_recorded,
+                                    '--dest-dir', sync_download_test_dir_recorded], debug=debug)
     assert 'UsageError' in result.output
     assert 'Only' in result.output
     assert '--src-dir' in result.output
@@ -108,10 +126,10 @@ def test_sync_dest_dry_run(debug):
 
     # test --dry-run output with --dest-dir and validate
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dry-run', '--dest-dir', sync_download_test_dir],
+                                    sync_download_bucket_name_recorded, '--dry-run', '--dest-dir', sync_download_test_dir_recorded],
                                    debug=debug)
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
-    assert len(os.listdir(sync_download_test_dir)) == 0
+    assert len(os.listdir(sync_download_test_dir_recorded)) == 0
     assert len(downloaded_set) == len(sync_remote_object_content.keys())
     assert deleted_set == set()
     assert skipped_set == set()
@@ -192,8 +210,7 @@ def test_sync_dest_new_objects(object_storage_client):
         object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, new_object_name)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_include_dry_run(debug):
+def test_sync_dest_include_dry_run(vcr_fixture, debug):
     """
     1. Select one object from remote and perform a --dry-run by specifying the same file name in --include.
     2. We expect that only this object gets transferred. No other objects gets transferred/skipped.
@@ -202,14 +219,13 @@ def test_sync_dest_include_dry_run(debug):
     # invoke sync with include
     file_name_to_sync = 'Object_0'
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--include',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--include',
                                     file_name_to_sync, '--dry-run'], debug=debug)
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
     assert downloaded_set == {file_name_to_sync}
 
 
-@util.skip_while_rerecording
-def test_sync_dest_include(debug):
+def test_sync_dest_include(vcr_fixture, debug):
     """
     1. Select one object from remote and download that by passing that parameter to --include
     2. Validate that only that object got transferred to local. Also, validate the contents of the object
@@ -219,19 +235,19 @@ def test_sync_dest_include(debug):
 
     file_name_to_include = 'Object_0'
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--include',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--include',
                                     file_name_to_include], debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['download-failures'] == {}
     assert set(parsed_result['downloaded-objects']) == {file_name_to_include}
     assert parsed_result['skipped-objects'] == []
-    assert bulk_operation.get_count_of_files_in_folder_and_subfolders(sync_download_test_dir) == 1
+    assert bulk_operation.get_count_of_files_in_folder_and_subfolders(sync_download_test_dir_recorded) == 1
     compare_file_content_to_local(slice_dict_by_key(sync_remote_object_content, {file_name_to_include}, True),
-                                  sync_download_test_dir)
+                                  sync_download_test_dir_recorded)
 
     # try downloading the files again and verify that it's skipped
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--include',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--include',
                                     file_name_to_include], debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['download-failures'] == {}
@@ -239,8 +255,7 @@ def test_sync_dest_include(debug):
     assert file_name_to_include in parsed_result['skipped-objects']
 
 
-@util.skip_while_rerecording
-def test_sync_dest_exclude_dry_run(debug):
+def test_sync_dest_exclude_dry_run(vcr_fixture, debug):
     """
     1. Select one object from local and perform a --dry-run by specifying it in --exclude
     2. Validate that every other object is in the transfer list except the one in exclude list
@@ -248,7 +263,7 @@ def test_sync_dest_exclude_dry_run(debug):
 
     file_name_to_exclude = 'Object_0'
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--exclude',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--exclude',
                                     file_name_to_exclude, '--dry-run'], debug=debug)
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
     assert len(downloaded_set) == len(sync_remote_object_content.keys()) - 1
@@ -276,8 +291,7 @@ def test_sync_dest_exclude(debug):
                                   sync_download_test_dir)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_dir_prefix(debug):
+def test_sync_dest_dir_prefix(vcr_fixture, debug):
     """
     1. Set a prefix to apply to all the transactions during sync
     2. Perform a --dry-run with the prefix applied and verify that all the files in the remote get transferred.
@@ -287,12 +301,12 @@ def test_sync_dest_dir_prefix(debug):
     """
 
     prefix_test_dir = 'prefix'
-    prefix_test_path = os.path.join(sync_download_test_dir, prefix_test_dir)
+    prefix_test_path = os.path.join(sync_download_test_dir_recorded, prefix_test_dir)
 
     prefix_to_sync = 'a/b'
     # perform a dry run the get the objects to be transferred
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', prefix_test_path, '--prefix',
+                                    sync_download_bucket_name_recorded, '--dest-dir', prefix_test_path, '--prefix',
                                     prefix_to_sync, '--dry-run'], debug=debug)
 
     _, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -302,7 +316,7 @@ def test_sync_dest_dir_prefix(debug):
 
     # sync with the same prefix and verify that the object doesn't contain the prefix supplied. Also, verify the content
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', prefix_test_path, '--prefix',
+                                    sync_download_bucket_name_recorded, '--dest-dir', prefix_test_path, '--prefix',
                                     prefix_to_sync], debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['download-failures'] == {}
@@ -319,7 +333,7 @@ def test_sync_dest_dir_prefix(debug):
             n_o_name = prefix_test_dir + o_name[len(prefix_to_sync):]
             new_object_content_map[n_o_name] = sync_remote_object_content[o_name]
 
-    compare_file_content_to_local(new_object_content_map, sync_download_test_dir)
+    compare_file_content_to_local(new_object_content_map, sync_download_test_dir_recorded)
 
 
 @util.skip_while_rerecording
@@ -432,8 +446,7 @@ def test_sync_dest_with_delete_empty_folders(debug):
     assert len(next(os.walk(sync_download_test_dir))[1]) == len(local_folders_from_remote)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_with_delete_and_include(object_storage_client):
+def test_sync_dest_with_delete_and_include(vcr_fixture, object_storage_client):
     """
     1. Create new set of objects in remote with .pdf and .doc extensions.
     2. Perform a dry run with --delete to include only *.pdf and validate that only .pdf files are transferred.
@@ -445,11 +458,11 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     6. Perform actual sync and validate the final output with the ones from the dry-run
     """
 
-    r_obj_set_1 = create_new_objects_remote(object_storage_client, sync_download_bucket_name, 6, extension='pdf')
-    r_obj_set_2 = create_new_objects_remote(object_storage_client, sync_download_bucket_name, 4, extension='doc')
+    r_obj_set_1 = create_new_objects_remote(object_storage_client, sync_download_bucket_name_recorded, 6, extension='pdf')
+    r_obj_set_2 = create_new_objects_remote(object_storage_client, sync_download_bucket_name_recorded, 4, extension='doc')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--dry-run'], debug=debug)
 
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -457,11 +470,11 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     assert skipped_set == set()
     assert len(downloaded_set) == len(r_obj_set_1)
 
-    l_file_set_1 = create_new_files_local(sync_download_test_dir, 3, extension='pdf')
-    l_file_set_2 = create_new_files_local(sync_download_test_dir, 5, extension='txt')
+    l_file_set_1 = create_new_files_local(sync_download_test_dir_recorded, 3, extension='pdf')
+    l_file_set_2 = create_new_files_local(sync_download_test_dir_recorded, 5, extension='txt')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--dry-run'], debug=debug)
 
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -470,7 +483,7 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     assert len(downloaded_set) == len(r_obj_set_1)
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--include', '*.doc', '--dry-run'], debug=debug)
 
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -479,7 +492,7 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     assert len(downloaded_set) == len(r_obj_set_1.union(r_obj_set_2))
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--include', '*.doc'], debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['download-failures'] == {}
@@ -487,7 +500,7 @@ def test_sync_dest_with_delete_and_include(object_storage_client):
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-files']) == l_file_set_1
 
-    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
+    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2), sync_download_bucket_name_recorded)
 
 
 @util.skip_while_rerecording
@@ -545,11 +558,10 @@ def test_sync_dest_with_delete_and_exclude(object_storage_client):
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-files']) == l_file_set_2
 
-    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
+    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2), sync_download_bucket_name)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_with_delete_and_prefix(debug):
+def test_sync_dest_with_delete_and_prefix(vcr_fixture, debug):
     """
     1. Create an empty directory for prefix test.
     2. Create new files in the prefix directory root which are not present in remote. Make sure the new files created
@@ -565,7 +577,7 @@ def test_sync_dest_with_delete_and_prefix(debug):
     """
 
     prefix_test_dir = 'prefix_delete'
-    prefix_test_path = os.path.join(sync_download_test_dir, prefix_test_dir)
+    prefix_test_path = os.path.join(sync_download_test_dir_recorded, prefix_test_dir)
 
     # create new files which are not present in remote
     new_local_file_set = create_new_files_local(prefix_test_path, 10)
@@ -573,7 +585,7 @@ def test_sync_dest_with_delete_and_prefix(debug):
     prefix_to_sync = 'a/b'
     # perform a dry run the get the objects to be transferred
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', prefix_test_path, '--prefix',
+                                    sync_download_bucket_name_recorded, '--dest-dir', prefix_test_path, '--prefix',
                                     prefix_to_sync, '--delete', '--dry-run'], debug=debug)
 
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -583,7 +595,7 @@ def test_sync_dest_with_delete_and_prefix(debug):
     assert deleted_set == new_local_file_set
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', prefix_test_path, '--prefix',
+                                    sync_download_bucket_name_recorded, '--dest-dir', prefix_test_path, '--prefix',
                                     prefix_to_sync, '--delete'], debug=debug)
 
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
@@ -596,8 +608,7 @@ def test_sync_dest_with_delete_and_prefix(debug):
                                    if k.startswith(prefix_to_sync)}, prefix_test_path)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
+def test_sync_dest_with_delete_include_and_prefix(vcr_fixture, object_storage_client, debug):
     """
     Assert that scope of file transfer and delete is only limited to --include pattern
 
@@ -613,17 +624,17 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
 
     _prefix = 'prefix_delete_include'
 
-    r_obj_set_1 = create_new_objects_remote(object_storage_client, sync_download_bucket_name, 6, extension='pdf',
+    r_obj_set_1 = create_new_objects_remote(object_storage_client, sync_download_bucket_name_recorded, 6, extension='pdf',
                                             prefix=_prefix)
-    r_obj_set_2 = create_new_objects_remote(object_storage_client, sync_download_bucket_name, 4, extension='doc',
+    r_obj_set_2 = create_new_objects_remote(object_storage_client, sync_download_bucket_name_recorded, 4, extension='doc',
                                             prefix=_prefix)
 
     # create other .pdf files in the bucket root just to assert that these are not fetched during download
-    r_obj_set_3 = create_new_objects_remote(object_storage_client, sync_download_bucket_name, 11, extension='pdf',
+    r_obj_set_3 = create_new_objects_remote(object_storage_client, sync_download_bucket_name_recorded, 11, extension='pdf',
                                             prefix=None)
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--prefix', _prefix, '--dry-run'], debug=debug)
 
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -632,11 +643,11 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     assert len(downloaded_set) == len(r_obj_set_1)
 
     # create new files which are not present in remote
-    l_file_set_1 = create_new_files_local(sync_download_test_dir, 3, extension='pdf')
-    l_file_set_2 = create_new_files_local(sync_download_test_dir, 7, extension='txt')
+    l_file_set_1 = create_new_files_local(sync_download_test_dir_recorded, 3, extension='pdf')
+    l_file_set_2 = create_new_files_local(sync_download_test_dir_recorded, 7, extension='txt')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--prefix', _prefix, '--dry-run'], debug=debug)
 
     deleted_set, downloaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
@@ -645,7 +656,7 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     assert len(downloaded_set) == len(r_obj_set_1)
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--include', '*.doc', '--dry-run', '--prefix', _prefix],
                                    debug=debug)
 
@@ -655,7 +666,7 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     assert len(downloaded_set) == len(r_obj_set_1.union(r_obj_set_2))
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
+                                    sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded, '--delete',
                                     '--include', '*.pdf', '--include', '*.doc', '--prefix', _prefix], debug=debug)
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['download-failures'] == {}
@@ -663,7 +674,7 @@ def test_sync_dest_with_delete_include_and_prefix(object_storage_client, debug):
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-files']) == l_file_set_1
 
-    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2).union(r_obj_set_3))
+    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2).union(r_obj_set_3), sync_download_bucket_name_recorded)
 
 
 @util.skip_while_rerecording
@@ -729,7 +740,7 @@ def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-files']) == l_file_set_2
 
-    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2))
+    cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2), sync_download_bucket_name)
 
 
 @util.skip_while_rerecording
@@ -784,8 +795,7 @@ def test_sync_between_src_and_dest(debug):
     assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
 
 
-@util.skip_while_rerecording
-def test_sync_dest_validate_unsupported_params(debug):
+def test_sync_dest_validate_unsupported_params(vcr_fixture, debug):
     """
     Validate that the following parameters can not be specified with --dest-dir:
 
@@ -805,12 +815,12 @@ def test_sync_dest_validate_unsupported_params(debug):
     for unsupported_param in unsupported_params:
         if unsupported_param == '--storage-tier':
             result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                            sync_download_bucket_name, '--dest-dir', sync_download_test_dir,
+                                            sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded,
                                             unsupported_param, random.choice(['Standard', 'InfrequentAccess', 'Archive'])],
                                            debug=debug)
         else:
             result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                            sync_download_bucket_name, '--dest-dir', sync_download_test_dir,
+                                            sync_download_bucket_name_recorded, '--dest-dir', sync_download_test_dir_recorded,
                                             unsupported_param, generate_random_string(10)], debug=debug)
 
         assert 'UsageError' in result.output
@@ -845,22 +855,21 @@ def test_sync_dest_skip_archived_objects(object_storage_client, debug):
     object_storage_client.delete_object(util.NAMESPACE, sync_download_bucket_name, archived_object)
 
 
-@util.skip_while_rerecording
-def test_sync_dest_when_bucket_name_is_invalid(debug):
+def test_sync_dest_when_bucket_name_is_invalid(vcr_fixture, debug):
     """
     Run the sync command specifying --dest-dir using an invalid bucket name and validate that it throws a ServiceError
     """
 
     invalid_bucket_name = 'invalid_bucket'
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    invalid_bucket_name, '--dest-dir', sync_download_test_dir, '--dry-run'], debug=debug)
+                                    invalid_bucket_name, '--dest-dir', sync_download_test_dir_recorded, '--dry-run'], debug=debug)
     assert 'ServiceError:' in result.output
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['status'] == 404
     assert parsed_result['code'] == 'BucketNotFound'
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                    invalid_bucket_name, '--dest-dir', sync_download_test_dir], debug=debug)
+                                    invalid_bucket_name, '--dest-dir', sync_download_test_dir_recorded], debug=debug)
     assert 'ServiceError:' in result.output
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert parsed_result['status'] == 404
@@ -943,9 +952,9 @@ def create_new_objects_remote(client, bucket_name, no_of_files_to_create, with_c
     return new_remote_obj_set
 
 
-def cleanup_objects_from_remote(client, obj_set):
+def cleanup_objects_from_remote(client, obj_set, bucket_name):
     for obj in obj_set:
-        client.delete_object(util.NAMESPACE, sync_download_bucket_name, obj)
+        client.delete_object(util.NAMESPACE, bucket_name, obj)
 
 
 def parse_dry_run_result(parsed_result):
