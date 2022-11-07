@@ -30,11 +30,11 @@ class TestApiGatewaySubscriber(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--subscriber-id' in result.output
         result = util.invoke_command(['api-gateway', 'subscriber', 'update', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'subscriber', 'update', '--clients'])
-        assert 'Error: Option \'--clients\' requires an argument' in result.output
+        assert 'Error: --clients option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'subscriber', 'update', '--usage-plans'])
-        assert 'Error: Option \'--usage-plans\' requires an argument' in result.output
+        assert 'Error: --usage-plans option requires an argument' in result.output
 
     def test_delete_subscriber(self):
         result = util.invoke_command(['api-gateway', 'subscriber', 'delete'])
@@ -46,7 +46,7 @@ class TestApiGatewaySubscriber(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
         result = util.invoke_command(['api-gateway', 'subscriber', 'list', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
 
     def test_change_compartment(self):
         result = util.invoke_command(['api-gateway', 'subscriber', 'change-compartment'])

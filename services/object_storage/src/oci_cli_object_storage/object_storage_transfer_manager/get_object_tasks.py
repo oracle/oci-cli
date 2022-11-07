@@ -8,6 +8,7 @@ from .work_pool_task import WorkPoolTaskCallbacksContainer, WorkPoolTaskErrorCal
 
 import heapq
 import oci
+import os
 import six
 import threading
 
@@ -46,8 +47,8 @@ class GetObjectTask(WorkPoolTask):
                 for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
                     file.write(chunk)
         except IOError as e:
-            # IsADirectoryError
-            if e.errno == 21:
+            # IsADirectoryError, PermissionError
+            if e.errno == 21 or (e.errno == 13 and os.path.isdir(self.kwargs['full_file_path'])):
                 pass
             else:
                 raise

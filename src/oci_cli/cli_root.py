@@ -16,17 +16,17 @@ from oci.util import Sentinel   # noqa: E402
 import six  # noqa: E402
 import importlib    # noqa: E402
 import re   # noqa: E402
-from .version import __version__    # noqa: E402
-from .aliasing import parameter_alias, CommandGroupWithAlias    # noqa: E402
-from . import help_text_producer    # noqa: E402
-from . import cli_util  # noqa: E402
+from oci_cli.version import __version__    # noqa: E402
+from oci_cli.aliasing import parameter_alias, CommandGroupWithAlias    # noqa: E402
+from oci_cli import help_text_producer    # noqa: E402
+from oci_cli import cli_util  # noqa: E402
 
-from . import cli_constants     # noqa: E402
+from oci_cli import cli_constants     # noqa: E402
 from collections import OrderedDict     # noqa: E402
 from oci._vendor import requests    # noqa: E402
-from . import cli_metrics    # noqa: E402
+from oci_cli import cli_metrics    # noqa: E402
 from interactive import cli_interactive    # noqa: E402
-from .service_mapping import service_mapping    # noqa: E402
+from oci_cli.service_mapping import service_mapping    # noqa: E402
 
 # Enable WARN logging to surface important warnings attached to loading
 # defaults, automatic coercion, or fallback values/endpoints that may impact

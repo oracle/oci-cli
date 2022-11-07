@@ -31,7 +31,7 @@ class TestNoSQLCliExtended(unittest.TestCase):
         result = util.invoke_command(['nosql', 'row', 'update', '--ttl-use-default'])
         assert 'requires an argument' in result.output
         result = util.invoke_command(['nosql', 'row', 'update', '--is-ttl-use-table-default'])
-        assert 'Error: No such option' in result.output
+        assert 'Error: no such option' in result.output
 
     def test_nosql_query_query(self):
         result = util.invoke_command(['nosql', 'query', 'execute', '--max-read-in-kbs'])

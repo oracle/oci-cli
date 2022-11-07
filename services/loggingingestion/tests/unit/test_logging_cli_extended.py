@@ -16,7 +16,7 @@ class TestLoggingIngestionCliExtend(unittest.TestCase):
     #   oci logging-ingestion put-logs ... --agent-timestamp ...
     def test_log_change_log_group(self):
         result = util.invoke_command(['logging-ingestion', 'put-logs', '--timestamp-opc-agent-processing', '2017-09-15'])
-        assert 'No such option: --timestamp-opc-agent-processing' in result.output
+        assert 'no such option: --timestamp-opc-agent-processing' in result.output
 
         result = util.invoke_command(['logging-ingestion', 'put-logs', '--agent-timestamp'])
         assert 'requires an argument' in result.output

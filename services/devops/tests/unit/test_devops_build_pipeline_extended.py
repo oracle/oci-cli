@@ -34,23 +34,23 @@ class TestDevopsBuildPipeline(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--project-id' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--project-id'])
-        assert 'Error: Option \'--project-id\' requires an argument' in result.output
+        assert 'Error: --project-id option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--description'])
-        assert 'Error: Option \'--description\' requires an argument' in result.output
+        assert 'Error: --description option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--build-pipeline-parameters'])
-        assert 'Error: Option \'--build-pipeline-parameters\' requires an argument' in result.output
+        assert 'Error: --build-pipeline-parameters option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--max-wait-seconds'])
-        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
+        assert 'Error: --max-wait-seconds option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--wait-interval-seconds'])
-        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
+        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--from-json'])
-        assert 'Error: Option \'--from-json\' requires an argument' in result.output
+        assert 'Error: --from-json option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--defined-tags'])
-        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
+        assert 'Error: --defined-tags option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'create', '--freeform-tags'])
-        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
+        assert 'Error: --freeform-tags option requires an argument' in result.output
 
     def test_build_pipeline_get(self):
         result = util.invoke_command(['devops', 'build-pipeline', 'get'])
@@ -62,55 +62,55 @@ class TestDevopsBuildPipeline(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--build-pipeline-id' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--build-pipeline-id'])
-        assert 'Error: Option \'--build-pipeline-id\' requires an argument' in result.output
+        assert 'Error: --build-pipeline-id option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--description'])
-        assert 'Error: Option \'--description\' requires an argument' in result.output
+        assert 'Error: --description option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--build-pipeline-parameters'])
-        assert 'Error: Option \'--build-pipeline-parameters\' requires an argument' in result.output
+        assert 'Error: --build-pipeline-parameters option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--max-wait-seconds'])
-        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
+        assert 'Error: --max-wait-seconds option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--wait-interval-seconds'])
-        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
+        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--from-json'])
-        assert 'Error: Option \'--from-json\' requires an argument' in result.output
+        assert 'Error: --from-json option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--defined-tags'])
-        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
+        assert 'Error: --defined-tags option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'update', '--freeform-tags'])
-        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
+        assert 'Error: --freeform-tags option requires an argument' in result.output
 
     def test_build_pipeline_delete(self):
         result = util.invoke_command(['devops', 'build-pipeline', 'delete'])
         assert 'Error: Missing option(s)' in result.output
         assert '--build-pipeline-id' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'delete', '--build-pipeline-id'])
-        assert 'Error: Option \'--build-pipeline-id\' requires an argument' in result.output
+        assert 'Error: --build-pipeline-id option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'delete', '--if-match'])
-        assert 'Error: Option \'--if-match\' requires an argument' in result.output
+        assert 'Error: --if-match option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'delete', '--max-wait-seconds'])
-        assert 'Error: Option \'--max-wait-seconds\' requires an argument' in result.output
+        assert 'Error: --max-wait-seconds option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'delete', '--wait-interval-seconds'])
-        assert 'Error: Option \'--wait-interval-seconds\' requires an argument' in result.output
+        assert 'Error: --wait-interval-seconds option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'delete', '--from-json'])
-        assert 'Error: Option \'--from-json\' requires an argument' in result.output
+        assert 'Error: --from-json option requires an argument' in result.output
 
     def test_build_pipeline_list(self):
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--id'])
-        assert 'Error: Option \'--id\' requires an argument' in result.output
+        assert 'Error: --id option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--compartment-id'])
-        assert 'Error: Option \'--compartment-id\' requires an argument' in result.output
+        assert 'Error: --compartment-id option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--project-id'])
-        assert 'Error: Option \'--project-id\' requires an argument' in result.output
+        assert 'Error: --project-id option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--limit'])
-        assert 'Error: Option \'--limit\' requires an argument' in result.output
+        assert 'Error: --limit option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--page'])
-        assert 'Error: Option \'--page\' requires an argument' in result.output
+        assert 'Error: --page option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--page-size'])
-        assert 'Error: Option \'--page-size\' requires an argument' in result.output
+        assert 'Error: --page-size option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--sort-order'])
-        assert 'Error: Option \'--sort-order\' requires an argument' in result.output
+        assert 'Error: --sort-order option requires an argument' in result.output
         result = util.invoke_command(['devops', 'build-pipeline', 'list', '--from-json'])
-        assert 'Error: Option \'--from-json\' requires an argument' in result.output
+        assert 'Error: --from-json option requires an argument' in result.output

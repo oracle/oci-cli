@@ -5,21 +5,37 @@
 import sys
 from inspect import getsourcefile
 from os import listdir, path, environ
-from .service_mapping import service_mapping
+from oci_cli.service_mapping import service_mapping
 
 ALL_SERVICES_DIR = "services"
 NON_SERVICE_TOP_LEVEL_COMMANDS = ["raw-request", "session", "setup"]
 
 # Add platformization directories to the python system path (PYTHONPATH)
 # This has to be done prior to importing cli_root.
-this_file_path = path.abspath(getsourcefile(lambda: 0))
+if getattr(sys, "frozen", False):
+    # The application is frozen
+    datadir = path.dirname(sys.executable)
+    # exe datadir : C:\Users\username\OneDrive\Desktop\PythonCLI\oci-cli\build\exe.win-amd64-3.9
+    # exe dynamic_loader.py C:\Users\username\OneDrive\Desktop\PythonCLI\oci-cli\build\lib\oci_cli
+    # msi datadir : C:\Users\username\AppData\Local\Programs\Oracle\oci-cli
+    # msi dynamic_loader.py datadir C:\Users\username\AppData\Local\Programs\Oracle\oci-cli\Lib\site-packages\oci_cli
+    libdir = path.dirname(datadir)
+    if "build" in libdir:
+        this_file_path = path.join(libdir, 'lib', 'oci_cli', 'dynamic_loader.py')
+    if "AppData" in datadir:
+        this_file_path = path.join(datadir, 'Lib', 'site-packages', 'oci_cli', 'dynamic_loader.py')
+else:
+    this_file_path = path.abspath(getsourcefile(lambda: 0))
 if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     # If the installation directory starts with oci_cli, we need to find the
     # last occurrence of oci_cli in the path.
     python_cli_root_dir = this_file_path[0:this_file_path.rindex("oci_cli")]
+elif "lib" in this_file_path:
+    # which using exe C:\Users\username\AppData\Local\Programs\Oracle\oci-cli\Lib\oci_cli
+    python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
 else:
-    python_cli_root_dir = this_file_path[0:this_file_path.index("/src/oci_cli")]
-sys.path.append(python_cli_root_dir + 'src')
+    python_cli_root_dir = this_file_path[0:this_file_path.index(path.join('src', 'oci_cli'))]
+    sys.path.append(python_cli_root_dir + 'src')
 sys.path.append(python_cli_root_dir)
 services_dir = path.join(python_cli_root_dir, ALL_SERVICES_DIR)
 

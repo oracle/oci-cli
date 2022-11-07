@@ -4,7 +4,6 @@
 
 from __future__ import print_function
 import arrow
-import ast
 import click
 import datetime
 import dateutil.parser
@@ -26,7 +25,7 @@ import uuid
 import struct
 import base64
 import logging
-from .formatting import render_config_errors
+from oci_cli.formatting import render_config_errors
 from itertools import chain
 from terminaltables import AsciiTable
 from timeit import default_timer as timer
@@ -38,20 +37,20 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 
-from . import cli_exceptions
-from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
+from oci_cli import cli_exceptions
+from oci_cli.cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
 from oci import exceptions, config, Response
 from oci.retry import RetryStrategyBuilder, retry_checkers
 from oci._vendor import requests
 
-from .version import __version__
+from oci_cli.version import __version__
 
-from . import string_utils
-from . import help_text_producer
-from . import cli_constants
-from . import cli_metrics
-from . import dynamic_loader
+from oci_cli import string_utils
+from oci_cli import help_text_producer
+from oci_cli import cli_constants
+from oci_cli import cli_metrics
+from oci_cli import dynamic_loader
 
 import collections.abc as abc
 
@@ -324,7 +323,7 @@ def get_session_token_signer(client_config):
         click.echo('ERROR: This CLI session has expired, so it cannot currently be used to run commands')
         if click.confirm('Do you want to re-authenticate your CLI session profile?', default=True):
             ctx = click.get_current_context()
-            from .cli_session import authenticate
+            from oci_cli.cli_session import authenticate
             # if the expired session profile used a private key passphrase, then prompt for a passphrase during re-authentication; otherwise, don't prompt for passphrase during re-authentication
             passphrase_prompt = client_config['pass_phrase'] is not None
             ctx.invoke(authenticate, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']), use_passphrase=passphrase_prompt)
@@ -363,7 +362,7 @@ def create_config_and_signer_based_on_click_context(ctx):
             # if user requests session authentication without a config file, prompt them to create a config file with a session profile
             # otherwise, prompt them to create the config file with a profile that uses API key pair authentication
             if session_token_auth and click.confirm('Do you want to create a new config file with a CLI session profile that can be used with --auth {}?'.format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN), default=True):
-                from .cli_session import authenticate
+                from oci_cli.cli_session import authenticate
                 ctx.invoke(authenticate, profile_name=ctx.obj['profile'], config_location=os.path.expanduser(ctx.obj['config_file']))
                 # if there are any issues with the authentication, they should be handled by the session authenticate process itself
                 # so these lines below will only be reached if the session authenticate command finished successfully
@@ -877,17 +876,7 @@ def wrap_exceptions(func):
 
             if ctx.obj["debug"]:
                 raise
-            tpl = "{exc}:\n{details}"
-            # exception dict will only have one list element. Updating "logging_tips" and "troubleshooting_tips" field of 0th index of list.
-            if 'logging_tips' in exception.args[0]:
-                exception.args[0]['logging_tips'] = "Please run the OCI CLI command using --debug flag to find more debug information."
-            api_errors_info = "See https://docs.oracle.com/iaas/Content/API/References/apierrors.htm#apierrors_{}__{}_{} for more information about resolving this error".format(str(exception.args[0]['status']), str(exception.args[0]['status']), str(exception.args[0]['code']).lower())
-            if 'troubleshooting_tips' in exception.args[0]:
-                exception.args[0]['troubleshooting_tips'] = "{}. If you are unable to resolve this issue, run this CLI command with --debug option and contact Oracle support and provide them the full error message.".format(api_errors_info)
-            if 'client_version' in exception.args[0]:
-                exception.args[0]['client_version'] += ', Oracle-PythonCLI/{}'.format(__version__)
-            details = json.dumps(exception.args[0], indent=4, sort_keys=True)
-            sys.exit(tpl.format(exc=exception.__class__.__name__, details=details))
+            raise cli_exceptions.ServiceException(exception.args[0], exception.__class__.__name__)
         except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError as exception:
             if ctx.obj["debug"]:
                 raise
@@ -903,9 +892,32 @@ def wrap_exceptions(func):
                 raise
             tpl = "{usage}\n\nError: Missing option --endpoint."
             sys.exit(tpl.format(usage=ctx.get_usage()))
-        except (oci.exceptions.RequestException, oci.exceptions.ConnectTimeout):
+        except oci.exceptions.ConnectTimeout as exception:
             cli_metrics.Metrics.update_metric("NUM_CONN_FAILURES", ctx.obj['debug'])
-            raise
+            if ctx.obj["debug"]:
+                raise
+            message = "The connection to endpoint timed out"
+            troubleshooting_tips = "It looks like a connection timeout, please check your network setting or contact your network administrator."
+            raise cli_exceptions.ClientException(exception.__class__.__name__, message=message,
+                                                 troubleshooting_tips=troubleshooting_tips)
+        except oci.exceptions.RequestException as exception:
+            cli_metrics.Metrics.update_metric("NUM_CONN_FAILURES", ctx.obj['debug'])
+            if ctx.obj["debug"]:
+                raise
+            request_endpoint = get_request_endpoint_from_exception_string(str(exception))
+            message = "The connection to endpoint timed out."
+            troubleshooting_tips = ""
+            if request_endpoint:
+                curl_endpoint_split = request_endpoint.split(" ")
+                if len(curl_endpoint_split) == 3:
+                    curl_endpoint = curl_endpoint_split[2]
+                    message = f"The connection to endpoint timed out while trying to reach {curl_endpoint}"
+                    troubleshooting_tips = f"Try running curl {curl_endpoint}. If the curl doesn't work, check your network setting or contact your network administrator."
+
+            raise cli_exceptions.ClientException(exception.__class__.__name__,
+                                                 request_endpoint=request_endpoint,
+                                                 message=message,
+                                                 troubleshooting_tips=troubleshooting_tips)
         except Exception as exception:
             if ctx.obj["debug"]:
                 raise
@@ -930,23 +942,12 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
         json_to_parse = parameter_value
 
     try:
-        obj = json.loads(json_to_parse)
+        if camelize_keys:
+            return make_dict_keys_camel_case(json.loads(json_to_parse), parameter_name)
+        else:
+            return json.loads(json_to_parse)
     except ValueError:
-        try:
-            obj = ast.literal_eval(json_to_parse)
-        except (ValueError, SyntaxError):
-            if "file" in parameter_value:
-                if "file://" not in parameter_value:
-                    msg = 'The syntax used for giving JSON input is incorrect.\nSample example for MacOs/Linux/Unix -\noci os bucket create -ns mynamespace --name mybucket --compartment-id ocid1.compartment.oc1..aaaaaaaarhifmvrvuqtye5q66rck6copzqck3ukc5fldrwpp2jojdcypxfga --metadata file:///tmp/testfile.json\nSample example for Windows -\noci os bucket create -ns mynamespace --name mybucket --compartment-id ocid1.compartment.oc1..aaaaaaaarhifmvrvuqtye5q66rck6copzqck3ukc5fldrwpp2jojdcypxfga --metadata file://C:\\temp\\testfile.json\nFor more help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'
-                else:
-                    msg = 'File for {!r} must be in JSON format.You can get the correct JSON format for command options and commands : https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOptions\nFor more help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name)
-            else:
-                msg = 'Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.oracle.com/en-us/iaas/tools/oci-cli/latest/oci_cli_docs/oci.html#cmdoption-generate-full-command-json-input'.format(parameter_name)
-            sys.exit(msg)
-
-    if camelize_keys:
-        return make_dict_keys_camel_case(obj, parameter_name)
-    return obj
+        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
 
 
 # Takes a dictionary representing a JSON object and converts keys into their camelized form. This will do a deep conversion - for example if a value in the dictionary is a dictionary itself
@@ -1486,7 +1487,7 @@ def get_default_value_from_defaults_file(ctx, param_name, param_type, param_take
 
 def convert_value_from_param_type(value, param_type, param_takes_multiple):
     # Inline import to avoid a circular dependency
-    from .custom_types import CLI_DATETIME
+    from oci_cli.custom_types import CLI_DATETIME
 
     if value is None:
         return value
@@ -1519,7 +1520,7 @@ def convert_value_from_param_type(value, param_type, param_takes_multiple):
 
 def convert_value_from_param_type_accepting_multiple(value, param_type):
     # Inline import to avoid a circular dependency
-    from .custom_types import CLI_DATETIME
+    from oci_cli.custom_types import CLI_DATETIME
 
     # Since our splitting into multiples relies on a string split, we can't do anything if it's
     # not a string
@@ -2488,7 +2489,7 @@ def get_config_setup_function():
         try:
             webbrowser.get()
             # if a runnable browser was located by webbrowser.get(), we can proceed with `oci setup boostrap`
-            from .cli_setup_bootstrap import bootstrap_oci_cli
+            from oci_cli.cli_setup_bootstrap import bootstrap_oci_cli
             return bootstrap_oci_cli
         except webbrowser.Error:
             # runnable browser was not located by webbrowser.get(), so we have to go with `oci setup config`
@@ -2496,7 +2497,7 @@ def get_config_setup_function():
             click.echo('Switching to browserless config file setup process')
 
     # this will only be reached if the user says no to the first prompt about browser login, or if they said yes to that prompt but webbrowser.get() couldn't locate a runnable browser
-    from .cli_setup import generate_oci_config
+    from oci_cli.cli_setup import generate_oci_config
     return generate_oci_config
 
 
@@ -2568,6 +2569,14 @@ def apply_user_only_access_permissions(path):
             # For directories, we need to apply S_IXUSER otherwise it looks like on Linux/Unix/macOS if we create the directory then
             # it won't behave like a directory and let files be put into it
             os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
+
+
+def get_request_endpoint_from_exception_string(exception_string: str):
+    try:
+        request_endpoint = re.search('Request Endpoint:(.*)/n', exception_string)
+        return request_endpoint.group(1)
+    except Exception:
+        return None
 
 
 class CommandExample:

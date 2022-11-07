@@ -64,7 +64,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--email-notification', email,
             '--idcs-access-token-file', token_file
         ])
-        assert 'Error: No such option: --capacity ' in result.output
+        assert 'Error: no such option: --capacity ' in result.output
 
         # Check that --idcs-access-token is not expected on the CLI and triggers an error.
         result = util.invoke_command([
@@ -80,7 +80,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--idcs-access-token', 'eyJraWQiOiJhc3dfb2'
             '--idcs-access-token-file', token_file
         ])
-        assert 'Error: No such option: --idcs-access-token ' in result.output
+        assert 'Error: no such option: --idcs-access-token ' in result.output
 
     def test_private_endpoint_feature(self):
 
@@ -138,7 +138,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--ca-certificate-file', intermediates_file,
             '--private-key', 'abcdefg'
         ])
-        assert 'Error: No such option: --private-key ' in result.output
+        assert 'Error: no such option: --private-key ' in result.output
 
         # Check that create-vanity-url --public-certificate is not expected on the CLI and triggers an error.
         result = util.invoke_command([
@@ -150,7 +150,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--ca-certificate-file', intermediates_file,
             '--public-certificate', 'abcdefg'
         ])
-        assert 'Error: No such option: --public-certificate ' in result.output
+        assert 'Error: no such option: --public-certificate ' in result.output
 
         # Check that create-vanity-url --ca-certificate is not expected on the CLI and triggers an error.
         result = util.invoke_command([
@@ -162,7 +162,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--ca-certificate-file', intermediates_file,
             '--ca-certificate', 'abcdefg'
         ])
-        assert 'Error: No such option: --ca-certificate ' in result.output
+        assert 'Error: no such option: --ca-certificate ' in result.output
 
         # Check that update-vanity-url --private-key is not expected on the CLI and triggers an error.
         result = util.invoke_command([
@@ -173,7 +173,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--ca-certificate-file', intermediates_file,
             '--private-key', 'abcdefg'
         ])
-        assert 'Error: No such option: --private-key ' in result.output
+        assert 'Error: no such option: --private-key ' in result.output
 
         # Check that update-vanity-url --public-certificate is not expected on the CLI and triggers an error.
         result = util.invoke_command([
@@ -184,7 +184,7 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--ca-certificate-file', intermediates_file,
             '--public-certificate', 'abcdefg'
         ])
-        assert 'Error: No such option: --public-certificate ' in result.output
+        assert 'Error: no such option: --public-certificate ' in result.output
 
         # Check that update-vanity-url --ca-certificate is not expected on the CLI and triggers an error.
         result = util.invoke_command([
@@ -195,4 +195,4 @@ class TestAnalyticsCliExtended(unittest.TestCase):
             '--ca-certificate-file', intermediates_file,
             '--ca-certificate', 'abcdefg'
         ])
-        assert 'Error: No such option: --ca-certificate ' in result.output
+        assert 'Error: no such option: --ca-certificate ' in result.output

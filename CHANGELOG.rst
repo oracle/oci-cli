@@ -6,6 +6,76 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.20.1 - 2022-11-08
+--------------------
+
+Added
+~~~~~
+
+* Database service
+
+  * Support for new commands
+
+    * ``oci db autonomous-database list-refreshable-clones``
+    * ``oci db cloud-exa-infra add-storage``
+    * ``oci db cloud-vm-cluster add``
+    * ``oci db cloud-vm-cluster remove``
+
+  * Support for new optional parameters
+
+    * ``oci db cloud-vm-cluster create --data-storage-size-in-tbs --db-node-storage-size-in-gbs --db-servers --memory-size-in-gbs``
+    * ``oci db cloud-vm-cluster update --data-storage-size-in-tbs --db-node-storage-size-in-gbs --memory-size-in-gbs``
+
+* Support for creating rollback jobs in the Resource Manager service
+
+  * ``oci resource-manager job create-plan-rollback-job``
+  * ``oci resource-manager job create-apply-rollback-job``
+
+* Support for EDGE value for existing parameter --node-type in the Big Data service
+
+  * ``oci bds instance worker-nodes add --node-type``
+
+* Support for new optional parameter in the Data Flow service
+  
+  * ``oci data-flow private-endpoint create --scan-details``
+  * ``oci data-flow private-endpoint update --scan-details``
+
+* Application Dependency Management service
+
+  * Support for new commands
+
+    * ``oci adm vulnerability-audit create-vulnerability-audit-external-resource-vulnerability-audit-source``
+    * ``oci adm vulnerability-audit create-vulnerability-audit-oci-resource-vulnerability-audit-source``
+    * ``oci adm vulnerability-audit create-vulnerability-audit-unknown-source-vulnerability-audit-source``
+
+  * Support for new optional parameters
+
+    * ``oci adm vulnerability-audit list-application-dependency-vulnerabilities --depth --root-node-id``
+
+Changed
+~~~~~~~
+
+* Dependency on click is downgraded to 7.1.2
+
+* The required parameters --application-dependencies --compartment-id are now optional in the Application Dependency Management service
+
+  * ``oci adm vulnerability-audit create --application-dependencies --compartment-id``
+
+* Error message improvement with troubleshooting tips on RequestTimeout and ConnectTimeout for CLI commands with JSON inputs
+
+Fixed     
+~~~~~
+
+* Fixed incorrectly raised PermissionError when downloading content in folders created from the console in the Object Storage service
+
+  * ``oci os object bulk-download``
+
+* Fixed repeated confirmation prompt for no passphrase setup
+
+  * ``oci setup config``
+  * ``oci setup keys``
+
+
 3.20.0 - 2022-11-01
 --------------------
 

@@ -30,7 +30,7 @@ def template_group():
     pass
 
 
-@click.command(cli_util.override('resource_manager.stack_group.command_name', 'stack'), cls=CommandGroupWithAlias, help="""The stack object. Stacks represent definitions of groups of Oracle Cloud Infrastructure resources that you can act upon as a group. You take action on stacks by using jobs.""")
+@click.command(cli_util.override('resource_manager.stack_group.command_name', 'stack'), cls=CommandGroupWithAlias, help="""The properties that define a stack. A stack is the collection of Oracle Cloud Infrastructure resources corresponding to a given Terraform configuration. For instructions on managing stacks, see [Managing Stacks]. For more information about stacks, see [Key Concepts].""")
 @cli_util.help_option_group
 def stack_group():
     pass
@@ -84,7 +84,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('resource_manager.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""The properties that define a job. Jobs perform the actions that are defined in your configuration. - **Plan job**. A plan job takes your Terraform configuration, parses it, and creates an execution plan. - **Apply job**. The apply job takes your execution plan, applies it to the associated stack, then executes the configuration's instructions. - **Destroy job**. To clean up the infrastructure controlled by the stack, you run a destroy job. A destroy job does not delete the stack or associated job resources, but instead releases the resources managed by the stack. - **Import_TF_State job**. An import Terraform state job takes a Terraform state file and sets it as the current state of the stack. This is used to migrate local Terraform environments to Resource Manager.""")
+@click.command(cli_util.override('resource_manager.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""The properties of a job. A job performs the actions that are defined in your Terraform configuration. For instructions on managing jobs, see [Managing Jobs]. For more information about jobs, see [Key Concepts].""")
 @cli_util.help_option_group
 def job_group():
     pass
@@ -232,7 +232,7 @@ def change_private_endpoint_compartment(ctx, from_json, private_endpoint_id, com
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a Stack and it's associated Jobs into a different compartment. \n[Command Reference](changeStackCompartment)""")
+@stack_group.command(name=cli_util.override('resource_manager.change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a stack (and its associated jobs) into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeStackCompartment)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Stack should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -698,6 +698,178 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
+@job_group.command(name=cli_util.override('resource_manager.create_job_create_plan_rollback_job_operation_details.command_name', 'create-job-create-plan-rollback-job-operation-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
+@cli_util.option('--job-operation-details-target-rollback-job-id', required=True, help=u"""The [OCID] of a successful apply job to use for the plan rollback job.""")
+@cli_util.option('--display-name', help=u"""Description of the job.""")
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
+@cli_util.option('--job-operation-details-terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_plan_rollback_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_target_rollback_job_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_is_provider_upgrade_required, job_operation_details_terraform_advanced_options):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['jobOperationDetails'] = {}
+    _details['stackId'] = stack_id
+    _details['jobOperationDetails']['targetRollbackJobId'] = job_operation_details_target_rollback_job_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if operation is not None:
+        _details['operation'] = operation
+
+    if apply_job_plan_resolution is not None:
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_is_provider_upgrade_required is not None:
+        _details['jobOperationDetails']['isProviderUpgradeRequired'] = job_operation_details_is_provider_upgrade_required
+
+    if job_operation_details_terraform_advanced_options is not None:
+        _details['jobOperationDetails']['terraformAdvancedOptions'] = cli_util.parse_json_parameter("job_operation_details_terraform_advanced_options", job_operation_details_terraform_advanced_options)
+
+    _details['jobOperationDetails']['operation'] = 'PLAN_ROLLBACK'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_job(
+        create_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('resource_manager.create_job_create_apply_rollback_job_operation_details.command_name', 'create-job-create-apply-rollback-job-operation-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
+@cli_util.option('--job-operation-details-execution-plan-rollback-strategy', required=True, help=u"""Specifies the source of the execution plan for rollback to apply. Use `AUTO_APPROVED` to run the job without an execution plan for rollback job.""")
+@cli_util.option('--display-name', help=u"""Description of the job.""")
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-is-provider-upgrade-required', type=click.BOOL, help=u"""Specifies whether or not to upgrade provider versions. Within the version constraints of your Terraform configuration, use the latest versions available from the source of Terraform providers. For more information about this option, see [Dependency Lock File (terraform.io)].""")
+@cli_util.option('--job-operation-details-terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-execution-plan-rollback-job-id', help=u"""The [OCID] of a plan rollback job, for use when specifying `\"FROM_PLAN_ROLLBACK_JOB_ID\"` as the `executionPlanRollbackStrategy`.""")
+@cli_util.option('--job-operation-details-target-rollback-job-id', help=u"""The [OCID] of a successful apply job, for use when specifying `\"AUTO_APPROVED\"` as the `executionPlanRollbackStrategy`.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'job-operation-details-terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_apply_rollback_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_execution_plan_rollback_strategy, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_is_provider_upgrade_required, job_operation_details_terraform_advanced_options, job_operation_details_execution_plan_rollback_job_id, job_operation_details_target_rollback_job_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['jobOperationDetails'] = {}
+    _details['stackId'] = stack_id
+    _details['jobOperationDetails']['executionPlanRollbackStrategy'] = job_operation_details_execution_plan_rollback_strategy
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if operation is not None:
+        _details['operation'] = operation
+
+    if apply_job_plan_resolution is not None:
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_is_provider_upgrade_required is not None:
+        _details['jobOperationDetails']['isProviderUpgradeRequired'] = job_operation_details_is_provider_upgrade_required
+
+    if job_operation_details_terraform_advanced_options is not None:
+        _details['jobOperationDetails']['terraformAdvancedOptions'] = cli_util.parse_json_parameter("job_operation_details_terraform_advanced_options", job_operation_details_terraform_advanced_options)
+
+    if job_operation_details_execution_plan_rollback_job_id is not None:
+        _details['jobOperationDetails']['executionPlanRollbackJobId'] = job_operation_details_execution_plan_rollback_job_id
+
+    if job_operation_details_target_rollback_job_id is not None:
+        _details['jobOperationDetails']['targetRollbackJobId'] = job_operation_details_target_rollback_job_id
+
+    _details['jobOperationDetails']['operation'] = 'APPLY_ROLLBACK'
+
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+    result = client.create_job(
+        create_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('resource_manager.create_job_create_apply_job_operation_details.command_name', 'create-job-create-apply-job-operation-details'), help=u"""Creates a job. \n[Command Reference](createJob)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
@@ -1027,7 +1199,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating Stacks]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -1106,7 +1278,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating Stacks]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -1192,7 +1364,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_git_config_source_details.command_name', 'create-stack-create-git-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating Stacks]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -1286,7 +1458,7 @@ def create_stack_create_git_config_source_details(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_object_storage_config_source_details.command_name', 'create-stack-create-object-storage-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_object_storage_config_source_details.command_name', 'create-stack-create-object-storage-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating Stacks]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-region', required=True, help=u"""The name of the bucket's region. Example: `us-phoenix-1`""")
 @cli_util.option('--config-source-namespace', required=True, help=u"""The Object Storage namespace that contains the bucket.""")
@@ -1376,7 +1548,7 @@ def create_stack_create_object_storage_config_source_details(ctx, from_json, wai
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_compartment_config_source_details.command_name', 'create-stack-create-compartment-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating Stacks]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-compartment-id', required=True, help=u"""The [OCID] of the compartment to use for creating the stack. The new stack will include definitions for supported resource types in scope of the specified compartment OCID (tenancy level for root compartment, compartment level otherwise).""")
 @cli_util.option('--config-source-region', required=True, help=u"""The region to use for creating the stack. The new stack will include definitions for supported resource types in this region.""")
@@ -1468,7 +1640,7 @@ def create_stack_create_compartment_config_source_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_stack_template_config_source_details.command_name', 'create-stack-create-stack-template-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [To create a stack]. \n[Command Reference](createStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_stack_template_config_source_details.command_name', 'create-stack-create-stack-template-config-source-details'), help=u"""Creates a stack in the specified compartment. You can create a stack from a Terraform configuration. The Terraform configuration can be directly uploaded or referenced from a source code control system. You can also create a stack from an existing compartment, which generates a Terraform configuration. You can also upload the Terraform configuration from an Object Storage bucket. For more information, see [Creating Stacks]. \n[Command Reference](createStack)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-template-id', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -1827,7 +1999,7 @@ def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.delete_stack.command_name', 'delete'), help=u"""Deletes the specified stack object. \n[Command Reference](deleteStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.delete_stack.command_name', 'delete'), help=u"""Deletes the specified stack. \n[Command Reference](deleteStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2040,7 +2212,7 @@ def get_configuration_source_provider(ctx, from_json, configuration_source_provi
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('resource_manager.get_job.command_name', 'get'), help=u"""Returns the specified job along with the job details. \n[Command Reference](getJob)""")
+@job_group.command(name=cli_util.override('resource_manager.get_job.command_name', 'get'), help=u"""Gets the properties of the specified job. \n[Command Reference](getJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2127,7 +2299,7 @@ def get_job_logs(ctx, from_json, job_id, type, level_greater_than_or_equal_to, s
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('resource_manager.get_job_logs_content.command_name', 'get-job-logs-content'), help=u"""Returns a raw log file for the specified job. The raw log file contains console log entries in text format. The maximum number of entries in a file is 100,000. \n[Command Reference](getJobLogsContent)""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_logs_content.command_name', 'get-job-logs-content'), help=u"""Returns the raw log file for the specified job in text format. The file includes a maximum of 100,000 log entries. \n[Command Reference](getJobLogsContent)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2149,7 +2321,7 @@ def get_job_logs_content(ctx, from_json, job_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('resource_manager.get_job_tf_config.command_name', 'get-job-tf-config'), help=u"""Returns the Terraform configuration file for the specified job in .zip format. Returns an error if no zip file is found. \n[Command Reference](getJobTfConfig)""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_tf_config.command_name', 'get-job-tf-config'), help=u"""Returns the Terraform configuration for the specified job in zip format. If no zip file is found, returns an error. \n[Command Reference](getJobTfConfig)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2194,7 +2366,7 @@ def get_job_tf_config(ctx, from_json, file, job_id):
         file.close()
 
 
-@job_group.command(name=cli_util.override('resource_manager.get_job_tf_plan.command_name', 'get-job-tf-plan'), help=u"""Returns the output of the specified Terraform plan job in binary or JSON format. For information about running Terraform plan jobs, see [To run a plan job]. \n[Command Reference](getJobTfPlan)""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_tf_plan.command_name', 'get-job-tf-plan'), help=u"""Returns the output of the specified Terraform plan job in binary or JSON format. For information about running Terraform plan jobs, see [Creating Plan Jobs]. \n[Command Reference](getJobTfPlan)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--tf-plan-format', type=custom_types.CliCaseInsensitiveChoice(["BINARY", "JSON"]), help=u"""The output format of the Terraform plan.""")
@@ -2333,7 +2505,7 @@ def get_reachable_ip(ctx, from_json, private_ip, private_endpoint_id):
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.get_stack.command_name', 'get'), help=u"""Gets a stack using the stack ID. \n[Command Reference](getStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.get_stack.command_name', 'get'), help=u"""Gets the specified stack. \n[Command Reference](getStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2355,7 +2527,7 @@ def get_stack(ctx, from_json, stack_id):
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.get_stack_tf_config.command_name', 'get-stack-tf-config'), help=u"""Returns the Terraform configuration file in .zip format for the specified stack. Returns an error if no zip file is found. \n[Command Reference](getStackTfConfig)""")
+@stack_group.command(name=cli_util.override('resource_manager.get_stack_tf_config.command_name', 'get-stack-tf-config'), help=u"""Returns the Terraform configuration file for the specified stack in zip format. Returns an error if no zip file is found. \n[Command Reference](getStackTfConfig)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2512,7 +2684,7 @@ def get_template_logo(ctx, from_json, file, template_id):
         file.close()
 
 
-@template_group.command(name=cli_util.override('resource_manager.get_template_tf_config.command_name', 'get-template-tf-config'), help=u"""Returns the Terraform configuration file in .zip format for the specified template. Returns an error if no zip file is found. \n[Command Reference](getTemplateTfConfig)""")
+@template_group.command(name=cli_util.override('resource_manager.get_template_tf_config.command_name', 'get-template-tf-config'), help=u"""Returns the Terraform configuration file in zip format for the specified template. Returns an error if no zip file is found. \n[Command Reference](getTemplateTfConfig)""")
 @cli_util.option('--template-id', required=True, help=u"""The [OCID] of the template.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2557,7 +2729,7 @@ def get_template_tf_config(ctx, from_json, file, template_id):
         file.close()
 
 
-@work_request_group.command(name=cli_util.override('resource_manager.get_work_request.command_name', 'get'), help=u"""Return the given work request. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('resource_manager.get_work_request.command_name', 'get'), help=u"""Returns the specified work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2641,9 +2813,9 @@ def list_configuration_source_providers(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('resource_manager.list_jobs.command_name', 'list'), help=u"""Returns a list of jobs in a stack or compartment, ordered by time created.
+@job_group.command(name=cli_util.override('resource_manager.list_jobs.command_name', 'list'), help=u"""Lists jobs according to the specified filter. By default, the list is ordered by time created.
 
-- To list all jobs in a stack, provide the stack [OCID]. - To list all jobs in a compartment, provide the compartment [OCID]. - To return a specific job, provide the job [OCID]. \n[Command Reference](listJobs)""")
+- To list all jobs in a stack, provide the stack [OCID]. - To list all jobs in a compartment, provide the compartment [OCID]. - To return a specific job, provide the job [OCID]. (Equivalent to [GetStack].) \n[Command Reference](listJobs)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--stack-id', help=u"""The stack [OCID] on which to filter.""")
 @cli_util.option('--id', help=u"""The [OCID] on which to query for jobs.""")
@@ -2772,7 +2944,7 @@ def list_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.list_resource_discovery_services.command_name', 'list-resource-discovery-services'), help=u"""Returns a list of supported services for Resource Discovery. For reference on service names, see the [Terraform provider documentation]. \n[Command Reference](listResourceDiscoveryServices)""")
+@stack_group.command(name=cli_util.override('resource_manager.list_resource_discovery_services.command_name', 'list-resource-discovery-services'), help=u"""Returns a list of supported services for [Resource Discovery]. For reference on service names, see the [Terraform provider documentation]. \n[Command Reference](listResourceDiscoveryServices)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2850,7 +3022,7 @@ def list_stack_resource_drift_details(ctx, from_json, all_pages, page_size, stac
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.list_stacks.command_name', 'list'), help=u"""Returns a list of stacks. - If called using the compartment ID, returns all stacks in the specified compartment. - If called using the stack ID, returns the specified stack. \n[Command Reference](listStacks)""")
+@stack_group.command(name=cli_util.override('resource_manager.list_stacks.command_name', 'list'), help=u"""Lists stacks according to the specified filter. - If called using the compartment ID, returns all stacks in the specified compartment. - If called using the stack ID, returns the specified stack. (See also [GetStack].) \n[Command Reference](listStacks)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--id', help=u"""The [OCID] on which to query for a stack.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns only those resources that match the specified lifecycle state. The state value is case-insensitive. For more information about stack lifecycle states, see [Key Concepts].
@@ -2934,7 +3106,7 @@ def list_template_categories(ctx, from_json, all_pages, ):
 
 @template_group.command(name=cli_util.override('resource_manager.list_templates.command_name', 'list'), help=u"""Lists templates according to the specified filter. The attributes `compartmentId` and `templateCategoryId` are required unless `templateId` is specified. \n[Command Reference](listTemplates)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
-@cli_util.option('--template-category-id', help=u"""Unique identifier of the template category. Possible values are `0` (Quick Starts), `1` (Service), `2` (Architecture), and `3` (Private).""")
+@cli_util.option('--template-category-id', help=u"""Unique identifier for the template category. Possible values are `0` (Quickstarts), `1` (Service), `2` (Architecture), and `3` (Private). Template category labels are displayed in the Console page listing templates. Quickstarts, Service, and Architecture templates (categories 0, 1, and 2) are available in all compartments. Each private template (category 3) is available in the compartment where it was created.""")
 @cli_util.option('--template-id', help=u"""The [OCID] of the template.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a resource by name. Requires `sortBy` set to `DISPLAYNAME`. Alternatively, when you know the resource OCID, use the related Get operation.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to use when sorting returned resources. By default, `TIMECREATED` is ordered descending. By default, `DISPLAYNAME` is ordered ascending. Note that you can sort only on one field.""")
@@ -3015,7 +3187,7 @@ def list_terraform_versions(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('resource_manager.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_group.command(name=cli_util.override('resource_manager.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Returns a paginated list of errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -3072,7 +3244,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('resource_manager.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_group.command(name=cli_util.override('resource_manager.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns a paginated list of logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -3129,7 +3301,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('resource_manager.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a given compartment or for a given resource. \n[Command Reference](listWorkRequests)""")
+@work_request_group.command(name=cli_util.override('resource_manager.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment or for the specified resource. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that exist in the compartment, identified by [OCID].""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -3612,13 +3784,13 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.update_stack.command_name', 'update'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [To update a stack] and [To edit a stack]. \n[Command Reference](updateStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack.command_name', 'update'), help=u"""Updates the specified stack. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [Updating Stacks]. \n[Command Reference](updateStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--config-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks. Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3708,13 +3880,13 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_git_config_source_details.command_name', 'update-stack-update-git-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [To update a stack] and [To edit a stack]. \n[Command Reference](updateStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_git_config_source_details.command_name', 'update-stack-update-git-config-source-details'), help=u"""Updates the specified stack. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [Updating Stacks]. \n[Command Reference](updateStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--config-source-configuration-source-provider-id', required=True, help=u"""Unique identifier ([OCID]) for the Git configuration source.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks. Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3817,12 +3989,12 @@ def update_stack_update_git_config_source_details(ctx, from_json, force, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_object_storage_config_source_details.command_name', 'update-stack-update-object-storage-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [To update a stack] and [To edit a stack]. \n[Command Reference](updateStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_object_storage_config_source_details.command_name', 'update-stack-update-object-storage-config-source-details'), help=u"""Updates the specified stack. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [Updating Stacks]. \n[Command Reference](updateStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks. Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3928,12 +4100,12 @@ def update_stack_update_object_storage_config_source_details(ctx, from_json, for
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [To update a stack] and [To edit a stack]. \n[Command Reference](updateStack)""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details'), help=u"""Updates the specified stack. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [Updating Stacks]. \n[Command Reference](updateStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--custom-terraform-provider', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks that use Terraform version 0.12.x and 0.13.x only. (Older stacks that use other Terraform versions are automatically updated.) Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
+@cli_util.option('--is-third-party-provider-experience-enabled', type=click.BOOL, help=u"""When `true`, changes the stack's sourcing of third-party Terraform providers to [Terraform Registry] and allows [custom providers]. Applies to older stacks. Once set to `true`, cannot be reverted. For more information about stack sourcing of third-party Terraform providers, see [Third-party Provider Configuration].""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 250. The maximum size of each variable, including both name and value, is 8192 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

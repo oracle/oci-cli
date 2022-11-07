@@ -731,3 +731,69 @@ resourcemanager_cli.private_endpoint_group.add_command(resourcemanager_cli.list_
 # oci resource-manager reachable-ip get -> oci resource-manager private-endpoint
 resourcemanager_cli.reachable_ip_group.commands.pop(resourcemanager_cli.get_reachable_ip.name)
 resourcemanager_cli.private_endpoint_group.add_command(resourcemanager_cli.get_reachable_ip)
+
+
+# oci resource-manager job create-job-create-apply-rollback-job-operation-details -> oci resource-manager job create-apply-rollback-job
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.job_group, resourcemanager_cli.create_job_create_apply_rollback_job_operation_details, "create-apply-rollback-job")
+
+
+# oci resource-manager job create-job-create-plan-rollback-job-operation-details -> oci resource-manager job create-plan-rollback-job
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.job_group, resourcemanager_cli.create_job_create_plan_rollback_job_operation_details, "create-plan-rollback-job")
+
+
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_apply_rollback_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_rollback_strategy', 'job_operation_details_execution_plan_rollback_job_id', 'job_operation_details_target_rollback_job_id', 'job_operation_details_terraform_advanced_options', 'job_operation_details_is_provider_upgrade_required', 'apply_job_plan_resolution'])
+@resourcemanager_cli.job_group.command(name=resourcemanager_cli.create_job_create_apply_rollback_job_operation_details.name, help=resourcemanager_cli.create_job_create_apply_rollback_job_operation_details.help)
+@cli_util.option('--execution-plan-rollback-strategy', required=True, help=u"""Specifies the source of the execution plan for rollback to apply. Use `AUTO_APPROVED` to run the job without an execution plan for rollback job. [required]""")
+@cli_util.option('--execution-plan-rollback-job-id', help=u"""The [OCID] of a plan rollback job, for use when specifying `"FROM_PLAN_ROLLBACK_JOB_ID"` as the `executionPlanRollbackStrategy`.""")
+@cli_util.option('--target-rollback-job-id', help=u"""The [OCID] of a successful apply job, for use when specifying `"AUTO_APPROVED"` as the `executionPlanRollbackStrategy`.""")
+@cli_util.option('--terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_apply_rollback_job_operation_details_extended(ctx, **kwargs):
+
+    if 'execution_plan_rollback_strategy' in kwargs:
+        kwargs['job_operation_details_execution_plan_rollback_strategy'] = kwargs['execution_plan_rollback_strategy']
+        kwargs.pop('execution_plan_rollback_strategy')
+
+    if 'execution_plan_rollback_job_id' in kwargs:
+        kwargs['job_operation_details_execution_plan_rollback_job_id'] = kwargs['execution_plan_rollback_job_id']
+        kwargs.pop('execution_plan_rollback_job_id')
+
+    if 'target_rollback_job_id' in kwargs:
+        kwargs['job_operation_details_target_rollback_job_id'] = kwargs['target_rollback_job_id']
+        kwargs.pop('target_rollback_job_id')
+
+    if 'terraform_advanced_options' in kwargs:
+        kwargs['job_operation_details_terraform_advanced_options'] = kwargs['terraform_advanced_options']
+        kwargs.pop('terraform_advanced_options')
+
+    ctx.invoke(resourcemanager_cli.create_job_create_apply_rollback_job_operation_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_plan_rollback_job_operation_details, params_to_exclude=['job_operation_details_target_rollback_job_id', 'job_operation_details_terraform_advanced_options', 'job_operation_details_is_provider_upgrade_required', 'apply_job_plan_resolution'])
+@resourcemanager_cli.job_group.command(name=resourcemanager_cli.create_job_create_plan_rollback_job_operation_details.name, help=resourcemanager_cli.create_job_create_plan_rollback_job_operation_details.help)
+@cli_util.option('--target-rollback-job-id', required=True, help=u"""The [OCID] of a successful apply job to use for the plan rollback job. [required]""")
+@cli_util.option('--terraform-advanced-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_plan_rollback_job_operation_details_extended(ctx, **kwargs):
+
+    if 'target_rollback_job_id' in kwargs:
+        kwargs['job_operation_details_target_rollback_job_id'] = kwargs['target_rollback_job_id']
+        kwargs.pop('target_rollback_job_id')
+
+    if 'terraform_advanced_options' in kwargs:
+        kwargs['job_operation_details_terraform_advanced_options'] = kwargs['terraform_advanced_options']
+        kwargs.pop('terraform_advanced_options')
+
+    ctx.invoke(resourcemanager_cli.create_job_create_plan_rollback_job_operation_details, **kwargs)

@@ -4,11 +4,11 @@
 
 from __future__ import print_function
 import click
-from .cli_root import cli
-from .cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION, OCI_CLI_AUTH_API_KEY, OCI_CLI_AUTH_SESSION_TOKEN, OCI_CLI_AUTH_INSTANCE_PRINCIPAL, OCI_CLI_AUTH_RESOURCE_PRINCIPAL
-from . import cli_util
+from oci_cli.cli_root import cli
+from oci_cli.cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION, OCI_CLI_AUTH_API_KEY, OCI_CLI_AUTH_SESSION_TOKEN, OCI_CLI_AUTH_INSTANCE_PRINCIPAL, OCI_CLI_AUTH_RESOURCE_PRINCIPAL
+from oci_cli import cli_util
 from services.identity.src.oci_cli_identity.generated import identity_cli
-from .util import pymd5
+from oci_cli.util import pymd5
 
 import base64
 

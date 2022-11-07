@@ -3,7 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
-from . import cli_root, cli_util
+from oci_cli import cli_root, cli_util
 
 # Map parameter variable names to shortcuts.
 PARAMETER_SHORTCUT = {

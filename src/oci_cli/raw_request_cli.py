@@ -7,9 +7,9 @@ import json
 import oci
 import six.moves
 
-from .cli_root import cli
-from . import cli_util
-from . import custom_types
+from oci_cli.cli_root import cli
+from oci_cli import cli_util
+from oci_cli import custom_types
 from oci.retry import RetryStrategyBuilder, DEFAULT_RETRY_STRATEGY, retry_checkers
 
 

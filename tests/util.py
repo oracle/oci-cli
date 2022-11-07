@@ -241,7 +241,7 @@ def remove_outer_quotes(text):
         return text
 
 
-def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False, progress_bar_expected=False):
+def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False):
     try:
         assert result.exit_code == 0 or result.exit_code is None
 
@@ -252,10 +252,7 @@ def validate_response(result, extra_validation=None, includes_debug_data=False, 
             assert 'user-agent' in result.output
             assert '200' in result.output or '204' in result.output
         elif json_response_expected:
-            if progress_bar_expected:
-                validate_json_response(result.output[result.output.find('{'):])
-            else:
-                validate_json_response(result.output)
+            validate_json_response(result.output)
 
         if expect_etag:
             assert "etag" in result.output

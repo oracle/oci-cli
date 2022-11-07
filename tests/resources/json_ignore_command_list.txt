@@ -33,3 +33,10 @@ network, virtual-circuit, update
 db, database, create
 data-integration, data-asset, create
 data-integration, data-asset, update
+db, autonomous-database, list-refreshable-clones
+db, cloud-exa-infra, add-storage
+db, cloud-vm-cluster, add
+db, cloud-vm-cluster, remove
+adm, vulnerability-audit, create
+adm, vulnerability-audit, list
+adm, vulnerability-audit, list-application-dependency-vulnerabilities
