@@ -174,7 +174,7 @@ def runner():
             except TypeError:
                 new_output_bytes = cleaned_output
             finally:
-                result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
+                result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
 
         return result
 

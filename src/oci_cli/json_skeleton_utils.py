@@ -9,11 +9,11 @@ import re
 import six
 import sys
 
-from . import cli_util
-from . import cli_exceptions
+from oci_cli import cli_util
+from oci_cli import cli_exceptions
 
-from .custom_types import CliFromJson, CLI_DATETIME
-from .string_utils import camelize, underscore
+from oci_cli.custom_types import CliFromJson, CLI_DATETIME
+from oci_cli.string_utils import camelize, underscore
 
 import collections.abc as abc
 

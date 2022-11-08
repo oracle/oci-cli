@@ -33,34 +33,34 @@ class TestAPMTraces(unittest.TestCase):
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query'])
         assert 'Error: Missing option(s) --apm-domain-id, --start-time-gte, --start-time-lt.' in result.output  # Validating renaming of group query-result-response to query-response and query to run-query
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query', '--apm-domain-id'])
-        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output  # Validating the required attribute
+        assert 'Error: --apm-domain-id option requires an argument' in result.output  # Validating the required attribute
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query', '--start-time-gte'])
-        assert 'Error: Option \'--start-time-gte\' requires an argument' in result.output  # Validating the required attribute
+        assert 'Error: --start-time-gte option requires an argument' in result.output  # Validating the required attribute
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query', '--start-time-lt'])
-        assert 'Error: Option \'--start-time-lt\' requires an argument' in result.output  # Validating the required attribute
+        assert 'Error: --start-time-lt option requires an argument' in result.output  # Validating the required attribute
         result = util.invoke_command(['apm-traces', 'query', 'query-response', 'run-query', '--query-text'])
-        assert 'Error: Option \'--query-text\' requires an argument' in result.output
+        assert 'Error: --query-text option requires an argument' in result.output
 
     def test_list_quick_picks_options(self):
         result = util.invoke_command(['apm-traces', 'query', 'quick-picks', 'list'])
         assert 'Error: Missing option(s) --apm-domain-id' in result.output
         result = util.invoke_command(['apm-traces', 'query', 'quick-picks', 'list', '--apm-domain-id'])
-        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output  # Validating the required attribute
+        assert 'Error: --apm-domain-id option requires an argument' in result.output  # Validating the required attribute
 
     def test_get_span_options(self):
         result = util.invoke_command(['apm-traces', 'trace', 'span', 'get'])
         assert 'Error: Missing option(s) --apm-domain-id, --span-key, --trace-key.' in result.output  # Validating the required attribute
         result = util.invoke_command(['apm-traces', 'trace', 'span', 'get', '--apm-domain-id'])
-        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+        assert 'Error: --apm-domain-id option requires an argument' in result.output
         result = util.invoke_command(['apm-traces', 'trace', 'span', 'get', '--span-key'])
-        assert 'Error: Option \'--span-key\' requires an argument' in result.output
+        assert 'Error: --span-key option requires an argument' in result.output
         result = util.invoke_command(['apm-traces', 'trace', 'trace', 'get', '--trace-key'])
-        assert 'Error: Option \'--trace-key\' requires an argument' in result.output
+        assert 'Error: --trace-key option requires an argument' in result.output
 
     def test_get_trace_options(self):
         result = util.invoke_command(['apm-traces', 'trace', 'trace', 'get'])
         assert 'Error: Missing option(s) --apm-domain-id, --trace-key.' in result.output  # Validating the required attribute
         result = util.invoke_command(['apm-traces', 'trace', 'span', 'get', '--apm-domain-id'])
-        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+        assert 'Error: --apm-domain-id option requires an argument' in result.output
         result = util.invoke_command(['apm-traces', 'trace', 'trace', 'get', '--trace-key'])
-        assert 'Error: Option \'--trace-key\' requires an argument' in result.output
+        assert 'Error: --trace-key option requires an argument' in result.output

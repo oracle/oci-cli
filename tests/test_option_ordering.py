@@ -47,10 +47,10 @@ class TestOptionOrdering(unittest.TestCase):
         self.assertEqual(0, result.exit_code)
         assert self.has_debug_data(result)
 
-    # def test_debug_with_command_option(self):
-    #     result = self.invoke_operation(['iam', 'user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1', '-d'])
-    #     self.assertEqual(None, result.exit_code)
-    #     assert self.has_debug_data(result)
+    def test_debug_with_command_option(self):
+        result = self.invoke_operation(['iam', 'user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1', '-d'])
+        self.assertEqual(None, result.exit_code)
+        assert self.has_debug_data(result)
 
     def test_help_at_root(self):
         self.verify_help([], [None, '-?', '--help'], 'Usage: oci [OPTIONS]')

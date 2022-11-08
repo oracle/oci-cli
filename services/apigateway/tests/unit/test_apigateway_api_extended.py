@@ -29,48 +29,48 @@ class TestApiGatewayApi(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'create', '--compartment-id'])
-        assert 'Error: Option \'--compartment-id\' requires an argument' in result.output
+        assert 'Error: --compartment-id option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'create', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'create', '--defined-tags'])
-        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
+        assert 'Error: --defined-tags option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'create', '--freeform-tags'])
-        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
+        assert 'Error: --freeform-tags option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'create', '--content'])
-        assert 'Error: Option \'--content\' requires an argument' in result.output
+        assert 'Error: --content option requires an argument' in result.output
 
     def test_api_update(self):
         result = util.invoke_command(['api-gateway', 'api', 'update'])
         assert 'Error: Missing option(s)' in result.output
         assert '--api-id' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'update', '--api-id'])
-        assert 'Error: Option \'--api-id\' requires an argument' in result.output
+        assert 'Error: --api-id option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'update', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'update', '--defined-tags'])
-        assert 'Error: Option \'--defined-tags\' requires an argument' in result.output
+        assert 'Error: --defined-tags option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'update', '--freeform-tags'])
-        assert 'Error: Option \'--freeform-tags\' requires an argument' in result.output
+        assert 'Error: --freeform-tags option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'update', '--content'])
-        assert 'Error: Option \'--content\' requires an argument' in result.output
+        assert 'Error: --content option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'update', '--if-match'])
-        assert 'Error: Option \'--if-match\' requires an argument' in result.output
+        assert 'Error: --if-match option requires an argument' in result.output
 
     def test_api_delete(self):
         result = util.invoke_command(['api-gateway', 'api', 'delete'])
         assert 'Error: Missing option(s)' in result.output
         assert '--api-id' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'delete', '--api-id'])
-        assert 'Error: Option \'--api-id\' requires an argument' in result.output
+        assert 'Error: --api-id option requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'delete', '--if-match'])
-        assert 'Error: Option \'--if-match\' requires an argument' in result.output
+        assert 'Error: --if-match option requires an argument' in result.output
 
     def test_api_list(self):
         result = util.invoke_command(['api-gateway', 'api', 'list'])
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'list', '--display-name'])
-        assert 'Error: Option \'--display-name\' requires an argument' in result.output
+        assert 'Error: --display-name option requires an argument' in result.output
 
     def test_api_get(self):
         result = util.invoke_command(['api-gateway', 'api', 'get'])
@@ -92,7 +92,7 @@ class TestApiGatewayApi(unittest.TestCase):
         assert '--api-id' in result.output
         assert '--file' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'content', 'get', '--if-match'])
-        assert 'Error: Option \'--if-match\' requires an argument' in result.output
+        assert 'Error: --if-match option requires an argument' in result.output
 
     def test_api_deployment_specification(self):
         result = util.invoke_command(['api-gateway', 'api', 'deployment-specification'])
@@ -102,7 +102,7 @@ class TestApiGatewayApi(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--api-id' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'deployment-specification', 'get', '--if-match'])
-        assert 'Error: Option \'--if-match\' requires an argument' in result.output
+        assert 'Error: --if-match option requires an argument' in result.output
 
     def test_api_validations(self):
         result = util.invoke_command(['api-gateway', 'api', 'validations'])
@@ -112,4 +112,4 @@ class TestApiGatewayApi(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--api-id' in result.output
         result = util.invoke_command(['api-gateway', 'api', 'validations', 'get', '--if-match'])
-        assert 'Error: Option \'--if-match\' requires an argument' in result.output
+        assert 'Error: --if-match option requires an argument' in result.output

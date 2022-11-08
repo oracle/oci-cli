@@ -13,7 +13,7 @@ class TestLoadBalancer(unittest.TestCase):
     def test_nsg_id_options(self):
 
         result = util.invoke_command(['lb', 'nsg', 'update', '--network-security-group-ids'])
-        assert 'Error: No such option:' in result.output
+        assert 'Error: no such option:' in result.output
         assert 'network-security-group-ids' in result.output
 
         result = util.invoke_command(['lb', 'nsg', 'update', '--nsg-ids', 'dummy', '--force'])
@@ -21,7 +21,7 @@ class TestLoadBalancer(unittest.TestCase):
         assert 'load-balancer-id' in result.output
 
         result = util.invoke_command(['lb', 'load-balancer', 'create', '--network-security-group-ids'])
-        assert 'Error: No such option:' in result.output
+        assert 'Error: no such option:' in result.output
         assert 'network-security-group-ids' in result.output
 
         result = util.invoke_command(['lb', 'load-balancer', 'create', '--nsg-ids', 'dummy'])

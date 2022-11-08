@@ -1337,7 +1337,7 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
 
     # multipart uploads print out an upload ID and information when each part is uploaded successfully
     # for doing validation we need to strip this out
@@ -1348,7 +1348,8 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+
     return result
 
 

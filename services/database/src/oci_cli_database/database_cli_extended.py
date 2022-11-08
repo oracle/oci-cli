@@ -1603,6 +1603,7 @@ def list_patch_history_entries_by_database(ctx, **kwargs):
 
 # Rename Exacs New resource model names
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.cloud_exadata_infrastructure_group, "cloud-exa-infra")
+cli_util.rename_command(database_cli, database_cli.cloud_exadata_infrastructure_group, database_cli.add_storage_capacity_cloud_exadata_infrastructure, "add-storage")
 cli_util.rename_command(database_cli, database_cli.cloud_vm_cluster_group, database_cli.get_cloud_vm_cluster_iorm_config, "get-exadata-iorm-config")
 cli_util.rename_command(database_cli, database_cli.cloud_vm_cluster_group, database_cli.update_cloud_vm_cluster_iorm_config, "update-exadata-iorm-config")
 cli_util.rename_command(database_cli, database_cli.db_system_group, database_cli.migrate_exadata_db_system_resource_model, "switch")
@@ -1618,6 +1619,19 @@ database_cli.cloud_vm_cluster_group.add_command(database_cli.get_cloud_vm_cluste
 database_cli.cloud_vm_cluster_group.add_command(database_cli.list_cloud_vm_cluster_update_history_entries)
 database_cli.db_root_group.commands.pop(database_cli.update_group.name)
 database_cli.db_root_group.commands.pop(database_cli.update_history_entry_group.name)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.add_storage_capacity_cloud_exadata_infrastructure, params_to_exclude=['cloud_exadata_infrastructure_id'])
+@database_cli.cloud_exadata_infrastructure_group.command('add-storage', help=database_cli.add_storage_capacity_cloud_exadata_infrastructure.help)
+@cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def add_storage_capacity_cloud_exadata_infrastructure(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs.pop('cloud_exa_infra_id')
+
+    ctx.invoke(database_cli.add_storage_capacity_cloud_exadata_infrastructure, **kwargs)
 
 
 @cli_util.copy_params_from_generated_command(database_cli.create_cloud_vm_cluster, params_to_exclude=['cloud_exadata_infrastructure_id', 'is_sparse_diskgroup_enabled', 'is_local_backup_enabled', 'ssh_public_keys'])
@@ -3171,3 +3185,7 @@ def delete_autonomous_database_extended(ctx, from_json, wait_for_state, max_wait
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+# oci db autonomous-database list-autonomous-database-refreshable-clones -> oci db autonomous-database list-refreshable-clones
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.list_autonomous_database_refreshable_clones, "list-refreshable-clones")

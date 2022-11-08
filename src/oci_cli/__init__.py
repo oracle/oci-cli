@@ -21,26 +21,26 @@ if fips_libcrypto_file:
 
 
 # These imports are used by tests. The primary entry point for the CLI is cli.py.
-from .cli_root import cli  # noqa: F401,E402
-from .custom_types import cli_datetime  # noqa: F401,E402
-from .custom_types import cli_from_json  # noqa: F401,E402
-from . import dynamic_loader as dl  # noqa: F401,E402
+from oci_cli.cli_root import cli  # noqa: F401,E402
+from oci_cli.custom_types import cli_datetime  # noqa: F401,E402
+from oci_cli.custom_types import cli_from_json  # noqa: F401,E402
+from oci_cli import dynamic_loader as dl  # noqa: F401,E402
 
 dl.load_required_services_for_invocation()
 
-from . import aliasing  # noqa: F401,E402
-from . import file_filters  # noqa: F401,E402
-from . import final_command_processor  # noqa: F401,E402
-from . import cli_setup  # noqa: F401,E402
-from . import cli_session  # noqa: F401,E402
-from . import cli_setup_bootstrap  # noqa: F401,E402
-from . import cli_util  # noqa: F401,E402
-from . import cli_exceptions  # noqa: F401,E402
-from . import json_skeleton_utils  # noqa: F401,E402
-from . import string_utils  # noqa: F401,E402
-from . import help_text_producer  # noqa: F401,E402
-from . import raw_request_cli  # noqa: F401,E402
+from oci_cli import aliasing  # noqa: F401,E402
+from oci_cli import file_filters  # noqa: F401,E402
+from oci_cli import final_command_processor  # noqa: F401,E402
+from oci_cli import cli_setup  # noqa: F401,E402
+from oci_cli import cli_session  # noqa: F401,E402
+from oci_cli import cli_setup_bootstrap  # noqa: F401,E402
+from oci_cli import cli_util  # noqa: F401,E402
+from oci_cli import cli_exceptions  # noqa: F401,E402
+from oci_cli import json_skeleton_utils  # noqa: F401,E402
+from oci_cli import string_utils  # noqa: F401,E402
+from oci_cli import help_text_producer  # noqa: F401,E402
+from oci_cli import raw_request_cli  # noqa: F401,E402
 from oci import config  # noqa: F401,E402
-from .version import __version__  # noqa: F401,E402
+from oci_cli.version import __version__  # noqa: F401,E402
 
 final_command_processor.process()

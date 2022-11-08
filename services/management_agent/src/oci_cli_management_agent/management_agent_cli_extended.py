@@ -19,7 +19,7 @@ from oci_cli import custom_types  # noqa: F401
 @managementagent_cli.management_agent_group.command(name=cli_util.override('management_agent.management_agent_group.command_name', 'list'), help=u"""Returns a list of Management Agent.""")
 @cli_util.option('--agent-version', help=u"""Filter to return only Management Agents having the particular agent version.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'plugin-name': {'module': 'management_agent', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'management_agent', 'class': 'list[string]'}}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentSummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'list[ManagementAgentSummary]'})
 @cli_util.wrap_exceptions
 def version_parameterconflict_extended(ctx, **kwargs):
     if 'agent_version' in kwargs:

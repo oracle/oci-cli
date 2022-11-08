@@ -358,15 +358,18 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--max-host-count', type=click.INT, help=u"""The maximum number of hosts to be accessed through the private endpoint. This value is used to calculate the relevant CIDR block and should be a multiple of 256.  If the value is not a multiple of 256, it is rounded up to the next multiple of 256. For example, 300 is rounded up to 512.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scan-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of fqdn/port pairs used to create private endpoint. Each object is a simple key-value pair with FQDN as key and port number as value. [ { fqdn: \"scan1.oracle.com\", port: \"1521\"}, { fqdn: \"scan2.oracle.com\", port: \"1521\" } ]
+
+This option is a JSON list with items of type Scan.  For documentation on Scan please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/Scan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}, 'scan-details': {'module': 'data_flow', 'class': 'list[Scan]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}}, output_type={'module': 'data_flow', 'class': 'PrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}, 'scan-details': {'module': 'data_flow', 'class': 'list[Scan]'}}, output_type={'module': 'data_flow', 'class': 'PrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, dns_zones, subnet_id, defined_tags, description, display_name, freeform_tags, max_host_count, nsg_ids):
+def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, dns_zones, subnet_id, defined_tags, description, display_name, freeform_tags, max_host_count, nsg_ids, scan_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -393,6 +396,9 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if scan_details is not None:
+        _details['scanDetails'] = cli_util.parse_json_parameter("scan_details", scan_details)
 
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.create_private_endpoint(
@@ -1630,23 +1636,26 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--max-host-count', type=click.INT, help=u"""The maximum number of hosts to be accessed through the private endpoint. This value is used to calculate the relevant CIDR block and should be a multiple of 256.  If the value is not a multiple of 256, it is rounded up to the next multiple of 256. For example, 300 is rounded up to 512.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scan-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of fqdn/port pairs used to create private endpoint. Each object is a simple key-value pair with FQDN as key and port number as value. [ { fqdn: \"scan1.oracle.com\", port: \"1521\"}, { fqdn: \"scan2.oracle.com\", port: \"1521\" } ]
+
+This option is a JSON list with items of type Scan.  For documentation on Scan please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/Scan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}, 'scan-details': {'module': 'data_flow', 'class': 'list[Scan]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'dns-zones': {'module': 'data_flow', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'data_flow', 'class': 'list[string]'}, 'scan-details': {'module': 'data_flow', 'class': 'list[Scan]'}})
 @cli_util.wrap_exceptions
-def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, defined_tags, description, display_name, dns_zones, freeform_tags, max_host_count, nsg_ids, if_match):
+def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, defined_tags, description, display_name, dns_zones, freeform_tags, max_host_count, nsg_ids, scan_details, if_match):
 
     if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or dns_zones or freeform_tags or nsg_ids:
-            if not click.confirm("WARNING: Updates to defined-tags and dns-zones and freeform-tags and nsg-ids will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or dns_zones or freeform_tags or nsg_ids or scan_details:
+            if not click.confirm("WARNING: Updates to defined-tags and dns-zones and freeform-tags and nsg-ids and scan-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1676,6 +1685,9 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if scan_details is not None:
+        _details['scanDetails'] = cli_util.parse_json_parameter("scan_details", scan_details)
 
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.update_private_endpoint(

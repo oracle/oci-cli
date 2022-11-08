@@ -12,7 +12,7 @@ class TestNetwork(unittest.TestCase):
 
     def nsg_wrong_param_name(self, operation):
         result = util.invoke_command(['network', 'nsg'] + operation + ['--network-security-group-id'])
-        assert 'Error: No such option:' in result.output
+        assert 'Error: no such option:' in result.output
         assert 'network-security-group-id' in result.output
 
     def nsg_correct_param_name(self, operation, other_params, force):

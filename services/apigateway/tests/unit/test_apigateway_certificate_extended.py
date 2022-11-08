@@ -38,7 +38,7 @@ class TestApiGatewayCertificate(unittest.TestCase):
             result = util.invoke_command(
                 ['api-gateway', 'certificate', 'change-compartment', command])
 
-            verify(result, ['Error: Option \'{c}\' requires an argument'.format(
+            verify(result, ['Error: {c} option requires an argument'.format(
                 c=command)])
 
     def test_cert_create(self):
@@ -62,7 +62,7 @@ class TestApiGatewayCertificate(unittest.TestCase):
             result = util.invoke_command(
                 ['api-gateway', 'certificate', 'create', command])
 
-            verify(result, ['Error: Option \'{c}\' requires an argument'.format(
+            verify(result, ['Error: {c} option requires an argument'.format(
                 c=command)])
 
     def test_cert_delete(self):
@@ -86,7 +86,7 @@ class TestApiGatewayCertificate(unittest.TestCase):
         for command in expected[1:-2]:
             result = util.invoke_command(
                 ['api-gateway', 'certificate', 'delete', command])
-            verify(result, ['Error: Option \'{c}\' requires an argument'.format(
+            verify(result, ['Error: {c} option requires an argument'.format(
                 c=command)])
 
     def test_cert_get(self):
@@ -104,7 +104,7 @@ class TestApiGatewayCertificate(unittest.TestCase):
         for command in expected[1:-2]:
             result = util.invoke_command(
                 ['api-gateway', 'certificate', 'get', command])
-            verify(result, ['Error: Option \'{c}\' requires an argument'.format(
+            verify(result, ['Error: {c} option requires an argument'.format(
                 c=command)])
 
     def test_cert_list(self):
@@ -129,7 +129,7 @@ class TestApiGatewayCertificate(unittest.TestCase):
         for command in expected[1:-2]:
             result = util.invoke_command(
                 ['api-gateway', 'certificate', 'list', command])
-            verify(result, ['Error: Option \'{c}\' requires an argument'.format(
+            verify(result, ['Error: {c} option requires an argument'.format(
                 c=command)])
 
     def test_cert_update(self):
@@ -153,7 +153,7 @@ class TestApiGatewayCertificate(unittest.TestCase):
         for command in expected[1:-2]:
             result = util.invoke_command(
                 ['api-gateway', 'certificate', 'update', command])
-            verify(result, ['Error: Option \'{c}\' requires an argument'.format(
+            verify(result, ['Error: {c} option requires an argument'.format(
                 c=command)])
 
 

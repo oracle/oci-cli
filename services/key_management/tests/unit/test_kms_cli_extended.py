@@ -55,7 +55,7 @@ class TestKMS(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert 'key-id' in result.output
         result = util.invoke_command(['kms', 'management', 'key', 'schedule-deletion', '--time-of-deletion'])
-        assert 'Error: Option \'--time-of-deletion\' requires an argument' in result.output
+        assert 'Error: --time-of-deletion option requires an argument' in result.output
 
     def test_kms_management_key_cancel_deletion(self):
         result = util.invoke_command(['kms', 'management', 'key', 'cancel-deletion'])
@@ -72,7 +72,7 @@ class TestKMS(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert 'key-id' in result.output
         result = util.invoke_command(['kms', 'management', 'key-version', 'schedule-deletion', '--time-of-deletion'])
-        assert 'Error: Option \'--time-of-deletion\' requires an argument' in result.output
+        assert 'Error: --time-of-deletion option requires an argument' in result.output
 
     def test_kms_vault_usage_get(self):
         result = util.invoke_command(['kms', 'management', 'vault-usage'])

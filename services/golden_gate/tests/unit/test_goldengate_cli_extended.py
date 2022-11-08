@@ -41,11 +41,11 @@ class TestGoldenGate(unittest.TestCase):
 
     def test_deployment_create_req_params1(self):
         result = util.invoke_command(['goldengate', 'deployment', 'create', '--admin-username'])
-        assert 'Error: Option \'--admin-username\' requires an argument' in result.output
+        assert 'Error: --admin-username option requires an argument' in result.output
 
     def test_deployment_create_req_params2(self):
         result = util.invoke_command(['goldengate', 'deployment', 'create', '--admin-password'])
-        assert 'Error: Option \'--admin-password\' requires an argument' in result.output
+        assert 'Error: --admin-password option requires an argument' in result.output
 
     def test_deployment_create_req_params3(self):
         result = util.invoke_command(['goldengate', 'deployment', 'create', '--license-model', 'LICENSE_INCLUDED', '--display-name', 'aa', '--compartment-id', 'bb', '--subnet-id', 'cc', '--cpu-core-count', '1', '--is-auto-scaling-enabled', 'true'])

@@ -660,7 +660,7 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--number-of-worker-nodes', required=True, type=click.INT, help=u"""Number of additional worker nodes for the cluster.""")
-@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER"]), help=u"""Worker node types, can either be Worker Data node or Compute only worker node.""")
+@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "EDGE"]), help=u"""Worker node types, can either be Worker Data node or Compute only worker node.""")
 @cli_util.option('--shape', help=u"""Shape of the node. This has to be specified when adding compute only worker node at the first time. Otherwise, it's a read-only property.""")
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. This has to be specified when adding compute only worker node at the first time. Otherwise, it's a read-only property.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
