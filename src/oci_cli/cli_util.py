@@ -3,6 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
+import traceback
 import arrow
 import click
 import datetime
@@ -914,10 +915,15 @@ def wrap_exceptions(func):
                     message = f"The connection to endpoint timed out while trying to reach {curl_endpoint}"
                     troubleshooting_tips = f"Try running curl {curl_endpoint}. If the curl doesn't work, check your network setting or contact your network administrator."
 
-            raise cli_exceptions.ClientException(exception.__class__.__name__,
-                                                 request_endpoint=request_endpoint,
-                                                 message=message,
-                                                 troubleshooting_tips=troubleshooting_tips)
+            temp = traceback.format_exc()
+            if "SSL: CERTIFICATE_VERIFY_FAILED" in temp:
+                message = "It looks like you are missing some additional certificates for operation. run 'curl request_endpoint' to make sure you are able to call endpoint using curl."
+                troubleshooting_tips = "If you have a root certificate, either use --cert-bundle <path_to_cert_bundle_file> with CLI command or set REQUESTS_CA_BUNDLE env variable. i.e export REQUESTS_CA_BUNDLE=path_to_cert_bundle_file on POSIX-compliant bash-like shell terminal."
+                raise cli_exceptions.ClientException("SSLException", request_endpoint=request_endpoint, message=message, troubleshooting_tips=troubleshooting_tips)
+            else:
+                raise cli_exceptions.ClientException(exception.__class__.__name__,
+                                                     request_endpoint=request_endpoint,
+                                                     message=message, troubleshooting_tips=troubleshooting_tips)
         except Exception as exception:
             if ctx.obj["debug"]:
                 raise

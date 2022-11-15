@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.20.2 - 2022-11-15
+--------------------
+
+Added
+~~~~~
+
+* Database service
+
+  * Support for mTLS authentication with Listener and for providing custom value for TLS port and Non-TLS Port during AVM Cluster Creation on ExaCC
+  
+    * ``oci db autonomous-vm-cluster create --is-mtls-enabled --scan-listener-port-non-tls --scan-listener-port-tls``
+  
+  * Support for new optional parameters in CloudAutonomousVmClusters
+  
+    * ``oci db cloud-autonomous-vm-cluster create --autonomous-data-storage-size-in-tbs --cpu-core-count-per-node --db-servers --maintenance-window-details --memory-per-oracle-compute-unit-in-gbs --total-container-databases``
+    * ``oci db cloud-autonomous-vm-cluster update --maintenance-window-details``
+    
+  * Support for new command in CloudExadataInfrastructure
+   
+    * ``oci db cloud-exadata-infrastructure-unallocated-resources get``
+  
+* Support to list resources and outputs associated with resource manager job and stack for the Resource Management service
+
+  * ``oci resource-manager associated-resource-summary list-job-associated-resources``
+  * ``oci resource-manager associated-resource-summary list-stack-associated-resources``
+  * ``oci resource-manager job-output-summary list-job-outputs``
+
+Changed
+~~~~~~~
+
+* Improved handling SSL error messages in CLI to enable customers self help
+
 3.20.1 - 2022-11-08
 --------------------
 

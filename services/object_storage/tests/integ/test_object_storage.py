@@ -837,6 +837,45 @@ def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
 
 
 @util.skip_while_rerecording
+def test_object_put_empty_file(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
+    object_name = "TestEmptyObject_" + test_id
+    filename = os.path.join("tests/temp", object_name)
+
+    with open(filename, 'w') as f:
+        pass
+
+    with open(filename, 'r') as f:
+        put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--force', '--file',
+                             '-', '--name', object_name]
+
+        # supply object content file through stdin
+        put_result = invoke(runner, config_file, config_profile, put_required_args, input=f)
+        print(put_result.output)
+
+    validate_response(put_result)
+
+    assert json.loads(put_result.output)['opc-content-md5'] == '1B2M2Y8AsgTpgAmY7PhCfg=='
+
+    put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--force', '--file',
+                         filename, '--name', object_name]
+
+    # supply file through filename
+    put_result = invoke(runner, config_file, config_profile, put_required_args)
+    print(put_result.output)
+    validate_response(put_result)
+    assert json.loads(put_result.output)['opc-content-md5'] == '1B2M2Y8AsgTpgAmY7PhCfg=='
+
+    # delete object to clean up
+    delete_required_args = ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                            '--force']
+    invoke(runner, config_file, config_profile, delete_required_args)
+
+    # remove file to cleanup
+    os.remove(filename)
+
+
+@util.skip_while_rerecording
 def test_object_put_from_stdin_with_auto_content_type(runner, config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".txt"

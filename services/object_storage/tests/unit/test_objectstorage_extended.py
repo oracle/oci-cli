@@ -7,6 +7,7 @@ import hashlib
 import mock
 import unittest
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import time_delta
+from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import ProgressBar
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_progress_bar_label
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_encryption_key_params
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_source_encryption_key_params
@@ -39,6 +40,20 @@ class TestObjectStorage(unittest.TestCase):
         assert _get_progress_bar_label('', str_long_slash, 'Deleted') == 'Deleted item'
         assert _get_progress_bar_label('', str_long, 'Deleted') == 'Deleted item'
         assert _get_progress_bar_label('', str_normal, 'Deleted') == 'Deleted filename'
+
+    def test_progressbar_empty_file(self):
+        total_size = 0
+        bar = ProgressBar(total_size, 'Empty file!')
+        bar.update(total_size)
+        bar.update_label_to_end('Finished')
+        assert bar._progressbar.finished
+
+    def test_progressbar_update(self):
+        total_size = 100
+        bar = ProgressBar(total_size, 'Upload file!')
+        bar.update(50)
+        bar.update(50)
+        assert bar._progressbar.finished
 
     def test_verify_checksum(self):
         td = tempfile.mkdtemp()

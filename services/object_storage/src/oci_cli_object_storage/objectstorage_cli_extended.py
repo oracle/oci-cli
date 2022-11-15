@@ -3181,7 +3181,7 @@ class ProgressBar:
     PROGRESS_BAR_GRANULARITY = 10000
 
     def __init__(self, total_bytes, label, next_part=None):
-        self._total_bytes = total_bytes
+        self._total_bytes = 1 if total_bytes == 0 else total_bytes
         self._total_progress_bytes = 0
         self._last_progress = 0
         self._progressbar = click.progressbar(length=ProgressBar.PROGRESS_BAR_GRANULARITY,
