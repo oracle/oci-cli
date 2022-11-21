@@ -16,6 +16,7 @@ import test_object_storage_bulk_operations as bulk_operation
 from test_object_storage_sync_download import parse_dry_run_result, \
     generate_random_string, create_new_objects_remote, create_new_files_local, cleanup_files_from_local
 from tests import util
+import services.object_storage.tests.common.util as object_storage_util
 
 OBJECTS_TO_CREATE_IN_REMOTE_FOR_SYNC = 20
 
@@ -29,6 +30,10 @@ sync_remote_prefixes = {
     'a': [],
     '': []
 }
+
+new_path = 'new_path'
+new_files_set = 'new_files_set'
+new_dir = 'new_dir'
 
 
 @pytest.fixture(params=[False])
@@ -84,6 +89,14 @@ def teardown(debug):
     yield
     bulk_operation.invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name',
                            sync_upload_bucket_name, '--force'], debug=debug)
+
+
+@pytest.fixture()
+def cleanup_new_content_set():
+    data = {new_files_set: {}, new_dir: ''}
+    yield data
+    cleanup_files_from_local(data[new_files_set])
+    object_storage_util.remove_dir_at_path(data[new_dir])
 
 
 @util.skip_while_rerecording
@@ -162,7 +175,7 @@ def test_sync_src_updated_objects(object_storage_client):
 
 
 @util.skip_while_rerecording
-def test_sync_src_new_objects(object_storage_client):
+def test_sync_src_new_objects(object_storage_client, cleanup_new_content_set):
     """
     1. Upload the files to remote and validate the output and file contents
     2. Create a new file in local
@@ -176,6 +189,7 @@ def test_sync_src_new_objects(object_storage_client):
     new_object_name = 'a/new_object'
     new_file_contents = {new_object_name: bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH)}
     new_file_path = os.path.join(sync_upload_test_dir, new_object_name)
+    cleanup_new_content_set[new_files_set] = {new_file_path}
     with open(new_file_path, 'w') as fh:
         fh.write(new_file_contents[new_object_name])
 
@@ -425,7 +439,7 @@ def test_sync_src_with_delete_paging(object_storage_client, debug):
 
 
 @util.skip_while_rerecording
-def test_sync_src_with_delete_and_include(object_storage_client):
+def test_sync_src_with_delete_and_include(object_storage_client, cleanup_new_content_set):
     """
     1. Create new set of objects in local with .pdf and .doc extensions.
     2. Perform a dry run with --delete to include only *.pdf and validate that only .pdf files are transferred.
@@ -439,6 +453,8 @@ def test_sync_src_with_delete_and_include(object_storage_client):
 
     l_file_set_1 = create_new_files_local(sync_upload_test_dir, 3, extension='pdf')
     l_file_set_2 = create_new_files_local(sync_upload_test_dir, 5, extension='doc')
+    cleanup_new_content_set[new_files_set] = l_file_set_1.union(l_file_set_2)
+    cleanup_new_content_set[new_dir] = os.path.join(sync_upload_test_dir, 'dir')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
                                     sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--delete',
@@ -479,11 +495,9 @@ def test_sync_src_with_delete_and_include(object_storage_client):
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_1
 
-    cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
-
 
 @util.skip_while_rerecording
-def test_sync_src_with_delete_and_exclude(object_storage_client, debug):
+def test_sync_src_with_delete_and_exclude(object_storage_client, debug, cleanup_new_content_set):
     """
     1. Create new set of objects in local with .pdf and .doc extensions.
     2. Perform a dry run with --delete to exclude only *.pdf and validate that all other files are transferred.
@@ -497,6 +511,8 @@ def test_sync_src_with_delete_and_exclude(object_storage_client, debug):
 
     l_file_set_1 = create_new_files_local(sync_upload_test_dir, 3, extension='pdf')
     l_file_set_2 = create_new_files_local(sync_upload_test_dir, 5, extension='doc')
+    cleanup_new_content_set[new_files_set] = l_file_set_1.union(l_file_set_2)
+    cleanup_new_content_set[new_dir] = os.path.join(sync_upload_test_dir, 'dir')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
                                     sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--delete',
@@ -536,8 +552,6 @@ def test_sync_src_with_delete_and_exclude(object_storage_client, debug):
     assert set(parsed_result['uploaded-objects']) == set(sync_local_object_content.keys())
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_2
-
-    cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
 @util.skip_while_rerecording
@@ -601,7 +615,7 @@ def test_sync_src_with_delete_and_prefix(object_storage_client, debug):
 
 
 @util.skip_while_rerecording
-def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug):
+def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug, cleanup_new_content_set):
     """
     Assert that scope of file transfer and delete is only limited to --include pattern within the bucket prefix
 
@@ -621,6 +635,8 @@ def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug):
 
     l_file_set_1 = create_new_files_local(sync_upload_test_dir, 6, extension='pdf')
     l_file_set_2 = create_new_files_local(sync_upload_test_dir, 4, extension='doc')
+    cleanup_new_content_set[new_files_set] = l_file_set_1.union(l_file_set_2)
+    cleanup_new_content_set[new_dir] = os.path.join(sync_upload_test_dir, 'dir')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
                                     sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--prefix',
@@ -663,11 +679,10 @@ def test_sync_src_with_delete_include_and_prefix(object_storage_client, debug):
     assert set(parsed_result['uploaded-objects']) == set([(os.path.join(_prefix, f[len(sync_upload_test_dir):].replace(os.sep, '/').strip('/'))) for f in l_file_set_1.union(l_file_set_2)])
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_1
-    cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
 @util.skip_while_rerecording
-def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug):
+def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug, cleanup_new_content_set):
     """
     Assert that scope of file transfer and delete is only limited to --exclude pattern within the bucket prefix
 
@@ -686,6 +701,8 @@ def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug):
     _prefix = 'upload_prefix_exclude_delete/'
     l_file_set_1 = create_new_files_local(sync_upload_test_dir, 6, extension='pdf')
     l_file_set_2 = create_new_files_local(sync_upload_test_dir, 4, extension='doc')
+    cleanup_new_content_set[new_files_set] = l_file_set_1.union(l_file_set_2)
+    cleanup_new_content_set[new_dir] = os.path.join(sync_upload_test_dir, 'dir')
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
                                     sync_upload_bucket_name, '--src-dir', sync_upload_test_dir, '--prefix',
@@ -728,7 +745,6 @@ def test_sync_src_with_delete_exclude_and_prefix(object_storage_client, debug):
     assert set(parsed_result['uploaded-objects']) == set([(os.path.join(_prefix, o).replace(os.sep, '/')) for o in sync_local_object_content.keys()])
     assert parsed_result['skipped-objects'] == []
     assert set(parsed_result['deleted-objects']) == r_obj_set_2
-    cleanup_files_from_local(l_file_set_1.union(l_file_set_2))
 
 
 @util.skip_while_rerecording

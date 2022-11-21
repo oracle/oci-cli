@@ -174,7 +174,7 @@ def add_workload_common(ctx, **kwargs):
     result = get_rover_cluster_helper(ctx, kwargs['cluster_id'])
 
     if kwargs['type'].lower() == "bucket":
-        result_bucket = validate_bucket(ctx, **kwargs)
+        result_bucket = validate_bucket(result.data.compartment_id, ctx, **kwargs)
 
         workload_id = result_bucket.data.name
         workload_data = prepare_bucket_workload_data(result_bucket, **kwargs)

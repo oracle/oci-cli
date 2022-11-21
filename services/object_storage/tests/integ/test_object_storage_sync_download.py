@@ -932,7 +932,8 @@ def create_empty_folders_local(path, no_of_folders_to_create):
 
 def cleanup_files_from_local(file_set):
     for file in file_set:
-        os.remove(file)
+        if os.path.exists(file):
+            os.remove(file)
 
 
 def create_new_objects_remote(client, bucket_name, no_of_files_to_create, with_content=False, extension='txt',

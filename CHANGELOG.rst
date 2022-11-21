@@ -6,9 +6,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.20.3 - 2022-11-22
+--------------------
+Fixed
+~~~~~
+
+* Upgraded the cryptography version to (>=3.2.1,<39.0.0) to fix the `OpenSSL Security bug <https://www.openssl.org/blog/blog/2022/11/01/email-address-overflows/>`_
+
 3.20.2 - 2022-11-15
 --------------------
-
 Added
 ~~~~~
 
