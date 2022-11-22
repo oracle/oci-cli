@@ -8,13 +8,13 @@ certifi
 cffi>=1.9.1
 click==7.1.2
 coverage==4.5.2
-cryptography>=3.2.1,<=37.0.2
+cryptography>=3.2.1,<39.0.0
 httpsig-cffi==15.0.0
 Jinja2==3.0.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.88.1
+oci==2.88.2
 packaging==20.2
 pluggy==0.13.0
 py==1.10.0

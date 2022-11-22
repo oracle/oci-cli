@@ -29,11 +29,11 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.88.1',
+    'oci==2.88.2',
     'arrow>=1.0.0',
     'certifi',
     'click==7.1.2',
-    'cryptography>=3.2.1,<=37.0.2',
+    'cryptography>=3.2.1,<39.0.0',
     'jmespath==0.10.0',
     'python-dateutil>=2.5.3,<3.0.0',
     'pytz>=2016.10',

@@ -96,6 +96,71 @@ def modify_image_workload_name(image_workload_name):
     return image_workload_name
 
 
+def get_object_storage_helper(ctx):
+    # Override the region for r1 for os public endpoint
+    if 'config' in ctx.obj:
+        if 'region' in ctx.obj['config'] and ctx.obj['config']['region']:  # region present in ~/.oci/config
+            if ctx.obj['config']['region'].strip().split(".")[0] == "r1":
+                region = ctx.obj['config']['region']
+                ctx.obj['region'] = "r1.oracleiaas.com"
+                object_cli = cli_util.build_client('object_storage', 'object_storage', ctx)
+                ctx.obj['region'] = region
+                return object_cli
+    return cli_util.build_client('object_storage', 'object_storage', ctx)
+
+
+def validate_get_image(ctx, **kwargs):
+    if 'image_id' in kwargs and not kwargs['image_id']:
+        raise click.UsageError('Parameter image-id cannot be whitespace or empty string')
+    image_id = kwargs['image_id']
+    try:
+        compute_image_obj = get_compute_image_helper(ctx, image_id)
+        if compute_image_obj is None or compute_image_obj.data is None:
+            raise click.UsageError("Image not authorized or not found")
+    except Exception as e:
+        raise click.UsageError("Image not authorized or not found")
+    return compute_image_obj
+
+
+def validate_bucket(compartment_id, ctx, **kwargs):
+    if kwargs['type'].lower() == "bucket":
+        if not ('bucket_name' in kwargs and kwargs['bucket_name']):
+            raise click.UsageError('Parameter bucket-name cannot be whitespace or empty string')
+        try:
+            object_storage_obj = get_object_storage_helper(ctx)
+            kwargs_os = {
+                'compartment_id': compartment_id}
+            namespace = object_storage_obj.get_namespace(**kwargs_os).data
+            result = object_storage_obj.get_bucket(
+                namespace_name=namespace,
+                bucket_name=kwargs['bucket_name']
+            )
+            if result is None or result.data is None:
+                raise click.UsageError("Bucket not authorized or not found")
+        except Exception as e:
+            raise click.UsageError("Bucket not authorized or not found")
+    return result
+
+
+def prepare_bucket_workload_data(result_bucket, **kwargs):
+    workload_data = [{
+        "workloadType": "BUCKET", "id": result_bucket.data.name, "name": kwargs['bucket_name'],
+        "compartmentId": result_bucket.data.compartment_id,
+        'prefix': kwargs['prefix'], 'rangeStart': kwargs['range_start'], 'rangeEnd': kwargs['range_end']
+    }]
+    return workload_data
+
+
+def prepare_image_workload_data(compute_image_obj, image_id):
+    compute_image_obj_name = modify_image_workload_name(compute_image_obj.data.display_name)
+    workload_data = [
+        {'workloadType': "IMAGE", 'id': image_id, 'name': compute_image_obj_name,
+         'size': compute_image_obj.data.size_in_mbs, 'compartmentId': compute_image_obj.data.compartment_id,
+         }
+    ]
+    return workload_data
+
+
 def create_master_key_policy_rover_resource(resource_name, ctx, **kwargs):
     confirm_prompt_policy = "You are providing your own master key ID, please create a policy to allow " \
                             "Roving Edge Infrastructure to create DEKs and use the master key ID to encrypt " \
@@ -201,66 +266,3 @@ def remove_additional_params_after_policy(**kwargs):
     if 'policy_compartment_id' in kwargs:
         kwargs.pop('policy_compartment_id')
     return kwargs
-
-
-def get_object_storage_helper(ctx):
-    # Override the region for r1 for os public endpoint
-    if 'config' in ctx.obj:
-        if 'region' in ctx.obj['config'] and ctx.obj['config']['region']:  # region present in ~/.oci/config
-            if ctx.obj['config']['region'].strip().split(".")[0] == "r1":
-                region = ctx.obj['config']['region']
-                ctx.obj['region'] = "r1.oracleiaas.com"
-                object_cli = cli_util.build_client('object_storage', 'object_storage', ctx)
-                ctx.obj['region'] = region
-                return object_cli
-    return cli_util.build_client('object_storage', 'object_storage', ctx)
-
-
-def validate_get_image(ctx, **kwargs):
-    if 'image_id' in kwargs and not kwargs['image_id']:
-        raise click.UsageError('Parameter image-id cannot be whitespace or empty string')
-    image_id = kwargs['image_id']
-    try:
-        compute_image_obj = get_compute_image_helper(ctx, image_id)
-        if compute_image_obj is None or compute_image_obj.data is None:
-            raise click.UsageError("Image not authorized or not found")
-    except Exception as e:
-        raise click.UsageError("Image not authorized or not found")
-    return compute_image_obj
-
-
-def validate_bucket(ctx, **kwargs):
-    if kwargs['type'].lower() == "bucket":
-        if not ('bucket_name' in kwargs and kwargs['bucket_name']):
-            raise click.UsageError('Parameter bucket-name cannot be whitespace or empty string')
-        try:
-            object_storage_obj = get_object_storage_helper(ctx)
-            namespace = object_storage_obj.get_namespace().data
-            result = object_storage_obj.get_bucket(
-                namespace_name=namespace,
-                bucket_name=kwargs['bucket_name']
-            )
-            if result is None or result.data is None:
-                raise click.UsageError("Bucket not authorized or not found")
-        except Exception as e:
-            raise click.UsageError("Bucket not authorized or not found")
-    return result
-
-
-def prepare_bucket_workload_data(result_bucket, **kwargs):
-    workload_data = [{
-        "workloadType": "BUCKET", "id": result_bucket.data.name, "name": kwargs['bucket_name'],
-        "compartmentId": result_bucket.data.compartment_id,
-        'prefix': kwargs['prefix'], 'rangeStart': kwargs['range_start'], 'rangeEnd': kwargs['range_end']
-    }]
-    return workload_data
-
-
-def prepare_image_workload_data(compute_image_obj, image_id):
-    compute_image_obj_name = modify_image_workload_name(compute_image_obj.data.display_name)
-    workload_data = [
-        {'workloadType': "IMAGE", 'id': image_id, 'name': compute_image_obj_name,
-         'size': compute_image_obj.data.size_in_mbs, 'compartmentId': compute_image_obj.data.compartment_id,
-         }
-    ]
-    return workload_data

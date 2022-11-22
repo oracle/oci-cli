@@ -469,7 +469,7 @@ class TestObjectStorage(unittest.TestCase):
         assert "Error: Missing option(s) --bucket-name, --name, --access-type, --time-expires." in result.output
 
         result = util.invoke_command(['os', 'preauth-request', 'create', '--bucket-name', 'b001', '--name', 'par', '--access-type', 'new-access', '--time-expires', '2017-09-15T20:30:00.123456Z'])
-        assert "Error: Invalid value for '--access-type': invalid choice: new-access. (choose from ObjectRead, ObjectWrite, ObjectReadWrite, AnyObjectWrite, AnyObjectRead, AnyObjectReadWrite)" in result.output
+        assert "Error: Invalid value for '--access-type': invalid choice: new-access." in result.output
 
     def test_preauth_request_delete(self):
         result = util.invoke_command(['os', 'preauth-request', 'delete'])

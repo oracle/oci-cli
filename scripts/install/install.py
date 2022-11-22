@@ -304,13 +304,12 @@ def install_cli(install_dir, tmp_dir, version, optional_features, dependency_dir
     # Check if we should install a local full-install bundle.
     oci_cli_whl_files = glob.glob(match_wheel)
     if os.path.exists('./' + dependency_dir) and len(oci_cli_whl_files) > 0:
+        dependency_dir = DEFAULT_DEPENDENCY_DIR + '/python{}{}.html'.format(sys.version_info.major, sys.version_info.minor)
         print_status("Installing {} from local resources.".format(oci_cli_whl_files[0]))
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, oci_cli_whl_files[0], '--upgrade', '--find-links', dependency_dir]
 
     elif OFFLINE_INSTALL:
-        # # Since cffi is a 4th party library which cryptography uses, it needs to be installed first in the offline installation
-        # cmd = [path_to_pip, 'install', 'cffi', '--find-links', dependency_dir, '--no-index']
-        # exec_command(cmd, env=env)
+        dependency_dir = DEFAULT_DEPENDENCY_DIR + '/python{}{}.html'.format(sys.version_info.major, sys.version_info.minor)
         cmd = [path_to_pip, 'install', cli_package_name, '--find-links', dependency_dir, '--no-index', '--ignore-requires-python']
     else:
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
@@ -626,9 +625,7 @@ def main():
     global OFFLINE_INSTALL
     OFFLINE_INSTALL = args.offline_install
     dependency_dir = args.dependency_dir
-    if dependency_dir is None and OFFLINE_INSTALL:
-        dependency_dir = DEFAULT_DEPENDENCY_DIR + '/python{}{}'.format(sys.version_info.major, sys.version_info.minor)
-    elif dependency_dir is None:
+    if dependency_dir is None:
         dependency_dir = DEFAULT_DEPENDENCY_DIR
     global DRY_RUN
     DRY_RUN = args.dry_run
