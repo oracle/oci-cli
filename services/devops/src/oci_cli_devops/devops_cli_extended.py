@@ -819,14 +819,23 @@ def list_deployments_extended(ctx, **kwargs):
     ctx.invoke(devops_cli.list_deployments, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(devops_cli.create_deployment_create_deploy_pipeline_deployment_details, params_to_exclude=['deploy_pipeline_id', 'deploy_artifact_override_arguments'])
+@cli_util.copy_params_from_generated_command(devops_cli.create_deployment_create_deploy_pipeline_deployment_details, params_to_exclude=['deploy_pipeline_id', 'deploy_artifact_override_arguments', 'deploy_stage_override_arguments'])
 @devops_cli.deployment_group.command(name=cli_util.override('devops_cli.create_deployment_create_deploy_pipeline_deployment_details.command_name', 'create-pipeline-deployment'), help=devops_cli.create_deployment_create_deploy_pipeline_deployment_details.help)
+@cli_util.option('--stage-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--pipeline-id', required=True, help=u"""Pipeline Identifier""")
 @cli_util.option('--artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_create_deploy_pipeline_deployment_details_extended(ctx, **kwargs):
+
+    if 'stage_override_arguments' in kwargs:
+        kwargs['deploy_stage_override_arguments'] = kwargs['stage_override_arguments']
+        kwargs.pop('stage_override_arguments')
     if 'pipeline_id' in kwargs:
         kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
         kwargs.pop('pipeline_id')
@@ -862,8 +871,13 @@ def create_deployment_create_deploy_pipeline_redeployment_details_extended(ctx, 
     ctx.invoke(devops_cli.create_deployment_create_deploy_pipeline_redeployment_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(devops_cli.create_deployment_create_single_deploy_stage_deployment_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_id', 'deploy_artifact_override_arguments'])
+@cli_util.copy_params_from_generated_command(devops_cli.create_deployment_create_single_deploy_stage_deployment_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_id', 'deploy_artifact_override_arguments', 'deploy_stage_override_arguments'])
 @devops_cli.deployment_group.command(name=cli_util.override('devops_cli.create_deployment_create_single_deploy_stage_deployment_details.command_name', 'create-single-stage-deployment'), help=devops_cli.create_deployment_create_single_deploy_stage_deployment_details.help)
+@cli_util.option('--stage-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--pipeline-id', required=True, help=u"""Pipeline Identifier""")
 @cli_util.option('--stage-id', required=True, help=u"""The [OCID] of the stage which is marked for approval.""")
 @cli_util.option('--artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -871,6 +885,9 @@ def create_deployment_create_deploy_pipeline_redeployment_details_extended(ctx, 
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_create_single_deploy_stage_deployment_details_extended(ctx, **kwargs):
+    if 'stage_override_arguments' in kwargs:
+        kwargs['deploy_stage_override_arguments'] = kwargs['stage_override_arguments']
+        kwargs.pop('stage_override_arguments')
     if 'pipeline_id' in kwargs:
         kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
         kwargs.pop('pipeline_id')

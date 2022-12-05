@@ -385,6 +385,70 @@ def add_masking_columns_from_sdm(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
+@alert_group.command(name=cli_util.override('data_safe.alerts_update.command_name', 'alerts-update'), help=u"""Update alerts within a given compartment. \n[Command Reference](alertsUpdate)""")
+@cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPEN", "CLOSED"]), help=u"""The status of the alert.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
+@cli_util.option('--target-id', help=u"""The OCID of the target associated with alerts.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def alerts_update(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, status, compartment_id, target_id, if_match, compartment_id_in_subtree, access_level):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['status'] = status
+    _details['compartmentId'] = compartment_id
+
+    if target_id is not None:
+        _details['targetId'] = target_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.alerts_update(
+        alerts_update_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.apply_discovery_job_results.command_name', 'apply-discovery-job-results'), help=u"""Applies the results of a discovery job to the specified sensitive data model. Note that the plannedAction attribute of discovery results is used for processing them. You should first use PatchDiscoveryJobResults to set the plannedAction attribute of the discovery results you want to process. ApplyDiscoveryJobResults automatically reads the plannedAction attribute and updates the sensitive data model to reflect the actions you planned. \n[Command Reference](applyDiscoveryJobResults)""")
 @cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
 @cli_util.option('--discovery-job-id', required=True, help=u"""The OCID of the discovery job.""")
@@ -3023,6 +3087,8 @@ def create_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_installed_database_details.command_name', 'create-target-database-installed-database-details'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-listener-port', required=True, type=click.INT, help=u"""The port number of the database listener.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The service name of the database registered as target database.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3036,8 +3102,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-details-instance-id', help=u"""The OCID of the compute instance on which the database is running.""")
 @cli_util.option('--database-details-ip-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database host IP Addresses. Fully qualified domain names can be used if connectionType is 'ONPREM_CONNECTOR'.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-details-listener-port', type=click.INT, help=u"""The port number of the database listener.""")
-@cli_util.option('--database-details-service-name', help=u"""The service name of the database registered as target database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3046,7 +3110,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_installed_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_instance_id, database_details_ip_addresses, database_details_listener_port, database_details_service_name):
+def create_target_database_installed_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_instance_id, database_details_ip_addresses):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3055,6 +3119,8 @@ def create_target_database_installed_database_details(ctx, from_json, wait_for_s
     _details['databaseDetails'] = {}
     _details['compartmentId'] = compartment_id
     _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['listenerPort'] = database_details_listener_port
+    _details['databaseDetails']['serviceName'] = database_details_service_name
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -3082,12 +3148,6 @@ def create_target_database_installed_database_details(ctx, from_json, wait_for_s
 
     if database_details_ip_addresses is not None:
         _details['databaseDetails']['ipAddresses'] = cli_util.parse_json_parameter("database_details_ip_addresses", database_details_ip_addresses)
-
-    if database_details_listener_port is not None:
-        _details['databaseDetails']['listenerPort'] = database_details_listener_port
-
-    if database_details_service_name is not None:
-        _details['databaseDetails']['serviceName'] = database_details_service_name
 
     _details['databaseDetails']['databaseType'] = 'INSTALLED_DATABASE'
 
@@ -3125,6 +3185,7 @@ def create_target_database_installed_database_details(ctx, from_json, wait_for_s
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_autonomous_database_details.command_name', 'create-target-database-autonomous-database-details'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-autonomous-database-id', required=True, help=u"""The OCID of the autonomous database registered as a target database in Data Safe.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3136,7 +3197,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-details-autonomous-database-id', help=u"""The OCID of the autonomous database registered as a target database in Data Safe.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3145,7 +3205,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_autonomous_database_id):
+def create_target_database_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3154,6 +3214,7 @@ def create_target_database_autonomous_database_details(ctx, from_json, wait_for_
     _details['databaseDetails'] = {}
     _details['compartmentId'] = compartment_id
     _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['autonomousDatabaseId'] = database_details_autonomous_database_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -3175,9 +3236,6 @@ def create_target_database_autonomous_database_details(ctx, from_json, wait_for_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if database_details_autonomous_database_id is not None:
-        _details['databaseDetails']['autonomousDatabaseId'] = database_details_autonomous_database_id
 
     _details['databaseDetails']['databaseType'] = 'AUTONOMOUS_DATABASE'
 
@@ -3215,6 +3273,7 @@ def create_target_database_autonomous_database_details(ctx, from_json, wait_for_
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_database_cloud_service_details.command_name', 'create-target-database-database-cloud-service-details'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The database service name.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3228,7 +3287,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-details-vm-cluster-id', help=u"""The OCID of the VM cluster in which the database is running.""")
 @cli_util.option('--database-details-db-system-id', help=u"""The OCID of the cloud database system registered as a target database in Data Safe.""")
-@cli_util.option('--database-details-service-name', help=u"""The database service name.""")
+@cli_util.option('--database-details-listener-port', type=click.INT, help=u"""The port number of the database listener.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3237,7 +3296,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_database_cloud_service_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_vm_cluster_id, database_details_db_system_id, database_details_service_name):
+def create_target_database_database_cloud_service_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_vm_cluster_id, database_details_db_system_id, database_details_listener_port):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3246,6 +3305,7 @@ def create_target_database_database_cloud_service_details(ctx, from_json, wait_f
     _details['databaseDetails'] = {}
     _details['compartmentId'] = compartment_id
     _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['serviceName'] = database_details_service_name
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -3274,8 +3334,8 @@ def create_target_database_database_cloud_service_details(ctx, from_json, wait_f
     if database_details_db_system_id is not None:
         _details['databaseDetails']['dbSystemId'] = database_details_db_system_id
 
-    if database_details_service_name is not None:
-        _details['databaseDetails']['serviceName'] = database_details_service_name
+    if database_details_listener_port is not None:
+        _details['databaseDetails']['listenerPort'] = database_details_listener_port
 
     _details['databaseDetails']['databaseType'] = 'DATABASE_CLOUD_SERVICE'
 
@@ -3313,6 +3373,7 @@ def create_target_database_database_cloud_service_details(ctx, from_json, wait_f
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_private_endpoint.command_name', 'create-target-database-private-endpoint'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-option-datasafe-private-endpoint-id', required=True, help=u"""The OCID of the Data Safe private endpoint.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3323,7 +3384,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-option-datasafe-private-endpoint-id', help=u"""The OCID of the Data Safe private endpoint.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3332,7 +3392,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, display_name, description, credentials, tls_config, freeform_tags, defined_tags, connection_option_datasafe_private_endpoint_id):
+def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, connection_option_datasafe_private_endpoint_id, display_name, description, credentials, tls_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3341,6 +3401,7 @@ def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_
     _details['connectionOption'] = {}
     _details['compartmentId'] = compartment_id
     _details['databaseDetails'] = cli_util.parse_json_parameter("database_details", database_details)
+    _details['connectionOption']['datasafePrivateEndpointId'] = connection_option_datasafe_private_endpoint_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -3359,9 +3420,6 @@ def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if connection_option_datasafe_private_endpoint_id is not None:
-        _details['connectionOption']['datasafePrivateEndpointId'] = connection_option_datasafe_private_endpoint_id
 
     _details['connectionOption']['connectionType'] = 'PRIVATE_ENDPOINT'
 
@@ -3399,6 +3457,7 @@ def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_
 @target_database_group.command(name=cli_util.override('data_safe.create_target_database_on_premise_connector.command_name', 'create-target-database-on-premise-connector'), help=u"""Registers the specified database with Data Safe and creates a Data Safe target database in the Data Safe Console. \n[Command Reference](createTargetDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the Data Safe target database.""")
 @cli_util.option('--database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-option-on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3409,7 +3468,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-option-on-prem-connector-id', help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3418,7 +3476,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, display_name, description, credentials, tls_config, freeform_tags, defined_tags, connection_option_on_prem_connector_id):
+def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, connection_option_on_prem_connector_id, display_name, description, credentials, tls_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3427,6 +3485,7 @@ def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, 
     _details['connectionOption'] = {}
     _details['compartmentId'] = compartment_id
     _details['databaseDetails'] = cli_util.parse_json_parameter("database_details", database_details)
+    _details['connectionOption']['onPremConnectorId'] = connection_option_on_prem_connector_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -3445,9 +3504,6 @@ def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, 
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if connection_option_on_prem_connector_id is not None:
-        _details['connectionOption']['onPremConnectorId'] = connection_option_on_prem_connector_id
 
     _details['connectionOption']['connectionType'] = 'ONPREM_CONNECTOR'
 
@@ -4567,12 +4623,13 @@ def download_discovery_report(ctx, from_json, file, sensitive_data_model_id, dis
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--target-id', help=u"""The OCID of the target database for which the masking log is to be downloaded.""")
+@cli_util.option('--masking-work-request-id', help=u"""The OCID of the masking work request that resulted in this masking log.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def download_masking_log(ctx, from_json, file, masking_policy_id, target_id):
+def download_masking_log(ctx, from_json, file, masking_policy_id, target_id, masking_work_request_id):
 
     if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
@@ -4584,6 +4641,9 @@ def download_masking_log(ctx, from_json, file, masking_policy_id, target_id):
 
     if target_id is not None:
         _details['targetId'] = target_id
+
+    if masking_work_request_id is not None:
+        _details['maskingWorkRequestId'] = masking_work_request_id
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.download_masking_log(
@@ -7003,7 +7063,7 @@ The parameter `compartmentIdInSubtree` applies when you perform ListAuditTrails 
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "FAILED", "NEEDS_ATTENTION"]), help=u"""A optional filter to return only resources that match the specified lifecycle state.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["STARTING", "COLLECTING", "RECOVERING", "IDLE", "STOPPING", "STOPPED", "RESUMING", "RETRYING"]), help=u"""A optional filter to return only resources that match the specified sub-state of audit trail.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["STARTING", "COLLECTING", "RECOVERING", "IDLE", "STOPPING", "STOPPED", "RESUMING", "RETRYING", "NOT_STARTED", "STOPPED_NEEDS_ATTN", "STOPPED_FAILED"]), help=u"""A optional filter to return only resources that match the specified sub-state of audit trail.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field used for sorting. Only one sorting order (sortOrder) can be specified. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -7360,7 +7420,7 @@ def list_data_safe_private_endpoints(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@sensitive_data_model_group.command(name=cli_util.override('data_safe.list_discovery_analytics.command_name', 'list-discovery-analytics'), help=u"""Gets consolidated discovery analytics data based on the specified query parameters. \n[Command Reference](listDiscoveryAnalytics)""")
+@sensitive_data_model_group.command(name=cli_util.override('data_safe.list_discovery_analytics.command_name', 'list-discovery-analytics'), help=u"""Gets consolidated discovery analytics data based on the specified query parameters. If CompartmentIdInSubtreeQueryParam is specified as true, the behaviour is equivalent to accessLevel \"ACCESSIBLE\" by default. \n[Command Reference](listDiscoveryAnalytics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "sensitiveDataModelId"]), help=u"""Attribute by which the discovery analytics data should be grouped.""")
@@ -7875,7 +7935,7 @@ def list_masked_columns(ctx, from_json, all_pages, page_size, masking_report_id,
     cli_util.render_response(result, ctx)
 
 
-@masking_policy_group.command(name=cli_util.override('data_safe.list_masking_analytics.command_name', 'list-masking-analytics'), help=u"""Gets consolidated masking analytics data based on the specified query parameters. \n[Command Reference](listMaskingAnalytics)""")
+@masking_policy_group.command(name=cli_util.override('data_safe.list_masking_analytics.command_name', 'list-masking-analytics'), help=u"""Gets consolidated masking analytics data based on the specified query parameters. If CompartmentIdInSubtreeQueryParam is specified as true, the behaviour is equivalent to accessLevel \"ACCESSIBLE\" by default. \n[Command Reference](listMaskingAnalytics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "policyId"]), help=u"""Attribute by which the masking analytics data should be grouped.""")
@@ -7940,7 +8000,7 @@ def list_masking_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName"]), help=u"""The field to sort by. You can specify only one sort order (sortOrder). The default order for timeCreated is descending. The default order for other fields is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName", "dataType"]), help=u"""The field to sort by. You can specify only one sort order (sortOrder). The default order for timeCreated is descending. The default order for other fields is ascending.""")
 @cli_util.option('--masking-column-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle states.""")
 @cli_util.option('--data-type', type=custom_types.CliCaseInsensitiveChoice(["CHARACTER", "DATE", "LOB", "NUMERIC"]), multiple=True, help=u"""A filter to return only resources that match the specified data types.""")
 @cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
@@ -8193,7 +8253,7 @@ def list_masking_reports(ctx, from_json, all_pages, page_size, compartment_id, l
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--on-prem-connector-id', help=u"""A filter to return only the on-premises connector that matches the specified id.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
-@cli_util.option('--on-prem-connector-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only on-premises connector resources that match the specified lifecycle state.""")
+@cli_util.option('--on-prem-connector-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only on-premises connector resources that match the specified lifecycle state.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
@@ -8344,6 +8404,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeGenerated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeGenerated is descending. Default order for displayName is ascending. If no value is specified timeGenerated is default.""")
 @cli_util.option('--report-definition-id', help=u"""The ID of the report definition to filter the list of reports""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["UPDATING", "ACTIVE"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["GENERATED", "SCHEDULED"]), help=u"""An optional filter to return only resources that match the specified type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8351,7 +8412,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'ReportCollection'})
 @cli_util.wrap_exceptions
-def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, sort_order, sort_by, report_definition_id, lifecycle_state):
+def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, sort_order, sort_by, report_definition_id, lifecycle_state, type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -8375,6 +8436,8 @@ def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartme
         kwargs['report_definition_id'] = report_definition_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if type is not None:
+        kwargs['type'] = type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
@@ -8661,7 +8724,7 @@ def list_security_assessments(ctx, from_json, all_pages, page_size, compartment_
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName", "columnName"]), help=u"""The field to sort by. You can specify only one sort order (sortOrder). The default order for timeCreated is descending. The default order for schemaName, objectName, and columnName is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName", "columnName", "dataType"]), help=u"""The field to sort by. You can specify only one sort order (sortOrder). The default order for timeCreated is descending. The default order for schemaName, objectName, and columnName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}, 'column-name': {'module': 'data_safe', 'class': 'list[string]'}, 'data-type': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-id': {'module': 'data_safe', 'class': 'list[string]'}, 'parent-column-key': {'module': 'data_safe', 'class': 'list[string]'}})
@@ -8994,7 +9057,7 @@ def list_tables(ctx, from_json, all_pages, page_size, target_database_id, limit,
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field used for sorting. Only one sorting order (sortOrder) can be specified. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "TIMECREATED", "TIMEUPDATED"]), help=u"""The field to sort by. Only one sort order may be provided.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -9778,10 +9841,11 @@ def modify_global_settings(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @alert_group.command(name=cli_util.override('data_safe.patch_alerts.command_name', 'patch'), help=u"""Patch alerts. Updates one or more alerts by specifying alert Ids. \n[Command Reference](patchAlerts)""")
-@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of patch instructions.
-
-This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of patch instructions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -9790,17 +9854,20 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
 @cli_util.wrap_exceptions
-def patch_alerts(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, items, if_match):
+def patch_alerts(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, items, compartment_id, if_match, compartment_id_in_subtree, access_level):
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-
-    if items is not None:
-        _details['items'] = cli_util.parse_json_parameter("items", items)
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+    _details['compartmentId'] = compartment_id
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.patch_alerts(
@@ -9988,6 +10055,60 @@ def patch_sensitive_columns(ctx, from_json, wait_for_state, max_wait_seconds, wa
     result = client.patch_sensitive_columns(
         sensitive_data_model_id=sensitive_data_model_id,
         patch_sensitive_column_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@target_alert_policy_association_group.command(name=cli_util.override('data_safe.patch_target_alert_policy_association.command_name', 'patch'), help=u"""Creates new target-alert policy associations that will be applied on target. \n[Command Reference](patchTargetAlertPolicyAssociation)""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of patch instructions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.wrap_exceptions
+def patch_target_alert_policy_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, items, compartment_id, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.patch_target_alert_policy_association(
+        patch_target_alert_policy_association_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -10231,6 +10352,57 @@ def refresh_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@report_definition_group.command(name=cli_util.override('data_safe.remove_schedule_report.command_name', 'remove'), help=u"""Deletes schedule of a PDF or XLS report. \n[Command Reference](removeScheduleReport)""")
+@cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, if_match):
+
+    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+        raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.remove_schedule_report(
+        report_definition_id=report_definition_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @audit_trail_group.command(name=cli_util.override('data_safe.resume_audit_trail.command_name', 'resume'), help=u"""Resumes the specified audit trail once it got stopped. \n[Command Reference](resumeAuditTrail)""")
 @cli_util.option('--audit-trail-id', required=True, help=u"""The OCID of the audit trail.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10330,6 +10502,151 @@ def retrieve_audit_policies(ctx, from_json, wait_for_state, max_wait_seconds, wa
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.retrieve_audit_policies(
         audit_policy_id=audit_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@report_definition_group.command(name=cli_util.override('data_safe.schedule_report.command_name', 'schedule-report'), help=u"""Schedules a PDF or XLS report based on parameters and report definition. \n[Command Reference](scheduleReport)""")
+@cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
+@cli_util.option('--schedule', required=True, help=u"""Schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
+
+Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be excel or pdf""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource should be created.""")
+@cli_util.option('--report-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'report-details': {'module': 'data_safe', 'class': 'ReportDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'report-details': {'module': 'data_safe', 'class': 'ReportDetails'}})
+@cli_util.wrap_exceptions
+def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details, display_name, if_match):
+
+    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+        raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schedule'] = schedule
+    _details['mimeType'] = mime_type
+    _details['compartmentId'] = compartment_id
+    _details['reportDetails'] = cli_util.parse_json_parameter("report_details", report_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.schedule_report(
+        report_definition_id=report_definition_id,
+        schedule_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@report_definition_group.command(name=cli_util.override('data_safe.schedule_report_schedule_audit_report_details.command_name', 'schedule-report-schedule-audit-report-details'), help=u"""Schedules a PDF or XLS report based on parameters and report definition. \n[Command Reference](scheduleReport)""")
+@cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
+@cli_util.option('--schedule', required=True, help=u"""Schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
+
+Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be excel or pdf""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource should be created.""")
+@cli_util.option('--report-details-record-time-span', required=True, help=u"""The time span of records in report to be scheduled. <period-value><period> Allowed period strings - \"H\",\"D\",\"M\",\"Y\" Each of the above fields potentially introduce constraints. A workRequest is created only when period-value satisfies all the constraints. Constraints introduced: 1. period = H (The allowed range for period-value is [1, 23]) 2. period = D (The allowed range for period-value is [1, 30]) 3. period = M (The allowed range for period-value is [1, 11]) 4. period = Y (The minimum period-value is 1)""")
+@cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--report-details-row-limit', type=click.INT, help=u"""Specifies the limit on number of rows in report.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def schedule_report_schedule_audit_report_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details_record_time_span, display_name, if_match, report_details_row_limit):
+
+    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+        raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reportDetails'] = {}
+    _details['schedule'] = schedule
+    _details['mimeType'] = mime_type
+    _details['compartmentId'] = compartment_id
+    _details['reportDetails']['recordTimeSpan'] = report_details_record_time_span
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if report_details_row_limit is not None:
+        _details['reportDetails']['rowLimit'] = report_details_row_limit
+
+    _details['reportDetails']['reportType'] = 'AUDIT'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.schedule_report(
+        report_definition_id=report_definition_id,
+        schedule_report_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -11300,7 +11617,7 @@ def update_library_masking_format(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
 @cli_util.option('--object-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "EDITIONING_VIEW"]), help=u"""The type of the object that contains the database column.""")
 @cli_util.option('--masking-column-group', help=u"""The group of the masking column. It's a masking group identifier and can be any string of acceptable length. All the columns in a group are masked together to ensure that the masked data across these columns continue to retain the same logical relationship. For more details, check <a href=https://docs.oracle.com/en/cloud/paas/data-safe/udscs/group-masking1.html#GUID-755056B9-9540-48C0-9491-262A44A85037>Group Masking in the Data Safe documentation.</a>""")
-@cli_util.option('--sensitive-type-id', help=u"""The OCID of the sensitive type to be associated with the masking column.""")
+@cli_util.option('--sensitive-type-id', help=u"""The OCID of the sensitive type to be associated with the masking column. Note that there will be no change in assigned masking format when sensitive type is changed.""")
 @cli_util.option('--is-masking-enabled', type=click.BOOL, help=u"""Indicates if data masking is enabled for the masking column. Set it to false if you don't want to mask the column.""")
 @cli_util.option('--masking-formats', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The masking formats to be assigned to the masking column. You can specify a condition as part of each masking format. It enables you to do <a href=\"https://docs.oracle.com/en/cloud/paas/data-safe/udscs/conditional-masking.html\">conditional masking</a> so that you can mask the column data values differently using different masking formats and the associated conditions. A masking format can have one or more format entries. The combined output of all the format entries is used for masking. It provides the flexibility to define a masking format that can generate different parts of a data value separately and then combine them to get the final data value for masking.
 
@@ -12701,6 +13018,8 @@ def update_target_database(ctx, from_json, force, wait_for_state, max_wait_secon
 @target_database_group.command(name=cli_util.override('data_safe.update_target_database_installed_database_details.command_name', 'update-target-database-installed-database-details'), help=u"""Updates one or more attributes of the specified Data Safe target database. \n[Command Reference](updateTargetDatabase)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-listener-port', required=True, type=click.INT, help=u"""The port number of the database listener.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The service name of the database registered as target database.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12715,8 +13034,6 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--database-details-instance-id', help=u"""The OCID of the compute instance on which the database is running.""")
 @cli_util.option('--database-details-ip-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database host IP Addresses. Fully qualified domain names can be used if connectionType is 'ONPREM_CONNECTOR'.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-details-listener-port', type=click.INT, help=u"""The port number of the database listener.""")
-@cli_util.option('--database-details-service-name', help=u"""The service name of the database registered as target database.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -12726,7 +13043,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_target_database_installed_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_instance_id, database_details_ip_addresses, database_details_listener_port, database_details_service_name):
+def update_target_database_installed_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_instance_id, database_details_ip_addresses):
 
     if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
@@ -12743,6 +13060,8 @@ def update_target_database_installed_database_details(ctx, from_json, force, wai
     _details = {}
     _details['databaseDetails'] = {}
     _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['listenerPort'] = database_details_listener_port
+    _details['databaseDetails']['serviceName'] = database_details_service_name
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -12770,12 +13089,6 @@ def update_target_database_installed_database_details(ctx, from_json, force, wai
 
     if database_details_ip_addresses is not None:
         _details['databaseDetails']['ipAddresses'] = cli_util.parse_json_parameter("database_details_ip_addresses", database_details_ip_addresses)
-
-    if database_details_listener_port is not None:
-        _details['databaseDetails']['listenerPort'] = database_details_listener_port
-
-    if database_details_service_name is not None:
-        _details['databaseDetails']['serviceName'] = database_details_service_name
 
     _details['databaseDetails']['databaseType'] = 'INSTALLED_DATABASE'
 
@@ -12814,6 +13127,7 @@ def update_target_database_installed_database_details(ctx, from_json, force, wai
 @target_database_group.command(name=cli_util.override('data_safe.update_target_database_autonomous_database_details.command_name', 'update-target-database-autonomous-database-details'), help=u"""Updates one or more attributes of the specified Data Safe target database. \n[Command Reference](updateTargetDatabase)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-autonomous-database-id', required=True, help=u"""The OCID of the autonomous database registered as a target database in Data Safe.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12826,7 +13140,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--database-details-autonomous-database-id', help=u"""The OCID of the autonomous database registered as a target database in Data Safe.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -12836,7 +13149,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_target_database_autonomous_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_autonomous_database_id):
+def update_target_database_autonomous_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match):
 
     if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
@@ -12853,6 +13166,7 @@ def update_target_database_autonomous_database_details(ctx, from_json, force, wa
     _details = {}
     _details['databaseDetails'] = {}
     _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['autonomousDatabaseId'] = database_details_autonomous_database_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -12874,9 +13188,6 @@ def update_target_database_autonomous_database_details(ctx, from_json, force, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if database_details_autonomous_database_id is not None:
-        _details['databaseDetails']['autonomousDatabaseId'] = database_details_autonomous_database_id
 
     _details['databaseDetails']['databaseType'] = 'AUTONOMOUS_DATABASE'
 
@@ -12915,6 +13226,7 @@ def update_target_database_autonomous_database_details(ctx, from_json, force, wa
 @target_database_group.command(name=cli_util.override('data_safe.update_target_database_database_cloud_service_details.command_name', 'update-target-database-database-cloud-service-details'), help=u"""Updates one or more attributes of the specified Data Safe target database. \n[Command Reference](updateTargetDatabase)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
 @cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The database service name.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12929,7 +13241,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--database-details-vm-cluster-id', help=u"""The OCID of the VM cluster in which the database is running.""")
 @cli_util.option('--database-details-db-system-id', help=u"""The OCID of the cloud database system registered as a target database in Data Safe.""")
-@cli_util.option('--database-details-service-name', help=u"""The database service name.""")
+@cli_util.option('--database-details-listener-port', type=click.INT, help=u"""The port number of the database listener.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -12939,7 +13251,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_target_database_database_cloud_service_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_service_name):
+def update_target_database_database_cloud_service_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_listener_port):
 
     if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
@@ -12956,6 +13268,7 @@ def update_target_database_database_cloud_service_details(ctx, from_json, force,
     _details = {}
     _details['databaseDetails'] = {}
     _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['serviceName'] = database_details_service_name
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -12984,8 +13297,8 @@ def update_target_database_database_cloud_service_details(ctx, from_json, force,
     if database_details_db_system_id is not None:
         _details['databaseDetails']['dbSystemId'] = database_details_db_system_id
 
-    if database_details_service_name is not None:
-        _details['databaseDetails']['serviceName'] = database_details_service_name
+    if database_details_listener_port is not None:
+        _details['databaseDetails']['listenerPort'] = database_details_listener_port
 
     _details['databaseDetails']['databaseType'] = 'DATABASE_CLOUD_SERVICE'
 
@@ -13023,6 +13336,7 @@ def update_target_database_database_cloud_service_details(ctx, from_json, force,
 
 @target_database_group.command(name=cli_util.override('data_safe.update_target_database_private_endpoint.command_name', 'update-target-database-private-endpoint'), help=u"""Updates one or more attributes of the specified Data Safe target database. \n[Command Reference](updateTargetDatabase)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--connection-option-datasafe-private-endpoint-id', required=True, help=u"""The OCID of the Data Safe private endpoint.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13035,7 +13349,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--connection-option-datasafe-private-endpoint-id', help=u"""The OCID of the Data Safe private endpoint.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -13045,7 +13358,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_target_database_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, display_name, description, database_details, credentials, tls_config, freeform_tags, defined_tags, if_match, connection_option_datasafe_private_endpoint_id):
+def update_target_database_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, connection_option_datasafe_private_endpoint_id, display_name, description, database_details, credentials, tls_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
@@ -13061,6 +13374,7 @@ def update_target_database_private_endpoint(ctx, from_json, force, wait_for_stat
 
     _details = {}
     _details['connectionOption'] = {}
+    _details['connectionOption']['datasafePrivateEndpointId'] = connection_option_datasafe_private_endpoint_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -13082,9 +13396,6 @@ def update_target_database_private_endpoint(ctx, from_json, force, wait_for_stat
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if connection_option_datasafe_private_endpoint_id is not None:
-        _details['connectionOption']['datasafePrivateEndpointId'] = connection_option_datasafe_private_endpoint_id
 
     _details['connectionOption']['connectionType'] = 'PRIVATE_ENDPOINT'
 
@@ -13122,6 +13433,7 @@ def update_target_database_private_endpoint(ctx, from_json, force, wait_for_stat
 
 @target_database_group.command(name=cli_util.override('data_safe.update_target_database_on_premise_connector.command_name', 'update-target-database-on-premise-connector'), help=u"""Updates one or more attributes of the specified Data Safe target database. \n[Command Reference](updateTargetDatabase)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--connection-option-on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--display-name', help=u"""The display name of the target database in Data Safe.""")
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13134,7 +13446,6 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--connection-option-on-prem-connector-id', help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -13144,7 +13455,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_target_database_on_premise_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, display_name, description, database_details, credentials, tls_config, freeform_tags, defined_tags, if_match, connection_option_on_prem_connector_id):
+def update_target_database_on_premise_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, connection_option_on_prem_connector_id, display_name, description, database_details, credentials, tls_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
@@ -13160,6 +13471,7 @@ def update_target_database_on_premise_connector(ctx, from_json, force, wait_for_
 
     _details = {}
     _details['connectionOption'] = {}
+    _details['connectionOption']['onPremConnectorId'] = connection_option_on_prem_connector_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -13181,9 +13493,6 @@ def update_target_database_on_premise_connector(ctx, from_json, force, wait_for_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if connection_option_on_prem_connector_id is not None:
-        _details['connectionOption']['onPremConnectorId'] = connection_option_on_prem_connector_id
 
     _details['connectionOption']['connectionType'] = 'ONPREM_CONNECTOR'
 

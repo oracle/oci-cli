@@ -475,3 +475,19 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insi
 
 # oci opsi host-insights list-importable-compute-entities -> oci opsi host-insights list-macs-cloud-hosts
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.list_importable_compute_entities, "list-macs-cloud-hosts")
+
+
+# oci opsi exadata-insights add-exadata-insight-members-add-pe-comanaged-exadata-insight-members-details -> oci opsi exadata-insights add-pe-comanaged-exadata-members
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.add_exadata_insight_members_add_pe_comanaged_exadata_insight_members_details, "add-pe-comanaged-exadata-members")
+
+
+# oci opsi exadata-insights create-exadata-insight-create-pe-comanaged-exadata-insight-details -> oci opsi exadata-insights create-pe-comanaged-exadata
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.create_exadata_insight_create_pe_comanaged_exadata_insight_details, "create-pe-comanaged-exadata")
+
+
+# oci opsi exadata-insights enable-exadata-insight-enable-pe-comanaged-exadata-insight-details -> oci opsi exadata-insights enable-pe-comanaged-exadata
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.enable_exadata_insight_enable_pe_comanaged_exadata_insight_details, "enable-pe-comanaged-exadata")
+
+
+# oci opsi exadata-insights update-exadata-insight-update-pe-comanaged-exadata-insight-details -> oci opsi exadata-insights update-pe-comanaged-exadata
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.update_exadata_insight_update_pe_comanaged_exadata_insight_details, "update-pe-comanaged-exadata")

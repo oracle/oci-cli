@@ -11,6 +11,10 @@ service_mapping = {
         "ai_language",
         "Language"
     ],
+    "ai-document": [
+        "ai_document",
+        "Document Understanding"
+    ],
     "ai-vision": [
         "ai_vision",
         "Vision"
@@ -118,6 +122,10 @@ service_mapping = {
     "compute-management": [
         "core",
         "Compute Management Service"
+    ],
+    "container-instances": [
+        "container_instances",
+        "Container Instance"
     ],
     "dashboard-service": [
         "dashboard_service",

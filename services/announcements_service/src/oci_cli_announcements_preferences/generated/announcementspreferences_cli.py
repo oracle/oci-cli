@@ -38,12 +38,13 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--preference-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPT_IN_TENANT_ANNOUNCEMENTS", "OPT_IN_TENANT_AND_INFORMATIONAL_ANNOUNCEMENTS", "OPT_OUT_ALL_ANNOUNCEMENTS"]), help=u"""The string representing the user's preference, whether to opt in to only required announcements, to opt in to all announcements, including informational announcements, or to opt out of all announcements.""")
 @cli_util.option('--is-unsubscribed', type=click.BOOL, help=u"""A Boolean value to indicate whether the specified compartment chooses to not to receive informational announcements by email. (Manage preferences for receiving announcements by email by specifying the `preferenceType` attribute instead.)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment for which you want to manage announcement email preferences. (Specify the tenancy by providing the root compartment OCID.)""")
+@cli_util.option('--preferred-time-zone', help=u"""The time zone that the user prefers for announcement time stamps. Specify the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example America/Los_Angeles.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'announcements_service', 'class': 'AnnouncementsPreferencesSummary'})
 @cli_util.wrap_exceptions
-def create_announcements_preference(ctx, from_json, type, preference_type, is_unsubscribed, compartment_id):
+def create_announcements_preference(ctx, from_json, type, preference_type, is_unsubscribed, compartment_id, preferred_time_zone):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -57,6 +58,9 @@ def create_announcements_preference(ctx, from_json, type, preference_type, is_un
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if preferred_time_zone is not None:
+        _details['preferredTimeZone'] = preferred_time_zone
 
     _details['type'] = 'CreateAnnouncementsPreferencesDetails'
 
@@ -150,13 +154,14 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--preference-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPT_IN_TENANT_ANNOUNCEMENTS", "OPT_IN_TENANT_AND_INFORMATIONAL_ANNOUNCEMENTS", "OPT_OUT_ALL_ANNOUNCEMENTS"]), help=u"""The string representing the user's preference, whether to opt in to only required announcements, to opt in to all announcements, including informational announcements, or to opt out of all announcements.""")
 @cli_util.option('--is-unsubscribed', type=click.BOOL, help=u"""A Boolean value to indicate whether the specified compartment chooses to not to receive informational announcements by email. (Manage preferences for receiving announcements by email by specifying the `preferenceType` attribute instead.)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment for which you want to manage announcement email preferences. (Specify the tenancy by providing the root compartment OCID.)""")
+@cli_util.option('--preferred-time-zone', help=u"""The time zone that the user prefers for announcement time stamps. Specify the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example America/Los_Angeles.""")
 @cli_util.option('--if-match', help=u"""The locking version, used for optimistic concurrency control.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'announcements_service', 'class': 'AnnouncementsPreferencesSummary'})
 @cli_util.wrap_exceptions
-def update_announcements_preference(ctx, from_json, preference_id, type, preference_type, is_unsubscribed, compartment_id, if_match):
+def update_announcements_preference(ctx, from_json, preference_id, type, preference_type, is_unsubscribed, compartment_id, preferred_time_zone, if_match):
 
     if isinstance(preference_id, six.string_types) and len(preference_id.strip()) == 0:
         raise click.UsageError('Parameter --preference-id cannot be whitespace or empty string')
@@ -175,6 +180,9 @@ def update_announcements_preference(ctx, from_json, preference_id, type, prefere
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if preferred_time_zone is not None:
+        _details['preferredTimeZone'] = preferred_time_zone
 
     _details['type'] = 'UpdateAnnouncementsPreferencesDetails'
 

@@ -81,6 +81,8 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--filter-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of filter groups for the announcement subscription. A filter group combines one or more filters that the Announcements service applies to announcements for matching purposes.
 
 This option is a JSON dictionary of type dict(str, FilterGroupDetails).  For documentation on FilterGroupDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/announcementsubscription/0.0.1/datatypes/FilterGroupDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--preferred-language', help=u"""(For announcement subscriptions with Oracle Fusion Applications configured as the service only) The language in which the user prefers to receive emailed announcements. Specify the preference with a value that uses the language tag format (x-obmcs-human-language). For example fr-FR.""")
+@cli_util.option('--preferred-time-zone', help=u"""The time zone that the user prefers for announcement time stamps. Specify the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example America/Los_Angeles.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -91,7 +93,7 @@ This option is a JSON dictionary of type dict(str, FilterGroupDetails).  For doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'filter-groups': {'module': 'announcements_service', 'class': 'dict(str, FilterGroupDetails)'}, 'freeform-tags': {'module': 'announcements_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'announcements_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'announcements_service', 'class': 'AnnouncementSubscription'})
 @cli_util.wrap_exceptions
-def create_announcement_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, ons_topic_id, description, filter_groups, freeform_tags, defined_tags):
+def create_announcement_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, ons_topic_id, description, filter_groups, preferred_language, preferred_time_zone, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -106,6 +108,12 @@ def create_announcement_subscription(ctx, from_json, wait_for_state, max_wait_se
 
     if filter_groups is not None:
         _details['filterGroups'] = cli_util.parse_json_parameter("filter_groups", filter_groups)
+
+    if preferred_language is not None:
+        _details['preferredLanguage'] = preferred_language
+
+    if preferred_time_zone is not None:
+        _details['preferredTimeZone'] = preferred_time_zone
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -374,6 +382,8 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--display-name', help=u"""A user-friendly name for the announcement subscription. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description of the announcement subscription. Avoid entering confidential information.""")
 @cli_util.option('--ons-topic-id', help=u"""The [OCID] of the Notifications service topic that is the target for publishing announcements that match the configured announcement subscription. The caller of the operation needs the ONS_TOPIC_PUBLISH permission for the targeted Notifications service topic. For more information about Notifications permissions, see [Details for Notifications].""")
+@cli_util.option('--preferred-language', help=u"""(For announcement subscriptions with Oracle Fusion Applications configured as the service only) The language in which the user prefers to receive emailed announcements. Specify the preference with a value that uses the language tag format (x-obmcs-human-language). For example fr-FR.""")
+@cli_util.option('--preferred-time-zone', help=u"""The time zone that the user prefers for announcement time stamps. Specify the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example America/Los_Angeles.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The locking version, used for optimistic concurrency control.""")
@@ -386,7 +396,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'announcements_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'announcements_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'announcements_service', 'class': 'AnnouncementSubscription'})
 @cli_util.wrap_exceptions
-def update_announcement_subscription(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, announcement_subscription_id, display_name, description, ons_topic_id, freeform_tags, defined_tags, if_match):
+def update_announcement_subscription(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, announcement_subscription_id, display_name, description, ons_topic_id, preferred_language, preferred_time_zone, freeform_tags, defined_tags, if_match):
 
     if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
@@ -410,6 +420,12 @@ def update_announcement_subscription(ctx, from_json, force, wait_for_state, max_
 
     if ons_topic_id is not None:
         _details['onsTopicId'] = ons_topic_id
+
+    if preferred_language is not None:
+        _details['preferredLanguage'] = preferred_language
+
+    if preferred_time_zone is not None:
+        _details['preferredTimeZone'] = preferred_time_zone
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
