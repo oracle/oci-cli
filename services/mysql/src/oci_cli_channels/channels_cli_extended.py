@@ -2,6 +2,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from oci_cli import cli_util, json_skeleton_utils
+from oci_cli import custom_types  # noqa: F401
 from oci_cli.cli_util import copy_help_from_generated_code
 from services.mysql.src.oci_cli_channels.generated import channels_cli
 from services.mysql.src.oci_cli_mysql.generated import mysql_service_cli
@@ -19,8 +20,9 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.c
 @cli_util.option('--target-db-system-id', required=True, help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_db_system_id", remove_required=False))
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
+@cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_filters", remove_required=False))
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
 def create_channel_create_channel_source_from_mysql_details_extended(ctx, **kwargs):
     target_details = {}
@@ -35,6 +37,10 @@ def create_channel_create_channel_source_from_mysql_details_extended(ctx, **kwar
     if 'target_channel_name' in kwargs and kwargs['target_channel_name'] is not None:
         target_details['channelName'] = kwargs['target_channel_name']
     kwargs.pop('target_channel_name')
+
+    if 'target_filters' in kwargs and kwargs['target_filters'] is not None:
+        target_details['filters'] = cli_util.parse_json_parameter("target_filters", kwargs['target_filters'])
+    kwargs.pop('target_filters')
 
     target_details['targetType'] = 'DBSYSTEM'
 
@@ -53,8 +59,9 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.u
 @channels_cli.channel_group.command(name='update-from-mysql', help=channels_cli.update_channel_update_channel_source_from_mysql_details.help)
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
+@cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_filters", remove_required=False))
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
 def update_channel_update_channel_source_from_mysql_details_extended(ctx, **kwargs):
     target_details = {}
@@ -66,6 +73,10 @@ def update_channel_update_channel_source_from_mysql_details_extended(ctx, **kwar
     if 'target_channel_name' in kwargs and kwargs['target_channel_name'] is not None:
         target_details['channelName'] = kwargs['target_channel_name']
     kwargs.pop('target_channel_name')
+
+    if 'target_filters' in kwargs and kwargs['target_filters'] is not None:
+        target_details['filters'] = cli_util.parse_json_parameter("target_filters", kwargs['target_filters'])
+    kwargs.pop('target_filters')
 
     target_details['targetType'] = 'DBSYSTEM'
 

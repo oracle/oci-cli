@@ -73,7 +73,8 @@ class TestChannelsCliExtend(unittest.TestCase):
                                       '--source-ssl-mode', 'dummy',
                                       '--target-db-system-id', 'dummy',
                                       '--target-channel-name', 'dummy',
-                                      '--target-applier-username', 'dummy'])
+                                      '--target-applier-username', 'dummy',
+                                      '--target-filters', '[]'])
         assert 'Error: Missing option(s)' not in result.output
 
     # test command override channel update_channel_update_channel_source_from_mysql_details -> oci mysql channel update-from-mysql
@@ -91,7 +92,11 @@ class TestChannelsCliExtend(unittest.TestCase):
         assert 'Error: no such option: --target-db-system-id' in result.output
 
         # test flattened target parameters
-        result = util.invoke_command(['mysql', 'channel', 'update-from-mysql', '--channel-id', 'dummy', '--target-applier-username', 'dummy', '--target-channel-name', 'dummy'])
+        result = util.invoke_command(['mysql', 'channel', 'update-from-mysql',
+                                      '--channel-id', 'dummy',
+                                      '--target-applier-username', 'dummy',
+                                      '--target-channel-name', 'dummy',
+                                      '--target-filters', '[]'])
         assert 'Error: Missing option(s)' not in result.output
 
     # test override of WARNING message in update-from-mysql

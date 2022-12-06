@@ -251,3 +251,7 @@ def update_connection_update_oci_object_storage_connection_details_extended(ctx,
         kwargs.pop('os_region')
 
     ctx.invoke(goldengate_cli.update_connection_update_oci_object_storage_connection_details, **kwargs)
+
+
+# oci goldengate deployment collect-deployment-diagnostic -> oci goldengate deployment collect-diagnostics
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.collect_deployment_diagnostic, "collect-diagnostics")

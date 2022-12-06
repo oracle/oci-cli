@@ -6,6 +6,146 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.21.0 - 2022-12-06
+--------------------
+Added
+~~~~~
+
+* Support for the Document Understanding service
+
+ * ``oci ai-document``
+
+* Support for Container Instances service
+
+ * ``oci container-instances``
+
+* Support for Collecting Diagnostics action in GoldenGate Deployment service
+
+ * ``oci goldengate deployment collect-diagnostics``
+
+* Support for enabling create stack from OCI DevOps Service or Bitbucket Cloud/Server as Source Control Management in Resource Manager service
+
+ * ``oci resource-manager configuration-source-provider update-bitbucket-cloud-username-app-password-provider``
+ * ``oci resource-manager configuration-source-provider update-bitbucket-server-access-token-provider``
+ * ``oci resource-manager stack create-from-bitbucket-cloud``
+ * ``oci resource-manager stack create-from-bitbucket-server``
+ * ``oci resource-manager stack update-from-bitbucket-cloud``
+ * ``oci resource-manager stack update-from-devops``
+ * ``oci resource-manager configuration-source-provider create-bitbucket-cloud-username-app-password-provider``
+ * ``oci resource-manager configuration-source-provider create-bitbucket-server-access-token-provider``
+ * ``oci resource-manager stack code``
+
+
+
+* Support for new optional parameters for Devops Deployments in Devops service
+
+ * ``oci devops deployment create-pipeline-deployment --stage-override-arguments``
+ * ``oci devops deployment create-single-stage-deployment --stage-override-arguments``
+
+* Stack Monitoring service
+
+    * Support for PeopleSoft Discovery in Stack Monitoring service
+
+        * ``oci stack-monitoring discovery-job create --discovery-details``
+
+    * Support for Apache Tomcat and SQLServer Discovery
+
+        * ``oci stack-monitoring discovery-job create --discovery-detail``
+
+* Mysql Database Service
+
+    * Support for new required parameter "compartmentId" in BackupSummary response of API
+
+        * ``oci mysql backup get --backup-id"``
+
+    * Supports Managed Read Reaplicas - Load Balancing by adding a LOADBALANCER endpoint to DbSystem endpoints
+
+        * ``oci mysql db-system get --db-system-id"``
+
+    * Support for Mysql Database Service Managed Read Replicas
+
+        * ``oci mysql replica *``
+
+    * Support for new optional parameters that allow to set up replication filters
+
+        * ``oci mysql channel create-from-mysql --target-filters``
+        * ``oci mysql channel update-from-mysql --target-filters``
+
+    * Support for new optional parameters that allow to set up replication from a source configured without global transaction identifiers
+
+        * ``oci mysql channel create-from-mysql --source-anonymous-transactions-handling``
+        * ``oci mysql channel update-from-mysql --source-anonymous-transactions-handling``
+
+* Support for the Timezone and Language Preferences in Announce service
+
+ * ``oci announce announcement-subscription create --preferred-language``
+ * ``oci announce announcement-subscription update --preferred-language``
+ * ``oci announce announcements-preferences create --preferred-time-zone``
+ * ``oci announce announcements-preferences update --preferred-time-zone``
+
+* Support for DataSafe Report Scheduling and Alerts Bulk API in data-safe service
+
+ * ``oci data-safe masking-policy download-masking-log``
+ * ``oci data-safe report-summary list-reports``
+ * ``oci data-safe report-definition remove``
+ * ``oci data-safe report-definition schedule-report``
+ * ``oci data-safe report-definition schedule-report-schedule-audit-report-details``
+ * ``oci data-safe target-alert-policy-association patch``
+
+* Java Management Service
+
+    * Support for Java Server Usage reporting
+
+        * ``oci jms java-server-usage``
+        * ``oci jms java-server-instance-usage summarize``
+        * ``oci jms deployed-application-usage summarize``
+
+    * Support for Java Library Usage reporting
+
+        * ``oci jms library-usage *``
+
+    * Support for Cryptographic Roadmap Impact Analysis
+
+     * ``oci jms crypto-analysis-result *`
+     * ``oci jms fleet request-crypto-analyses``
+
+    * Support for Java Flight Recorder recordings and upload
+
+     * ``oci jms fleet request-jfr-recordings``
+
+    * Support for Restricting Management of Advanced Functionality
+
+     * ``oci jms fleet-advanced-feature-configuration``
+
+    * Support for new command
+
+     * ``oci jms java-family list``
+
+* Operations Insights
+
+  * Support for ExaCS systems to Operations Insights
+
+    * ``oci opsi exadata-insights create-pe-comanaged-exadata``
+    * ``oci opsi exadata-insights enable-pe-comanaged-exadata``
+    * ``oci opsi exadata-insights update-pe-comanaged-exadata``
+    * ``oci opsi exadata-insights add-pe-comanaged-exadata-members``
+    * ``oci opsi database-insights list-database-configurations``
+
+  * Optional Parameter ``--vmcluster-name`` parameter added in ``oci opsi database-insights`` and ``oci opsi host-insights``
+
+    * ``oci opsi database-insights summarize-database-insight*``
+
+* Support for multiple choices for parameter of type click.Choice
+
+Changed
+~~~~~~~
+* [BREAKING] ``--compartment-id`` is now a required parameter in ``oci data-safe alert patch``
+* Reduced offline installation package size
+* Remove deprecated command in the Java Management Service
+
+ * ``oci jms java-family-collection list-java-families``
+
+
 3.20.3 - 2022-11-22
 --------------------
 Fixed

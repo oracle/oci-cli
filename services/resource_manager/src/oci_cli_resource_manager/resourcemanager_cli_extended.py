@@ -796,4 +796,44 @@ def create_job_create_plan_rollback_job_operation_details_extended(ctx, **kwargs
         kwargs['job_operation_details_terraform_advanced_options'] = kwargs['terraform_advanced_options']
         kwargs.pop('terraform_advanced_options')
 
-    ctx.invoke(resourcemanager_cli.create_job_create_plan_rollback_job_operation_details, **kwargs)
+    if 'branch_name' in kwargs:
+        kwargs['config_source_branch_name'] = kwargs['branch_name']
+        kwargs.pop('branch_name')
+
+    if 'working_directory' in kwargs:
+        kwargs['config_source_working_directory'] = kwargs['working_directory']
+        kwargs.pop('working_directory')
+
+    ctx.invoke(resourcemanager_cli.update_stack_update_dev_ops_config_source_details, **kwargs)
+
+
+# oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-cloud-username-app-password-configuration-source-provider-details -> oci resource-manager configuration-source-provider create-bitbucket-cloud-username-app-password-provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.create_configuration_source_provider_create_bitbucket_cloud_username_app_password_configuration_source_provider_details, "create-bitbucket-cloud-username-app-password-provider")
+
+
+# oci resource-manager configuration-source-provider create-configuration-source-provider-create-bitbucket-server-access-token-configuration-source-provider-details -> oci resource-manager configuration-source-provider create-bitbucket-server-access-token-provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.create_configuration_source_provider_create_bitbucket_server_access_token_configuration_source_provider_details, "create-bitbucket-server-access-token-provider")
+
+
+# oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-cloud-username-app-password-configuration-source-provider-details -> oci resource-manager configuration-source-provider update-bitbucket-cloud-username-app-password-provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.update_configuration_source_provider_update_bitbucket_cloud_username_app_password_configuration_source_provider_details, "update-bitbucket-cloud-username-app-password-provider")
+
+
+# oci resource-manager configuration-source-provider update-configuration-source-provider-update-bitbucket-server-access-token-configuration-source-provider-details -> oci resource-manager configuration-source-provider update-bitbucket-server-access-token-provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.update_configuration_source_provider_update_bitbucket_server_access_token_configuration_source_provider_details, "update-bitbucket-server-access-token-provider")
+
+
+# oci resource-manager stack create-stack-create-bitbucket-cloud-config-source-details -> oci resource-manager stack create-from-bitbucket-cloud
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_bitbucket_cloud_config_source_details, "create-from-bitbucket-cloud")
+
+
+# oci resource-manager stack create-stack-create-bitbucket-server-config-source-details -> oci resource-manager stack create-from-bitbucket-server
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_bitbucket_server_config_source_details, "create-from-bitbucket-server")
+
+
+# oci resource-manager stack update-stack-update-bitbucket-cloud-config-source-details -> oci resource-manager stack update-from-bitbucket-cloud
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.update_stack_update_bitbucket_cloud_config_source_details, "update-from-bitbucket-cloud")
+
+
+# oci resource-manager stack update-stack-update-bitbucket-server-config-source-details -> oci resource-manager stack code
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.update_stack_update_bitbucket_server_config_source_details, "code")

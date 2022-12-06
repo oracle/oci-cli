@@ -122,15 +122,16 @@ def create_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-port', type=click.INT, help=u"""The port the source MySQL instance listens on.""")
 @cli_util.option('--source-ssl-ca-certificate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-anonymous-transactions-handling', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'target': {'module': 'mysql', 'class': 'CreateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
+@json_skeleton_utils.get_cli_json_input_option({'target': {'module': 'mysql', 'class': 'CreateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'mysql', 'class': 'CreateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}}, output_type={'module': 'mysql', 'class': 'Channel'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'mysql', 'class': 'CreateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}}, output_type={'module': 'mysql', 'class': 'Channel'})
 @cli_util.wrap_exceptions
-def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target, source_hostname, source_username, source_password, source_ssl_mode, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, source_port, source_ssl_ca_certificate):
+def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target, source_hostname, source_username, source_password, source_ssl_mode, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, source_port, source_ssl_ca_certificate, source_anonymous_transactions_handling):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -166,6 +167,9 @@ def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait
 
     if source_ssl_ca_certificate is not None:
         _details['source']['sslCaCertificate'] = cli_util.parse_json_parameter("source_ssl_ca_certificate", source_ssl_ca_certificate)
+
+    if source_anonymous_transactions_handling is not None:
+        _details['source']['anonymousTransactionsHandling'] = cli_util.parse_json_parameter("source_anonymous_transactions_handling", source_anonymous_transactions_handling)
 
     _details['source']['sourceType'] = 'MYSQL'
 
@@ -213,15 +217,18 @@ def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-channel-name', help=u"""The case-insensitive name that identifies the replication channel. Channel names must follow the rules defined for [MySQL identifiers]. The names of non-Deleted Channels must be unique for each DB System.""")
 @cli_util.option('--target-applier-username', help=u"""The username for the replication applier of the target MySQL DB System.""")
+@cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Replication filter rules to be applied at the DB System Channel target.
+
+This option is a JSON list with items of type ChannelFilter.  For documentation on ChannelFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/channels/20190415/datatypes/ChannelFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'mysql', 'class': 'CreateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'mysql', 'class': 'CreateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'mysql', 'class': 'CreateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'mysql', 'class': 'Channel'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'mysql', 'class': 'CreateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}}, output_type={'module': 'mysql', 'class': 'Channel'})
 @cli_util.wrap_exceptions
-def create_channel_create_channel_target_from_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, target_db_system_id, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, target_channel_name, target_applier_username):
+def create_channel_create_channel_target_from_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, target_db_system_id, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, target_channel_name, target_applier_username, target_filters):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -254,6 +261,9 @@ def create_channel_create_channel_target_from_db_system_details(ctx, from_json, 
 
     if target_applier_username is not None:
         _details['target']['applierUsername'] = target_applier_username
+
+    if target_filters is not None:
+        _details['target']['filters'] = cli_util.parse_json_parameter("target_filters", target_filters)
 
     _details['target']['targetType'] = 'DBSYSTEM'
 
@@ -649,16 +659,17 @@ def update_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--source-password', help=u"""The password for the replication user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--source-ssl-mode', help=u"""The SSL mode of the Channel.""")
 @cli_util.option('--source-ssl-ca-certificate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-anonymous-transactions-handling', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'target': {'module': 'mysql', 'class': 'UpdateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
+@json_skeleton_utils.get_cli_json_input_option({'target': {'module': 'mysql', 'class': 'UpdateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'mysql', 'class': 'UpdateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target': {'module': 'mysql', 'class': 'UpdateChannelTargetDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}})
 @cli_util.wrap_exceptions
-def update_channel_update_channel_source_from_mysql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, target, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, source_hostname, source_port, source_username, source_password, source_ssl_mode, source_ssl_ca_certificate):
+def update_channel_update_channel_source_from_mysql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, target, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, source_hostname, source_port, source_username, source_password, source_ssl_mode, source_ssl_ca_certificate, source_anonymous_transactions_handling):
 
     if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
@@ -711,6 +722,9 @@ def update_channel_update_channel_source_from_mysql_details(ctx, from_json, forc
     if source_ssl_ca_certificate is not None:
         _details['source']['sslCaCertificate'] = cli_util.parse_json_parameter("source_ssl_ca_certificate", source_ssl_ca_certificate)
 
+    if source_anonymous_transactions_handling is not None:
+        _details['source']['anonymousTransactionsHandling'] = cli_util.parse_json_parameter("source_anonymous_transactions_handling", source_anonymous_transactions_handling)
+
     _details['source']['sourceType'] = 'MYSQL'
 
     client = cli_util.build_client('mysql', 'channels', ctx)
@@ -758,16 +772,19 @@ def update_channel_update_channel_source_from_mysql_details(ctx, from_json, forc
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--target-channel-name', help=u"""The case-insensitive name that identifies the replication channel. Channel names must follow the rules defined for [MySQL identifiers]. The names of non-Deleted Channels must be unique for each DB System.""")
 @cli_util.option('--target-applier-username', help=u"""The username for the replication applier of the target MySQL DB System.""")
+@cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Replication filter rules to be applied at the DB System Channel target.
+
+This option is a JSON list with items of type ChannelFilter.  For documentation on ChannelFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/channels/20190415/datatypes/ChannelFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'mysql', 'class': 'UpdateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source': {'module': 'mysql', 'class': 'UpdateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'mysql', 'class': 'UpdateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'mysql', 'class': 'UpdateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
-def update_channel_update_channel_target_from_db_system_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, source, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, target_channel_name, target_applier_username):
+def update_channel_update_channel_target_from_db_system_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, source, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, target_channel_name, target_applier_username, target_filters):
 
     if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
@@ -807,6 +824,9 @@ def update_channel_update_channel_target_from_db_system_details(ctx, from_json, 
 
     if target_applier_username is not None:
         _details['target']['applierUsername'] = target_applier_username
+
+    if target_filters is not None:
+        _details['target']['filters'] = cli_util.parse_json_parameter("target_filters", target_filters)
 
     _details['target']['targetType'] = 'DBSYSTEM'
 

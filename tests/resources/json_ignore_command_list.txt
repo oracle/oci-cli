@@ -40,3 +40,6 @@ db, cloud-vm-cluster, remove
 adm, vulnerability-audit, create
 adm, vulnerability-audit, list
 adm, vulnerability-audit, list-application-dependency-vulnerabilities
+devops, deployment, create-pipeline-deployment
+devops, deployment, create-single-stage-deployment
+resource-manager, job, create-plan-rollback-job
