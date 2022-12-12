@@ -9,6 +9,41 @@ The project is open source and maintained by Oracle Corp. The home page for the 
 
 __ https://docs.cloud.oracle.com/Content/API/Concepts/cliconcepts.htm
 
+Announcements
+=============
+
+Interactive Features
+--------------------
+OCI CLI offers interactive features to guide you through command usage.
+
+Enabling them allows:
+    * Suggestions and autocompletion to help compose commands;
+    * Color-coded suggestions to distinguish required parameters from optional parameters; and
+    * Quick references display alongside suggestions to recognize command and parameter purposes.
+
+Try the interactive features anytime with the ``-i`` option:
+::
+
+    oci -i
+
+Read more on `OCI Documentation`__.
+
+__ https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm
+
+Container Image
+---------------
+OCI CLI is now available as container images. 
+
+With a standards-compliant container runtime engine, pull and run the latest version of oci-cli from the GitHub Container Registry.
+
+Read about setup requirements and instructions on `Working with the OCI CLI Container Image`__.
+
+Find previous image versions on `our package page`__.
+
+__ https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clicontainer.htm
+
+__ https://github.com/oracle/docker-images/pkgs/container/oci-cli
+
 
 Installation
 ============
@@ -42,25 +77,24 @@ See the `installation guide`__ for detailed installation instructions, options a
 __ https://docs.cloud.oracle.com/Content/API/SDKDocs/cliinstall.htm
 
 Offline Installation
-====================
-
+--------------------
 1. Go to the `CLI releases page`__ and locate the required CLI version.
 
 2. For the release, go to the "Assets" area.
 
 3. Download and copy the zip file for your Operating System to the environment where you want to install CLI.
 
-4. Unzip the file and execute the following from inside the unzipped folder:
+4. Unzip the file and execute the following from inside the unzipped folder
 
- a. Linux:
-     ::
+   On Linux:
+   ::
 
-          bash install.sh --offline-install
+       bash install.sh --offline-install
 
- b. Windows
-     ::
+   On Windows:
+   ::
 
-          install.ps1 -OfflineInstall
+       install.ps1 -OfflineInstall
 
 __ https://github.com/oracle/oci-cli/releases
 
@@ -76,6 +110,11 @@ or
 ::
 
     oci -h
+
+To enable interactive features for usage guidance:
+::
+
+    oci -i
 
 
 Examples

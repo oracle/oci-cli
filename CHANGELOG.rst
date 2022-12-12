@@ -6,6 +6,116 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.22.0 - 2022-12-13
+--------------------
+Added
+~~~~~
+* Support for the Queue service
+
+ * ``oci queue``
+ 
+* Support new pluggable-database commands for the Database service
+
+ * ``oci db database move``
+ * ``oci db pluggable-database disable-pluggable-database-management``
+ * ``oci db pluggable-database enable-pluggable-database-management``
+ * ``oci db pluggable-database modify-pluggable-database-management``
+ 
+* Support optional parameters availability_configuration and maintenance_window_schedule on monitors creation and updation for the APM Synthetics service
+
+ * ``oci apm-synthetics monitor create-browser-monitor --availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor create-rest-monitor --availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor create-scripted-browser-monitor --availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor create-scripted-rest-monitor --availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor update-browser-monitor --availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor update-rest-monitor --availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor update-scripted-browser-monitor ---availability_configuration, --maintenance_window_schedule``
+ * ``oci apm-synthetics monitor update-scripted-rest-monitor --availability_configuration, --maintenance_window_schedule``
+
+* Support new Project commands & optional parameters for the DevOps service
+ 
+ * ``oci devops work-request list --operation-type-multi-value-query``
+ * ``oci devops project schedule-cascading-delete``
+ * ``oci devops project cancel-cascading-delete``
+  
+* Support option paramter nsg-ids for the Database Migration service
+
+ * ``oci database-migration connection create --nsg-ids``
+ * ``oci database-migration connection update --nsg-ids``
+  
+* Support for new optional parameter in the Big Data Service (BDS)
+
+ * ``oci bds instance create --cluster-profile``
+
+* Service Mesh service
+
+ * Support for new command in virtual-deployment
+
+  * ``oci service-mesh virtual-deployment update-virtual-deployment-disabled-service-discovery-configuration``
+
+ * Support for cancelling a work request for any work request that has been accepted but not yet started
+ 
+  * ``oci service-mesh work-request cancel``
+  
+ * Support for new optional parameters in the list work requests to filter on associated resource id and operation status 
+ 
+  * ``oci service-mesh work-request list --operation-status --resource-id``
+  
+ * Support for sorting in the list work requests, list work request errors, list work request logs
+ 
+  * ``oci service-mesh work-request list --sort-by --sort-order``
+  * ``oci service-mesh work-request list-work-request-errors --sort-by --sort-order``
+  * ``oci service-mesh work-request list-work-request-logs --sort-by --sort-order``
+  
+* Fusion Application service
+  
+ * Support for Fusion Application self-service refresh scheduling
+  
+  * ``oci fusion-apps update-refresh-activity-details update-refresh-activity``
+  * ``oci fusion-apps refresh-activity delete``
+  
+ * Support for new optional parameters in create-refresh-activity-details
+
+  * ``oci fusion-apps create-refresh-activity-details create-refresh-activity --time-scheduled-start``
+ 
+ * Support for new refresh activity lifecycle state NEEDS_ATTENTION in list
+
+  * ``oci fusion-apps refresh-activity list --lifecycle-state needs_attention``
+ 
+* Golden Gate service
+
+ * Support for new commands
+
+  * ``oci goldengate connection create-connection-create-azure-data-lake-storage-connection-details``
+  * ``oci goldengate connection create-connection-create-azure-synapse-connection-details``
+  * ``oci goldengate connection create-connection-create-kafka-schema-registry-connection-details``
+  * ``oci goldengate connection create-connection-create-postgresql-connection-details``
+  * ``oci goldengate connection update-connection-update-azure-data-lake-storage-connection-details``
+  * ``oci goldengate connection update-connection-update-azure-synapse-connection-details``
+  * ``oci goldengate connection update-connection-update-kafka-schema-registry-connection-details``
+  * ``oci goldengate connection update-connection-update-postgresql-connection-details``
+
+ * Support for new optional parameter
+
+  * ``oci goldengate connection create-object-storage-connection --private-key-passphrase``
+  * ``oci goldengate connection update-object-storage-connection --private-key-passphrase``
+
+Changed
+~~~~~~~
+* [BREAKING] The command ingest-stream-distribution-channel-asset-metadata-entry-details has been renamed in Media service
+
+ * ``oci media-services stream-distribution-channel ingest``
+
+* [BREAKING] Optional parameters --rule are now required for access-policy create in Service Mesh service
+
+ * ``oci service-mesh access-policy create --rule
+
+* Required parameters --listeners and --service-discovery are now optional on virtual-deployment in Service Mesh service
+
+ * ``oci service-mesh virtual-deployment create --listeners, --service-discovery``
+ * ``oci service-mesh virtual-deployment create-virtual-deployment-dns-service-discovery-configuration --listeners``
+
+
 3.21.0 - 2022-12-06
 --------------------
 Added

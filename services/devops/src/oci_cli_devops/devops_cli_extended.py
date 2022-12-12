@@ -968,3 +968,9 @@ cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.create_
 
 # oci devops trigger update-trigger-update-vbs-trigger-details -> oci devops trigger update-vbs-trigger
 cli_util.rename_command(devops_cli, devops_cli.trigger_group, devops_cli.update_trigger_update_vbs_trigger_details, "update-vbs-trigger")
+
+# oci devops project cancel-scheduled-cascading-project-deletion -> oci devops project cancel-cascading-delete
+cli_util.rename_command(devops_cli, devops_cli.project_group, devops_cli.cancel_scheduled_cascading_project_deletion, "cancel-cascading-delete")
+
+# oci devops project schedule-cascading-project-deletion -> oci devops project schedule-cascading-delete
+cli_util.rename_command(devops_cli, devops_cli.project_group, devops_cli.schedule_cascading_project_deletion, "schedule-cascading-delete")

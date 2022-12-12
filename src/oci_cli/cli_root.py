@@ -331,7 +331,7 @@ def find_latest_release_version(ctx, param, value):
         latest_version_list = [int(x) for x in latest_version.split(".")]
         if current_version_list < latest_version_list:
             click.echo(click.style("You are using OCI CLI version {}, however version {} is available. You should consider upgrading using"
-                                   " https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliupgrading.htm".format(current_version, latest_version), fg='red'))
+                                   " https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliupgrading.htm".format(current_version, latest_version), fg='red'))
             exit_code = 1
 
     sys.exit(exit_code)
@@ -349,7 +349,13 @@ $T contains the OCID of the current tenant):
 
 Output is in JSON format.
 
-For information on configuration, see https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm.""")
+For information on configuration, see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliinstall.htm#configfile.
+
+Enable our interactive features to guide you through command usage:
+
+  oci -i
+
+For information on interactive features, see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--release-info', is_flag=True, show_default=False, callback=find_latest_release_info,
               expose_value=False, is_eager=True, help='Prints ChangeLog difference between current installed version and '
@@ -377,6 +383,8 @@ For information on configuration, see https://docs.cloud.oracle.com/Content/API/
 @click.option('--query', help="""JMESPath query [http://jmespath.org/] to run on the response JSON before output.
 
 Queries can be entered directly on the command line or referenced from the [OCI_CLI_COMMAND_ALIASES] section of your configuration file by using the syntax query://<query_name>, for example query://get_id_and_name
+
+For more information, see the Using Queries section at https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#Managing_CLI_Input_and_Output
 """)
 @click.option('--raw-output', is_flag=True, help='If the output of a given query is a single string value, this will return the string without surrounding quotes')
 @click.option('--auth', type=click.Choice(choices=OCI_CLI_AUTH_CHOICES), help='The type of auth to use for the API request. By default the API key in your config file will be used.  This value can also be provided in the {auth_env_var} environment variable.'.format(auth_env_var=cli_constants.OCI_CLI_AUTH_ENV_VAR))
@@ -386,7 +394,9 @@ Queries can be entered directly on the command line or referenced from the [OCI_
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
-@click.option('-i', '--cli-auto-prompt', is_flag=True, help='Use the CLI in interactive mode.')
+@click.option('-i', '--cli-auto-prompt', is_flag=True, help='''Use the interactive features for autocompletion and quick view of command reference.
+
+For information on interactive features, see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm.''')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
 def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):

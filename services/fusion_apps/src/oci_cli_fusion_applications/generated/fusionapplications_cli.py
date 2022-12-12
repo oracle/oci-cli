@@ -33,6 +33,12 @@ def refresh_activity_group():
     pass
 
 
+@click.command(cli_util.override('fusion_apps.update_refresh_activity_details_group.command_name', 'update-refresh-activity-details'), cls=CommandGroupWithAlias, help="""The information about scheduled refresh.""")
+@cli_util.help_option_group
+def update_refresh_activity_details_group():
+    pass
+
+
 @click.command(cli_util.override('fusion_apps.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -101,6 +107,7 @@ def scheduled_activity_group():
 
 fusion_apps_root_group.add_command(fusion_environment_family_group)
 fusion_apps_root_group.add_command(refresh_activity_group)
+fusion_apps_root_group.add_command(update_refresh_activity_details_group)
 fusion_apps_root_group.add_command(work_request_log_entry_group)
 fusion_apps_root_group.add_command(work_request_group)
 fusion_apps_root_group.add_command(create_refresh_activity_details_group)
@@ -501,6 +508,7 @@ def create_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
 @create_refresh_activity_details_group.command(name=cli_util.override('fusion_apps.create_refresh_activity.command_name', 'create-refresh-activity'), help=u"""Creates a new RefreshActivity. \n[Command Reference](createRefreshActivity)""")
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
 @cli_util.option('--source-fusion-environment-id', required=True, help=u"""The [OCID] of the source environment""")
+@cli_util.option('--time-scheduled-start', type=custom_types.CLI_DATETIME, help=u"""Current time the refresh activity is scheduled to start. An RFC3339 formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -509,7 +517,7 @@ def create_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, source_fusion_environment_id):
+def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, source_fusion_environment_id, time_scheduled_start):
 
     if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
@@ -519,6 +527,9 @@ def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     _details = {}
     _details['sourceFusionEnvironmentId'] = source_fusion_environment_id
+
+    if time_scheduled_start is not None:
+        _details['timeScheduledStart'] = time_scheduled_start
 
     client = cli_util.build_client('fusion_apps', 'fusion_applications', ctx)
     result = client.create_refresh_activity(
@@ -685,6 +696,63 @@ def delete_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
     client = cli_util.build_client('fusion_apps', 'fusion_applications', ctx)
     result = client.delete_fusion_environment_family(
         fusion_environment_family_id=fusion_environment_family_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@refresh_activity_group.command(name=cli_util.override('fusion_apps.delete_refresh_activity.command_name', 'delete'), help=u"""Deletes a scheduled RefreshActivity resource by identifier \n[Command Reference](deleteRefreshActivity)""")
+@cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
+@cli_util.option('--refresh-activity-id', required=True, help=u"""The unique identifier (OCID) of the Refresh activity.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, refresh_activity_id, if_match):
+
+    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+        raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
+
+    if isinstance(refresh_activity_id, six.string_types) and len(refresh_activity_id.strip()) == 0:
+        raise click.UsageError('Parameter --refresh-activity-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fusion_apps', 'fusion_applications', ctx)
+    result = client.delete_refresh_activity(
+        fusion_environment_id=fusion_environment_id,
+        refresh_activity_id=refresh_activity_id,
         **kwargs
     )
     if wait_for_state:
@@ -1167,7 +1235,7 @@ def list_fusion_environments(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--time-scheduled-start-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that returns all resources that are scheduled after this date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-expected-finish-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that returns all resources that end before this date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), help=u"""A filter that returns all resources that match the specified status""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELED"]), help=u"""A filter that returns all resources that match the specified status""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1829,4 +1897,68 @@ def update_fusion_environment_family(ctx, from_json, force, wait_for_state, max_
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@update_refresh_activity_details_group.command(name=cli_util.override('fusion_apps.update_refresh_activity.command_name', 'update-refresh-activity'), help=u"""Updates a scheduled RefreshActivity. \n[Command Reference](updateRefreshActivity)""")
+@cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
+@cli_util.option('--refresh-activity-id', required=True, help=u"""The unique identifier (OCID) of the Refresh activity.""")
+@cli_util.option('--time-scheduled-start', type=custom_types.CLI_DATETIME, help=u"""Time the refresh activity is scheduled to start. An RFC3339 formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fusion_apps', 'class': 'RefreshActivity'})
+@cli_util.wrap_exceptions
+def update_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, refresh_activity_id, time_scheduled_start, if_match):
+
+    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+        raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
+
+    if isinstance(refresh_activity_id, six.string_types) and len(refresh_activity_id.strip()) == 0:
+        raise click.UsageError('Parameter --refresh-activity-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if time_scheduled_start is not None:
+        _details['timeScheduledStart'] = time_scheduled_start
+
+    client = cli_util.build_client('fusion_apps', 'fusion_applications', ctx)
+    result = client.update_refresh_activity(
+        fusion_environment_id=fusion_environment_id,
+        refresh_activity_id=refresh_activity_id,
+        update_refresh_activity_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_refresh_activity') and callable(getattr(client, 'get_refresh_activity')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_refresh_activity(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

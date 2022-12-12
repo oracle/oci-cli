@@ -42,6 +42,18 @@ def all_required_param_selected(text, list_of_required_params):
     return missing_required_param
 
 
+def global_param_check(buffer_list):
+    global_param = ['--generate-full-command-json-input', '--generate-param-json-input', '--help', '-h',
+                    '-?', '--latest-version', '-v', '--version', '--release-info']
+    found = False
+    for param in global_param:
+        if param in buffer_list:
+            found = True
+            break
+
+    return found
+
+
 def override_key_binding(**kwargs):
     kb = key_binding.KeyBindings()
 
@@ -62,13 +74,15 @@ def override_key_binding(**kwargs):
         # the main purpose of this function is, pressing enter chooses the option then pressing enter again executes the
         # command
         buffer = event.current_buffer
+        buffer_list = buffer.text.split()
         missing_required_param = all_required_param_selected(
             buffer.text, kwargs["completer"].list_of_required_params
         )
+        is_global_param = global_param_check(buffer_list)
         if (
             not buffer.text or not buffer.complete_state
         ):  # If in the beginning or no menu(meaning menu is already chosen)
-            if not missing_required_param:
+            if not missing_required_param or is_global_param:
                 named_commands.accept_line(event)
             else:
                 kwargs["toolbar"].set_toolbar_text(
