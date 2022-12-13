@@ -102,3 +102,7 @@ mediaservices_cli.stream_packaging_config_group.commands.pop(mediaservices_cli.c
 cli_util.rename_command(mediaservices_cli, mediaservices_cli.stream_packaging_config_group, mediaservices_cli.create_stream_packaging_config_stream_packaging_config_encryption_aes128, "create-stream-packaging-config-encryption-aes128")
 
 cli_util.rename_command(mediaservices_cli, mediaservices_cli.stream_packaging_config_group, mediaservices_cli.create_stream_packaging_config_stream_packaging_config_encryption_none, "create-stream-packaging-config-encryption-none")
+
+# Rename ingest-stream-distribution-channel-asset-metadata-entry-details to just ingest
+mediaservices_cli.stream_distribution_channel_group.commands.pop(mediaservices_cli.ingest_stream_distribution_channel.name)
+cli_util.rename_command(mediaservices_cli, mediaservices_cli.stream_distribution_channel_group, mediaservices_cli.ingest_stream_distribution_channel_asset_metadata_entry_details, "ingest")

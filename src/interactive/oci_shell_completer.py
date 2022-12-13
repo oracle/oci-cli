@@ -205,14 +205,17 @@ class OciShellCompleter(Completer):
         already_chosen_parameters = set()
         parameter = None
         param_value = ""  # this will save parameter value between quotes ( " " or ' ' ) with space
-
         # Parse Input Buffer
         for token_index, token in enumerate(token_check):
             # add parameters to the list so they will be excluded from the list given to the user
             if token.startswith("-"):
-                already_chosen_parameters.update(
-                    self.list_all_parameter_names(command, token)
-                )
+                multiple_dict = {x.name: x.multiple for x in command.params}
+                token_snake = convert_to_snake_case(token)
+                # add only those parameters whose multiple value is not set
+                if not multiple_dict.get(token_snake):
+                    already_chosen_parameters.update(
+                        self.list_all_parameter_names(command, token)
+                    )
                 parameter = token
                 remaining_command_tokens.remove(token)
                 continue
@@ -305,6 +308,10 @@ class OciShellCompleter(Completer):
             )
         self.size = len(completions)
         return completions
+
+
+def convert_to_snake_case(token_str):
+    return token_str.strip('-').replace('-', '_')
 
 
 def check_param_is_flag(command, param):

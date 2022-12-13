@@ -77,8 +77,10 @@ class TestAutoPrompt(unittest.TestCase):
             completer = OciShellCompleter(ctx)
             if expected_parameters_list:
                 first_parameter = expected_parameters_list[0]
-
-                expected_parameters_list.remove(first_parameter)
+                multiple_dict = {x.name: x.multiple for x in command.params}
+                first_parameter_snake = first_parameter.strip('-').replace('-', '_')
+                if not multiple_dict.get(first_parameter_snake):
+                    expected_parameters_list.remove(first_parameter)
                 document = Document(previous_document_text + first_parameter + " x ",
                                     previous_curser_position + len(first_parameter) + 3)
                 completions = completer.get_completions(document, CompleteEvent())

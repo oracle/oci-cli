@@ -395,6 +395,10 @@ service_mapping = {
         "osub_usage",
         "OneSubscription  Usage Computation"
     ],
+    "queue": [
+        "queue",
+        "Queue"
+    ],
     "resource-manager": [
         "resource_manager",
         "Resource Manager"
