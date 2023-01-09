@@ -201,14 +201,22 @@ def download_and_create_virtualenv(tmp_dir, install_dir):
 
 
 def install_python3_venv():
-    cmd = [sudo_cmd, 'apt-get', 'update']
+    # This is required because if script is run through root user sudo_cmd value will be empty quote and command subprocess.check_call([ ' ', 'apt-get', 'update' ]) will not work.
+    if sudo_cmd == "":
+        cmd = ['apt-get', 'update']
+    else:
+        cmd = [sudo_cmd, 'apt-get', 'update']
     if DRY_RUN:
         print_status('dry-run: Skipping apt-get update, cmd=' + str(cmd))
     else:
         exec_command(cmd)
 
     print_status('Installing python3-venv.')
-    cmd = [sudo_cmd, 'apt-get', 'install', 'python3-venv', '-y']
+    # This is required because if script is run through root user sudo_cmd value will be empty quote and command subprocess.check_call(['', 'apt-get', 'install', 'python3-venv', '-y']) will not work.
+    if sudo_cmd == "":
+        cmd = ['apt-get', 'install', 'python3-venv', '-y']
+    else:
+        cmd = [sudo_cmd, 'apt-get', 'install', 'python3-venv', '-y']
     if DRY_RUN:
         print_status('dry-run: Skipping apt-get install python3-venv, cmd=' + str(cmd))
     else:
@@ -304,7 +312,6 @@ def install_cli(install_dir, tmp_dir, version, optional_features, dependency_dir
     # Check if we should install a local full-install bundle.
     oci_cli_whl_files = glob.glob(match_wheel)
     if os.path.exists('./' + dependency_dir) and len(oci_cli_whl_files) > 0:
-        dependency_dir = DEFAULT_DEPENDENCY_DIR + '/python{}{}.html'.format(sys.version_info.major, sys.version_info.minor)
         print_status("Installing {} from local resources.".format(oci_cli_whl_files[0]))
         cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, oci_cli_whl_files[0], '--upgrade', '--find-links', dependency_dir]
 
@@ -577,7 +584,11 @@ def install_native_dependencies_for_ubuntu():
     is_python3 = sys.version_info[0] == 3
     python_dep = 'python3-dev' if is_python3 else 'python-dev'
     dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
-    cmd = [sudo_cmd, 'apt-get', '--assume-yes', 'install']
+    # This is required because if script is run through root user sudo_cmd value will be empty quote and command subprocess.check_call(['', 'apt-get', '--assume-yes', 'install']) will not work.
+    if sudo_cmd == "":
+        cmd = ['apt-get', '--assume-yes', 'install']
+    else:
+        cmd = [sudo_cmd, 'apt-get', '--assume-yes', 'install']
     cmd.extend(dep_list)
     exec_command(cmd)
 

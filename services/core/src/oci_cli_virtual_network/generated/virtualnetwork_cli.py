@@ -4516,7 +4516,7 @@ def delete_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -6167,7 +6167,7 @@ def delete_vtap(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)

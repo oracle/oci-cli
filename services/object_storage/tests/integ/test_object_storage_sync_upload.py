@@ -24,6 +24,9 @@ sync_local_object_content = {}
 sync_upload_bucket_name = str()
 sync_upload_test_dir = str()
 
+sync_local_file_content = {}
+sync_local_dir_content = {}
+
 sync_remote_prefixes = {
     'a/b/c': [],
     'a/b': [],
@@ -43,7 +46,7 @@ def debug(request):
 
 @pytest.fixture(scope='module', autouse=True)
 def generate_files_in_remote(object_storage_client, test_id):
-    global sync_upload_bucket_name, sync_upload_test_dir
+    global sync_upload_bucket_name, sync_upload_test_dir, sync_local_object_content
 
     print('Setting up the test bucket for sync upload..')
     sync_upload_bucket_name = 'ObjectStorageSyncUploadTest_{}'.format(test_id)
@@ -74,7 +77,29 @@ def generate_files_in_remote(object_storage_client, test_id):
         Path(local_file_path).parent.mkdir(parents=True, exist_ok=True)
         with open(local_file_path, 'w') as fh:
             fh.write(object_content)
-        sync_local_object_content[object_name] = object_content
+
+        sync_local_file_content[object_name] = object_content
+
+    for i in range(OBJECTS_TO_CREATE_IN_REMOTE_FOR_SYNC):
+        if i % 4 == 3:
+            object_name = 'a/b/c/Empty_{}'.format(i)
+            sync_remote_prefixes['a/b/c'].append(object_name)
+        elif i % 4 == 2:
+            object_name = 'a/b/Empty_{}'.format(i)
+            sync_remote_prefixes['a/b'].append(object_name)
+        elif i % 4 == 1:
+            object_name = 'a/Empty_{}'.format(i)
+            sync_remote_prefixes['a'].append(object_name)
+        else:
+            # At the root of the bucket
+            object_name = 'Empty_{}'.format(i)
+            sync_remote_prefixes[''].append(object_name)
+
+        local_file_path = os.path.join(sync_upload_test_dir, object_name)
+        Path(local_file_path).mkdir(parents=True, exist_ok=True)
+        sync_local_dir_content[f'{object_name}/'] = ''
+
+    sync_local_object_content = {**sync_local_file_content, **sync_local_dir_content}
 
     yield
 
@@ -143,13 +168,15 @@ def test_sync_src_updated_objects(object_storage_client):
     upload_and_validate_all_objects(object_storage_client, debug)
 
     # write one local object with different content
-    f_diff_content = random.choice(list(sync_local_object_content))
+    f_diff_content = random.choice(list(sync_local_file_content))
+
     new_content = bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH_SHORT)
-    sync_local_object_content[f_diff_content] = new_content
+    original_content = sync_local_file_content[f_diff_content]
+    sync_local_file_content[f_diff_content] = new_content
     with open(os.path.join(sync_upload_test_dir, f_diff_content), 'w') as fh:
         fh.write(new_content)
 
-    f_same_content = random.choice([o for o in sync_local_object_content if o != f_diff_content])
+    f_same_content = random.choice([o for o in sync_local_file_content if o != f_diff_content])
     fp_f_same_content = os.path.join(sync_upload_test_dir, f_same_content)
     original_mtime = os.stat(fp_f_same_content).st_mtime
     # Update the last modification time of one file while keeping the content same.
@@ -167,11 +194,14 @@ def test_sync_src_updated_objects(object_storage_client):
         assert set(parsed_result['uploaded-objects']) == {f_diff_content, f_same_content}
         assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys()) - 2
 
-        compare_file_content_to_remote(object_storage_client, sync_local_object_content,
+        compare_file_content_to_remote(object_storage_client, sync_local_file_content,
                                        objects_in_scope=[f_diff_content, f_same_content])
     finally:
         # set the original time back to the f_same_content file so that it doesn't get picked up by subsequent tests
         os.utime(fp_f_same_content, (original_mtime, original_mtime))
+        sync_local_file_content[f_diff_content] = original_content
+        with open(os.path.join(sync_upload_test_dir, f_diff_content), 'w') as fh:
+            fh.write(original_content)
 
 
 @util.skip_while_rerecording
@@ -193,17 +223,14 @@ def test_sync_src_new_objects(object_storage_client, cleanup_new_content_set):
     with open(new_file_path, 'w') as fh:
         fh.write(new_file_contents[new_object_name])
 
-    try:
-        result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
-                                        sync_upload_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
-        parsed_result = util.parse_json_response_from_mixed_output(result.output)
-        assert parsed_result['upload-failures'] == {}
-        assert set(parsed_result['uploaded-objects'].keys()) == {new_object_name}
-        assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys())
+    result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
+                                    sync_upload_bucket_name, '--src-dir', sync_upload_test_dir], debug=debug)
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert set(parsed_result['uploaded-objects'].keys()) == {new_object_name}
+    assert len(parsed_result['skipped-objects']) == len(sync_local_object_content.keys())
 
-        compare_file_content_to_remote(object_storage_client, new_file_contents, objects_in_scope=[new_object_name])
-    finally:
-        os.remove(new_file_path)
+    compare_file_content_to_remote(object_storage_client, new_file_contents, objects_in_scope=[new_object_name])
 
 
 @util.skip_while_rerecording
@@ -316,7 +343,7 @@ def test_sync_dest_dir_prefix(object_storage_client, debug):
 
     deleted_set, uploaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
     # verify that all objects gets uploaded
-    assert set([o[len(sync_upload_test_dir):].strip('/') for o in uploaded_set]) == set(
+    assert set([o[len(sync_upload_test_dir):].lstrip('/') for o in uploaded_set]) == set(
         sync_local_object_content.keys())
     assert len(skipped_set) == 0
     assert len(deleted_set) == 0
@@ -863,11 +890,12 @@ def test_sync_src_with_follow_symlinks_file(object_storage_client, debug):
     2. Validate that this symlink gets written to object storage by default. Also, validate the file content
     """
 
-    random_file = random.choice(list(sync_local_object_content))
+    random_file = random.choice(list(sync_local_file_content))
     file_to_create_a_symlink_of = os.path.join(sync_upload_test_dir, random_file)
 
     # randomly generate a location for symlink file withing the test tree
-    symlink_pref = os.path.join(random.choice(list(sync_remote_prefixes)), 'symlink_file')
+    symlink_folder = random.choice(list(sync_remote_prefixes))
+    symlink_pref = os.path.join(symlink_folder, 'symlink_file')
     symlink_fp = os.path.join(sync_upload_test_dir, symlink_pref)
 
     create_symlink(file_to_create_a_symlink_of, symlink_fp)
@@ -887,8 +915,9 @@ def test_sync_src_with_follow_symlinks_file(object_storage_client, debug):
     parsed_result = util.parse_json_response_from_mixed_output(result.output)
     assert symlink_pref in parsed_result['uploaded-objects']
     assert parsed_result['skipped-objects'] == []
-    compare_file_content_to_remote(object_storage_client, {symlink_pref: sync_local_object_content[random_file]},
+    compare_file_content_to_remote(object_storage_client, {symlink_pref: sync_local_file_content[random_file]},
                                    objects_in_scope=symlink_pref)
+    # can be moved in fixture
     os.unlink(symlink_fp)
 
 
@@ -922,11 +951,11 @@ def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
                                     '--dry-run'], debug=debug)
     deleted_set, uploaded_set, skipped_set = parse_dry_run_result(result.output.strip().split('\n'))
     # validate that the symlink directory would upload all the objects of the original directory
-    dir_content_with_symlink = {k[len(random_dir):].strip('/'): v for k, v in sync_local_object_content.items()
+    dir_content_with_symlink = {k[len(random_dir):].lstrip('/'): v for k, v in sync_local_object_content.items()
                                 if k.startswith(random_dir)}
     for f in uploaded_set:
         if symlink_pref in f:
-            assert f[len(symlink_fp):].strip('/') in dir_content_with_symlink
+            assert f[len(symlink_fp):].lstrip('/') in dir_content_with_symlink
     assert skipped_set == set()
     assert deleted_set == set()
 
@@ -937,10 +966,13 @@ def test_sync_src_with_follow_symlinks_dir(object_storage_client, debug):
     for o in parsed_result['uploaded-objects']:
         if symlink_pref in o:
             # objects uploaded would only contain the symlink_prefix
-            assert o[len(symlink_pref):].strip('/') in dir_content_with_symlink
+            assert o[len(symlink_pref):].lstrip('/') in dir_content_with_symlink
     assert parsed_result['skipped-objects'] == []
+    dir_content_with_symlink_prefix = {f'{symlink_pref}/{k}': v for k, v in dir_content_with_symlink.items()}
+
+    object_content_map = {**sync_local_object_content, **dir_content_with_symlink_prefix}
     compare_file_content_to_remote(object_storage_client,
-                                   {(os.path.join(symlink_pref, k)).replace(os.sep, '/'): v for k, v in dir_content_with_symlink.items()},
+                                   object_content_map,
                                    prefix_to_test=symlink_pref)
     os.unlink(symlink_fp)
 
@@ -1026,7 +1058,6 @@ def compare_file_content_to_remote(client, object_content_map, prefix_to_test=No
         sb = StringBuilder()
         for chunk in obj_response.data.raw.stream(os_cli.OBJECT_GET_CHUNK_SIZE, decode_content=False):
             sb.append(chunk.decode('utf-8'))
-
         assert object_content_map[obj.name] == str(sb)
 
 

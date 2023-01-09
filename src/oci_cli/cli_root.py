@@ -330,8 +330,8 @@ def find_latest_release_version(ctx, param, value):
         current_version_list = [int(x) for x in current_version.split(".")]
         latest_version_list = [int(x) for x in latest_version.split(".")]
         if current_version_list < latest_version_list:
-            click.echo(click.style("You are using OCI CLI version {}, however version {} is available. You should consider upgrading using"
-                                   " https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliupgrading.htm".format(current_version, latest_version), fg='red'))
+            click.echo(click.style("You are using OCI CLI version {}, however version {} is available. You should consider upgrading using {}".format(
+                current_version, latest_version, cli_constants.UPGRADING_CLI_DOCUMENTATION), fg='red'))
             exit_code = 1
 
     sys.exit(exit_code)
@@ -339,7 +339,7 @@ def find_latest_release_version(ctx, param, value):
 
 @click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True,
                context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True),
-               help="""Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
+               help=f"""Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
 Compute, Database, IAM, Load Balancing, Networking, DNS, File Storage, Email Delivery and Object Storage Services.
 
 Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where
@@ -349,17 +349,17 @@ $T contains the OCID of the current tenant):
 
 Output is in JSON format.
 
-For information on configuration, see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliinstall.htm#configfile.
+For information on configuration, see {cli_constants.OCI_CONFIG_DOCUMENTATION}.
 
 Enable our interactive features to guide you through command usage:
 
   oci -i
 
-For information on interactive features, see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm.""")
+For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--release-info', is_flag=True, show_default=False, callback=find_latest_release_info,
               expose_value=False, is_eager=True, help='Prints ChangeLog difference between current installed version and '
-                                                      'latest released version. Please visit https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst for more info')
+                                                      f'latest released version. Please visit {cli_constants.GITHUB_CHANGELOG} for more info')
 @click.option('--latest-version', is_flag=True, show_default=False, callback=find_latest_release_version,
               expose_value=False, is_eager=True, help='Prints latest released version.')
 @click.option('--config-file',
@@ -371,7 +371,11 @@ For information on interactive features, see https://docs.oracle.com/iaas/Conten
 @click.option('--cli-rc-file', '--defaults-file',
               default=cli_constants.CLI_RC_DEFAULT_LOCATION, show_default=True,
               is_eager=True, callback=eager_load_cli_rc_file,
-              help='The path to the OCI CLI-specific configuration file, containing parameter default values and other configuration information such as command aliases and predefined queries. The --defaults-file option is deprecated and you should use the --cli-rc-file option instead.')
+              help=f'''The path to the OCI CLI-specific configuration file, containing parameter default values and other configuration information such as command aliases and predefined queries.
+
+The --defaults-file option is deprecated and you should use the --cli-rc-file option instead.
+
+For more information about the cli configuration file, see {cli_constants.CLI_CONFIG_DOCUMENTATION}.''')
 @click.option('--opc-request-id', '--opc-client-request-id', '--request-id', 'request_id',
               help='The request id to use for tracking the request.')
 @click.option('--region', callback=read_values_from_env, help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
@@ -380,11 +384,11 @@ For information on interactive features, see https://docs.oracle.com/iaas/Conten
 @click.option('--read-timeout', 'read_timeout', type=click.INT, callback=read_values_from_env, help='The value of the read timeout in seconds to wait for service calls to send response to sdk. This will override the default read timeout value of 60 secs. ')
 @click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
-@click.option('--query', help="""JMESPath query [http://jmespath.org/] to run on the response JSON before output.
+@click.option('--query', help=f"""JMESPath query [http://jmespath.org/] to run on the response JSON before output.
 
 Queries can be entered directly on the command line or referenced from the [OCI_CLI_COMMAND_ALIASES] section of your configuration file by using the syntax query://<query_name>, for example query://get_id_and_name
 
-For more information, see the Using Queries section at https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#Managing_CLI_Input_and_Output
+For more information, see the Using Queries section at {cli_constants.INPUT_OUTPUT_DOCUMENTATION}
 """)
 @click.option('--raw-output', is_flag=True, help='If the output of a given query is a single string value, this will return the string without surrounding quotes')
 @click.option('--auth', type=click.Choice(choices=OCI_CLI_AUTH_CHOICES), help='The type of auth to use for the API request. By default the API key in your config file will be used.  This value can also be provided in the {auth_env_var} environment variable.'.format(auth_env_var=cli_constants.OCI_CLI_AUTH_ENV_VAR))
@@ -394,9 +398,9 @@ For more information, see the Using Queries section at https://docs.oracle.com/i
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
-@click.option('-i', '--cli-auto-prompt', is_flag=True, help='''Use the interactive features for autocompletion and quick view of command reference.
+@click.option('-i', '--cli-auto-prompt', is_flag=True, help=f'''Use the interactive features for autocompletion and quick view of command reference.
 
-For information on interactive features, see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm.''')
+For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.''')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
 def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):

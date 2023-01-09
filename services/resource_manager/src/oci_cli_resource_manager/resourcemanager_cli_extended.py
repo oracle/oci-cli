@@ -44,7 +44,7 @@ def create_base64encoded_tf_state(tf_state):
 @cli_util.option('--working-directory', help=""" The path of the directory from which to run terraform. If not specified the root will be used.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NOT_CHECKED", "IN_SYNC", "DRIFTED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
 def create_stack_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source, display_name, description, variables, terraform_version, freeform_tags, defined_tags, working_directory, **kwargs):
 
@@ -139,7 +139,7 @@ def create_stack_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--config-source', help="""A Terraform configuration .zip file.""")
 @cli_util.option('--working-directory', help=""" The path of the directory from which to run terraform. If not specified the root will be used.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'reseouce_manager', 'class': 'Stack'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'reseouce_manager', 'class': 'Stack'})
 @cli_util.wrap_exceptions
 def update_stack_extended(ctx, config_source, working_directory, **kwargs):
 
@@ -269,7 +269,7 @@ resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create
 # New/Renamed options
 @cli_util.option('--tf-state-file', required=True, help=u"""Job details that are specific to import Terraform state operations.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
 def create_import_tf_state_job(ctx, **kwargs):
     # Extract the renamed options and construct original options.
@@ -784,7 +784,7 @@ the file://path/to/file syntax.
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-terraform-provider': {'module': 'resource_manager', 'class': 'CustomTerraformProvider'}, 'variables': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}, 'terraform-advanced-options': {'module': 'resource_manager', 'class': 'TerraformAdvancedOptions'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
 def create_job_create_plan_rollback_job_operation_details_extended(ctx, **kwargs):
 

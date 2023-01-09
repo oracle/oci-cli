@@ -3868,16 +3868,17 @@ def create_deployment_create_deploy_pipeline_redeployment_details(ctx, from_json
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--deployment-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deploy-stage-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--deploy-artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
-def create_deployment_create_deploy_pipeline_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, display_name, freeform_tags, defined_tags, deployment_arguments, deploy_artifact_override_arguments):
+def create_deployment_create_deploy_pipeline_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, display_name, freeform_tags, defined_tags, deployment_arguments, deploy_stage_override_arguments, deploy_artifact_override_arguments):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3896,6 +3897,9 @@ def create_deployment_create_deploy_pipeline_deployment_details(ctx, from_json, 
 
     if deployment_arguments is not None:
         _details['deploymentArguments'] = cli_util.parse_json_parameter("deployment_arguments", deployment_arguments)
+
+    if deploy_stage_override_arguments is not None:
+        _details['deployStageOverrideArguments'] = cli_util.parse_json_parameter("deploy_stage_override_arguments", deploy_stage_override_arguments)
 
     if deploy_artifact_override_arguments is not None:
         _details['deployArtifactOverrideArguments'] = cli_util.parse_json_parameter("deploy_artifact_override_arguments", deploy_artifact_override_arguments)
@@ -3940,16 +3944,17 @@ def create_deployment_create_deploy_pipeline_deployment_details(ctx, from_json, 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--deployment-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deploy-stage-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--deploy-artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
-def create_deployment_create_single_deploy_stage_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, deploy_stage_id, display_name, freeform_tags, defined_tags, deployment_arguments, deploy_artifact_override_arguments):
+def create_deployment_create_single_deploy_stage_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, deploy_stage_id, display_name, freeform_tags, defined_tags, deployment_arguments, deploy_stage_override_arguments, deploy_artifact_override_arguments):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3969,6 +3974,9 @@ def create_deployment_create_single_deploy_stage_deployment_details(ctx, from_js
 
     if deployment_arguments is not None:
         _details['deploymentArguments'] = cli_util.parse_json_parameter("deployment_arguments", deployment_arguments)
+
+    if deploy_stage_override_arguments is not None:
+        _details['deployStageOverrideArguments'] = cli_util.parse_json_parameter("deploy_stage_override_arguments", deploy_stage_override_arguments)
 
     if deploy_artifact_override_arguments is not None:
         _details['deployArtifactOverrideArguments'] = cli_util.parse_json_parameter("deploy_artifact_override_arguments", deploy_artifact_override_arguments)

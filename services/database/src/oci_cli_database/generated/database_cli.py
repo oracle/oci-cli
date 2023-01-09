@@ -7041,7 +7041,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7094,7 +7094,7 @@ def delete_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_second
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7146,7 +7146,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7263,7 +7263,7 @@ def delete_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7319,7 +7319,7 @@ def delete_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7372,7 +7372,7 @@ def delete_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7464,7 +7464,7 @@ def delete_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7516,7 +7516,7 @@ def delete_database_software_image(ctx, from_json, wait_for_state, max_wait_seco
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7577,7 +7577,7 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7630,7 +7630,7 @@ def delete_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7683,7 +7683,7 @@ def delete_external_container_database(ctx, from_json, wait_for_state, max_wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7736,7 +7736,7 @@ def delete_external_database_connector(ctx, from_json, wait_for_state, max_wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7789,7 +7789,7 @@ def delete_external_non_container_database(ctx, from_json, wait_for_state, max_w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7842,7 +7842,7 @@ def delete_external_pluggable_database(ctx, from_json, wait_for_state, max_wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -7959,7 +7959,7 @@ def delete_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -8012,7 +8012,7 @@ def delete_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -8070,7 +8070,7 @@ def delete_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -17500,7 +17500,7 @@ def terminate_autonomous_container_database(ctx, from_json, wait_for_state, max_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -17552,7 +17552,7 @@ def terminate_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, 
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
@@ -17608,7 +17608,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
