@@ -51,7 +51,7 @@ class ServiceException(Exception):
         self.exception_dict = exception_dict
         self.exception_class = exception_class
         exception_dict['logging_tips'] = "Please run the OCI CLI command using --debug flag to find more debug information."
-        exception_dict['troubleshooting_tips'] = "See [https://docs.oracle.com/iaas/Content/API/References/apierrors.htm] for more information about resolving this error. If you are unable to resolve this issue, run this CLI command with --debug option and contact Oracle support and provide them the full error message."
+        exception_dict['troubleshooting_tips'] = f"See [{cli_constants.SERVICE_ERROR_DOCUMENTATION}] for more information about resolving this error. If you are unable to resolve this issue, run this CLI command with --debug option and contact Oracle support and provide them the full error message."
         if 'client_version' in exception_dict:
             exception_dict['client_version'] += ', Oracle-PythonCLI/{}'.format(__version__)
         else:

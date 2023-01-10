@@ -950,8 +950,16 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
     # don't monopolise the processes in the transfer_manager's underlying pool of work
     parallel_head_object_look_ahead_window = int(parallel_upload_count / 2)
     for dir_name, subdir_list, file_list in os.walk(expanded_directory, followlinks=not no_follow_symlinks):
+        empty_folder_flag = False  # Flag to be used for differentiating empty-folder upload
+        if syncing and (not subdir_list) and (not file_list) and (dir_name != expanded_directory):  # Identifying empty_folder
+            file_list = [os.sep]
+            empty_folder_flag = True
+
         for idx, file in enumerate(file_list):
-            full_file_path = os.path.join(dir_name, file)
+            if empty_folder_flag:  # As os.path.join does not work with filename as '/'
+                full_file_path = dir_name + os.sep
+            else:
+                full_file_path = os.path.join(dir_name, file)
 
             # os.walk by default only skips the directories which are symlink. We need to check if any file symlink
             # is present and skip those if no_follow_symlink is specified
@@ -1011,11 +1019,14 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
                     else:
                         head_object = _make_retrying_head_object_call(client, namespace, bucket_name, object_name,
                                                                       client_request_id)
-
                     if head_object is None:
                         # Object does not exist, so make sure that the put fails if one is created in the meantime.
                         base_kwargs['if_none_match'] = '*'
                     else:
+                        if empty_folder_flag:           # Skipping download in case of empty folder, if folder exists in bucket
+                            upload_output.add_skipped(object_name)
+                            upload_skipped.add(object_name)
+                            continue
                         r_file_size = int(head_object.headers['content-length'])
                         r_file_mtime = dateutil.parser.parse(head_object.headers['last-modified'])
                         if no_overwrite or (syncing and not requires_sync(full_file_path, r_file_size, r_file_mtime)):
@@ -1030,6 +1041,7 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
                                     object_name)):
                             upload_output.add_skipped(object_name)
                             upload_skipped.add(object_name)
+                            base_kwargs.pop('if_match')     # clear set if_match header for next object iteration
                             continue
 
                 upload_transfers.add(object_name)
@@ -1078,8 +1090,12 @@ def _bulk_upload(ctx, client, namespace, bucket_name, src_dir, cache_control, co
                 if storage_tier:
                     base_kwargs['storage_tier'] = storage_tier
 
-                transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path,
-                                               file_size, verify_checksum, **base_kwargs)
+                if empty_folder_flag:  # Using different method of uploading in case of empty_folder
+                    transfer_manager.upload_empty_object(callbacks_container, namespace, bucket_name, object_name, verify_checksum, **base_kwargs)
+                else:
+                    transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name,
+                                                   full_file_path,
+                                                   file_size, verify_checksum, **base_kwargs)
 
                 # These can vary per request, so remove them if they exist so we have a blank slate for the next iteration
                 base_kwargs.pop('if_none_match', None)
@@ -1433,6 +1449,11 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
                 # a balance between upload and download ignoring the microsecond information while listing objects.
                 last_modified = obj.time_modified.replace(microsecond=0)
                 if os.path.exists(full_file_path):
+                    if os.path.isdir(full_file_path):
+                        download_output.add_skipped(obj.name)
+                        download_skipped.add(normalized_full_file_path)
+                        continue
+
                     # for syncing we add an additional behaviour to check for the size and last modified time between
                     # source and destination
                     not_syncing = syncing and not requires_sync(full_file_path, obj.size, last_modified, to_remote=False)
@@ -1465,8 +1486,9 @@ def _bulk_download(ctx, client, namespace, bucket_name, dest_dir, dry_run, delim
             if dry_run:
                 for obj in to_download:
                     if syncing:
-                        print("Downloading object:", end=" ")
-                    click.echo(click.style("{}").format(obj['name']))
+                        click.echo(click.style("Downloading object: {}").format(obj['name']))
+                    else:
+                        click.echo(click.style("{}").format(obj['name']))
 
             else:
                 for obj in to_download:
@@ -1734,7 +1756,7 @@ def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_contro
         normalize_expanded_dir = normalize_file_path_for_object_storage(expanded_directory)
         if dry_run:
             for on in download_skipped:
-                on = on[len(normalize_expanded_dir):].strip('/')
+                on = on[len(normalize_expanded_dir):].lstrip('/')
                 if prefix is not None:
                     on = prefix + on
                 print('Skipping object:', on)
@@ -1747,6 +1769,7 @@ def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_contro
             _filter = _get_file_filter_collection(expanded_directory, include, exclude, prefix)
             deleted_objects = []
             for dir_name, subdir_list, file_list in os.walk(expanded_directory, topdown=False, followlinks=not no_follow_symlinks):
+                file_list_delete = file_list[:]
                 for file in file_list:
                     full_file_path = os.path.join(dir_name, file)
                     # ignore symlinks while delete as well when no_follow_symlink is specified
@@ -1760,18 +1783,25 @@ def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_contro
                         continue
 
                     full_file_path = normalize_file_path_for_object_storage(full_file_path)
-                    print('Deleting file:', full_file_path)
+                    print('Deleting :', full_file_path)
                     if not dry_run:
                         os.remove(full_file_path)
+                    file_list_delete.remove(file)
                     deleted_objects.append(full_file_path)
 
-                # after deleting the files check and delete the empty parent directories
-                # Don't delete empty folders for dry run
-                if not dry_run:
-                    try:
-                        os.rmdir(dir_name)
-                    except OSError:
-                        pass
+                if (not file_list_delete) and (dir_name != expanded_directory):
+                    empty_folder_object = normalize_file_path_for_object_storage(dir_name + os.sep)
+                    if empty_folder_object not in excluded_local_objects:
+                        if not dry_run:
+                            try:  # after deleting the files check and delete the empty parent directories
+                                os.rmdir(dir_name)
+                                print('Deleting :', empty_folder_object)
+                                deleted_objects.append(empty_folder_object)
+                            except OSError:
+                                pass
+                        else:
+                            print('Deleting :', empty_folder_object)
+                            deleted_objects.append(empty_folder_object)
 
             # combine download output data with delete data based on output format
             if output_format == 'json':

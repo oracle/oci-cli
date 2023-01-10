@@ -22,6 +22,7 @@ from oci.object_storage.models import CreatePreauthenticatedRequestDetails, Crea
 import services.object_storage.src.oci_cli_object_storage as oci_cli_object_storage
 from tests import test_config_container
 from tests import util
+import services.object_storage.tests.common.util as object_storage_util
 
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
 OBJECTS_TO_CREATE_IN_FOLDER_FOR_BULK_PUT = 20
@@ -30,6 +31,9 @@ CONTENT_STRING_LENGTH_SHORT = 50
 MID_SIZED_FILE_IN_MEBIBTYES = 20
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 150  # Default multipart is 128MiB
 GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key_bulk.txt'
+
+new_files_set = 'new_files_set'
+new_dir = 'new_dir'
 
 
 # Holds the objects we create and their content so that we can verify results
@@ -84,6 +88,14 @@ def delete_pending_buckets():
     logging.debug("--------Deleting Created Buckets-----------")
     for bucket_name in data[created_buckets]:
         delete_bucket(bucket_name)
+
+
+@pytest.fixture()
+def cleanup_new_content_set():
+    data = {new_files_set: {}, new_dir: ''}
+    yield data
+    object_storage_util.cleanup_files_from_local(data[new_files_set])
+    object_storage_util.remove_dir_at_path(data[new_dir])
 
 
 def delete_bucket(bucket_name):
@@ -596,6 +608,94 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id, delete_p
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
     for uploaded_object_name in parsed_result['uploaded-objects']:
         assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
+
+    delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
+
+
+@util.skip_while_rerecording
+def test_bulk_upload_twice_with_input_no(object_storage_client, test_id, delete_pending_buckets, monkeypatch, cleanup_new_content_set):
+    create_bucket_request = oci.object_storage.models.CreateBucketDetails()
+    create_bucket_request.name = 'ObjectStorageBulkUploadTwiceTestN_{}'.format(test_id)
+    create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
+    object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', root_bulk_put_folder
+    ])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
+    file_count = get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+    assert len(parsed_result['uploaded-objects']) == file_count
+
+    object_storage_util.create_file_at_path(root_bulk_put_folder, 'new_file.txt')
+
+    cleanup_new_content_set[new_files_set] = {os.path.join(root_bulk_put_folder, 'new_file.txt')}
+
+    monkeypatch.setattr('click.confirm', lambda _: False)
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', root_bulk_put_folder
+    ])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['skipped-objects']) == file_count
+    assert len(parsed_result['uploaded-objects']) == 1
+
+    monkeypatch.undo()
+
+    delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+    delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
+
+
+@util.skip_while_rerecording
+def test_bulk_upload_twice_with_input_yes(object_storage_client, test_id, delete_pending_buckets, monkeypatch, cleanup_new_content_set):
+    create_bucket_request = oci.object_storage.models.CreateBucketDetails()
+    create_bucket_request.name = 'ObjectStorageBulkUploadTwiceTestY_{}'.format(test_id)
+    create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
+    object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+    delete_pending_buckets[created_buckets].append(create_bucket_request.name)
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', root_bulk_put_folder
+    ])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert parsed_result['skipped-objects'] == []
+    file_count = get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+    assert len(parsed_result['uploaded-objects']) == file_count
+
+    object_storage_util.create_file_at_path(root_bulk_put_folder, 'new_file.txt')
+
+    cleanup_new_content_set[new_files_set] = {os.path.join(root_bulk_put_folder, 'new_file.txt')}
+
+    monkeypatch.setattr('click.confirm', lambda _: True)
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', root_bulk_put_folder
+    ])
+    parsed_result = util.parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['skipped-objects']) == 0
+    assert len(parsed_result['uploaded-objects']) == file_count + 1
+
+    monkeypatch.undo()
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
     delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
@@ -1285,7 +1385,7 @@ def test_basic_bulk_delete_versions_object_name(vcr_fixture, object_storage_clie
 # Try to delete with random object-name not present in bucket such that it hits pagination and loop terminates successfully
 # Delete objects placed in different pages, object versions ranging over multiple pages
 @util.skip_while_rerecording
-def test_bulk_delete_versions_pagination_him(object_storage_client, debug, test_id):
+def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBulkDeleteVersionsPagination_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
@@ -1610,9 +1710,10 @@ def test_bulk_delete_pagination(object_storage_client, debug, test_id):
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
 
-def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id_recorded, on_error_fixture):
-    bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id_recorded)
-    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id_recorded, on_error_fixture)
+@util.skip_while_rerecording
+def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id, on_error_fixture):
+    bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id)
+    bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, on_error_fixture)
 
 
 @util.skip_while_rerecording

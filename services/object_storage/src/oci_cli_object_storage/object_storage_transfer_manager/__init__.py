@@ -12,10 +12,11 @@ from .upload_tasks import SimpleSingleUploadTask
 from .multipart_upload_tasks import MultipartUploadProcessorTask
 from .pooled_multipart_object_assembler import PooledMultipartObjectAssembler
 from .transfer_manager import TransferManager
+from .upload_empty_object_task import SingleEmptyObjectUploadTask
 
 __all__ = [
     "TransferManagerConfig", "WorkPool", "WorkPoolFuture", "WorkPoolTask",
     "WorkPoolTaskCallback", "WorkPoolTaskErrorCallback", "WorkPoolTaskSuccessCallback", "WorkPoolTaskCallbacksContainer",
     "DeleteObjectTask", "GetObjectTask", "GetObjectMultipartTask", "HeadObjectTask", "SimpleSingleUploadTask", "MultipartUploadProcessorTask",
-    "PooledMultipartObjectAssembler", "TransferManager"
+    "PooledMultipartObjectAssembler", "TransferManager", "SingleEmptyObjectUploadTask"
 ]

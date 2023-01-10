@@ -89,8 +89,27 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
     - `o ocids compartment` *instantly* shows the full OCIDs for all compartments
     - `o ocid  sales/bastion` *instantly* shows the full OCIDs for all compartments
 
+#### New features in version 1.3 (2022-12-15)
+ - get paginated results with `o <repeat-last-command> -page next`
+ - take JSON input from a file and format output with `o`
+   - `o -i data.json -o name#id#date`
+ - select child fields from complex output with `-o key.subkey`
+   - note: some fields are dicts or lists that only present well in "text" format
+
+## Installation
+
+**``o``** is a single file. To install, download **``o``**, place it in your PATH (probably in the same place as ``oci``), and make it executable.
+  **``o``** works in Linux, Mac, WSL and CloudShell.
+
+Use these commands to get ``o`` from github and install it next to ``oci``.
+```
+o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
+where=$(which oci) && to=${where%ci} && wget -q $o_src -O $to && chmod a+x $to
+```
+When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
+
 ## How **``o``** works  
- - **``o``** compares your input with thousands of ``oci`` commands, and uses an intelligent algorithm to find the best match.
+ - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.
 
  - **``o <command>``** provides a usage synopsis, showing required and optional parameters for matching commands.  Add "help" to the end to see global parameters as well.  E.g. <nobr>``o <command> help``</nobr> provides the usage synopsis with global parameters, while <nobr>``o <command> --help go``</nobr> runs <nobr>``oci <command> --help``</nobr>.
 
@@ -117,15 +136,6 @@ You will need:
     - **Authorization failed or requested resource not found** often means you connected to the cloud okay, but policies don't allow you to do what you tried to do.
     - Minimally you need permission to **inspect** resources in order for most commands to work.
 - ``oci`` must be in your PATH so that ``o`` can find it
-
-## Installation
-
-**``o``** should be in your PATH, probably in the same place as ``oci``.  Use these commands to download ``o`` from github and install it next to ``oci``.
-```
-o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
-where=$(which oci) && wget -q $o_src -O ${where%ci} && chmod a+x ${where%ci}
-```
-When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
 
 **OCIDs File**
 

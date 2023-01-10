@@ -1,6 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+import io
 
 from oci._vendor import requests
 from oci.object_storage import UploadManager
@@ -10,6 +11,7 @@ from .get_object_tasks import GetObjectTask, GetObjectMultipartTask
 from .head_object_tasks import HeadObjectTask
 from .multipart_upload_tasks import MultipartUploadProcessorTask
 from .upload_tasks import SimpleSingleUploadTask
+from .upload_empty_object_task import SingleEmptyObjectUploadTask
 
 
 class TransferManager():
@@ -88,3 +90,9 @@ class TransferManager():
         self._object_storage_request_pool.wait_for_completion()
         self._multipart_upload_processor_pool.wait_for_completion()
         self._object_storage_multipart_request_pool.wait_for_completion()
+
+    def upload_empty_object(self, callbacks_container, namespace_name, bucket_name, object_name, verify_checksum, **kwargs):
+        input_stream = io.StringIO(None)
+        kwargs.pop('multipart_part_completion_callback')
+        upload_task = SingleEmptyObjectUploadTask(self._client, namespace_name, bucket_name, object_name, input_stream, callbacks_container, verify_checksum, **kwargs)
+        return self._object_storage_request_pool.submit(upload_task)

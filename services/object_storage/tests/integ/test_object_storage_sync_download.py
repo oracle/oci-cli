@@ -362,7 +362,7 @@ def test_sync_dest_with_delete(debug):
     assert len(skipped_set) == 0
 
     download_and_validate_all_objects()
-    new_local_file_set = create_new_files_local(sync_download_test_dir, 10)
+    new_local_file_set = create_new_files_local(sync_download_test_dir, 10, is_delete_set=True)
 
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
                                     sync_download_bucket_name, '--dest-dir', sync_download_test_dir, '--delete',
@@ -424,7 +424,7 @@ def test_sync_dest_with_delete_empty_folders(debug):
 
     assert len(downloaded_set) == 0
     assert len(skipped_set) == len(sync_remote_object_content.keys())
-    assert len(deleted_set) == 0  # As no files are present in dest-dir, only empty folders
+    assert len(deleted_set) == len(new_local_empty_folder_set)  # As locally created empty folders will be deleted
 
     # Validate that no. of folders in dest-dir is equal to the no. of folders created from remote sync + empty folders created locally
     assert len(new_local_empty_folder_set) + len(local_folders_from_remote) == len(
@@ -438,7 +438,7 @@ def test_sync_dest_with_delete_empty_folders(debug):
     assert parsed_result['download-failures'] == {}
     assert parsed_result['downloaded-objects'] == []
     assert len(parsed_result['skipped-objects']) == len(sync_remote_object_content.keys())
-    assert len(parsed_result['deleted-files']) == 0  # As no files are present in dest-dir, only empty folders
+    assert len(parsed_result['deleted-files']) == len(new_local_empty_folder_set)  # As locally created empty folders will be deleted
 
     # Validate that no. of folders in dest-dir are only in remote bucket as there cannot
     # be any empty folder in remote source bucket and
@@ -580,7 +580,7 @@ def test_sync_dest_with_delete_and_prefix(vcr_fixture, debug):
     prefix_test_path = os.path.join(sync_download_test_dir_recorded, prefix_test_dir)
 
     # create new files which are not present in remote
-    new_local_file_set = create_new_files_local(prefix_test_path, 10)
+    new_local_file_set = create_new_files_local(prefix_test_path, 10, is_delete_set=True)
 
     prefix_to_sync = 'a/b'
     # perform a dry run the get the objects to be transferred
@@ -904,7 +904,7 @@ def compare_file_content_to_local(file_content_map, path_to_test, files_in_scope
             assert content == file_content_map[object_name]
 
 
-def create_new_files_local(path, no_of_files_to_create, with_content=False, extension='txt'):
+def create_new_files_local(path, no_of_files_to_create, with_content=False, extension='txt', is_delete_set=False):
     # write new files in local
     new_local_file_set = set()
     for i in range(no_of_files_to_create):
@@ -917,6 +917,8 @@ def create_new_files_local(path, no_of_files_to_create, with_content=False, exte
             if with_content:
                 fh.write(bulk_operation.generate_random_string(bulk_operation.CONTENT_STRING_LENGTH))
         new_local_file_set.add(new_file_path.replace(os.sep, '/'))
+    if is_delete_set:
+        new_local_file_set.add(f'{os.path.join(path,"dir")}/')
     return new_local_file_set
 
 
@@ -965,7 +967,7 @@ def parse_dry_run_result(parsed_result):
             transferred_set.add(result.split(':')[1].strip())
         elif result.startswith('Skipping object') or result.startswith('Skipping file'):
             skipped_set.add(result.split(':')[1].strip())
-        elif result.startswith('Deleting file') or result.startswith('Deleting object'):
+        elif result.startswith('Deleting file') or result.startswith('Deleting object') or result.startswith('Deleting') or result.startswith('Deleting folder'):
             deleted_set.add(result.split(':')[1].strip())
 
     return deleted_set, transferred_set, skipped_set

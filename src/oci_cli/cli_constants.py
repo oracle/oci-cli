@@ -61,6 +61,17 @@ OCI_CLI_PARAM_TO_ENV_MAP = {
 }
 
 MEBIBYTE = 1024 * 1024
-CHANGE_LOG_URL = 'https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst'
+CHANGE_LOG_URL = 'https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst'  # raw file used for requests
 OCI_CLI_PYPI_URL = 'https://pypi.org/pypi/oci-cli/json'
-TROUBLESHOOTING_DOCUMENTATION = 'https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdk_troubleshooting.htm'
+
+
+# Documentations
+OCI_CONFIG_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDocs/cliinstall.htm#configfile'
+CLI_CONFIG_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDocs/cliconfigure.htm'
+UPGRADING_CLI_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDocs/cliupgrading.htm'
+INTERACTIVE_CLI_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm'
+INPUT_OUTPUT_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#Managing_CLI_Input_and_Output'
+TROUBLESHOOTING_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDocs/clitroubleshooting.htm'
+SERVICE_ERROR_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/References/apierrors.htm'
+
+GITHUB_CHANGELOG = 'https://github.com/oracle/oci-cli/blob/master/CHANGELOG.rst'

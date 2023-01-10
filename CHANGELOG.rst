@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-3.22.0 - 2022-12-13
+3.22.1 - 2023-01-10
 --------------------
 Added
 ~~~~~
