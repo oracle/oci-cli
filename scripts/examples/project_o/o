@@ -21,7 +21,7 @@ import fcntl
 import errno
 import datetime
 VERSION = "1.3"
-UPDATED = "2022-12-25"
+UPDATED = "2023-01-04"
 
 # ==============================================================================
 # Global variables
@@ -1392,7 +1392,7 @@ def omap(argv):
                     print('\n    SUBNET', '{:18}'.format(subnet['alias']), subnet['cidr-block'])
                     # get vnics and vnicattachments
                     vnics = [i for i in ocids if i['type'] == 'vnic'
-                             and i['subnet-id'] == subnet['id']]
+                             and 'subnet-id' in i and i['subnet-id'] == subnet['id']]
                     for vnic in vnics:
                         print('      vnic',
                               '{:18}'.format(vnic['alias']),
@@ -1411,7 +1411,7 @@ def omap(argv):
                             print('  inst:', ocid[va['instance-id']]['alias'], end='')
                         print('')
                     lbs = [i for i in ocids if i['type'] == 'loadbalancer'
-                           and subnet['id'] in i['subnet-ids']]
+                           and 'subnet-ids' in i and subnet['id'] in i['subnet-ids']]
                     for lb in lbs:
                         print('      ' + '{:21}'.format(lb['type']), '{:28}'.format(lb['alias']),
                               ', '.join([ip['ip-address'] for ip in lb['ip-addresses']]))
@@ -1965,7 +1965,7 @@ try:
         exit(cli.returncode)
 
     cli = subprocess.Popen(oci_command_list, stdout=subprocess.PIPE,
-                           stderr=subprocess.PIPE, text=True)
+                           stderr=subprocess.PIPE, universal_newlines=True)
 except subprocess.SubprocessError as err:
     print('ERROR:', err)
     exit(1)

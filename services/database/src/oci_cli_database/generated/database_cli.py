@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2022, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -147,7 +147,7 @@ def db_system_compute_performance_group():
     pass
 
 
-@click.command(cli_util.override('db.cloud_exadata_infrastructure_unallocated_resources_group.command_name', 'cloud-exadata-infrastructure-unallocated-resources'), cls=CommandGroupWithAlias, help="""Unallocated resources details of the Cloud Exadata infrastructure. Applies to Cloud Exadata infrastructure instances only.""")
+@click.command(cli_util.override('db.cloud_exadata_infrastructure_unallocated_resources_group.command_name', 'cloud-exadata-infrastructure-unallocated-resources'), cls=CommandGroupWithAlias, help="""Details of unallocated resources of the Cloud Exadata infrastructure. Applies to Cloud Exadata infrastructure instances only.""")
 @cli_util.help_option_group
 def cloud_exadata_infrastructure_unallocated_resources_group():
     pass
@@ -4058,7 +4058,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scan-listener-port-tls', type=click.INT, help=u"""The SCAN Listener TLS port number. Default value is 2484.""")
 @cli_util.option('--scan-listener-port-non-tls', type=click.INT, help=u"""The SCAN Listener Non TLS port number. Default value is 1521.""")
-@cli_util.option('--is-mtls-enabled', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database at time of provisioning a VMCluster.Default is TLS.""")
+@cli_util.option('--is-mtls-enabled', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database while provisioning a VMCluster. Default is TLS.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4406,11 +4406,11 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The total number of Autonomous Container Databases that can be created.""")
-@cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The number of OCPU cores to enable per VM cluster node.""")
+@cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The number of OCPU cores to be enabled per VM cluster node.""")
 @cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per each OCPU core.""")
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The data disk group size to be allocated for Autonomous Databases, in TBs.""")
 @cli_util.option('--cluster-time-zone', help=u"""The time zone to use for the Cloud Autonomous VM cluster. For details, see [DB System Time Zones].""")
-@cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Db server.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle PaaS and IaaS services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Database service. Note that when provisioning an Autonomous Database on [dedicated Exadata infrastructure], this attribute must be null because the attribute is already set at the Autonomous Exadata Infrastructure level. When using [shared Exadata infrastructure], if a value is not specified, the system will supply the value of `BRING_YOUR_OWN_LICENSE`.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4607,7 +4607,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 @cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The memory to be allocated in GBs.""")
 @cli_util.option('--db-node-storage-size-in-gbs', type=click.INT, help=u"""The local node storage to be allocated in GBs.""")
 @cli_util.option('--data-storage-size-in-tbs', help=u"""The data disk group size to be allocated in TBs.""")
-@cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Db servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DB servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-name', help=u"""The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--data-storage-percentage', type=click.INT, help=u"""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration] in the Exadata documentation for details on the impact of the configuration settings on storage.""")
 @cli_util.option('--domain', help=u"""A domain name used for the cloud VM cluster. If the Oracle-provided internet and VCN resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted. Applies to Exadata Cloud Service instances only.""")
@@ -4617,6 +4617,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 @cli_util.option('--time-zone', help=u"""The time zone to use for the cloud VM cluster. For details, see [Time Zones].""")
 @cli_util.option('--scan-listener-port-tcp', type=click.INT, help=u"""The TCP Single Client Access Name (SCAN) port. The default port is 1521.""")
 @cli_util.option('--scan-listener-port-tcp-ssl', type=click.INT, help=u"""The TCPS Single Client Access Name (SCAN) port. The default port is 2484.""")
+@cli_util.option('--private-zone-id', help=u"""The private zone id in which DNS records need to be created.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-network-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that the backup network of this DB system belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. Applicable only to Exadata systems.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -4632,7 +4633,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, data_collection_options):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, data_collection_options):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4689,6 +4690,9 @@ def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if scan_listener_port_tcp_ssl is not None:
         _details['scanListenerPortTcpSsl'] = scan_listener_port_tcp_ssl
+
+    if private_zone_id is not None:
+        _details['privateZoneId'] = private_zone_id
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
@@ -6088,6 +6092,8 @@ This option is a JSON list with items of type ExadataInfrastructureContact.  For
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-count', type=click.INT, help=u"""The number of storage servers for the Exadata infrastructure.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the Exadata infrastructure.""")
+@cli_util.option('--is-multi-rack-deployment', type=click.BOOL, help=u"""Indicates if deployment is Multi-Rack or not.""")
+@cli_util.option('--multi-rack-configuration-file', help=u"""The base64 encoded Multi-Rack configuration json file.""")
 @cli_util.option('--is-cps-offline-report-enabled', type=click.BOOL, help=u"""Indicates whether cps offline diagnostic report is enabled for this Exadata infrastructure. This will allow a customer to quickly check status themselves and fix problems on their end, saving time and frustration for both Oracle and the customer when they find the CPS in a disconnected state.You can enable offline diagnostic report during Exadata infrastructure provisioning. You can also disable or enable it at any time using the UpdateExadatainfrastructure API.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -6101,7 +6107,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, dns_server, ntp_server, corporate_proxy, contacts, maintenance_window, storage_count, compute_count, is_cps_offline_report_enabled, freeform_tags, defined_tags):
+def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, dns_server, ntp_server, corporate_proxy, contacts, maintenance_window, storage_count, compute_count, is_multi_rack_deployment, multi_rack_configuration_file, is_cps_offline_report_enabled, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6134,6 +6140,12 @@ def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_multi_rack_deployment is not None:
+        _details['isMultiRackDeployment'] = is_multi_rack_deployment
+
+    if multi_rack_configuration_file is not None:
+        _details['multiRackConfigurationFile'] = multi_rack_configuration_file
 
     if is_cps_offline_report_enabled is not None:
         _details['isCpsOfflineReportEnabled'] = is_cps_offline_report_enabled
@@ -10375,7 +10387,7 @@ def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructur
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_unallocated_resources_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure_unallocated_resources.command_name', 'get'), help=u"""Gets un allocated resources information for the specified Cloud Exadata infrastructure. \n[Command Reference](getCloudExadataInfrastructureUnallocatedResources)""")
+@cloud_exadata_infrastructure_unallocated_resources_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure_unallocated_resources.command_name', 'get'), help=u"""Gets unallocated resources information for the specified Cloud Exadata infrastructure. \n[Command Reference](getCloudExadataInfrastructureUnallocatedResources)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10840,17 +10852,20 @@ def get_db_system_upgrade_history_entry(ctx, from_json, db_system_id, upgrade_hi
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.get_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Exadata infrastructure. Applies to Exadata Cloud@Customer instances only. To get information on an Exadata Cloud Service infrastructure resource, use the  [GetCloudExadataInfrastructure] operation. \n[Command Reference](getExadataInfrastructure)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--excluded-fields', type=custom_types.CliCaseInsensitiveChoice(["multiRackConfigurationFile"]), multiple=True, help=u"""If provided, the specified fields will be excluded in the response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id):
+def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id, excluded_fields):
 
     if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if excluded_fields is not None and len(excluded_fields) > 0:
+        kwargs['excluded_fields'] = excluded_fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_exadata_infrastructure(
@@ -14518,6 +14533,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "DISCONNECTED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--excluded-fields', type=custom_types.CliCaseInsensitiveChoice(["multiRackConfigurationFile"]), multiple=True, help=u"""If provided, the specified fields will be excluded in the response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -14525,7 +14541,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[ExadataInfrastructureSummary]'})
 @cli_util.wrap_exceptions
-def list_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, excluded_fields):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -14543,6 +14559,8 @@ def list_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartme
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if excluded_fields is not None and len(excluded_fields) > 0:
+        kwargs['excluded_fields'] = excluded_fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
@@ -16181,7 +16199,7 @@ def remote_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_sec
 
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.remove_virtual_machine_from_cloud_vm_cluster.command_name', 'remove'), help=u"""Remove Virtual Machines from the Cloud VM cluster. Applies to Exadata Cloud instances only. \n[Command Reference](removeVirtualMachineFromCloudVmCluster)""")
-@cli_util.option('--db-servers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ExaCS DB servers for the cluster to be removed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-servers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ExaDB-D DB server for the cluster to be removed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -19218,6 +19236,8 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 This option is a JSON list with items of type ExadataInfrastructureContact.  For documentation on ExadataInfrastructureContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ExadataInfrastructureContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-storage-count', type=click.INT, help=u"""The requested number of additional storage servers for the Exadata infrastructure.""")
+@cli_util.option('--is-multi-rack-deployment', type=click.BOOL, help=u"""Indicates if deployment is Multi-Rack or not.""")
+@cli_util.option('--multi-rack-configuration-file', help=u"""The base64 encoded Multi-Rack configuration json file.""")
 @cli_util.option('--additional-compute-count', type=click.INT, help=u"""The requested number of additional compute servers for the Exadata infrastructure.""")
 @cli_util.option('--additional-compute-system-model', type=custom_types.CliCaseInsensitiveChoice(["X7", "X8", "X8M", "X9M"]), help=u"""Oracle Exadata System Model specification. The system model determines the amount of compute or storage server resources available for use. For more information, please see [System and Shape Configuration Options] (https://docs.oracle.com/en/engineered-systems/exadata-cloud-at-customer/ecccm/ecc-system-config-options.html#GUID-9E090174-5C57-4EB1-9243-B470F9F10D6B)""")
 @cli_util.option('--dns-server', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -19238,7 +19258,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'contacts': {'module': 'database', 'class': 'list[ExadataInfrastructureContact]'}, 'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, contacts, maintenance_window, additional_storage_count, additional_compute_count, additional_compute_system_model, dns_server, ntp_server, time_zone, is_cps_offline_report_enabled, freeform_tags, defined_tags, if_match):
+def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, contacts, maintenance_window, additional_storage_count, is_multi_rack_deployment, multi_rack_configuration_file, additional_compute_count, additional_compute_system_model, dns_server, ntp_server, time_zone, is_cps_offline_report_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
@@ -19283,6 +19303,12 @@ def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wai
 
     if additional_storage_count is not None:
         _details['additionalStorageCount'] = additional_storage_count
+
+    if is_multi_rack_deployment is not None:
+        _details['isMultiRackDeployment'] = is_multi_rack_deployment
+
+    if multi_rack_configuration_file is not None:
+        _details['multiRackConfigurationFile'] = multi_rack_configuration_file
 
     if additional_compute_count is not None:
         _details['additionalComputeCount'] = additional_compute_count
