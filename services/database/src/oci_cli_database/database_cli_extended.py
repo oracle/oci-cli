@@ -67,6 +67,10 @@ cli_util.rename_command(database_cli, database_cli.db_system_group, database_cli
 # Renaming db-system-upgrade-history-entry sub command
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_upgrade_history_entry_group, "db-system-upgrade-history")
 
+DATA_COLLECTION_OPTIONS_HELP = u"""Available options are \"isDiagnosticsEventsEnabled\", \"isHealthMonitoringEnabled\" and \"isIncidentLogsEnabled\". Provide a value true or false to enable or disable a particular option.
+Example: `{\"isDiagnosticsEventsEnabled\":true, \"isHealthMonitoringEnabled\":true, \"isIncidentLogsEnabled\":true}`
+""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP
+
 
 # Renaming the db system upgrade history parameter upgrade-history-entry-id to upgrade-history-id
 @cli_util.copy_params_from_generated_command(database_cli.get_db_system_upgrade_history_entry, params_to_exclude=['upgrade_history_entry_id'])
@@ -676,6 +680,12 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
     if 'pdb_name' in kwargs and kwargs['pdb_name']:
         create_database_details.pdb_name = kwargs['pdb_name']
 
+    if 'defined_tags' in kwargs and kwargs['defined_tags']:
+        create_database_details.defined_tags = kwargs['defined_tags']
+
+    if 'freeform_tags' in kwargs and kwargs['freeform_tags']:
+        create_database_details.freeform_tags = kwargs['freeform_tags']
+
     if 'vault_id' in kwargs and kwargs['vault_id']:
         create_database_details['vaultId'] = kwargs['vault_id']
 
@@ -1276,12 +1286,13 @@ database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_group.nam
 database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_history_entry_group.name)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_vm_cluster, params_to_exclude=['version_parameterconflict', 'update_details'])
+@cli_util.copy_params_from_generated_command(database_cli.update_vm_cluster, params_to_exclude=['version_parameterconflict', 'update_details', 'data_collection_options'])
 @database_cli.vm_cluster_group.command(name='update', help=database_cli.update_vm_cluster.help)
 @cli_util.option('--patch-action', help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', help="""The OCID of the patch.""")
 @cli_util.option('--update-action', help="""The action to perform on the update.""")
 @cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
+@cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
@@ -1634,14 +1645,15 @@ def add_storage_capacity_cloud_exadata_infrastructure(ctx, **kwargs):
     ctx.invoke(database_cli.add_storage_capacity_cloud_exadata_infrastructure, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_cloud_vm_cluster, params_to_exclude=['cloud_exadata_infrastructure_id', 'is_sparse_diskgroup_enabled', 'is_local_backup_enabled', 'ssh_public_keys'])
+@cli_util.copy_params_from_generated_command(database_cli.create_cloud_vm_cluster, params_to_exclude=['cloud_exadata_infrastructure_id', 'is_sparse_diskgroup_enabled', 'is_local_backup_enabled', 'ssh_public_keys', 'data_collection_options'])
 @database_cli.cloud_vm_cluster_group.command('create', help=database_cli.create_cloud_vm_cluster.help)
 @cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
 @cli_util.option('--is-sparse-diskgroup', type=click.BOOL, help=u"""If true, the sparse disk group is configured for the cloud VM cluster. If false, the sparse disk group is not created.""")
 @cli_util.option('--is-local-backup', type=click.BOOL, help=u"""If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the Cloud VM Cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
 def create_cloud_vm_cluster(ctx, **kwargs):
     kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
@@ -1702,13 +1714,14 @@ def list_cloud_vm_clusters(ctx, **kwargs):
     ctx.invoke(database_cli.list_cloud_vm_clusters, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_cloud_vm_cluster, params_to_exclude=['ssh_public_keys', 'update_details'])
+@cli_util.copy_params_from_generated_command(database_cli.update_cloud_vm_cluster, params_to_exclude=['ssh_public_keys', 'update_details', 'data_collection_options'])
 @database_cli.cloud_vm_cluster_group.command(name='update', help=database_cli.update_cloud_vm_cluster.help)
 @cli_util.option('--update-action', help="""The action to perform on the update.""")
 @cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the cloud VM cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'update-details': {'module': 'database', 'class': 'UpdateDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'compute-nodes': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'update-details': {'module': 'database', 'class': 'UpdateDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'compute-nodes': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
 def update_cloud_vm_cluster(ctx, **kwargs):
     if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
@@ -3236,3 +3249,15 @@ def delete_autonomous_database_extended(ctx, from_json, wait_for_state, max_wait
 
 # oci db autonomous-database list-autonomous-database-refreshable-clones -> oci db autonomous-database list-refreshable-clones
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.list_autonomous_database_refreshable_clones, "list-refreshable-clones")
+
+
+# DEX-16751 Add custom help text for data collection options
+@cli_util.copy_params_from_generated_command(database_cli.create_vm_cluster, params_to_exclude=['data_collection_options'])
+@database_cli.vm_cluster_group.command('create', help=database_cli.create_vm_cluster.help)
+@cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@cli_util.wrap_exceptions
+def create_vm_cluster_extended(ctx, **kwargs):
+
+    ctx.invoke(database_cli.create_vm_cluster, **kwargs)

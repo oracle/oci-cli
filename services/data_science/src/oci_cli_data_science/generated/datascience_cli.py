@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2022, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
@@ -36,6 +36,12 @@ def job_shape_group():
 @click.command(cli_util.override('data_science.model_deployment_group.command_name', 'model-deployment'), cls=CommandGroupWithAlias, help="""Model deployments are used by data scientists to perform predictions from the model hosted on an HTTP server.""")
 @cli_util.help_option_group
 def model_deployment_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.model_version_set_group.command_name', 'model-version-set'), cls=CommandGroupWithAlias, help="""A model version set to associate different versions of machine learning models.""")
+@cli_util.help_option_group
+def model_version_set_group():
     pass
 
 
@@ -90,6 +96,7 @@ def notebook_session_group():
 data_science_root_group.add_command(model_deployment_shape_group)
 data_science_root_group.add_command(job_shape_group)
 data_science_root_group.add_command(model_deployment_group)
+data_science_root_group.add_command(model_version_set_group)
 data_science_root_group.add_command(job_run_group)
 data_science_root_group.add_command(project_group)
 data_science_root_group.add_command(fast_launch_job_config_group)
@@ -425,6 +432,63 @@ def change_model_deployment_compartment(ctx, from_json, model_deployment_id, com
         change_model_deployment_compartment_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@model_version_set_group.command(name=cli_util.override('data_science.change_model_version_set_compartment.command_name', 'change-compartment'), help=u"""Moves a modelVersionSet resource into a different compartment. \n[Command Reference](changeModelVersionSetCompartment)""")
+@cli_util.option('--model-version-set-id', required=True, help=u"""The [OCID] of the model version set.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_model_version_set_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_version_set_id, compartment_id, if_match):
+
+    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_model_version_set_compartment(
+        model_version_set_id=model_version_set_id,
+        change_model_version_set_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1029,6 +1093,8 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--input-schema', help=u"""Input schema file content in String format""")
 @cli_util.option('--output-schema', help=u"""Output schema file content in String format""")
+@cli_util.option('--model-version-set-id', help=u"""The OCID of the model version set that the model is associated to.""")
+@cli_util.option('--version-label', help=u"""The version label can add an additional description of the lifecycle state of the model or the application using/training the model.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1037,7 +1103,7 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}}, output_type={'module': 'data_science', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, input_schema, output_schema):
+def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, input_schema, output_schema, model_version_set_id, version_label):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1069,6 +1135,12 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if output_schema is not None:
         _details['outputSchema'] = output_schema
+
+    if model_version_set_id is not None:
+        _details['modelVersionSetId'] = model_version_set_id
+
+    if version_label is not None:
+        _details['versionLabel'] = version_label
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model(
@@ -1334,6 +1406,71 @@ def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch
         create_model_provenance_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@model_version_set_group.command(name=cli_util.override('data_science.create_model_version_set.command_name', 'create'), help=u"""Creates a new modelVersionSet. \n[Command Reference](createModelVersionSet)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the model version set in.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model version set.""")
+@cli_util.option('--name', required=True, help=u"""A user-friendly name for the resource. It must be unique and can't be modified. Avoid entering confidential information. Example: `My model version set`""")
+@cli_util.option('--description', help=u"""A short description of the model version set.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelVersionSet'})
+@cli_util.wrap_exceptions
+def create_model_version_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+    _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_version_set(
+        create_model_version_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_version_set') and callable(getattr(client, 'get_model_version_set')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_version_set(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1865,6 +2002,61 @@ def delete_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@model_version_set_group.command(name=cli_util.override('data_science.delete_model_version_set.command_name', 'delete'), help=u"""Deletes the specified modelVersionSet. \n[Command Reference](deleteModelVersionSet)""")
+@cli_util.option('--model-version-set-id', required=True, help=u"""The [OCID] of the model version set.""")
+@cli_util.option('--is-delete-related-models', type=click.BOOL, help=u"""By default, this parameter is false. A model version set can only be deleted if all the models associate with it are already in the DELETED state. You can optionally specify the deleteRelatedModels boolean query parameters to true, which deletes all associated models for you.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_model_version_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_version_set_id, is_delete_related_models, if_match):
+
+    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_delete_related_models is not None:
+        kwargs['is_delete_related_models'] = is_delete_related_models
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_model_version_set(
+        model_version_set_id=model_version_set_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @notebook_session_group.command(name=cli_util.override('data_science.delete_notebook_session.command_name', 'delete'), help=u"""Deletes the specified notebook session. Any unsaved work in this notebook session are lost. \n[Command Reference](deleteNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -2301,6 +2493,28 @@ def get_model_provenance(ctx, from_json, model_id):
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_model_provenance(
         model_id=model_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_version_set_group.command(name=cli_util.override('data_science.get_model_version_set.command_name', 'get'), help=u"""Gets the specified model version set information. \n[Command Reference](getModelVersionSet)""")
+@cli_util.option('--model-version-set-id', required=True, help=u"""The [OCID] of the model version set.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelVersionSet'})
+@cli_util.wrap_exceptions
+def get_model_version_set(ctx, from_json, model_version_set_id):
+
+    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_version_set(
+        model_version_set_id=model_version_set_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2922,8 +3136,83 @@ def list_model_deployments(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@model_version_set_group.command(name=cli_util.override('data_science.list_model_version_sets.command_name', 'list'), help=u"""Lists model version sets in the specified compartment. \n[Command Reference](listModelVersionSets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name", "lifecycleState"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelVersionSetSummary]'})
+@cli_util.wrap_exceptions
+def list_model_version_sets(ctx, from_json, all_pages, page_size, compartment_id, id, project_id, name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if name is not None:
+        kwargs['name'] = name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_model_version_sets,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_model_version_sets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_model_version_sets(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.list_models.command_name', 'list'), help=u"""Lists models in the specified compartment. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--model-version-set-name', help=u"""<b>Filter</b> results by the name of the model version set.""")
+@cli_util.option('--version-label', help=u"""<b>Filter</b> results by version label.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -2944,12 +3233,16 @@ See [List Pagination].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelSummary]'})
 @cli_util.wrap_exceptions
-def list_models(ctx, from_json, all_pages, page_size, compartment_id, id, project_id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_version_set_name, version_label, id, project_id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if model_version_set_name is not None:
+        kwargs['model_version_set_name'] = model_version_set_name
+    if version_label is not None:
+        kwargs['version_label'] = version_label
     if id is not None:
         kwargs['id'] = id
     if project_id is not None:
@@ -3239,7 +3532,7 @@ def list_work_request_logs(ctx, from_json, all_pages, work_request_id):
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
 
@@ -3643,6 +3936,8 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 @cli_util.option('--defined-metadata-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of defined metadata details for the model.
 
 This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version-set-id', help=u"""The OCID of the model version set that the model is associated to.""")
+@cli_util.option('--version-label', help=u"""The version label can add an additional description of the lifecycle state of the model or the application using/training the model.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3653,7 +3948,7 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}}, output_type={'module': 'data_science', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, if_match):
+def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, model_version_set_id, version_label, if_match):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -3686,6 +3981,12 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if defined_metadata_list is not None:
         _details['definedMetadataList'] = cli_util.parse_json_parameter("defined_metadata_list", defined_metadata_list)
+
+    if model_version_set_id is not None:
+        _details['modelVersionSetId'] = model_version_set_id
+
+    if version_label is not None:
+        _details['versionLabel'] = version_label
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model(
@@ -3940,6 +4241,78 @@ def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch
         update_model_provenance_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@model_version_set_group.command(name=cli_util.override('data_science.update_model_version_set.command_name', 'update'), help=u"""Updates the properties of a model version set. User can update the `description` property. \n[Command Reference](updateModelVersionSet)""")
+@cli_util.option('--model-version-set-id', required=True, help=u"""The [OCID] of the model version set.""")
+@cli_util.option('--description', help=u"""A short description of the model version set.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelVersionSet'})
+@cli_util.wrap_exceptions
+def update_model_version_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_version_set_id, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_version_set(
+        model_version_set_id=model_version_set_id,
+        update_model_version_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_version_set') and callable(getattr(client, 'get_model_version_set')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_version_set(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

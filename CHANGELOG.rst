@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.22.2 - 2023-01-17
+--------------------
+Added
+~~~~~
+
+* Database service
+
+    * Support for Private DNS in ExaCS systems during provisioning
+
+      * ``oci db cloud-vm-cluster create --private-zone-id``
+
+    * Support for Elastic Storage Expansion (Multi-Rack) feature
+
+      * ``oci db exadata-infrastructure create --is-multi-rack-deployment, --multi-rack-configuration-file``
+      * ``oci db exadata-infrastructure get --excluded-fields``
+      * ``oci db exadata-infrastructure list --excluded-fields``
+      * ``oci db exadata-infrastructure update --is-multi-rack-deployment, --multi-rack-configuration-file``
+
+    * Support for target version fields of infra patching v2 features on cloud exadata infrastructure
+
+      * ``oci db cloud-exa-infra get --storageserverversion``
+      * ``oci db cloud-exa-infra get --dbserverversion``
+      * ``oci db cloud-exa-infra get --monthlystorageserverversion``
+      * ``oci db cloud-exa-infra get --monthlydbserverversion``
+
+* Data Science Service
+
+    * Support for creating model version sets in model catalog
+
+      * ``oci data-science model-version-set *``
+
+    * Support for option paramater ``model-version-set-id`` and  ``version-label`` for following commands
+
+      * ``oci data-science model create --model-version-set-id, --version-label``
+      * ``oci data-science model list --model-version-set-name, --version-label``
+      * ``oci data-science model update --model-version-set-id, --version-label``
+
 3.22.1 - 2023-01-10
 --------------------
 Added
