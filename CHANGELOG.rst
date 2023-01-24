@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.22.3 - 2023-01-24
+--------------------
+Added
+~~~~~
+
+* Support for the Cloud Migrations service
+
+  * ``oci cloud-migrations``
+
+* Support for new optional parameter to set Custom Private IP during Private End Point provisioning in the Database service
+
+  * ``oci db autonomous-database create --private-endpoint-ip``
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details --private-endpoint-ip``
+  * ``oci db autonomous-database create-from-backup-id --private-endpoint-ip``
+  * ``oci db autonomous-database create-from-backup-timestamp --private-endpoint-ip``
+  * ``oci db autonomous-database create-from-clone --private-endpoint-ip``
+  * ``oci db autonomous-database create-refreshable-clone --private-endpoint-ip``
+  * ``oci db autonomous-database update --private-endpoint-ip``
+
+* Support for Machine Learning pipelines for the Data Science Service
+
+  * ``oci data-science pipeline``
+  * ``oci data-science pipeline-run``
+
+* Support for the language PII (Personal Identifiable Information) detection in the AI Language service
+
+  * ``oci ai language batch-detect-pii-entities``
+
+* Support for cross region replication in the File Storage service
+
+  * ``oci fs replication create``
+  * ``oci fs replication get``
+  * ``oci fs replication list``
+  * ``oci fs replication delete``
+  * ``oci fs replication change-compartment``
+  * ``oci fs file-system estimate-replication``
+  
 3.22.2 - 2023-01-17
 --------------------
 Added

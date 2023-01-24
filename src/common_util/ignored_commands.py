@@ -73,6 +73,7 @@ IGNORED_COMMANDS = [
     # input requires a valid file to upload
     ['data-science', 'model', 'create-model-artifact'],
     ['data-science', 'job', 'create-job-artifact'],
+    ['data-science', 'pipeline', 'create-step-artifact'],
     # this command expects either subnetId or vlanId optional param, therefore, cannot be tested here
     # removing it from here and adding coverage in test_compute_cli_extended.py
     ['compute', 'instance', 'attach-vnic'],
