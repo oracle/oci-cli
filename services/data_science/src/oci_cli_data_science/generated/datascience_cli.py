@@ -39,6 +39,36 @@ def model_deployment_group():
     pass
 
 
+@click.command(cli_util.override('data_science.project_group.command_name', 'project'), cls=CommandGroupWithAlias, help="""Projects enable users to organize their data science work.""")
+@cli_util.help_option_group
+def project_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.pipeline_run_group.command_name', 'pipeline-run'), cls=CommandGroupWithAlias, help="""Description of PipelineRun.""")
+@cli_util.help_option_group
+def pipeline_run_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.notebook_session_group.command_name', 'notebook-session'), cls=CommandGroupWithAlias, help="""Notebook sessions are interactive coding environments for data scientists.""")
+@cli_util.help_option_group
+def notebook_session_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.pipeline_group.command_name', 'pipeline'), cls=CommandGroupWithAlias, help="""A Pipeline to orchestrate and execute machine learning workflows.""")
+@cli_util.help_option_group
+def pipeline_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.model_version_set_group.command_name', 'model-version-set'), cls=CommandGroupWithAlias, help="""A model version set to associate different versions of machine learning models.""")
 @cli_util.help_option_group
 def model_version_set_group():
@@ -48,12 +78,6 @@ def model_version_set_group():
 @click.command(cli_util.override('data_science.job_run_group.command_name', 'job-run'), cls=CommandGroupWithAlias, help="""A job run.""")
 @cli_util.help_option_group
 def job_run_group():
-    pass
-
-
-@click.command(cli_util.override('data_science.project_group.command_name', 'project'), cls=CommandGroupWithAlias, help="""Projects enable users to organize their data science work.""")
-@cli_util.help_option_group
-def project_group():
     pass
 
 
@@ -69,12 +93,6 @@ def model_group():
     pass
 
 
-@click.command(cli_util.override('data_science.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
-@cli_util.help_option_group
-def work_request_group():
-    pass
-
-
 @click.command(cli_util.override('data_science.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""A job for training models.""")
 @cli_util.help_option_group
 def job_group():
@@ -87,24 +105,20 @@ def notebook_session_shape_group():
     pass
 
 
-@click.command(cli_util.override('data_science.notebook_session_group.command_name', 'notebook-session'), cls=CommandGroupWithAlias, help="""Notebook sessions are interactive coding environments for data scientists.""")
-@cli_util.help_option_group
-def notebook_session_group():
-    pass
-
-
 data_science_root_group.add_command(model_deployment_shape_group)
 data_science_root_group.add_command(job_shape_group)
 data_science_root_group.add_command(model_deployment_group)
+data_science_root_group.add_command(project_group)
+data_science_root_group.add_command(pipeline_run_group)
+data_science_root_group.add_command(work_request_group)
+data_science_root_group.add_command(notebook_session_group)
+data_science_root_group.add_command(pipeline_group)
 data_science_root_group.add_command(model_version_set_group)
 data_science_root_group.add_command(job_run_group)
-data_science_root_group.add_command(project_group)
 data_science_root_group.add_command(fast_launch_job_config_group)
 data_science_root_group.add_command(model_group)
-data_science_root_group.add_command(work_request_group)
 data_science_root_group.add_command(job_group)
 data_science_root_group.add_command(notebook_session_shape_group)
-data_science_root_group.add_command(notebook_session_group)
 
 
 @model_group.command(name=cli_util.override('data_science.activate_model.command_name', 'activate'), help=u"""Activates the model. \n[Command Reference](activateModel)""")
@@ -280,6 +294,31 @@ def cancel_job_run(ctx, from_json, job_run_id, if_match):
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.cancel_job_run(
         job_run_id=job_run_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.cancel_pipeline_run.command_name', 'cancel'), help=u"""Cancel a PipelineRun. \n[Command Reference](cancelPipelineRun)""")
+@cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_pipeline_run(ctx, from_json, pipeline_run_id, if_match):
+
+    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.cancel_pipeline_run(
+        pipeline_run_id=pipeline_run_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -518,6 +557,68 @@ def change_notebook_session_compartment(ctx, from_json, notebook_session_id, com
     result = client.change_notebook_session_compartment(
         notebook_session_id=notebook_session_id,
         change_notebook_session_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.change_pipeline_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePipelineCompartment)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_pipeline_compartment(ctx, from_json, pipeline_id, compartment_id, if_match):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_pipeline_compartment(
+        pipeline_id=pipeline_id,
+        change_pipeline_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.change_pipeline_run_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePipelineRunCompartment)""")
+@cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_pipeline_run_compartment(ctx, from_json, pipeline_run_id, compartment_id, if_match):
+
+    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_pipeline_run_compartment(
+        pipeline_run_id=pipeline_run_id,
+        change_pipeline_run_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1549,6 +1650,360 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@pipeline_group.command(name=cli_util.override('data_science.create_pipeline.command_name', 'create'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the pipeline with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline.""")
+@cli_util.option('--step-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step details for each step.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the pipeline.""")
+@cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, configuration_details, log_configuration_details, infrastructure_configuration_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['stepDetails'] = cli_util.parse_json_parameter("step_details", step_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if configuration_details is not None:
+        _details['configurationDetails'] = cli_util.parse_json_parameter("configuration_details", configuration_details)
+
+    if log_configuration_details is not None:
+        _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
+
+    if infrastructure_configuration_details is not None:
+        _details['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("infrastructure_configuration_details", infrastructure_configuration_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_pipeline(
+        create_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline') and callable(getattr(client, 'get_pipeline')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.create_pipeline_pipeline_default_configuration_details.command_name', 'create-pipeline-pipeline-default-configuration-details'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the pipeline with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline.""")
+@cli_util.option('--step-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step details for each step.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the pipeline.""")
+@cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-details-maximum-runtime-in-minutes', type=click.INT, help=u"""A time bound for the execution of the entire Pipeline. Timer starts when the Pipeline Run is in progress.""")
+@cli_util.option('--configuration-details-environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Environment variables to set for steps in the pipeline.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-details-command-line-arguments', help=u"""The command line arguments to set for steps in the pipeline.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, log_configuration_details, infrastructure_configuration_details, freeform_tags, defined_tags, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configurationDetails'] = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['stepDetails'] = cli_util.parse_json_parameter("step_details", step_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_configuration_details is not None:
+        _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
+
+    if infrastructure_configuration_details is not None:
+        _details['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("infrastructure_configuration_details", infrastructure_configuration_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if configuration_details_maximum_runtime_in_minutes is not None:
+        _details['configurationDetails']['maximumRuntimeInMinutes'] = configuration_details_maximum_runtime_in_minutes
+
+    if configuration_details_environment_variables is not None:
+        _details['configurationDetails']['environmentVariables'] = cli_util.parse_json_parameter("configuration_details_environment_variables", configuration_details_environment_variables)
+
+    if configuration_details_command_line_arguments is not None:
+        _details['configurationDetails']['commandLineArguments'] = configuration_details_command_line_arguments
+
+    _details['configurationDetails']['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_pipeline(
+        create_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline') and callable(getattr(client, 'get_pipeline')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.create_pipeline_run.command_name', 'create'), help=u"""Creates a new PipelineRun. \n[Command Reference](createPipelineRun)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline run.""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline for which pipeline run is created.""")
+@cli_util.option('--project-id', help=u"""The [OCID] of the project to associate the pipeline run with.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--step-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step override details. Only Step Configuration is allowed to be overridden.
+
+This option is a JSON list with items of type PipelineStepOverrideDetails.  For documentation on PipelineStepOverrideDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepOverrideDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'configuration-override-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-override-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
+@cli_util.wrap_exceptions
+def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, configuration_override_details, log_configuration_override_details, step_override_details, freeform_tags, defined_tags, system_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['pipelineId'] = pipeline_id
+
+    if project_id is not None:
+        _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if configuration_override_details is not None:
+        _details['configurationOverrideDetails'] = cli_util.parse_json_parameter("configuration_override_details", configuration_override_details)
+
+    if log_configuration_override_details is not None:
+        _details['logConfigurationOverrideDetails'] = cli_util.parse_json_parameter("log_configuration_override_details", log_configuration_override_details)
+
+    if step_override_details is not None:
+        _details['stepOverrideDetails'] = cli_util.parse_json_parameter("step_override_details", step_override_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_pipeline_run(
+        create_pipeline_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline_run') and callable(getattr(client, 'get_pipeline_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.create_pipeline_run_pipeline_default_configuration_details.command_name', 'create-pipeline-run-pipeline-default-configuration-details'), help=u"""Creates a new PipelineRun. \n[Command Reference](createPipelineRun)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the pipeline run.""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline for which pipeline run is created.""")
+@cli_util.option('--project-id', help=u"""The [OCID] of the project to associate the pipeline run with.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--step-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step override details. Only Step Configuration is allowed to be overridden.
+
+This option is a JSON list with items of type PipelineStepOverrideDetails.  For documentation on PipelineStepOverrideDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepOverrideDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-override-details-maximum-runtime-in-minutes', type=click.INT, help=u"""A time bound for the execution of the entire Pipeline. Timer starts when the Pipeline Run is in progress.""")
+@cli_util.option('--configuration-override-details-environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Environment variables to set for steps in the pipeline.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-override-details-command-line-arguments', help=u"""The command line arguments to set for steps in the pipeline.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-override-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-override-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
+@cli_util.wrap_exceptions
+def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, log_configuration_override_details, step_override_details, freeform_tags, defined_tags, system_tags, configuration_override_details_maximum_runtime_in_minutes, configuration_override_details_environment_variables, configuration_override_details_command_line_arguments):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configurationOverrideDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['pipelineId'] = pipeline_id
+
+    if project_id is not None:
+        _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if log_configuration_override_details is not None:
+        _details['logConfigurationOverrideDetails'] = cli_util.parse_json_parameter("log_configuration_override_details", log_configuration_override_details)
+
+    if step_override_details is not None:
+        _details['stepOverrideDetails'] = cli_util.parse_json_parameter("step_override_details", step_override_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if configuration_override_details_maximum_runtime_in_minutes is not None:
+        _details['configurationOverrideDetails']['maximumRuntimeInMinutes'] = configuration_override_details_maximum_runtime_in_minutes
+
+    if configuration_override_details_environment_variables is not None:
+        _details['configurationOverrideDetails']['environmentVariables'] = cli_util.parse_json_parameter("configuration_override_details_environment_variables", configuration_override_details_environment_variables)
+
+    if configuration_override_details_command_line_arguments is not None:
+        _details['configurationOverrideDetails']['commandLineArguments'] = configuration_override_details_command_line_arguments
+
+    _details['configurationOverrideDetails']['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_pipeline_run(
+        create_pipeline_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline_run') and callable(getattr(client, 'get_pipeline_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('data_science.create_project.command_name', 'create'), help=u"""Creates a new project. \n[Command Reference](createProject)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the project in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
@@ -1611,6 +2066,45 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.create_step_artifact.command_name', 'create-step-artifact'), help=u"""Upload the artifact for a step in the pipeline. \n[Command Reference](createStepArtifact)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--step-name', required=True, help=u"""Unique Step identifier in a pipeline.""")
+@cli_util.option('--step-artifact', required=True, help=u"""The step artifact to upload.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_step_artifact(ctx, from_json, pipeline_id, step_name, step_artifact, content_length, content_disposition):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+        raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_step_artifact(
+        pipeline_id=pipeline_id,
+        step_name=step_name,
+        step_artifact=step_artifact,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2109,6 +2603,131 @@ def delete_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@pipeline_group.command(name=cli_util.override('data_science.delete_pipeline.command_name', 'delete'), help=u"""Deletes a Pipeline resource by identifier. \n[Command Reference](deletePipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--delete-related-pipeline-runs', type=click.BOOL, help=u"""A boolean value to specify whether to delete related PipelineRuns or not.""")
+@cli_util.option('--delete-related-job-runs', type=click.BOOL, help=u"""A boolean value to specify whether to delete related jobRuns or not.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, delete_related_pipeline_runs, delete_related_job_runs, if_match):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if delete_related_pipeline_runs is not None:
+        kwargs['delete_related_pipeline_runs'] = delete_related_pipeline_runs
+    if delete_related_job_runs is not None:
+        kwargs['delete_related_job_runs'] = delete_related_job_runs
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_pipeline(
+        pipeline_id=pipeline_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.delete_pipeline_run.command_name', 'delete'), help=u"""Deletes a PipelineRun resource by identifier. \n[Command Reference](deletePipelineRun)""")
+@cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
+@cli_util.option('--delete-related-job-runs', type=click.BOOL, help=u"""A boolean value to specify whether to delete related jobRuns or not.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_run_id, delete_related_job_runs, if_match):
+
+    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if delete_related_job_runs is not None:
+        kwargs['delete_related_job_runs'] = delete_related_job_runs
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_pipeline_run(
+        pipeline_run_id=pipeline_run_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline_run') and callable(getattr(client, 'get_pipeline_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_pipeline_run(pipeline_run_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('data_science.delete_project.command_name', 'delete'), help=u"""Deletes the specified project. This operation fails unless all associated resources (notebook sessions or models) are in a DELETED state. You must delete all associated resources before deleting a project. \n[Command Reference](deleteProject)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -2542,6 +3161,50 @@ def get_notebook_session(ctx, from_json, notebook_session_id):
     cli_util.render_response(result, ctx)
 
 
+@pipeline_group.command(name=cli_util.override('data_science.get_pipeline.command_name', 'get'), help=u"""Gets a Pipeline by identifier. \n[Command Reference](getPipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def get_pipeline(ctx, from_json, pipeline_id):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_pipeline(
+        pipeline_id=pipeline_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.get_pipeline_run.command_name', 'get'), help=u"""Gets a PipelineRun by identifier. \n[Command Reference](getPipelineRun)""")
+@cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
+@cli_util.wrap_exceptions
+def get_pipeline_run(ctx, from_json, pipeline_run_id):
+
+    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_pipeline_run(
+        pipeline_run_id=pipeline_run_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('data_science.get_project.command_name', 'get'), help=u"""Gets the specified project's information. \n[Command Reference](getProject)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2562,6 +3225,59 @@ def get_project(ctx, from_json, project_id):
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.get_step_artifact_content.command_name', 'get-step-artifact-content'), help=u"""Download the artifact for a step in the pipeline. \n[Command Reference](getStepArtifactContent)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--step-name', required=True, help=u"""Unique Step identifier in a pipeline.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233], section 2.1. Note that only a single range of bytes is supported.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_step_artifact_content(ctx, from_json, file, pipeline_id, step_name, range):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+        raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if range is not None:
+        kwargs['range'] = range
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_step_artifact_content(
+        pipeline_id=pipeline_id,
+        step_name=step_name,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @work_request_group.command(name=cli_util.override('data_science.get_work_request.command_name', 'get'), help=u"""Gets the specified work request's information. \n[Command Reference](getWorkRequest)""")
@@ -2625,6 +3341,33 @@ def head_model_artifact(ctx, from_json, model_id):
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.head_model_artifact(
         model_id=model_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.head_step_artifact.command_name', 'head-step-artifact'), help=u"""Get the artifact metadata for a step in the pipeline. \n[Command Reference](headStepArtifact)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--step-name', required=True, help=u"""Unique Step identifier in a pipeline.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_step_artifact(ctx, from_json, pipeline_id, step_name):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+        raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.head_step_artifact(
+        pipeline_id=pipeline_id,
+        step_name=step_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3413,6 +4156,152 @@ def list_notebook_sessions(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@pipeline_run_group.command(name=cli_util.override('data_science.list_pipeline_runs.command_name', 'list'), help=u"""Returns a list of PipelineRuns. \n[Command Reference](listPipelineRuns)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--pipeline-id', help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), help=u"""The current state of the PipelineRun.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeAccepted`, the results are shown in descending order. When you sort by `displayName`, the results are shown in ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[PipelineRunSummary]'})
+@cli_util.wrap_exceptions
+def list_pipeline_runs(ctx, from_json, all_pages, page_size, compartment_id, id, pipeline_id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if pipeline_id is not None:
+        kwargs['pipeline_id'] = pipeline_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipeline_runs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipeline_runs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipeline_runs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.list_pipelines.command_name', 'list'), help=u"""Returns a list of Pipelines. \n[Command Reference](listPipelines)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), help=u"""The current state of the Pipeline.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. When you sort by `displayName`, the results are shown in ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[PipelineSummary]'})
+@cli_util.wrap_exceptions
+def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, project_id, id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipelines,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipelines,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipelines(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('data_science.list_projects.command_name', 'list'), help=u"""Lists projects in the specified compartment. \n[Command Reference](listProjects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
@@ -3532,7 +4421,7 @@ def list_work_request_logs(ctx, from_json, all_pages, work_request_id):
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
 
@@ -4382,6 +5271,269 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_notebook_session(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.update_pipeline.command_name', 'update'), help=u"""Updates the Pipeline. \n[Command Reference](updatePipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description for the resource.""")
+@cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations are allowed to be updated.
+
+This option is a JSON list with items of type PipelineStepUpdateDetails.  For documentation on PipelineStepUpdateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepUpdateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, configuration_details, log_configuration_details, step_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+    if not force:
+        if configuration_details or log_configuration_details or step_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to configuration-details and log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if configuration_details is not None:
+        _details['configurationDetails'] = cli_util.parse_json_parameter("configuration_details", configuration_details)
+
+    if log_configuration_details is not None:
+        _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
+
+    if step_details is not None:
+        _details['stepDetails'] = cli_util.parse_json_parameter("step_details", step_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_pipeline(
+        pipeline_id=pipeline_id,
+        update_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline') and callable(getattr(client, 'get_pipeline')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('data_science.update_pipeline_pipeline_default_configuration_details.command_name', 'update-pipeline-pipeline-default-configuration-details'), help=u"""Updates the Pipeline. \n[Command Reference](updatePipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description for the resource.""")
+@cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations are allowed to be updated.
+
+This option is a JSON list with items of type PipelineStepUpdateDetails.  For documentation on PipelineStepUpdateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepUpdateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--configuration-details-maximum-runtime-in-minutes', type=click.INT, help=u"""A time bound for the execution of the entire Pipeline. Timer starts when the Pipeline Run is in progress.""")
+@cli_util.option('--configuration-details-environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Environment variables to set for steps in the pipeline.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-details-command-line-arguments', help=u"""The command line arguments to set for steps in the pipeline.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, log_configuration_details, step_details, freeform_tags, defined_tags, if_match, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+    if not force:
+        if log_configuration_details or step_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configurationDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_configuration_details is not None:
+        _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
+
+    if step_details is not None:
+        _details['stepDetails'] = cli_util.parse_json_parameter("step_details", step_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if configuration_details_maximum_runtime_in_minutes is not None:
+        _details['configurationDetails']['maximumRuntimeInMinutes'] = configuration_details_maximum_runtime_in_minutes
+
+    if configuration_details_environment_variables is not None:
+        _details['configurationDetails']['environmentVariables'] = cli_util.parse_json_parameter("configuration_details_environment_variables", configuration_details_environment_variables)
+
+    if configuration_details_command_line_arguments is not None:
+        _details['configurationDetails']['commandLineArguments'] = configuration_details_command_line_arguments
+
+    _details['configurationDetails']['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_pipeline(
+        pipeline_id=pipeline_id,
+        update_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline') and callable(getattr(client, 'get_pipeline')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_run_group.command(name=cli_util.override('data_science.update_pipeline_run.command_name', 'update'), help=u"""Updates the PipelineRun. \n[Command Reference](updatePipelineRun)""")
+@cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
+@cli_util.option('--display-name', help=u"""Name of the pipeline run.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
+@cli_util.wrap_exceptions
+def update_pipeline_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_run_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_pipeline_run(
+        pipeline_run_id=pipeline_run_id,
+        update_pipeline_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pipeline_run') and callable(getattr(client, 'get_pipeline_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pipeline_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

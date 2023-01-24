@@ -36,6 +36,7 @@ cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detec
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_language_key_phrases_group, aiservicelanguage_cli.batch_detect_language_key_phrases, "batch-detect-key-phrases")
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_language_sentiments_group, aiservicelanguage_cli.batch_detect_language_sentiments, "batch-detect-sentiments")
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_language_text_classification_group, aiservicelanguage_cli.batch_detect_language_text_classification, "batch-detect-text-classification")
+cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.batch_detect_language_pii_entities_group, aiservicelanguage_cli.batch_detect_language_pii_entities, "batch-detect-pii-entities")
 
 # Single Documents APIs
 cli_util.rename_command(aiservicelanguage_cli, aiservicelanguage_cli.detect_dominant_language_group, aiservicelanguage_cli.detect_dominant_language, "detect-language")
@@ -50,6 +51,7 @@ aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.batch_det
 aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.batch_detect_language_key_phrases_group.name)
 aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.batch_detect_language_sentiments_group.name)
 aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.batch_detect_language_text_classification_group.name)
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.batch_detect_language_pii_entities_group.name)
 
 # Single Documents APIs
 aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.detect_dominant_language_group.name)
@@ -65,6 +67,7 @@ language_group.add_command(aiservicelanguage_cli.batch_detect_language_entities)
 language_group.add_command(aiservicelanguage_cli.batch_detect_language_key_phrases)
 language_group.add_command(aiservicelanguage_cli.batch_detect_language_sentiments)
 language_group.add_command(aiservicelanguage_cli.batch_detect_language_text_classification)
+language_group.add_command(aiservicelanguage_cli.batch_detect_language_pii_entities)
 
 # Single Documents APIs
 aiservicelanguage_cli.ai_root_group.add_command(language_group)

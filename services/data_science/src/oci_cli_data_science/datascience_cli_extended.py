@@ -226,6 +226,205 @@ def update_job_extended(ctx, **kwargs):
     ctx.invoke(datascience_cli.update_job, **kwargs)
 
 
+# Overrides the rendering behavior to include all heads in the head step artifact response
+@cli_util.copy_params_from_generated_command(datascience_cli.head_step_artifact, params_to_exclude=[])
+@datascience_cli.pipeline_group.command(name=cli_util.override('head_step_artifact.command_name', 'head-step-artifact'), help=datascience_cli.head_step_artifact.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_step_artifact(ctx, from_json, pipeline_id, step_name):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+        raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.head_step_artifact(
+        pipeline_id=pipeline_id,
+        step_name=step_name,
+        **kwargs
+    )
+    cli_util.render(result.data, result.headers, ctx, display_all_headers=True)
+
+
+# updates the command to use the new option and open the resource prior to sending to the sdk
+@cli_util.copy_params_from_generated_command(datascience_cli.create_step_artifact, params_to_exclude=['step_artifact', 'content_disposition'])
+@datascience_cli.pipeline_group.command(name=cli_util.override('create_step_artifact.command_name', 'create-step-artifact'), help=datascience_cli.create_step_artifact.help)
+@cli_util.option('--step-artifact', required=True, help=u"""The step artifact to upload.""")
+@cli_util.option('--content-disposition', help=u"""This header is for specifying a filename during upload. It is used to identify the file type and validate if the file type is supported. Example: `--content-disposition "attachment; filename=hello-world.py"`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_step_artifact_extended(ctx, pipeline_id, step_name, from_json, **kwargs):
+
+    step_artifact = kwargs['step_artifact']
+    del kwargs['step_artifact']
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+        raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
+
+    with open(step_artifact, 'rb') as file:
+        kwargs['pipeline_id'] = pipeline_id
+        kwargs['step_artifact'] = file
+        kwargs['step_name'] = step_name
+        ctx.invoke(datascience_cli.create_step_artifact, **kwargs)
+
+
+# Overrides list pipelines to set compartment id as optional when resource id is provided
+@datascience_cli.pipeline_group.command(name=cli_util.override('data_science.list_pipelines.command_name', 'list'), help=u"""Returns a list of Pipelines. \n[Command Reference](listPipelines)""")
+@cli_util.option('--compartment-id', help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), help=u"""The current state of the Pipeline.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. When you sort by `displayName`, the results are shown in ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[PipelineSummary]'})
+@cli_util.wrap_exceptions
+def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, project_id, id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipelines,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipelines,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipelines(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+# Overrides list pipeline runs to set compartment id as optional when resource id is provided
+@datascience_cli.pipeline_run_group.command(name=cli_util.override('data_science.list_pipeline_runs.command_name', 'list'), help=u"""Returns a list of PipelineRuns. \n[Command Reference](listPipelineRuns)""")
+@cli_util.option('--compartment-id', help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--pipeline-id', help=u"""The [OCID] of the pipeline.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), help=u"""The current state of the PipelineRun.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeAccepted`, the results are shown in descending order. When you sort by `displayName`, the results are shown in ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[PipelineRunSummary]'})
+@cli_util.wrap_exceptions
+def list_pipeline_runs(ctx, from_json, all_pages, page_size, compartment_id, id, pipeline_id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if pipeline_id is not None:
+        kwargs['pipeline_id'] = pipeline_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipeline_runs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipeline_runs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipeline_runs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 # Remove create-model-deployment-single-model-deployment-configuration-details from oci data-science model-deployment
 datascience_cli.model_deployment_group.commands.pop(datascience_cli.create_model_deployment_single_model_deployment_configuration_details.name)
 
@@ -260,3 +459,15 @@ datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_defaul
 
 # oci data-science job get-job-artifact-content -> oci data-science job get-artifact-content
 cli_util.rename_command(datascience_cli, datascience_cli.job_group, datascience_cli.get_job_artifact_content, "get-artifact-content")
+
+
+# Remove create-pipeline-pipeline-default-configuration-details from oci data-science pipeline
+datascience_cli.pipeline_group.commands.pop(datascience_cli.create_pipeline_pipeline_default_configuration_details.name)
+
+
+# Remove update-pipeline-pipeline-default-configuration-details from oci data-science pipeline
+datascience_cli.pipeline_group.commands.pop(datascience_cli.update_pipeline_pipeline_default_configuration_details.name)
+
+
+# Remove create-pipeline-run-pipeline-default-configuration-details from oci data-science pipeline-run
+datascience_cli.pipeline_run_group.commands.pop(datascience_cli.create_pipeline_run_pipeline_default_configuration_details.name)

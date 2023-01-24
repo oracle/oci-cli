@@ -193,7 +193,7 @@ def test_create_update_bucket_and_put_object():
 def test_create_with_complex_param_in_json(network_resources):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_create_with_complex_param_in_json.yml'):
         input_file_path = os.path.join(INPUT_FILE_FOLDER, 'create-security-list.json')
-        with(open(input_file_path, 'w')) as f:
+        with (open(input_file_path, 'w')) as f:
             f.write(CREATE_SECURITY_LIST_TEMPLATE.format(util.COMPARTMENT_ID, network_resources[0]))
 
         result = invoke(['network', 'security-list', 'create', '--from-json', 'file://{}'.format(input_file_path)])

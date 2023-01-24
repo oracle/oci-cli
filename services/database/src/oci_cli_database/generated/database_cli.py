@@ -2360,6 +2360,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DATABASE", "BACKUP_FROM_ID", "BACKUP_FROM_TIMESTAMP", "CLONE_TO_REFRESHABLE", "CROSS_REGION_DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new Autonomous Database. Use `DATABASE` for creating a new Autonomous Database by cloning an existing Autonomous Database. Use `CROSS_REGION_DATAGUARD` to create a standby Data Guard database in another region.
 
@@ -2383,7 +2384,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, source, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
+def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, source, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2477,6 +2478,9 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -2603,6 +2607,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
@@ -2623,7 +2628,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, clone_type, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
+def create_autonomous_database_create_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, clone_type, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2719,6 +2724,9 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -2843,6 +2851,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
@@ -2864,7 +2873,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, refreshable_mode):
+def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, refreshable_mode):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2959,6 +2968,9 @@ def create_autonomous_database_create_refreshable_autonomous_database_clone_deta
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -3087,6 +3099,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
@@ -3107,7 +3120,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_backup_id, clone_type, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
+def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_backup_id, clone_type, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3203,6 +3216,9 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -3328,6 +3344,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
@@ -3350,7 +3367,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_id, clone_type, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, timestamp, use_latest_available_backup_time_stamp):
+def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_id, clone_type, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, timestamp, use_latest_available_backup_time_stamp):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3446,6 +3463,9 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -3576,6 +3596,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
@@ -3596,7 +3617,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
+def create_autonomous_database_create_cross_region_autonomous_database_data_guard_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3691,6 +3712,9 @@ def create_autonomous_database_create_cross_region_autonomous_database_data_guar
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -3814,6 +3838,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version for Autonomous Database.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
 
@@ -3834,7 +3859,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
+def create_autonomous_database_create_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, character_set, ncharacter_set, db_name, cpu_core_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3928,6 +3953,9 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -17867,6 +17895,7 @@ To create or delete a local (in-region) standby, see the `isDataGuardEnabled` pa
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
 @cli_util.option('--private-endpoint-label', help=u"""The private endpoint label for the resource. Setting this to an empty string, after the private endpoint database gets created, will change the same private endpoint database to the public endpoint database.""")
+@cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts. Setting this to an empty list removes all customer contacts of an Oracle Autonomous Database.
 
@@ -17888,7 +17917,7 @@ This option is a JSON list with items of type ScheduledOperationDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, db_workload, license_model, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, nsg_ids, customer_contacts, is_mtls_connection_required, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, if_match):
+def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, db_workload, license_model, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, customer_contacts, is_mtls_connection_required, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, if_match):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -17984,6 +18013,9 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
     if private_endpoint_label is not None:
         _details['privateEndpointLabel'] = private_endpoint_label
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)

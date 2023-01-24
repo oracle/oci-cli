@@ -16,4 +16,3 @@ organizations_service_cli.organizations_service_group.add_command(workrequest_cl
 organizations_service_cli.organizations_service_group.add_command(workrequest_cli.work_request_log_entry_group)
 
 cli_util.rename_command(organizations_service_cli, workrequest_cli.work_request_log_entry_group, workrequest_cli.list_work_request_logs, "list")
-cli_util.rename_command(organizations_service_cli, organizations_service_cli.organizations_service_group, workrequest_cli.work_request_log_entry_group, 'work-request-log-entry')

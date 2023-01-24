@@ -38,11 +38,11 @@ def create_auto_scaling_policy_extended(ctx, **kwargs):
             raise click.UsageError('If Parameter --policy-type is scheduled, then Parameter --execution-schedule must be provided')
         else:
             # Since autoscaling_cli.create_auto_scaling_policy_create_scheduled_policy_details doesn't expect the parameter policy_type
-            del(kwargs['policy_type'])
+            del (kwargs['policy_type'])
             ctx.invoke(autoscaling_cli.create_auto_scaling_policy_create_scheduled_policy_details, **kwargs)
     else:
         # Since autoscaling_cli.create_auto_scaling_policy doesn't expect the parameter execution_schedule
-        del(kwargs['execution_schedule'])
+        del (kwargs['execution_schedule'])
         ctx.invoke(autoscaling_cli.create_auto_scaling_policy, **kwargs)
 
 
@@ -58,9 +58,9 @@ def update_auto_scaling_policy_extended(ctx, **kwargs):
             raise click.UsageError('If Parameter --policy-type is scheduled, then Parameter --execution-schedule must be provided')
         else:
             # Since autoscaling_cli.update_auto_scaling_policy_update_scheduled_policy_details doesn't expect the parameter policy_type
-            del(kwargs['policy_type'])
+            del (kwargs['policy_type'])
             ctx.invoke(autoscaling_cli.update_auto_scaling_policy_update_scheduled_policy_details, **kwargs)
     else:
         # Since autoscaling_cli.update_auto_scaling_policy doesn't expect the parameter execution_schedule
-        del(kwargs['execution_schedule'])
+        del (kwargs['execution_schedule'])
         ctx.invoke(autoscaling_cli.update_auto_scaling_policy, **kwargs)

@@ -129,7 +129,7 @@ def restore_from_file(ctx, **kwargs):
     file = kwargs['restore_key_from_file_location']
 
     # Since the generated function expects the parameter name to be restore_key_from_file_details
-    del(kwargs['restore_key_from_file_location'])
+    del (kwargs['restore_key_from_file_location'])
     try:
         with open(file, 'r') as myfile:
             data = myfile.read()
