@@ -9,6 +9,8 @@ except Exception as e:
 
 import six
 
+from datetime import datetime, timezone
+
 from oci import exceptions
 from oci.response import Response
 from oci.request import Request
@@ -79,12 +81,18 @@ class BaseClient(object):
             enforce_content_headers=enforce_content_headers
         )
         if not 200 <= response.status <= 299:
+            request_endpoint = request.method + " " + request.url
+            timestamp = datetime.now(timezone.utc).isoformat()
             raise exceptions.ServiceError(
                 response.status,
                 None,
                 response.headers,
                 str(response.data),
-                original_request=request)
+                original_request=request,
+                target_service=self.service,
+                request_endpoint=request_endpoint,
+                client_version="null",
+                timestamp=timestamp)
 
         data = response.data
         try:

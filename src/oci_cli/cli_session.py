@@ -208,11 +208,10 @@ The session exported is the active profile (specified either by defaults or the 
 @click.pass_context
 @cli_util.wrap_exceptions
 def export(ctx, output_file, force):
-    config_file = ctx.obj['config_file']
+    config_file = os.path.expanduser(ctx.obj['config_file'])
     profile = ctx.obj['profile']
 
     config = configparser.ConfigParser()
-    config_file = os.path.expanduser(config_file)
     config.read(config_file)
     profile_to_export = {key: value for key, value in config[profile].items()}
 
@@ -257,7 +256,7 @@ def import_session(ctx, session_archive, force):
         click.echo('File {} does not exist.'.format(session_archive), file=sys.stderr)
         sys.exit(1)
 
-    config_file = ctx.obj['config_file']
+    config_file = os.path.expanduser(ctx.obj['config_file'])
     profile = ctx.obj['profile']
 
     config = configparser.ConfigParser()

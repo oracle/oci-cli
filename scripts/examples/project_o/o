@@ -20,8 +20,8 @@ import os
 import fcntl
 import errno
 import datetime
-VERSION = "1.3"
-UPDATED = "2023-01-04"
+VERSION = "1.4"
+UPDATED = "2023-01-20"
 
 # ==============================================================================
 # Global variables
@@ -53,7 +53,8 @@ default_out_spec = 'name{:.30}#shape#cidr-block#prohibit-public{:5.5}' \
     '#direction#destination' \
     '#ip-address#public-ip#private-ip' \
     '#vnic-id#desc{:.40}' \
-    '#access-uri#storage-tier'
+    '#access-uri#storage-tier' \
+    '#token'
 
 matches = []                   # list of commands that match user input
 best_match = None              # matches[best_match] is the closest match
@@ -860,6 +861,9 @@ def get_matching_ocid(option, value):
             opt_type = 'rovernode'
         elif opt_type == 'authtoken':
             opt_type = 'credential'
+        elif opt_type == 'zonenameor':
+            opt_type = 'dns-zone'
+        # print('HERE opt_type', opt_type)
 
     matches = [item for k, item in ocid.items() if
                type_match(opt_type, item['type'])
@@ -941,14 +945,30 @@ def value_parameter(option, value):
         return datetime_parameter(value)
 
     # Special help with log-search --search-query "search comp1 comp2 | ..."
-    # Substitute compartment ocid for one or more values.
+    # Substitute "ocid1.compartment..." for one or more values.
     if option == '--search-query':
         m = re.search(r'search ([^|]+)', value)
         if m:
-            for v in m.group(1).split():
-                o = get_matching_ocid('compartment', v)
-                if o != v:
-                    value = re.sub(v, '"' + o + '"', value)
+            for comp in m.group(1).split():
+                c = comp
+                if c.startswith('"'):
+                    c = comp[1:-1]
+                o = get_matching_ocid('compartment', c)
+                if o != c:
+                    value = re.sub(comp, '"' + o + '"', value)
+
+    # Special help with structured-search --search-query "where compartmentId = ocid"
+    if option == '--query-text':
+        match = re.findall(r"(c\w*) *= *('*\w+'*)", value, flags=re.IGNORECASE)
+        for (m, spec) in match:
+            if m.lower() == 'compartmentid'[:len(m)]:
+                if m.lower() != 'compartmentid':
+                    value = re.sub(r'\b' + m + r'\b', 'compartmentId', value)
+            if spec.startswith("'"):
+                spec = spec[1:-1]
+            o = get_matching_ocid('compartment', spec)
+            if o != spec:
+                value = re.sub(spec, "'" + o + "'", value)
 
     return value
 
@@ -1003,9 +1023,13 @@ def get_fields_from(spec, keynames):
         s, fmt = sf, '{}'
         if s == '.':
             s = ''
-        m = re.search('(.*)({.*})', s)
+        m = re.search('([^:{]+)(.*)', s)
         if m:
             s, fmt = m.group(1), m.group(2)
+            if not fmt.startswith('{'):
+                fmt = '{' + fmt + '}'
+            if fmt.startswith('{:r') or fmt.startswith('{:-'):
+                fmt = '{:>' + fmt[3:]
         if s in sorted(keynames):               # exact keyname match
             fields.append(s)
             column[s] = {'format': fmt, 'offset': 0, 'minwidth': len(s)}
@@ -1017,26 +1041,25 @@ def get_fields_from(spec, keynames):
                 if (user_out_spec == default_out_spec and (
                         k == 'quota-names'
                         or s == 'size' and 'resize' in k
-                        or s == 'id' and 'bandwidth' in k)):
+                        or s == 'id' and 'bandwidth' in k
+                        or s == 'id' and 'identity' in k)):
                     continue
                 kf = k.split('.')
                 # sub-key partial matches must partial-match: key.subkey
                 if ((k not in fields)
-                        and ((s in k and '.' not in k)
+                        and ((s.lower() in k.lower() and '.' not in k)
                              or ('.' in s and '.' in k
-                                 and (sf[-1] in kf[-1])
-                                 and (sf[-2] in kf[-2])))):
+                                 and (sf[-1].lower() in kf[-1].lower())
+                                 and (sf[-2].lower() in kf[-2].lower())))):
                     fields.append(k)
                     column[k] = {'format': fmt, 'offset': 0, 'minwidth': len(s)}
                     if debug: print('{:>30.30}'.format(s), '->', k)    # noqa: E701
-                    # Partial match at top level key skips lower level matches.
-                    # if s and '.' not in k or k.endswith('.'+s):
-                    #     break
 
     if len(fields) == 0:
         if user_out_spec != default_out_spec:
             print(bold("no matching output fields: " + spec), file=sys.stderr)
         return get_fields_from("/", keynames)
+    if debug: print("COLUMN:", column)     # noqa: E701
     return fields, sep
 
 # ==============================================================================
@@ -1087,8 +1110,12 @@ def show_column_headers(out_fields, sep):
     if sep == '|':
         for k in out_fields:
             # print(bold(column[k]['format'].format(k)), end=' ', file=sys.stderr)
-            print(bold(column[k]['format'].format(k.split(".")[-1])),
-                  end=' ', file=sys.stderr)
+            try:
+                print(bold(column[k]['format'].format(k.split(".")[-1])),
+                      end=' ', file=sys.stderr)
+            except ValueError:
+                print(bold("bad format: " + k + column[k]['format']))
+                column[k]['format'] = '{}'
         print('', file=sys.stderr)
     elif sep != '/':
         if sep == ',':
@@ -1099,13 +1126,27 @@ def show_column_headers(out_fields, sep):
 # ==============================================================================
 
 
+def jdump_item(item):
+    """Remove json decorations, empty lines from json.dumps output"""
+
+    return (re.sub(r'(?m)"\s*$|( *)"', r'\1',         # remove outer double-quotes
+            # remove closing braces and trailing newline
+            re.sub(r'(?m)[\[\]{},]+$', '',            # noqa: E128
+            # noqa: E128 remove braces at beginning of lines, empty lines
+            re.sub(r'(?m)^[\s{}[\],]+\n', '',         # noqa: E128
+            # noqa: E128 change  key: [ value ] ->  key: value
+            re.sub(r': \[\s+("[^"]*")\s+]', r': \1',  # noqa: E128
+            json.dumps(item, indent=2))))))           # noqa: E128
+
+# ==============================================================================
+
+
 def show_item(item, fields, sep):
     """Report result in user specified -o format."""
 
     out = []
     for field in fields:
         value = ''
-        # print(json.dumps(item[f[0]][f[1]], indent=4))
         if field in item:
             value = str(item[field])
         else:
@@ -1113,21 +1154,17 @@ def show_item(item, fields, sep):
             f = field.split('.')
             if len(f) > 1:
                 if f[-1] in item[f[0]]:
-                    # remove json decorations, remove empty lines
-                    value = re.sub(r'[{}\'"[\]]', '',
-                                   re.sub(r'(?m)^[ {},[\]]+\n', '',
-                                          json.dumps(item[f[0]][f[1]], indent=4)))
+                    value = jdump_item(item[f[0]][f[1]])
                 else:
                     if type(item[f[0]]) is list:
-                        subitem = item[f[0]]
+                        subitem = jdump_item(item[f[0]])
                     else:
                         subitem = item[f[0]][f[1]] if f[1] in item[f[0]] else None
+                    if type(subitem) is dict and f[-1] in subitem:
+                        value = jdump_item(subitem[f[-1]])
                     if type(subitem) is list and f[-1] in subitem[0]:
-                        # remove json decorations, remove empty lines
                         s = ['    ' + v[f[-1]] for v in subitem if f[-1] in v]
-                        value = re.sub(r'[{}\'"[\]]', '',
-                                       re.sub(r'(?m)^[ {},[\]]+\n?', '',
-                                              json.dumps(s, indent=4)))
+                        value = jdump_item(s)
 
         if field not in ('id', 'identifier') and value in ocid and not ocids_in_output:
             value = ocid[value]['alias']
@@ -1136,10 +1173,7 @@ def show_item(item, fields, sep):
 
         if column[field]['format'] == '{}' and sep != '|':
             if field in item:
-                out.append(re.sub(r'[{}\'"[\]]', '',
-                                  # re.sub(r'(?m)^[ {},[\]]+\n?', '',
-                                  re.sub(r'(?m)^[ {},[\]]+\n', '',
-                                         json.dumps(item[field], indent=4))))
+                out.append(jdump_item(item[field]))
             else:
                 out.append(value)
         else:
@@ -1152,22 +1186,20 @@ def show_item(item, fields, sep):
         for k, value in zip(fields, out):
             # Wrap long lines
             if k == 'access-uri':
-                print(column['keyfmt'].format(k), ' ', value)
+                print(column['keyfmt'].format(k) + '  ' + value)
+            elif '\n' in value:
+                # value = re.sub(r'(,){0,1}\n ', '\n' + ' ' * (maxkeylen + 3), value)
+                value = re.sub(r'\n ', '\n' + ' ' * (maxkeylen + 3), value)
+                value = re.sub(r'$\n', '', value)
+                value = re.sub(r'^  ', '', re.sub('\n  ', '\n', value))
+                print(column['keyfmt'].format(k) + '  ' + value)
             else:
-                # print(value)
-                if '\n' in value:
-                    # value = re.sub(r'(,){0,1}\n', '\n' + ' ' * (maxkeylen + 3), value) #.strip()
-                    value = re.sub(r'(,){0,1}\n ', '\n ' + ' ' * (maxkeylen + 3), value)
-                    value = re.sub(r'$\n', '', value)
-                    value = re.sub(r'^    ', '', re.sub('\n    ', '\n', value))
-                    print(column['keyfmt'].format(k), ' ', value)
-                else:
-                    print(column['keyfmt'].format(k), ' ',
-                          textwrap.fill(value,
-                                        subsequent_indent=indent,
-                                        break_on_hyphens=True,
-                                        break_long_words=True,
-                                        width=wrap - maxkeylen - 3))
+                print(column['keyfmt'].format(k) + '  '
+                      + textwrap.fill(value,
+                                      subsequent_indent=indent,
+                                      break_on_hyphens=True,
+                                      break_long_words=True,
+                                      width=wrap - maxkeylen - 3))
         if len(fields) > 1:
             print('')
 
@@ -1215,10 +1247,17 @@ def output(jsonOut):
         if type(jsonOut['data']) is list:
             results = jsonOut['data']
         elif type(jsonOut['data']) is dict:
-            if 'items' in jsonOut['data'] and type(jsonOut['data']['items']) is list:
-                results = jsonOut['data']['items']
-            else:
-                results = [jsonOut['data']]
+            try:
+                if 'items' in jsonOut['data'] and type(jsonOut['data']['items']) is list:
+                    results = jsonOut['data']['items']
+                # logging-search search-logs results:
+                elif 'results' in jsonOut['data'] and type(jsonOut['data']['results']) is list\
+                        and 'logContent' in jsonOut['data']['results'][0]['data']:
+                    results = [i['data']['logContent']['data'] for i in jsonOut['data']['results']]
+                else:
+                    results = [jsonOut['data']]
+            except (KeyError, IndexError):
+                results = [jsonOut]
         else:
             results = [jsonOut]  # sloppy
 
@@ -1523,6 +1562,8 @@ def prune(argv):
             n += prune_this(i)
         if item['id'] in ocid:
             del ocid[item['id']]
+        elif item['type'] == 'availabilitydomain' and item['name'] in ocid:
+            del ocid[item['name']]
         return n + 1
 
     # ==========================================================================
@@ -1972,10 +2013,17 @@ except subprocess.SubprocessError as err:
 
 flags = fcntl.fcntl(cli.stdout, fcntl.F_GETFL)
 fcntl.fcntl(cli.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+flags = fcntl.fcntl(cli.stderr, fcntl.F_GETFL)
+fcntl.fcntl(cli.stderr, fcntl.F_SETFL, flags | os.O_NONBLOCK)
 
 # Read output from cli - show non-JSON on stdout
 JSONstdout = ''
 while True:
+    stderr = cli.stderr.readline()
+    returncode = cli.poll()
+    if stderr:
+        print(bold(stderr), end='', flush=True)
+
     stdout = cli.stdout.readline()
     returncode = cli.poll()
     if stdout == '' and returncode is not None:
