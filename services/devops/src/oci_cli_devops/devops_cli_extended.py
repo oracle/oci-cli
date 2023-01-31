@@ -67,7 +67,7 @@ devops_cli.deployment_group.commands.pop(devops_cli.create_deployment_create_sin
 @cli_util.copy_params_from_generated_command(devops_cli.update_deploy_artifact, params_to_exclude=['deploy_artifact_id', 'deploy_artifact_type', 'deploy_artifact_source'])
 @devops_cli.deploy_artifact_group.command(name=cli_util.override('deploy_artifact.update_deploy_artifact.command_name', 'update'), help=devops_cli.update_deploy_artifact.help)
 @cli_util.option('--artifact-id', required=True, help=u"""unique Artifact identifier""")
-@cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
+@cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["COMMAND_SPEC", "DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-parameters': {'module': 'devops', 'class': 'DeployArtifactParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
 @cli_util.wrap_exceptions
@@ -86,7 +86,7 @@ def update_deploy_artifact_extended(ctx, **kwargs):
 @cli_util.option('--repository-id', required=True, help=u"""Specifies the repository id""")
 @cli_util.option('--artifact-path', required=True, help=u"""Specifies the artifact path in the repository""")
 @cli_util.option('--artifact-version', required=True, help=u"""Users should be able to set this as a pipeline parameter for example ${appVersion}""")
-@cli_util.option('--artifact-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
+@cli_util.option('--artifact-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMAND_SPEC", "DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-parameters': {'module': 'devops', 'class': 'DeployArtifactParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
 @cli_util.wrap_exceptions
@@ -108,7 +108,7 @@ def create_deploy_artifact_generic_deploy_artifact_source_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(devops_cli.create_deploy_artifact_inline_deploy_artifact_source, params_to_exclude=['deploy_artifact_source_base64_encoded_content', 'deploy_artifact_type'])
 @devops_cli.deploy_artifact_group.command(name=cli_util.override('deploy_artifact.create_deploy_artifact_inline_deploy_artifact_source.command_name', 'create-inline-artifact'), help=devops_cli.create_deploy_artifact_inline_deploy_artifact_source.help)
-@cli_util.option('--artifact-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
+@cli_util.option('--artifact-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMAND_SPEC", "DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
 @cli_util.option('--base64-encoded-content', required=True, help=u"""base64 Encoded String""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-parameters': {'module': 'devops', 'class': 'DeployArtifactParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
@@ -150,7 +150,7 @@ def create_deploy_artifact_ocir_deploy_artifact_source_extended(ctx, **kwargs):
 @cli_util.option('--repository-id', help=u"""Specifies the repository id""")
 @cli_util.option('--artifact-path', help=u"""Specifies the artifact path in the repository""")
 @cli_util.option('--artifact-version', help=u"""Users should be able to set this as a pipeline parameter for example ${appVersion}""")
-@cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
+@cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["COMMAND_SPEC", "DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-parameters': {'module': 'devops', 'class': 'DeployArtifactParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
 @cli_util.wrap_exceptions
@@ -177,7 +177,7 @@ def update_deploy_artifact_generic_deploy_artifact_source_extended(ctx, **kwargs
 @devops_cli.deploy_artifact_group.command(name=cli_util.override('deploy_artifact.update_deploy_artifact_inline_deploy_artifact_source.command_name', 'update-inline-artifact'), help=devops_cli.update_deploy_artifact_inline_deploy_artifact_source.help)
 @cli_util.option('--artifact-id', required=True, help=u"""unique Artifact identifier""")
 @cli_util.option('--base64-encoded-content', help=u"""base64 Encoded String""")
-@cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
+@cli_util.option('--artifact-type', type=custom_types.CliCaseInsensitiveChoice(["COMMAND_SPEC", "DEPLOYMENT_SPEC", "JOB_SPEC", "KUBERNETES_MANIFEST", "GENERIC_FILE", "DOCKER_IMAGE"]), help=u"""Type of the DeployArtifact""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'artifact-parameters': {'module': 'devops', 'class': 'DeployArtifactParameterCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
 @cli_util.wrap_exceptions
@@ -974,3 +974,59 @@ cli_util.rename_command(devops_cli, devops_cli.project_group, devops_cli.cancel_
 
 # oci devops project schedule-cascading-project-deletion -> oci devops project schedule-cascading-delete
 cli_util.rename_command(devops_cli, devops_cli.project_group, devops_cli.schedule_cascading_project_deletion, "schedule-cascading-delete")
+
+# oci devops deploy-stage create-deploy-stage-create-shell-deploy-stage-details -> oci devops deploy-stage create-shell-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_shell_deploy_stage_details, "create-shell-stage")
+
+# oci devops deploy-stage update-deploy-stage-update-shell-deploy-stage-details -> oci devops deploy-stage update-shell-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_shell_deploy_stage_details, "update-shell-stage")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_shell_deploy_stage_details, params_to_exclude=['command_spec_deploy_artifact_id', 'deploy_stage_predecessor_collection', 'deploy_pipeline_id'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_shell_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_shell_deploy_stage_details.help)
+@cli_util.option('--command-spec-artifact-id', required=True, help=u"""The OCID of the artifact that contains the command specification. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'container-config': {'module': 'devops', 'class': 'ContainerConfig'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_shell_deploy_stage_details_extended(ctx, **kwargs):
+
+    if 'command_spec_artifact_id' in kwargs:
+        kwargs['command_spec_deploy_artifact_id'] = kwargs['command_spec_artifact_id']
+        kwargs.pop('command_spec_artifact_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_shell_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_shell_deploy_stage_details, params_to_exclude=['command_spec_deploy_artifact_id', 'deploy_stage_id', 'deploy_stage_predecessor_collection'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_shell_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_shell_deploy_stage_details.help)
+@cli_util.option('--command-spec-artifact-id', help=u"""The OCID of the artifact that contains the command specification.""")
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'container-config': {'module': 'devops', 'class': 'ContainerConfig'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_shell_deploy_stage_details_extended(ctx, **kwargs):
+
+    if 'command_spec_artifact_id' in kwargs:
+        kwargs['command_spec_deploy_artifact_id'] = kwargs['command_spec_artifact_id']
+        kwargs.pop('command_spec_artifact_id')
+
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_shell_deploy_stage_details, **kwargs)

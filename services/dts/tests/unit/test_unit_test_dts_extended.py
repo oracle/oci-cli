@@ -25,6 +25,7 @@ import unittest
 
 from oci.dts.models import UpdateApplianceExportJobDetails, TransferJob, TransferAppliance
 
+from services.dts.src.oci_cli_dts.appliance_config import ApplianceConfig
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_STATE_NOT_LOCKED, APPLIANCE_STATE_LOCKED, \
     APPLIANCE_STATUS_NA
 from services.dts.src.oci_cli_transfer_job.transferjob_cli_extended import show_transfer_job_with_details, \
@@ -725,3 +726,17 @@ class UnitTestDTS(unittest.TestCase):
         with pytest.raises(oci.exceptions.ClientError):
             validate_bucket_belongs_to_compartment(ctx=mock_context, bucket="test-bucket", compartment_id="compartment-id")
         assert validate_bucket_belongs_to_compartment(ctx=mock_context, bucket="test-bucket", compartment_id="test-compartment-id") is None
+
+    @mock.patch('services.dts.src.oci_cli_dts.base_client.PoolManager.request')
+    @mock.patch('services.dts.src.oci_cli_dts.nfs_dataset_client_proxy.ApplianceConfigManager.get_config')
+    def test_that_failed_requests_raise_a_service_exception(self, mock_appliance_config_manager_get_config, mock_pool_manager_request):
+        # Mocking the response when trying to deactivate an already deactivated dataset
+        error_message = "Deactivate on dataset, e2e_ds1, not allowed in current state, INACTIVE"
+        mock_pool_manager_request.return_value = Response(400, {}, error_message, Request("mock.method", "mock.url"))
+        mock_appliance_config_manager_get_config.return_value = ApplianceConfig("mock.appliance_url", "mock.access_token", "mock.serial_id")
+
+        args_list = ['dts', 'nfs-dataset', 'deactivate', '--name', 'e2e_ds1']
+        result = util.invoke_command(args_list)
+
+        assert (isinstance(result.exception, SystemExit))
+        assert "ServiceError" in result.exception.__str__() and error_message in result.exception.__str__()

@@ -4023,6 +4023,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
@@ -4038,7 +4039,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
 
     kwargs = {}
 
@@ -4119,6 +4120,9 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     if platform_config_numa_nodes_per_socket is not None:
         _details['platformConfig']['numaNodesPerSocket'] = platform_config_numa_nodes_per_socket
@@ -4266,6 +4270,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
@@ -4284,7 +4289,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -4365,6 +4370,9 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     if platform_config_numa_nodes_per_socket is not None:
         _details['platformConfig']['numaNodesPerSocket'] = platform_config_numa_nodes_per_socket
@@ -4515,6 +4523,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS1", "NPS2"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
@@ -4531,7 +4540,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -4612,6 +4621,9 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     if platform_config_numa_nodes_per_socket is not None:
         _details['platformConfig']['numaNodesPerSocket'] = platform_config_numa_nodes_per_socket
@@ -4756,6 +4768,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4764,7 +4777,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled):
+def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -4845,6 +4858,9 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     _details['platformConfig']['type'] = 'AMD_VM'
 
@@ -4977,6 +4993,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4985,7 +5002,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled):
+def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5066,6 +5083,9 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     _details['platformConfig']['type'] = 'INTEL_VM'
 
@@ -5198,6 +5218,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5206,7 +5227,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled):
+def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5287,6 +5308,9 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     _details['platformConfig']['type'] = 'INTEL_SKYLAKE_BM'
 
@@ -5419,6 +5443,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
 @cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
@@ -5437,7 +5462,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -5518,6 +5543,9 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
 
     if platform_config_is_measured_boot_enabled is not None:
         _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
 
     if platform_config_numa_nodes_per_socket is not None:
         _details['platformConfig']['numaNodesPerSocket'] = platform_config_numa_nodes_per_socket

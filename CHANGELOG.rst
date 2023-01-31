@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.22.4 - 2023-01-31
+--------------------
+Added
+~~~~~
+
+* Support for new optional parameters for ExaCC, vault secret, and tool details in the Database service
+
+  * ``oci db autonomous-database create --compute-count --compute-model --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details --compute-count --compute-model --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-database create-from-backup-id --compute-count --compute-model --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-database create-from-backup-timestamp --compute-count --compute-model --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-database create-from-clone --compute-count --compute-model --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-database create-refreshable-clone --compute-count --compute-model --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-database update --compute-count --secret-id --secret-version-number --db-tools-details``
+  * ``oci db autonomous-vm-cluster create --compute-model``
+  * ``oci db cloud-autonomous-vm-cluster create --compute-model``
+
+* Support for new optional parameters enabling role-based access control in the Opensearch service
+
+  * ``oci opensearch cluster create --security-mode --security-master-user-name --security-master-user-password-hash``
+  * ``oci opensearch cluster update --security-mode --security-master-user-name --security-master-user-password-hash``
+
+* Devops service
+
+  * Support for new commands
+
+    * ``oci devops deploy-stage create-shell-stage``
+    * ``oci devops deploy-stage update-shell-stage``
+
+  * Support for new artifact type COMMAND_SPEC for existing parameter ``--artifact-type``
+
+    * ``oci devops deploy-artifact update --artifact-type command_spec``
+    * ``oci devops deploy-artifact create-generic-artifact --artifact-type command_spec``
+    * ``oci devops deploy-artifact create-inline-artifact --artifact-type command_spec``
+    * ``oci devops deploy-artifact update-generic-artifact --artifact-type command_spec``
+    * ``oci devops deploy-artifact update-inline-artifact --artifact-type command_spec``
+
+Fixed
+~~~~~
+
+* Fixed reading from and writing to default config (~/.oci/config) when importing authentication session
+
+  * ``oci session import``
+
 3.22.3 - 2023-01-24
 --------------------
 Added

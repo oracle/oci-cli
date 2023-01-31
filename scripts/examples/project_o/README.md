@@ -66,9 +66,9 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
  - support [complex type] parameters where a list of OCIDs is expected
    - comma-separated resource names are converted to a JSON list
  - simplify [datetime] parameters
-   - ``--start-time **today**`` beginning (midnight) of current day (UTC)
-   - ``--start-time **today-36h**`` - the day before yesterday at Noon
-   - ``--end-time **now**`` - current day+time (UTC)
+   - ``--start-time today`` beginning (midnight) of current day (UTC)
+   - ``--start-time today-36h`` - the day before yesterday at Noon
+   - ``--end-time now`` - current day+time (UTC)
  - output in *table, text, csv* or *JSON* format. Format is based on your field separator
     - *table:* `-o display#lifecycle` or `-o 'display|lifecycle'`
     - *text:* `-o display/lifecycle` - displays one field per line
@@ -87,14 +87,25 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
      - *id* in `-o name#id` selects the id (OCID of *this* resource) but not *image-id* or other ids in the same record
  - quick lookup of full OCIDs from *resource name* or partial OCID
     - `o ocids compartment` *instantly* shows the full OCIDs for all compartments
-    - `o ocid  sales/bastion` *instantly* shows the full OCIDs for all compartments
+    - `o ocid  sales/bastion` *instantly* shows the full OCIDs for the specified compartment
 
-#### New features in version 1.3 (2022-12-15)
- - get paginated results with `o <repeat-last-command> -page next`
- - take JSON input from a file and format output with `o`
-   - `o -i data.json -o name#id#date`
+#### New in version 1.3 (2022-12-15)
+ - get next page of results with `o <repeat-last-command> -page next`
  - select child fields from complex output with `-o key.subkey`
-   - note: some fields are dicts or lists that only present well in "text" format
+   - first use `o -o / <command> .` to see all available data fields
+   - then rerun with desired `-o key#key.subkey` list.
+ - save `oci` output (or `o -o json` output) to a file, then format with `o` - useful for getting the format just right
+   - `o -o json list compute instances > data.json`
+   - `o -i data.json -o name#id#date`
+
+#### New in version 1.4 (2023-01-20)
+ - replace compartment names with OCIDs in:
+   - `oci search resource structured-search --query-text <text>`
+   - `oci logging-search search-logs --search-query <text>`
+ - easier output formatting.  Braces are optional, allow ":-" instead of ":>" for right-justify
+   - `o -o id:-.10#name:6#create:.10 comp inst list`
+     - table output with right-most 10 characters of `id`, `display-name` in 6 (or more) characters, and first 10 characters of `time-created`
+
 
 ## Installation
 

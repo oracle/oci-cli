@@ -154,6 +154,9 @@ def backup_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--subnet-compartment-id', required=True, help=u"""The OCID for the compartment where the cluster's subnet is located.""")
 @cli_util.option('--master-node-host-bare-metal-shape', help=u"""The bare metal shape for the cluster's master nodes.""")
 @cli_util.option('--data-node-host-bare-metal-shape', help=u"""The bare metal shape for the cluster's data nodes.""")
+@cli_util.option('--security-mode', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "PERMISSIVE", "ENFORCING"]), help=u"""The security mode of the cluster.""")
+@cli_util.option('--security-master-user-name', help=u"""The name of the master user that are used to manage security config""")
+@cli_util.option('--security-master-user-password-hash', help=u"""The password hash of the master user that are used to manage security config""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -165,7 +168,7 @@ def backup_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, data_node_host_bare_metal_shape, freeform_tags, defined_tags, system_tags):
+def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, data_node_host_bare_metal_shape, security_mode, security_master_user_name, security_master_user_password_hash, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -196,6 +199,15 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if data_node_host_bare_metal_shape is not None:
         _details['dataNodeHostBareMetalShape'] = data_node_host_bare_metal_shape
+
+    if security_mode is not None:
+        _details['securityMode'] = security_mode
+
+    if security_master_user_name is not None:
+        _details['securityMasterUserName'] = security_master_user_name
+
+    if security_master_user_password_hash is not None:
+        _details['securityMasterUserPasswordHash'] = security_master_user_password_hash
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -832,6 +844,9 @@ def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--opensearch-cluster-id', required=True, help=u"""unique OpensearchCluster identifier""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the cluster. Avoid entering confidential information.""")
 @cli_util.option('--software-version', help=u"""""")
+@cli_util.option('--security-mode', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "PERMISSIVE", "ENFORCING"]), help=u"""The security mode of the cluster.""")
+@cli_util.option('--security-master-user-name', help=u"""The name of the master user that are used to manage security config""")
+@cli_util.option('--security-master-user-password-hash', help=u"""The password hash of the master user that are used to manage security config""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -844,7 +859,7 @@ def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, freeform_tags, defined_tags, if_match):
+def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, security_mode, security_master_user_name, security_master_user_password_hash, freeform_tags, defined_tags, if_match):
 
     if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
@@ -863,6 +878,15 @@ def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_se
 
     if software_version is not None:
         _details['softwareVersion'] = software_version
+
+    if security_mode is not None:
+        _details['securityMode'] = security_mode
+
+    if security_master_user_name is not None:
+        _details['securityMasterUserName'] = security_master_user_name
+
+    if security_master_user_password_hash is not None:
+        _details['securityMasterUserPasswordHash'] = security_master_user_password_hash
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
